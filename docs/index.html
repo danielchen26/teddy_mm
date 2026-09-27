@@ -85,7 +85,7 @@ h1 {
 }
 .claim-box strong { color: var(--warn); }
 .claim-box a { font-weight: 500; }
-.section { padding: 2.5rem 0; border-bottom: 1px solid var(--line); }
+.section { padding: 2.5rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: 56px; }
 .section h2 { font-size: 1.4rem; letter-spacing: -.02em; margin: 0 0 .25rem; }
 .section .sub { color: var(--ink-muted); margin: 0 0 1.15rem; max-width: 40rem; font-size: .95rem; }
 .fig {
@@ -171,6 +171,53 @@ h1 {
   line-height: 1.6; box-shadow: var(--card-shadow); overflow-x: auto;
 }
 .note { font-size: .85rem; color: var(--ink-muted); margin: .75rem 0 0; }
+.inout { display: grid; grid-template-columns: 1.3fr 1fr; gap: .75rem; margin: 1.1rem 0 0; }
+@media (max-width: 760px) { .inout { grid-template-columns: 1fr; } }
+.io { border-radius: var(--radius); padding: .85rem 1rem; border: 1px solid var(--line); background: var(--bg-elev); }
+.io h3 { margin: 0 0 .45rem; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; }
+.io.in h3 { color: var(--good); } .io.out h3 { color: var(--bad); }
+.io ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .3rem; font-size: .86rem; }
+.io li { padding-left: 1.3rem; position: relative; }
+.io li::before { position: absolute; left: 0; font-weight: 700; }
+.io.in li::before { content: "✓"; color: var(--good); } .io.out li::before { content: "✕"; color: var(--bad); }
+.storymap { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.1rem 0 0; }
+.storymap a { display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .75rem .35rem .4rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); text-decoration: none; font-size: .82rem; font-weight: 500; }
+.storymap a span { width: 1.3rem; height: 1.3rem; border-radius: 50%; display: grid; place-items: center; background: var(--bg-soft); font-family: var(--mono); font-size: .7rem; }
+.storymap a.hot { border-color: var(--accent); color: var(--accent); }
+.storymap a.hot span { background: var(--accent); color: var(--bg); }
+.lstep { display: flex; gap: .4rem; overflow-x: auto; margin: 0 0 .75rem; }
+.lstep button { flex: 1 0 auto; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink-muted); border-radius: 10px;
+  padding: .55rem .8rem; font: inherit; font-size: .86rem; font-weight: 600; cursor: pointer; text-align: left; }
+.lstep button b { font-family: var(--mono); margin-right: .3rem; color: var(--ink-faint, var(--ink-muted)); }
+.lstep button[aria-selected="true"] { color: var(--ink); border-color: var(--ink); }
+.lpanel-wrap { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 1.15rem 1.25rem; min-height: 15rem; }
+.lpanel { display: none; } .lpanel.on { display: block; }
+.lk { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 6px; background: var(--bg-soft); color: var(--ink-muted); }
+.lk.bad { background: color-mix(in srgb, var(--bad) 14%, transparent); color: var(--bad); }
+.lk.warn { background: var(--warn-bg); color: var(--warn); }
+.lk.good { background: var(--accent-soft); color: var(--accent); }
+.lh { font-size: 1.12rem; font-weight: 600; margin: .5rem 0 .6rem; letter-spacing: -.01em; }
+.ld { font-size: .88rem; color: var(--ink-muted); margin: .8rem 0 0; max-width: 46rem; }
+.lnums { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
+@media (max-width: 700px) { .lnums { grid-template-columns: 1fr 1fr; } }
+.lnums div { background: var(--bg-soft); border-radius: 10px; padding: .6rem .7rem; }
+.lnums b { display: block; font-size: 1.25rem; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.lnums span { font-size: .75rem; color: var(--ink-muted); }
+.lnums .bad b { color: var(--bad); }
+.lmini { display: grid; gap: .45rem; }
+.mrow { display: grid; grid-template-columns: 12rem 1fr 6rem; gap: .6rem; align-items: center; font-size: .84rem; }
+@media (max-width: 600px) { .mrow { grid-template-columns: 8.5rem 1fr 4.8rem; font-size: .76rem; } }
+.mrow span { color: var(--ink-muted); }
+.mrow i { height: 14px; border-radius: 0 4px 4px 0; background: var(--line); width: var(--w); }
+.mrow.good i { background: var(--accent); } .mrow.good span { color: var(--ink); font-weight: 600; }
+.mrow em { font-style: normal; font-family: var(--mono); font-size: .78rem; text-align: right; }
+.mrow.geo em { color: var(--bad); }
+.lcta { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; margin: 1rem 0 0; }
+.cta { display: inline-flex; padding: .6rem 1.1rem; border-radius: 999px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; font-size: .9rem; }
+.cta:hover { opacity: .9; }
+details.posters { margin: 1.1rem 0 0; }
+details.posters summary { cursor: pointer; font-size: .86rem; font-weight: 600; color: var(--ink-muted); margin-bottom: .75rem; }
 footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .85rem; }
 footer strong { color: var(--ink); }
 code { font-family: var(--mono); font-size: .86em; }
@@ -186,8 +233,8 @@ code { font-family: var(--mono); font-size: .86em; }
       <a href="#attr">Attr</a>
       <a href="#scope">Scope</a>
       <a href="#labels">Labels</a>
-      <a href="#anm-loop">ANM loop</a>
-        <a href="#claims">Claims</a>
+      <a href="#anm-loop">Decision loop</a>
+      <a href="#claims">Claims</a>
       <a href="#rerun">Re-run</a>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle theme">Theme</button>
     </nav>
@@ -210,21 +257,29 @@ code { font-family: var(--mono); font-size: .86em; }
           <img src="assets/infographics/00_global_frame_light.png" alt="Global frame: CITE cell → frozen TEDDY map → ANM editable decisions" width="1600" height="900" />
         </picture>
       </div>
-      <div class="claim-box">
-        <strong>What this repo claims / does not.</strong>
-        <strong>Mode B (in):</strong> TEDDY typed evidence → ANM finite_field decisions; editable observer YAML; missing-modality abstain; LOO/flip on decisions.
-        <strong>Not claimed:</strong> Mode A (residual as field, layer Jacobian, in-silico gene perturbs); gated ±ε / ±ε/2 G1–G4; reverse closed loop; fusion audit; ATAC/chromatin.
-        <strong>z<sub>512</sub>:</strong> mean-pool last-layer tokens @ context <strong>1024</strong> (not pretrain 2048, not disease token) — a loading factor.
-        Conclusions = <em>decision-layer</em> sensitivity to TEDDY evidence, not representation response to perturbs; cannot yet say whether z is sufficient for protein readout.
-        ADT-only is weak; abstain story is honest. Not clinical · not Pearson &gt; ~0.61.
-        Numbers: <a href="reports/HARD_PROOF.md">HARD_PROOF</a> ·
-        <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a> ·
-        <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a> ·
-        <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>
-        <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a> ·
-        <a href="reports/ANM_HELPS_TEDDY_LOOP.md">ANM_HELPS_TEDDY_LOOP</a> ·
-        <a href="reports/REVERSE_LOOP_SMALL.md">REVERSE_LOOP_SMALL</a>.
+      <div class="inout">
+        <div class="io in"><h3>Mode B — claimed</h3><ul>
+          <li>TEDDY typed evidence → ANM <code>finite_field</code> decisions</li>
+          <li>Editable observer YAML (O0 → O1 → O2), no TEDDY retrain</li>
+          <li>Missing-modality abstain · LOO / flip on decisions</li>
+          <li>Decision loop: <code>z_512</code> alone is <b>insufficient</b> on must-separate pairs → veto → complement → verify (<a href="anm-loop.html">interactive</a>)</li>
+        </ul></div>
+        <div class="io out"><h3>Not claimed</h3><ul>
+          <li>Mode A: residual as field, layer Jacobian, in-silico gene perturbs</li>
+          <li>Reverse loop as <i>representation response</i> to perturbs · gated ±ε G1–G4</li>
+          <li>Pearson &gt; phase-1 full-ADT ~0.61 · fusion audit · ATAC · clinical</li>
+        </ul></div>
       </div>
+      <p class="note"><b><code>z<sub>512</sub></code></b> = mean-pool last-layer tokens @ context <b>1024</b> (not pretrain 2048, not disease token). ADT-only is weak; the abstain story is honest.
+        Numbers: <a href="reports/HARD_PROOF.md">HARD_PROOF</a> · <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a> · <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a> · <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a> · <a href="reports/REVERSE_LOOP_SMALL.md">REVERSE_LOOP_SMALL</a> · <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a></p>
+      <nav class="storymap" aria-label="Story map">
+        <a href="#edit"><span>1</span>Edit the question</a>
+        <a href="#missing"><span>2</span>Missing modality</a>
+        <a href="#attr"><span>3</span>Attribution</a>
+        <a href="#scope"><span>4</span>Scope gate</a>
+        <a href="#labels"><span>5</span>Zero-label</a>
+        <a href="#anm-loop" class="hot"><span>6</span>Decision loop</a>
+      </nav>
     </div>
   </section>
 
@@ -426,46 +481,88 @@ code { font-family: var(--mono); font-size: .86em; }
 
   <section class="section" id="anm-loop">
     <div class="wrap">
-      <h2>ANM reverse decision loop</h2>
-      <p class="sub">Mode B only: veto → complement → verify on must-separate pairs. Not Mode A. Not Pearson &gt; 0.61.</p>
-      <div class="fig">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/06_anm_loop_poster_dark.png" />
-          <img src="assets/infographics/06_anm_loop_poster_light.png" alt="ANM Mode B decision loop: Veto → Complement → Verify around frozen TEDDY z_512" width="1600" height="900" />
-        </picture>
+      <h2>6 · The decision loop — when <code>z_512</code> isn’t enough</h2>
+      <p class="sub">TEDDY places myeloid and T cells at cosine 0.982. ANM vetoes that as sufficient, adds typed true-ADT evidence + an editable observer, and verifies on the same pairs. Mode B only.</p>
+
+      <div class="lstep" role="tablist" aria-label="Decision loop steps">
+        <button role="tab" aria-selected="true" data-l="0"><b>1</b> Expect</button>
+        <button role="tab" aria-selected="false" data-l="1"><b>2</b> Veto</button>
+        <button role="tab" aria-selected="false" data-l="2"><b>3</b> Complement</button>
+        <button role="tab" aria-selected="false" data-l="3"><b>4</b> Verify</button>
       </div>
-      <p class="cap">Near-identical <code>z_512</code> (median cos 0.982) still disagrees on true ADT lineage. ANM vetoes sufficiency, admits typed true-ADT + O1, verifies.</p>
-      <div class="metrics">
-        <span><em>5,000</em> must-pairs</span>
-        <span><em>1,490</em> myeloid↔T</span>
-        <span>false_agree <em>0.85→0.40</em></span>
-        <span>soft_sep <em>0.17→0.63</em></span>
-        <span>Q <em>0.74→0.99</em></span>
-        <span>winner <em>true ADT + O1</em></span>
+      <div class="lpanel-wrap">
+        <div class="lpanel on" role="tabpanel">
+          <div class="lk">TEDDY alone</div>
+          <p class="lh">Nearby <code>z_512</code> ⇒ same biology ⇒ same call.</p>
+          <div class="flow" style="margin:.5rem 0 0">
+            <span class="step">RNA</span><span class="arrow">→</span><span class="step">frozen TEDDY-G</span><span class="arrow">→</span>
+            <span class="step">z<sub>512</sub></span><span class="arrow">→</span><span class="step">ADT preds</span><span class="arrow">→</span><span class="step">O0 call</span>
+          </div>
+          <p class="ld">Test: take kNN pairs at cos ≥ 0.98 and check them against held-out true ADT. This must-separate autopsy was the strongest of four cheap probes (0.581, rank 1).</p>
+        </div>
+        <div class="lpanel" role="tabpanel">
+          <div class="lk bad">Veto</div>
+          <p class="lh"><code>z_512</code> is <b>insufficient</b>: near-identical <code>z</code>, disagreeing true lineage.</p>
+          <div class="lnums">
+            <div><b>5,000</b><span>must-pairs written</span></div>
+            <div><b>1,490</b><span>myeloid↔T pairs</span></div>
+            <div><b>0.982</b><span>their median cos</span></div>
+            <div class="bad"><b>0.85</b><span>false_agree, TEDDY pred + O0</span></div>
+          </div>
+          <p class="ld">Readout must abstain, rewrite the observer, or admit a complement evidence channel.</p>
+        </div>
+        <div class="lpanel" role="tabpanel">
+          <div class="lk warn">Complement</div>
+          <p class="lh">Three cheap arms. Only typed evidence + observer moves the decision.</p>
+          <div class="lmini">
+            <div class="mrow"><span>(a) O1 / O2 observer only</span><i style="--w:83.1%"></i><em>0.83–0.84</em></div>
+            <div class="mrow good"><span>(b) true ADT typed + O1</span><i style="--w:39.7%"></i><em>0.40</em></div>
+            <div class="mrow geo"><span>(c) z⁺ feature swap</span><i style="--w:0%"></i><em>n/a · geometry</em></div>
+          </div>
+          <p class="ld">Bars = myeloid↔T false_agree (lower is better). z⁺ separates the fixed list geometrically but globally <b>worsens</b> must-rate (relative reduction −0.27) — geometry ≠ decision.</p>
+        </div>
+        <div class="lpanel" role="tabpanel">
+          <div class="lk good">Verify</div>
+          <p class="lh">Same 1,490 pairs. Winner: true-ADT typed + O1.</p>
+          <div class="lnums">
+            <div><b>0.85 → 0.40</b><span>false_agree ↓</span></div>
+            <div><b>0.17 → 0.63</b><span>soft_sep ↑</span></div>
+            <div><b>0.74 → 0.99</b><span>Q among decided ↑</span></div>
+            <div><b>2.841</b><span>score (sep + Q − fa)</span></div>
+          </div>
+          <p class="ld">All 5,000 pairs: false_agree 0.893 → 0.586 · Q 0.808 → 0.990 · soft_sep 0.167 → 0.469. No TEDDY retrain.</p>
+        </div>
       </div>
-      <div class="fig">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/07_myeloid_t_before_after_dark.png" />
-          <img src="assets/infographics/07_myeloid_t_before_after_light.png" alt="Myeloid vs T before/after: false agree drops from 0.85 to 0.40 with true ADT + O1" width="1600" height="900" />
-        </picture>
+      <div class="lcta">
+        <a class="cta" href="anm-loop.html">Open the interactive loop report →</a>
+        <span class="note" style="margin:0">Stepper, scoreboard by arm × metric, ANM vs feature swap, posters.</span>
       </div>
-      <p class="cap">Myeloid↔T story: baseline pred+O0 false-agrees; true-ADT typed evidence + editable O1 separates.</p>
-      <div class="fig">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/08_anm_vs_feature_swap_dark.png" />
-          <img src="assets/infographics/08_anm_vs_feature_swap_light.png" alt="ANM uniquely provides typed evidence, editable observers, abstain, verify — not just z+ feature swap" width="1600" height="900" />
-        </picture>
-      </div>
-      <p class="cap">Not feature-swap: global <code>z+</code> relative_must_reduction = −0.27. Decision ownership = typed evidence + observer + abstain + verify.</p>
-      <div class="zh">
-        <strong>中文</strong>
-        z_512 在 must-pair 上不够用；ANM 决策闭环否决→补真 ADT 类型证据+O1→核验。不是换特征，不是 Mode A，不是 Pearson &gt; 0.61。
-      </div>
+
+      <details class="posters">
+        <summary>Posters (static)</summary>
+        <div class="fig">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/06_anm_loop_poster_dark.png" />
+            <img src="assets/infographics/06_anm_loop_poster_light.png" alt="ANM Mode B decision loop: Veto → Complement → Verify around frozen TEDDY z_512" width="1600" height="900" loading="lazy" />
+          </picture>
+        </div>
+        <div class="viz-grid">
+          <div class="fig"><picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/07_myeloid_t_before_after_dark.png" />
+            <img src="assets/infographics/07_myeloid_t_before_after_light.png" alt="Myeloid vs T before/after: false agree 0.85 to 0.40" width="1600" height="900" loading="lazy" />
+          </picture></div>
+          <div class="fig"><picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/08_anm_vs_feature_swap_dark.png" />
+            <img src="assets/infographics/08_anm_vs_feature_swap_light.png" alt="ANM typed evidence, editable observers, abstain, verify vs z+ feature swap" width="1600" height="900" loading="lazy" />
+          </picture></div>
+        </div>
+      </details>
       <div class="links">
+        <a href="anm-loop.html">Interactive report</a>
         <a href="reports/ANM_HELPS_TEDDY_LOOP.md">ANM_HELPS_TEDDY_LOOP</a>
         <a href="reports/REVERSE_LOOP_SMALL.md">REVERSE_LOOP_SMALL</a>
         <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a>
-        <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>
+        <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES</a>
       </div>
     </div>
   </section>
@@ -479,8 +576,10 @@ code { font-family: var(--mono); font-size: .86em; }
         <div class="axis"><h4>Abstain</h4><p>ANM 317→834→3,373; Train stuck at 185.</p></div>
         <div class="axis"><h4>Attribution</h4><p>Full-n LOO n=16,433 · flip 0.277 · p≈0.0099.</p></div>
         <div class="axis"><h4>Zero-label</h4><p>ANM 0 labels vs Train ≈50–500 for numerical match only.</p></div>
+        <div class="axis"><h4>Decision loop</h4><p>Myeloid↔T must-pairs: false_agree 0.85→0.40 · Q 0.74→0.99 with typed true ADT + O1.</p></div>
+        <div class="axis"><h4>Not feature swap</h4><p>z⁺ alone worsens global must-rate (relative reduction −0.27).</p></div>
         <div class="axis"><h4>Mode B in</h4><p>TEDDY typed evidence → finite_field; YAML observers; missing-modality abstain; LOO on decisions.</p></div>
-        <div class="axis" style="background:var(--warn-bg);border-color:color-mix(in srgb, var(--warn) 30%, var(--line));"><h4 style="color:var(--warn);">Not claimed</h4><p>Mode A residual/Jacobian/gene perturbs · ±ε G1–G4 · Mode-A reverse closed loop (rep response) · fusion audit · ATAC. Mode B decision loop (veto→complement→verify) is in — see <a href="#anm-loop">ANM loop</a>.</p></div>
+        <div class="axis" style="background:var(--warn-bg);border-color:color-mix(in srgb, var(--warn) 30%, var(--line));"><h4 style="color:var(--warn);">Not claimed</h4><p>Mode A residual/Jacobian/gene perturbs · ±ε G1–G4 · reverse loop as representation response · fusion audit · ATAC. The Mode B <i>decision</i> loop (veto→complement→verify) is in — see <a href="#anm-loop">6 · Decision loop</a>.</p></div>
       </div>
       <div class="proof">
         On the same TEDDY δu (site4/test), ANM edits the observer with zero endpoint-label fit, keeping verifiable P<sub>f</sub>/Q<sub>f</sub> and auditable full-n LOO (n_attr=16,433, perm p≈0.0099). TEDDY-alone over-answers where the declared observer abstains; Train+Jev burns O2 labels and still cannot buy editable-field attribution. Not clinical. Do not claim Pearson &gt; 0.61.
@@ -526,7 +625,8 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 (function () {
   var root = document.documentElement;
   var btn = document.getElementById('themeBtn');
-  var stored = localStorage.getItem('teddy-anm-theme');
+  var stored = null;
+  try { stored = localStorage.getItem('teddy-anm-theme'); } catch (e) {}
   if (stored) root.setAttribute('data-theme', stored);
   function label() {
     var t = root.getAttribute('data-theme');
@@ -549,11 +649,15 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
     if (!cur) next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
     else next = cur === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
-    localStorage.setItem('teddy-anm-theme', next);
+    try { localStorage.setItem('teddy-anm-theme', next); } catch (e) {}
     applyPictureMedia(next);
     label();
   });
   if (stored === 'dark' || stored === 'light') applyPictureMedia(stored);
+  var lb = [].slice.call(document.querySelectorAll('.lstep button'));
+  var lp = [].slice.call(document.querySelectorAll('.lpanel'));
+  function lgo(i) { lb.forEach(function (b, j) { b.setAttribute('aria-selected', j === i); }); lp.forEach(function (p, j) { p.classList.toggle('on', j === i); }); }
+  lb.forEach(function (b, j) { b.addEventListener('click', function () { lgo(j); }); });
 })();
 </script>
 </body>
