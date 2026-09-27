@@ -1,8 +1,9 @@
 # TEDDY × ANM — GitHub Pages site
 
-Open **[index.html](index.html)** for the public landing page.
+Open **[index.html](index.html)** for the public landing (figure-first).
 
-- `assets/` — essential GIFs/PNGs (observer shift, label cost, attribution, missing modality)
+- `assets/infographics/` — icon-first story PNGs (light+dark); regenerate via `scripts/make_story_infographics.py`
+- `assets/hard_proof/`, `assets/missing_modality/` — proof GIFs/dashboards
 - `reports/` — HARD_PROOF, SCOPE_REFINE, MISSING_MODALITY, STAT_PROOF, BAKEOFF, v0 REPORT
 
 Pages source: `/docs` on the default branch.
