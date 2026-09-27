@@ -49,3 +49,12 @@ They **cannot** yet answer whether `z_512` (or the export sidecar) is **sufficie
 ## Honest weak-model note
 
 **ADT-only** is a weak channel in the missing-modality demo (panel Pearson drops; TEDDY-alone abstain can stay 0 while Q is mediocre). The abstain story is intentionally honest: ANM silence under weak evidence beats silent over-answer. Not clinical. Do not claim Pearson > phase-1 full-ADT **~0.61**.
+
+## Reverse step 1 (sufficiency probe only)
+
+Script: [`bridge_anm/reverse_step1_must_separate.py`](../bridge_anm/reverse_step1_must_separate.py)
+
+Reads `z_rna_export.npy` + true ADT panel, finds near-identical export-z pairs with different lineage/protein labels (**must-separate**). Report: [`docs/reports/REVERSE_STEP1.md`](reports/REVERSE_STEP1.md).
+
+Still Mode B / evidence geometry — **not** Mode A perturb-response.
+

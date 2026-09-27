@@ -108,6 +108,7 @@ ANM adopts O2 at **0** endpoint labels (abstain≈0.201, strict≈0.821, editabl
 |---|---|
 | Landing | [`docs/`](docs/) · [GitHub Pages](https://danielchen26.github.io/teddy_mm/) |
 | Mode B scope | [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md) |
+| Reverse step 1 | [`bridge_anm/reverse_step1_must_separate.py`](bridge_anm/reverse_step1_must_separate.py) · [`REVERSE_STEP1`](docs/reports/REVERSE_STEP1.md) |
 | Bridge | [`bridge_anm/`](bridge_anm/) |
 | Proofs | [`docs/reports/`](docs/reports/) |
 | Story PNGs | `docs/assets/infographics/` (icon-first, light+dark) |

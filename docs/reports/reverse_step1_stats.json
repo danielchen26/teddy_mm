@@ -1,0 +1,147 @@
+{
+  "claim_boundary": {
+    "mode": "B_sufficiency_for_readout_probe",
+    "not_claimed": [
+      "Mode_A_residual_stream_as_field",
+      "layer_Jacobian",
+      "in_silico_gene_perturbs",
+      "gated_pm_eps_G1_G4",
+      "reverse_closed_loop_perturb_response",
+      "fusion_audit",
+      "ATAC_chromatin"
+    ],
+    "distinction": "sufficiency-for-readout (near-identical z, different true labels) \u2260 perturb-response (how z moves under interventions)",
+    "z_512_definition": "mean-pool last-layer tokens at context length 1024 (not TEDDY pretrain 2048, not disease token); this script uses export sidecar z_keep dims after L2-normalize"
+  },
+  "inputs": {
+    "z_path": "outputs/anm_cite_bridge/z_rna_export.npy",
+    "adt_true_panel": "outputs/anm_cite_bridge/adt_true_panel.npy",
+    "meta": "outputs/anm_cite_bridge/cite_cells_meta.jsonl",
+    "n_site4": 16750,
+    "z_export_dim": 32,
+    "z_all_rows": 18750,
+    "panel": [
+      "CD19",
+      "CD72",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD16",
+      "CD11c",
+      "CD36"
+    ]
+  },
+  "params": {
+    "k": 30,
+    "min_cos": 0.98,
+    "adt_margin": 0.05,
+    "protein_l1_rel": 0.35,
+    "batch": 256,
+    "seed": 17,
+    "max_pairs_write": 5000,
+    "cos_sweep": "0.995,0.99,0.98,0.97,0.95"
+  },
+  "label_counts": {
+    "adt_lineage": {
+      "abstain": 394,
+      "b_lineage": 3727,
+      "myeloid": 4723,
+      "t_lineage": 7906
+    },
+    "key_marker_lineage": {
+      "b_lineage": 4863,
+      "myeloid": 2830,
+      "t_lineage": 9057
+    },
+    "coarse_cell_type": {
+      "b_lineage": 2946,
+      "myeloid": 1564,
+      "nk_ilc": 1940,
+      "other": 1019,
+      "progenitor_other": 2715,
+      "t_lineage": 6566
+    }
+  },
+  "results": {
+    "n_directed_near_edges": 357206,
+    "n_undirected_near_pairs_approx": 262089,
+    "n_must_separate_pairs_written": 5000,
+    "n_must_separate_pairs_total_undirected": 21267,
+    "n_cells_with_ge1_must_neighbor": 6659,
+    "frac_cells_with_ge1_must_neighbor": 0.3975522388059701,
+    "n_undirected_diff_adt_lineage": 9023,
+    "n_undirected_diff_key_marker": 30046,
+    "n_undirected_diff_coarse": 5460,
+    "n_undirected_diff_protein_profile": 117726,
+    "must_cos_sim_quantiles": {
+      "q25": 0.9822211265563965,
+      "q50": 0.9844339191913605,
+      "q75": 0.9867914766073227,
+      "min": 0.9800009727478027,
+      "max": 0.9950082898139954
+    },
+    "must_rel_l1_quantiles": {
+      "q25": 0.4096817190572458,
+      "q50": 0.5154682235949001,
+      "q75": 0.6764346934927028
+    }
+  },
+  "cos_sweep": [
+    {
+      "min_cos": 0.995,
+      "n_undirected_near_pairs": 85,
+      "n_must_separate": 4,
+      "frac_must_among_near": 0.047058823529411764,
+      "n_cells_with_ge1_must": 8,
+      "n_diff_adt_lineage": 0,
+      "n_diff_key_marker": 12,
+      "n_diff_coarse": 0,
+      "n_diff_protein_profile": 32
+    },
+    {
+      "min_cos": 0.99,
+      "n_undirected_near_pairs": 26122,
+      "n_must_separate": 954,
+      "frac_must_among_near": 0.03652094020365975,
+      "n_cells_with_ge1_must": 871,
+      "n_diff_adt_lineage": 309,
+      "n_diff_key_marker": 1960,
+      "n_diff_coarse": 74,
+      "n_diff_protein_profile": 10977
+    },
+    {
+      "min_cos": 0.98,
+      "n_undirected_near_pairs": 262089,
+      "n_must_separate": 21267,
+      "frac_must_among_near": 0.08114419147694103,
+      "n_cells_with_ge1_must": 6659,
+      "n_diff_adt_lineage": 9023,
+      "n_diff_key_marker": 30046,
+      "n_diff_coarse": 5460,
+      "n_diff_protein_profile": 117726
+    },
+    {
+      "min_cos": 0.97,
+      "n_undirected_near_pairs": 337102,
+      "n_must_separate": 35177,
+      "frac_must_among_near": 0.10435120527318141,
+      "n_cells_with_ge1_must": 8794,
+      "n_diff_adt_lineage": 16262,
+      "n_diff_key_marker": 47382,
+      "n_diff_coarse": 7842,
+      "n_diff_protein_profile": 155961
+    },
+    {
+      "min_cos": 0.95,
+      "n_undirected_near_pairs": 375430,
+      "n_must_separate": 47281,
+      "frac_must_among_near": 0.12593825746477372,
+      "n_cells_with_ge1_must": 9830,
+      "n_diff_adt_lineage": 22775,
+      "n_diff_key_marker": 60060,
+      "n_diff_coarse": 9939,
+      "n_diff_protein_profile": 178812
+    }
+  ]
+}

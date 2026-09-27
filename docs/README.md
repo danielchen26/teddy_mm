@@ -8,3 +8,4 @@ Open **[index.html](index.html)** for the public landing (figure-first).
 
 Pages source: `/docs` on the default branch.
 - `MODE_B_SCOPE.md` — Mode B vs Mode A claim boundary + `z_512` definition
+- `reports/REVERSE_STEP1.md` — must-separate z pairs (sufficiency-for-readout; not Mode A)
