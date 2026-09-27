@@ -1,0 +1,35 @@
+# Phase-2: bidirectional CITE (RNA↔ADT) with modality dropout + latent FM.
+# Independent of full phase-1 90k embed. Prefer data/processed/cite_phase2_4k
+# (or cite_smoke). Never write into data/processed/cite or outputs/cite_phase1.
+
+seed: 0
+task: cite_bidirectional
+
+paths:
+  processed_dir: data/processed/cite_phase2_4k   # fallback: data/processed/cite_smoke
+  outputs: outputs/cite_phase2
+
+modality_dropout:
+  p_drop_rna: 0.18          # ~15-20% RNA missing
+  p_drop_adt: 0.15
+  fuse_mode: mean           # mean | sum | rna_priority
+
+model:
+  z_dim: 512
+  hidden: 512
+  adt_hidden: 256           # shallow ADT encoder
+  adt_layers: 2
+  n_layers: 3
+  dropout: 0.1
+  fm_steps: 20
+  use_clr: true
+
+train:
+  epochs: 8                 # short scaffold run; bump later
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_nll: 1.0
+  lambda_fm: 1.0
+  lambda_rna_side: 0.5
+  device: auto              # auto | mps | cuda | cpu

@@ -1,0 +1,47 @@
+# Python / env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS / editors
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Large / regenerable data & weights (keep code + docs + reports)
+data/raw/
+data/processed/
+*.h5ad
+*.pt
+*.ckpt
+*.npz
+
+# Heavy bridge exports (jsonl / npy panels) — regenerate via bridge_anm/
+outputs/**/*.jsonl
+outputs/**/*.npy
+outputs/**/*.npz
+outputs/**/attr_compact.npz
+outputs/**/attr/
+outputs/cite_phase*/
+outputs/smoke/
+outputs/anm_cite_bridge/*.npy
+outputs/anm_cite_bridge/cite_*.jsonl
+outputs/anm_cite_bridge/ood_*.npy
+outputs/anm_cite_bridge/z_rna_export.npy
+outputs/anm_cite_bridge/hard_proof_dbg/
+outputs/anm_cite_bridge/hard_proof_smoke/
+outputs/anm_cite_bridge/missing_modality/*.jsonl
+outputs/anm_cite_bridge/missing_modality/*.npy
+outputs/anm_cite_bridge/missing_modality/attr/
+outputs/anm_cite_bridge/stat_proof_run.log
+
+# Keep proof markdown, small json, and viz (tracked under docs/assets too)
+# Local scratch
+*.log
+.tmp/

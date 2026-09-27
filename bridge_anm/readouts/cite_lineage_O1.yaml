@@ -1,0 +1,35 @@
+# CITE phase-1 lineage decision family — criterion O1 (exactness / Q_f strict)
+# Same TEDDY δu; re-declared observer only.
+criterion_id: O1
+family_id: cite_phase1_lineage_coherence
+schema_id: cite_lineage_typed_scalar_v0
+name: exactness_strict
+description: >
+  Stricter observer: boost therapeutic/key markers CD19 / CD3 / CD16,
+  raise readout_threshold. Demonstrates criterion edit without TEDDY retrain.
+
+P_f:
+  role: workability_under_strict_observer
+  panels:
+    b_lineage: [CD19, CD72, CD22]
+    t_lineage: [CD3, CD2, CD5]
+    myeloid:   [CD16, CD11c, CD36]
+  protein_weight: 1.0
+  key_marker_boost: 2.0
+  key_markers:
+    b_lineage: CD19
+    t_lineage: CD3
+    myeloid: CD16
+  readout_threshold: 0.28
+  abstain_if_below_threshold: true
+
+Q_f:
+  role: exactness_posthoc
+  note: >
+    Same holdout expected_action rule as O0 but larger margin (0.12).
+  key_subset: [CD19, CD3, CD16]
+  expected_margin: 0.12
+
+vs_O0: |
+  Only declaration changed: key_marker_boost and readout_threshold / expected_margin.
+  TEDDY best.pt and z_rna unchanged.

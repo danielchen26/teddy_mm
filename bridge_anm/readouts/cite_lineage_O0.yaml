@@ -1,0 +1,33 @@
+# CITE phase-1 lineage decision family — criterion O0 (workability / P_f soft)
+# Editing this file (O0 → O1) changes the declared observer without retraining TEDDY.
+criterion_id: O0
+family_id: cite_phase1_lineage_coherence
+schema_id: cite_lineage_typed_scalar_v0
+name: workability_soft
+description: >
+  P_f workability: major lineage markers coherent under soft threshold.
+  Proteins verified from outputs/cite_phase1/test_per_protein.json (MLP Pearson).
+
+P_f:
+  role: workability
+  panels:
+    b_lineage: [CD19, CD72, CD22]      # MLP Pearson ~0.93 / 0.93 / 0.91
+    t_lineage: [CD3, CD2, CD5]         # MLP Pearson ~0.91 / 0.90 / 0.90
+    myeloid:   [CD16, CD11c, CD36]     # MLP Pearson ~0.92 / 0.90 / 0.93
+  protein_weight: 1.0
+  key_marker_boost: 1.0
+  readout_threshold: 0.12
+  abstain_if_below_threshold: true
+
+Q_f:
+  role: exactness_posthoc
+  note: >
+    Q_f uses holdout true-ADT panel argmax as expected_action (site4 test).
+    Labels never enter ANM source events or field law.
+  key_subset: [CD19, CD3, CD16]
+  expected_margin: 0.05
+
+criterion_edit_O0_to_O1: |
+  Change readout_threshold 0.12→0.28 and key_marker_boost 1.0→2.0
+  (see cite_lineage_O1.yaml). Re-export events / re-run field only —
+  do NOT retrain teddy_mm phase-1 MLP/FM.

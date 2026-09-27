@@ -1,0 +1,323 @@
+{
+  "wall_seconds": 1.3775767920305952,
+  "runner_executed": true,
+  "summaries": {
+    "O0": {
+      "n_instances": 500,
+      "mean_P_f": 0.99,
+      "mean_Q_f_defined": 0.9683544303797469,
+      "n_Q_f_defined": 474,
+      "abstain_count": 5,
+      "action_counts": {
+        "myeloid": 214,
+        "b_lineage": 77,
+        "t_lineage": 204
+      }
+    },
+    "O1": {
+      "n_instances": 500,
+      "mean_P_f": 0.938,
+      "mean_Q_f_defined": 0.9767441860465116,
+      "n_Q_f_defined": 430,
+      "abstain_count": 31,
+      "action_counts": {
+        "myeloid": 210,
+        "b_lineage": 70,
+        "t_lineage": 189
+      }
+    }
+  },
+  "attribution_example": {
+    "instance_id": "cite_site4_73511",
+    "recommended_action": "myeloid",
+    "P_f": 1.0,
+    "Q_f": 1.0,
+    "action_scores": {
+      "b_lineage": 0.10386857495660447,
+      "t_lineage": 0.2720092563799766,
+      "myeloid": 0.5263200659813642
+    },
+    "top_events": [
+      {
+        "event_id": "cite_site4_73511:CD16",
+        "protein": "CD16",
+        "action": "myeloid",
+        "value": 0.9313117727321707,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "t_lineage",
+        "flipped": true,
+        "delta_scores": {
+          "myeloid": -0.33766991631607557,
+          "b_lineage": 0.0,
+          "t_lineage": 0.0
+        },
+        "delta_chosen_score": -0.33766991631607557
+      },
+      {
+        "event_id": "cite_site4_73511:CD11c",
+        "protein": "CD11c",
+        "action": "myeloid",
+        "value": 0.4125626782674178,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": -0.15894008480164024,
+          "b_lineage": 0.0,
+          "t_lineage": 0.0
+        },
+        "delta_chosen_score": -0.15894008480164024
+      },
+      {
+        "event_id": "cite_site4_73511:CD36",
+        "protein": "CD36",
+        "action": "myeloid",
+        "value": 0.10359825398825429,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": -0.03483497225919174,
+          "b_lineage": 0.008194185228326545,
+          "t_lineage": 0.015147337640516567
+        },
+        "delta_chosen_score": -0.03483497225919174
+      },
+      {
+        "event_id": "cite_site4_73511:CD19",
+        "protein": "CD19",
+        "action": "b_lineage",
+        "value": 0.11109760767958753,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": 0.0,
+          "b_lineage": -0.03142614416481457,
+          "t_lineage": 0.0
+        },
+        "delta_chosen_score": 0.0
+      },
+      {
+        "event_id": "cite_site4_73511:CD72",
+        "protein": "CD72",
+        "action": "b_lineage",
+        "value": 0.15325553212810547,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": 0.0,
+          "b_lineage": -0.04429885744277525,
+          "t_lineage": 0.0
+        },
+        "delta_chosen_score": 0.0
+      },
+      {
+        "event_id": "cite_site4_73511:CD22",
+        "protein": "CD22",
+        "action": "b_lineage",
+        "value": 0.12751951521193522,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": 0.0,
+          "b_lineage": -0.04081361460112008,
+          "t_lineage": 0.0
+        },
+        "delta_chosen_score": 0.0
+      },
+      {
+        "event_id": "cite_site4_73511:CD3",
+        "protein": "CD3",
+        "action": "t_lineage",
+        "value": 0.17236604157159863,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": 0.0,
+          "b_lineage": 0.0,
+          "t_lineage": -0.059558231634370934
+        },
+        "delta_chosen_score": 0.0
+      },
+      {
+        "event_id": "cite_site4_73511:CD2",
+        "protein": "CD2",
+        "action": "t_lineage",
+        "value": 0.4769148923214528,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": 0.0,
+          "b_lineage": 0.0,
+          "t_lineage": -0.15956363149463576
+        },
+        "delta_chosen_score": 0.0
+      },
+      {
+        "event_id": "cite_site4_73511:CD5",
+        "protein": "CD5",
+        "action": "t_lineage",
+        "value": 0.1839910346538489,
+        "base_recommended": "myeloid",
+        "ablated_recommended": "myeloid",
+        "flipped": false,
+        "delta_scores": {
+          "myeloid": 0.0,
+          "b_lineage": 0.0,
+          "t_lineage": -0.07089122152712696
+        },
+        "delta_chosen_score": 0.0
+      }
+    ]
+  },
+  "flip_summary": {
+    "n_scanned_with_flip": 32,
+    "median_min_flip_distance": 0.7268450223721877,
+    "example": {
+      "event_id": "cite_site4_73511:CD16",
+      "base_value": 0.9313117727321707,
+      "base_recommended": "myeloid",
+      "flip_exists": true,
+      "min_flip_distance": 0.7313117727321707,
+      "flip_to": "t_lineage",
+      "flip_value": 0.2
+    },
+    "samples": [
+      {
+        "instance_id": "cite_site4_73511",
+        "event_id": "cite_site4_73511:CD5",
+        "base_value": 0.1839910346538489,
+        "base_recommended": "myeloid",
+        "flip_exists": true,
+        "min_flip_distance": 0.7660089653461511,
+        "flip_to": "t_lineage",
+        "flip_value": 0.9500000000000001
+      },
+      {
+        "instance_id": "cite_site4_73511",
+        "event_id": "cite_site4_73511:CD16",
+        "base_value": 0.9313117727321707,
+        "base_recommended": "myeloid",
+        "flip_exists": true,
+        "min_flip_distance": 0.7313117727321707,
+        "flip_to": "t_lineage",
+        "flip_value": 0.2
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD19",
+        "base_value": 0.13301017941636173,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.033010179416361723,
+        "flip_to": "t_lineage",
+        "flip_value": 0.1
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD72",
+        "base_value": 0.19635347486493163,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.046353474864931604,
+        "flip_to": "t_lineage",
+        "flip_value": 0.15000000000000002
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD22",
+        "base_value": 0.16066931718656718,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.06066931718656718,
+        "flip_to": "t_lineage",
+        "flip_value": 0.1
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD3",
+        "base_value": 0.15642010541386894,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.04357989458613107,
+        "flip_to": "t_lineage",
+        "flip_value": 0.2
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD2",
+        "base_value": 0.09192089100145565,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.058079108998544376,
+        "flip_to": "t_lineage",
+        "flip_value": 0.15000000000000002
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD5",
+        "base_value": 0.14043202074801478,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.05956797925198523,
+        "flip_to": "t_lineage",
+        "flip_value": 0.2
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD16",
+        "base_value": 0.10957159275468249,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.04042840724531753,
+        "flip_to": "myeloid",
+        "flip_value": 0.15000000000000002
+      },
+      {
+        "instance_id": "cite_site4_73515",
+        "event_id": "cite_site4_73515:CD11c",
+        "base_value": 0.11183766059324492,
+        "base_recommended": "b_lineage",
+        "flip_exists": true,
+        "min_flip_distance": 0.038162339406755105,
+        "flip_to": "myeloid",
+        "flip_value": 0.15000000000000002
+      }
+    ]
+  },
+  "criteria": {
+    "O0": {
+      "name": "workability_soft",
+      "description": "P_f workability: soft panel coherence on 3+3+3 high-Pearson lineage markers; equal protein weights; readout_threshold=0.12.",
+      "readout_threshold": 0.12,
+      "protein_weight": 1.0,
+      "key_marker_boost": 1.0,
+      "value_clip": [
+        0.0,
+        1.0
+      ],
+      "norm": "train_p95",
+      "expected_from": "true_adt_panel_argmax",
+      "expected_margin": 0.05
+    },
+    "O1": {
+      "name": "exactness_strict",
+      "description": "Q_f-oriented exactness: same TEDDY predictions, re-declared observer \u2014 boost key therapeutic markers (CD19/CD3/CD16)\u00d72.0, stricter readout_threshold=0.28, larger expected margin.",
+      "readout_threshold": 0.28,
+      "protein_weight": 1.0,
+      "key_marker_boost": 2.0,
+      "value_clip": [
+        0.0,
+        1.0
+      ],
+      "norm": "train_p95",
+      "expected_from": "true_adt_panel_argmax",
+      "expected_margin": 0.12
+    }
+  }
+}

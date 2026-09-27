@@ -1,0 +1,1257 @@
+{
+  "timestamp_local": "2026-09-27 01:06:40 EDT",
+  "claim_boundary": "conditional_correctness_and_label_efficiency_only_not_clinical",
+  "no_retrain_best_pt": true,
+  "P_f_note": "Verifier P_f is binary (1 if recommended_action in actions else 0). \u03c4-sweep uses continuous soft_P=max(ANM action_scores) from the same field readout.",
+  "paths": {
+    "cells": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_cells_meta.jsonl",
+    "events": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_typed_events.jsonl",
+    "attr": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
+    "schema": "/Users/tianchichen/Documents/GitHub/teddy_mm/bridge_anm/schemas/cite_lineage_finite_field_v0.json",
+    "mm_cells": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl",
+    "mm_events": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl"
+  },
+  "claim1_gate": {
+    "tag": "site4_phase1_export",
+    "n_cells": 16750,
+    "criteria": {
+      "O0": {
+        "elapsed_sec": 1.2051823139190674,
+        "mean_P_f_binary": 0.9810746268656716,
+        "soft_P_quantiles": {
+          "0.0": 0.0827453201145923,
+          "0.1": 0.38451225769207337,
+          "0.25": 0.45251277070868473,
+          "0.5": 0.704121305107835,
+          "0.75": 0.824756518854062,
+          "0.9": 0.9085484427005012,
+          "1.0": 0.977835409413917
+        },
+        "baseline": {
+          "teddy_always_Q": 0.9452612819043982,
+          "teddy_always_n_labeled": 15711,
+          "teddy_thr_Q": 0.9471936657940107,
+          "teddy_thr_n_decided_labeled": 15661,
+          "anm_default_Q": 0.9496203834770299,
+          "anm_default_n_decided_labeled": 15542,
+          "anm_abstain_count": 317
+        },
+        "coverage_Q_curve_teddy_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.9452612819043982,
+            "n_answered": 16750,
+            "n_labeled_answered": 15711
+          },
+          {
+            "tau": 0.0827453201145923,
+            "coverage": 1.0,
+            "Q": 0.9452612819043982,
+            "n_answered": 16750,
+            "n_labeled_answered": 15711
+          },
+          {
+            "tau": 0.2978090847448762,
+            "coverage": 0.9333134328358209,
+            "Q": 0.961415220293725,
+            "n_answered": 15633,
+            "n_labeled_answered": 14980
+          },
+          {
+            "tau": 0.4231871915288837,
+            "coverage": 0.8666268656716418,
+            "Q": 0.970919458303635,
+            "n_answered": 14516,
+            "n_labeled_answered": 14030
+          },
+          {
+            "tau": 0.4351806500561319,
+            "coverage": 0.8,
+            "Q": 0.9834527985359158,
+            "n_answered": 13400,
+            "n_labeled_answered": 13114
+          },
+          {
+            "tau": 0.4625077709847983,
+            "coverage": 0.7333134328358208,
+            "Q": 0.9909695427304819,
+            "n_answered": 12283,
+            "n_labeled_answered": 12181
+          },
+          {
+            "tau": 0.5838461741169683,
+            "coverage": 0.6666865671641791,
+            "Q": 0.9961386494252874,
+            "n_answered": 11167,
+            "n_labeled_answered": 11136
+          },
+          {
+            "tau": 0.6333702330750308,
+            "coverage": 0.6,
+            "Q": 0.9973070017953322,
+            "n_answered": 10050,
+            "n_labeled_answered": 10026
+          },
+          {
+            "tau": 0.6800947731638711,
+            "coverage": 0.5333134328358209,
+            "Q": 0.9979809310151431,
+            "n_answered": 8933,
+            "n_labeled_answered": 8915
+          },
+          {
+            "tau": 0.7313088457686896,
+            "coverage": 0.4666865671641791,
+            "Q": 0.9983344010249839,
+            "n_answered": 7817,
+            "n_labeled_answered": 7805
+          },
+          {
+            "tau": 0.7831610090391715,
+            "coverage": 0.4,
+            "Q": 0.9983560005978179,
+            "n_answered": 6700,
+            "n_labeled_answered": 6691
+          },
+          {
+            "tau": 0.7926066337879821,
+            "coverage": 0.38477611940298506,
+            "Q": 0.9982911294081094,
+            "n_answered": 6445,
+            "n_labeled_answered": 6437
+          },
+          {
+            "tau": 0.8109103399611827,
+            "coverage": 0.2666865671641791,
+            "Q": 0.9982062780269059,
+            "n_answered": 4467,
+            "n_labeled_answered": 4460
+          },
+          {
+            "tau": 0.8660345195602844,
+            "coverage": 0.2,
+            "Q": 0.9991034070531979,
+            "n_answered": 3350,
+            "n_labeled_answered": 3346
+          },
+          {
+            "tau": 0.895222363208947,
+            "coverage": 0.1333731343283582,
+            "Q": 0.9995519713261649,
+            "n_answered": 2234,
+            "n_labeled_answered": 2232
+          },
+          {
+            "tau": 0.9249282016921476,
+            "coverage": 0.0666865671641791,
+            "Q": 1.0,
+            "n_answered": 1117,
+            "n_labeled_answered": 1116
+          },
+          {
+            "tau": 0.977835409413917,
+            "coverage": 0.012059701492537314,
+            "Q": 1.0,
+            "n_answered": 202,
+            "n_labeled_answered": 202
+          }
+        ],
+        "coverage_Q_curve_anm_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 0.9810746268656716,
+            "Q": 0.9496203834770299,
+            "n_answered": 16433,
+            "n_labeled_answered": 15542
+          },
+          {
+            "tau": 0.0827453201145923,
+            "coverage": 0.9810746268656716,
+            "Q": 0.9496203834770299,
+            "n_answered": 16433,
+            "n_labeled_answered": 15542
+          },
+          {
+            "tau": 0.2978090847448762,
+            "coverage": 0.9333134328358209,
+            "Q": 0.9604138851802403,
+            "n_answered": 15633,
+            "n_labeled_answered": 14980
+          },
+          {
+            "tau": 0.4231871915288837,
+            "coverage": 0.8666268656716418,
+            "Q": 0.9705630791161796,
+            "n_answered": 14516,
+            "n_labeled_answered": 14030
+          },
+          {
+            "tau": 0.4351806500561319,
+            "coverage": 0.8,
+            "Q": 0.9829952722281531,
+            "n_answered": 13400,
+            "n_labeled_answered": 13114
+          },
+          {
+            "tau": 0.4625077709847983,
+            "coverage": 0.7333134328358208,
+            "Q": 0.9907232575322223,
+            "n_answered": 12283,
+            "n_labeled_answered": 12181
+          },
+          {
+            "tau": 0.5838461741169683,
+            "coverage": 0.6666865671641791,
+            "Q": 0.9961386494252874,
+            "n_answered": 11167,
+            "n_labeled_answered": 11136
+          },
+          {
+            "tau": 0.6333702330750308,
+            "coverage": 0.6,
+            "Q": 0.9973070017953322,
+            "n_answered": 10050,
+            "n_labeled_answered": 10026
+          },
+          {
+            "tau": 0.6800947731638711,
+            "coverage": 0.5333134328358209,
+            "Q": 0.9979809310151431,
+            "n_answered": 8933,
+            "n_labeled_answered": 8915
+          },
+          {
+            "tau": 0.7313088457686896,
+            "coverage": 0.4666865671641791,
+            "Q": 0.9983344010249839,
+            "n_answered": 7817,
+            "n_labeled_answered": 7805
+          },
+          {
+            "tau": 0.7831610090391715,
+            "coverage": 0.4,
+            "Q": 0.9983560005978179,
+            "n_answered": 6700,
+            "n_labeled_answered": 6691
+          },
+          {
+            "tau": 0.7926066337879821,
+            "coverage": 0.38477611940298506,
+            "Q": 0.9982911294081094,
+            "n_answered": 6445,
+            "n_labeled_answered": 6437
+          },
+          {
+            "tau": 0.8109103399611827,
+            "coverage": 0.2666865671641791,
+            "Q": 0.9982062780269059,
+            "n_answered": 4467,
+            "n_labeled_answered": 4460
+          },
+          {
+            "tau": 0.8660345195602844,
+            "coverage": 0.2,
+            "Q": 0.9991034070531979,
+            "n_answered": 3350,
+            "n_labeled_answered": 3346
+          },
+          {
+            "tau": 0.895222363208947,
+            "coverage": 0.1333731343283582,
+            "Q": 0.9995519713261649,
+            "n_answered": 2234,
+            "n_labeled_answered": 2232
+          },
+          {
+            "tau": 0.9249282016921476,
+            "coverage": 0.0666865671641791,
+            "Q": 1.0,
+            "n_answered": 1117,
+            "n_labeled_answered": 1116
+          },
+          {
+            "tau": 0.977835409413917,
+            "coverage": 0.012059701492537314,
+            "Q": 1.0,
+            "n_answered": 202,
+            "n_labeled_answered": 202
+          }
+        ],
+        "coverage_Q_curve_teddy_gated_by_binary_P_f": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.9452612819043982,
+            "n_answered": 16750,
+            "n_labeled_answered": 15711
+          },
+          {
+            "tau": 0.5,
+            "coverage": 0.9810746268656716,
+            "Q": 0.950456826663235,
+            "n_answered": 16433,
+            "n_labeled_answered": 15542
+          },
+          {
+            "tau": 1.0,
+            "coverage": 0.9810746268656716,
+            "Q": 0.950456826663235,
+            "n_answered": 16433,
+            "n_labeled_answered": 15542
+          }
+        ],
+        "monotonicity_teddy": {
+          "n_pts": 17,
+          "frac_nondecreasing_as_coverage_drops": 0.875,
+          "Q_at_fullish": 0.9452612819043982,
+          "Q_at_tightest": 1.0,
+          "delta_Q_tightest": 0.054738718095601824,
+          "coverage_fullish": 1.0,
+          "coverage_tightest": 0.012059701492537314,
+          "Q_peak": 1.0,
+          "coverage_at_peak": 0.0666865671641791,
+          "tau_at_peak": 0.9249282016921476,
+          "delta_Q_peak": 0.054738718095601824,
+          "Q_best_cov_ge_0.4": 0.9983560005978179,
+          "coverage_best_cov_ge_0.4": 0.4,
+          "delta_Q_best_cov_ge_0.4": 0.05309471869341975
+        },
+        "monotonicity_anm": {
+          "n_pts": 17,
+          "frac_nondecreasing_as_coverage_drops": 0.875,
+          "Q_at_fullish": 0.9496203834770299,
+          "Q_at_tightest": 1.0,
+          "delta_Q_tightest": 0.05037961652297007,
+          "coverage_fullish": 0.9810746268656716,
+          "coverage_tightest": 0.012059701492537314,
+          "Q_peak": 1.0,
+          "coverage_at_peak": 0.0666865671641791,
+          "tau_at_peak": 0.9249282016921476,
+          "delta_Q_peak": 0.05037961652297007,
+          "Q_best_cov_ge_0.4": 0.9983560005978179,
+          "coverage_best_cov_ge_0.4": 0.4,
+          "delta_Q_best_cov_ge_0.4": 0.048735617120788
+        }
+      },
+      "O2": {
+        "elapsed_sec": 1.2248659133911133,
+        "mean_P_f_binary": 0.7986268656716418,
+        "soft_P_quantiles": {
+          "0.0": 0.07304827343983683,
+          "0.1": 0.16963987990682716,
+          "0.25": 0.24351804034362926,
+          "0.5": 0.3061678808810656,
+          "0.75": 0.3061678808810656,
+          "0.9": 0.3602351834312173,
+          "1.0": 0.3602351834312173
+        },
+        "baseline": {
+          "teddy_always_Q": 0.9148880105401844,
+          "teddy_always_n_labeled": 15180,
+          "teddy_thr_Q": 0.9428168019767031,
+          "teddy_thr_n_decided_labeled": 14165,
+          "anm_default_Q": 0.960305225836288,
+          "anm_default_n_decided_labeled": 12974,
+          "anm_abstain_count": 3373
+        },
+        "coverage_Q_curve_teddy_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.9148880105401844,
+            "n_answered": 16750,
+            "n_labeled_answered": 15180
+          },
+          {
+            "tau": 0.07304827343983683,
+            "coverage": 1.0,
+            "Q": 0.9148880105401844,
+            "n_answered": 16750,
+            "n_labeled_answered": 15180
+          },
+          {
+            "tau": 0.14620465769459293,
+            "coverage": 0.9333134328358209,
+            "Q": 0.9313745633860695,
+            "n_answered": 15633,
+            "n_labeled_answered": 14601
+          },
+          {
+            "tau": 0.17967352025675545,
+            "coverage": 0.8666268656716418,
+            "Q": 0.9465693008459258,
+            "n_answered": 14516,
+            "n_labeled_answered": 13831
+          },
+          {
+            "tau": 0.19951049646323424,
+            "coverage": 0.8,
+            "Q": 0.9624413145539906,
+            "n_answered": 13400,
+            "n_labeled_answered": 12993
+          },
+          {
+            "tau": 0.24351804034362926,
+            "coverage": 0.7653731343283582,
+            "Q": 0.9703325624052955,
+            "n_answered": 12820,
+            "n_labeled_answered": 12539
+          },
+          {
+            "tau": 0.3061678808810656,
+            "coverage": 0.5454328358208955,
+            "Q": 0.9628420222947867,
+            "n_answered": 9136,
+            "n_labeled_answered": 8881
+          },
+          {
+            "tau": 0.3602351834312173,
+            "coverage": 0.13886567164179103,
+            "Q": 0.8808167141500475,
+            "n_answered": 2326,
+            "n_labeled_answered": 2106
+          }
+        ],
+        "coverage_Q_curve_anm_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 0.7986268656716418,
+            "Q": 0.960305225836288,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          },
+          {
+            "tau": 0.07304827343983683,
+            "coverage": 0.7986268656716418,
+            "Q": 0.960305225836288,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          },
+          {
+            "tau": 0.14620465769459293,
+            "coverage": 0.7986268656716418,
+            "Q": 0.960305225836288,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          },
+          {
+            "tau": 0.17967352025675545,
+            "coverage": 0.7986268656716418,
+            "Q": 0.960305225836288,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          },
+          {
+            "tau": 0.19951049646323424,
+            "coverage": 0.7986268656716418,
+            "Q": 0.960305225836288,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          },
+          {
+            "tau": 0.24351804034362926,
+            "coverage": 0.7653731343283582,
+            "Q": 0.9688172900550283,
+            "n_answered": 12820,
+            "n_labeled_answered": 12539
+          },
+          {
+            "tau": 0.3061678808810656,
+            "coverage": 0.5454328358208955,
+            "Q": 0.9614908231055062,
+            "n_answered": 9136,
+            "n_labeled_answered": 8881
+          },
+          {
+            "tau": 0.3602351834312173,
+            "coverage": 0.13886567164179103,
+            "Q": 0.8822412155745489,
+            "n_answered": 2326,
+            "n_labeled_answered": 2106
+          }
+        ],
+        "coverage_Q_curve_teddy_gated_by_binary_P_f": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.9148880105401844,
+            "n_answered": 16750,
+            "n_labeled_answered": 15180
+          },
+          {
+            "tau": 0.5,
+            "coverage": 0.7986268656716418,
+            "Q": 0.9626175427778634,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          },
+          {
+            "tau": 1.0,
+            "coverage": 0.7986268656716418,
+            "Q": 0.9626175427778634,
+            "n_answered": 13377,
+            "n_labeled_answered": 12974
+          }
+        ],
+        "monotonicity_teddy": {
+          "n_pts": 8,
+          "frac_nondecreasing_as_coverage_drops": 0.7142857142857143,
+          "Q_at_fullish": 0.9148880105401844,
+          "Q_at_tightest": 0.8808167141500475,
+          "delta_Q_tightest": -0.03407129639013695,
+          "coverage_fullish": 1.0,
+          "coverage_tightest": 0.13886567164179103,
+          "Q_peak": 0.9703325624052955,
+          "coverage_at_peak": 0.7653731343283582,
+          "tau_at_peak": 0.24351804034362926,
+          "delta_Q_peak": 0.0554445518651111,
+          "Q_best_cov_ge_0.4": 0.9703325624052955,
+          "coverage_best_cov_ge_0.4": 0.7653731343283582,
+          "delta_Q_best_cov_ge_0.4": 0.0554445518651111
+        },
+        "monotonicity_anm": {
+          "n_pts": 8,
+          "frac_nondecreasing_as_coverage_drops": 0.7142857142857143,
+          "Q_at_fullish": 0.960305225836288,
+          "Q_at_tightest": 0.8822412155745489,
+          "delta_Q_tightest": -0.07806401026173904,
+          "coverage_fullish": 0.7986268656716418,
+          "coverage_tightest": 0.13886567164179103,
+          "Q_peak": 0.9688172900550283,
+          "coverage_at_peak": 0.7653731343283582,
+          "tau_at_peak": 0.24351804034362926,
+          "delta_Q_peak": 0.00851206421874029,
+          "Q_best_cov_ge_0.4": 0.9688172900550283,
+          "coverage_best_cov_ge_0.4": 0.7653731343283582,
+          "delta_Q_best_cov_ge_0.4": 0.00851206421874029
+        }
+      }
+    }
+  },
+  "claim2_attribution": {
+    "attr_n": 16433,
+    "n_flip_sensitive": 4557,
+    "n_nonflip": 11876,
+    "top1_flip_rate": 0.27730785614312664,
+    "flip_top_protein_counts": {
+      "CD16": 2085,
+      "CD36": 1673,
+      "CD11c": 260,
+      "CD2": 138,
+      "CD3": 120,
+      "CD19": 96,
+      "CD5": 94,
+      "CD22": 71,
+      "CD72": 20
+    },
+    "overall_top_protein_counts": {
+      "CD5": 3882,
+      "CD2": 2516,
+      "CD36": 2394,
+      "CD22": 2120,
+      "CD16": 2087,
+      "CD72": 1455,
+      "CD11c": 1195,
+      "CD3": 668,
+      "CD19": 116
+    },
+    "cell_scope": {
+      "full_panel_cells": {
+        "Q": 0.9452612819043982,
+        "n_decided": 15711,
+        "n_labeled": 15711
+      },
+      "flip_sensitive_cells": {
+        "Q": 0.8098818474758325,
+        "n_decided": 3724,
+        "n_labeled": 3724
+      },
+      "nonflip_cells": {
+        "Q": 0.9947537654425452,
+        "n_decided": 11818,
+        "n_labeled": 11818
+      },
+      "random_cells_same_n_as_flip": {
+        "mean_Q": 0.9457532040725483,
+        "std_Q": 0.0026942950036418657,
+        "min_Q": 0.9400093370681606,
+        "max_Q": 0.951093345873501,
+        "n_draws": 40,
+        "n_per_draw": 4557
+      },
+      "delta_Q_flip_minus_random": -0.1358713565967158
+    },
+    "protein_scope": {
+      "full_panel": {
+        "Q": 0.9452612819043982,
+        "n_decided": 15711,
+        "n_labeled": 15711,
+        "subset": [
+          "CD19",
+          "CD72",
+          "CD22",
+          "CD3",
+          "CD2",
+          "CD5",
+          "CD16",
+          "CD11c",
+          "CD36"
+        ]
+      },
+      "flip_sensitive_top_k": {
+        "Q": 0.27891286359875245,
+        "n_decided": 15711,
+        "n_labeled": 15711,
+        "subset": [
+          "CD16",
+          "CD36",
+          "CD11c"
+        ],
+        "k": 3
+      },
+      "overall_loo_top_k": {
+        "Q": 0.6280313156387245,
+        "n_decided": 15711,
+        "n_labeled": 15711,
+        "subset": [
+          "CD5",
+          "CD2",
+          "CD36"
+        ],
+        "k": 3
+      },
+      "balanced_1_per_lineage_by_flip": {
+        "Q": 0.8469861880211317,
+        "n_decided": 15711,
+        "n_labeled": 15711,
+        "subset": [
+          "CD19",
+          "CD2",
+          "CD16"
+        ]
+      },
+      "random_k_proteins": {
+        "mean_Q": 0.669150595124435,
+        "std_Q": 0.13335913700440388,
+        "min_Q": 0.37858825027051113,
+        "max_Q": 0.875819489529629,
+        "n_draws": 40,
+        "k": 3
+      },
+      "random_1_per_lineage": {
+        "mean_Q": 0.8546830246324232,
+        "std_Q": 0.019512213644779466,
+        "n_draws": 40
+      },
+      "delta_Q_balanced_flip_minus_random_lineage": -0.007696836611291502
+    }
+  },
+  "claim2_label_budget": {
+    "n_train_labeled": 3925,
+    "n_hard_train": 945,
+    "n_eval_labeled": 11786,
+    "n_hard_eval": 2779,
+    "teddy_Q_eval": 0.946122518241982,
+    "teddy_Q_hard_eval": 0.8128823317740195,
+    "curves": {
+      "logreg": [
+        {
+          "n_labels": 50,
+          "hard_labels_Q_on_hard_eval_mean": 0.776862180640518,
+          "hard_labels_Q_on_hard_eval_std": 0.015593604960698922,
+          "random_labels_Q_on_hard_eval_mean": 0.7426412378553435,
+          "random_labels_Q_on_hard_eval_std": 0.0730784833799996,
+          "delta_mean": 0.03422094278517451,
+          "n_seeds": 10
+        },
+        {
+          "n_labels": 100,
+          "hard_labels_Q_on_hard_eval_mean": 0.7892767182439726,
+          "hard_labels_Q_on_hard_eval_std": 0.016898924932927457,
+          "random_labels_Q_on_hard_eval_mean": 0.7926592299388269,
+          "random_labels_Q_on_hard_eval_std": 0.010587909280519888,
+          "delta_mean": -0.003382511694854262,
+          "n_seeds": 10
+        },
+        {
+          "n_labels": 200,
+          "hard_labels_Q_on_hard_eval_mean": 0.8048218783735157,
+          "hard_labels_Q_on_hard_eval_std": 0.006077383845569146,
+          "random_labels_Q_on_hard_eval_mean": 0.8002159050017992,
+          "random_labels_Q_on_hard_eval_std": 0.01364630444177343,
+          "delta_mean": 0.004605973371716532,
+          "n_seeds": 10
+        },
+        {
+          "n_labels": 400,
+          "hard_labels_Q_on_hard_eval_mean": 0.8102554875854624,
+          "hard_labels_Q_on_hard_eval_std": 0.0026640437594645044,
+          "random_labels_Q_on_hard_eval_mean": 0.8056854983807126,
+          "random_labels_Q_on_hard_eval_std": 0.005017178857987295,
+          "delta_mean": 0.004569989204749825,
+          "n_seeds": 10
+        }
+      ],
+      "mlp": [
+        {
+          "n_labels": 50,
+          "hard_labels_Q_on_hard_eval_mean": 0.7718963655991364,
+          "hard_labels_Q_on_hard_eval_std": 0.012777622504634375,
+          "random_labels_Q_on_hard_eval_mean": 0.7286793810723282,
+          "random_labels_Q_on_hard_eval_std": 0.08388001170873585,
+          "delta_mean": 0.04321698452680822,
+          "n_seeds": 10
+        },
+        {
+          "n_labels": 100,
+          "hard_labels_Q_on_hard_eval_mean": 0.7878013673983448,
+          "hard_labels_Q_on_hard_eval_std": 0.014286258116677305,
+          "random_labels_Q_on_hard_eval_mean": 0.7956099316300828,
+          "random_labels_Q_on_hard_eval_std": 0.00797680598859064,
+          "delta_mean": -0.0078085642317379245,
+          "n_seeds": 10
+        },
+        {
+          "n_labels": 200,
+          "hard_labels_Q_on_hard_eval_mean": 0.8071248650593738,
+          "hard_labels_Q_on_hard_eval_std": 0.007914880919678223,
+          "random_labels_Q_on_hard_eval_mean": 0.7969773299748111,
+          "random_labels_Q_on_hard_eval_std": 0.009307038883239858,
+          "delta_mean": 0.010147535084562676,
+          "n_seeds": 10
+        },
+        {
+          "n_labels": 400,
+          "hard_labels_Q_on_hard_eval_mean": 0.8143216984526808,
+          "hard_labels_Q_on_hard_eval_std": 0.005509221794603724,
+          "random_labels_Q_on_hard_eval_mean": 0.8025188916876574,
+          "random_labels_Q_on_hard_eval_std": 0.0061126498359369875,
+          "delta_mean": 0.011802806765023321,
+          "n_seeds": 10
+        }
+      ]
+    },
+    "note": "Frozen TEDDY panel features; small logreg/MLP head only. Eval target = ANM flip-sensitive hard holdout. Positive delta \u21d2 ANM-flagged hard labels buy more Q-on-hard per label."
+  },
+  "runtime_sec": 25.70828914642334,
+  "claim1_gate_adt_only": {
+    "tag": "missing_modality_adt_only",
+    "n_cells": 16750,
+    "criteria": {
+      "O0": {
+        "elapsed_sec": 1.1951017379760742,
+        "mean_P_f_binary": 1.0,
+        "soft_P_quantiles": {
+          "0.0": 0.217847704332389,
+          "0.1": 0.33121413527232496,
+          "0.25": 0.3804197361702731,
+          "0.5": 0.46688792582967353,
+          "0.75": 0.5993407850457966,
+          "0.9": 0.7696143152807813,
+          "1.0": 0.977835409413917
+        },
+        "baseline": {
+          "teddy_always_Q": 0.6288279111224295,
+          "teddy_always_n_labeled": 15707,
+          "teddy_thr_Q": 0.6288279111224295,
+          "teddy_thr_n_decided_labeled": 15707,
+          "anm_default_Q": 0.6181320430381358,
+          "anm_default_n_decided_labeled": 15707,
+          "anm_abstain_count": 0
+        },
+        "coverage_Q_curve_teddy_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.6288279111224295,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          },
+          {
+            "tau": 0.217847704332389,
+            "coverage": 1.0,
+            "Q": 0.6288279111224295,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          },
+          {
+            "tau": 0.31818055627519204,
+            "coverage": 0.9333134328358209,
+            "Q": 0.6422941016580592,
+            "n_answered": 15633,
+            "n_labeled_answered": 14716
+          },
+          {
+            "tau": 0.34390129622846877,
+            "coverage": 0.8666268656716418,
+            "Q": 0.655048955136636,
+            "n_answered": 14516,
+            "n_labeled_answered": 13686
+          },
+          {
+            "tau": 0.3653115268136778,
+            "coverage": 0.8,
+            "Q": 0.6702975767621754,
+            "n_answered": 13400,
+            "n_labeled_answered": 12669
+          },
+          {
+            "tau": 0.38563054639633954,
+            "coverage": 0.7333134328358208,
+            "Q": 0.6860235374967786,
+            "n_answered": 12283,
+            "n_labeled_answered": 11641
+          },
+          {
+            "tau": 0.4064157058887012,
+            "coverage": 0.6666865671641791,
+            "Q": 0.704558297231117,
+            "n_answered": 11167,
+            "n_labeled_answered": 10618
+          },
+          {
+            "tau": 0.4297494983452195,
+            "coverage": 0.6,
+            "Q": 0.7221643035863219,
+            "n_answered": 10050,
+            "n_labeled_answered": 9592
+          },
+          {
+            "tau": 0.45397320572785055,
+            "coverage": 0.5333134328358209,
+            "Q": 0.7371435250116877,
+            "n_answered": 8933,
+            "n_labeled_answered": 8556
+          },
+          {
+            "tau": 0.48076282051120633,
+            "coverage": 0.4666865671641791,
+            "Q": 0.75345928685471,
+            "n_answered": 7817,
+            "n_labeled_answered": 7516
+          },
+          {
+            "tau": 0.510131383245668,
+            "coverage": 0.4,
+            "Q": 0.7739291789083037,
+            "n_answered": 6700,
+            "n_labeled_answered": 6467
+          },
+          {
+            "tau": 0.5447924601334823,
+            "coverage": 0.3333731343283582,
+            "Q": 0.7923133776792314,
+            "n_answered": 5584,
+            "n_labeled_answered": 5412
+          },
+          {
+            "tau": 0.5868306749295982,
+            "coverage": 0.2666865671641791,
+            "Q": 0.8117376294591484,
+            "n_answered": 4467,
+            "n_labeled_answered": 4345
+          },
+          {
+            "tau": 0.6417493112008049,
+            "coverage": 0.2,
+            "Q": 0.8333333333333334,
+            "n_answered": 3350,
+            "n_labeled_answered": 3276
+          },
+          {
+            "tau": 0.7164810469868256,
+            "coverage": 0.1333731343283582,
+            "Q": 0.8577960676726109,
+            "n_answered": 2234,
+            "n_labeled_answered": 2187
+          },
+          {
+            "tau": 0.8063677727921983,
+            "coverage": 0.0666865671641791,
+            "Q": 0.8941605839416058,
+            "n_answered": 1117,
+            "n_labeled_answered": 1096
+          },
+          {
+            "tau": 0.977835409413917,
+            "coverage": 0.010626865671641792,
+            "Q": 0.949438202247191,
+            "n_answered": 178,
+            "n_labeled_answered": 178
+          }
+        ],
+        "coverage_Q_curve_anm_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.6181320430381358,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          },
+          {
+            "tau": 0.217847704332389,
+            "coverage": 1.0,
+            "Q": 0.6181320430381358,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          },
+          {
+            "tau": 0.31818055627519204,
+            "coverage": 0.9333134328358209,
+            "Q": 0.6337999456374015,
+            "n_answered": 15633,
+            "n_labeled_answered": 14716
+          },
+          {
+            "tau": 0.34390129622846877,
+            "coverage": 0.8666268656716418,
+            "Q": 0.6487651614788835,
+            "n_answered": 14516,
+            "n_labeled_answered": 13686
+          },
+          {
+            "tau": 0.3653115268136778,
+            "coverage": 0.8,
+            "Q": 0.6661930696976873,
+            "n_answered": 13400,
+            "n_labeled_answered": 12669
+          },
+          {
+            "tau": 0.38563054639633954,
+            "coverage": 0.7333134328358208,
+            "Q": 0.6828451163989347,
+            "n_answered": 12283,
+            "n_labeled_answered": 11641
+          },
+          {
+            "tau": 0.4064157058887012,
+            "coverage": 0.6666865671641791,
+            "Q": 0.7016387266905255,
+            "n_answered": 11167,
+            "n_labeled_answered": 10618
+          },
+          {
+            "tau": 0.4297494983452195,
+            "coverage": 0.6,
+            "Q": 0.7207047539616347,
+            "n_answered": 10050,
+            "n_labeled_answered": 9592
+          },
+          {
+            "tau": 0.45397320572785055,
+            "coverage": 0.5333134328358209,
+            "Q": 0.7365591397849462,
+            "n_answered": 8933,
+            "n_labeled_answered": 8556
+          },
+          {
+            "tau": 0.48076282051120633,
+            "coverage": 0.4666865671641791,
+            "Q": 0.7525279403938265,
+            "n_answered": 7817,
+            "n_labeled_answered": 7516
+          },
+          {
+            "tau": 0.510131383245668,
+            "coverage": 0.4,
+            "Q": 0.7737745477037267,
+            "n_answered": 6700,
+            "n_labeled_answered": 6467
+          },
+          {
+            "tau": 0.5447924601334823,
+            "coverage": 0.3333731343283582,
+            "Q": 0.7924981522542498,
+            "n_answered": 5584,
+            "n_labeled_answered": 5412
+          },
+          {
+            "tau": 0.5868306749295982,
+            "coverage": 0.2666865671641791,
+            "Q": 0.8115074798619103,
+            "n_answered": 4467,
+            "n_labeled_answered": 4345
+          },
+          {
+            "tau": 0.6417493112008049,
+            "coverage": 0.2,
+            "Q": 0.8327228327228328,
+            "n_answered": 3350,
+            "n_labeled_answered": 3276
+          },
+          {
+            "tau": 0.7164810469868256,
+            "coverage": 0.1333731343283582,
+            "Q": 0.8577960676726109,
+            "n_answered": 2234,
+            "n_labeled_answered": 2187
+          },
+          {
+            "tau": 0.8063677727921983,
+            "coverage": 0.0666865671641791,
+            "Q": 0.8941605839416058,
+            "n_answered": 1117,
+            "n_labeled_answered": 1096
+          },
+          {
+            "tau": 0.977835409413917,
+            "coverage": 0.010626865671641792,
+            "Q": 0.949438202247191,
+            "n_answered": 178,
+            "n_labeled_answered": 178
+          }
+        ],
+        "coverage_Q_curve_teddy_gated_by_binary_P_f": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.6288279111224295,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          },
+          {
+            "tau": 0.5,
+            "coverage": 1.0,
+            "Q": 0.6288279111224295,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          },
+          {
+            "tau": 1.0,
+            "coverage": 1.0,
+            "Q": 0.6288279111224295,
+            "n_answered": 16750,
+            "n_labeled_answered": 15707
+          }
+        ],
+        "monotonicity_teddy": {
+          "n_pts": 17,
+          "frac_nondecreasing_as_coverage_drops": 1.0,
+          "Q_at_fullish": 0.6288279111224295,
+          "Q_at_tightest": 0.949438202247191,
+          "delta_Q_tightest": 0.32061029112476147,
+          "coverage_fullish": 1.0,
+          "coverage_tightest": 0.010626865671641792,
+          "Q_peak": 0.949438202247191,
+          "coverage_at_peak": 0.010626865671641792,
+          "tau_at_peak": 0.977835409413917,
+          "delta_Q_peak": 0.32061029112476147,
+          "Q_best_cov_ge_0.4": 0.7739291789083037,
+          "coverage_best_cov_ge_0.4": 0.4,
+          "delta_Q_best_cov_ge_0.4": 0.14510126778587418
+        },
+        "monotonicity_anm": {
+          "n_pts": 17,
+          "frac_nondecreasing_as_coverage_drops": 1.0,
+          "Q_at_fullish": 0.6181320430381358,
+          "Q_at_tightest": 0.949438202247191,
+          "delta_Q_tightest": 0.33130615920905515,
+          "coverage_fullish": 1.0,
+          "coverage_tightest": 0.010626865671641792,
+          "Q_peak": 0.949438202247191,
+          "coverage_at_peak": 0.010626865671641792,
+          "tau_at_peak": 0.977835409413917,
+          "delta_Q_peak": 0.33130615920905515,
+          "Q_best_cov_ge_0.4": 0.7737745477037267,
+          "coverage_best_cov_ge_0.4": 0.4,
+          "delta_Q_best_cov_ge_0.4": 0.15564250466559082
+        }
+      },
+      "O2": {
+        "elapsed_sec": 1.2083959579467773,
+        "mean_P_f_binary": 0.9508059701492537,
+        "soft_P_quantiles": {
+          "0.0": 0.09014748601128342,
+          "0.1": 0.24351804034362926,
+          "0.25": 0.2816618343667122,
+          "0.5": 0.3061678808810656,
+          "0.75": 0.3061678808810656,
+          "0.9": 0.3061678808810656,
+          "1.0": 0.3602351834312173
+        },
+        "baseline": {
+          "teddy_always_Q": 0.6469542311491604,
+          "teddy_always_n_labeled": 15185,
+          "teddy_thr_Q": 0.6507819810185804,
+          "teddy_thr_n_decided_labeled": 14962,
+          "anm_default_Q": 0.5821560828418598,
+          "anm_default_n_decided_labeled": 14582,
+          "anm_abstain_count": 824
+        },
+        "coverage_Q_curve_teddy_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.6469542311491604,
+            "n_answered": 16750,
+            "n_labeled_answered": 15185
+          },
+          {
+            "tau": 0.09014748601128342,
+            "coverage": 1.0,
+            "Q": 0.6469542311491604,
+            "n_answered": 16750,
+            "n_labeled_answered": 15185
+          },
+          {
+            "tau": 0.21694320286453309,
+            "coverage": 0.9333134328358209,
+            "Q": 0.6564741937730724,
+            "n_answered": 15633,
+            "n_labeled_answered": 14357
+          },
+          {
+            "tau": 0.24351804034362926,
+            "coverage": 0.9000597014925373,
+            "Q": 0.6607502155791894,
+            "n_answered": 15076,
+            "n_labeled_answered": 13916
+          },
+          {
+            "tau": 0.25253039453552945,
+            "coverage": 0.8,
+            "Q": 0.6492477592829705,
+            "n_answered": 13400,
+            "n_labeled_answered": 12496
+          },
+          {
+            "tau": 0.2908750015373347,
+            "coverage": 0.7333134328358208,
+            "Q": 0.654056399132321,
+            "n_answered": 12283,
+            "n_labeled_answered": 11525
+          },
+          {
+            "tau": 0.3061678808810656,
+            "coverage": 0.7053731343283582,
+            "Q": 0.6588129496402878,
+            "n_answered": 11815,
+            "n_labeled_answered": 11120
+          },
+          {
+            "tau": 0.3602351834312173,
+            "coverage": 0.01671641791044776,
+            "Q": 0.6181102362204725,
+            "n_answered": 280,
+            "n_labeled_answered": 254
+          }
+        ],
+        "coverage_Q_curve_anm_gated_by_soft_P": [
+          {
+            "tau": 0.0,
+            "coverage": 0.9508059701492537,
+            "Q": 0.5821560828418598,
+            "n_answered": 15926,
+            "n_labeled_answered": 14582
+          },
+          {
+            "tau": 0.09014748601128342,
+            "coverage": 0.9508059701492537,
+            "Q": 0.5821560828418598,
+            "n_answered": 15926,
+            "n_labeled_answered": 14582
+          },
+          {
+            "tau": 0.21694320286453309,
+            "coverage": 0.9333134328358209,
+            "Q": 0.5845928815212091,
+            "n_answered": 15633,
+            "n_labeled_answered": 14357
+          },
+          {
+            "tau": 0.24351804034362926,
+            "coverage": 0.9000597014925373,
+            "Q": 0.5874532911756252,
+            "n_answered": 15076,
+            "n_labeled_answered": 13916
+          },
+          {
+            "tau": 0.25253039453552945,
+            "coverage": 0.8,
+            "Q": 0.5756241997439181,
+            "n_answered": 13400,
+            "n_labeled_answered": 12496
+          },
+          {
+            "tau": 0.2908750015373347,
+            "coverage": 0.7333134328358208,
+            "Q": 0.596529284164859,
+            "n_answered": 12283,
+            "n_labeled_answered": 11525
+          },
+          {
+            "tau": 0.3061678808810656,
+            "coverage": 0.7053731343283582,
+            "Q": 0.6053057553956834,
+            "n_answered": 11815,
+            "n_labeled_answered": 11120
+          },
+          {
+            "tau": 0.3602351834312173,
+            "coverage": 0.01671641791044776,
+            "Q": 0.5669291338582677,
+            "n_answered": 280,
+            "n_labeled_answered": 254
+          }
+        ],
+        "coverage_Q_curve_teddy_gated_by_binary_P_f": [
+          {
+            "tau": 0.0,
+            "coverage": 1.0,
+            "Q": 0.6469542311491604,
+            "n_answered": 16750,
+            "n_labeled_answered": 15185
+          },
+          {
+            "tau": 0.5,
+            "coverage": 0.9508059701492537,
+            "Q": 0.6534768893155946,
+            "n_answered": 15926,
+            "n_labeled_answered": 14582
+          },
+          {
+            "tau": 1.0,
+            "coverage": 0.9508059701492537,
+            "Q": 0.6534768893155946,
+            "n_answered": 15926,
+            "n_labeled_answered": 14582
+          }
+        ],
+        "monotonicity_teddy": {
+          "n_pts": 8,
+          "frac_nondecreasing_as_coverage_drops": 0.7142857142857143,
+          "Q_at_fullish": 0.6469542311491604,
+          "Q_at_tightest": 0.6181102362204725,
+          "delta_Q_tightest": -0.028843994928687944,
+          "coverage_fullish": 1.0,
+          "coverage_tightest": 0.01671641791044776,
+          "Q_peak": 0.6607502155791894,
+          "coverage_at_peak": 0.9000597014925373,
+          "tau_at_peak": 0.24351804034362926,
+          "delta_Q_peak": 0.013795984430029051,
+          "Q_best_cov_ge_0.4": 0.6607502155791894,
+          "coverage_best_cov_ge_0.4": 0.9000597014925373,
+          "delta_Q_best_cov_ge_0.4": 0.013795984430029051
+        },
+        "monotonicity_anm": {
+          "n_pts": 8,
+          "frac_nondecreasing_as_coverage_drops": 0.7142857142857143,
+          "Q_at_fullish": 0.5821560828418598,
+          "Q_at_tightest": 0.5669291338582677,
+          "delta_Q_tightest": -0.015226948983592115,
+          "coverage_fullish": 0.9508059701492537,
+          "coverage_tightest": 0.01671641791044776,
+          "Q_peak": 0.6053057553956834,
+          "coverage_at_peak": 0.7053731343283582,
+          "tau_at_peak": 0.3061678808810656,
+          "delta_Q_peak": 0.023149672553823608,
+          "Q_best_cov_ge_0.4": 0.6053057553956834,
+          "coverage_best_cov_ge_0.4": 0.7053731343283582,
+          "delta_Q_best_cov_ge_0.4": 0.023149672553823608
+        }
+      }
+    }
+  },
+  "proof_sentence": "On the same TEDDY \u03b4u (site4/test n=16750), ANM soft_P gating raises conditional Q O0 0.9453\u21921.0000 (\u0394Q_peak=0.0547; @cov\u22650.4 best=0.9984) and O2 0.9149\u21920.9703 (\u0394Q_peak=0.0554; mid operating region \u2014 extreme-low coverage can dip). ANM LOO flip-sensitive cells Q=0.8099 vs random same-n 0.9458 (\u0394=-0.1359). On missing-modality adt_only O0, soft_P gate lifts Q 0.6288\u21920.9494 (\u0394Q_peak=0.3206). Label-budget: frozen-feature head on ANM flip-hard cells beats random labels on hard holdout at n=50 (\u0394Q=+0.0342). Conditional correctness / label efficiency only \u2014 not clinical; no best.pt retrain."
+}

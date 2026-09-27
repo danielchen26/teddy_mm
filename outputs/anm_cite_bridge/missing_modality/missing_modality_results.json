@@ -1,0 +1,574 @@
+{
+  "n_base_cells": 16750,
+  "n_cells_total": 50250,
+  "n_eval_base": 12563,
+  "n_train_base": 4187,
+  "source": "hybrid_phase1_rna_phase2_adt",
+  "export_manifest": {
+    "n_base_cells_site4": 16750,
+    "n_cells_written": 50250,
+    "n_events": 452250,
+    "n_available_site4_test": 16750,
+    "masks": [
+      "rna_only",
+      "adt_only",
+      "joint"
+    ],
+    "source": "hybrid_phase1_rna_phase2_adt",
+    "phase1_full_adt_pearson": 0.6102218214870081,
+    "phase1_quoted_unidirectional": 0.61,
+    "phase2_metrics": {
+      "rna_only_pearson": 0.2540806151694879,
+      "adt_only_pearson": 0.2654089523023284,
+      "joint_pearson": 0.27572132700508406,
+      "rna_only_pearson_phase1_override": 0.6102218214870081,
+      "joint_pearson_hybrid": 0.5856662990296942
+    },
+    "panel_pearson_by_mask": {
+      "rna_only": 0.9147404698378734,
+      "adt_only": 0.44627287014827716,
+      "joint": 0.8703130689245495
+    },
+    "claim_boundary": "missing_modality_ANM_demo_only; do_not_claim_win_over_phase1_0.61; not_clinical",
+    "panel_proteins": [
+      "CD19",
+      "CD72",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD16",
+      "CD11c",
+      "CD36"
+    ],
+    "lineage_panels": {
+      "b_lineage": [
+        "CD19",
+        "CD72",
+        "CD22"
+      ],
+      "t_lineage": [
+        "CD3",
+        "CD2",
+        "CD5"
+      ],
+      "myeloid": [
+        "CD16",
+        "CD11c",
+        "CD36"
+      ]
+    },
+    "key_markers": {
+      "b_lineage": "CD19",
+      "t_lineage": "CD3",
+      "myeloid": "CD16"
+    },
+    "p95_train": {
+      "CD19": 1.7419734001159668,
+      "CD72": 1.9645029306411743,
+      "CD22": 1.0306048393249512,
+      "CD3": 2.488337993621826,
+      "CD2": 2.920950174331665,
+      "CD5": 3.1127536296844482,
+      "CD16": 1.947386384010315,
+      "CD11c": 1.989983320236206,
+      "CD36": 3.080791473388672
+    },
+    "phase1_ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1/best.pt",
+    "phase2_ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase2/best.pt",
+    "processed": "/Users/tianchichen/Documents/GitHub/teddy_mm/data/processed/cite",
+    "seed": 17,
+    "device": "mps",
+    "events_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl",
+    "cells_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl",
+    "same_cells_across_masks": true,
+    "anm_semantics": "missing modality = source ablation / channel-restricted typed evidence; P_f workability drops when key evidence absent; Q_f vs holdout GT only"
+  },
+  "by_mask": {
+    "rna_only": {
+      "n": 12563,
+      "teddy_alone": {
+        "arm": "TEDDY_alone",
+        "criteria": {
+          "O0": {
+            "n": 12563,
+            "n_labeled": 11771,
+            "abstain_count": 76,
+            "abstain_rate": 0.006049510467245085,
+            "n_decided_labeled": 11733,
+            "Q_analogue": 0.945026847353618,
+            "accuracy_strict_labeled": 0.9419760428170929,
+            "action_counts": {
+              "b_lineage": 3143,
+              "t_lineage": 5239,
+              "myeloid": 4105
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.945026847353618
+          },
+          "O2": {
+            "n": 12563,
+            "n_labeled": 11387,
+            "abstain_count": 1282,
+            "abstain_rate": 0.10204568972379209,
+            "n_decided_labeled": 10659,
+            "Q_analogue": 0.9399568439816118,
+            "accuracy_strict_labeled": 0.8798630016685695,
+            "action_counts": {
+              "b_lineage": 3930,
+              "t_lineage": 5641,
+              "myeloid": 1710
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.9399568439816118
+          }
+        },
+        "silent_over_answer_O0_vs_O2": {
+          "count": 1256,
+          "rate": 0.09997612035341877
+        },
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": true,
+          "needs_retrain_or_retune": true
+        }
+      },
+      "anm": {
+        "arm": "TEDDY_plus_ANM",
+        "criteria": {
+          "O0": {
+            "n": 12563,
+            "n_labeled": 11771,
+            "abstain_count": 233,
+            "abstain_rate": 0.01854652551142243,
+            "n_decided_labeled": 11648,
+            "Q_analogue": 0.9478880494505495,
+            "accuracy_strict_labeled": 0.9379831789992354,
+            "action_counts": {
+              "b_lineage": 2791,
+              "t_lineage": 5311,
+              "myeloid": 4228
+            },
+            "mean_P_f": 0.9814534744885776,
+            "mean_Q_f_defined": 0.9379831789992354,
+            "n_Q_f_defined": 11771,
+            "n_empty_source": 0,
+            "label_fit": false
+          },
+          "O2": {
+            "n": 12563,
+            "n_labeled": 11387,
+            "abstain_count": 2459,
+            "abstain_rate": 0.19573350314415347,
+            "n_decided_labeled": 9768,
+            "Q_analogue": 0.959049959049959,
+            "accuracy_strict_labeled": 0.8226925441292702,
+            "action_counts": {
+              "b_lineage": 2939,
+              "t_lineage": 5368,
+              "myeloid": 1797
+            },
+            "mean_P_f": 0.8042664968558465,
+            "mean_Q_f_defined": 0.8226925441292702,
+            "n_Q_f_defined": 11387,
+            "n_empty_source": 0,
+            "label_fit": false
+          }
+        },
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": false,
+          "mechanism": "YAML/criterion declaration only (O0\u2192O2)"
+        }
+      },
+      "attribution": {
+        "n_attr_cells": 1182,
+        "n_attr_requested": 1200,
+        "top1_protein_distribution": {
+          "CD72": 114,
+          "CD5": 261,
+          "CD11c": 80,
+          "CD22": 152,
+          "CD2": 182,
+          "CD16": 146,
+          "CD36": 184,
+          "CD3": 58,
+          "CD19": 5
+        },
+        "top1_flip_rate": 0.2766497461928934,
+        "flip_distance_quantiles": {
+          "q25": 0.5,
+          "q50": 0.7562005514078362,
+          "q75": 0.7857142857142857,
+          "n_with_flip": 326,
+          "n_no_flip": 856
+        },
+        "elapsed_sec": 1.853785753250122
+      },
+      "train_retune": {
+        "arm": "train_retune",
+        "n_train_labeled_pool": 3798,
+        "n_eval_labeled": 11387,
+        "curves": [
+          {
+            "n_O2_labels": 50,
+            "abstain_rate": 0.1081935540528673,
+            "Q_analogue": 0.9604135893648449,
+            "accuracy_strict_labeled": 0.8565030297707913,
+            "calib_margin_thr": 0.5
+          },
+          {
+            "n_O2_labels": 200,
+            "abstain_rate": 0.1735312198120664,
+            "Q_analogue": 0.9679098926787801,
+            "accuracy_strict_labeled": 0.7999473083340651,
+            "calib_margin_thr": 0.5
+          },
+          {
+            "n_O2_labels": 500,
+            "abstain_rate": 0.18591376130675333,
+            "Q_analogue": 0.97680690399137,
+            "accuracy_strict_labeled": 0.7952050583999297,
+            "calib_margin_thr": 0.5
+          },
+          {
+            "n_O2_labels": 1000,
+            "abstain_rate": 0.11442873452182313,
+            "Q_analogue": 0.9637048790162633,
+            "accuracy_strict_labeled": 0.8534293492579257,
+            "calib_margin_thr": 0.5
+          }
+        ],
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": true,
+          "note": "each observer/mask change consumes new O2 labels; no editable field"
+        }
+      }
+    },
+    "adt_only": {
+      "n": 12563,
+      "teddy_alone": {
+        "arm": "TEDDY_alone",
+        "criteria": {
+          "O0": {
+            "n": 12563,
+            "n_labeled": 11771,
+            "abstain_count": 0,
+            "abstain_rate": 0.0,
+            "n_decided_labeled": 11771,
+            "Q_analogue": 0.6277291648967802,
+            "accuracy_strict_labeled": 0.6277291648967802,
+            "action_counts": {
+              "b_lineage": 2271,
+              "t_lineage": 6525,
+              "myeloid": 3767
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.6277291648967802
+          },
+          "O2": {
+            "n": 12563,
+            "n_labeled": 11387,
+            "abstain_count": 253,
+            "abstain_rate": 0.020138501950171136,
+            "n_decided_labeled": 11213,
+            "Q_analogue": 0.6488896816195487,
+            "accuracy_strict_labeled": 0.6389742689031351,
+            "action_counts": {
+              "b_lineage": 4377,
+              "t_lineage": 7772,
+              "myeloid": 161
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.6488896816195487
+          }
+        },
+        "silent_over_answer_O0_vs_O2": {
+          "count": 253,
+          "rate": 0.020138501950171136
+        },
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": true,
+          "needs_retrain_or_retune": true
+        }
+      },
+      "anm": {
+        "arm": "TEDDY_plus_ANM",
+        "criteria": {
+          "O0": {
+            "n": 12563,
+            "n_labeled": 11771,
+            "abstain_count": 1664,
+            "abstain_rate": 0.1324524397038924,
+            "n_decided_labeled": 10267,
+            "Q_analogue": 0.6493620337002045,
+            "accuracy_strict_labeled": 0.5663919802905446,
+            "action_counts": {
+              "b_lineage": 1354,
+              "t_lineage": 5912,
+              "myeloid": 3633
+            },
+            "mean_P_f": 0.8675475602961076,
+            "mean_Q_f_defined": 0.5663919802905446,
+            "n_Q_f_defined": 11771,
+            "n_empty_source": 0,
+            "label_fit": false
+          },
+          "O2": {
+            "n": 12563,
+            "n_labeled": 11387,
+            "abstain_count": 12563,
+            "abstain_rate": 1.0,
+            "n_decided_labeled": 0,
+            "Q_analogue": null,
+            "accuracy_strict_labeled": 0.0,
+            "action_counts": {},
+            "mean_P_f": 0.0,
+            "mean_Q_f_defined": 0.0,
+            "n_Q_f_defined": 11387,
+            "n_empty_source": 0,
+            "label_fit": false
+          }
+        },
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": false,
+          "mechanism": "YAML/criterion declaration only (O0\u2192O2)"
+        }
+      },
+      "attribution": {
+        "n_attr_cells": 1056,
+        "n_attr_requested": 1200,
+        "top1_protein_distribution": {
+          "CD22": 115,
+          "CD5": 435,
+          "CD36": 150,
+          "CD11c": 168,
+          "CD16": 29,
+          "CD19": 12,
+          "CD2": 133,
+          "CD72": 13,
+          "CD3": 1
+        },
+        "top1_flip_rate": 0.7102272727272727,
+        "flip_distance_quantiles": {
+          "q25": 0.07899750434521094,
+          "q50": 0.12467545732291327,
+          "q75": 0.1887112309362059,
+          "n_with_flip": 710,
+          "n_no_flip": 346
+        },
+        "elapsed_sec": 1.6849422454833984
+      },
+      "train_retune": {
+        "arm": "train_retune",
+        "n_train_labeled_pool": 3798,
+        "n_eval_labeled": 11387,
+        "curves": [
+          {
+            "n_O2_labels": 50,
+            "abstain_rate": 0.19329059453763064,
+            "Q_analogue": 0.6844110603091661,
+            "accuracy_strict_labeled": 0.5521208395538773,
+            "calib_margin_thr": 0.1
+          },
+          {
+            "n_O2_labels": 200,
+            "abstain_rate": 0.20813208044261,
+            "Q_analogue": 0.675945436397915,
+            "accuracy_strict_labeled": 0.5352595064547291,
+            "calib_margin_thr": 0.16
+          },
+          {
+            "n_O2_labels": 500,
+            "abstain_rate": 0.19838412224466498,
+            "Q_analogue": 0.6931419807186678,
+            "accuracy_strict_labeled": 0.5556336172828664,
+            "calib_margin_thr": 0.13999999999999999
+          },
+          {
+            "n_O2_labels": 1000,
+            "abstain_rate": 0.19943795556336172,
+            "Q_analogue": 0.6965774462483545,
+            "accuracy_strict_labeled": 0.5576534644770352,
+            "calib_margin_thr": 0.13999999999999999
+          }
+        ],
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": true,
+          "note": "each observer/mask change consumes new O2 labels; no editable field"
+        }
+      }
+    },
+    "joint": {
+      "n": 12563,
+      "teddy_alone": {
+        "arm": "TEDDY_alone",
+        "criteria": {
+          "O0": {
+            "n": 12563,
+            "n_labeled": 11771,
+            "abstain_count": 0,
+            "abstain_rate": 0.0,
+            "n_decided_labeled": 11771,
+            "Q_analogue": 0.914960496134568,
+            "accuracy_strict_labeled": 0.914960496134568,
+            "action_counts": {
+              "b_lineage": 3045,
+              "t_lineage": 5831,
+              "myeloid": 3687
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.914960496134568
+          },
+          "O2": {
+            "n": 12563,
+            "n_labeled": 11387,
+            "abstain_count": 371,
+            "abstain_rate": 0.029531162938788505,
+            "n_decided_labeled": 11175,
+            "Q_analogue": 0.8867114093959731,
+            "accuracy_strict_labeled": 0.8702028629138491,
+            "action_counts": {
+              "b_lineage": 4304,
+              "t_lineage": 6557,
+              "myeloid": 1331
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.8867114093959731
+          }
+        },
+        "silent_over_answer_O0_vs_O2": {
+          "count": 371,
+          "rate": 0.029531162938788505
+        },
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": true,
+          "needs_retrain_or_retune": true
+        }
+      },
+      "anm": {
+        "arm": "TEDDY_plus_ANM",
+        "criteria": {
+          "O0": {
+            "n": 12563,
+            "n_labeled": 11771,
+            "abstain_count": 0,
+            "abstain_rate": 0.0,
+            "n_decided_labeled": 11771,
+            "Q_analogue": 0.9214170418825928,
+            "accuracy_strict_labeled": 0.9214170418825928,
+            "action_counts": {
+              "b_lineage": 2809,
+              "t_lineage": 5748,
+              "myeloid": 4006
+            },
+            "mean_P_f": 1.0,
+            "mean_Q_f_defined": 0.9214170418825928,
+            "n_Q_f_defined": 11771,
+            "n_empty_source": 0,
+            "label_fit": false
+          },
+          "O2": {
+            "n": 12563,
+            "n_labeled": 11387,
+            "abstain_count": 785,
+            "abstain_rate": 0.062485075220886734,
+            "n_decided_labeled": 10905,
+            "Q_analogue": 0.7583677212287941,
+            "accuracy_strict_labeled": 0.7262667954685167,
+            "action_counts": {
+              "b_lineage": 1791,
+              "t_lineage": 8318,
+              "myeloid": 1669
+            },
+            "mean_P_f": 0.9375149247791132,
+            "mean_Q_f_defined": 0.7262667954685167,
+            "n_Q_f_defined": 11387,
+            "n_empty_source": 0,
+            "label_fit": false
+          }
+        },
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": false,
+          "mechanism": "YAML/criterion declaration only (O0\u2192O2)"
+        }
+      },
+      "attribution": {
+        "n_attr_cells": 1200,
+        "n_attr_requested": 1200,
+        "top1_protein_distribution": {
+          "CD72": 114,
+          "CD5": 307,
+          "CD11c": 95,
+          "CD2": 190,
+          "CD16": 124,
+          "CD36": 169,
+          "CD22": 144,
+          "CD3": 40,
+          "CD19": 17
+        },
+        "top1_flip_rate": 0.30333333333333334,
+        "flip_distance_quantiles": {
+          "q25": 0.20642913172306976,
+          "q50": 0.4075558849156642,
+          "q75": 0.6364090241183404,
+          "n_with_flip": 341,
+          "n_no_flip": 859
+        },
+        "elapsed_sec": 1.8753290176391602
+      },
+      "train_retune": {
+        "arm": "train_retune",
+        "n_train_labeled_pool": 3798,
+        "n_eval_labeled": 11387,
+        "curves": [
+          {
+            "n_O2_labels": 50,
+            "abstain_rate": 0.14929305348204092,
+            "Q_analogue": 0.9590172395994632,
+            "accuracy_strict_labeled": 0.8158426275577413,
+            "calib_margin_thr": 0.5
+          },
+          {
+            "n_O2_labels": 200,
+            "abstain_rate": 0.16843769210503207,
+            "Q_analogue": 0.9563839898616538,
+            "accuracy_strict_labeled": 0.7952928778431545,
+            "calib_margin_thr": 0.5
+          },
+          {
+            "n_O2_labels": 500,
+            "abstain_rate": 0.14578027575305172,
+            "Q_analogue": 0.9627840032898118,
+            "accuracy_strict_labeled": 0.8224290857995961,
+            "calib_margin_thr": 0.5
+          },
+          {
+            "n_O2_labels": 1000,
+            "abstain_rate": 0.12180556775270045,
+            "Q_analogue": 0.958,
+            "accuracy_strict_labeled": 0.8413102660929129,
+            "calib_margin_thr": 0.5
+          }
+        ],
+        "criterion_edit_cost": {
+          "needs_endpoint_labels": true,
+          "note": "each observer/mask change consumes new O2 labels; no editable field"
+        }
+      }
+    }
+  },
+  "blockers": [
+    "Choice: hybrid_phase1_rna_phase2_adt because phase-2 test pearson rna_only\u22480.254/adt_only\u22480.268/joint\u22480.276 << phase-1 0.61.",
+    "Panel pearson by mask rna_only\u22480.915 adt_only\u22480.446 joint\u22480.870 \u2014 do not inflate vs unidirectional 0.61.",
+    "Declared adt_only reliability \u00d70.35 (criterion edit, no TEDDY retrain) so P_f/abstain track missing RNA.",
+    "TEDDY-alone under adt_only O0 abstain=0 over-answers; ANM abstains (O0=1664, O2=all).",
+    "Train-retune under adt_only plateaus Q\u22480.68\u20130.70 @1000 labels; no editable-field LOO/flip.",
+    "No best.pt backbone retrain; phase-2 train inference-only. No Perturb/GFlowNet/160M/ATAC. Not clinical."
+  ],
+  "proof_sentence": "On the same TEDDY \u03b4u base cells (site4/test n=16750), three modality masks (rna_only, adt_only, joint) act as source ablation: ANM declared P_f/abstain tracks evidence availability (rna_only: ANM abstain=233/P_f=0.9814534744885776; adt_only: ANM abstain=1664/P_f=0.8675475602961076; joint: ANM abstain=0/P_f=1.0), O0\u2192O2 observer edits are YAML-only (no TEDDY retrain), and LOO/flip attribution remains auditable per mask; TEDDY-alone silently over-answers where the declared observer abstains; train-retune must consume O2 labels per mask/observer and still lacks editable-field attribution. Pearson is secondary \u2014 do not claim win over phase-1 ~0.61. Not clinical.",
+  "viz": {
+    "gif_light": "missing_modality_masks_light.gif",
+    "gif_dark": "missing_modality_masks_dark.gif",
+    "dashboard_light": "missing_modality_dashboard_light.png",
+    "dashboard_dark": "missing_modality_dashboard_dark.png"
+  }
+}

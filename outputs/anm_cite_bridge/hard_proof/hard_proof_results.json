@@ -1,0 +1,1000 @@
+{
+  "timestamp_local": "2026-09-26 15:55:04 EDT",
+  "tier": "hard",
+  "n_site4": 16750,
+  "n_ood": 2000,
+  "ood_slice": "val_non_site4",
+  "n_available_site4_test": 16750,
+  "capped": false,
+  "export_manifest": {
+    "n_cells_site4_test": 16750,
+    "n_cells_ood": 2000,
+    "n_events": 168750,
+    "device": "mps",
+    "ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1/best.pt",
+    "compact": true,
+    "phase1_mlp_pearson_quoted": {
+      "CD19": 0.9321139392380869,
+      "CD72": 0.9326986089454039,
+      "CD22": 0.9108167826289092,
+      "CD3": 0.9125372175817795,
+      "CD2": 0.8985778861269099,
+      "CD5": 0.8982449200643862,
+      "CD16": 0.9186828501498828,
+      "CD11c": 0.8965328949073577,
+      "CD36": 0.9324591288981439
+    }
+  },
+  "disagreement_rates": {
+    "O0_vs_O1": {
+      "both_defined": 14488,
+      "agree": 14488,
+      "disagree": 0,
+      "disagree_rate_among_both": 0.0,
+      "a_only_defined": 1223,
+      "b_only_defined": 0,
+      "flip_pairs": {}
+    },
+    "O0_vs_O2": {
+      "both_defined": 14379,
+      "agree": 12585,
+      "disagree": 1794,
+      "disagree_rate_among_both": 0.12476528270394326,
+      "a_only_defined": 1332,
+      "b_only_defined": 801,
+      "flip_pairs": {
+        "myeloid->b_lineage": 1097,
+        "myeloid->t_lineage": 538,
+        "t_lineage->b_lineage": 69,
+        "b_lineage->t_lineage": 52,
+        "t_lineage->myeloid": 35,
+        "b_lineage->myeloid": 3
+      }
+    },
+    "O1_vs_O2": {
+      "both_defined": 13400,
+      "agree": 11986,
+      "disagree": 1414,
+      "disagree_rate_among_both": 0.10552238805970149,
+      "a_only_defined": 1088,
+      "b_only_defined": 1780,
+      "flip_pairs": {
+        "myeloid->b_lineage": 894,
+        "myeloid->t_lineage": 459,
+        "t_lineage->b_lineage": 31,
+        "b_lineage->t_lineage": 27,
+        "t_lineage->myeloid": 3
+      }
+    }
+  },
+  "arms": {
+    "teddy_alone": {
+      "arm": "TEDDY_alone",
+      "criteria": {
+        "O0": {
+          "rule": {
+            "readout_threshold": 0.12,
+            "key_marker_boost": 1.0,
+            "score_mode": "equal_panel_mean",
+            "label_fit": false
+          },
+          "n": 16750,
+          "n_labeled": 15711,
+          "abstain_count": 101,
+          "abstain_rate": 0.006029850746268657,
+          "n_decided_labeled": 15661,
+          "Q_analogue": 0.9471936657940107,
+          "accuracy_strict_labeled": 0.944179237476927,
+          "action_counts": {
+            "myeloid": 5502,
+            "t_lineage": 6969,
+            "b_lineage": 4178
+          },
+          "mean_P_f": null,
+          "mean_Q_f_defined": 0.9471936657940107
+        },
+        "O1": {
+          "rule": {
+            "readout_threshold": 0.28,
+            "key_marker_boost": 2.0,
+            "score_mode": "equal_panel_mean",
+            "label_fit": false
+          },
+          "n": 16750,
+          "n_labeled": 14488,
+          "abstain_count": 881,
+          "abstain_rate": 0.05259701492537314,
+          "n_decided_labeled": 14242,
+          "Q_analogue": 0.9734587838786687,
+          "accuracy_strict_labeled": 0.9569298729983434,
+          "action_counts": {
+            "myeloid": 5255,
+            "t_lineage": 6917,
+            "b_lineage": 3697
+          },
+          "mean_P_f": null,
+          "mean_Q_f_defined": 0.9734587838786687
+        },
+        "O2": {
+          "rule": {
+            "readout_threshold": 0.2,
+            "key_marker_boost": 3.0,
+            "score_mode": "key_marker_priority",
+            "label_fit": false
+          },
+          "n": 16750,
+          "n_labeled": 15180,
+          "abstain_count": 1796,
+          "abstain_rate": 0.10722388059701493,
+          "n_decided_labeled": 14165,
+          "Q_analogue": 0.9428168019767031,
+          "accuracy_strict_labeled": 0.8797760210803689,
+          "action_counts": {
+            "myeloid": 2301,
+            "t_lineage": 7433,
+            "b_lineage": 5220
+          },
+          "mean_P_f": null,
+          "mean_Q_f_defined": 0.9428168019767031
+        }
+      },
+      "silent_over_answer": {
+        "O0_over_answer_vs_O1_decl": {
+          "count": 780,
+          "rate": 0.046567164179104475
+        },
+        "O0_over_answer_vs_O2_decl": {
+          "count": 1752,
+          "rate": 0.10459701492537313
+        }
+      },
+      "criterion_edit_cost": {
+        "needs_endpoint_labels": true,
+        "needs_retrain_or_retune": true,
+        "mechanism": "threshold/boost grid or classifier head on new-criterion labels"
+      }
+    },
+    "anm": {
+      "arm": "TEDDY_plus_ANM",
+      "criteria": {
+        "O0": {
+          "rule": {
+            "criterion": "O0",
+            "label_fit": false,
+            "readout_threshold": 0.12,
+            "key_marker_boost": 1.0,
+            "score_mode": "equal_panel_mean",
+            "expected_margin": 0.05
+          },
+          "n": 16750,
+          "n_labeled": 15711,
+          "abstain_count": 317,
+          "abstain_rate": 0.01892537313432836,
+          "n_decided_labeled": 15542,
+          "Q_analogue": 0.9496203834770299,
+          "accuracy_strict_labeled": 0.9394055120616129,
+          "action_counts": {
+            "myeloid": 5676,
+            "t_lineage": 7066,
+            "b_lineage": 3691
+          },
+          "mean_P_f": 0.9810746268656716,
+          "mean_Q_f_defined": 0.9394055120616129,
+          "n_Q_f_defined": 15711
+        },
+        "O1": {
+          "rule": {
+            "criterion": "O1",
+            "label_fit": false,
+            "readout_threshold": 0.28,
+            "key_marker_boost": 2.0,
+            "score_mode": "equal_panel_mean",
+            "expected_margin": 0.12
+          },
+          "n": 16750,
+          "n_labeled": 14488,
+          "abstain_count": 834,
+          "abstain_rate": 0.049791044776119404,
+          "n_decided_labeled": 14272,
+          "Q_analogue": 0.9722533632286996,
+          "accuracy_strict_labeled": 0.9577581446714523,
+          "action_counts": {
+            "myeloid": 5429,
+            "t_lineage": 6864,
+            "b_lineage": 3623
+          },
+          "mean_P_f": 0.9502089552238806,
+          "mean_Q_f_defined": 0.9577581446714523,
+          "n_Q_f_defined": 14488
+        },
+        "O2": {
+          "rule": {
+            "criterion": "O2",
+            "label_fit": false,
+            "readout_threshold": 0.2,
+            "key_marker_boost": 3.0,
+            "score_mode": "key_marker_priority",
+            "expected_margin": 0.06
+          },
+          "n": 16750,
+          "n_labeled": 15180,
+          "abstain_count": 3373,
+          "abstain_rate": 0.2013731343283582,
+          "n_decided_labeled": 12974,
+          "Q_analogue": 0.960305225836288,
+          "accuracy_strict_labeled": 0.8207509881422925,
+          "action_counts": {
+            "myeloid": 2426,
+            "t_lineage": 7068,
+            "b_lineage": 3883
+          },
+          "mean_P_f": 0.7986268656716418,
+          "mean_Q_f_defined": 0.8207509881422925,
+          "n_Q_f_defined": 15180
+        }
+      },
+      "criterion_edit_cost": {
+        "needs_endpoint_labels": false,
+        "needs_retrain_or_retune": false,
+        "mechanism": "edit CRITERIA/YAML; re-adapt instances only"
+      },
+      "attribution": {
+        "kind": "closed_form_field_LOO_plus_flip_distance",
+        "declared_field": true,
+        "n_attr_cells": 16433,
+        "n_attr_requested": 16750,
+        "full_n": true,
+        "top1_protein_distribution": {
+          "CD16": 2087,
+          "CD3": 668,
+          "CD72": 1455,
+          "CD36": 2394,
+          "CD22": 2120,
+          "CD5": 3882,
+          "CD2": 2516,
+          "CD11c": 1195,
+          "CD19": 116
+        },
+        "top1_flip_rate": 0.27730785614312664,
+        "flip_distance_quantiles": {
+          "q25": 0.5270483050519688,
+          "q50": 0.75,
+          "q75": 0.8,
+          "n_with_flip": 4532,
+          "n_no_flip": 11901
+        },
+        "bootstrap_top1": {
+          "n_boot": 200,
+          "observed_mode_protein": "CD5",
+          "observed_mode_fraction": 0.23623197225095843,
+          "boot_mode_fraction_mean": 0.23629951926002554,
+          "boot_mode_fraction_ci95": [
+            0.23014209213168624,
+            0.24329550295137833
+          ],
+          "boot_mode_protein_stability": {
+            "CD5": 200
+          }
+        },
+        "permutation_test": {
+          "n_perm": 100,
+          "null_max_fraction_mean": 0.17131827709000183,
+          "null_max_fraction_ci95": [
+            0.16605098172593907,
+            0.17704780643315893
+          ],
+          "observed_mode_fraction": 0.23623197225095843,
+          "p_value_one_sided": 0.009900990099009901,
+          "null_mode_match_fraction_mean": 0.14089086130176656,
+          "note": "Shuffle event values within cell; compare max top-1 protein fraction to observed"
+        },
+        "runtime_sec": {
+          "attribution": 33.094094038009644,
+          "permutation": 867.34397315979
+        }
+      }
+    },
+    "train_plus_anm": {
+      "arm": "Train_plus_ANM_label_cost",
+      "anm_o2_targets": {
+        "abstain_rate": 0.2013731343283582,
+        "Q_analogue": 0.960305225836288,
+        "accuracy_strict_labeled": 0.8207509881422925,
+        "source": "TEDDY+ANM declared O2 on same eval",
+        "Q_analogue_among_decided": 0.960305225836288,
+        "note": "Match uses abstain + accuracy_strict vs ANM O2; among-decided Q reported separately"
+      },
+      "n_labeled_train_pool_o2": 10619,
+      "budgets": [
+        50,
+        100,
+        200,
+        500,
+        1000,
+        2000,
+        5000,
+        10619
+      ],
+      "curves": {
+        "logistic_jev_standin": [
+          {
+            "n_o2_labels": 50,
+            "default_conf_0.45": {
+              "abstain_count": 27,
+              "abstain_rate": 0.0016119402985074627,
+              "Q_analogue": 0.8850771869639794,
+              "accuracy_strict_labeled": 0.8837944664031621,
+              "n_decided_labeled": 15158
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.8899999999999999,
+              "abstain_count": 3282,
+              "abstain_rate": 0.1959402985074627,
+              "Q_analogue": 0.9382587024680441,
+              "accuracy_strict_labeled": 0.768840579710145,
+              "n_decided_labeled": 12439,
+              "abstain_gap_vs_anm": 0.005432835820895515,
+              "Q_gap_vs_anm": 0.022046523368243864
+            }
+          },
+          {
+            "n_o2_labels": 100,
+            "default_conf_0.45": {
+              "abstain_count": 19,
+              "abstain_rate": 0.0011343283582089553,
+              "Q_analogue": 0.880242680031654,
+              "accuracy_strict_labeled": 0.8793148880105401,
+              "n_decided_labeled": 15164
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.84,
+              "abstain_count": 3428,
+              "abstain_rate": 0.20465671641791044,
+              "Q_analogue": 0.9456043956043956,
+              "accuracy_strict_labeled": 0.7936100131752306,
+              "n_decided_labeled": 12740,
+              "abstain_gap_vs_anm": 0.003283582089552234,
+              "Q_gap_vs_anm": 0.014700830231892392
+            }
+          },
+          {
+            "n_o2_labels": 200,
+            "default_conf_0.45": {
+              "abstain_count": 31,
+              "abstain_rate": 0.0018507462686567163,
+              "Q_analogue": 0.8881335797254488,
+              "accuracy_strict_labeled": 0.8864953886693017,
+              "n_decided_labeled": 15152
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.8499999999999999,
+              "abstain_count": 3308,
+              "abstain_rate": 0.19749253731343283,
+              "Q_analogue": 0.9479795998430757,
+              "accuracy_strict_labeled": 0.7959156785243742,
+              "n_decided_labeled": 12745,
+              "abstain_gap_vs_anm": 0.00388059701492538,
+              "Q_gap_vs_anm": 0.012325625993212297
+            }
+          },
+          {
+            "n_o2_labels": 500,
+            "default_conf_0.45": {
+              "abstain_count": 42,
+              "abstain_rate": 0.002507462686567164,
+              "Q_analogue": 0.9036645757675801,
+              "accuracy_strict_labeled": 0.9015810276679842,
+              "n_decided_labeled": 15145
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.8499999999999999,
+              "abstain_count": 3392,
+              "abstain_rate": 0.20250746268656716,
+              "Q_analogue": 0.9633099141295862,
+              "accuracy_strict_labeled": 0.8129117259552042,
+              "n_decided_labeled": 12810,
+              "abstain_gap_vs_anm": 0.0011343283582089525,
+              "Q_gap_vs_anm": 0.003004688293298252
+            }
+          },
+          {
+            "n_o2_labels": 1000,
+            "default_conf_0.45": {
+              "abstain_count": 26,
+              "abstain_rate": 0.0015522388059701492,
+              "Q_analogue": 0.9052832926587956,
+              "accuracy_strict_labeled": 0.9041501976284585,
+              "n_decided_labeled": 15161
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.84,
+              "abstain_count": 3343,
+              "abstain_rate": 0.1995820895522388,
+              "Q_analogue": 0.96558153989589,
+              "accuracy_strict_labeled": 0.8187088274044796,
+              "n_decided_labeled": 12871,
+              "abstain_gap_vs_anm": 0.0017910447761194104,
+              "Q_gap_vs_anm": 0.00527631405960205
+            }
+          },
+          {
+            "n_o2_labels": 2000,
+            "default_conf_0.45": {
+              "abstain_count": 32,
+              "abstain_rate": 0.00191044776119403,
+              "Q_analogue": 0.9178380518709166,
+              "accuracy_strict_labeled": 0.916205533596838,
+              "n_decided_labeled": 15153
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.82,
+              "abstain_count": 3345,
+              "abstain_rate": 0.19970149253731342,
+              "Q_analogue": 0.9707313306046799,
+              "accuracy_strict_labeled": 0.8280632411067194,
+              "n_decided_labeled": 12949,
+              "abstain_gap_vs_anm": 0.0016716417910447867,
+              "Q_gap_vs_anm": 0.010426104768391897
+            }
+          },
+          {
+            "n_o2_labels": 5000,
+            "default_conf_0.45": {
+              "abstain_count": 43,
+              "abstain_rate": 0.0025671641791044776,
+              "Q_analogue": 0.9213201320132013,
+              "accuracy_strict_labeled": 0.9194993412384717,
+              "n_decided_labeled": 15150
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.7999999999999999,
+              "abstain_count": 3400,
+              "abstain_rate": 0.20298507462686566,
+              "Q_analogue": 0.9739938080495356,
+              "accuracy_strict_labeled": 0.8289855072463768,
+              "n_decided_labeled": 12920,
+              "abstain_gap_vs_anm": 0.0016119402985074471,
+              "Q_gap_vs_anm": 0.013688582213247646
+            }
+          },
+          {
+            "n_o2_labels": 10619,
+            "default_conf_0.45": {
+              "abstain_count": 50,
+              "abstain_rate": 0.0029850746268656717,
+              "Q_analogue": 0.9231683953227192,
+              "accuracy_strict_labeled": 0.9205533596837945,
+              "n_decided_labeled": 15137
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.79,
+              "abstain_count": 3337,
+              "abstain_rate": 0.19922388059701493,
+              "Q_analogue": 0.9740509740509741,
+              "accuracy_strict_labeled": 0.8333333333333334,
+              "n_decided_labeled": 12987,
+              "abstain_gap_vs_anm": 0.0021492537313432813,
+              "Q_gap_vs_anm": 0.013745748214686104
+            }
+          }
+        ],
+        "mlp_small_head": [
+          {
+            "n_o2_labels": 50,
+            "skipped": "need >=100 labels and >=2 classes"
+          },
+          {
+            "n_o2_labels": 100,
+            "default_conf_0.45": {
+              "abstain_count": 23,
+              "abstain_rate": 0.001373134328358209,
+              "Q_analogue": 0.8773503991555057,
+              "accuracy_strict_labeled": 0.8760210803689065,
+              "n_decided_labeled": 15157
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.8899999999999999,
+              "abstain_count": 3392,
+              "abstain_rate": 0.20250746268656716,
+              "Q_analogue": 0.9449505261504634,
+              "accuracy_strict_labeled": 0.7926877470355731,
+              "n_decided_labeled": 12734,
+              "abstain_gap_vs_anm": 0.0011343283582089525,
+              "Q_gap_vs_anm": 0.015354699685824591
+            }
+          },
+          {
+            "n_o2_labels": 200,
+            "default_conf_0.45": {
+              "abstain_count": 29,
+              "abstain_rate": 0.0017313432835820897,
+              "Q_analogue": 0.8886102679160618,
+              "accuracy_strict_labeled": 0.8870882740447957,
+              "n_decided_labeled": 15154
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.8599999999999999,
+              "abstain_count": 3310,
+              "abstain_rate": 0.19761194029850745,
+              "Q_analogue": 0.9515397842738784,
+              "accuracy_strict_labeled": 0.8019762845849803,
+              "n_decided_labeled": 12794,
+              "abstain_gap_vs_anm": 0.0037611940298507562,
+              "Q_gap_vs_anm": 0.008765441562409548
+            }
+          },
+          {
+            "n_o2_labels": 500,
+            "default_conf_0.45": {
+              "abstain_count": 774,
+              "abstain_rate": 0.0462089552238806,
+              "Q_analogue": 0.822860686233981,
+              "accuracy_strict_labeled": 0.7867588932806324,
+              "n_decided_labeled": 14514
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.54,
+              "abstain_count": 3402,
+              "abstain_rate": 0.2031044776119403,
+              "Q_analogue": 0.870747747016319,
+              "accuracy_strict_labeled": 0.7065217391304348,
+              "n_decided_labeled": 12317,
+              "abstain_gap_vs_anm": 0.0017313432835820985,
+              "Q_gap_vs_anm": 0.089557478819969
+            }
+          },
+          {
+            "n_o2_labels": 1000,
+            "default_conf_0.45": {
+              "abstain_count": 29,
+              "abstain_rate": 0.0017313432835820897,
+              "Q_analogue": 0.9088809712325152,
+              "accuracy_strict_labeled": 0.9074440052700923,
+              "n_decided_labeled": 15156
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.82,
+              "abstain_count": 3395,
+              "abstain_rate": 0.2026865671641791,
+              "Q_analogue": 0.968467767050763,
+              "accuracy_strict_labeled": 0.819433465085639,
+              "n_decided_labeled": 12844,
+              "abstain_gap_vs_anm": 0.001313432835820888,
+              "Q_gap_vs_anm": 0.008162541214475016
+            }
+          },
+          {
+            "n_o2_labels": 2000,
+            "default_conf_0.45": {
+              "abstain_count": 87,
+              "abstain_rate": 0.005194029850746269,
+              "Q_analogue": 0.9094699225729601,
+              "accuracy_strict_labeled": 0.9053359683794466,
+              "n_decided_labeled": 15111
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.75,
+              "abstain_count": 3351,
+              "abstain_rate": 0.20005970149253732,
+              "Q_analogue": 0.9648659152739992,
+              "accuracy_strict_labeled": 0.8177206851119895,
+              "n_decided_labeled": 12865,
+              "abstain_gap_vs_anm": 0.001313432835820888,
+              "Q_gap_vs_anm": 0.004560689437711263
+            }
+          },
+          {
+            "n_o2_labels": 5000,
+            "default_conf_0.45": {
+              "abstain_count": 43,
+              "abstain_rate": 0.0025671641791044776,
+              "Q_analogue": 0.9130406074612083,
+              "accuracy_strict_labeled": 0.910935441370224,
+              "n_decided_labeled": 15145
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.76,
+              "abstain_count": 3356,
+              "abstain_rate": 0.20035820895522388,
+              "Q_analogue": 0.9724266129656882,
+              "accuracy_strict_labeled": 0.8270750988142292,
+              "n_decided_labeled": 12911,
+              "abstain_gap_vs_anm": 0.0010149253731343288,
+              "Q_gap_vs_anm": 0.012121387129400252
+            }
+          },
+          {
+            "n_o2_labels": 10619,
+            "default_conf_0.45": {
+              "abstain_count": 45,
+              "abstain_rate": 0.0026865671641791043,
+              "Q_analogue": 0.9214818728125206,
+              "accuracy_strict_labeled": 0.9192358366271409,
+              "n_decided_labeled": 15143
+            },
+            "abstain_calibrated_to_anm_o2": {
+              "conf_threshold": 0.76,
+              "abstain_count": 3337,
+              "abstain_rate": 0.19922388059701493,
+              "Q_analogue": 0.9760857826120497,
+              "accuracy_strict_labeled": 0.8335309617918314,
+              "n_decided_labeled": 12963,
+              "abstain_gap_vs_anm": 0.0021492537313432813,
+              "Q_gap_vs_anm": 0.015780556775761734
+            }
+          }
+        ],
+        "teddy_thr_boost_grid": [
+          {
+            "n_o2_labels": 50,
+            "best_grid": {
+              "acc": 0.94,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 100,
+            "best_grid": {
+              "acc": 0.94,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 200,
+            "best_grid": {
+              "acc": 0.925,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 500,
+            "best_grid": {
+              "acc": 0.926,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 1000,
+            "best_grid": {
+              "acc": 0.922,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 2000,
+            "best_grid": {
+              "acc": 0.9215,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 5000,
+            "best_grid": {
+              "acc": 0.9174,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          },
+          {
+            "n_o2_labels": 10619,
+            "best_grid": {
+              "acc": 0.9158112816649402,
+              "thr": 0.08,
+              "boost": 1.0,
+              "mode": "key_marker_priority"
+            },
+            "eval_at_best_grid": {
+              "abstain_count": 0,
+              "abstain_rate": 0.0,
+              "Q_analogue": 0.9148880105401844,
+              "accuracy_strict_labeled": 0.9148880105401844,
+              "n_decided_labeled": 15180
+            },
+            "abstain_calibrated_thr": {
+              "thr": 0.26,
+              "abstain_count": 3455,
+              "abstain_rate": 0.20626865671641792,
+              "Q_analogue": 0.9665660552588808,
+              "accuracy_strict_labeled": 0.8227272727272728,
+              "n_decided_labeled": 12921,
+              "abstain_gap_vs_anm": 0.004895522388059709,
+              "Q_gap_vs_anm": 0.006260829422592873
+            }
+          }
+        ]
+      },
+      "match_headline": {
+        "logistic_calibrated": {
+          "n_o2_labels": 500,
+          "accuracy_strict_labeled": 0.8129117259552042,
+          "Q_analogue": 0.9633099141295862,
+          "abstain_rate": 0.20250746268656716,
+          "matched": true,
+          "match_metric": "abstain+accuracy_strict vs ANM O2 declared"
+        },
+        "mlp_calibrated": {
+          "n_o2_labels": 200,
+          "accuracy_strict_labeled": 0.8019762845849803,
+          "Q_analogue": 0.9515397842738784,
+          "abstain_rate": 0.19761194029850745,
+          "matched": true,
+          "match_metric": "abstain+accuracy_strict vs ANM O2 declared"
+        },
+        "grid_calibrated": {
+          "n_o2_labels": 50,
+          "accuracy_strict_labeled": 0.8227272727272728,
+          "Q_analogue": 0.9665660552588808,
+          "abstain_rate": 0.20626865671641792,
+          "matched": true,
+          "match_metric": "abstain+accuracy_strict vs ANM O2 declared"
+        }
+      },
+      "zero_shot_o0_model_abstain_does_not_track_observer": {
+        "abstain_counts": {
+          "O0": 185,
+          "O1": 185,
+          "O2": 185
+        },
+        "Q": {
+          "O0": 0.9551578137028484,
+          "O1": 0.9733397964129908,
+          "O2": 0.8276939440271223
+        },
+        "note": "O0-trained logistic uses one confidence gate; abstain count identical across O0/O1/O2 label sets \u2014 does not track declared observer. ANM abstain rises O0\u2192O1\u2192O2 by declaration with zero new labels."
+      },
+      "criterion_edit_cost": {
+        "needs_endpoint_labels": true,
+        "needs_retrain_or_retune": true,
+        "mechanism": "consume O2 labels for retune/retrain/head; still no editable field attribution"
+      }
+    }
+  },
+  "ood": {
+    "n": 2000,
+    "slice": "val_non_site4",
+    "criteria": {
+      "O0": {
+        "teddy_alone": {
+          "n": 2000,
+          "n_labeled": 1967,
+          "abstain_count": 1,
+          "abstain_rate": 0.0005,
+          "n_decided_labeled": 1967,
+          "Q_analogue": 0.9816980172852059,
+          "accuracy_strict_labeled": 0.9816980172852059,
+          "action_counts": {
+            "myeloid": 639,
+            "t_lineage": 1041,
+            "b_lineage": 319
+          }
+        },
+        "anm": {
+          "n": 2000,
+          "n_labeled": 1967,
+          "abstain_count": 1,
+          "abstain_rate": 0.0005,
+          "n_decided_labeled": 1967,
+          "Q_analogue": 0.9816980172852059,
+          "accuracy_strict_labeled": 0.9816980172852059,
+          "action_counts": {
+            "myeloid": 645,
+            "t_lineage": 1043,
+            "b_lineage": 311
+          },
+          "mean_P_f": 0.9995
+        }
+      },
+      "O1": {
+        "teddy_alone": {
+          "n": 2000,
+          "n_labeled": 1892,
+          "abstain_count": 19,
+          "abstain_rate": 0.0095,
+          "n_decided_labeled": 1888,
+          "Q_analogue": 0.9904661016949152,
+          "accuracy_strict_labeled": 0.9883720930232558,
+          "action_counts": {
+            "myeloid": 632,
+            "t_lineage": 1032,
+            "b_lineage": 317
+          }
+        },
+        "anm": {
+          "n": 2000,
+          "n_labeled": 1892,
+          "abstain_count": 21,
+          "abstain_rate": 0.0105,
+          "n_decided_labeled": 1886,
+          "Q_analogue": 0.9899257688229056,
+          "accuracy_strict_labeled": 0.9867864693446089,
+          "action_counts": {
+            "myeloid": 640,
+            "t_lineage": 1029,
+            "b_lineage": 310
+          },
+          "mean_P_f": 0.9895
+        }
+      },
+      "O2": {
+        "teddy_alone": {
+          "n": 2000,
+          "n_labeled": 1836,
+          "abstain_count": 111,
+          "abstain_rate": 0.0555,
+          "n_decided_labeled": 1772,
+          "Q_analogue": 0.9170428893905191,
+          "accuracy_strict_labeled": 0.8850762527233116,
+          "action_counts": {
+            "t_lineage": 1058,
+            "myeloid": 102,
+            "b_lineage": 729
+          }
+        },
+        "anm": {
+          "n": 2000,
+          "n_labeled": 1836,
+          "abstain_count": 431,
+          "abstain_rate": 0.2155,
+          "n_decided_labeled": 1521,
+          "Q_analogue": 0.9783037475345168,
+          "accuracy_strict_labeled": 0.8104575163398693,
+          "action_counts": {
+            "t_lineage": 1056,
+            "myeloid": 104,
+            "b_lineage": 409
+          },
+          "mean_P_f": 0.7845
+        }
+      }
+    }
+  },
+  "attr_n": 16433,
+  "n_boot": 200,
+  "n_perm": 100,
+  "label_cost_headline": "logistic_calibrated matched at n_O2_labels=500 (strict=0.8129117259552042, abstain=0.20250746268656716)\uff1bmlp_calibrated matched at n_O2_labels=200 (strict=0.8019762845849803, abstain=0.19761194029850745)\uff1bgrid_calibrated matched at n_O2_labels=50 (strict=0.8227272727272728, abstain=0.20626865671641792)\u3002\u5173\u952e\uff1a\u5373\u4fbf\u7528\u6ee1\u6c60 O2 \u6807\u7b7e\u628a\u5f03\u6743\u7387/strict \u6570\u503c\u6821\u51c6\u5230\u63a5\u8fd1 ANM\uff0cTrain \u81c2\u4ecd\u65e0\u58f0\u660e\u573a\u3001\u65e0 LOO \u5f52\u56e0/\u7ffb\u8f6c\u8ddd\u79bb\uff0c\u4e14 O0\u2192O2 \u89c2\u5bdf\u8005\u5207\u6362\u5fc5\u987b\u91cd\u65b0\u6d88\u8017\u6807\u7b7e\uff1bANM \u96f6\u6807\u7b7e\u6539\u58f0\u660e\u5373\u5207\u6362\u5f03\u6743\u4e0e expected_action\u3002",
+  "runtime_sec": 938.6726379394531,
+  "disk_note": "Avail 312.8 GiB / total 1995.2 GiB (84% used). No cache purge needed.",
+  "claim_boundary": "local_response_diagnosis_only_not_clinical",
+  "no_retrain_best_pt": true,
+  "proof_sentence": "On the same TEDDY \u03b4u (site4/test full-n), ANM declaration edits the observer (O0\u2192O1 tighter abstain; O0\u2192O2 rewrites expected_action) with zero endpoint-label fit, keeping verifiable P_f/Q_f and auditable full-n LOO attribution (n_attr=16433, bootstrap B=200, permutation p=0.009900990099009901). TEDDY-alone silently over-answers where the declared observer abstains; Train+ANM (logistic/MLP/grid) must consume O2 labels to approach ANM's O2 abstain/strict operating point and still cannot buy editable-field attribution or label-free observer edits. Accuracy is secondary; not clinical.",
+  "paths": {
+    "HARD_PROOF.md": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/HARD_PROOF.md",
+    "hard_proof_results.json": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/hard_proof_results.json",
+    "attr_compact.npz": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
+    "run_script": "/Users/tianchichen/Documents/GitHub/teddy_mm/bridge_anm/run_hard_proof.py",
+    "run_log": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/run.log"
+  },
+  "train_curves_repaired": true
+}

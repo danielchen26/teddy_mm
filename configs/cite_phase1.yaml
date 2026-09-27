@@ -1,0 +1,38 @@
+# Phase-1: TEDDY RNA -> ADT on NeurIPS 2021 BMMC CITE
+# Tuned for Mac M4 Max 128GB (MPS). Drop batch/seq if you hit memory pressure.
+
+seed: 0
+task: cite_rna_to_adt
+
+paths:
+  raw_h5ad: data/raw/GSE194122_openproblems_neurips2021_cite_BMMC_processed.h5ad
+  processed_dir: data/processed/cite
+  teddy_ckpt: ../teddy_mwe/ckpt/teddy_g_70M
+  outputs: outputs/cite_phase1
+
+split:
+  # Site 4 is the usual held-out site in this dataset.
+  test_sites: ["site4"]
+  val_fraction_within_train_donors: 0.1
+
+teddy:
+  seq_len: 1024
+  batch_size: 16
+  max_cells: null          # set e.g. 4000 for a smoke run
+  normalize_total: 10000.0
+
+model:
+  z_dim: 512
+  hidden: 512
+  n_layers: 3
+  dropout: 0.1
+  fm_steps: 20
+
+train:
+  epochs: 40
+  batch_size: 512
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_nll: 1.0
+  lambda_fm: 1.0
+  device: auto             # auto | mps | cuda | cpu

@@ -1,0 +1,159 @@
+{
+  "schema_id": "cite_lineage_typed_scalar_v0",
+  "schema_version": "0.1.0",
+  "family_id": "cite_phase1_lineage_coherence",
+  "description": "ANM finite-graph schema for TEDDY phase-1 CITE typed evidence: predicted ADT lineage markers as source events; local response / attribution only. Not a clinical claim.",
+  "claim_boundary": "local_response_diagnosis_only",
+  "instance_format": {
+    "required_fields": [
+      "instance_id",
+      "question",
+      "actions",
+      "proposed_source_events"
+    ],
+    "optional_fields": [
+      "expected_action",
+      "raw_records",
+      "cell_meta"
+    ]
+  },
+  "source_event_schema": {
+    "required_fields": [
+      "event_id",
+      "time",
+      "action",
+      "modality",
+      "polarity",
+      "value",
+      "provenance"
+    ],
+    "allowed_modalities": [
+      "b_marker",
+      "t_marker",
+      "myeloid_marker"
+    ],
+    "allowed_polarities": [
+      "support",
+      "contradiction",
+      "uncertainty_reduction"
+    ],
+    "polarity_aliases": {
+      "positive": "support",
+      "negative": "contradiction",
+      "uncertain": "uncertainty_reduction"
+    },
+    "value_range": [
+      0.0,
+      1.0
+    ],
+    "repair_rules": {
+      "fill_missing_event_id": true,
+      "fill_missing_time_from_order": true,
+      "normalize_polarity_alias": true,
+      "coerce_numeric_value": true
+    }
+  },
+  "preparation_to_field": {
+    "kind": "source_event_admission_v1",
+    "description": "TEDDY \u03b4u already typed; admit predicted-marker events. Holdout ADT labels never enter source events.",
+    "visible_evidence_anchors": {
+      "enabled": false,
+      "source_field": "proposed_source_events",
+      "event_id_prefix": "visible-anchor"
+    },
+    "support_calibration": {
+      "enabled": false,
+      "reference": "visible_candidate_scores",
+      "best_score_tolerance": 0.95,
+      "min_low_support": 0.05,
+      "max_low_support": 0.25,
+      "low_support_score_scale": 0.5,
+      "modalities": [
+        "b_marker",
+        "t_marker",
+        "myeloid_marker"
+      ]
+    },
+    "no_leakage": {
+      "reject_event_field": "uses_hidden_endpoint",
+      "hidden_endpoint_policy": "expected_action and adt_true are verifier / post-hoc only and cannot enter source events before readout"
+    }
+  },
+  "representation_closure": {
+    "kind": "event_field_projection_closure_v1",
+    "description": "Audit that verifier-relevant source-event fields are projected into the finite field.",
+    "verifier_relevant_event_fields": [
+      "time",
+      "action",
+      "modality",
+      "polarity",
+      "value"
+    ],
+    "optional_verifier_relevant_event_fields": [
+      "valid_until"
+    ],
+    "projected_event_fields": [
+      "time",
+      "action",
+      "modality",
+      "polarity",
+      "value"
+    ],
+    "retained_audit_fields": [
+      "event_id",
+      "provenance"
+    ],
+    "on_missing_projected_fields": "mark_state_space_incomplete_before_field_claim"
+  },
+  "field_representation": {
+    "kind": "finite_graph_scalar",
+    "base_space": "typed_source_event_graph",
+    "steps": 4,
+    "retention": 0.82,
+    "diffusion": 0.16,
+    "source_scale": 1.0,
+    "readout_threshold": 0.12
+  },
+  "observables": {
+    "P_f": "1 if readout selects an admissible lineage action (score >= readout_threshold), else 0 (abstain / unworkable)",
+    "Q_f": "1 if selected action matches holdout expected_action from true ADT panel (post-hoc verifier only), else 0; null if no expected_action",
+    "r_f": "Q_f / P_f when P_f > 0, else null"
+  },
+  "verifier": {
+    "kind": "expected_action_match",
+    "requires_expected_action": true,
+    "no_leakage_rule": "expected_action derived from adt_true is used only after readout; never fit field law to it."
+  },
+  "controls": [
+    "no_propagation",
+    "action_label_shuffle"
+  ],
+  "artifact_requirements": {
+    "required_top_level_fields": [
+      "raw_input",
+      "proposed_source_events",
+      "admitted_source_events",
+      "repaired_source_events",
+      "rejected_source_events",
+      "representation_closure_diagnostics",
+      "state_variable_response_diagnostics",
+      "field_state_summaries",
+      "readout",
+      "verifier",
+      "controls_and_loading_parameters",
+      "timings",
+      "token_counts",
+      "model",
+      "tool_call_counts",
+      "schema_version",
+      "repository_commit_hash",
+      "runner_version",
+      "seed",
+      "output_path",
+      "timestamp_utc"
+    ]
+  },
+  "criterion_overlay": {
+    "readout_threshold": 0.12
+  }
+}

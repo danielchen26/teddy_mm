@@ -1,0 +1,80 @@
+{
+  "n_base_cells_site4": 16750,
+  "n_cells_written": 50250,
+  "n_events": 452250,
+  "n_available_site4_test": 16750,
+  "masks": [
+    "rna_only",
+    "adt_only",
+    "joint"
+  ],
+  "source": "hybrid_phase1_rna_phase2_adt",
+  "phase1_full_adt_pearson": 0.6102218214870081,
+  "phase1_quoted_unidirectional": 0.61,
+  "phase2_metrics": {
+    "rna_only_pearson": 0.2540806151694879,
+    "adt_only_pearson": 0.2654089523023284,
+    "joint_pearson": 0.27572132700508406,
+    "rna_only_pearson_phase1_override": 0.6102218214870081,
+    "joint_pearson_hybrid": 0.5856662990296942
+  },
+  "panel_pearson_by_mask": {
+    "rna_only": 0.9147404698378734,
+    "adt_only": 0.44627287014827716,
+    "joint": 0.8703130689245495
+  },
+  "claim_boundary": "missing_modality_ANM_demo_only; do_not_claim_win_over_phase1_0.61; not_clinical",
+  "panel_proteins": [
+    "CD19",
+    "CD72",
+    "CD22",
+    "CD3",
+    "CD2",
+    "CD5",
+    "CD16",
+    "CD11c",
+    "CD36"
+  ],
+  "lineage_panels": {
+    "b_lineage": [
+      "CD19",
+      "CD72",
+      "CD22"
+    ],
+    "t_lineage": [
+      "CD3",
+      "CD2",
+      "CD5"
+    ],
+    "myeloid": [
+      "CD16",
+      "CD11c",
+      "CD36"
+    ]
+  },
+  "key_markers": {
+    "b_lineage": "CD19",
+    "t_lineage": "CD3",
+    "myeloid": "CD16"
+  },
+  "p95_train": {
+    "CD19": 1.7419734001159668,
+    "CD72": 1.9645029306411743,
+    "CD22": 1.0306048393249512,
+    "CD3": 2.488337993621826,
+    "CD2": 2.920950174331665,
+    "CD5": 3.1127536296844482,
+    "CD16": 1.947386384010315,
+    "CD11c": 1.989983320236206,
+    "CD36": 3.080791473388672
+  },
+  "phase1_ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1/best.pt",
+  "phase2_ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase2/best.pt",
+  "processed": "/Users/tianchichen/Documents/GitHub/teddy_mm/data/processed/cite",
+  "seed": 17,
+  "device": "mps",
+  "events_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl",
+  "cells_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl",
+  "same_cells_across_masks": true,
+  "anm_semantics": "missing modality = source ablation / channel-restricted typed evidence; P_f workability drops when key evidence absent; Q_f vs holdout GT only"
+}

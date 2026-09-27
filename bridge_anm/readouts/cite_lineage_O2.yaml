@@ -1,0 +1,43 @@
+# CITE phase-1 lineage decision family — criterion O2 (therapeutic key-marker priority)
+# REWRITES expected_action vs O0 (not merely stricter abstain).
+criterion_id: O2
+family_id: cite_phase1_lineage_coherence
+schema_id: cite_lineage_typed_scalar_v0
+name: therapeutic_key_marker_priority
+description: >
+  Key-marker-only observer: score lineages by CD19/CD3/CD16 with lineage weights
+  favoring therapeutic B/T (b=1.5, t=1.3, myeloid=0.5). Secondary panel members
+  weight 0. Same TEDDY δu; declaration-only edit. Measurable label disagreement vs O0.
+
+P_f:
+  role: workability_under_key_marker_priority
+  panels:
+    b_lineage: [CD19, CD72, CD22]
+    t_lineage: [CD3, CD2, CD5]
+    myeloid:   [CD16, CD11c, CD36]
+  protein_weight: 1.0
+  key_marker_boost: 3.0
+  secondary_weight: 0.0
+  lineage_weights:
+    b_lineage: 1.5
+    t_lineage: 1.3
+    myeloid: 0.5
+  key_markers:
+    b_lineage: CD19
+    t_lineage: CD3
+    myeloid: CD16
+  readout_threshold: 0.20
+  abstain_if_below_threshold: true
+
+Q_f:
+  role: exactness_posthoc
+  note: >
+    expected_action from holdout true-ADT under key_marker_priority scoring
+    (rewrites O0 equal-panel-mean labels on a measurable fraction).
+  key_subset: [CD19, CD3, CD16]
+  expected_margin: 0.06
+  expected_from: true_adt_key_marker_weighted
+
+vs_O0: |
+  score_mode equal_panel_mean → key_marker_priority; lineage_weights rewrite labels;
+  secondary_weight 0; key_marker_boost 3.0. TEDDY best.pt and z_rna unchanged.

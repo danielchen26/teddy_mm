@@ -1,0 +1,535 @@
+{
+  "timestamp_local": "2026-09-26 14:18:34 EDT",
+  "n_site4": 16750,
+  "n_ood": 2000,
+  "ood_slice": "val_non_site4",
+  "n_available_site4_test": 16750,
+  "capped": false,
+  "export_manifest": {
+    "n_cells_site4_test": 16750,
+    "n_cells_ood": 2000,
+    "n_events": 168750,
+    "device": "mps",
+    "ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1/best.pt",
+    "compact": true
+  },
+  "disagreement_rates": {
+    "O0_vs_O1": {
+      "both_defined": 14488,
+      "agree": 14488,
+      "disagree": 0,
+      "disagree_rate_among_both": 0.0,
+      "a_only_defined": 1223,
+      "b_only_defined": 0,
+      "flip_pairs": {}
+    },
+    "O0_vs_O2": {
+      "both_defined": 14379,
+      "agree": 12585,
+      "disagree": 1794,
+      "disagree_rate_among_both": 0.12476528270394326,
+      "a_only_defined": 1332,
+      "b_only_defined": 801,
+      "flip_pairs": {
+        "myeloid->b_lineage": 1097,
+        "myeloid->t_lineage": 538,
+        "t_lineage->b_lineage": 69,
+        "b_lineage->t_lineage": 52,
+        "t_lineage->myeloid": 35,
+        "b_lineage->myeloid": 3
+      }
+    },
+    "O1_vs_O2": {
+      "both_defined": 13400,
+      "agree": 11986,
+      "disagree": 1414,
+      "disagree_rate_among_both": 0.10552238805970149,
+      "a_only_defined": 1088,
+      "b_only_defined": 1780,
+      "flip_pairs": {
+        "myeloid->b_lineage": 894,
+        "myeloid->t_lineage": 459,
+        "t_lineage->b_lineage": 31,
+        "b_lineage->t_lineage": 27,
+        "t_lineage->myeloid": 3
+      }
+    }
+  },
+  "arms": {
+    "teddy_alone": {
+      "arm": "TEDDY_alone",
+      "criteria": {
+        "O0": {
+          "rule": {
+            "readout_threshold": 0.12,
+            "key_marker_boost": 1.0,
+            "score_mode": "equal_panel_mean",
+            "label_fit": false
+          },
+          "n": 16750,
+          "n_labeled": 15711,
+          "abstain_count": 101,
+          "abstain_rate": 0.006029850746268657,
+          "n_decided_labeled": 15661,
+          "Q_analogue": 0.9471936657940107,
+          "accuracy_strict_labeled": 0.944179237476927,
+          "action_counts": {
+            "myeloid": 5502,
+            "t_lineage": 6969,
+            "b_lineage": 4178
+          },
+          "mean_P_f": null,
+          "mean_Q_f_defined": 0.9471936657940107
+        },
+        "O1": {
+          "rule": {
+            "readout_threshold": 0.28,
+            "key_marker_boost": 2.0,
+            "score_mode": "equal_panel_mean",
+            "label_fit": false
+          },
+          "n": 16750,
+          "n_labeled": 14488,
+          "abstain_count": 881,
+          "abstain_rate": 0.05259701492537314,
+          "n_decided_labeled": 14242,
+          "Q_analogue": 0.9734587838786687,
+          "accuracy_strict_labeled": 0.9569298729983434,
+          "action_counts": {
+            "myeloid": 5255,
+            "t_lineage": 6917,
+            "b_lineage": 3697
+          },
+          "mean_P_f": null,
+          "mean_Q_f_defined": 0.9734587838786687
+        },
+        "O2": {
+          "rule": {
+            "readout_threshold": 0.2,
+            "key_marker_boost": 3.0,
+            "score_mode": "key_marker_priority",
+            "label_fit": false
+          },
+          "n": 16750,
+          "n_labeled": 15180,
+          "abstain_count": 1796,
+          "abstain_rate": 0.10722388059701493,
+          "n_decided_labeled": 14165,
+          "Q_analogue": 0.9428168019767031,
+          "accuracy_strict_labeled": 0.8797760210803689,
+          "action_counts": {
+            "myeloid": 2301,
+            "t_lineage": 7433,
+            "b_lineage": 5220
+          },
+          "mean_P_f": null,
+          "mean_Q_f_defined": 0.9428168019767031
+        }
+      },
+      "silent_over_answer": {
+        "O0_over_answer_vs_O1_decl": {
+          "count": 780,
+          "rate": 0.046567164179104475
+        },
+        "O0_over_answer_vs_O2_decl": {
+          "count": 1752,
+          "rate": 0.10459701492537313
+        }
+      },
+      "O2_after_label_fit_grid": {
+        "acc": 0.8206045767021377,
+        "thr": 0.08,
+        "boost": 1.5,
+        "label_fit": true,
+        "note": "MUST search thr/boost on O2 endpoint labels; differs from declared O2 pack",
+        "n": 16750,
+        "n_labeled": 15180,
+        "abstain_count": 0,
+        "abstain_rate": 0.0,
+        "n_decided_labeled": 15180,
+        "Q_analogue": 0.8205533596837945,
+        "accuracy_strict_labeled": 0.8205533596837945,
+        "action_counts": {
+          "myeloid": 5506,
+          "t_lineage": 7094,
+          "b_lineage": 4150
+        }
+      },
+      "criterion_edit_cost": {
+        "needs_endpoint_labels": true,
+        "needs_retrain_or_retune": true,
+        "mechanism": "threshold/boost grid or classifier head on new-criterion labels"
+      }
+    },
+    "anm": {
+      "arm": "TEDDY_plus_ANM",
+      "criteria": {
+        "O0": {
+          "rule": {
+            "criterion": "O0",
+            "label_fit": false,
+            "readout_threshold": 0.12,
+            "key_marker_boost": 1.0,
+            "score_mode": "equal_panel_mean",
+            "expected_margin": 0.05
+          },
+          "n": 16750,
+          "n_labeled": 15711,
+          "abstain_count": 317,
+          "abstain_rate": 0.01892537313432836,
+          "n_decided_labeled": 15542,
+          "Q_analogue": 0.9496203834770299,
+          "accuracy_strict_labeled": 0.9394055120616129,
+          "action_counts": {
+            "myeloid": 5676,
+            "t_lineage": 7066,
+            "b_lineage": 3691
+          },
+          "mean_P_f": 0.9810746268656716,
+          "mean_Q_f_defined": 0.9394055120616129,
+          "n_Q_f_defined": 15711
+        },
+        "O1": {
+          "rule": {
+            "criterion": "O1",
+            "label_fit": false,
+            "readout_threshold": 0.28,
+            "key_marker_boost": 2.0,
+            "score_mode": "equal_panel_mean",
+            "expected_margin": 0.12
+          },
+          "n": 16750,
+          "n_labeled": 14488,
+          "abstain_count": 834,
+          "abstain_rate": 0.049791044776119404,
+          "n_decided_labeled": 14272,
+          "Q_analogue": 0.9722533632286996,
+          "accuracy_strict_labeled": 0.9577581446714523,
+          "action_counts": {
+            "myeloid": 5429,
+            "t_lineage": 6864,
+            "b_lineage": 3623
+          },
+          "mean_P_f": 0.9502089552238806,
+          "mean_Q_f_defined": 0.9577581446714523,
+          "n_Q_f_defined": 14488
+        },
+        "O2": {
+          "rule": {
+            "criterion": "O2",
+            "label_fit": false,
+            "readout_threshold": 0.2,
+            "key_marker_boost": 3.0,
+            "score_mode": "key_marker_priority",
+            "expected_margin": 0.06
+          },
+          "n": 16750,
+          "n_labeled": 15180,
+          "abstain_count": 3373,
+          "abstain_rate": 0.2013731343283582,
+          "n_decided_labeled": 12974,
+          "Q_analogue": 0.960305225836288,
+          "accuracy_strict_labeled": 0.8207509881422925,
+          "action_counts": {
+            "myeloid": 2426,
+            "t_lineage": 7068,
+            "b_lineage": 3883
+          },
+          "mean_P_f": 0.7986268656716418,
+          "mean_Q_f_defined": 0.8207509881422925,
+          "n_Q_f_defined": 15180
+        }
+      },
+      "criterion_edit_cost": {
+        "needs_endpoint_labels": false,
+        "needs_retrain_or_retune": false,
+        "mechanism": "edit CRITERIA/YAML; re-adapt instances only"
+      },
+      "attribution": {
+        "kind": "closed_form_field_LOO_plus_flip_distance",
+        "declared_field": true,
+        "n_attr_cells": 246,
+        "top1_protein_distribution": {
+          "CD5": 59,
+          "CD16": 33,
+          "CD2": 49,
+          "CD22": 29,
+          "CD36": 36,
+          "CD72": 22,
+          "CD11c": 12,
+          "CD3": 6
+        },
+        "top1_flip_rate": 0.24390243902439024,
+        "flip_distance_quantiles": {
+          "q25": 0.7,
+          "q50": 0.75,
+          "q75": 0.8233382545240459,
+          "n_with_flip": 59,
+          "n_no_flip": 187
+        },
+        "bootstrap_top1": {
+          "n_boot": 100,
+          "observed_mode_protein": "CD5",
+          "observed_mode_fraction": 0.23983739837398374,
+          "boot_mode_fraction_mean": 0.24109756097560975,
+          "boot_mode_fraction_ci95": [
+            0.2032520325203252,
+            0.2886178861788618
+          ]
+        },
+        "permutation_test": {
+          "n_perm": 40,
+          "null_max_fraction_mean": 0.17875799721756264,
+          "observed_mode_fraction": 0.23983739837398374,
+          "p_value_one_sided": 0.024390243902439025,
+          "note": "Shuffle event values within cell; compare max top-1 protein fraction to observed"
+        }
+      }
+    },
+    "jev": {
+      "arm": "TEDDY_plus_Jev_class_standin",
+      "standin_documented": true,
+      "description": "Log-loss Choice stand-in (sklearn LogisticRegression); real Jev API optional/unavailable. Pattern: anm-jev mwe/jev_class.py single-pass Choice + log-loss.",
+      "criteria": {
+        "O0": {
+          "zero_shot_from_O0_model": {
+            "n": 16750,
+            "n_labeled": 15711,
+            "abstain_count": 185,
+            "abstain_rate": 0.011044776119402985,
+            "n_decided_labeled": 15588,
+            "Q_analogue": 0.9551578137028484,
+            "accuracy_strict_labeled": 0.9476799694481574,
+            "action_counts": {
+              "myeloid": 5308,
+              "t_lineage": 7247,
+              "b_lineage": 4010
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.9551578137028484
+          },
+          "after_retrain": {
+            "n": 16750,
+            "n_labeled": 15711,
+            "abstain_count": 185,
+            "abstain_rate": 0.011044776119402985,
+            "n_decided_labeled": 15588,
+            "Q_analogue": 0.9551578137028484,
+            "accuracy_strict_labeled": 0.9476799694481574,
+            "action_counts": {
+              "myeloid": 5308,
+              "t_lineage": 7247,
+              "b_lineage": 4010
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.9551578137028484,
+            "train_labeled": 11009,
+            "label_fit": true
+          },
+          "primary_Q": 0.9551578137028484,
+          "note": "O0 uses trained model; O1/O2 primary shown as zero-shot unless after_retrain used"
+        },
+        "O1": {
+          "zero_shot_from_O0_model": {
+            "n": 16750,
+            "n_labeled": 14488,
+            "abstain_count": 185,
+            "abstain_rate": 0.011044776119402985,
+            "n_decided_labeled": 14441,
+            "Q_analogue": 0.9733397964129908,
+            "accuracy_strict_labeled": 0.9701822197680839,
+            "action_counts": {
+              "myeloid": 5308,
+              "t_lineage": 7247,
+              "b_lineage": 4010
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.9733397964129908
+          },
+          "after_retrain": {
+            "n": 16750,
+            "n_labeled": 14488,
+            "abstain_count": 157,
+            "abstain_rate": 0.009373134328358209,
+            "n_decided_labeled": 14445,
+            "Q_analogue": 0.9740394600207685,
+            "accuracy_strict_labeled": 0.9711485367200442,
+            "action_counts": {
+              "myeloid": 5278,
+              "t_lineage": 7232,
+              "b_lineage": 4083
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.9740394600207685,
+            "train_labeled": 10145,
+            "label_fit": true
+          },
+          "primary_Q": 0.9733397964129908,
+          "note": "O0 uses trained model; O1/O2 primary shown as zero-shot unless after_retrain used"
+        },
+        "O2": {
+          "zero_shot_from_O0_model": {
+            "n": 16750,
+            "n_labeled": 15180,
+            "abstain_count": 185,
+            "abstain_rate": 0.011044776119402985,
+            "n_decided_labeled": 15043,
+            "Q_analogue": 0.8276939440271223,
+            "accuracy_strict_labeled": 0.8202239789196311,
+            "action_counts": {
+              "myeloid": 5308,
+              "t_lineage": 7247,
+              "b_lineage": 4010
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.8276939440271223
+          },
+          "after_retrain": {
+            "n": 16750,
+            "n_labeled": 15180,
+            "abstain_count": 50,
+            "abstain_rate": 0.0029850746268656717,
+            "n_decided_labeled": 15137,
+            "Q_analogue": 0.9231683953227192,
+            "accuracy_strict_labeled": 0.9205533596837945,
+            "action_counts": {
+              "myeloid": 2269,
+              "t_lineage": 7653,
+              "b_lineage": 6778
+            },
+            "mean_P_f": null,
+            "mean_Q_f_defined": 0.9231683953227192,
+            "train_labeled": 10619,
+            "label_fit": true
+          },
+          "primary_Q": 0.8276939440271223,
+          "note": "O0 uses trained model; O1/O2 primary shown as zero-shot unless after_retrain used"
+        }
+      },
+      "criterion_edit_cost": {
+        "needs_endpoint_labels": true,
+        "needs_retrain_or_retune": true,
+        "mechanism": "re-fit log-loss Choice on new-criterion labels"
+      },
+      "abstain_tracks_declaration": {
+        "O0_model_abstain_on_O0": 185,
+        "O0_model_abstain_on_O1": 185,
+        "O0_model_abstain_on_O2": 185,
+        "note": "Jev stand-in abstain is confidence gate, not observer declaration"
+      }
+    }
+  },
+  "ood": {
+    "n": 2000,
+    "slice": "val_non_site4",
+    "criteria": {
+      "O0": {
+        "teddy_alone": {
+          "n": 2000,
+          "n_labeled": 1967,
+          "abstain_count": 1,
+          "abstain_rate": 0.0005,
+          "n_decided_labeled": 1967,
+          "Q_analogue": 0.9816980172852059,
+          "accuracy_strict_labeled": 0.9816980172852059,
+          "action_counts": {
+            "myeloid": 639,
+            "t_lineage": 1041,
+            "b_lineage": 319
+          }
+        },
+        "anm": {
+          "n": 2000,
+          "n_labeled": 1967,
+          "abstain_count": 1,
+          "abstain_rate": 0.0005,
+          "n_decided_labeled": 1967,
+          "Q_analogue": 0.9816980172852059,
+          "accuracy_strict_labeled": 0.9816980172852059,
+          "action_counts": {
+            "myeloid": 645,
+            "t_lineage": 1043,
+            "b_lineage": 311
+          }
+        }
+      },
+      "O1": {
+        "teddy_alone": {
+          "n": 2000,
+          "n_labeled": 1892,
+          "abstain_count": 19,
+          "abstain_rate": 0.0095,
+          "n_decided_labeled": 1888,
+          "Q_analogue": 0.9904661016949152,
+          "accuracy_strict_labeled": 0.9883720930232558,
+          "action_counts": {
+            "myeloid": 632,
+            "t_lineage": 1032,
+            "b_lineage": 317
+          }
+        },
+        "anm": {
+          "n": 2000,
+          "n_labeled": 1892,
+          "abstain_count": 21,
+          "abstain_rate": 0.0105,
+          "n_decided_labeled": 1886,
+          "Q_analogue": 0.9899257688229056,
+          "accuracy_strict_labeled": 0.9867864693446089,
+          "action_counts": {
+            "myeloid": 640,
+            "t_lineage": 1029,
+            "b_lineage": 310
+          }
+        }
+      },
+      "O2": {
+        "teddy_alone": {
+          "n": 2000,
+          "n_labeled": 1836,
+          "abstain_count": 111,
+          "abstain_rate": 0.0555,
+          "n_decided_labeled": 1772,
+          "Q_analogue": 0.9170428893905191,
+          "accuracy_strict_labeled": 0.8850762527233116,
+          "action_counts": {
+            "t_lineage": 1058,
+            "myeloid": 102,
+            "b_lineage": 729
+          }
+        },
+        "anm": {
+          "n": 2000,
+          "n_labeled": 1836,
+          "abstain_count": 431,
+          "abstain_rate": 0.2155,
+          "n_decided_labeled": 1521,
+          "Q_analogue": 0.9783037475345168,
+          "accuracy_strict_labeled": 0.8104575163398693,
+          "action_counts": {
+            "t_lineage": 1056,
+            "myeloid": 104,
+            "b_lineage": 409
+          }
+        }
+      }
+    }
+  },
+  "attr_n": 250,
+  "runtime_sec": 16.31688404083252,
+  "claim_boundary": "local_response_diagnosis_only_not_clinical",
+  "no_retrain_best_pt": true,
+  "proof_sentence": "ANM makes the observer an editable field declaration: O0\u2192O1 tightens abstain and O0\u2192O2 rewrites expected_action with zero endpoint-label fit, keeping verifiable P_f/Q_f and auditable LOO attribution+flip distances under GT; TEDDY-alone and Jev-class stand-in require new labels to retune/retrain or else silent over-answer / abstain that does not track the declared observer. Accuracy is secondary; not clinical.",
+  "blockers": [
+    "disk_pressure_deleted_raw_h5ad_and_caches",
+    "no_full_field_artifact_json_at_16k_streamed_metrics",
+    "jev_is_logloss_choice_standin_not_live_api",
+    "attribution_stats_on_attr_n_250_not_full_n"
+  ],
+  "paths": {
+    "STAT_PROOF.md": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/stat_proof/STAT_PROOF.md",
+    "stat_proof_results.json": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/stat_proof/stat_proof_results.json",
+    "export_manifest.json": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/export_manifest.json",
+    "bridge_dir": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge"
+  }
+}

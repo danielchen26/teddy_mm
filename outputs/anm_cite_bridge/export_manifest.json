@@ -1,0 +1,73 @@
+{
+  "n_cells_site4_test": 16750,
+  "n_cells_ood": 2000,
+  "n_cells_total": 18750,
+  "n_cells": 16750,
+  "n_events": 168750,
+  "n_available_site4_test": 16750,
+  "capped": false,
+  "split": "test",
+  "sites": [
+    "site4"
+  ],
+  "ood_slice": "val_non_site4",
+  "panel_proteins": [
+    "CD19",
+    "CD72",
+    "CD22",
+    "CD3",
+    "CD2",
+    "CD5",
+    "CD16",
+    "CD11c",
+    "CD36"
+  ],
+  "lineage_panels": {
+    "b_lineage": [
+      "CD19",
+      "CD72",
+      "CD22"
+    ],
+    "t_lineage": [
+      "CD3",
+      "CD2",
+      "CD5"
+    ],
+    "myeloid": [
+      "CD16",
+      "CD11c",
+      "CD36"
+    ]
+  },
+  "key_markers": {
+    "b_lineage": "CD19",
+    "t_lineage": "CD3",
+    "myeloid": "CD16"
+  },
+  "phase1_mlp_pearson_quoted": {
+    "CD19": 0.9321139392380869,
+    "CD72": 0.9326986089454039,
+    "CD22": 0.9108167826289092,
+    "CD3": 0.9125372175817795,
+    "CD2": 0.8985778861269099,
+    "CD5": 0.8982449200643862,
+    "CD16": 0.9186828501498828,
+    "CD11c": 0.8965328949073577,
+    "CD36": 0.9324591288981439
+  },
+  "phase1_test_mlp_pearson_mean": 0.6102218214870081,
+  "ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1/best.pt",
+  "seed": 17,
+  "z_keep": 32,
+  "compact": true,
+  "z_rna_export": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/z_rna_export.npy",
+  "device": "mps",
+  "criteria_available": [
+    "O0",
+    "O1",
+    "O2"
+  ],
+  "events_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_typed_events.jsonl",
+  "cells_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_cells_meta.jsonl",
+  "claim_boundary": "typed_evidence_export_only_not_clinical"
+}
