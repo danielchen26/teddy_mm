@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Reverse step 1 — must-separate pairs in TEDDY evidence space (Mode B only).
 
-Reads bridge export ``z_rna_export.npy`` + true ADT panel / cell meta, finds
-near-identical z neighbors that disagree on lineage or protein labels.
+Reads full frozen TEDDY-G ``z_512`` (mean-pool last-layer @ ctx 1024) + true
+ADT panel / cell meta, finds near-identical z neighbors that disagree on
+lineage or protein labels.
 
 Purpose
 -------
@@ -14,9 +15,11 @@ Mode A, residual-as-field, Jacobian, gated ±ε G1–G4, fusion audit, or ATAC.
 
 Notes
 -----
-``z_rna_export.npy`` is the compact sidecar (L2-normalized full z_512, then
-``z_keep`` leading dims; default 32). Full loading factor remains: mean-pool
-last-layer tokens at context length 1024.
+Default z input is ``z_rna_512.npy`` (L2-normalized full 512-D), **not** the
+compact ``z_rna_export.npy`` sidecar (``z_keep=32`` leading dims). If the
+512-D sidecar is missing, rebuild from ``data/processed/cite/z_rna.npy`` via
+meta ``global_index`` (same L2 + row order as the bridge export) or re-run
+``scripts/03_embed_rna.py --seq-len 1024``. Do not silently fall back to dim=32.
 """
 from __future__ import annotations
 
@@ -32,7 +35,66 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lib.lineage_panels import KEY_MARKERS, LINEAGE_PANELS, all_panel_proteins
 
+
 PANEL = all_panel_proteins()
+
+
+def resolve_z_path(bridge: Path, z_path: Path | None) -> Path:
+    """Prefer full z_512 sidecar; refuse compact z_keep=32 as the probe space.
+
+    Resolution order when ``z_path`` is None:
+      1. ``bridge/z_rna_512.npy``
+      2. Rebuild from ``ROOT/data/processed/cite/z_rna.npy`` + cite_cells_meta
+         (writes ``bridge/z_rna_512.npy``)
+      3. Honest exit — do not use ``z_rna_export.npy`` (dim 32)
+    """
+    if z_path is not None:
+        if not z_path.is_file():
+            raise SystemExit(f"--z-path not found: {z_path}")
+        return z_path
+
+    sidecar = bridge / "z_rna_512.npy"
+    if sidecar.is_file():
+        return sidecar
+
+    processed = ROOT / "data" / "processed" / "cite" / "z_rna.npy"
+    meta_path = bridge / "cite_cells_meta.jsonl"
+    if processed.is_file() and meta_path.is_file():
+        print(f"building {sidecar} from {processed} + {meta_path.name}")
+        z_full = np.load(processed, mmap_mode="r")
+        if z_full.ndim != 2 or z_full.shape[1] != 512:
+            raise SystemExit(
+                f"expected processed z_rna.npy (N, 512), got {getattr(z_full, 'shape', None)}"
+            )
+        gis: list[int] = []
+        with meta_path.open() as f:
+            for line in f:
+                gis.append(int(json.loads(line)["global_index"]))
+        gis_a = np.asarray(gis, dtype=np.int64)
+        out = np.empty((len(gis_a), 512), dtype=np.float32)
+        bs = 2048
+        for s in range(0, len(gis_a), bs):
+            e = min(s + bs, len(gis_a))
+            block = np.asarray(z_full[gis_a[s:e]], dtype=np.float32)
+            norms = np.linalg.norm(block, axis=1, keepdims=True) + 1e-6
+            out[s:e] = block / norms
+        np.save(sidecar, out)
+        print(f"wrote {sidecar} shape={out.shape}")
+        return sidecar
+
+    compact = bridge / "z_rna_export.npy"
+    hint = ""
+    if compact.is_file():
+        shp = np.load(compact, mmap_mode="r").shape
+        hint = (
+            f" Found compact {compact.name} shape={tuple(shp)} (z_keep leading dims) — "
+            "that is NOT the reverse-step1 probe space."
+        )
+    raise SystemExit(
+        "full z_512 missing: need bridge/z_rna_512.npy or data/processed/cite/z_rna.npy "
+        "(frozen TEDDY-G mean-pool last-layer @ ctx 1024 from scripts/03_embed_rna.py)."
+        + hint
+    )
 
 
 def _coarse_from_cell_type(ct: str) -> str:
@@ -220,6 +282,12 @@ def sweep_threshold(
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--bridge-dir", type=Path, default=ROOT / "outputs" / "anm_cite_bridge")
+    p.add_argument(
+        "--z-path",
+        type=Path,
+        default=None,
+        help="full z_512 npy (default: bridge/z_rna_512.npy or rebuild from processed z_rna.npy)",
+    )
     p.add_argument("--k", type=int, default=30)
     p.add_argument("--min-cos", type=float, default=0.98)
     p.add_argument("--adt-margin", type=float, default=0.05)
@@ -235,7 +303,13 @@ def main() -> None:
     out_dir = args.out_dir or (bridge / "reverse_step1")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    z_all = np.load(bridge / "z_rna_export.npy").astype(np.float32)
+    z_path = resolve_z_path(bridge, args.z_path)
+    z_all = np.load(z_path).astype(np.float32)
+    if z_all.ndim != 2 or z_all.shape[1] != 512:
+        raise SystemExit(
+            f"reverse step1 requires full z_512 (N, 512); got {z_path} shape={z_all.shape}. "
+            "Do not pass compact z_rna_export.npy (z_keep=32)."
+        )
     adt = np.load(bridge / "adt_true_panel.npy").astype(np.float32)
     n_site4 = adt.shape[0]
     if z_all.shape[0] < n_site4:
@@ -260,7 +334,7 @@ def main() -> None:
     key_lin_a = np.array(key_lin)
     coarse_a = np.array(coarse)
 
-    print(f"site4 n={n_site4} z_export_dim={z.shape[1]} k={args.k} min_cos={args.min_cos}")
+    print(f"site4 n={n_site4} z_path={z_path} z_dim={z.shape[1]} k={args.k} min_cos={args.min_cos}")
     print("adt_lineage counts:", {k: int((adt_lin_a == k).sum()) for k in sorted(set(adt_lin))})
     print("coarse counts:", {k: int((coarse_a == k).sum()) for k in sorted(set(coarse))})
 
@@ -370,17 +444,19 @@ def main() -> None:
             "z_512_definition": (
                 "mean-pool last-layer tokens at context length 1024 "
                 "(not TEDDY pretrain 2048, not disease token); "
-                "this script uses export sidecar z_keep dims after L2-normalize"
+                "L2-normalized full d_model=512 (not compact z_keep=32)"
             ),
         },
         "inputs": {
-            "z_path": str(bridge / "z_rna_export.npy"),
+            "z_path": str(z_path),
             "adt_true_panel": str(bridge / "adt_true_panel.npy"),
             "meta": str(bridge / "cite_cells_meta.jsonl"),
             "n_site4": n_site4,
+            "z_dim": int(z.shape[1]),
             "z_export_dim": int(z.shape[1]),
             "z_all_rows": int(z_all.shape[0]),
             "panel": PANEL,
+            "note": "z_dim must be 512; compact z_rna_export.npy (z_keep=32) is not used",
         },
         "params": {
             "k": args.k,
@@ -466,10 +542,10 @@ gene or protein perturbs (**perturb-response** / reverse closed loop).
 
 ## z definition
 
-- Full loading factor: `z_512` = mean-pool last-layer tokens @ context **1024**
-  (not pretrain 2048, not disease token).
-- This run used export sidecar `{bridge / "z_rna_export.npy"}`:
-  site4 n={n_site4}, dim={z.shape[1]} (compact `z_keep`, not full 512).
+- `z_512` = mean-pool last-layer tokens @ context **1024**
+  (not pretrain 2048, not disease token); L2-normalized full **512-D**.
+- This run used `{z_path}`: site4 n={n_site4}, dim={z.shape[1]}
+  (not compact `z_rna_export.npy` / `z_keep=32`).
 
 ## Params (primary pair list)
 

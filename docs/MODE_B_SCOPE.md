@@ -18,7 +18,7 @@ This is **not** Mode A. Do not read current results as residual-stream / Jacobia
 | Not | A dedicated disease / CLS token readout |
 | Dim | `d_model = 512` after mean-pool |
 
-Bridge sidecar `outputs/anm_cite_bridge/z_rna_export.npy` stores **L2-normalized** z with `z_keep=32` (first 32 dims) for compact export — a **loading factor / evidence index**, not a claim that 32-D is biologically complete.
+Bridge sidecar `outputs/anm_cite_bridge/z_rna_512.npy` stores **L2-normalized full** `z_512` (export row order). Compact `z_rna_export.npy` keeps only `z_keep=32` leading dims for typed-event JSONL — **not** the reverse-step1 probe space.
 
 ---
 
@@ -54,7 +54,7 @@ They **cannot** yet answer whether `z_512` (or the export sidecar) is **sufficie
 
 Script: [`bridge_anm/reverse_step1_must_separate.py`](../bridge_anm/reverse_step1_must_separate.py)
 
-Reads `z_rna_export.npy` + true ADT panel, finds near-identical export-z pairs with different lineage/protein labels (**must-separate**). Report: [`docs/reports/REVERSE_STEP1.md`](reports/REVERSE_STEP1.md).
+Reads full `z_rna_512.npy` (not compact `z_keep=32`) + true ADT panel, finds near-identical z pairs with different lineage/protein labels (**must-separate**). Report: [`docs/reports/REVERSE_STEP1.md`](reports/REVERSE_STEP1.md).
 
 Still Mode B / evidence geometry — **not** Mode A perturb-response.
 

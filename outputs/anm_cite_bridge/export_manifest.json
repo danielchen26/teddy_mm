@@ -69,5 +69,12 @@
   ],
   "events_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_typed_events.jsonl",
   "cells_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_cells_meta.jsonl",
-  "claim_boundary": "typed_evidence_export_only_not_clinical"
+  "claim_boundary": "typed_evidence_export_only_not_clinical",
+  "z_rna_512": "/workspace/teddy_mm_repo/outputs/anm_cite_bridge/z_rna_512.npy",
+  "z_512_definition": "L2-normalized mean-pool last-layer TEDDY-G @ ctx 1024 from data/processed/cite/z_rna.npy; full d_model=512",
+  "z_512_shape": [
+    18750,
+    512
+  ],
+  "z_keep_note": "z_rna_export.npy remains compact z_keep=32 leading dims of same L2 vectors"
 }

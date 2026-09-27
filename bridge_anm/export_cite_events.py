@@ -336,9 +336,15 @@ def main() -> None:
             )
 
     z_path = None
+    z_512_path = None
     if compact and store_z_rows:
         z_path = args.out_dir / "z_rna_export.npy"
         np.save(z_path, np.stack(store_z_rows, axis=0))
+        # Full L2-normalized z_512 in the same export row order (site4 then OOD).
+        full_idx = np.concatenate([pick, ood_pick]) if ood_pick.size else pick
+        z_512_path = args.out_dir / "z_rna_512.npy"
+        np.save(z_512_path, z[full_idx].astype(np.float32))
+        print(f"wrote {z_512_path} shape={(len(full_idx), z.shape[1])}")
 
     n_site4 = int(pick.size)
     n_ood = int(ood_pick.size)
@@ -367,6 +373,14 @@ def main() -> None:
         "z_keep": args.z_keep,
         "compact": compact,
         "z_rna_export": str(z_path) if z_path else None,
+        "z_rna_512": str(z_512_path) if z_512_path else None,
+        "z_512_definition": (
+            "L2-normalized mean-pool last-layer TEDDY-G @ ctx 1024 "
+            "(from data/processed/cite/z_rna.npy); full d_model=512"
+        ),
+        "z_512_shape": (
+            [int(n_site4 + n_ood), int(z.shape[1])] if z_512_path else None
+        ),
         "device": str(device),
         "criteria_available": list(CRITERIA.keys()),
         "events_path": str(events_path),

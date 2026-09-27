@@ -10,7 +10,7 @@ Public landing: **[docs/index.html](https://danielchen26.github.io/teddy_mm/)** 
 |---|---|
 | **Mode B (implemented)** | TEDDY as typed evidence source → ANM **finite_field** decisions; editable observer YAML (O0/O1/O2); missing-modality abstain demos; LOO/flip attribution on **decisions** |
 | **NOT claimed (Mode A+)** | Residual stream as field · layer Jacobian · in-silico gene perturbs · gated ±ε / ±ε/2 G1–G4 · reverse closed loop · fusion audit · ATAC/chromatin |
-| **`z_512` definition** | Mean-pool **last-layer** tokens at context length **1024** (not TEDDY pretrain 2048, not a disease token). Loading factor for CITE embed (`scripts/03_embed_rna.py`). Bridge export may store L2-normalized `z_keep=32` sidecar only. |
+| **`z_512` definition** | Mean-pool **last-layer** tokens at context length **1024** (not TEDDY pretrain 2048, not a disease token). Loading factor for CITE embed (`scripts/03_embed_rna.py`). Bridge: full L2 `z_rna_512.npy`; compact `z_rna_export.npy` is `z_keep=32` only (not reverse-step1). |
 | **Conclusions about** | **Decision-layer** sensitivity to TEDDY evidence — not TEDDY representation response to perturbs. Cannot yet answer whether z is sufficient for protein readout. |
 | **Honest weak arm** | ADT-only is a weak model; abstain story is honest silence, not a Pearson contest. |
 
