@@ -8,8 +8,8 @@ Public landing: **[docs/index.html](https://danielchen26.github.io/teddy_mm/)** 
 
 | | |
 |---|---|
-| **Mode B (implemented)** | TEDDY as typed evidence source → ANM **finite_field** decisions; editable observer YAML (O0/O1/O2); missing-modality abstain demos; LOO/flip attribution on **decisions** |
-| **NOT claimed (Mode A+)** | Residual stream as field · layer Jacobian · in-silico gene perturbs · gated ±ε / ±ε/2 G1–G4 · reverse closed loop · fusion audit · ATAC/chromatin |
+| **Mode B (implemented)** | TEDDY as typed evidence source → ANM **finite_field** decisions; editable observer YAML (O0/O1/O2); missing-modality abstain demos; LOO/flip attribution on **decisions**; **decision loop** veto→complement→verify on must-pairs |
+| **NOT claimed (Mode A+)** | Residual stream as field · layer Jacobian · in-silico gene perturbs · gated ±ε / ±ε/2 G1–G4 · Mode-A reverse closed loop (rep response) · fusion audit · ATAC/chromatin |
 | **`z_512` definition** | Mean-pool **last-layer** tokens at context length **1024** (not TEDDY pretrain 2048, not a disease token). Loading factor for CITE embed (`scripts/03_embed_rna.py`). Bridge: full L2 `z_rna_512.npy`; compact `z_rna_export.npy` is `z_keep=32` only (not reverse-step1). |
 | **Conclusions about** | **Decision-layer** sensitivity to TEDDY evidence — not TEDDY representation response to perturbs. Cannot yet answer whether z is sufficient for protein readout. |
 | **Honest weak arm** | ADT-only is a weak model; abstain story is honest silence, not a Pearson contest. |
@@ -100,6 +100,24 @@ ANM adopts O2 at **0** endpoint labels (abstain≈0.201, strict≈0.821, editabl
 
 ---
 
+
+## 6 · ANM reverse decision loop (Mode B)
+
+![ANM loop](docs/assets/infographics/06_anm_loop_poster_light.png)
+
+Veto `z_512` insufficiency on must-pairs → complement with **true ADT typed + O1** → verify. Not feature-swap (`z+` global relative_must_reduction **−0.27**). Not Mode A.
+
+`5,000` must-pairs · `1,490` myeloid↔T · false_agree `0.85→0.40` · soft_sep `0.17→0.63` · Q `0.74→0.99`
+
+![Myeloid↔T](docs/assets/infographics/07_myeloid_t_before_after_light.png)
+
+![ANM vs feature swap](docs/assets/infographics/08_anm_vs_feature_swap_light.png)
+
+*([Pages](https://danielchen26.github.io/teddy_mm/#anm-loop) · deep writeup [`ANM_HELPS_TEDDY_LOOP`](docs/reports/ANM_HELPS_TEDDY_LOOP.md) · stats [`REVERSE_LOOP_SMALL`](docs/reports/REVERSE_LOOP_SMALL.md))*
+
+> Source note: Daniel’s brief truncated at 「还有」— proof+figures for the loop items are complete; further asks can append to the report.
+
+---
 ## Proof sentence
 
 > On the same TEDDY δu (site4/test), ANM edits the observer with zero endpoint-label fit, keeping verifiable P_f/Q_f and auditable full-n LOO (n_attr=16,433, perm p≈0.0099). TEDDY-alone over-answers where the declared observer abstains; Train+Jev burns O2 labels and still cannot buy editable-field attribution. Not clinical. Do not claim Pearson > 0.61.
@@ -114,7 +132,7 @@ ANM adopts O2 at **0** endpoint labels (abstain≈0.201, strict≈0.821, editabl
 | Story PNGs | `docs/assets/infographics/` (icon-first, light+dark) |
 | GIFs | `docs/assets/hard_proof/`, `docs/assets/missing_modality/` |
 
-Regenerate story figures: `python scripts/make_story_infographics.py`
+Regenerate story figures: `python scripts/make_story_infographics.py` · loop posters: `/usr/bin/python3 scripts/make_anm_helps_teddy_loop_figures.py`
 
 ### 中文摘要
 

@@ -29,6 +29,7 @@ Bridge sidecar `outputs/anm_cite_bridge/z_rna_512.npy` stores **L2-normalized fu
 - Missing-modality abstain demos (honest silence under weak channels)
 - Closed-form LOO / top-1 flip attribution on **declared decisions**
 - Scope gate / zero-label observer transfer vs Train+Jev (see proof reports)
+- Mode B reverse **decision** loop on must-separate pairs (veto→complement→verify)
 
 Verified numbers only — cite [`HARD_PROOF`](reports/HARD_PROOF.md), [`SCOPE_REFINE_PROOF`](reports/SCOPE_REFINE_PROOF.md), [`MISSING_MODALITY_ANM_DEMO`](reports/MISSING_MODALITY_ANM_DEMO.md).
 
@@ -36,7 +37,7 @@ Verified numbers only — cite [`HARD_PROOF`](reports/HARD_PROOF.md), [`SCOPE_RE
 
 - Mode A: residual stream as field, layer Jacobian, in-silico gene perturbs
 - Gated ±ε / ±ε/2 G1–G4 protocols
-- Reverse closed loop (representation response to perturbs)
+- Mode-A reverse closed loop (representation response to perturbs)
 - Fusion audit
 - ATAC / chromatin foundation
 
@@ -53,6 +54,13 @@ They **cannot** yet answer whether `z_512` (or the export sidecar) is **sufficie
 ## Cheap next probes (Mode B only)
 
 Four cheap probes ranked in [`docs/reports/CHEAP_PROBES_RANKING.md`](reports/CHEAP_PROBES_RANKING.md). Still **not** Mode A. Gated ±ε G1–G4 here are **decision-layer** nudges on typed evidence, not residual-stream / gene-perturb protocols.
+
+
+## Reverse decision loop (Mode B — implemented)
+
+Script: [`bridge_anm/reverse_loop_small.py`](../bridge_anm/reverse_loop_small.py)
+
+**Veto → complement → verify** on reverse_step1 `z_512` must-pairs. Winner = true-ADT typed evidence + O1 (not `z+` alone). Deep writeup + NotebookLM posters: [`docs/reports/ANM_HELPS_TEDDY_LOOP.md`](reports/ANM_HELPS_TEDDY_LOOP.md). Still **not** Mode A perturb-response.
 
 ## Reverse step 1 (sufficiency probe only)
 

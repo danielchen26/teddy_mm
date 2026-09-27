@@ -186,7 +186,8 @@ code { font-family: var(--mono); font-size: .86em; }
       <a href="#attr">Attr</a>
       <a href="#scope">Scope</a>
       <a href="#labels">Labels</a>
-      <a href="#claims">Claims</a>
+      <a href="#anm-loop">ANM loop</a>
+        <a href="#claims">Claims</a>
       <a href="#rerun">Re-run</a>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle theme">Theme</button>
     </nav>
@@ -220,7 +221,9 @@ code { font-family: var(--mono); font-size: .86em; }
         <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a> ·
         <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a> ·
         <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>
-        <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a>.
+        <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a> ·
+        <a href="reports/ANM_HELPS_TEDDY_LOOP.md">ANM_HELPS_TEDDY_LOOP</a> ·
+        <a href="reports/REVERSE_LOOP_SMALL.md">REVERSE_LOOP_SMALL</a>.
       </div>
     </div>
   </section>
@@ -420,6 +423,53 @@ code { font-family: var(--mono); font-size: .86em; }
     </div>
   </section>
 
+
+  <section class="section" id="anm-loop">
+    <div class="wrap">
+      <h2>ANM reverse decision loop</h2>
+      <p class="sub">Mode B only: veto → complement → verify on must-separate pairs. Not Mode A. Not Pearson &gt; 0.61.</p>
+      <div class="fig">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/06_anm_loop_poster_dark.png" />
+          <img src="assets/infographics/06_anm_loop_poster_light.png" alt="ANM Mode B decision loop: Veto → Complement → Verify around frozen TEDDY z_512" width="1600" height="900" />
+        </picture>
+      </div>
+      <p class="cap">Near-identical <code>z_512</code> (median cos 0.982) still disagrees on true ADT lineage. ANM vetoes sufficiency, admits typed true-ADT + O1, verifies.</p>
+      <div class="metrics">
+        <span><em>5,000</em> must-pairs</span>
+        <span><em>1,490</em> myeloid↔T</span>
+        <span>false_agree <em>0.85→0.40</em></span>
+        <span>soft_sep <em>0.17→0.63</em></span>
+        <span>Q <em>0.74→0.99</em></span>
+        <span>winner <em>true ADT + O1</em></span>
+      </div>
+      <div class="fig">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/07_myeloid_t_before_after_dark.png" />
+          <img src="assets/infographics/07_myeloid_t_before_after_light.png" alt="Myeloid vs T before/after: false agree drops from 0.85 to 0.40 with true ADT + O1" width="1600" height="900" />
+        </picture>
+      </div>
+      <p class="cap">Myeloid↔T story: baseline pred+O0 false-agrees; true-ADT typed evidence + editable O1 separates.</p>
+      <div class="fig">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/08_anm_vs_feature_swap_dark.png" />
+          <img src="assets/infographics/08_anm_vs_feature_swap_light.png" alt="ANM uniquely provides typed evidence, editable observers, abstain, verify — not just z+ feature swap" width="1600" height="900" />
+        </picture>
+      </div>
+      <p class="cap">Not feature-swap: global <code>z+</code> relative_must_reduction = −0.27. Decision ownership = typed evidence + observer + abstain + verify.</p>
+      <div class="zh">
+        <strong>中文</strong>
+        z_512 在 must-pair 上不够用；ANM 决策闭环否决→补真 ADT 类型证据+O1→核验。不是换特征，不是 Mode A，不是 Pearson &gt; 0.61。
+      </div>
+      <div class="links">
+        <a href="reports/ANM_HELPS_TEDDY_LOOP.md">ANM_HELPS_TEDDY_LOOP</a>
+        <a href="reports/REVERSE_LOOP_SMALL.md">REVERSE_LOOP_SMALL</a>
+        <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a>
+        <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="claims">
     <div class="wrap">
       <h2>Claims</h2>
@@ -430,7 +480,7 @@ code { font-family: var(--mono); font-size: .86em; }
         <div class="axis"><h4>Attribution</h4><p>Full-n LOO n=16,433 · flip 0.277 · p≈0.0099.</p></div>
         <div class="axis"><h4>Zero-label</h4><p>ANM 0 labels vs Train ≈50–500 for numerical match only.</p></div>
         <div class="axis"><h4>Mode B in</h4><p>TEDDY typed evidence → finite_field; YAML observers; missing-modality abstain; LOO on decisions.</p></div>
-        <div class="axis" style="background:var(--warn-bg);border-color:color-mix(in srgb, var(--warn) 30%, var(--line));"><h4 style="color:var(--warn);">Not claimed</h4><p>Mode A residual/Jacobian/gene perturbs · ±ε G1–G4 · reverse closed loop · fusion audit · ATAC. z sufficiency for protein readout still open.</p></div>
+        <div class="axis" style="background:var(--warn-bg);border-color:color-mix(in srgb, var(--warn) 30%, var(--line));"><h4 style="color:var(--warn);">Not claimed</h4><p>Mode A residual/Jacobian/gene perturbs · ±ε G1–G4 · Mode-A reverse closed loop (rep response) · fusion audit · ATAC. Mode B decision loop (veto→complement→verify) is in — see <a href="#anm-loop">ANM loop</a>.</p></div>
       </div>
       <div class="proof">
         On the same TEDDY δu (site4/test), ANM edits the observer with zero endpoint-label fit, keeping verifiable P<sub>f</sub>/Q<sub>f</sub> and auditable full-n LOO (n_attr=16,433, perm p≈0.0099). TEDDY-alone over-answers where the declared observer abstains; Train+Jev burns O2 labels and still cannot buy editable-field attribution. Not clinical. Do not claim Pearson &gt; 0.61.
@@ -438,6 +488,8 @@ code { font-family: var(--mono); font-size: .86em; }
       <div class="links">
         <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>
         <a href="reports/REVERSE_STEP1.md">REVERSE_STEP1</a>
+        <a href="reports/ANM_HELPS_TEDDY_LOOP.md">ANM_HELPS_TEDDY_LOOP</a>
+        <a href="reports/REVERSE_LOOP_SMALL.md">REVERSE_LOOP_SMALL</a>
         <a href="reports/HARD_PROOF.md">HARD_PROOF</a>
         <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a>
         <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a>
@@ -459,7 +511,7 @@ code { font-family: var(--mono); font-size: .86em; }
 PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100
 PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 # missing modality: bridge_anm/export_missing_modality_events.py → run_missing_modality_demo.py</div>
-      <p class="note">Criteria: <code>bridge_anm/readouts/cite_lineage_O{0,1,2}.yaml</code> · regenerate story PNGs: <code>python scripts/make_story_infographics.py</code></p>
+      <p class="note">Criteria: <code>bridge_anm/readouts/cite_lineage_O{0,1,2}.yaml</code> · regenerate story PNGs: <code>python scripts/make_story_infographics.py</code> · loop posters: <code>/usr/bin/python3 scripts/make_anm_helps_teddy_loop_figures.py</code></p>
     </div>
   </section>
 </main>
