@@ -4,16 +4,29 @@ Public landing (GitHub Pages): **[docs/index.html](https://danielchen26.github.i
 
 **Claim boundary (read first):** not clinical · not a Pearson win over phase-1 full-ADT **~0.61** · holdout `adt_true` = verifier only · Train+Jev = log-loss Choice stand-in (not a live Jev API) · no `best.pt` retrain. Numbers below cite only [`HARD_PROOF`](docs/reports/HARD_PROOF.md), [`SCOPE_REFINE_PROOF`](docs/reports/SCOPE_REFINE_PROOF.md), [`MISSING_MODALITY`](docs/reports/MISSING_MODALITY_ANM_DEMO.md).
 
-Each capability section below follows the same pedagogy:
+---
 
-1. **What foundation-model scientists originally wanted** (plain English)
-2. **Concrete TEDDY CITE example** a non-expert can follow — and where that goal breaks
-3. **How we compare** TEDDY alone vs TEDDY+ANM vs Train+Jev (verified numbers only)
-4. **GIF / figure last** (links into `docs/assets/`)
+## Global frame (skim this first)
+
+**What biologists care about.** In CITE-seq, you see RNA and surface proteins (ADT) on the same cell. Biologists and TEDDY foundation-model scientists want a trustworthy **RNA → protein / cell-state readout**: “from this cell’s RNA, what is its protein panel and lineage-like state?”
+
+**What TEDDY already gives.** Freeze TEDDY-G on NeurIPS 2021 BMMC CITE → latent **z_512** → ADT panel predictions. Phase-1 TEDDY+MLP full-ADT Pearson on the export slice is **0.610 (~0.61)**. That map is the evidence layer.
+
+**Normal expectation without ANM.** One frozen map + one fixed score. Once Pearson looks good enough, you treat the readout as done: same question forever, answer every cell, no declared “why this call.”
+
+**What ANM adds.** On typed δu events from that frozen TEDDY evidence, ANM turns the *decision* (call / abstain / which markers matter / which cells to trust) into an **editable declared field** — without retraining TEDDY and without claiming Pearson > ~0.61.
+
+Every case below is the same skimable story:
+
+1. **Care about** — the scientific question in plain words  
+2. **Expectation** — what a good answer looks like under normal (no-ANM) circumstances  
+3. **Problem framework** — what breaks  
+4. **How we solve** — TEDDY alone vs TEDDY+ANM vs Train+Jev (verified numbers only)  
+5. **GIF / figure last**
 
 ---
 
-## Setup (shared across sections)
+## Setup (shared)
 
 NeurIPS 2021 BMMC CITE · holdout **site4/test n=16,750**.
 
@@ -21,31 +34,35 @@ NeurIPS 2021 BMMC CITE · holdout **site4/test n=16,750**.
 
 | Arm | What it is | Structural limit |
 |---|---|---|
-| **TEDDY alone** | Panel-mean / threshold rules | Silent over-answer; criterion change needs label retune; no declared-field LOO |
+| **TEDDY alone** | Panel-mean / threshold rules on frozen preds | Silent over-answer; criterion change needs label retune; no declared-field LOO |
 | **TEDDY + ANM** | Declared P_f / Q_f field (YAML observers O0/O1/O2) | Edit declaration only; full-n LOO attribution |
 | **Train + Jev stand-in** | Logistic / MLP / grid calibration | Needs O2 labels to match; O0-trained abstain stuck at **185**; no editable-field attribution |
 
-Phase-1 TEDDY+MLP full-ADT Pearson on the export slice: **0.610** (~0.61). Accuracy is secondary on every section.
+Accuracy is secondary on every section. Do not claim Pearson > ~0.61.
 
 ---
 
 ## 1 · Edit the question without retrain
 
-### 1 · What foundation-model scientists originally wanted
+### 1 · Care about
 
-Train **one RNA→protein map**, freeze a readout head, maximize a single score (Pearson on the ADT panel). The “question” is baked in at train time.
+Biologists often want a **lineage-style call** from the predicted surface panel: is this cell B, T, or myeloid? Foundation-model work usually trains one RNA→protein map and freezes one readout head.
 
-### 2 · Concrete TEDDY CITE example
+### 2 · Expectation (without ANM)
 
-Collaborator asks first: *call each cell B / T / myeloid with equal marker weight (**O0**)*.  
-Then: *same labels, abstain more when the margin is thin (**O1**)*.  
-Then: *prefer key-lineage markers over equal panel mean (**O2**)*.
+A good answer looks like: maximize Pearson (~0.61 here), then apply **one** fixed decision rule forever. Same weights, same “question,” every week.
 
-On site4/test: O0→O1 disagree rate **0.0000** (tighter abstain only). O0→O2 rewrites `expected_action` on **1,794 / 14,379** both-defined cells (rate **0.1248**) — e.g. many myeloid→B flips when key markers dominate.
+### 3 · Problem framework
 
-**Where it breaks:** a frozen Pearson head cannot rewrite the decision field. Changing O0→O2 means new labels + retune for TEDDY-alone / Train+Jev — or keep answering the old question.
+The scientific question is not fixed. Collaborators change the criterion:
 
-### 3 · How we compare (HARD_PROOF)
+- **O0** — equal marker weight  
+- **O1** — same labels, abstain more when the margin is thin  
+- **O2** — prefer key-lineage markers over equal panel mean  
+
+On site4/test: O0→O1 disagree rate **0.0000** (tighter abstain only). O0→O2 rewrites `expected_action` on **1,794 / 14,379** both-defined cells (rate **0.1248**). A frozen Pearson head cannot rewrite that decision field — you retune with new labels, or keep answering last week’s question.
+
+### 4 · How we solve (HARD_PROOF)
 
 | Arm | O0 Q | O0 abstain | O1 Q | O1 abstain | O2 Q | O2 abstain | Criterion change cost |
 |---|---:|---:|---:|---:|---:|---:|---|
@@ -53,30 +70,32 @@ On site4/test: O0→O1 disagree rate **0.0000** (tighter abstain only). O0→O2 
 | **TEDDY + ANM** | 0.9394 | **317** | 0.9578 | **834** | 0.8208 | **3,373** | **Declaration only** |
 | Train+Jev (O0 zero-shot) | 0.9552 | 185 | 0.9733 | 185 | 0.8277 | 185 | Abstain does not follow observer |
 
-Also: TEDDY-alone O0 rule still answers on **780** cells where O1 abstains and **1,752** where O2 abstains.
+Also: TEDDY-alone O0 rule still answers on **780** cells where O1 abstains and **1,752** where O2 abstains. Train abstain stuck at **185** on every observer.
 
-### 4 · Figure last
+### 5 · Figure last
 
 ![Observer shift O0→O1→O2](docs/assets/hard_proof/observer_shift_o0o1o2_light.gif)
 
-*Observer shift on the same TEDDY δu: ANM abstain climbs 317→834→3,373; Train+Jev stays flat at 185; TEDDY-alone over-answers where the new observer abstains.*  
-([Pages](https://danielchen26.github.io/teddy_mm/) · dark: [`observer_shift_o0o1o2_dark.gif`](docs/assets/hard_proof/observer_shift_o0o1o2_dark.gif))
+*Same TEDDY δu: ANM abstain climbs 317→834→3,373; Train+Jev stays flat at 185; TEDDY-alone over-answers where the new observer abstains.*  
+([Pages](https://danielchen26.github.io/teddy_mm/#edit) · dark: [`observer_shift_o0o1o2_dark.gif`](docs/assets/hard_proof/observer_shift_o0o1o2_dark.gif))
 
 ---
 
 ## 2 · Abstain when a modality is missing
 
-### 1 · What foundation-model scientists originally wanted
+### 1 · Care about
 
-A multimodal predictor that **always answers** from whatever channels are present, keeping Pearson high under joint RNA+ADT.
+Real CITE batches are messy. Biologists care: *when RNA or ADT is weak/offline, can I still trust a lineage / protein readout?*
 
-### 2 · Concrete TEDDY CITE example
+### 2 · Expectation (without ANM)
 
-Same site4 cells, three masks: `rna_only` (sequencer OK, antibody panel offline), `adt_only` (only surface proteins today), `joint`. A core facility drops RNA for one batch of 12,563 cells — should lineage calls stay as confident as with both channels?
+A good multimodal model **always answers** from whatever channels are present, and keeps Pearson high under joint RNA+ADT.
 
-**Where it breaks:** under weak `adt_only`, TEDDY-alone O0 abstain = **0** (silent over-answer) while Q ≈ 0.63. Always-answering ≠ trustworthy. Panel Pearson (rna_only≈0.915, adt_only≈0.446, joint≈0.870) is secondary; full-ADT phase-1 reference stays ~0.61.
+### 3 · Problem framework
 
-### 3 · How we compare (MISSING_MODALITY)
+Same site4 cells, three masks: `rna_only`, `adt_only`, `joint`. Under weak `adt_only`, TEDDY-alone O0 abstain = **0** (silent over-answer) while Q ≈ 0.63. Always-answering ≠ trustworthy. Panel Pearson (rna_only≈0.915, adt_only≈0.446, joint≈0.870) is secondary; full-ADT phase-1 reference stays ~0.61.
+
+### 4 · How we solve (MISSING_MODALITY)
 
 | Mask | TEDDY O0 Q | TEDDY O0 abstain | ANM O0 Q | ANM O0 abstain | ANM O0 mean P_f | ANM O2 abstain |
 |---|---:|---:|---:|---:|---:|---:|
@@ -86,28 +105,30 @@ Same site4 cells, three masks: `rna_only` (sequencer OK, antibody panel offline)
 
 Train-retune under `adt_only` plateaus at Q≈0.68–0.70 even with 1,000 O2 labels — still no editable-field LOO (flip_rate≈0.71).
 
-### 4 · Figure last
+### 5 · Figure last
 
 ![Missing modality masks](docs/assets/missing_modality/missing_modality_masks_light.gif)
 
-*Mask animation: on `adt_only`, ANM abstain jumps and mean P_f drops; TEDDY-alone keeps answering (abstain 0).*  
+*On `adt_only`, ANM abstain jumps and mean P_f drops; TEDDY-alone keeps answering (abstain 0).*  
 ([dashboard](docs/assets/missing_modality/missing_modality_dashboard_light.png) · [Pages](https://danielchen26.github.io/teddy_mm/#missing))
 
 ---
 
 ## 3 · Attribute which marker flipped the call
 
-### 1 · What foundation-model scientists originally wanted
+### 1 · Care about
 
-Once Pearson is good enough: **which input features drove the prediction?** Usual tools = saliency / SHAP / top-expressed markers — not flip distance on a declared decision field.
+After a call is made, biologists ask: **which surface marker actually flipped this cell’s decision?** That is scientific attribution, not a residual plot.
 
-### 2 · Concrete TEDDY CITE example
+### 2 · Expectation (without ANM)
 
-A reviewer picks a cell called T-lineage under O0: *“If we drop CD5, does the call flip — and how far was the margin?”* That is leave-one-out on the declared protein field. On full site4, top-1 flip concentration includes CD5 (3,882), CD2 (2,516), CD36 (2,394).
+Once Pearson is good enough, use saliency / SHAP / “top expressed markers.” A good answer is a ranked feature list on opaque coefficients.
 
-**Where it breaks:** panel-mean heuristics and Train heads lack closed-form LOO / flip-distance on an editable observer field.
+### 3 · Problem framework
 
-### 3 · How we compare (HARD_PROOF)
+A reviewer picks a T-lineage cell under O0: *“If we drop CD5, does the call flip — and how far was the margin?”* That needs leave-one-out **on a declared decision field**. Panel-mean heuristics and Train heads lack closed-form LOO / flip-distance on an editable observer. On full site4, top-1 flip concentration includes CD5 (3,882), CD2 (2,516), CD36 (2,394).
+
+### 4 · How we solve (HARD_PROOF)
 
 | Metric | TEDDY+ANM | TEDDY alone / Train+Jev |
 |---|---|---|
@@ -119,7 +140,7 @@ A reviewer picks a cell called T-lineage under O0: *“If we drop CD5, does the 
 
 Matching abstain numerically still does **not** buy attribution.
 
-### 4 · Figure last
+### 5 · Figure last
 
 ![Attribution top-1 flip](docs/assets/hard_proof/attribution_top1_flip_light.png)
 
@@ -130,17 +151,21 @@ Matching abstain numerically still does **not** buy attribution.
 
 ## 4 · Gate for conditional accuracy (scope refine)
 
-### 1 · What foundation-model scientists originally wanted
+### 1 · Care about
 
-One global accuracy / Pearson on the **full** test set — every cell equally worth answering; maximize average score at coverage = 1.
+Follow-up budget is limited. Biologists care: *which cells are trustworthy enough to confirm / label next?* Conditional correctness under partial coverage — not only full-set average score.
 
-### 2 · Concrete TEDDY CITE example
+### 2 · Expectation (without ANM)
 
-A sorting experiment can confirm only ~40% of cells. Raise τ on `soft_P = max(action_scores)` so conditional Q climbs as coverage shrinks. Separately, ANM LOO marks **flip-sensitive** cells (harder scope): Q **0.8099** vs random same-n **0.9458**.
+One global accuracy / Pearson on the **full** test set. Every cell equally worth answering; maximize average score at coverage = 1.
 
-**Where it breaks:** full-coverage Pearson hides barely-decided cells. Without a workability gate or attributed-hard scope, you cannot trade coverage for conditional correctness or prioritize which cells to label next.
+### 3 · Problem framework
 
-### 3 · How we compare (SCOPE_REFINE_PROOF)
+A sorting experiment can confirm only ~40% of cells. Full-coverage Pearson hides barely-decided cells. Without a workability gate or attributed-hard scope, you cannot trade coverage for conditional correctness or prioritize which cells to label next.
+
+### 4 · How we solve (SCOPE_REFINE_PROOF)
+
+Raise τ on `soft_P = max(action_scores)` so conditional Q climbs as coverage shrinks. Separately, ANM LOO marks **flip-sensitive** cells (harder scope).
 
 | Setting | Baseline Q @cov=1 | Peak / best Q | ΔQ | Note |
 |---|---:|---:|---:|---|
@@ -157,7 +182,7 @@ A sorting experiment can confirm only ~40% of cells. Raise τ on `soft_P = max(a
 
 ΔQ (flip − random) = **−0.1359**. At n=50 labels, hard-scoped training beats random on hard holdout (logreg ΔQ ≈ **+0.034**). TEDDY alone “always answer” is the cov=1 baseline; Train can fit a head on hard labels but lacks the declared soft_P field that produced the scope.
 
-### 4 · Figure last
+### 5 · Figure last
 
 No dedicated GIF for this section — primary artifacts are the tables above and [`SCOPE_REFINE_PROOF.md`](docs/reports/SCOPE_REFINE_PROOF.md). See also the HARD_PROOF [dashboard](docs/assets/hard_proof/dashboard_hard_proof_light.png).
 
@@ -165,17 +190,21 @@ No dedicated GIF for this section — primary artifacts are the tables above and
 
 ## 5 · Zero-label criterion transfer vs label-cost calibration
 
-### 1 · What foundation-model scientists originally wanted
+### 1 · Care about
 
-After the RNA→protein map is trained, adapt to a **new downstream rubric** by collecting more labels and fitting a small head / calibrator. Cost = labeled cells; success = matching accuracy / abstain.
+Mid-project the scoring rubric changes (O0→O2). Biologists / FM teams care: *can we adopt the new criterion without a new labeling campaign?*
 
-### 2 · Concrete TEDDY CITE example
+### 2 · Expectation (without ANM)
 
-Mid-project the scoring rule changes O0→O2. ANM already sits at abstain≈0.201, strict≈0.821 with **zero** new endpoint labels. Train+Jev must re-annotate under O2 and calibrate until abstain≈0.20 and strict≈0.82.
+Adapt by collecting more labels and fitting a small head / calibrator. Cost = labeled cells; success = matching accuracy / abstain numbers.
 
-**Where it breaks:** even after ≈50–500 O2 labels, Train still has no editable-field attribution and must re-spend labels on the next observer edit. Numerical match ≠ criterion ownership.
+### 3 · Problem framework
 
-### 3 · How we compare (HARD_PROOF)
+Even after ≈50–500 O2 labels to match abstain≈0.20 and strict≈0.82, Train still has no editable-field attribution and must re-spend labels on the next observer edit. Numerical match ≠ criterion ownership.
+
+### 4 · How we solve (HARD_PROOF)
+
+ANM already sits at abstain≈0.201, strict≈0.821 with **zero** new endpoint labels.
 
 | Method | n O2 labels to match | strict (labeled) | abstain | Editable field? |
 |---|---:|---:|---:|---|
@@ -186,7 +215,7 @@ Mid-project the scoring rule changes O0→O2. ANM already sits at abstain≈0.20
 
 O0-trained Train abstain stays **185** across O0/O1/O2 until retuned.
 
-### 4 · Figure last
+### 5 · Figure last
 
 ![Label cost curve](docs/assets/hard_proof/label_cost_curve_light.gif)
 
@@ -208,7 +237,7 @@ O0-trained Train abstain stays **185** across O0/O1/O2 until retuned.
 
 ### 中文摘要（可选）
 
-每一节：（1）基础模型原先要解决什么；（2）TEDDY CITE 具体例子 + 问题一变/模态缺失/需要归因时哪里断；（3）三臂对照只用 HARD_PROOF / SCOPE / MISSING 核实数字；（4）GIF 放最后。不重训 TEDDY；不声称 Pearson > ~0.61；非临床。
+全局：生物学家关心 CITE 上 RNA→蛋白/细胞状态；TEDDY 给出 z 与 ADT Pearson ~0.61；常态期望是一张冻结映射；ANM 在同一证据上加可编辑决策。每一节同一结构：（1）关心什么；（2）常态期望；（3）问题框架；（4）三臂怎么解（只用核实数字）；（5）GIF 最后。不重训 TEDDY；不声称 Pearson > ~0.61；非临床。
 
 ---
 
