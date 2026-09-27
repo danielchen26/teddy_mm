@@ -234,6 +234,17 @@ td.num, th.num { font-family: var(--mono); font-size: .82rem; text-align: right;
 footer { padding: 2.5rem 0 3.5rem; color: var(--ink-muted); font-size: .88rem; }
 footer strong { color: var(--ink); }
 code, .mono { font-family: var(--mono); font-size: .86em; }
+
+.story-infographic {
+  margin: 0 0 1.25rem; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line); background: var(--bg-elev); box-shadow: var(--card-shadow);
+}
+.story-infographic img { display: block; width: 100%; height: auto; }
+.story-infographic .cap {
+  padding: .7rem 1.05rem; font-size: .85rem; color: var(--ink-muted);
+  border-top: 1px solid var(--line); background: var(--bg-soft);
+}
+.story-infographic .cap strong { color: var(--ink); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -267,6 +278,14 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
         <strong>ANM</strong> sits on that same evidence and adds an editable decision field
         (call / abstain / which markers / which cells to trust) — without claiming Pearson &gt; ~0.61.
       </p>
+        <div class="story-infographic">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/00_global_frame_dark.png" />
+            <img src="assets/infographics/00_global_frame_light.png" alt="Global CITE TEDDY frozen map frame: Care Expectation Problem Solve" width="1400" height="820" loading="lazy" />
+          </picture>
+          <div class="cap"><strong>Infographic</strong> — Care → Expectation → where it breaks → how TEDDY+ANM solves. Pearson ~0.61 is the evidence layer, not the claim.</div>
+        </div>
+
       <div class="frame">
         <div class="frame-card">
           <span class="k">Care about</span>
@@ -313,6 +332,7 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
         Each case below is a self-contained story a non-expert can skim.
       </p>
       <div class="pedagogy">
+        <span>0 Infographic</span>
         <span>1 Care about</span>
         <span>2 Expectation</span>
         <span>3 Problem framework</span>
@@ -370,6 +390,14 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
 
       <div class="cap-block">
         <h3>Story: criterion / observer edit</h3>
+
+        <div class="story-infographic">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/01_edit_question_dark.png" />
+            <img src="assets/infographics/01_edit_question_light.png" alt="Edit question O0 O1 O2 Care Expectation Problem Solve" width="1400" height="820" loading="lazy" />
+          </picture>
+          <div class="cap"><strong>Infographic</strong> — O0→O2 rewrite rate 0.1248 · ANM abstain 317→834→3,373 · Train stuck at 185. GIF comparison below.</div>
+        </div>
 
         <div class="story">
           <span class="step-label">1 · Care about</span>
@@ -490,6 +518,14 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
       <div class="cap-block">
         <h3>Story: missing-modality abstain / P<sub>f</sub> tracking</h3>
 
+        <div class="story-infographic">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/02_missing_modality_dark.png" />
+            <img src="assets/infographics/02_missing_modality_light.png" alt="Missing modality Care Expectation Problem Solve" width="1400" height="820" loading="lazy" />
+          </picture>
+          <div class="cap"><strong>Infographic</strong> — adt_only: TEDDY abstain 0 vs ANM 1,664. Mask GIFs stay last after the prose + table.</div>
+        </div>
+
         <div class="story">
           <span class="step-label">1 · Care about</span>
           <p>
@@ -608,6 +644,14 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
       <div class="cap-block">
         <h3>Story: declared-field attribution (LOO + flip)</h3>
 
+        <div class="story-infographic">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/03_attribution_dark.png" />
+            <img src="assets/infographics/03_attribution_light.png" alt="Attribution LOO Care Expectation Problem Solve" width="1400" height="820" loading="lazy" />
+          </picture>
+          <div class="cap"><strong>Infographic</strong> — Full-n LOO n_attr=16,433 · flip rate 0.277 · perm p≈0.0099. Histogram / dashboard GIFs last.</div>
+        </div>
+
         <div class="story">
           <span class="step-label">1 · Care about</span>
           <p>
@@ -686,6 +730,14 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
 
       <div class="cap-block">
         <h3>Story: soft_P / P<sub>f</sub> coverage–Q gate</h3>
+
+        <div class="story-infographic">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/04_scope_gate_dark.png" />
+            <img src="assets/infographics/04_scope_gate_light.png" alt="Scope gate Care Expectation Problem Solve" width="1400" height="820" loading="lazy" />
+          </picture>
+          <div class="cap"><strong>Infographic</strong> — soft_P gate ΔQ +0.0547 (O0) · flip-sensitive Q 0.8099 vs random 0.9458. Tables remain the numeric artifact.</div>
+        </div>
 
         <div class="story">
           <span class="step-label">1 · Care about</span>
@@ -791,6 +843,14 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
 
       <div class="cap-block">
         <h3>Story: zero-label observer transfer</h3>
+
+        <div class="story-infographic">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/infographics/05_label_cost_dark.png" />
+            <img src="assets/infographics/05_label_cost_light.png" alt="Label cost Care Expectation Problem Solve" width="1400" height="820" loading="lazy" />
+          </picture>
+          <div class="cap"><strong>Infographic</strong> — ANM O2 at 0 endpoint labels · Train needs ≈50–500 to match numbers only. Cost-curve GIF last.</div>
+        </div>
 
         <div class="story">
           <span class="step-label">1 · Care about</span>
@@ -938,7 +998,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 <footer>
   <div class="wrap">
     <p><strong>TEDDY × ANM CITE bridge</strong> — local response diagnosis on NeurIPS 2021 BMMC CITE (site4 holdout). English primary; optional Chinese summary above.</p>
-    <p>Each case: Care about → Expectation → Problem framework → How we solve (3 arms) → GIF last. Theme follows system preference; toggle overrides.</p>
+    <p>Each case: Infographic (Care→Expectation→Problem→Solve) with the prose → tables → GIF last. Theme follows system preference; toggle overrides.</p>
   </div>
 </footer>
 

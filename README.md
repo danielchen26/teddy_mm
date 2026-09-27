@@ -24,6 +24,10 @@ Every case below is the same skimable story:
 4. **How we solve** — TEDDY alone vs TEDDY+ANM vs Train+Jev (verified numbers only)  
 5. **GIF / figure last**
 
+![Global CITE/TEDDY frozen map frame](docs/assets/infographics/00_global_frame_light.png)
+
+*Care → Expectation → where it breaks → TEDDY+ANM. Dark: [`00_global_frame_dark.png`](docs/assets/infographics/00_global_frame_dark.png).*
+
 ---
 
 ## Setup (shared)
@@ -43,6 +47,10 @@ Accuracy is secondary on every section. Do not claim Pearson > ~0.61.
 ---
 
 ## 1 · Edit the question without retrain
+
+![Edit question O0/O1/O2](docs/assets/infographics/01_edit_question_light.png)
+
+*Care → Expectation → Problem → Solve (HARD_PROOF). Dark: [`01_edit_question_dark.png`](docs/assets/infographics/01_edit_question_dark.png).*
 
 ### 1 · Care about
 
@@ -83,6 +91,10 @@ Also: TEDDY-alone O0 rule still answers on **780** cells where O1 abstains and *
 
 ## 2 · Abstain when a modality is missing
 
+![Missing modality](docs/assets/infographics/02_missing_modality_light.png)
+
+*Care → Expectation → Problem → Solve (MISSING_MODALITY). Dark: [`02_missing_modality_dark.png`](docs/assets/infographics/02_missing_modality_dark.png).*
+
 ### 1 · Care about
 
 Real CITE batches are messy. Biologists care: *when RNA or ADT is weak/offline, can I still trust a lineage / protein readout?*
@@ -115,6 +127,10 @@ Train-retune under `adt_only` plateaus at Q≈0.68–0.70 even with 1,000 O2 lab
 ---
 
 ## 3 · Attribute which marker flipped the call
+
+![Attribution](docs/assets/infographics/03_attribution_light.png)
+
+*Care → Expectation → Problem → Solve (HARD_PROOF LOO). Dark: [`03_attribution_dark.png`](docs/assets/infographics/03_attribution_dark.png).*
 
 ### 1 · Care about
 
@@ -150,6 +166,10 @@ Matching abstain numerically still does **not** buy attribution.
 ---
 
 ## 4 · Gate for conditional accuracy (scope refine)
+
+![Scope gate](docs/assets/infographics/04_scope_gate_light.png)
+
+*Care → Expectation → Problem → Solve (SCOPE_REFINE_PROOF). Dark: [`04_scope_gate_dark.png`](docs/assets/infographics/04_scope_gate_dark.png).*
 
 ### 1 · Care about
 
@@ -189,6 +209,10 @@ No dedicated GIF for this section — primary artifacts are the tables above and
 ---
 
 ## 5 · Zero-label criterion transfer vs label-cost calibration
+
+![Label cost](docs/assets/infographics/05_label_cost_light.png)
+
+*Care → Expectation → Problem → Solve (HARD_PROOF). Dark: [`05_label_cost_dark.png`](docs/assets/infographics/05_label_cost_dark.png).*
 
 ### 1 · Care about
 
@@ -234,10 +258,11 @@ O0-trained Train abstain stays **185** across O0/O1/O2 until retuned.
 | Bridge code | [`bridge_anm/`](bridge_anm/) |
 | Proof reports | [`docs/reports/`](docs/reports/) · also under `outputs/anm_cite_bridge/` |
 | Key GIFs | `docs/assets/hard_proof/`, `docs/assets/missing_modality/` |
+| Story infographics | `docs/assets/infographics/` (Care→Expectation→Problem→Solve PNGs, light+dark) |
 
 ### 中文摘要（可选）
 
-全局：生物学家关心 CITE 上 RNA→蛋白/细胞状态；TEDDY 给出 z 与 ADT Pearson ~0.61；常态期望是一张冻结映射；ANM 在同一证据上加可编辑决策。每一节同一结构：（1）关心什么；（2）常态期望；（3）问题框架；（4）三臂怎么解（只用核实数字）；（5）GIF 最后。不重训 TEDDY；不声称 Pearson > ~0.61；非临床。
+全局：生物学家关心 CITE 上 RNA→蛋白/细胞状态；TEDDY 给出 z 与 ADT Pearson ~0.61；常态期望是一张冻结映射；ANM 在同一证据上加可编辑决策。每一节同一结构：信息图（关心→期望→断裂→解）+（1）关心什么；（2）常态期望；（3）问题框架；（4）三臂怎么解（只用核实数字）；（5）GIF 最后。不重训 TEDDY；不声称 Pearson > ~0.61；非临床。
 
 ---
 
