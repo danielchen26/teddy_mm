@@ -1,0 +1,425 @@
+{
+  "claim_boundary": {
+    "mode": "B_reverse_loop_small_must_separate",
+    "pipeline": [
+      "veto",
+      "complement",
+      "verify"
+    ],
+    "not_claimed": [
+      "Mode_A_residual_stream_as_field",
+      "layer_Jacobian",
+      "in_silico_gene_perturbs",
+      "fusion_audit",
+      "clinical"
+    ],
+    "true_adt_events_note": "complement (b) admits true ADT as typed evidence for this probe only; production path keeps holdout ADT verifier-only"
+  },
+  "inputs": {
+    "pairs_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/reverse_step1/must_separate_pairs.jsonl",
+    "n_pairs": 5000,
+    "n_unique_cells": 2872,
+    "z_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/z_rna_512.npy",
+    "panel": [
+      "CD19",
+      "CD72",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD16",
+      "CD11c",
+      "CD36"
+    ]
+  },
+  "veto": {
+    "claim": "z_512 (mean-pool last-layer @ ctx 1024, L2 512-D) is INSUFFICIENT to separate these must-pairs: near-identical z carries disagreeing true ADT lineage / protein labels. Downstream readout must abstain, rewrite observer, or admit a complement evidence channel.",
+    "n_pairs_written": 5000,
+    "flag_counts": {
+      "diff_adt_lineage": 2059,
+      "diff_protein_profile": 4639,
+      "diff_key_marker_lineage": 3287,
+      "diff_coarse_cell_type": 790
+    },
+    "lineage_confusion": {
+      "myeloid|t_lineage": 1490,
+      "b_lineage|t_lineage": 375,
+      "abstain|t_lineage": 213,
+      "b_lineage|myeloid": 194,
+      "abstain|myeloid": 168,
+      "abstain|b_lineage": 24
+    },
+    "n_myeloid_t_pairs": 1490,
+    "frac_myeloid_t": 0.298,
+    "myeloid_t_cos_sim_quantiles": {
+      "min": 0.9800012707710266,
+      "q25": 0.9810009449720383,
+      "q50": 0.9822191596031189,
+      "q75": 0.983788788318634,
+      "max": 0.990542471408844
+    },
+    "myeloid_t_focus_protein_deltas": {
+      "CD5": {
+        "n": 1490,
+        "mean_abs_delta": 0.7155161401769459,
+        "median_abs_delta": 0.40774770081043243,
+        "q75_abs_delta": 1.0865748226642609
+      },
+      "CD3": {
+        "n": 1490,
+        "mean_abs_delta": 0.6981261888506428,
+        "median_abs_delta": 0.3616558760404587,
+        "q75_abs_delta": 0.8664438873529434
+      },
+      "CD16": {
+        "n": 1490,
+        "mean_abs_delta": 1.0650999203649343,
+        "median_abs_delta": 0.907050609588623,
+        "q75_abs_delta": 1.776064932346344
+      }
+    },
+    "veto": true,
+    "mode": "B_sufficiency_for_readout",
+    "not_mode_a": true,
+    "baseline_pred_O0_myeloid_t": {
+      "false_agreement_rate_among_both_decided": 0.8536754507628294,
+      "soft_separation_rate": 0.1738255033557047,
+      "Q_among_decided": 0.7409695817490495
+    }
+  },
+  "complements": {
+    "a_observer": [
+      "complement_a_O1_abstain",
+      "complement_a_O2_observer"
+    ],
+    "b_true_adt": [
+      "complement_b_true_ADT_O0",
+      "complement_b_true_ADT_O1"
+    ],
+    "c_zplus": {
+      "n_myeloid_t_pairs": 1490,
+      "held_lineage": "myeloid",
+      "held_proteins": [
+        "CD16",
+        "CD11c",
+        "CD36"
+      ],
+      "zplus_proteins": [
+        "CD19",
+        "CD72",
+        "CD22",
+        "CD3",
+        "CD2",
+        "CD5"
+      ],
+      "cos_z512": {
+        "mean": 0.9826505275780723,
+        "median": 0.9822191596031189,
+        "frac_still_ge_0_98": 1.0,
+        "frac_dropped_below_0_95": 0.0
+      },
+      "cos_zplus_true_complement": {
+        "mean": 0.8255820943005133,
+        "median": 0.8865448236465454,
+        "frac_still_ge_0_98": 0.09395973154362416,
+        "frac_dropped_below_0_95": 0.7208053691275168
+      },
+      "cos_zplus_pred_complement": {
+        "mean": 0.9877049229289061,
+        "median": 0.9969751238822937,
+        "frac_still_ge_0_98": 0.8348993288590604,
+        "frac_dropped_below_0_95": 0.07583892617449664
+      },
+      "prior_global_relative_must_reduction_vs_z512": {
+        "zplus_adt_true_complement": -0.27272456550677143,
+        "zplus_adt_pred_complement": -0.27353544257798595,
+        "zplus_adt_pred_all9_leakcheck": -0.2508802113539737
+      },
+      "prior_note": "Prior global z\u207a probe (held myeloid) relative_must_reduction primary=-0.27272456550677143; NEGATIVE => z\u207a alone worsens must-rate among near.",
+      "interpretation": "On FIXED myeloid\u2194T must-pairs: true-ADT z\u207a lowers cosine (frac still \u22650.98 = 0.09395973154362416; frac <0.95 = 0.7208053691275168), so geometry can separate this fixed set. Pred z\u207a does NOT (frac still \u22650.98 = 0.8348993288590604). Prior GLOBAL probe still found z\u207a worsens must-rate among its own near neighborhoods (relative_must_reduction primary=-0.27272456550677143). Decision winner remains true-ADT typed evidence + O1, not z\u207a alone.",
+      "decision_vs_geometry_note": "z\u207a true geometry helps on fixed pairs but is not the winning decision complement; prior z\u207a alone worsened global must-rate. Pred z\u207a fails fixed-pair separation."
+    },
+    "variants_run": [
+      "baseline_pred_O0",
+      "complement_a_O1_abstain",
+      "complement_a_O2_observer",
+      "complement_b_true_ADT_O0",
+      "complement_b_true_ADT_O1"
+    ]
+  },
+  "verify": {
+    "all_written_pairs": {
+      "baseline_pred_O0": {
+        "n_pairs": 5000,
+        "both_decided": 4666,
+        "same_action_among_both_decided": 4165,
+        "differ_action_among_both_decided": 501,
+        "false_agreement_rate_among_both_decided": 0.8926275182168881,
+        "any_abstain": 334,
+        "both_abstain": 142,
+        "abstain_pair_frac": 0.0668,
+        "soft_separation_rate": 0.167,
+        "correct_separation_rate": 0.0416,
+        "n_decided_cell_slots": 9524,
+        "mean_Q_among_decided_defined": 0.8081765087605451,
+        "n_Q_defined": 7705,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 7705,
+        "Q_among_decided": 0.8081765087605451,
+        "mean_Q_recomputed": 0.8081765087605451
+      },
+      "complement_a_O1_abstain": {
+        "n_pairs": 5000,
+        "both_decided": 4462,
+        "same_action_among_both_decided": 4031,
+        "differ_action_among_both_decided": 431,
+        "false_agreement_rate_among_both_decided": 0.9034065441506051,
+        "any_abstain": 538,
+        "both_abstain": 496,
+        "abstain_pair_frac": 0.1076,
+        "soft_separation_rate": 0.1938,
+        "correct_separation_rate": 0.0114,
+        "n_decided_cell_slots": 8966,
+        "mean_Q_among_decided_defined": 0.8665363426337302,
+        "n_Q_defined": 5627,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 5627,
+        "Q_among_decided": 0.8665363426337302,
+        "mean_Q_recomputed": 0.8665363426337302
+      },
+      "complement_a_O2_observer": {
+        "n_pairs": 5000,
+        "both_decided": 2582,
+        "same_action_among_both_decided": 2027,
+        "differ_action_among_both_decided": 555,
+        "false_agreement_rate_among_both_decided": 0.7850503485670023,
+        "any_abstain": 2418,
+        "both_abstain": 1969,
+        "abstain_pair_frac": 0.4836,
+        "soft_separation_rate": 0.5946,
+        "correct_separation_rate": 0.087,
+        "n_decided_cell_slots": 5613,
+        "mean_Q_among_decided_defined": 0.8514386376981797,
+        "n_Q_defined": 5109,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 5109,
+        "Q_among_decided": 0.8514386376981797,
+        "mean_Q_recomputed": 0.8514386376981797
+      },
+      "complement_b_true_ADT_O0": {
+        "n_pairs": 5000,
+        "both_decided": 4905,
+        "same_action_among_both_decided": 2963,
+        "differ_action_among_both_decided": 1942,
+        "false_agreement_rate_among_both_decided": 0.6040774719673803,
+        "any_abstain": 95,
+        "both_abstain": 0,
+        "abstain_pair_frac": 0.019,
+        "soft_separation_rate": 0.4074,
+        "correct_separation_rate": 0.2226,
+        "n_decided_cell_slots": 9905,
+        "mean_Q_among_decided_defined": 0.9567061759201497,
+        "n_Q_defined": 8015,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 8015,
+        "Q_among_decided": 0.9567061759201497,
+        "mean_Q_recomputed": 0.9567061759201497
+      },
+      "complement_b_true_ADT_O1": {
+        "n_pairs": 5000,
+        "both_decided": 4529,
+        "same_action_among_both_decided": 2653,
+        "differ_action_among_both_decided": 1876,
+        "false_agreement_rate_among_both_decided": 0.5857805255023184,
+        "any_abstain": 471,
+        "both_abstain": 116,
+        "abstain_pair_frac": 0.0942,
+        "soft_separation_rate": 0.4694,
+        "correct_separation_rate": 0.1092,
+        "n_decided_cell_slots": 9413,
+        "mean_Q_among_decided_defined": 0.9899108794350092,
+        "n_Q_defined": 5947,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 5947,
+        "Q_among_decided": 0.9899108794350092,
+        "mean_Q_recomputed": 0.9899108794350092
+      }
+    },
+    "myeloid_t_focus": {
+      "baseline_pred_O0": {
+        "n_pairs": 1490,
+        "both_decided": 1442,
+        "same_action_among_both_decided": 1231,
+        "differ_action_among_both_decided": 211,
+        "false_agreement_rate_among_both_decided": 0.8536754507628294,
+        "any_abstain": 48,
+        "both_abstain": 17,
+        "abstain_pair_frac": 0.032214765100671144,
+        "soft_separation_rate": 0.1738255033557047,
+        "correct_separation_rate": 0.08389261744966443,
+        "n_decided_cell_slots": 2915,
+        "mean_Q_among_decided_defined": 0.7409695817490495,
+        "n_Q_defined": 2104,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 2104,
+        "Q_among_decided": 0.7409695817490495,
+        "mean_Q_recomputed": 0.7409695817490495
+      },
+      "complement_a_O1_abstain": {
+        "n_pairs": 1490,
+        "both_decided": 1391,
+        "same_action_among_both_decided": 1156,
+        "differ_action_among_both_decided": 235,
+        "false_agreement_rate_among_both_decided": 0.8310567936736161,
+        "any_abstain": 99,
+        "both_abstain": 83,
+        "abstain_pair_frac": 0.06644295302013423,
+        "soft_separation_rate": 0.22416107382550335,
+        "correct_separation_rate": 0.032214765100671144,
+        "n_decided_cell_slots": 2798,
+        "mean_Q_among_decided_defined": 0.7777777777777778,
+        "n_Q_defined": 1332,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 1332,
+        "Q_among_decided": 0.7777777777777778,
+        "mean_Q_recomputed": 0.7777777777777778
+      },
+      "complement_a_O2_observer": {
+        "n_pairs": 1490,
+        "both_decided": 1109,
+        "same_action_among_both_decided": 935,
+        "differ_action_among_both_decided": 174,
+        "false_agreement_rate_among_both_decided": 0.8431018935978359,
+        "any_abstain": 381,
+        "both_abstain": 330,
+        "abstain_pair_frac": 0.2557046979865772,
+        "soft_separation_rate": 0.3724832214765101,
+        "correct_separation_rate": 0.08389261744966443,
+        "n_decided_cell_slots": 2269,
+        "mean_Q_among_decided_defined": 0.8824110671936759,
+        "n_Q_defined": 2024,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 2024,
+        "Q_among_decided": 0.8824110671936759,
+        "mean_Q_recomputed": 0.8824110671936759
+      },
+      "complement_b_true_ADT_O0": {
+        "n_pairs": 1490,
+        "both_decided": 1475,
+        "same_action_among_both_decided": 674,
+        "differ_action_among_both_decided": 801,
+        "false_agreement_rate_among_both_decided": 0.4569491525423729,
+        "any_abstain": 15,
+        "both_abstain": 0,
+        "abstain_pair_frac": 0.010067114093959731,
+        "soft_separation_rate": 0.5476510067114094,
+        "correct_separation_rate": 0.36845637583892615,
+        "n_decided_cell_slots": 2965,
+        "mean_Q_among_decided_defined": 0.9716981132075472,
+        "n_Q_defined": 2120,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 2120,
+        "Q_among_decided": 0.9716981132075472,
+        "mean_Q_recomputed": 0.9716981132075472
+      },
+      "complement_b_true_ADT_O1": {
+        "n_pairs": 1490,
+        "both_decided": 1407,
+        "same_action_among_both_decided": 558,
+        "differ_action_among_both_decided": 849,
+        "false_agreement_rate_among_both_decided": 0.39658848614072495,
+        "any_abstain": 83,
+        "both_abstain": 17,
+        "abstain_pair_frac": 0.05570469798657718,
+        "soft_separation_rate": 0.625503355704698,
+        "correct_separation_rate": 0.17248322147651007,
+        "n_decided_cell_slots": 2880,
+        "mean_Q_among_decided_defined": 0.9868421052631579,
+        "n_Q_defined": 1368,
+        "match_expected_among_decided_with_expected": null,
+        "n_decided_with_expected": 1368,
+        "Q_among_decided": 0.9868421052631579,
+        "mean_Q_recomputed": 0.9868421052631579
+      },
+      "complement_c_zplus_geometry": {
+        "n_pairs": 1490,
+        "soft_separation_rate": 0.7208053691275168,
+        "correct_separation_rate": null,
+        "false_agreement_rate_among_both_decided": 0.09395973154362416,
+        "abstain_pair_frac": null,
+        "Q_among_decided": null,
+        "note": "geometry only: soft_sep\u2248frac cos dropped <0.95; false_agree\u2248frac still \u22650.98"
+      }
+    }
+  },
+  "winner": {
+    "winner": "complement_b_true_ADT_O1",
+    "winner_row": {
+      "complement": "complement_b_true_ADT_O1",
+      "score": 2.8412603305318287,
+      "soft_separation_rate": 0.625503355704698,
+      "Q_among_decided": 0.9868421052631579,
+      "false_agreement_rate_among_both_decided": 0.39658848614072495,
+      "correct_separation_rate": 0.17248322147651007,
+      "abstain_pair_frac": 0.05570469798657718
+    },
+    "ranking": [
+      {
+        "complement": "complement_b_true_ADT_O1",
+        "score": 2.8412603305318287,
+        "soft_separation_rate": 0.625503355704698,
+        "Q_among_decided": 0.9868421052631579,
+        "false_agreement_rate_among_both_decided": 0.39658848614072495,
+        "correct_separation_rate": 0.17248322147651007,
+        "abstain_pair_frac": 0.05570469798657718
+      },
+      {
+        "complement": "complement_b_true_ADT_O0",
+        "score": 2.610050974087993,
+        "soft_separation_rate": 0.5476510067114094,
+        "Q_among_decided": 0.9716981132075472,
+        "false_agreement_rate_among_both_decided": 0.4569491525423729,
+        "correct_separation_rate": 0.36845637583892615,
+        "abstain_pair_frac": 0.010067114093959731
+      },
+      {
+        "complement": "complement_c_zplus_geometry",
+        "score": 2.3476510067114096,
+        "soft_separation_rate": 0.7208053691275168,
+        "Q_among_decided": null,
+        "false_agreement_rate_among_both_decided": 0.09395973154362416,
+        "correct_separation_rate": null,
+        "abstain_pair_frac": null
+      },
+      {
+        "complement": "complement_a_O2_observer",
+        "score": 1.78427561654886,
+        "soft_separation_rate": 0.3724832214765101,
+        "Q_among_decided": 0.8824110671936759,
+        "false_agreement_rate_among_both_decided": 0.8431018935978359,
+        "correct_separation_rate": 0.08389261744966443,
+        "abstain_pair_frac": 0.2557046979865772
+      },
+      {
+        "complement": "complement_a_O1_abstain",
+        "score": 1.3950431317551684,
+        "soft_separation_rate": 0.22416107382550335,
+        "Q_among_decided": 0.7777777777777778,
+        "false_agreement_rate_among_both_decided": 0.8310567936736161,
+        "correct_separation_rate": 0.032214765100671144,
+        "abstain_pair_frac": 0.06644295302013423
+      },
+      {
+        "complement": "baseline_pred_O0",
+        "score": 1.2349451376976295,
+        "soft_separation_rate": 0.1738255033557047,
+        "Q_among_decided": 0.7409695817490495,
+        "false_agreement_rate_among_both_decided": 0.8536754507628294,
+        "correct_separation_rate": 0.08389261744966443,
+        "abstain_pair_frac": 0.032214765100671144
+      }
+    ],
+    "note": "Winner = best Mode B decision complement on myeloid\u2194T must-pairs (soft_separation + Q_among_decided \u2212 false_agreement). z\u207a geometry reported separately; prior showed it worsens global must-rate."
+  },
+  "wall_seconds": 2.169034004211426
+}
