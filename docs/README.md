@@ -1,7 +1,8 @@
 # TEDDY × ANM — GitHub Pages site
 
-Open **[index.html](index.html)** for the public landing (figure-first).
+Open **[index.html](index.html)** for the public landing: problem → comparison protocol → six blocks (each with method, interactive chart, data table and what it proves) → claim boundary → reproduce.
 
+- `anm-loop.html` — interactive Block 6 report (veto → complement → verify, scoreboard by arm × metric)
 - `assets/infographics/` — icon-first story PNGs (light+dark); regenerate via `scripts/make_story_infographics.py`
 - `assets/hard_proof/`, `assets/missing_modality/` — proof GIFs/dashboards
 - `reports/` — HARD_PROOF, SCOPE_REFINE, MISSING_MODALITY, STAT_PROOF, BAKEOFF, v0 REPORT

@@ -16,7 +16,7 @@
   --accent: #0d6e6e; --accent-soft: #d8efef;
   --warn: #8a4b12; --warn-bg: #f5e6d4;
   --good: #1f6b3a; --good-bg: #dcefe3; --bad: #a13a3a; --bad-bg: #f6e0dc;
-  --bar-neutral: #b9b5aa; --bar-base: #c98a55;
+  --bar-neutral: #b9b5aa; --bar-base: #c8641f; --bar-win: #008c7e;
   --card-shadow: 0 1px 2px rgba(26,28,30,.04), 0 8px 24px rgba(26,28,30,.06);
   --radius: 14px; --max: 1080px;
   --font: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
@@ -29,7 +29,7 @@
     --accent: #5ec4c4; --accent-soft: #1a3333;
     --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22;
     --bad: #e08a8a; --bad-bg: #3a2020;
-    --bar-neutral: #4a4f57; --bar-base: #b37545;
+    --bar-neutral: #4a4f57; --bar-base: #c9722f; --bar-win: #10a092;
     --card-shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
   }
 }
@@ -39,7 +39,7 @@
   --accent: #5ec4c4; --accent-soft: #1a3333;
   --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22;
   --bad: #e08a8a; --bad-bg: #3a2020;
-  --bar-neutral: #4a4f57; --bar-base: #b37545;
+  --bar-neutral: #4a4f57; --bar-base: #c9722f; --bar-win: #10a092;
   --card-shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
 }
 * { box-sizing: border-box; }
@@ -156,7 +156,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .hbar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--bar-neutral); transition: width .45s ease; }
 .hbar .val { font-family: var(--mono); font-size: .78rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
 .hbar.base .fill { background: var(--bar-base); }
-.hbar.win .fill { background: var(--accent); }
+.hbar.win .fill { background: var(--bar-win); }
 .hbar.win .lab { color: var(--ink); font-weight: 600; }
 .hbar.proxy .fill { background: repeating-linear-gradient(135deg, var(--bar-neutral) 0 4px, transparent 4px 7px); border: 1px solid var(--bar-neutral); }
 .hbar[data-tip] { cursor: default; }
@@ -215,7 +215,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .waffle { display: grid; grid-template-columns: repeat(10, 16px); gap: 3px; }
 .waffle i { width: 16px; height: 16px; border-radius: 3px; background: var(--bg-soft); border: 1px solid var(--line); transition: background .3s ease, border-color .3s ease; }
 .waffle i.fa { background: var(--bad); border-color: var(--bad); }
-.waffle i.sep { background: var(--accent); border-color: var(--accent); }
+.waffle i.sep { background: var(--bar-win); border-color: var(--bar-win); }
 .wstat { font-size: 2.4rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1; }
 .wstat small { font-size: .95rem; color: var(--ink-muted); font-weight: 500; }
 
@@ -439,7 +439,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
             <div>
               <div class="wstat" id="wstat">40<small> / 100 false-agree</small></div>
               <p style="font-size:.88rem;color:var(--ink-muted);margin:.6rem 0 0" id="wtext"></p>
-              <div class="legend"><span><i style="background:var(--bad)"></i>same call, true ADT disagrees</span><span><i style="background:var(--accent)"></i>different calls (separated)</span></div>
+              <div class="legend"><span><i style="background:var(--bad)"></i>same call, true ADT disagrees</span><span><i style="background:var(--bar-win)"></i>different calls (separated)</span></div>
             </div>
           </div>
           <div class="say good"><b>Verified.</b> Winner = <code>complement_b_true_ADT_O1</code> (score = soft_sep + Q − false_agree ≈ <b>2.841</b>). Same story on all 5,000 written pairs: false_agree 0.893 → 0.586, Q 0.808 → 0.990, soft_sep 0.167 → 0.469. <a href="#verify-all">Full scoreboard ↓</a></div>
@@ -472,7 +472,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
         </div>
         <p class="metric-def" id="metricDef"></p>
         <div class="hbars" id="scorebars"></div>
-        <div class="legend"><span><i style="background:var(--bar-base)"></i>baseline (TEDDY pred + O0)</span><span><i style="background:var(--accent)"></i>winner (true ADT + O1)</span><span><i style="background:var(--bar-neutral)"></i>other complements</span><span><i style="background:repeating-linear-gradient(135deg,var(--bar-neutral) 0 3px,transparent 3px 5px);border:1px solid var(--bar-neutral)"></i>z⁺ geometry proxy</span></div>
+        <div class="legend"><span><i style="background:var(--bar-base)"></i>baseline (TEDDY pred + O0)</span><span><i style="background:var(--bar-win)"></i>winner (true ADT + O1)</span><span><i style="background:var(--bar-neutral)"></i>other complements</span><span><i style="background:repeating-linear-gradient(135deg,var(--bar-neutral) 0 3px,transparent 3px 5px);border:1px solid var(--bar-neutral)"></i>z⁺ geometry proxy</span></div>
         <p class="srcnote" id="honest"></p>
         <details class="tv">
           <summary>Table view</summary>

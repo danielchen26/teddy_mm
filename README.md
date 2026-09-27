@@ -1,155 +1,102 @@
-# TEDDY × ANM CITE bridge
+# TEDDY × ANM — CITE bridge
 
-Public landing: **[docs/index.html](https://danielchen26.github.io/teddy_mm/)** · source [`docs/`](docs/).
+**Keep TEDDY frozen. Make its answers editable, honest and auditable with ANM.**
 
-**Claim boundary:** not clinical · not a Pearson win over phase-1 full-ADT **~0.61** · holdout `adt_true` = verifier only · Train+Jev = log-loss stand-in · no `best.pt` retrain. Numbers cite [`HARD_PROOF`](docs/reports/HARD_PROOF.md), [`SCOPE_REFINE_PROOF`](docs/reports/SCOPE_REFINE_PROOF.md), [`MISSING_MODALITY`](docs/reports/MISSING_MODALITY_ANM_DEMO.md). Full Mode B scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
+**Site:** [danielchen26.github.io/teddy_mm](https://danielchen26.github.io/teddy_mm/) — interactive charts for every block · [decision-loop report](https://danielchen26.github.io/teddy_mm/anm-loop.html) · source [`docs/`](docs/)
 
-### What this repo claims / does not
+![Global frame: CITE cell → frozen TEDDY map → ANM editable decisions](docs/assets/infographics/00_global_frame_light.png)
+
+## 1 · The problem
+
+TEDDY (frozen TEDDY-G 70M; `z_512` = mean-pool last layer @ context 1024) maps a cell's RNA to its surface proteins (phase-1 full-ADT Pearson ≈ 0.61). As a readout on its own it leaves six gaps. Each became a block with its own test.
+
+| Gap | TEDDY alone today | Block |
+|---|---|---|
+| Change the question | Hard-wired rule; keeps answering the old question (1,752 cells that O2 would hold back) | 1 |
+| Weak or missing input | Answers every cell: 0 abstentions at Q 0.63 under `adt_only` | 2 |
+| Explain a call | No declared decision field → no per-marker leave-one-out or flip distance | 3 |
+| Know where to trust it | No graded signal to gate on | 4 |
+| Price of a new criterion | A trained readout needs 50–500 new labels per switch | 5 |
+| Is the embedding enough? | Myeloid↔T pairs at cos 0.982 in `z_512`; readout falsely agrees 85% | 6 |
+
+**Not a goal:** beating Pearson ≈ 0.61 or retraining TEDDY. TEDDY's predictions are the input to every block, unchanged.
+
+## 2 · How we compare — one protocol, every block
+
+- **Same frozen TEDDY** — `best.pt` is never retrained; every arm reads the same predicted 9-protein panel (typed evidence δu).
+- **Same cells** — holdout site4/test, n = 16,750 (out-of-site check: val_non_site4, n = 2,000).
+- **Truth only verifies** — holdout true ADT sets the expected answer and never enters ANM's evidence (one labelled exception: Block 6's complement probe).
+- **Decision metrics first** — abstention, label cost, attribution, coverage vs Q, false agreement. Accuracy is reported, never the win condition.
+
+| Arm | What it is | Adopt a new criterion | Abstention follows it? | Attribution |
+|---|---|---|---|---|
+| TEDDY alone | Predicted panel → lineage score → thresholded argmax (O0 rule) | Re-tune on labels | No — keeps its old rule | Panel heuristic |
+| **TEDDY + ANM** | Same predictions as typed events → ANM `finite_field` under a declared observer YAML (O0 / O1 / O2) | **Edit YAML · 0 labels** | **Yes — 317 → 834 → 3,373** | **Closed-form LOO + flip distance** |
+| Train + Jev | Head trained on labels over the same features (log-loss logistic / MLP / grid; Jev-class stand-in) | Retrain on new labels | No — 185 → 185 → 185 | Learned coefficient × feature |
+
+> **help = (TEDDY + ANM) − (TEDDY alone)** on identical δu, with Train + Jev as the "just train harder" control.
+
+Observers live in [`bridge_anm/readouts/cite_lineage_O{0,1,2}.yaml`](bridge_anm/readouts/): O1 raises the threshold 0.12 → 0.28 and doubles key-marker weight (0 expected calls change); O2 switches to key-marker priority with lineage weights (12.48% of expected calls change).
+
+## 3 · Six blocks
+
+| # | Block | Method (workflow) | Key result | Proves ANM helps TEDDY by… | Report |
+|---|---|---|---|---|---|
+| 1 | [Edit the question](https://danielchen26.github.io/teddy_mm/#edit) | Declare O0 / O1 / O2 in YAML → run field → compare abstention with TEDDY alone (O0 rule) and an O0-trained head | ANM abstain 317 → 834 → 3,373; head 185 flat; TEDDY alone over-answers 1,752 at O2 | serving a new question with 0 labels, no retrain | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 2 | [Missing modality](https://danielchen26.github.io/teddy_mm/#missing) | `rna_only` / `adt_only` / `joint` masks as source ablation + declared reliability gate (×0.35) | `adt_only`: abstain 0 → 1,664, mean P_f 0.868; O2 abstains on all 12,563 | honest silence when TEDDY's input is weak | [MISSING_MODALITY](docs/reports/MISSING_MODALITY_ANM_DEMO.md) |
+| 3 | [Attribution](https://danielchen26.github.io/teddy_mm/#attr) | Leave one typed event out → top marker → flip distance; bootstrap B = 200, permutation n = 100 | 16,433 cells · top-1 flip 0.277 · median flip distance 0.75 · p ≈ 0.0099 | an auditable per-marker "why" for every call | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 4 | [Scope gate](https://danielchen26.github.io/teddy_mm/#scope) | Gate on soft_P (τ sweep); ANM hard scope = LOO flip-sensitive cells vs random same-n | O0 Q 0.945 → 0.998 at 40% coverage; hard-scope Q 0.810 vs 0.946 random | showing where TEDDY's calls can be trusted | [SCOPE_REFINE_PROOF](docs/reports/SCOPE_REFINE_PROOF.md) |
+| 5 | [Zero-label transfer](https://danielchen26.github.io/teddy_mm/#labels) | Heads trained on 50 → 10,619 O2 labels, gate calibrated to ANM's O2 abstain rate | Match needs ≈ 50 (grid) / 200 (MLP) / 500 (logistic) labels; ANM needs 0 | new criteria at zero label cost | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 6 | [Decision loop](https://danielchen26.github.io/teddy_mm/anm-loop.html) | Veto `z_512` on must-separate pairs → complement (typed true ADT + O1) → verify on the same pairs | Myeloid↔T false agreement 0.85 → 0.40, Q 0.74 → 0.99; z⁺ feature swap −0.27 | a principled way to patch TEDDY's blind spot | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) · [ANM_HELPS_TEDDY_LOOP](docs/reports/ANM_HELPS_TEDDY_LOOP.md) |
+
+**Accuracy check (Block 1, like for like, Q among decided cells):** TEDDY alone 0.947 / 0.974 / 0.943 vs ANM 0.950 / 0.972 / 0.960 (O0 / O1 / O2). Roughly tied, and not the claim. HARD_PROOF's three-arm table lists ANM's mean Q_f, which counts abstentions as misses (0.939 / 0.958 / 0.821).
+
+<details>
+<summary>Posters (one per block)</summary>
 
 | | |
 |---|---|
-| **Mode B (implemented)** | TEDDY as typed evidence source → ANM **finite_field** decisions; editable observer YAML (O0/O1/O2); missing-modality abstain demos; LOO/flip attribution on **decisions**; **decision loop** veto→complement→verify on must-pairs |
-| **NOT claimed (Mode A+)** | Residual stream as field · layer Jacobian · in-silico gene perturbs · gated ±ε / ±ε/2 G1–G4 · Mode-A reverse closed loop (rep response) · fusion audit · ATAC/chromatin |
-| **`z_512` definition** | Mean-pool **last-layer** tokens at context length **1024** (not TEDDY pretrain 2048, not a disease token). Loading factor for CITE embed (`scripts/03_embed_rna.py`). Bridge: full L2 `z_rna_512.npy`; compact `z_rna_export.npy` is `z_keep=32` only (not reverse-step1). |
-| **Conclusions about** | **Decision-layer** sensitivity to TEDDY evidence — not TEDDY representation response to perturbs. Cannot yet answer whether z is sufficient for protein readout. |
-| **Honest weak arm** | ADT-only is a weak model; abstain story is honest silence, not a Pearson contest. |
+| ![Edit the question](docs/assets/infographics/01_edit_question_light.png) | ![Missing modality](docs/assets/infographics/02_missing_modality_light.png) |
+| ![Attribution](docs/assets/infographics/03_attribution_light.png) | ![Scope gate](docs/assets/infographics/04_scope_gate_light.png) |
+| ![Label cost](docs/assets/infographics/05_label_cost_light.png) | ![Decision loop](docs/assets/infographics/06_anm_loop_poster_light.png) |
+| ![Myeloid↔T before/after](docs/assets/infographics/07_myeloid_t_before_after_light.png) | ![ANM vs feature swap](docs/assets/infographics/08_anm_vs_feature_swap_light.png) |
 
----
+Dark variants: `docs/assets/infographics/*_dark.png`. GIFs: `docs/assets/hard_proof/`, `docs/assets/missing_modality/`.
+</details>
 
-## Hero
+## 4 · Claim boundary
 
-TEDDY freezes a CITE RNA→protein map (`z_512` = mean-pool last-layer @1024, Pearson ~0.61). **Mode B:** ANM edits the decision field on that typed evidence — call, abstain, markers, scope — without retraining TEDDY and without claiming Pearson > ~0.61 (not Mode A / residual / Jacobian / gene-perturb).
-
-![Global frame](docs/assets/infographics/00_global_frame_light.png)
-
-*CITE cell → frozen TEDDY map → ANM editable decisions. Dark: [`00_global_frame_dark.png`](docs/assets/infographics/00_global_frame_dark.png).*
-
-**Setup.** site4/test n=16,750 · `RNA → frozen TEDDY-G → z_512 → ADT preds → δu → ANM P_f/Q_f`
-
-| Arm | Role |
+| | |
 |---|---|
-| TEDDY alone | Panel rules · silent over-answer · no declared LOO |
-| **TEDDY + ANM** | YAML observers · abstain tracks declaration · full-n LOO |
-| Train + Jev | Needs O2 labels · abstain stuck at **185** · no editable field |
+| **Claimed (Mode B)** | TEDDY typed evidence → ANM `finite_field` decisions · editable observer YAML (O0/O1/O2), no TEDDY retrain · missing-modality abstention · LOO/flip attribution on decisions · scope gate and zero-label transfer vs Train + Jev · decision loop veto → complement → verify on must-separate pairs |
+| **Not claimed** | Mode A (residual stream as field, layer Jacobian, in-silico gene perturbs) · reverse loop as representation response to perturbs · gated ±ε G1–G4 · Pearson > phase-1 full-ADT ≈ 0.61 · fusion audit · ATAC/chromatin · clinical superiority · live Jev API |
+| **`z_512`** | Mean-pool of last-layer tokens at context length **1024** (not pretrain 2048, not a disease token), L2-normalized 512-D (`z_rna_512.npy`). Compact `z_rna_export.npy` (`z_keep=32`) is not the probe space. |
+| **Honest weak spots** | ADT-only is a weak channel (panel Pearson 0.446). Block 4 trades coverage for Q and O2 dips at very low coverage. Block 6 uses true ADT as an explicit complement probe; production keeps holdout ADT verifier-only. |
 
----
+Full scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
 
-## 1 · Edit the question
+## 5 · Reproduce (no TEDDY retrain)
 
-![Edit question](docs/assets/infographics/01_edit_question_light.png)
-
-O0→O1→O2 on the same frozen δu. ANM abstain climbs with the YAML observer; Train stays flat; TEDDY-alone over-answers where the new observer abstains.
-
-`0.1248` O0→O2 rewrite · `317→834→3,373` ANM abstain · `185` Train stuck · `1,752` TEDDY over-answers @O2
-
-![Observer shift](docs/assets/hard_proof/observer_shift_o0o1o2_light.gif)
-
-*([Pages](https://danielchen26.github.io/teddy_mm/#edit) · dark GIF: [`observer_shift_o0o1o2_dark.gif`](docs/assets/hard_proof/observer_shift_o0o1o2_dark.gif))*
-
----
-
-## 2 · Missing modality
-
-![Missing modality](docs/assets/infographics/02_missing_modality_light.png)
-
-Under weak `adt_only`, TEDDY-alone abstain = 0 (Q ≈ 0.63). ANM abstain jumps to 1,664 — honest silence over silent over-answer.
-
-`0` TEDDY abstain @adt_only · `1,664` ANM abstain · `12,563` ANM O2 (all) · `P_f 0.8675`
-
-![Masks GIF](docs/assets/missing_modality/missing_modality_masks_light.gif)
-
-*([dashboard](docs/assets/missing_modality/missing_modality_dashboard_light.png) · [Pages](https://danielchen26.github.io/teddy_mm/#missing))*
-
----
-
-## 3 · Attribution
-
-![Attribution](docs/assets/infographics/03_attribution_light.png)
-
-Closed-form LOO on the declared field — not SHAP. Matching abstain ≠ attribution.
-
-`16,433` n_attr · `0.277` top-1 flip · `0.75` flip-dist q50 · `≈0.0099` perm p · CD5 `3,882`
-
-![Attribution top-1](docs/assets/hard_proof/attribution_top1_flip_light.png)
-
-*([Pages](https://danielchen26.github.io/teddy_mm/#attr))*
-
----
-
-## 4 · Scope gate
-
-![Scope gate](docs/assets/infographics/04_scope_gate_light.png)
-
-Raise τ on `soft_P` — spend follow-up budget on trustworthy cells. Flip-sensitive scope is harder than a random same-n draw.
-
-O0 ΔQ `+0.0547` · O2 `+0.0554` · adt_only `+0.3206` · flip Q `0.8099` vs random `0.9458`
-
-*No dedicated GIF — [`SCOPE_REFINE_PROOF.md`](docs/reports/SCOPE_REFINE_PROOF.md). [Pages](https://danielchen26.github.io/teddy_mm/#scope).*
-
----
-
-## 5 · Zero-label transfer
-
-![Label cost](docs/assets/infographics/05_label_cost_light.png)
-
-ANM adopts O2 at **0** endpoint labels (abstain≈0.201, strict≈0.821, editable). Train needs ≈50 / 200 / 500 O2 labels to match numbers only.
-
-![Label cost curve](docs/assets/hard_proof/label_cost_curve_light.gif)
-
-*([Pages](https://danielchen26.github.io/teddy_mm/#labels))*
-
----
-
-
-## 6 · ANM reverse decision loop (Mode B)
-
-![ANM loop](docs/assets/infographics/06_anm_loop_poster_light.png)
-
-Veto `z_512` insufficiency on must-pairs → complement with **true ADT typed + O1** → verify. Not feature-swap (`z+` global relative_must_reduction **−0.27**). Not Mode A.
-
-`5,000` must-pairs · `1,490` myeloid↔T · false_agree `0.85→0.40` · soft_sep `0.17→0.63` · Q `0.74→0.99`
-
-![Myeloid↔T](docs/assets/infographics/07_myeloid_t_before_after_light.png)
-
-![ANM vs feature swap](docs/assets/infographics/08_anm_vs_feature_swap_light.png)
-
-*([Pages](https://danielchen26.github.io/teddy_mm/#anm-loop) · deep writeup [`ANM_HELPS_TEDDY_LOOP`](docs/reports/ANM_HELPS_TEDDY_LOOP.md) · stats [`REVERSE_LOOP_SMALL`](docs/reports/REVERSE_LOOP_SMALL.md))*
-
-> Source note: Daniel’s brief truncated at 「还有」— proof+figures for the loop items are complete; further asks can append to the report.
-
----
-## Proof sentence
-
-> On the same TEDDY δu (site4/test), ANM edits the observer with zero endpoint-label fit, keeping verifiable P_f/Q_f and auditable full-n LOO (n_attr=16,433, perm p≈0.0099). TEDDY-alone over-answers where the declared observer abstains; Train+Jev burns O2 labels and still cannot buy editable-field attribution. Not clinical. Do not claim Pearson > 0.61.
-
-| What | Where |
-|---|---|
-| Landing | [`docs/`](docs/) · [GitHub Pages](https://danielchen26.github.io/teddy_mm/) |
-| Mode B scope | [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md) |
-| Reverse step 1 | [`bridge_anm/reverse_step1_must_separate.py`](bridge_anm/reverse_step1_must_separate.py) · [`REVERSE_STEP1`](docs/reports/REVERSE_STEP1.md) |
-| Bridge | [`bridge_anm/`](bridge_anm/) |
-| Proofs | [`docs/reports/`](docs/reports/) |
-| Story PNGs | `docs/assets/infographics/` (icon-first, light+dark) |
-| GIFs | `docs/assets/hard_proof/`, `docs/assets/missing_modality/` |
-
-Regenerate story figures: `python scripts/make_story_infographics.py` · loop posters: `/usr/bin/python3 scripts/make_anm_helps_teddy_loop_figures.py`
-
-### 中文摘要
-
-TEDDY 冻结 CITE 上 RNA→蛋白证据（Pearson ~0.61）；ANM 在同一证据上可编辑决策。不重训 · 不声称 Pearson > ~0.61 · 非临床。图优先。
-
----
-
-## Re-run (no TEDDY retrain)
+| Block | Script | Report |
+|---|---|---|
+| Export (once) | `bridge_anm/export_cite_events.py --n-cells 0 --ood-n 2000` | [STAT_PROOF](docs/reports/STAT_PROOF.md) |
+| 1 · 3 · 5 | `bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100` | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 2 | `bridge_anm/export_missing_modality_events.py` → `bridge_anm/run_missing_modality_demo.py` | [MISSING_MODALITY](docs/reports/MISSING_MODALITY_ANM_DEMO.md) |
+| 4 | `bridge_anm/run_scope_refine_proof.py` | [SCOPE_REFINE_PROOF](docs/reports/SCOPE_REFINE_PROOF.md) |
+| 6 | `bridge_anm/reverse_step1_must_separate.py` → `bridge_anm/reverse_loop_small.py` | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) |
 
 ```bash
 cd teddy_mm
 PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100
 PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
-# missing modality: see docs/index.html#rerun
+PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
 ```
 
-Criteria YAML: `bridge_anm/readouts/cite_lineage_O{0,1,2}.yaml`.
+Figures: `python scripts/make_story_infographics.py` · loop posters: `/usr/bin/python3 scripts/make_anm_helps_teddy_loop_figures.py`.
+
+### 中文摘要
+
+TEDDY 冻结不动（RNA→蛋白，Pearson ≈ 0.61）。ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层。六个模块（改问题 · 缺模态 · 归因 · 范围门控 · 零标签迁移 · 决策闭环）都用同一套对照：TEDDY alone vs TEDDY + ANM vs 训练头，只证明“帮助 TEDDY”，不证明 Pearson 胜利，不重训，非临床。
 
 ---
 
