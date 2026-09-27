@@ -4,90 +4,59 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TEDDY × ANM — Editable observers on CITE evidence</title>
-<meta name="description" content="Prior predictors freeze one question at train time. On TEDDY CITE δu, ANM edits the observer (decision / abstain / attribution / scope) with zero endpoint labels — not a Pearson win over ~0.61." />
+<meta name="description" content="Foundation models freeze one question at train time. On TEDDY CITE δu, ANM edits the observer (decision / abstain / attribution / scope) with zero endpoint labels — not a Pearson win over ~0.61." />
 <meta name="color-scheme" content="light dark" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
+
 :root {
-  --bg: #f7f6f2;
-  --bg-elev: #ffffff;
-  --bg-soft: #efeee8;
-  --ink: #1a1c1e;
-  --ink-muted: #5a5f66;
-  --line: #d8d5cc;
-  --accent: #0d6e6e;
-  --accent-soft: #d8efef;
-  --warn: #8a4b12;
-  --warn-bg: #f5e6d4;
-  --good: #1f6b3a;
-  --good-bg: #dcefe3;
-  --bad: #8b2e2e;
+  --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #efeee8;
+  --ink: #1a1c1e; --ink-muted: #5a5f66; --line: #d8d5cc;
+  --accent: #0d6e6e; --accent-soft: #d8efef;
+  --warn: #8a4b12; --warn-bg: #f5e6d4;
+  --good: #1f6b3a; --good-bg: #dcefe3; --bad: #8b2e2e;
   --card-shadow: 0 1px 2px rgba(26,28,30,.04), 0 8px 24px rgba(26,28,30,.06);
-  --radius: 14px;
-  --max: 1080px;
+  --radius: 14px; --max: 1080px;
   --font: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #121416;
-    --bg-elev: #1b1e22;
-    --bg-soft: #23272c;
-    --ink: #eceae4;
-    --ink-muted: #a3a8b0;
-    --line: #2e333a;
-    --accent: #5ec4c4;
-    --accent-soft: #1a3333;
-    --warn: #e0a86a;
-    --warn-bg: #2f2418;
-    --good: #7dcea0;
-    --good-bg: #1a2e22;
+    --bg: #121416; --bg-elev: #1b1e22; --bg-soft: #23272c;
+    --ink: #eceae4; --ink-muted: #a3a8b0; --line: #2e333a;
+    --accent: #5ec4c4; --accent-soft: #1a3333;
+    --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22;
     --bad: #e08a8a;
     --card-shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
   }
 }
 :root[data-theme="dark"] {
-  --bg: #121416;
-  --bg-elev: #1b1e22;
-  --bg-soft: #23272c;
-  --ink: #eceae4;
-  --ink-muted: #a3a8b0;
-  --line: #2e333a;
-  --accent: #5ec4c4;
-  --accent-soft: #1a3333;
-  --warn: #e0a86a;
-  --warn-bg: #2f2418;
-  --good: #7dcea0;
-  --good-bg: #1a2e22;
+  --bg: #121416; --bg-elev: #1b1e22; --bg-soft: #23272c;
+  --ink: #eceae4; --ink-muted: #a3a8b0; --line: #2e333a;
+  --accent: #5ec4c4; --accent-soft: #1a3333;
+  --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22;
   --bad: #e08a8a;
   --card-shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  margin: 0;
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.55;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
+  margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink);
+  line-height: 1.55; font-size: 16px; -webkit-font-smoothing: antialiased;
 }
 a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { opacity: .85; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
 .topbar {
-  position: sticky; top: 0; z-index: 20;
-  backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 20; backdrop-filter: blur(12px);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   border-bottom: 1px solid var(--line);
 }
 .topbar-inner {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 1rem; padding: .85rem 0; max-width: var(--max); margin: 0 auto;
-  padding-left: 1.25rem; padding-right: 1.25rem;
+  gap: 1rem; padding: .85rem 1.25rem; max-width: var(--max); margin: 0 auto;
 }
 .brand { font-weight: 700; letter-spacing: -.02em; font-size: 1rem; }
 .brand span { color: var(--accent); font-weight: 600; }
@@ -98,10 +67,7 @@ a:hover { opacity: .85; }
   border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink);
   border-radius: 999px; padding: .35rem .75rem; font: inherit; font-size: .8rem; cursor: pointer;
 }
-.hero {
-  padding: 3.5rem 0 2.5rem;
-  border-bottom: 1px solid var(--line);
-}
+.hero { padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--line); }
 .eyebrow {
   display: inline-flex; gap: .5rem; align-items: center;
   font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
@@ -129,13 +95,30 @@ h1 {
 .section { padding: 3rem 0; border-bottom: 1px solid var(--line); }
 .section h2 { font-size: 1.55rem; letter-spacing: -.02em; margin: 0 0 .4rem; }
 .section .sub { color: var(--ink-muted); margin: 0 0 1.5rem; max-width: 44rem; }
-.problem-list { margin: 0 0 0; padding: 0; list-style: none; display: grid; gap: .75rem; }
-.problem-list li {
+.cap-block {
   background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 1rem 1.15rem; box-shadow: var(--card-shadow); font-size: .95rem;
+  padding: 1.35rem 1.4rem; margin: 0 0 1.75rem; box-shadow: var(--card-shadow);
 }
-.problem-list strong { color: var(--ink); }
-.problem-list .fail { color: var(--bad); font-weight: 600; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; display: block; margin-bottom: .35rem; }
+.cap-block > h3 {
+  margin: 0 0 1rem; font-size: 1.2rem; letter-spacing: -.01em;
+  padding-bottom: .75rem; border-bottom: 1px solid var(--line);
+}
+.step-label {
+  display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--accent); margin: 0 0 .35rem;
+}
+.cap-block .goal, .cap-block .example, .cap-block .compare { margin: 0 0 1.1rem; }
+.cap-block .goal p, .cap-block .example p, .cap-block .compare p {
+  margin: 0; color: var(--ink-muted); font-size: .95rem;
+}
+.cap-block .goal p strong, .cap-block .example p strong, .cap-block .compare p strong {
+  color: var(--ink); font-weight: 600;
+}
+.cap-block .example .break {
+  margin-top: .55rem; padding: .65rem .8rem; border-radius: 10px;
+  background: color-mix(in srgb, var(--bad) 8%, var(--bg-soft));
+  border-left: 3px solid var(--bad); color: var(--ink); font-size: .9rem;
+}
 .flow {
   display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .35rem;
   font-family: var(--mono); font-size: .82rem; margin: 1rem 0 1.5rem;
@@ -164,10 +147,9 @@ h1 {
 .card .win { color: var(--good); font-weight: 600; }
 .card .lose { color: var(--bad); font-weight: 600; }
 .viz {
-  margin: 1.25rem 0 0; border-radius: var(--radius); overflow: hidden;
+  margin: 1rem 0 0; border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--line); background: var(--bg-elev);
 }
-.viz.large img { display: block; width: 100%; height: auto; }
 .viz img { display: block; width: 100%; height: auto; }
 .viz .cap {
   padding: .85rem 1.05rem; font-size: .9rem; color: var(--ink); border-top: 1px solid var(--line);
@@ -188,9 +170,9 @@ th { background: var(--bg-soft); font-weight: 600; font-size: .78rem; letter-spa
 tr:last-child td { border-bottom: none; }
 td.num, th.num { font-family: var(--mono); font-size: .82rem; text-align: right; white-space: nowrap; }
 .hl { background: color-mix(in srgb, var(--accent-soft) 55%, transparent); }
-.table-wrap { overflow-x: auto; margin: 1rem 0 0; border-radius: var(--radius); }
+.table-wrap { overflow-x: auto; margin: .85rem 0 0; border-radius: var(--radius); }
 .note { font-size: .88rem; color: var(--ink-muted); margin: .75rem 0 0; }
-.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .85rem; margin: 1.25rem 0; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .85rem; margin: .85rem 0 0; }
 @media (max-width: 860px) { .kpi-grid { grid-template-columns: 1fr 1fr; } }
 .kpi {
   background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
@@ -210,13 +192,6 @@ td.num, th.num { font-family: var(--mono); font-size: .82rem; text-align: right;
   background: var(--bg-elev); color: var(--ink); text-decoration: none; font-size: .85rem; font-weight: 500;
 }
 .links a:hover { border-color: var(--accent); color: var(--accent); }
-.story-block {
-  background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 1.2rem 1.25rem; margin: 0 0 1.25rem; box-shadow: var(--card-shadow);
-}
-.story-block h3 { margin: 0 0 .5rem; font-size: 1.1rem; }
-.story-block p { margin: 0; color: var(--ink-muted); font-size: .95rem; }
-.story-block p + p { margin-top: .6rem; }
 .two-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: 1.25rem; align-items: start; }
 @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
 .axis-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .85rem; margin: 1rem 0 0; }
@@ -232,9 +207,9 @@ td.num, th.num { font-family: var(--mono); font-size: .82rem; text-align: right;
   padding: 1.1rem 1.2rem; margin-top: 1.5rem; color: var(--ink-muted); font-size: .92rem;
 }
 .zh-block h3 { margin: 0 0 .5rem; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); }
-footer {
-  padding: 2.5rem 0 3.5rem; color: var(--ink-muted); font-size: .88rem;
-}
+.zh-block p { margin: 0 0 .55rem; }
+.zh-block p:last-child { margin-bottom: 0; }
+footer { padding: 2.5rem 0 3.5rem; color: var(--ink-muted); font-size: .88rem; }
 footer strong { color: var(--ink); }
 code, .mono { font-family: var(--mono); font-size: .86em; }
 </style>
@@ -244,10 +219,12 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
   <div class="topbar-inner">
     <div class="brand">TEDDY <span>×</span> ANM</div>
     <nav class="nav">
-      <a href="#problem">Problem</a>
       <a href="#setup">Setup</a>
-      <a href="#arms">Arms</a>
-      <a href="#solves">What ANM solves</a>
+      <a href="#edit">Edit question</a>
+      <a href="#missing">Missing modality</a>
+      <a href="#attr">Attribution</a>
+      <a href="#scope">Scope gate</a>
+      <a href="#labels">Label cost</a>
       <a href="#claims">Claims</a>
       <a href="#rerun">Re-run</a>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle theme">Theme</button>
@@ -256,17 +233,15 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
 </header>
 
 <main>
-  <!-- 1. HOOK -->
   <section class="hero">
     <div class="wrap">
       <div class="eyebrow">NeurIPS 2021 BMMC CITE · site4/test n=16,750</div>
-      <h1>Prior predictors freeze one question.<br />ANM edits the observer — without retraining TEDDY.</h1>
+      <h1>Foundation models freeze one question.<br />ANM edits the observer — without retraining TEDDY.</h1>
       <p class="lede">
-        A typical supervised head locks the decision criterion at train time.
-        Change the question → <strong>retrain + new labels</strong>.
-        Weak modality → it still answers.
-        No editable field, no abstain that follows a declaration, no auditable attribution.
-        <strong>ANM</strong> sits on typed evidence from a frozen TEDDY and turns the criterion into a declared field you can rewrite in YAML.
+        Multimodal foundation work usually trains <strong>one map</strong> (e.g. RNA→protein) and scores it with
+        <strong>one fixed readout</strong> (maximize Pearson). That is useful — and brittle when the question changes,
+        a modality is missing, or you need to know <em>which marker flipped the call</em>.
+        <strong>ANM</strong> sits on typed evidence from a frozen TEDDY and turns the decision criterion into a declared field you rewrite in YAML.
       </p>
       <div class="claim-box">
         <h2>Claim boundary — read this first</h2>
@@ -275,6 +250,7 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
           <li><strong>Not a global Pearson uplift.</strong> Phase-1 TEDDY+MLP full-ADT Pearson is ~0.61 — we do <em>not</em> claim to beat it.</li>
           <li class="win">Wins we do claim: decision edit · abstain · attribution · zero-label criterion transfer · conditional accuracy via P<sub>f</sub> / soft_P gate.</li>
           <li>Holdout <code>adt_true</code> is verifier-only. Train+Jev is a log-loss Choice <em>stand-in</em>, not a live Jev API. No <code>best.pt</code> retrain.</li>
+          <li>Numbers below cite only <a href="reports/HARD_PROOF.md">HARD_PROOF</a>, <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE_PROOF</a>, <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a>.</li>
         </ul>
       </div>
       <div class="pill-row">
@@ -287,42 +263,6 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
     </div>
   </section>
 
-  <!-- Problem prior methods could NOT solve -->
-  <section class="section" id="problem">
-    <div class="wrap">
-      <h2>What prior predictors could not do</h2>
-      <p class="sub">Same frozen TEDDY δu. The gaps below are structural — not “train harder.”</p>
-      <ul class="problem-list">
-        <li>
-          <span class="fail">Cannot</span>
-          <strong>Change the question without retraining.</strong>
-          O0→O1 tightens abstain; O0→O2 rewrites <code>expected_action</code> on 12.48% of cells. A fixed head needs new labels + retune for each observer.
-        </li>
-        <li>
-          <span class="fail">Cannot</span>
-          <strong>Abstain when evidence is weak.</strong>
-          Under <code>adt_only</code>, TEDDY-alone O0 abstain = <strong>0</strong> (silent over-answer). ANM O0 abstain = <strong>1,664</strong>; O2 abstains on all 12,563.
-        </li>
-        <li>
-          <span class="fail">Cannot</span>
-          <strong>Attribute decision flips on a declared field.</strong>
-          Panel-mean heuristics have no closed-form LOO / flip distance. ANM reports full-n LOO (n_attr=16,433), flip rate 0.277, permutation p≈0.0099.
-        </li>
-        <li>
-          <span class="fail">Cannot</span>
-          <strong>Gate for conditional accuracy without a new model.</strong>
-          Soft_P = max(action_scores) raises conditional Q as coverage tightens (O0 peak ΔQ +0.0547; adt_only ΔQ_peak +0.3206) — SCOPE_REFINE_PROOF.
-        </li>
-        <li>
-          <span class="fail">Cannot</span>
-          <strong>Transfer criteria at zero label cost.</strong>
-          To numerically match ANM’s O2 operating point (abstain≈0.20, strict≈0.82), Train needs ≈50 / 200 / 500 O2 labels (grid / MLP / logistic) — and still has no editable-field attribution.
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 2. Concrete TEDDY setup -->
   <section class="section" id="setup">
     <div class="wrap">
       <h2>Concrete setup · TEDDY CITE bridge</h2>
@@ -338,28 +278,6 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
         <span class="step">typed δu events</span><span class="arrow">→</span>
         <span class="step">ANM P<sub>f</sub> / Q<sub>f</sub></span>
       </div>
-      <div class="story-block">
-        <h3>Where ANM sits</h3>
-        <p>
-          ANM consumes <strong>typed evidence</strong> built from TEDDY protein-panel predictions, verified against holdout GT (<code>adt_true</code> = verifier only).
-          Observers O0 / O1 / O2 are YAML criteria (<code>bridge_anm/readouts/cite_lineage_O{0,1,2}.yaml</code>).
-          Editing the observer = edit the declaration — <strong>zero endpoint-label fit</strong>, no <code>best.pt</code> retrain.
-        </p>
-        <p>
-          Phase-1 TEDDY+MLP full-ADT Pearson on the export slice: <strong>0.610</strong> (~0.61).
-          Missing-modality demo uses hybrid export (phase-1 RNA + phase-2 ADT) because phase-2 RNA Pearson ≈0.25–0.28 ≪ 0.61.
-          Panel Pearson by mask: rna_only≈0.915, adt_only≈0.446, joint≈0.870 — secondary; not the win condition.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Three arms + cell stories -->
-  <section class="section" id="arms">
-    <div class="wrap">
-      <h2>Three arms on the same δu</h2>
-      <p class="sub">Accuracy is secondary. Watch criterion-change cost, whether abstain follows the declaration, and whether attribution exists.</p>
-
       <div class="grid-3">
         <article class="card">
           <span class="tag alone">Arm 1</span>
@@ -367,7 +285,6 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
           <ul>
             <li>Panel-mean / threshold rules</li>
             <li class="lose">Silent over-answer</li>
-            <li>O0 rule answers where O1/O2 should abstain: <strong>780 / 1,752</strong> cells</li>
             <li>Criterion change → retune with labels</li>
             <li>No declared-field LOO / flip distance</li>
           </ul>
@@ -378,9 +295,8 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
           <ul>
             <li>Declared P<sub>f</sub> / Q<sub>f</sub> field</li>
             <li class="win">Edit YAML → new observer</li>
-            <li>Abstain tracks O0→O1→O2: <strong>317 → 834 → 3,373</strong></li>
+            <li>Abstain tracks declaration</li>
             <li>Full-n LOO attribution + flip distances</li>
-            <li>Zero endpoint labels for observer edits</li>
           </ul>
         </article>
         <article class="card">
@@ -388,330 +304,503 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
           <h3>Train + Jev stand-in</h3>
           <ul>
             <li>Logistic / MLP / grid calibration</li>
-            <li>Can match abstain≈0.20 numerically</li>
             <li class="lose">Needs O2 labels (≈50–500)</li>
-            <li>O0-trained abstain stuck at <strong>185</strong> across O0/O1/O2</li>
+            <li>O0-trained abstain stuck at <strong>185</strong></li>
             <li>Still no editable-field attribution</li>
           </ul>
         </article>
       </div>
-
-      <div class="story-block" style="margin-top:1.25rem">
-        <h3>Cell / criterion stories (HARD_PROOF)</h3>
-        <p>
-          <strong>O0→O1:</strong> disagree rate on expected_action = <strong>0.0000</strong> — only tighter abstain, no label rewrite.
-          <strong>O0→O2:</strong> disagree rate = <strong>0.1248</strong> (1,794 / 14,379 both-defined) — key-marker priority rewrites expected_action.
-        </p>
-        <p>
-          TEDDY-alone with the O0 rule still answers on <strong>780</strong> cells where the O1 declaration abstains, and <strong>1,752</strong> where O2 abstains.
-          Train+Jev’s O0-trained confidence gate keeps abstain = 185 on every observer — it does not track the declaration.
-        </p>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Arm</th>
-              <th class="num">O0 Q</th>
-              <th class="num">O0 abstain</th>
-              <th class="num">O1 Q</th>
-              <th class="num">O1 abstain</th>
-              <th class="num">O2 Q</th>
-              <th class="num">O2 abstain</th>
-              <th>Criterion change cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>TEDDY alone</td>
-              <td class="num">0.9472</td>
-              <td class="num">101</td>
-              <td class="num">0.9735</td>
-              <td class="num">881</td>
-              <td class="num">0.9428</td>
-              <td class="num">1,796</td>
-              <td>Needs label retune</td>
-            </tr>
-            <tr class="hl">
-              <td>TEDDY + ANM</td>
-              <td class="num">0.9394</td>
-              <td class="num">317</td>
-              <td class="num">0.9578</td>
-              <td class="num">834</td>
-              <td class="num">0.8208</td>
-              <td class="num">3,373</td>
-              <td><strong>Declaration only</strong></td>
-            </tr>
-            <tr>
-              <td>Train+Jev (O0 model zero-shot)</td>
-              <td class="num">0.9552</td>
-              <td class="num">185</td>
-              <td class="num">0.9733</td>
-              <td class="num">185</td>
-              <td class="num">0.8277</td>
-              <td class="num">185</td>
-              <td>Abstain does not follow observer</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">Source: <a href="reports/HARD_PROOF.md">HARD_PROOF.md</a> (TEDDY alone / ANM / Train zero-shot Q+abstain) · site4/test full-n · GT verifier only. Also see <a href="reports/STAT_PROOF.md">STAT_PROOF.md</a>, <a href="reports/BAKEOFF_REPORT.md">BAKEOFF_REPORT.md</a>.</p>
+      <p class="note" style="margin-top:1rem">Phase-1 TEDDY+MLP full-ADT Pearson on the export slice: <strong>0.610</strong> (~0.61). Missing-modality demo uses hybrid export (phase-1 RNA + phase-2 ADT). Accuracy is secondary on every section below. Each capability block repeats: FM goal → concrete example → three-arm compare → figure last.</p>
     </div>
   </section>
 
-  <!-- 4. Problems ANM solves — each tied to GIF/table -->
-  <section class="section" id="solves">
+  <section class="section" id="edit">
     <div class="wrap">
-      <h2>Problems ANM solves that predecessors could not</h2>
-      <p class="sub">Each win is tied to a figure from the proof runs. Story first; dense numbers below each figure.</p>
+      <h2>1 · Edit the question without retrain</h2>
+      <p class="sub">Same frozen TEDDY δu. Change the declared observer — not the backbone weights.</p>
 
-      <!-- 4a observer edit -->
-      <div class="story-block">
-        <h3>1 · Edit the question without retrain</h3>
-        <p>
-          Switch O0 → O1 (stricter abstain, 0% label rewrite) or O0 → O2 (12.48% expected_action rewrite) by editing YAML.
-          ANM abstain rises 317 → 834 → 3,373. Train abstain stays flat at 185 without new labels.
-        </p>
-      </div>
-      <div class="viz large">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/observer_shift_o0o1o2_dark.gif" />
-          <img src="assets/hard_proof/observer_shift_o0o1o2_light.gif" alt="Observer shift O0 to O1 to O2 GIF" width="1080" height="600" loading="lazy" />
-        </picture>
-        <div class="cap">
-          <span class="watch">What to watch</span>
-          ANM’s abstain bar climbs with each declared observer. TEDDY-alone keeps answering where the new observer abstains. Train+Jev’s abstain line is flat — one confidence gate, three observers.
-          <div class="muted">Asset: <code>observer_shift_o0o1o2_{light,dark}.gif</code> · HARD_PROOF</div>
+      <div class="cap-block">
+        <h3>Capability: criterion / observer edit</h3>
+
+        <div class="goal">
+          <span class="step-label">1 · What foundation-model scientists originally wanted</span>
+          <p>
+            Train <strong>one RNA→protein map</strong>, freeze a readout head, and maximize a single score
+            (here: Pearson correlation across the ADT panel). The “question” is baked in at train time:
+            predict protein levels as well as possible under that fixed metric.
+          </p>
+        </div>
+
+        <div class="example">
+          <span class="step-label">2 · Concrete TEDDY CITE example</span>
+          <p>
+            Imagine a wet-lab collaborator first asks: <em>“Call each cell B / T / myeloid from the predicted surface panel
+            with equal marker weight (observer O0).”</em>
+            Next week they tighten the rule: <em>“Same labels, but abstain more often when the margin is thin (O1).”</em>
+            Then they change priority: <em>“Prefer key-lineage markers over equal panel mean (O2).”</em>
+            On site4/test, O0→O1 only tightens abstain (disagree rate <strong>0.0000</strong>).
+            O0→O2 rewrites <code>expected_action</code> on <strong>1,794 / 14,379</strong> both-defined cells (rate <strong>0.1248</strong>) —
+            e.g. many myeloid→B flips when key markers dominate.
+          </p>
+          <div class="break">
+            <strong>Where the original goal breaks:</strong> a frozen Pearson head cannot rewrite the decision field.
+            Changing O0→O2 means new labels + retune for TEDDY-alone / Train+Jev — or keep answering the old question.
+          </div>
+        </div>
+
+        <div class="compare">
+          <span class="step-label">3 · How we compare (verified · HARD_PROOF)</span>
+          <p>
+            On the same δu (n=16,750): <strong>TEDDY+ANM</strong> edits YAML only — abstain rises
+            <strong>317 → 834 → 3,373</strong> (O0→O1→O2).
+            <strong>TEDDY alone</strong> still answers with the O0 rule on <strong>780</strong> cells where O1 abstains and
+            <strong>1,752</strong> where O2 abstains.
+            <strong>Train+Jev</strong> (O0-trained logistic, zero-shot) keeps abstain = <strong>185</strong> on every observer;
+            Q = 0.9552 / 0.9733 / 0.8277 — confidence gate, not declaration.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Arm</th>
+                <th class="num">O0 Q</th>
+                <th class="num">O0 abstain</th>
+                <th class="num">O1 Q</th>
+                <th class="num">O1 abstain</th>
+                <th class="num">O2 Q</th>
+                <th class="num">O2 abstain</th>
+                <th>Criterion change cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TEDDY alone</td>
+                <td class="num">0.9472</td>
+                <td class="num">101</td>
+                <td class="num">0.9735</td>
+                <td class="num">881</td>
+                <td class="num">0.9428</td>
+                <td class="num">1,796</td>
+                <td>Needs label retune</td>
+              </tr>
+              <tr class="hl">
+                <td>TEDDY + ANM</td>
+                <td class="num">0.9394</td>
+                <td class="num">317</td>
+                <td class="num">0.9578</td>
+                <td class="num">834</td>
+                <td class="num">0.8208</td>
+                <td class="num">3,373</td>
+                <td><strong>Declaration only</strong></td>
+              </tr>
+              <tr>
+                <td>Train+Jev (O0 model zero-shot)</td>
+                <td class="num">0.9552</td>
+                <td class="num">185</td>
+                <td class="num">0.9733</td>
+                <td class="num">185</td>
+                <td class="num">0.8277</td>
+                <td class="num">185</td>
+                <td>Abstain does not follow observer</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="v">0.0000</div><div class="l">O0 vs O1 disagree rate</div></div>
+          <div class="kpi"><div class="v">0.1248</div><div class="l">O0 vs O2 disagree rate</div></div>
+          <div class="kpi"><div class="v">317→3,373</div><div class="l">ANM abstain O0→O2</div></div>
+          <div class="kpi"><div class="v">185</div><div class="l">Train abstain stuck (all O*)</div></div>
+        </div>
+
+        <div class="viz large">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/observer_shift_o0o1o2_dark.gif" />
+            <img src="assets/hard_proof/observer_shift_o0o1o2_light.gif" alt="Observer shift O0 to O1 to O2: ANM abstain climbs; Train stays flat" width="1080" height="600" loading="lazy" />
+          </picture>
+          <div class="cap">
+            <span class="watch">Figure last · English caption</span>
+            Observer shift O0→O1→O2 on the same TEDDY δu. Watch ANM’s abstain bar climb with each declared observer;
+            TEDDY-alone keeps answering where the new observer abstains; Train+Jev’s abstain line stays flat at 185.
+            <div class="muted">Asset: <code>observer_shift_o0o1o2_{light,dark}.gif</code> · HARD_PROOF</div>
+          </div>
         </div>
       </div>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="v">0.0000</div><div class="l">O0 vs O1 disagree rate</div></div>
-        <div class="kpi"><div class="v">0.1248</div><div class="l">O0 vs O2 disagree rate</div></div>
-        <div class="kpi"><div class="v">317→3,373</div><div class="l">ANM abstain O0→O2</div></div>
-        <div class="kpi"><div class="v">185</div><div class="l">Train abstain stuck (all O*)</div></div>
-      </div>
+    </div>
+  </section>
 
-      <!-- 4b missing modality -->
-      <div class="story-block" style="margin-top:2rem">
-        <h3>2 · Abstain on weak evidence (missing modality)</h3>
-        <p>
-          Three masks on the same base cells: <code>rna_only</code> / <code>adt_only</code> / <code>joint</code> as source ablation.
-          ANM P<sub>f</sub> and abstain track which channel is present.
-          Headline failure of predecessors: under weak <code>adt_only</code>, TEDDY-alone O0 abstain = 0 while ANM abstains — <strong>not</strong> a Pearson win over 0.61.
-        </p>
-      </div>
-      <div class="viz large">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="assets/missing_modality/missing_modality_masks_dark.gif" />
-          <img src="assets/missing_modality/missing_modality_masks_light.gif" alt="Missing modality masks animation" width="1080" height="600" loading="lazy" />
-        </picture>
-        <div class="cap">
-          <span class="watch">What to watch</span>
-          When the mask flips to <code>adt_only</code>, ANM’s abstain jumps and mean P<sub>f</sub> drops. TEDDY-alone keeps answering (abstain 0). Joint restores high P<sub>f</sub> and low abstain.
-          <div class="muted">Asset: <code>missing_modality_masks_{light,dark}.gif</code> · MISSING_MODALITY_ANM_DEMO</div>
+  <section class="section" id="missing">
+    <div class="wrap">
+      <h2>2 · Abstain when a modality is missing</h2>
+      <p class="sub">Source ablation on the same base cells — reverse diagnosis, not a Pearson contest.</p>
+
+      <div class="cap-block">
+        <h3>Capability: missing-modality abstain / P<sub>f</sub> tracking</h3>
+
+        <div class="goal">
+          <span class="step-label">1 · What foundation-model scientists originally wanted</span>
+          <p>
+            Build a multimodal predictor that still outputs a protein (or lineage) estimate when one channel is weak —
+            ideally keeping Pearson high under joint RNA+ADT. The implicit hope: <strong>always answer</strong> from whatever
+            channels are present.
+          </p>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Mask</th>
-              <th class="num">TEDDY O0 Q</th>
-              <th class="num">TEDDY O0 abstain</th>
-              <th class="num">ANM O0 Q</th>
-              <th class="num">ANM O0 abstain</th>
-              <th class="num">ANM O0 mean P<sub>f</sub></th>
-              <th class="num">ANM O2 abstain</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>rna_only</code></td>
-              <td class="num">0.9450</td>
-              <td class="num">76</td>
-              <td class="num">0.9479</td>
-              <td class="num">233</td>
-              <td class="num">0.9815</td>
-              <td class="num">2,459</td>
-            </tr>
-            <tr class="hl">
-              <td><code>adt_only</code></td>
-              <td class="num">0.6277</td>
-              <td class="num">0</td>
-              <td class="num">0.6494</td>
-              <td class="num">1,664</td>
-              <td class="num">0.8675</td>
-              <td class="num">12,563 (all)</td>
-            </tr>
-            <tr>
-              <td><code>joint</code></td>
-              <td class="num">0.9150</td>
-              <td class="num">0</td>
-              <td class="num">0.9214</td>
-              <td class="num">0</td>
-              <td class="num">1.0000</td>
-              <td class="num">785</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="two-col" style="margin-top:1.25rem">
-        <div class="viz">
+
+        <div class="example">
+          <span class="step-label">2 · Concrete TEDDY CITE example</span>
+          <p>
+            Same site4 cells, three masks as source ablation: <code>rna_only</code> (sequencer OK, antibody panel offline),
+            <code>adt_only</code> (only surface proteins measured today), and <code>joint</code>.
+            Think of a core facility that drops RNA for one batch of 12,563 cells — should the model still call lineage
+            as confidently as when both channels exist?
+          </p>
+          <div class="break">
+            <strong>Where the original goal breaks:</strong> under weak <code>adt_only</code>, TEDDY-alone O0 abstain = <strong>0</strong>
+            (silent over-answer) while Q falls to ~0.63. Always-answering is not the same as trustworthy answering.
+            Panel Pearson (rna_only≈0.915, adt_only≈0.446, joint≈0.870) is secondary; full-ADT phase-1 reference stays ~0.61.
+          </div>
+        </div>
+
+        <div class="compare">
+          <span class="step-label">3 · How we compare (verified · MISSING_MODALITY)</span>
+          <p>
+            <strong>TEDDY+ANM</strong> P<sub>f</sub> / abstain track the mask: rna_only abstain 233 (mean P<sub>f</sub> 0.9815);
+            adt_only abstain <strong>1,664</strong> (P<sub>f</sub> 0.8675); joint abstain 0 (P<sub>f</sub> 1.0).
+            O2 under adt_only abstains on <strong>all 12,563</strong>.
+            <strong>TEDDY alone</strong> O0 abstain = 0 on adt_only and joint.
+            <strong>Train-retune</strong> under adt_only plateaus at Q≈0.68–0.70 even with 1,000 O2 labels — still no editable-field LOO
+            (flip_rate≈0.71 under weak ADT).
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Mask</th>
+                <th class="num">TEDDY O0 Q</th>
+                <th class="num">TEDDY O0 abstain</th>
+                <th class="num">ANM O0 Q</th>
+                <th class="num">ANM O0 abstain</th>
+                <th class="num">ANM O0 mean P<sub>f</sub></th>
+                <th class="num">ANM O2 abstain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>rna_only</code></td>
+                <td class="num">0.9450</td>
+                <td class="num">76</td>
+                <td class="num">0.9479</td>
+                <td class="num">233</td>
+                <td class="num">0.9815</td>
+                <td class="num">2,459</td>
+              </tr>
+              <tr class="hl">
+                <td><code>adt_only</code></td>
+                <td class="num">0.6277</td>
+                <td class="num">0</td>
+                <td class="num">0.6494</td>
+                <td class="num">1,664</td>
+                <td class="num">0.8675</td>
+                <td class="num">12,563 (all)</td>
+              </tr>
+              <tr>
+                <td><code>joint</code></td>
+                <td class="num">0.9150</td>
+                <td class="num">0</td>
+                <td class="num">0.9214</td>
+                <td class="num">0</td>
+                <td class="num">1.0000</td>
+                <td class="num">785</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Hybrid export (phase-1 RNA + phase-2 ADT). Source: <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY_ANM_DEMO.md</a>.</p>
+
+        <div class="viz large">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/missing_modality/missing_modality_masks_dark.gif" />
+            <img src="assets/missing_modality/missing_modality_masks_light.gif" alt="Missing modality masks: ANM abstain jumps on adt_only" width="1080" height="600" loading="lazy" />
+          </picture>
+          <div class="cap">
+            <span class="watch">Figure last · English caption</span>
+            Mask animation rna_only → adt_only → joint. When evidence flips to weak ADT-only, ANM abstain jumps and mean P<sub>f</sub> drops;
+            TEDDY-alone keeps answering (abstain 0). Joint restores high P<sub>f</sub> and low abstain.
+            <div class="muted">Asset: <code>missing_modality_masks_{light,dark}.gif</code> · MISSING_MODALITY</div>
+          </div>
+        </div>
+        <div class="viz" style="margin-top:1rem">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="assets/missing_modality/missing_modality_dashboard_dark.png" />
-            <img src="assets/missing_modality/missing_modality_dashboard_light.png" alt="Missing modality dashboard" width="1080" height="600" loading="lazy" />
+            <img src="assets/missing_modality/missing_modality_dashboard_light.png" alt="Missing modality dashboard contrasting masks" width="1080" height="600" loading="lazy" />
           </picture>
           <div class="cap">
-            <span class="watch">What to watch</span>
-            Dashboard contrast: reverse diagnosis under missing RNA vs missing ADT — declaration advantage, not Pearson.
+            <span class="watch">Figure last · English caption</span>
+            Dashboard contrast across masks — declaration / abstain advantage under missing RNA vs missing ADT, not a Pearson win over ~0.61.
           </div>
-        </div>
-        <div class="note" style="margin:0; padding:1rem 0">
-          Hybrid export (phase-1 RNA + phase-2 ADT). Full-ADT phase-1 Pearson reference remains ~0.61.
-          Under <code>adt_only</code>, train-retune plateaus at Q≈0.68–0.70 even with 1,000 O2 labels — still no editable-field LOO/flip (flip_rate≈0.71).
-          Source: <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY_ANM_DEMO.md</a>.
-        </div>
-      </div>
-
-      <!-- 4c attribution -->
-      <div class="story-block" style="margin-top:2rem">
-        <h3>3 · Attribute flips (LOO + bootstrap / permutation)</h3>
-        <p>
-          Full-n leave-one-out on the declared field: n_attr=<strong>16,433</strong>, top-1 flip rate <strong>0.277</strong>, flip-distance q50=<strong>0.75</strong>.
-          Bootstrap B=200 (mode CD5); permutation n_perm=100, one-sided p≈<strong>0.0099</strong>.
-          Predecessors stop at panel-mean heuristics or opaque learned coefficients — no closed-form field LOO.
-        </p>
-      </div>
-      <div class="two-col">
-        <div class="viz">
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/attribution_top1_flip_dark.png" />
-            <img src="assets/hard_proof/attribution_top1_flip_light.png" alt="Attribution top-1 protein and flip distances" width="1080" height="600" loading="lazy" />
-          </picture>
-          <div class="cap">
-            <span class="watch">What to watch</span>
-            Top-1 protein histogram and flip-distance quantiles on the declared O0 field — auditable per cell.
-          </div>
-        </div>
-        <div class="viz">
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/dashboard_hard_proof_dark.png" />
-            <img src="assets/hard_proof/dashboard_hard_proof_light.png" alt="Hard proof dashboard" width="1080" height="600" loading="lazy" />
-          </picture>
-          <div class="cap">
-            <span class="watch">What to watch</span>
-            Three-arm dashboard: criterion diverge, abstain track, attribution bootstrap — HARD_PROOF.
-          </div>
-        </div>
-      </div>
-
-      <!-- 4d scope / Pf gate -->
-      <div class="story-block" style="margin-top:2rem">
-        <h3>4 · Conditional accuracy via P<sub>f</sub> / soft_P gate (SCOPE)</h3>
-        <p>
-          Continuous workability <code>soft_P = max(action_scores)</code> raises conditional Q as coverage tightens.
-          Flip-sensitive cells (ANM LOO flipped) are a harder scope: Q 0.8099 vs random same-n 0.9458 (ΔQ <strong>−0.1359</strong>).
-          At n=50 labels, training on ANM flip-hard cells beats random labels on hard holdout (logreg ΔQ ≈ +0.034).
-        </p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Setting</th>
-              <th class="num">Baseline Q @cov=1</th>
-              <th class="num">Peak / best Q</th>
-              <th class="num">ΔQ</th>
-              <th class="num">Coverage note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="hl">
-              <td>O0 soft_P gate</td>
-              <td class="num">0.9453</td>
-              <td class="num">1.0000 · @cov≥0.4 → 0.9984</td>
-              <td class="num">+0.0547</td>
-              <td class="num">peak @cov≈0.067</td>
-            </tr>
-            <tr>
-              <td>O2 soft_P gate</td>
-              <td class="num">0.9149</td>
-              <td class="num">0.9703</td>
-              <td class="num">+0.0554</td>
-              <td class="num">best @cov≈0.765</td>
-            </tr>
-            <tr>
-              <td>adt_only O0 soft_P</td>
-              <td class="num">0.6288</td>
-              <td class="num">0.9494</td>
-              <td class="num">+0.3206</td>
-              <td class="num">peak @ low cov</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Cell scope</th>
-              <th class="num">Q</th>
-              <th class="num">n decided</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Full panel cells</td><td class="num">0.9453</td><td class="num">15,711</td></tr>
-            <tr class="hl"><td>Flip-sensitive (ANM LOO flipped)</td><td class="num">0.8099</td><td class="num">3,724</td></tr>
-            <tr><td>Non-flip</td><td class="num">0.9948</td><td class="num">11,818</td></tr>
-            <tr><td>Random same-n as flip (40 draws)</td><td class="num">0.9458 ± 0.0027</td><td class="num">4,557</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">Source: <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE_PROOF.md</a>. Conditional correctness / label efficiency only — not clinical.</p>
-
-      <!-- 4e label cost -->
-      <div class="story-block" style="margin-top:2rem">
-        <h3>5 · Zero-label criterion transfer vs label-cost calibration</h3>
-        <p>
-          Train can approximate ANM’s O2 operating point (abstain≈0.201, strict≈0.821) — but only by consuming O2 labels,
-          and it still cannot buy editable-field attribution or label-free observer edits.
-        </p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Method</th>
-              <th class="num">n O2 labels to match</th>
-              <th class="num">strict (labeled)</th>
-              <th class="num">abstain</th>
-              <th>Editable field?</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>grid_calibrated</td><td class="num">≈50</td><td class="num">0.8227</td><td class="num">0.2063</td><td>No</td></tr>
-            <tr><td>mlp_calibrated</td><td class="num">≈200</td><td class="num">0.8020</td><td class="num">0.1976</td><td>No</td></tr>
-            <tr><td>logistic (Jev stand-in)</td><td class="num">≈500</td><td class="num">0.8129</td><td class="num">0.2025</td><td>No</td></tr>
-            <tr class="hl"><td>ANM declaration O2</td><td class="num">0</td><td class="num">target ≈0.821</td><td class="num">≈0.201</td><td><strong>Yes</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="viz large">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/label_cost_curve_dark.png" />
-          <img src="assets/hard_proof/label_cost_curve_light.gif" alt="Label cost curve: train approaches ANM O2 abstain with more labels" width="1080" height="600" loading="lazy" />
-        </picture>
-        <div class="cap">
-          <span class="watch">What to watch</span>
-          Logistic Q-gap vs ANM shrinks as O2 labels grow (50→5,000) — numerical match only. The curve never buys a declared field or LOO flip distances.
-          <div class="muted">Asset: <code>label_cost_curve_light.gif</code> / <code>label_cost_curve_dark.png</code> · HARD_PROOF</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 5. Claim boundary + axes -->
+  <section class="section" id="attr">
+    <div class="wrap">
+      <h2>3 · Attribute which marker flipped the call</h2>
+      <p class="sub">Closed-form leave-one-out on the declared field — auditable per cell.</p>
+
+      <div class="cap-block">
+        <h3>Capability: declared-field attribution (LOO + flip)</h3>
+
+        <div class="goal">
+          <span class="step-label">1 · What foundation-model scientists originally wanted</span>
+          <p>
+            Once Pearson (or a classifier) is good enough, the usual next ask is: <strong>which input features drove the prediction?</strong>
+            Classic answers are saliency / SHAP on opaque coefficients, or ad-hoc “top expressed markers” —
+            not a flip distance on a declared decision field.
+          </p>
+        </div>
+
+        <div class="example">
+          <span class="step-label">2 · Concrete TEDDY CITE example</span>
+          <p>
+            A reviewer picks one cell called T-lineage under O0 and asks:
+            <em>“If we drop CD5 from the panel evidence, does the call flip — and how far was the margin?”</em>
+            That is leave-one-out on the declared protein field, not a Pearson residual plot.
+            On full site4, top-1 proteins concentrating flips include CD5 (3,882), CD2 (2,516), CD36 (2,394).
+          </p>
+          <div class="break">
+            <strong>Where the original goal breaks:</strong> panel-mean heuristics and Train heads have coefficients,
+            but no closed-form LOO / flip-distance on an editable observer field. You cannot audit “why this cell flipped
+            when the criterion changed” without that field.
+          </div>
+        </div>
+
+        <div class="compare">
+          <span class="step-label">3 · How we compare (verified · HARD_PROOF)</span>
+          <p>
+            <strong>TEDDY+ANM</strong> full-n LOO: n_attr=<strong>16,433</strong>, top-1 flip rate <strong>0.277</strong>,
+            flip-distance q50=<strong>0.75</strong>; bootstrap B=200 (mode CD5); permutation n_perm=100, one-sided p≈<strong>0.0099</strong>.
+            <strong>TEDDY alone</strong> / <strong>Train+Jev</strong>: no declared-field LOO or flip distances in the proof —
+            matching abstain numerically still does not buy attribution.
+          </p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi"><div class="v">16,433</div><div class="l">n_attr (full-n LOO)</div></div>
+          <div class="kpi"><div class="v">0.277</div><div class="l">top-1 flip rate</div></div>
+          <div class="kpi"><div class="v">0.75</div><div class="l">flip-distance q50</div></div>
+          <div class="kpi"><div class="v">≈0.0099</div><div class="l">permutation p (n_perm=100)</div></div>
+        </div>
+
+        <div class="two-col" style="margin-top:1rem">
+          <div class="viz">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/attribution_top1_flip_dark.png" />
+              <img src="assets/hard_proof/attribution_top1_flip_light.png" alt="Attribution top-1 protein histogram and flip distances" width="1080" height="600" loading="lazy" />
+            </picture>
+            <div class="cap">
+              <span class="watch">Figure last · English caption</span>
+              Top-1 protein histogram and flip-distance quantiles on the declared O0 field — auditable per cell (HARD_PROOF).
+            </div>
+          </div>
+          <div class="viz">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/dashboard_hard_proof_dark.png" />
+              <img src="assets/hard_proof/dashboard_hard_proof_light.png" alt="Hard proof three-arm dashboard" width="1080" height="600" loading="lazy" />
+            </picture>
+            <div class="cap">
+              <span class="watch">Figure last · English caption</span>
+              Three-arm HARD_PROOF dashboard: criterion diverge, abstain track, attribution bootstrap.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="scope">
+    <div class="wrap">
+      <h2>4 · Gate for conditional accuracy (scope refine)</h2>
+      <p class="sub">Use continuous workability soft_P to spend a limited follow-up budget on trustworthy cells.</p>
+
+      <div class="cap-block">
+        <h3>Capability: soft_P / P<sub>f</sub> coverage–Q gate</h3>
+
+        <div class="goal">
+          <span class="step-label">1 · What foundation-model scientists originally wanted</span>
+          <p>
+            Report one global accuracy (or Pearson) on the full test set. The operating assumption:
+            <strong>every cell is equally worth answering</strong>, so maximize average score under full coverage.
+          </p>
+        </div>
+
+        <div class="example">
+          <span class="step-label">2 · Concrete TEDDY CITE example</span>
+          <p>
+            A sorting experiment has budget for only ~40% of cells to send to a confirmatory antibody stain.
+            You want a gate: raise τ on <code>soft_P = max(action_scores)</code> so conditional Q climbs as coverage shrinks —
+            not a new model, just a declared threshold on the same field.
+            Separately, ANM LOO marks <strong>flip-sensitive</strong> cells (harder scope): their Q is 0.8099 vs random same-n 0.9458.
+          </p>
+          <div class="break">
+            <strong>Where the original goal breaks:</strong> a single full-coverage Pearson / Q hides that some cells are
+            barely decided. Without a workability gate or attributed-hard scope, you cannot trade coverage for conditional correctness
+            or prioritize which cells to label next.
+          </div>
+        </div>
+
+        <div class="compare">
+          <span class="step-label">3 · How we compare (verified · SCOPE_REFINE_PROOF)</span>
+          <p>
+            <strong>TEDDY+ANM</strong> soft_P gate: O0 baseline Q 0.9453 → peak 1.0000 (ΔQ <strong>+0.0547</strong>; @cov≥0.4 best 0.9984);
+            O2 0.9149 → 0.9703 (ΔQ <strong>+0.0554</strong>); adt_only O0 0.6288 → 0.9494 (ΔQ <strong>+0.3206</strong>).
+            Flip-sensitive scope Q=<strong>0.8099</strong> (n_decided 3,724) vs random same-n <strong>0.9458±0.0027</strong> (ΔQ <strong>−0.1359</strong>).
+            At n=50 labels, training on ANM flip-hard cells beats random on hard holdout (logreg ΔQ ≈ <strong>+0.034</strong>).
+            <strong>TEDDY alone</strong> “always answer” is the cov=1 baseline; <strong>Train</strong> can fit a head on hard labels but
+            still lacks the declared soft_P field that produced the scope.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th class="num">Baseline Q @cov=1</th>
+                <th class="num">Peak / best Q</th>
+                <th class="num">ΔQ</th>
+                <th class="num">Coverage note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hl">
+                <td>O0 soft_P gate</td>
+                <td class="num">0.9453</td>
+                <td class="num">1.0000 · @cov≥0.4 → 0.9984</td>
+                <td class="num">+0.0547</td>
+                <td class="num">peak @cov≈0.067</td>
+              </tr>
+              <tr>
+                <td>O2 soft_P gate</td>
+                <td class="num">0.9149</td>
+                <td class="num">0.9703</td>
+                <td class="num">+0.0554</td>
+                <td class="num">best @cov≈0.765</td>
+              </tr>
+              <tr>
+                <td>adt_only O0 soft_P</td>
+                <td class="num">0.6288</td>
+                <td class="num">0.9494</td>
+                <td class="num">+0.3206</td>
+                <td class="num">peak @ low cov</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cell scope</th>
+                <th class="num">Q</th>
+                <th class="num">n decided</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Full panel cells</td><td class="num">0.9453</td><td class="num">15,711</td></tr>
+              <tr class="hl"><td>Flip-sensitive (ANM LOO flipped)</td><td class="num">0.8099</td><td class="num">3,724</td></tr>
+              <tr><td>Non-flip</td><td class="num">0.9948</td><td class="num">11,818</td></tr>
+              <tr><td>Random same-n as flip (40 draws)</td><td class="num">0.9458 ± 0.0027</td><td class="num">4,557</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Source: <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE_PROOF.md</a>. Conditional correctness / label efficiency only — not clinical. No dedicated GIF for this section; numbers are the primary artifact.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="labels">
+    <div class="wrap">
+      <h2>5 · Zero-label criterion transfer vs label-cost calibration</h2>
+      <p class="sub">Train can numerically match ANM’s O2 operating point — only by burning O2 labels, and still without an editable field.</p>
+
+      <div class="cap-block">
+        <h3>Capability: zero-label observer transfer</h3>
+
+        <div class="goal">
+          <span class="step-label">1 · What foundation-model scientists originally wanted</span>
+          <p>
+            After the RNA→protein map is trained, adapt to a <strong>new downstream rubric</strong> by collecting more labels
+            and fitting a small head / calibrator. Cost is measured in labeled cells; success is matching accuracy / abstain rates.
+          </p>
+        </div>
+
+        <div class="example">
+          <span class="step-label">2 · Concrete TEDDY CITE example</span>
+          <p>
+            Mid-project, the scoring rule changes from O0 to O2 (key-marker priority). ANM already sits at abstain≈0.201,
+            strict≈0.821 on declared O2 with <strong>zero</strong> new endpoint labels.
+            A Train+Jev stand-in must re-annotate cells under the O2 rule and calibrate until abstain≈0.20 and strict≈0.82.
+          </p>
+          <div class="break">
+            <strong>Where the original goal breaks:</strong> even after spending ≈50–500 O2 labels to match the numbers,
+            Train still has no editable-field attribution and must re-spend labels on the next observer edit.
+            Numerical match ≠ criterion ownership.
+          </div>
+        </div>
+
+        <div class="compare">
+          <span class="step-label">3 · How we compare (verified · HARD_PROOF)</span>
+          <p>
+            To match ANM O2 (abstain≈0.201, strict≈0.821):
+            grid ≈<strong>50</strong> labels (strict 0.8227, abstain 0.2063);
+            MLP ≈<strong>200</strong> (strict 0.8020, abstain 0.1976);
+            logistic / Jev stand-in ≈<strong>500</strong> (strict 0.8129, abstain 0.2025).
+            <strong>ANM</strong>: <strong>0</strong> endpoint labels + editable field.
+            O0-trained Train abstain stays <strong>185</strong> across O0/O1/O2 until retuned.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th class="num">n O2 labels to match</th>
+                <th class="num">strict (labeled)</th>
+                <th class="num">abstain</th>
+                <th>Editable field?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>grid_calibrated</td><td class="num">≈50</td><td class="num">0.8227</td><td class="num">0.2063</td><td>No</td></tr>
+              <tr><td>mlp_calibrated</td><td class="num">≈200</td><td class="num">0.8020</td><td class="num">0.1976</td><td>No</td></tr>
+              <tr><td>logistic (Jev stand-in)</td><td class="num">≈500</td><td class="num">0.8129</td><td class="num">0.2025</td><td>No</td></tr>
+              <tr class="hl"><td>ANM declaration O2</td><td class="num">0</td><td class="num">target ≈0.821</td><td class="num">≈0.201</td><td><strong>Yes</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="viz large">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/hard_proof/label_cost_curve_dark.png" />
+            <img src="assets/hard_proof/label_cost_curve_light.gif" alt="Label cost curve: Train approaches ANM O2 with more O2 labels" width="1080" height="600" loading="lazy" />
+          </picture>
+          <div class="cap">
+            <span class="watch">Figure last · English caption</span>
+            Logistic Q-gap vs ANM shrinks as O2 labels grow (50→5,000) — numerical match only.
+            The curve never buys a declared field or LOO flip distances.
+            <div class="muted">Asset: <code>label_cost_curve_light.gif</code> / <code>label_cost_curve_dark.png</code> · HARD_PROOF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="claims">
     <div class="wrap">
       <h2>Superiority axes — and what we refuse to claim</h2>
@@ -750,15 +839,16 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
       <div class="zh-block">
         <h3>中文摘要（可选）</h3>
         <p>
-          同一批 TEDDY δu（site4/test n=16,750）上：ANM 把观察者变成可编辑场声明（弃权 / expected_action / 归因 / 范围收紧），
+          每一节同一结构：（1）基础模型/多模态原先要解决什么（例如单一 RNA→蛋白映射 + 固定 Pearson）；（2）TEDDY CITE 上一个非专家能懂的具体例子，以及问题一变/模态缺失/需要归因时哪里会断；（3）三臂对照（TEDDY alone / TEDDY+ANM / Train+Jev）只用 HARD_PROOF · SCOPE · MISSING_MODALITY 里的核实数字；（4）GIF/图放在文字与表格之后。
+        </p>
+        <p>
+          同一批 TEDDY δu（site4/test n=16,750）：ANM 把观察者变成可编辑场声明（弃权 / expected_action / 归因 / 范围收紧），
           <strong>不重训 TEDDY</strong>。准确率是次要的；不声称临床优越，也不声称 Pearson 超过 ~0.61。
-          胜负条件：准则可编辑、弃权跟随声明、可审计 LOO 归因、零标签准则迁移。
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Re-run -->
   <section class="section" id="rerun">
     <div class="wrap">
       <h2>How to re-run</h2>
@@ -784,7 +874,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 <footer>
   <div class="wrap">
     <p><strong>TEDDY × ANM CITE bridge</strong> — local response diagnosis on NeurIPS 2021 BMMC CITE (site4 holdout). English primary; optional Chinese summary above.</p>
-    <p>Aesthetic cues from the anm-jev comparison style. Theme follows system preference; toggle overrides.</p>
+    <p>Each capability section: FM goal → concrete example → three-arm compare → figure last. Theme follows system preference; toggle overrides.</p>
   </div>
 </footer>
 
