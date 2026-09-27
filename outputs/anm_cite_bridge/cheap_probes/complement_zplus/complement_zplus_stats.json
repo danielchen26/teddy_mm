@@ -1,0 +1,125 @@
+{
+  "claim_boundary": {
+    "mode": "B_complement_zplus_held_protein_protocol",
+    "not_claimed": [
+      "Mode_A",
+      "fusion_audit",
+      "phase2_joint_as_implemented"
+    ],
+    "held_protocol": "z+ built from proteins excluding held lineage=myeloid (['CD16', 'CD11c', 'CD36']); must-separate judged on held protein profile + lineage labels"
+  },
+  "params": {
+    "k": 30,
+    "min_cos": 0.98,
+    "protein_l1_rel": 0.35,
+    "held_lineage": "myeloid",
+    "held_proteins": [
+      "CD16",
+      "CD11c",
+      "CD36"
+    ],
+    "zplus_proteins": [
+      "CD19",
+      "CD72",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5"
+    ]
+  },
+  "phase2_note": {
+    "phase2_joint_embedding": "not available as exported z; cite_phase2 has best.pt + 4k raw ADT(134) but no aligned site4 joint z sidecar",
+    "used_instead": "ADT true/pred complement features on site4 panel (9) with held-lineage protocol"
+  },
+  "site4_variants": {
+    "z512_held_eval": {
+      "n_cells": 16750,
+      "z_dim": 512,
+      "n_undirected_near": 177701,
+      "n_must_separate": 83469,
+      "frac_must_among_near": 0.4697159835904131,
+      "n_cells_with_ge1_must": 11926,
+      "frac_cells_with_ge1_must": 0.712,
+      "n_diff_adt_lineage": 4051,
+      "n_diff_key_marker": 13358,
+      "n_diff_held_protein_profile": 78647,
+      "z_source": "z_rna_512 mean-pool ctx1024"
+    },
+    "zplus_adt_true_complement": {
+      "n_cells": 16750,
+      "z_dim": 6,
+      "n_undirected_near": 308309,
+      "n_must_separate": 184313,
+      "frac_must_among_near": 0.5978190711266943,
+      "n_cells_with_ge1_must": 16675,
+      "frac_cells_with_ge1_must": 0.9955223880597015,
+      "n_diff_adt_lineage": 38111,
+      "n_diff_key_marker": 40373,
+      "n_diff_held_protein_profile": 182314,
+      "z_source": "L2 ADT true on non-held proteins ['CD19', 'CD72', 'CD22', 'CD3', 'CD2', 'CD5']; eval held ['CD16', 'CD11c', 'CD36']"
+    },
+    "zplus_adt_pred_complement": {
+      "n_cells": 16750,
+      "z_dim": 6,
+      "n_undirected_near": 315214,
+      "n_must_separate": 188561,
+      "frac_must_among_near": 0.5981999530477707,
+      "n_cells_with_ge1_must": 16739,
+      "frac_cells_with_ge1_must": 0.9993432835820896,
+      "n_diff_adt_lineage": 21495,
+      "n_diff_key_marker": 51635,
+      "n_diff_held_protein_profile": 172976,
+      "z_source": "L2 TEDDY ADT preds on non-held ['CD19', 'CD72', 'CD22', 'CD3', 'CD2', 'CD5']; eval held ['CD16', 'CD11c', 'CD36']"
+    },
+    "zplus_adt_pred_all9_leakcheck": {
+      "n_cells": 16750,
+      "z_dim": 9,
+      "n_undirected_near": 318336,
+      "n_must_separate": 187041,
+      "frac_must_among_near": 0.5875584288299156,
+      "n_cells_with_ge1_must": 16736,
+      "frac_cells_with_ge1_must": 0.9991641791044776,
+      "n_diff_adt_lineage": 18807,
+      "n_diff_key_marker": 49214,
+      "n_diff_held_protein_profile": 170371,
+      "z_source": "L2 TEDDY ADT preds all 9 (includes held \u2014 leakage check, not primary)"
+    }
+  },
+  "ood_variants": {
+    "zplus_adt_true_complement": {
+      "n_cells": 2000,
+      "z_dim": 6,
+      "n_undirected_near": 29686,
+      "n_must_separate": 9307,
+      "frac_must_among_near": 0.31351478811561007,
+      "n_cells_with_ge1_must": 1897,
+      "frac_cells_with_ge1_must": 0.9485,
+      "n_diff_adt_lineage": 1629,
+      "n_diff_key_marker": 1232,
+      "n_diff_held_protein_profile": 9169
+    },
+    "zplus_adt_pred_complement": {
+      "n_cells": 2000,
+      "z_dim": 6,
+      "n_undirected_near": 38322,
+      "n_must_separate": 16513,
+      "frac_must_among_near": 0.4309013099525077,
+      "n_cells_with_ge1_must": 1934,
+      "frac_cells_with_ge1_must": 0.967,
+      "n_diff_adt_lineage": 1014,
+      "n_diff_key_marker": 6254,
+      "n_diff_held_protein_profile": 14708
+    }
+  },
+  "relative_must_reduction_vs_z512": {
+    "zplus_adt_true_complement": -0.27272456550677143,
+    "zplus_adt_pred_complement": -0.27353544257798595,
+    "zplus_adt_pred_all9_leakcheck": -0.2508802113539737
+  },
+  "signal": {
+    "primary_variant": "zplus_adt_true_complement",
+    "primary_metric": "relative_must_reduction_vs_z512",
+    "primary_score": -0.27272456550677143,
+    "interpretation": "Positive score => z+ near-neighborhoods contain fewer held-protein/lineage disagreements than z_512 (complement channel separates what z cannot)."
+  }
+}

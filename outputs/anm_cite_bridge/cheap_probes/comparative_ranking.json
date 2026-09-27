@@ -1,0 +1,121 @@
+{
+  "claim_boundary": {
+    "mode": "B_cheap_next_probes_comparative",
+    "not_claimed": [
+      "Mode_A_residual_stream_as_field",
+      "layer_Jacobian",
+      "in_silico_gene_perturbs",
+      "reverse_closed_loop_perturb_response",
+      "fusion_audit",
+      "clinical"
+    ]
+  },
+  "ranking": [
+    {
+      "probe": "1_must_separate_autopsy",
+      "primary_metric": "max(adt_lineage_disagree_frac, same_celltype_must_frac)",
+      "primary_value": 0.581,
+      "abs_for_rank": 0.581,
+      "direction": "same_celltype_must_frac=0.581 (within-type insufficiency) vs adt_lineage_disagree_frac=0.412",
+      "extra": {
+        "adt_lineage_disagree_frac": 0.4118,
+        "same_celltype_must_frac": 0.581,
+        "top_protein": {
+          "protein": "CD5",
+          "lineage": "t_lineage",
+          "is_key_marker": false,
+          "mean_abs_delta": 0.7023991670906544,
+          "median_abs_delta": 0.4454953968524933,
+          "q75_abs_delta": 0.9537385553121567
+        },
+        "top_confusion": "myeloid|t_lineage=1490",
+        "saturated_bio_minus_noise": 1.0
+      },
+      "rank": 1
+    },
+    {
+      "probe": "3_complement_zplus",
+      "primary_metric": "relative_must_reduction_vs_z512",
+      "primary_value": -0.27272456550677143,
+      "abs_for_rank": 0.27272456550677143,
+      "direction": "POSITIVE would mean z+ separates held proteins better; observed NEGATIVE => z+ worsens must-rate",
+      "extra": {
+        "site4_fracs": {
+          "z512_held_eval": 0.4697159835904131,
+          "zplus_adt_true_complement": 0.5978190711266943,
+          "zplus_adt_pred_complement": 0.5981999530477707,
+          "zplus_adt_pred_all9_leakcheck": 0.5875584288299156
+        },
+        "ood_fracs": {
+          "zplus_adt_true_complement": 0.31351478811561007,
+          "zplus_adt_pred_complement": 0.4309013099525077
+        },
+        "scores": {
+          "zplus_adt_true_complement": -0.27272456550677143,
+          "zplus_adt_pred_complement": -0.27353544257798595,
+          "zplus_adt_pred_all9_leakcheck": -0.2508802113539737
+        }
+      },
+      "rank": 2
+    },
+    {
+      "probe": "2_gated_loo",
+      "primary_metric": "any_gated_flip_frac",
+      "primary_value": 0.02733333333333332,
+      "abs_for_rank": 0.02733333333333332,
+      "direction": "higher => more O0 decisions flip under \u00b1\u03b5/\u00b1\u03b5/2 on top LOO protein",
+      "extra": {
+        "gate_counts": {
+          "G1": 1459,
+          "G2": 0,
+          "G3": 0,
+          "G4": 41
+        },
+        "loo_flip_rate_full": 0.2773078680038452,
+        "delta_vs_loo_flip": -0.26,
+        "eps": 0.1,
+        "n_kept": 1500
+      },
+      "rank": 3
+    },
+    {
+      "probe": "4_loading_scan",
+      "primary_metric": "must_frac_spread_across_dims",
+      "primary_value": 0.015386021303931574,
+      "abs_for_rank": 0.015386021303931574,
+      "direction": "higher spread => must-rate depends on dim-loading proxy (ctx re-encode blocked: no torch)",
+      "extra": {
+        "variant_fracs": {
+          "leading_dim_128": 0.4294535960286514,
+          "leading_dim_256": 0.44299313418608544,
+          "leading_dim_512": 0.444839617332583
+        },
+        "blockers": [
+          "torch_unavailable: ModuleNotFoundError: No module named 'torch'"
+        ],
+        "rel_small_vs_512": -0.03458779457682219
+      },
+      "rank": 4
+    }
+  ],
+  "strongest_probe": "1_must_separate_autopsy",
+  "headline_numbers": {
+    "1_must_separate_autopsy": {
+      "metric": "max(adt_lineage_disagree_frac, same_celltype_must_frac)",
+      "value": 0.581
+    },
+    "3_complement_zplus": {
+      "metric": "relative_must_reduction_vs_z512",
+      "value": -0.27272456550677143
+    },
+    "2_gated_loo": {
+      "metric": "any_gated_flip_frac",
+      "value": 0.02733333333333332
+    },
+    "4_loading_scan": {
+      "metric": "must_frac_spread_across_dims",
+      "value": 0.015386021303931574
+    }
+  },
+  "narrative_rank_note": "Ranked by |primary|. Autopsy primary = max(ADT-lineage disagree frac, same-celltype must frac). Complement negative score is a strong negative result (z+ does not fix held-protein must-separate). Gated LOO shows decisions robust to \u00b10.1/\u00b10.05 vs LOO-ablate flip 0.277. Loading ctx re-encode blocked (no torch); dim-proxy spread tiny."
+}

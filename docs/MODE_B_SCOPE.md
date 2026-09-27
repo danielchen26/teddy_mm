@@ -50,6 +50,10 @@ They **cannot** yet answer whether `z_512` (or the export sidecar) is **sufficie
 
 **ADT-only** is a weak channel in the missing-modality demo (panel Pearson drops; TEDDY-alone abstain can stay 0 while Q is mediocre). The abstain story is intentionally honest: ANM silence under weak evidence beats silent over-answer. Not clinical. Do not claim Pearson > phase-1 full-ADT **~0.61**.
 
+## Cheap next probes (Mode B only)
+
+Four cheap probes ranked in [`docs/reports/CHEAP_PROBES_RANKING.md`](reports/CHEAP_PROBES_RANKING.md). Still **not** Mode A. Gated ±ε G1–G4 here are **decision-layer** nudges on typed evidence, not residual-stream / gene-perturb protocols.
+
 ## Reverse step 1 (sufficiency probe only)
 
 Script: [`bridge_anm/reverse_step1_must_separate.py`](../bridge_anm/reverse_step1_must_separate.py)

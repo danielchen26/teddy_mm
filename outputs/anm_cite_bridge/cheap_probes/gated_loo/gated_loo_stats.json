@@ -1,0 +1,91 @@
+{
+  "claim_boundary": {
+    "mode": "B_gated_LOO_decision_sensitivity",
+    "not_claimed": [
+      "Mode_A_residual_stream_as_field",
+      "layer_Jacobian",
+      "in_silico_gene_perturbs",
+      "representation_response_under_gene_protein_perturb"
+    ],
+    "gate_definitions": {
+      "G1": "no decision flip under \u00b1\u03b5 or \u00b1\u03b5/2 on top LOO protein",
+      "G2": "flips under \u00b1\u03b5 but not \u00b1\u03b5/2 (scale-gated)",
+      "G3": "flips under \u00b1\u03b5/2 (high sensitivity)",
+      "G4": "sign-asymmetric flip at \u03b5 and/or \u03b5/2"
+    },
+    "note": "Nudges typed evidence values in ANM finite_field; not TEDDY hidden-state perturbs."
+  },
+  "params": {
+    "eps": 0.1,
+    "eps_half": 0.05,
+    "max_cells": 1500,
+    "n_attr_total": 16433,
+    "n_selected": 1500,
+    "n_kept_non_abstain": 1500,
+    "seed": 17,
+    "criterion": "O0"
+  },
+  "existing_LOO_baseline": {
+    "source": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
+    "full_n_attr": 16433,
+    "full_top1_flip_rate": 0.2773078680038452,
+    "subsample_loo_flip_rate": 0.28733333333333333
+  },
+  "gate_counts": {
+    "G1": 1459,
+    "G2": 0,
+    "G3": 0,
+    "G4": 41
+  },
+  "gate_fractions": {
+    "G1": 0.9726666666666667,
+    "G2": 0.0,
+    "G3": 0.0,
+    "G4": 0.027333333333333334
+  },
+  "per_protein_gate_counts": {
+    "CD11c": {
+      "G1": 103,
+      "G4": 5
+    },
+    "CD16": {
+      "G1": 198,
+      "G4": 5
+    },
+    "CD19": {
+      "G1": 10
+    },
+    "CD2": {
+      "G1": 217,
+      "G4": 1
+    },
+    "CD22": {
+      "G1": 190,
+      "G4": 5
+    },
+    "CD3": {
+      "G1": 50,
+      "G4": 12
+    },
+    "CD36": {
+      "G1": 204,
+      "G4": 3
+    },
+    "CD5": {
+      "G1": 362,
+      "G4": 5
+    },
+    "CD72": {
+      "G4": 5,
+      "G1": 125
+    }
+  },
+  "signal": {
+    "any_gated_flip_frac": 0.02733333333333332,
+    "strong_G3_G4_frac": 0.027333333333333334,
+    "G4_asym_frac": 0.027333333333333334,
+    "primary_metric": "any_gated_flip_frac",
+    "delta_vs_loo_flip": -0.26
+  },
+  "runtime_sec": 0.6175501346588135
+}

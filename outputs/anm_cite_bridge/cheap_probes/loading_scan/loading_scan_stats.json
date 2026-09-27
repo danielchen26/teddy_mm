@@ -1,0 +1,86 @@
+{
+  "claim_boundary": {
+    "mode": "B_loading_scan",
+    "not_claimed": [
+      "Mode_A",
+      "true_ctx_reencode_unless_feasible"
+    ],
+    "note": "True ctx 256/512/1024 re-encode is the intended probe. Leading-dim subsets are capacity proxies on the EXISTING ctx=1024 z_512 only."
+  },
+  "reencode_feasibility": {
+    "feasible": false,
+    "blockers": [
+      "torch_unavailable: ModuleNotFoundError: No module named 'torch'"
+    ],
+    "notes": [
+      "ckpt_weights_bytes=284887424",
+      "processed_cite_arrays_present"
+    ],
+    "available_ctx_variants_on_disk": [
+      {
+        "ctx": 1024,
+        "path": "/Users/tianchichen/Documents/GitHub/teddy_mm/data/processed/cite/z_rna.npy",
+        "note": "scripts/03_embed_rna.py default"
+      }
+    ],
+    "requested_ctx": [
+      256,
+      512,
+      1024
+    ]
+  },
+  "params": {
+    "k": 30,
+    "min_cos": 0.98,
+    "protein_l1_rel": 0.35,
+    "dims": [
+      128,
+      256,
+      512
+    ],
+    "n_cells": 16750,
+    "source_z": "z_rna_512.npy (ctx1024 mean-pool)"
+  },
+  "variants": {
+    "leading_dim_128": {
+      "n_undirected_near": 116434,
+      "n_must_separate": 50003,
+      "frac_must_among_near": 0.4294535960286514,
+      "n_cells_with_ge1_must": 9905,
+      "frac_cells_with_ge1_must": 0.5913432835820895,
+      "z_dim": 128,
+      "kind": "leading_dim_subset_of_ctx1024_z512",
+      "requested_dim": 128,
+      "NOT_true_ctx_variant": true
+    },
+    "leading_dim_256": {
+      "n_undirected_near": 155262,
+      "n_must_separate": 68780,
+      "frac_must_among_near": 0.44299313418608544,
+      "n_cells_with_ge1_must": 11160,
+      "frac_cells_with_ge1_must": 0.6662686567164179,
+      "z_dim": 256,
+      "kind": "leading_dim_subset_of_ctx1024_z512",
+      "requested_dim": 256,
+      "NOT_true_ctx_variant": true
+    },
+    "leading_dim_512": {
+      "n_undirected_near": 177700,
+      "n_must_separate": 79048,
+      "frac_must_among_near": 0.444839617332583,
+      "n_cells_with_ge1_must": 11782,
+      "frac_cells_with_ge1_must": 0.7034029850746268,
+      "z_dim": 512,
+      "kind": "leading_dim_subset_of_ctx1024_z512",
+      "requested_dim": 512,
+      "NOT_true_ctx_variant": true
+    }
+  },
+  "signal": {
+    "must_frac_spread_across_dims": 0.015386021303931574,
+    "rel_must_frac_change_small_vs_512": -0.03458779457682219,
+    "primary_metric": "must_frac_spread_across_dims",
+    "interpretation": "Large spread => must-separate rate depends on loading/capacity proxy (evidence geometry sensitive to how much of z is kept). Near-zero => insufficiency is stable across dim subsets of this ctx1024 z.",
+    "ctx_reencode_done": false
+  }
+}

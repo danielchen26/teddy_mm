@@ -1,0 +1,234 @@
+{
+  "claim_boundary": {
+    "mode": "B_must_separate_autopsy",
+    "not_claimed": [
+      "Mode_A_residual_stream_as_field",
+      "layer_Jacobian",
+      "in_silico_gene_perturbs",
+      "perturb_response"
+    ],
+    "note": "Decomposes existing must-separate pairs; does not claim causal gene/protein response."
+  },
+  "inputs": {
+    "pairs_path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/reverse_step1/must_separate_pairs.jsonl",
+    "n_pairs": 5000,
+    "adt_shape": [
+      16750,
+      9
+    ],
+    "panel": [
+      "CD19",
+      "CD72",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD16",
+      "CD11c",
+      "CD36"
+    ]
+  },
+  "flag_counts": {
+    "diff_adt_lineage": 2059,
+    "diff_protein_profile": 4639,
+    "diff_key_marker_lineage": 3287,
+    "diff_coarse_cell_type": 790
+  },
+  "bucket_counts": {
+    "bio_adt_lineage": 2059,
+    "bio_key_marker": 2467,
+    "bio_coarse_cell_type": 474
+  },
+  "bucket_fractions": {
+    "bio_adt_lineage": 0.4118,
+    "bio_key_marker": 0.4934,
+    "bio_coarse_cell_type": 0.0948
+  },
+  "cell_type_identical_frac": 0.581,
+  "lineage_confusion_pairs": {
+    "myeloid|t_lineage": 1490,
+    "b_lineage|t_lineage": 375,
+    "abstain|t_lineage": 213,
+    "b_lineage|myeloid": 194,
+    "abstain|myeloid": 168,
+    "abstain|b_lineage": 24
+  },
+  "key_marker_confusion_pairs": {
+    "b_lineage|t_lineage": 1657,
+    "myeloid|t_lineage": 1329,
+    "b_lineage|myeloid": 301
+  },
+  "coarse_confusion_pairs": {
+    "nk_ilc|t_lineage": 753,
+    "progenitor_other|t_lineage": 106,
+    "b_lineage|t_lineage": 37,
+    "other|progenitor_other": 7,
+    "other|t_lineage": 6,
+    "nk_ilc|progenitor_other": 5,
+    "b_lineage|progenitor_other": 1
+  },
+  "protein_rank_by_mean_abs_delta": [
+    {
+      "protein": "CD5",
+      "lineage": "t_lineage",
+      "is_key_marker": false,
+      "mean_abs_delta": 0.7023991670906544,
+      "median_abs_delta": 0.4454953968524933,
+      "q75_abs_delta": 0.9537385553121567
+    },
+    {
+      "protein": "CD3",
+      "lineage": "t_lineage",
+      "is_key_marker": true,
+      "mean_abs_delta": 0.700598469863832,
+      "median_abs_delta": 0.38101208209991455,
+      "q75_abs_delta": 0.8136794418096542
+    },
+    {
+      "protein": "CD16",
+      "lineage": "myeloid",
+      "is_key_marker": true,
+      "mean_abs_delta": 0.694272819390148,
+      "median_abs_delta": 0.34554968774318695,
+      "q75_abs_delta": 1.1113430261611938
+    },
+    {
+      "protein": "CD2",
+      "lineage": "t_lineage",
+      "is_key_marker": false,
+      "mean_abs_delta": 0.6654418578498066,
+      "median_abs_delta": 0.5225473344326019,
+      "q75_abs_delta": 0.9253417253494263
+    },
+    {
+      "protein": "CD36",
+      "lineage": "myeloid",
+      "is_key_marker": false,
+      "mean_abs_delta": 0.4978524930611253,
+      "median_abs_delta": 0.323787659406662,
+      "q75_abs_delta": 0.7287576347589493
+    },
+    {
+      "protein": "CD72",
+      "lineage": "b_lineage",
+      "is_key_marker": false,
+      "mean_abs_delta": 0.44059246083684267,
+      "median_abs_delta": 0.2962559014558792,
+      "q75_abs_delta": 0.5912439823150635
+    },
+    {
+      "protein": "CD19",
+      "lineage": "b_lineage",
+      "is_key_marker": true,
+      "mean_abs_delta": 0.30812829166725275,
+      "median_abs_delta": 0.20699842274188995,
+      "q75_abs_delta": 0.38732919842004776
+    },
+    {
+      "protein": "CD11c",
+      "lineage": "myeloid",
+      "is_key_marker": false,
+      "mean_abs_delta": 0.23152887099049985,
+      "median_abs_delta": 0.10380639880895615,
+      "q75_abs_delta": 0.2562979757785797
+    },
+    {
+      "protein": "CD22",
+      "lineage": "b_lineage",
+      "is_key_marker": false,
+      "mean_abs_delta": 0.21029694705531002,
+      "median_abs_delta": 0.13548962026834488,
+      "q75_abs_delta": 0.2617177665233612
+    }
+  ],
+  "concentration": {
+    "mean_top1_share_of_panel_l1": 0.3384946811843105,
+    "mean_top3_share_of_panel_l1": 0.7068576080759331
+  },
+  "signal": {
+    "bio_frac": 1.0,
+    "noise_like_frac": 0.0,
+    "fine_protein_frac": 0.0,
+    "bio_minus_noise": 1.0,
+    "primary_metric": "bio_minus_noise",
+    "interpretation": "Positive bio_minus_noise => must-pairs dominated by lineage/coarse disagreements (bio signal in evidence geometry). Near-zero/negative => dominated by same-type protein drift (noise-like / fine-grained insufficiency)."
+  },
+  "signal_refined": {
+    "adt_lineage_disagree_frac": 0.4118,
+    "key_marker_disagree_frac": 0.6574,
+    "coarse_disagree_frac": 0.158,
+    "same_celltype_must_frac": 0.581,
+    "primary_metric": "max(adt_lineage_disagree_frac, same_celltype_must_frac)",
+    "primary_value": 0.581,
+    "note": "Written must-pairs are all flagged bio_* by hierarchical bucket (bio_minus_noise saturates at 1.0). Prefer ADT-lineage frac and same-celltype must frac as competing Mode B signals.",
+    "top_proteins": [
+      {
+        "protein": "CD5",
+        "lineage": "t_lineage",
+        "is_key_marker": false,
+        "mean_abs_delta": 0.7023991670906544,
+        "median_abs_delta": 0.4454953968524933,
+        "q75_abs_delta": 0.9537385553121567
+      },
+      {
+        "protein": "CD3",
+        "lineage": "t_lineage",
+        "is_key_marker": true,
+        "mean_abs_delta": 0.700598469863832,
+        "median_abs_delta": 0.38101208209991455,
+        "q75_abs_delta": 0.8136794418096542
+      },
+      {
+        "protein": "CD16",
+        "lineage": "myeloid",
+        "is_key_marker": true,
+        "mean_abs_delta": 0.694272819390148,
+        "median_abs_delta": 0.34554968774318695,
+        "q75_abs_delta": 1.1113430261611938
+      },
+      {
+        "protein": "CD2",
+        "lineage": "t_lineage",
+        "is_key_marker": false,
+        "mean_abs_delta": 0.6654418578498066,
+        "median_abs_delta": 0.5225473344326019,
+        "q75_abs_delta": 0.9253417253494263
+      },
+      {
+        "protein": "CD36",
+        "lineage": "myeloid",
+        "is_key_marker": false,
+        "mean_abs_delta": 0.4978524930611253,
+        "median_abs_delta": 0.323787659406662,
+        "q75_abs_delta": 0.7287576347589493
+      }
+    ],
+    "top_lineage_confusion": [
+      [
+        "myeloid|t_lineage",
+        1490
+      ],
+      [
+        "b_lineage|t_lineage",
+        375
+      ],
+      [
+        "abstain|t_lineage",
+        213
+      ],
+      [
+        "b_lineage|myeloid",
+        194
+      ],
+      [
+        "abstain|myeloid",
+        168
+      ]
+    ],
+    "bucket_counts": {
+      "bio_adt_lineage": 2059,
+      "bio_key_marker": 2467,
+      "bio_coarse_cell_type": 474
+    }
+  }
+}
