@@ -2,13 +2,23 @@
 
 Public landing: **[docs/index.html](https://danielchen26.github.io/teddy_mm/)** · source [`docs/`](docs/).
 
-**Claim boundary:** not clinical · not a Pearson win over phase-1 full-ADT **~0.61** · holdout `adt_true` = verifier only · Train+Jev = log-loss stand-in · no `best.pt` retrain. Numbers cite [`HARD_PROOF`](docs/reports/HARD_PROOF.md), [`SCOPE_REFINE_PROOF`](docs/reports/SCOPE_REFINE_PROOF.md), [`MISSING_MODALITY`](docs/reports/MISSING_MODALITY_ANM_DEMO.md).
+**Claim boundary:** not clinical · not a Pearson win over phase-1 full-ADT **~0.61** · holdout `adt_true` = verifier only · Train+Jev = log-loss stand-in · no `best.pt` retrain. Numbers cite [`HARD_PROOF`](docs/reports/HARD_PROOF.md), [`SCOPE_REFINE_PROOF`](docs/reports/SCOPE_REFINE_PROOF.md), [`MISSING_MODALITY`](docs/reports/MISSING_MODALITY_ANM_DEMO.md). Full Mode B scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
+
+### What this repo claims / does not
+
+| | |
+|---|---|
+| **Mode B (implemented)** | TEDDY as typed evidence source → ANM **finite_field** decisions; editable observer YAML (O0/O1/O2); missing-modality abstain demos; LOO/flip attribution on **decisions** |
+| **NOT claimed (Mode A+)** | Residual stream as field · layer Jacobian · in-silico gene perturbs · gated ±ε / ±ε/2 G1–G4 · reverse closed loop · fusion audit · ATAC/chromatin |
+| **`z_512` definition** | Mean-pool **last-layer** tokens at context length **1024** (not TEDDY pretrain 2048, not a disease token). Loading factor for CITE embed (`scripts/03_embed_rna.py`). Bridge export may store L2-normalized `z_keep=32` sidecar only. |
+| **Conclusions about** | **Decision-layer** sensitivity to TEDDY evidence — not TEDDY representation response to perturbs. Cannot yet answer whether z is sufficient for protein readout. |
+| **Honest weak arm** | ADT-only is a weak model; abstain story is honest silence, not a Pearson contest. |
 
 ---
 
 ## Hero
 
-TEDDY freezes a CITE RNA→protein map (z_512, Pearson ~0.61). ANM edits the decision field on that same evidence — call, abstain, markers, scope — without retraining TEDDY and without claiming Pearson > ~0.61.
+TEDDY freezes a CITE RNA→protein map (`z_512` = mean-pool last-layer @1024, Pearson ~0.61). **Mode B:** ANM edits the decision field on that typed evidence — call, abstain, markers, scope — without retraining TEDDY and without claiming Pearson > ~0.61 (not Mode A / residual / Jacobian / gene-perturb).
 
 ![Global frame](docs/assets/infographics/00_global_frame_light.png)
 
@@ -97,6 +107,7 @@ ANM adopts O2 at **0** endpoint labels (abstain≈0.201, strict≈0.821, editabl
 | What | Where |
 |---|---|
 | Landing | [`docs/`](docs/) · [GitHub Pages](https://danielchen26.github.io/teddy_mm/) |
+| Mode B scope | [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md) |
 | Bridge | [`bridge_anm/`](bridge_anm/) |
 | Proofs | [`docs/reports/`](docs/reports/) |
 | Story PNGs | `docs/assets/infographics/` (icon-first, light+dark) |

@@ -7,3 +7,4 @@ Open **[index.html](index.html)** for the public landing (figure-first).
 - `reports/` — HARD_PROOF, SCOPE_REFINE, MISSING_MODALITY, STAT_PROOF, BAKEOFF, v0 REPORT
 
 Pages source: `/docs` on the default branch.
+- `MODE_B_SCOPE.md` — Mode B vs Mode A claim boundary + `z_512` definition

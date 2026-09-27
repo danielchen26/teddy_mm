@@ -199,9 +199,9 @@ code { font-family: var(--mono); font-size: .86em; }
       <div class="eyebrow">NeurIPS 2021 BMMC CITE · site4/test n=16,750</div>
       <h1>RNA → protein evidence.<br />Editable decisions on top.</h1>
       <p class="lede">
-        TEDDY freezes a CITE map (z<sub>512</sub>, phase-1 full-ADT Pearson <strong>~0.61</strong>).
-        <strong>ANM</strong> edits the decision field on that same evidence — call, abstain, markers, scope —
-        without retraining TEDDY and without claiming Pearson &gt; ~0.61.
+        TEDDY freezes a CITE map (z<sub>512</sub> = mean-pool last-layer @1024, phase-1 full-ADT Pearson <strong>~0.61</strong>).
+        <strong>Mode B:</strong> <strong>ANM</strong> edits the decision field on that typed evidence — call, abstain, markers, scope —
+        without retraining TEDDY and without claiming Pearson &gt; ~0.61 (not Mode A).
       </p>
       <div class="fig">
         <picture>
@@ -210,12 +210,16 @@ code { font-family: var(--mono); font-size: .86em; }
         </picture>
       </div>
       <div class="claim-box">
-        <strong>Claim boundary.</strong>
-        Not clinical · not a Pearson win over ~0.61 · holdout <code>adt_true</code> = verifier only ·
-        Train+Jev = log-loss stand-in · no <code>best.pt</code> retrain.
-        Numbers from <a href="reports/HARD_PROOF.md">HARD_PROOF</a>,
-        <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a>,
-        <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a>.
+        <strong>What this repo claims / does not.</strong>
+        <strong>Mode B (in):</strong> TEDDY typed evidence → ANM finite_field decisions; editable observer YAML; missing-modality abstain; LOO/flip on decisions.
+        <strong>Not claimed:</strong> Mode A (residual as field, layer Jacobian, in-silico gene perturbs); gated ±ε / ±ε/2 G1–G4; reverse closed loop; fusion audit; ATAC/chromatin.
+        <strong>z<sub>512</sub>:</strong> mean-pool last-layer tokens @ context <strong>1024</strong> (not pretrain 2048, not disease token) — a loading factor.
+        Conclusions = <em>decision-layer</em> sensitivity to TEDDY evidence, not representation response to perturbs; cannot yet say whether z is sufficient for protein readout.
+        ADT-only is weak; abstain story is honest. Not clinical · not Pearson &gt; ~0.61.
+        Numbers: <a href="reports/HARD_PROOF.md">HARD_PROOF</a> ·
+        <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a> ·
+        <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a> ·
+        <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>.
       </div>
     </div>
   </section>
@@ -418,17 +422,20 @@ code { font-family: var(--mono); font-size: .86em; }
   <section class="section" id="claims">
     <div class="wrap">
       <h2>Claims</h2>
-      <p class="sub">Wins on decision / abstain / attribution / zero-label transfer — not Pearson &gt; 0.61.</p>
+      <p class="sub">Mode B wins on decision / abstain / attribution / zero-label transfer — not Pearson &gt; 0.61, not Mode A.</p>
       <div class="axis-grid">
         <div class="axis"><h4>Decision / edit</h4><p>O0→O2 rewrite 12.48% via YAML only.</p></div>
         <div class="axis"><h4>Abstain</h4><p>ANM 317→834→3,373; Train stuck at 185.</p></div>
         <div class="axis"><h4>Attribution</h4><p>Full-n LOO n=16,433 · flip 0.277 · p≈0.0099.</p></div>
         <div class="axis"><h4>Zero-label</h4><p>ANM 0 labels vs Train ≈50–500 for numerical match only.</p></div>
+        <div class="axis"><h4>Mode B in</h4><p>TEDDY typed evidence → finite_field; YAML observers; missing-modality abstain; LOO on decisions.</p></div>
+        <div class="axis" style="background:var(--warn-bg);border-color:color-mix(in srgb, var(--warn) 30%, var(--line));"><h4 style="color:var(--warn);">Not claimed</h4><p>Mode A residual/Jacobian/gene perturbs · ±ε G1–G4 · reverse closed loop · fusion audit · ATAC. z sufficiency for protein readout still open.</p></div>
       </div>
       <div class="proof">
         On the same TEDDY δu (site4/test), ANM edits the observer with zero endpoint-label fit, keeping verifiable P<sub>f</sub>/Q<sub>f</sub> and auditable full-n LOO (n_attr=16,433, perm p≈0.0099). TEDDY-alone over-answers where the declared observer abstains; Train+Jev burns O2 labels and still cannot buy editable-field attribution. Not clinical. Do not claim Pearson &gt; 0.61.
       </div>
       <div class="links">
+        <a href="MODE_B_SCOPE.md">MODE_B_SCOPE</a>
         <a href="reports/HARD_PROOF.md">HARD_PROOF</a>
         <a href="reports/SCOPE_REFINE_PROOF.md">SCOPE_REFINE</a>
         <a href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY</a>
