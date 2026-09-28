@@ -36,7 +36,7 @@
     corrsep: ['Correct separation', 'The share of must-separate pairs split into the right, different calls.'],
     zplus: ['z⁺ · feature swap', 'TEDDY’s embedding with protein features glued on: the “just swap features” alternative to typed evidence.'],
     phase1: ['Phase 1 · TEDDY + small head (done)', 'Frozen TEDDY embeds each cell’s RNA once (512 numbers, context 1024). A small head trained in this repo maps that embedding to all 134 surface proteins, fitted with a negative-binomial loss. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595); every block uses its predictions (labelled exceptions: the RNA-missing stand-in in Blocks 2 and 4, measured protein in Block 6’s complement test).'],
-    phase2: ['Phase 2 · fusion scaffold (unfinished)', 'A multimodal model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both) and a latent flow-matching decoder. Only a 6-epoch scaffold run exists (test Pearson 0.25–0.27). It contains no ANM; Block 2 uses it as the RNA-missing stand-in (and half of “both”), and Block 4’s RNA-missing view reuses it.'],
+    phase2: ['Phase 2 · fusion scaffold (unfinished)', 'A multimodal model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both) and a latent flow-matching decoder. Only a 6-epoch scaffold run exists. Its recorded test Pearson (0.25–0.27) scores one random flow-matching sample per cell; decoded directly it reaches 0.56 from RNA alone, still below phase 1’s 0.61 (scripts/phase2_decode_check.py). It contains no ANM; Block 2 uses it as the RNA-missing stand-in (and half of “both”), and Block 4’s RNA-missing view reuses it.'],
     modeb: ['Mode B', 'What this project does: treat TEDDY as an evidence source and study the decision layer on top of it.'],
     modea: ['Mode A (not done)', 'Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Not claimed here.'],
     rnaonly: ['RNA (TEDDY)', 'Evidence from TEDDY’s predictions, made from the cell’s RNA.'],
@@ -326,6 +326,79 @@
       '<div class="gp-axes"><span>Mode →</span><span>Phase →</span></div></div>'  // the Mode label is rotated, so its → reads as ↑;
   }
 
+  // ---------- left timeline: page progress, one marker per section, a short note for where you are ----------
+  function shortOf(sec) {
+    if (sec.short) return sec.short;
+    var m = /^Block (\d)/.exec(sec.label) || /^(\d\d)\b/.exec(sec.label);
+    return m ? m[1] : (sec.label === 'Overview' ? '↑' : sec.label.charAt(0));
+  }
+  function buildRail(cfg, ids) {
+    var order = ids.slice().sort(function (a, b) { return document.getElementById(a).offsetTop - document.getElementById(b).offsetTop; });
+    var rail = document.createElement('nav');
+    rail.className = 't-rail'; rail.setAttribute('aria-label', 'Page timeline');
+    rail.innerHTML = '<div class="t-track"><div class="t-fill"></div></div>' + order.map(function (id) {
+      var sec = cfg.sections[id];
+      return '<a class="t-dot" href="#' + id + '" data-id="' + id + '" aria-label="' + esc(sec.label) + '"><span>' + shortOf(sec) + '</span></a>';
+    }).join('') + '<div class="t-card" aria-hidden="true"><b></b><span></span></div>';
+    var bar = document.createElement('div');
+    bar.className = 't-bar'; bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<i></i>';
+    document.body.appendChild(rail); document.body.appendChild(bar);
+    var fill = rail.querySelector('.t-fill'), barFill = bar.querySelector('i'), card = rail.querySelector('.t-card');
+    var dots = [].slice.call(rail.querySelectorAll('.t-dot')), tops = {}, active = null, hideT = null, hovering = null;
+    function maxScroll() { return Math.max(1, document.documentElement.scrollHeight - window.innerHeight); }
+    function layout() {
+      var h = rail.clientHeight - 36, prev = -1e9, pos = [];
+      order.forEach(function (id) {
+        var el = document.getElementById(id);
+        var f = Math.max(0, Math.min(1, (el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3) / maxScroll()));
+        var y = Math.max(f * h, prev + 22); pos.push(y); prev = y;
+      });
+      var over = pos.length ? pos[pos.length - 1] - h : 0;
+      if (over > 0) pos = pos.map(function (y, i) { return y * h / (h + over); });
+      dots.forEach(function (d, i) { d.style.top = (18 + pos[i]) + 'px'; tops[d.getAttribute('data-id')] = 18 + pos[i]; });
+      progress();
+    }
+    function progress() {
+      var f = Math.max(0, Math.min(1, window.scrollY / maxScroll()));
+      fill.style.height = (f * 100) + '%'; barFill.style.width = (f * 100) + '%';
+    }
+    function showCard(id, sticky) {
+      var sec = cfg.sections[id]; if (!sec) return;
+      card.querySelector('b').textContent = sec.label; card.querySelector('span').textContent = sec.plain;
+      var y = Math.max(8, Math.min(rail.clientHeight - 90, (tops[id] || 0) - 14));
+      card.style.top = y + 'px'; card.classList.add('on');
+      clearTimeout(hideT);
+      if (!sticky) hideT = setTimeout(function () { if (!hovering) card.classList.remove('on'); }, 1600);
+    }
+    dots.forEach(function (d) {
+      var id = d.getAttribute('data-id');
+      d.addEventListener('pointerenter', function () { hovering = id; showCard(id, true); });
+      d.addEventListener('pointerleave', function () { hovering = null; if (active) showCard(active, false); else card.classList.remove('on'); });
+      d.addEventListener('focus', function () { showCard(id, true); });
+      d.addEventListener('blur', function () { card.classList.remove('on'); });
+    });
+    var scrolled = false;
+    window.addEventListener('scroll', function () {
+      progress();
+      if (!scrolled) { scrolled = true; requestAnimationFrame(function () { scrolled = false; if (active && !hovering) showCard(active, false); }); }
+    }, { passive: true });
+    window.addEventListener('resize', layout);
+    if ('ResizeObserver' in window) new ResizeObserver(function () { requestAnimationFrame(layout); }).observe(document.querySelector('main') || document.body);
+    window.addEventListener('load', layout);
+    layout();
+    return {
+      setActive: function (id) {
+        active = id;
+        var passed = true;
+        dots.forEach(function (d) {
+          var on = d.getAttribute('data-id') === id;
+          d.classList.toggle('on', on); d.classList.toggle('past', passed && !on);
+          if (on) { d.setAttribute('aria-current', 'location'); passed = false; } else d.removeAttribute('aria-current');
+        });
+      }
+    };
+  }
+
   function buildGuide(cfg) {
     var aside = document.getElementById('guide');
     if (!aside || !cfg) return;
@@ -437,6 +510,7 @@
       var sec = cfg.sections[key] || cfg.sections[id];
       if (!sec) return;
       currentId = id;
+      if (rail) rail.setActive(id);
       if (key === currentKey) return;
       currentKey = key;
       nowT.textContent = sec.label; nowD.textContent = sec.plain;
@@ -462,6 +536,7 @@
     }
     window.GUIDE_REFRESH = function () { if (currentId) { currentKey = null; setNow(currentId); } };
     var ids = Object.keys(cfg.sections).filter(function (id) { return document.getElementById(id); });
+    var rail = ids.length ? buildRail(cfg, ids) : null;
     // at the very bottom the last section may never reach the trigger band, so it wins there
     function atBottom() { return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2; }
     function pick() {

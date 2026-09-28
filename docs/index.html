@@ -71,6 +71,7 @@ main { container-type: inline-size; container-name: main; }
 .nav a.ext { color: var(--accent); font-weight: 600; }
 .theme-btn { margin-left: 6px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); border-radius: 999px; padding: 5px 11px; font: inherit; font-size: .78rem; cursor: pointer; }
 @media (max-width: 1000px) { .nav a.hide-1000 { display: none; } }
+@media (max-width: 1100px) { .nav a.hide-1100 { display: none; } }
 @media (max-width: 760px) { .nav a.hide-760 { display: none; } }
 .mnav { display: none; position: relative; }
 @media (max-width: 760px) { .mnav { display: block; } }
@@ -484,7 +485,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <a href="#protocol" class="hide-760">How we compare</a>
       <a href="#blocks" class="hide-760">Six blocks</a>
       <a href="#claims" class="hide-1000">Boundary</a>
-      <a href="#rerun" class="hide-1000">Reproduce</a>
+      <a href="#rerun" class="hide-1000 hide-1100">Reproduce</a>
       <a href="anm-loop.html" class="ext hide-1000">Loop report ↗</a>
       <details class="mnav">
         <summary aria-label="Open section menu"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mlabel">Menu</span></summary>
@@ -502,9 +503,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <a href="#claims">04 · Claim boundary</a>
           <a href="#rerun">05 · Reproduce</a>
           <a href="anm-loop.html" class="ext">Decision-loop report ↗</a>
+          <a href="https://github.com/danielchen26/teddy_mm" class="ext" target="_blank" rel="noopener">GitHub repository ↗</a>
         </div>
       </details>
       <button class="g-open" type="button" aria-controls="guide" aria-expanded="false"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span class="glabel">Guide</span></button>
+      <a class="gh-link opt-gh" href="https://github.com/danielchen26/teddy_mm" target="_blank" rel="noopener" aria-label="GitHub repository" title="GitHub repository"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="ghl">GitHub</span></a>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle light or dark theme">Theme</button>
     </nav>
   </div>
@@ -625,7 +628,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <thead><tr><th scope="col"></th><th scope="col">Axis</th><th scope="col">What it is</th><th scope="col">Status</th></tr></thead>
           <tbody>
             <tr><th scope="row"><span class="term" data-term="phase1">Phase 1</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">Frozen TEDDY turns RNA into an embedding once; a small head trained in this repo maps it to all 134 surface proteins. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595).</td><td class="win" data-arm="Status">Done. Every block uses its predictions.</td></tr>
-            <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">A multimodal fusion model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both). No ANM inside.</td><td data-arm="Status">Unfinished: a 6-epoch scaffold run, test Pearson 0.25–0.27. Used only as the RNA-missing stand-in: in Block 2 (and half of “both”), reused in Block 4’s RNA-missing view.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">A multimodal fusion model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both). No ANM inside.</td><td data-arm="Status">Unfinished: a 6-epoch scaffold. Its recorded test Pearson (0.25–0.27) scores one random flow-matching sample per cell; decoded directly it reaches 0.56 from RNA alone (phase 1: 0.61). Used only as the RNA-missing stand-in: in Block 2 (and half of “both”), reused in Block 4’s RNA-missing view.</td></tr>
             <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM as a decision layer on TEDDY’s outputs: the phase-1 predictions, with labelled exceptions that use the phase-2 stand-in or measured protein.</td><td class="win" data-arm="Status">Done: the six blocks (Block 6 under review).</td></tr>
             <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM inside TEDDY: its residual stream as ANM’s field, layer Jacobians, in-silico gene perturbations.</td><td data-arm="Status">Not done.</td></tr>
           </tbody>
@@ -909,7 +912,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </div>
         <div class="bproof">
           <div class="proves"><b>Proves (helps a TEDDY pipeline)</b>When TEDDY can’t run and the pipeline falls back on a weaker source, ANM’s calls follow the trust declared for each source: it holds back on the weak stand-in instead of answering every cell. No retraining, and TEDDY’s predictions are unchanged wherever RNA exists.</div>
-          <div class="limits"><b>Does not prove</b>That ANM detects weak evidence by itself: the “no calls” come from the 0.35 we declared. Anything about TEDDY’s accuracy: with RNA missing TEDDY is not involved. The stand-in reads the cell’s measured proteins, the same ones that set the answer key, yet stays weak (panel Pearson 0.446, vs 0.915 for TEDDY), and accuracy barely moves (0.628 → 0.649).</div>
+          <div class="limits"><b>Does not prove</b>That ANM detects weak evidence by itself: the “no calls” come from the 0.35 we declared. Anything about TEDDY’s accuracy: with RNA missing TEDDY is not involved. The stand-in reads the cell’s measured proteins, the same ones that set the answer key, yet stays weak (panel Pearson 0.446, vs 0.915 for TEDDY), and accuracy barely moves (0.628 → 0.649). Part of that weakness is how the stand-in was sampled: one random flow-matching draw per cell. Its direct decode scores much higher across all 134 proteins (0.61 vs 0.27); Block 2 was not re-run with it.</div>
         </div>
         <p class="zh">缺 RNA 时 TEDDY 无法运行，只能用一个较弱的纯蛋白模型顶替；ANM 按事先声明的可信度（×0.35）少答（0 → 1,664 个“不作答”），固定规则则全部照答。这说明决策会遵循声明的可信度，不说明 ANM 自己发现了证据变弱，也与 TEDDY 的准确性无关。</p>
       </article>
@@ -1339,7 +1342,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'No RNA → no TEDDY → a weaker stand-in → declared trust → fewer calls',
           steps: [
             ['What TEDDY can do here', 'Nothing when RNA is missing: TEDDY reads RNA. Its predictions enter only the ' + T('rnaonly', 'RNA') + ' and ' + T('joint', 'both') + ' conditions.'],
-            ['The stand-in', 'With ' + T('adtonly', 'RNA missing') + ', this repo’s phase-2 model, run with its RNA input switched off, reconstructs the 9 panel proteins from the cell’s measured proteins. It is weak: panel Pearson 0.446.'],
+            ['The stand-in', 'With ' + T('adtonly', 'RNA missing') + ', this repo’s phase-2 model, run with its RNA input switched off, reconstructs the 9 panel proteins from the cell’s measured proteins. It is weak: panel Pearson 0.446, partly because it was scored as one random flow-matching sample per cell.'],
             ['Declare the trust', 'The question multiplies every stand-in evidence item by 0.35 before ANM’s engine runs (the fixed rule sees the values unscaled). We chose that number; ANM does not estimate it.'],
             ['Soft rule', 'Scores shrink, so ANM declines 1,664 cells and still calls 86.8%. The fixed rule answers every cell, at accuracy 0.63 (ANM’s calls: 0.65).'],
             ['Key-marker rule', 'Only one marker per lineage counts, so with the 0.35 trust no score can reach the 0.20 bar (best case 0.126): all 12,563 are declined by construction.']

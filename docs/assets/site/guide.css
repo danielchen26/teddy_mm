@@ -178,6 +178,36 @@ aside.guide [hidden] { display: none !important; }
 .g-open[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
 .g-scrim { display: none; }
 
+/* left timeline (wide screens) and a thin progress bar (narrow screens) */
+.t-rail { display: none; }
+.t-bar { position: fixed; top: 56px; left: 0; right: 0; height: 3px; z-index: 40; background: transparent; pointer-events: none; }
+.t-bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+.gh-link { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--bg-elev); color: var(--ink); font-size: .78rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.gh-link:hover { border-color: var(--accent); color: var(--accent); }
+.gh-link svg { flex: none; }
+@media (max-width: 1100px) { .gh-link .ghl { display: none; } .gh-link { padding: 5px 8px; } }
+@media (max-width: 480px) { .gh-link.opt-gh { display: none; } }
+@media (min-width: 1200px) {
+  .t-bar { display: none; }
+  main, footer { margin-left: 52px; }
+  .t-rail { display: block; position: fixed; left: 0; top: 56px; bottom: 0; width: 52px; z-index: 22; border-right: 1px solid var(--line); background: var(--bg); }
+  .t-track { position: absolute; left: 25px; top: 18px; bottom: 18px; width: 2px; border-radius: 1px; background: var(--line); }
+  .t-fill { width: 100%; height: 0; border-radius: 1px; background: var(--accent); }
+  .t-dot { position: absolute; left: 14px; width: 24px; height: 24px; margin-top: -12px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--bg); border: 1.5px solid var(--line-strong, var(--ink-faint)); color: var(--ink-muted); text-decoration: none;
+    font-family: var(--mono); font-size: .6rem; font-weight: 700; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease; }
+  .t-dot:hover, .t-dot:focus-visible { transform: scale(1.12); border-color: var(--accent); color: var(--accent); outline: none; }
+  .t-dot.past { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); color: var(--accent); }
+  .t-dot.on { background: var(--accent); border-color: var(--accent); color: var(--bg); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .t-card { position: absolute; left: 46px; width: 250px; padding: 9px 12px 10px; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--line);
+    box-shadow: 0 10px 28px rgba(0,0,0,.14); opacity: 0; transform: translateX(-4px); pointer-events: none; transition: opacity .18s ease, transform .18s ease; }
+  .t-card.on { opacity: 1; transform: none; }
+  .t-card b { display: block; font-size: .82rem; line-height: 1.3; }
+  .t-card span { display: block; margin-top: 3px; font-size: .76rem; line-height: 1.45; color: var(--ink-muted); }
+}
+@media (prefers-reduced-motion: reduce) { .t-card, .t-dot { transition: none !important; } }
+
 /* wide screens: a floating column on the right; the page makes room for it. It can be resized from its
    left edge (--gw) and hidden to a tab on the right edge (html.g-collapsed). */
 :root { --gw: 320px; }
