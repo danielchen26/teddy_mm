@@ -55,6 +55,17 @@ Three roles, one direction. Nothing flows back into TEDDY.
 | 5 · Zero-label transfer | TEDDY's 9 predictions, 0 labels. The trained heads it is compared with learn from those 9 plus 32 numbers of TEDDY's embedding (the threshold grid uses the 9 only) | measured proteins |
 | 6 · Decision loop | Pairs are picked outside ANM: neighbours in TEDDY's embedding whose measured proteins disagree. ANM then calls each cell from TEDDY's predictions, and from measured protein in the complement test | measured proteins |
 
+**Two separate axes: phases build the evidence, modes say how ANM uses TEDDY**
+
+| | Axis | What it is | Status |
+|---|---|---|---|
+| [Phase 1](#t-phase1) | building the evidence | Frozen TEDDY embeds RNA once; a small head trained in this repo maps it to all 134 surface proteins (MLP head 0.610 vs latent flow matching 0.595, test Pearson) | done; every block uses its predictions |
+| [Phase 2](#t-phase2) | building the evidence | Multimodal fusion model: TEDDY's RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both). No ANM inside | unfinished: 6-epoch scaffold run, test Pearson 0.25–0.27; used only as the RNA-missing stand-in (Block 2, half of "both", reused in Block 4's RNA-missing view) |
+| [Mode B](#t-modeb) | how ANM uses TEDDY | ANM as a decision layer on TEDDY's outputs: the phase-1 predictions, with labelled exceptions that use the phase-2 stand-in or measured protein | done: the six blocks (Block 6 under review) |
+| [Mode A](#t-modea) | how ANM uses TEDDY | ANM inside TEDDY: its residual stream as ANM's field, layer Jacobians, in-silico gene perturbations | not done |
+
+*Why two words:* phases are steps in building the model that supplies the evidence (phase 2 was meant to extend phase 1). Modes are not steps but two alternative ways for ANM to engage with TEDDY: on its outputs (B) or inside it (A). The axes are independent. Even unfinished, phase 2 already feeds Mode B as the RNA-missing stand-in (Blocks 2 and 4); a finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against TEDDY's, and that would still be Mode B, not Mode A.
+
 **Two ways to study a foundation model**
 
 | | [Mode B](#t-modeb) · this repo | [Mode A](#t-modea) · not done |
@@ -231,6 +242,8 @@ Edit a question's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](brid
 | <a name="t-joint"></a>**Both (averaged)** | The average of TEDDY’s prediction and the stand-in’s protein-only reconstruction. |
 | <a name="t-finitefield"></a>**Finite field · ANM’s engine** | ANM’s decision engine: it combines the typed evidence under the observer into a score per lineage, then calls or declines. |
 | <a name="t-pearson"></a>**Pearson ≈ 0.61** | How well TEDDY’s phase-1 head predicts all measured proteins (correlation on held-out cells). A reference point; we do not try to beat it. |
+| <a name="t-phase1"></a>**Phase 1 · TEDDY + small head (done)** | Frozen TEDDY embeds each cell’s RNA once (512 numbers, context 1024). A small head trained in this repo maps that embedding to all 134 surface proteins, fitted with a negative-binomial loss. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595); every block uses its predictions (labelled exceptions: the RNA-missing stand-in in Blocks 2 and 4, measured protein in Block 6’s complement test). |
+| <a name="t-phase2"></a>**Phase 2 · fusion scaffold (unfinished)** | A multimodal model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both) and a latent flow-matching decoder. Only a 6-epoch scaffold run exists (test Pearson 0.25–0.27). It contains no ANM; Block 2 uses it as the RNA-missing stand-in (and half of “both”), and Block 4’s RNA-missing view reuses it. |
 | <a name="t-modeb"></a>**Mode B** | What this project does: treat TEDDY as an evidence source and study the decision layer on top of it. |
 | <a name="t-modea"></a>**Mode A (not done)** | Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Not claimed here. |
 

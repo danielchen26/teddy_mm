@@ -34,6 +34,8 @@
     softsep: ['Soft separation', 'The share of must-separate pairs the readout tells apart: different calls, or one cell declined.'],
     corrsep: ['Correct separation', 'The share of must-separate pairs split into the right, different calls.'],
     zplus: ['z⁺ · feature swap', 'TEDDY’s embedding with protein features glued on: the “just swap features” alternative to typed evidence.'],
+    phase1: ['Phase 1 · TEDDY + small head (done)', 'Frozen TEDDY embeds each cell’s RNA once (512 numbers, context 1024). A small head trained in this repo maps that embedding to all 134 surface proteins, fitted with a negative-binomial loss. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595); every block uses its predictions (labelled exceptions: the RNA-missing stand-in in Blocks 2 and 4, measured protein in Block 6’s complement test).'],
+    phase2: ['Phase 2 · fusion scaffold (unfinished)', 'A multimodal model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both) and a latent flow-matching decoder. Only a 6-epoch scaffold run exists (test Pearson 0.25–0.27). It contains no ANM; Block 2 uses it as the RNA-missing stand-in (and half of “both”), and Block 4’s RNA-missing view reuses it.'],
     modeb: ['Mode B', 'What this project does: treat TEDDY as an evidence source and study the decision layer on top of it.'],
     modea: ['Mode A (not done)', 'Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Not claimed here.'],
     rnaonly: ['RNA (TEDDY)', 'Evidence from TEDDY’s predictions, made from the cell’s RNA.'],
@@ -56,6 +58,9 @@
     if (savedW) document.documentElement.style.setProperty('--gw', Math.max(260, Math.min(Math.max(260, Math.min(640, window.innerWidth - 640)), savedW)) + 'px');
     if (window.localStorage.getItem('teddyGuide.collapsed') === '1') document.documentElement.classList.add('g-collapsed');
   } catch (e) {}
+  // no slide animation while the saved layout is applied on load
+  document.documentElement.classList.add('g-notrans');
+  window.addEventListener('load', function () { requestAnimationFrame(function () { requestAnimationFrame(function () { document.documentElement.classList.remove('g-notrans'); }); }); });
 
   // abbreviations marked automatically in prose (headings, buttons, links and code are skipped)
   var AUTO = [

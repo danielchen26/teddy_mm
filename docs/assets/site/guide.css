@@ -159,7 +159,8 @@ aside.guide [hidden] { display: none !important; }
   .g-resize:hover::after, .g-resize:focus-visible::after { background: color-mix(in srgb, var(--accent) 60%, transparent); }
   .g-resize:focus-visible { outline: none; }
   html.g-dragging, html.g-dragging * { cursor: col-resize !important; user-select: none !important; }
-  html.g-dragging main, html.g-dragging footer, html.g-dragging aside.guide { transition: none; }
+  html.g-dragging main, html.g-dragging footer, html.g-dragging aside.guide,
+  html.g-notrans main, html.g-notrans footer, html.g-notrans aside.guide { transition: none !important; }
   html.g-dragging .g-resize::after { background: var(--accent); }
   html.g-collapsed main, html.g-collapsed footer { margin-right: 0; }
   html.g-collapsed aside.guide { transform: translateX(100%); visibility: hidden; transition: transform .22s ease, visibility 0s linear .22s; }

@@ -658,6 +658,20 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </table>
       </div>
 
+      <p class="subh" style="margin-top:28px">Two separate axes: phases build the evidence, modes say how ANM uses TEDDY</p>
+      <div class="capwrap card">
+        <table class="capm axes">
+          <thead><tr><th scope="col"></th><th scope="col">Axis</th><th scope="col">What it is</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="term" data-term="phase1">Phase 1</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">Frozen TEDDY turns RNA into an embedding once; a small head trained in this repo maps it to all 134 surface proteins. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595).</td><td class="win" data-arm="Status">Done. Every block uses its predictions.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">A multimodal fusion model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both). No ANM inside.</td><td data-arm="Status">Unfinished: a 6-epoch scaffold run, test Pearson 0.25–0.27. Used only as the RNA-missing stand-in: in Block 2 (and half of “both”), reused in Block 4’s RNA-missing view.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM as a decision layer on TEDDY’s outputs: the phase-1 predictions, with labelled exceptions that use the phase-2 stand-in or measured protein.</td><td class="win" data-arm="Status">Done: the six blocks (Block 6 under review).</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM inside TEDDY: its residual stream as ANM’s field, layer Jacobians, in-silico gene perturbations.</td><td data-arm="Status">Not done.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-note"><b>Why two words.</b> Phases are steps in building the model that supplies the evidence: phase 2 was meant to extend phase 1. Modes are not steps but two alternative ways for ANM to engage with TEDDY: on its outputs (B) or inside it (A). The axes are independent. Even unfinished, phase 2 already feeds Mode B as the RNA-missing stand-in (Blocks 2 and 4). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against TEDDY’s; that would still be Mode B, not Mode A.</p>
+
       <p class="subh" style="margin-top:28px">Two ways to study a foundation model</p>
       <div class="modes">
         <div class="mode card on">
@@ -1254,11 +1268,12 @@ window.GUIDE_CONFIG = (function () {
             ['ANM: decision', 'Normally reads only TEDDY’s outputs (the 9 predictions), never RNA and never TEDDY’s internals; the labelled exceptions are listed next. A written-down question turns them into a call or “no call”. ANM has no learned weights.'],
             ['Measured proteins: grading', 'Kept aside and used to grade the calls (3 lineages, no NK class). Labelled exceptions also use them as input: Block 2’s stand-in and its “both” average (the stand-in is reused in Block 4), and Block 6 (pair selection and the complement test).'],
             ['Is it multimodal?', 'The data are, TEDDY is not: it reads only RNA and nothing fuses protein into it. The one combination is Block 2’s “both”, an average of TEDDY’s predictions and the protein-only stand-in.'],
+            ['Phases vs modes', 'Phase 1 (TEDDY plus a small head, done) and phase 2 (a fusion model, unfinished) build the evidence. Mode B (ANM on TEDDY’s outputs, done) and Mode A (ANM inside TEDDY, not done) are two ways for ANM to use TEDDY. The axes are independent.'],
             ['What we compare', 'Three arms on the same cells: TEDDY alone (its fixed rule), TEDDY + ANM, and a trained head (Train + Jev), across six questions, one per block. The table here gives each arm’s result.'],
             [T('modeb', 'Mode B') + ', not ' + T('modea', 'Mode A'), 'We study the decision on top of TEDDY’s outputs. Opening TEDDY up (its layers, gene perturbations) is Mode A and is not done here.']
           ]
         },
-        concepts: ['teddy', 'anm', 'evidence', 'citeseq', 'adt', 'modeb', 'modea']
+        concepts: ['teddy', 'anm', 'phase1', 'phase2', 'evidence', 'citeseq', 'adt', 'modeb', 'modea']
       },
       problem: {
         label: '01 · The problem', plain: 'Six things TEDDY alone can’t do when you need a decision.', steps: ['teddy'],
@@ -2087,7 +2102,7 @@ window.GUIDE_CONFIG = (function () {
     if (!T || !host) return;
     // every term in the shared dictionary, grouped; anything not listed lands in "Other"
     var groups = [
-      ['The setup', ['teddy', 'anm', 'finitefield', 'citeseq', 'adt', 'z512', 'evidence', 'lineage', 'modeb', 'modea']],
+      ['The setup', ['teddy', 'anm', 'finitefield', 'phase1', 'phase2', 'citeseq', 'adt', 'z512', 'evidence', 'lineage', 'modeb', 'modea']],
       ['The question · Blocks 1 and 5', ['observer', 'o0', 'o1', 'o2', 'abstain']],
       ['Inputs · Block 2', ['rnaonly', 'adtonly', 'joint']],
       ['Checks and metrics · Blocks 1–5', ['pf', 'qf', 'qdec', 'softp', 'coverage', 'loo', 'flip', 'bootstrap', 'permutation']],
@@ -2171,14 +2186,17 @@ window.GUIDE_CONFIG = (function () {
 
   // re-render charts on resize
   var lastW = 0, raf = 0;
+  // redraw when the content area changes width: window resize, or the guide column being resized or hidden
+  function mainW() { return Math.round((document.querySelector('main') || document.documentElement).getBoundingClientRect().width); }
   function onResize() {
-    var w = document.documentElement.clientWidth;
+    var w = mainW();
     if (w === lastW) return;
     lastW = w;
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(renderAll);
   }
   window.addEventListener('resize', onResize);
+  if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(document.querySelector('main'));
 
   var mnav = $('.mnav');
   if (mnav) {
@@ -2210,7 +2228,7 @@ window.GUIDE_CONFIG = (function () {
   renderObs();
   buildGloss();
   buildTables();
-  lastW = document.documentElement.clientWidth;
+  lastW = mainW();
   renderAll();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderAll);
 })();
