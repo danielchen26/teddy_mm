@@ -125,7 +125,7 @@ TEDDY alone, on the hard gap, **mostly false-agrees**.
 
 ### Winner
 
-**`complement_b_true_ADT_O1`** — score = soft_sep + Q − false_agree ≈ **2.841**.
+**`complement_b_true_ADT_O1`** — score = 2·soft_sep + Q + (1 − false_agree) ≈ **2.841** (`pick_winner` in `bridge_anm/reverse_loop_small.py`).
 
 Headline deltas vs baseline (myeloid↔T):
 

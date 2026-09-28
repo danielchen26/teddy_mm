@@ -100,7 +100,7 @@ Every block follows the same protocol:
 | 3 | [Attribution](https://danielchen26.github.io/teddy_mm/#attr) | Remove one marker's evidence at a time → the marker that decides → how far from flipping; [bootstrap](#t-bootstrap) 200×, permutation 100× | 16,433 cells · 27.7% of calls flip · p ≈ 0.0099 | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
 | 4 | [Scope gate](https://danielchen26.github.io/teddy_mm/#scope) | Keep TEDDY's call only where ANM is confident ([soft_P](#t-softp) cut-off); compare hard cells with random ones | Accuracy 0.945 → 0.998 at 40% [coverage](#t-coverage); hard cells 0.810 vs 0.946 | [SCOPE_REFINE_PROOF](docs/reports/SCOPE_REFINE_PROOF.md) |
 | 5 | [Zero-label transfer](https://danielchen26.github.io/teddy_mm/#labels) | Train heads on 50 → 10,619 labels until they copy ANM's key-marker answers | Copying needs ≈ 50 / 200 / 500 labels; ANM needs 0 | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
-| 6 | [Decision loop](https://danielchen26.github.io/teddy_mm/anm-loop.html) | Flag look-alike pairs TEDDY's [embedding](#t-z512) can't separate → add measured protein as evidence with the strict rule → check again | False agreement 0.85 → 0.40; accuracy 0.74 → 0.99; the [feature swap z⁺](#t-zplus) makes it worse (−0.27) | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) |
+| 6 | [Decision loop](https://danielchen26.github.io/teddy_mm/anm-loop.html) | Flag look-alike pairs TEDDY's [embedding](#t-z512) can't separate → swap in measured protein as evidence, with the strict rule → check again | False agreement 0.85 → 0.40; accuracy 0.74 → 0.99; the [feature swap z⁺](#t-zplus) makes it worse (−0.27) | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) |
 
 Charts, data tables and every number's source: **[danielchen26.github.io/teddy_mm](https://danielchen26.github.io/teddy_mm/)**.
 
@@ -188,7 +188,7 @@ Edit a question's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](brid
 | <a name="t-z512"></a>**TEDDY embedding (z_512)** | TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024. |
 | <a name="t-mustpair"></a>**Must-separate pair** | Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree, for example one myeloid and one T cell. |
 | <a name="t-veto"></a>**Veto** | ANM flags that TEDDY’s embedding cannot tell a pair apart, so a readout built on it should not be trusted there. |
-| <a name="t-complement"></a>**Complement** | Add a missing evidence channel (here, measured protein as typed evidence) instead of retraining TEDDY. |
+| <a name="t-complement"></a>**Complement** | Give the decision the evidence it lacks (here, measured protein as typed evidence, in place of TEDDY’s predictions) instead of retraining TEDDY. |
 | <a name="t-verify"></a>**Verify** | Score the same pairs again after the change: false agreement, soft separation and accuracy. |
 | <a name="t-falseagree"></a>**False agreement** | Among must-separate pairs where both cells get a call, the share given the same call even though they differ. |
 | <a name="t-softsep"></a>**Soft separation** | The share of must-separate pairs the readout tells apart: different calls, or one cell declined. |
@@ -236,7 +236,7 @@ teddy_mm/
 - The loop as TEDDY's representation responding to perturbations
 - Pearson above phase-1 ≈ 0.61 · fusion audit · ATAC / chromatin · clinical superiority · the live Jev API
 
-**Honest weak spots.** With RNA missing the channel is weak (panel Pearson 0.446). Block 4 trades coverage for accuracy, and under the key-marker rule accuracy dips at very low coverage. Block 6 uses measured protein as extra evidence in one explicit test; in normal use it stays the answer key.
+**Honest weak spots.** With RNA missing the channel is weak (panel Pearson 0.446). Block 4 trades coverage for accuracy, and under the key-marker rule accuracy dips at very low coverage. Block 6 uses measured protein as the evidence, in place of TEDDY's predictions, in one explicit test; in normal use it stays the answer key.
 
 **TEDDY's embedding** (`z_512`) is the mean of its last-layer tokens at context length 1024 (not pretrain 2048, not a disease token), L2-normalized 512-D (`z_rna_512.npy`). Full scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
 

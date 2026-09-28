@@ -42,7 +42,7 @@
     lineage: ['Lineage call', 'The decision per cell: B cell, T cell or myeloid, each judged from 3 markers (B: CD19 CD72 CD22 · T: CD3 CD2 CD5 · myeloid: CD16 CD11c CD36).'],
     pearson: ['Pearson ≈ 0.61', 'How well TEDDY’s phase-1 head predicts all measured proteins (correlation on held-out cells). A reference point; we do not try to beat it.'],
     veto: ['Veto', 'ANM flags that TEDDY’s embedding cannot tell a pair apart, so a readout built on it should not be trusted there.'],
-    complement: ['Complement', 'Add a missing evidence channel (here, measured protein as typed evidence) instead of retraining TEDDY.'],
+    complement: ['Complement', 'Give the decision the evidence it lacks (here, measured protein as typed evidence, in place of TEDDY’s predictions) instead of retraining TEDDY.'],
     verify: ['Verify', 'Score the same pairs again after the change: false agreement, soft separation and accuracy.'],
     finitefield: ['Finite field · ANM’s engine', 'ANM’s decision engine: it combines the typed evidence under the observer into a score per lineage, then calls or declines.'],
     permutation: ['Permutation test', 'Shuffle the data many times to see how often a pattern this strong appears by chance. Here p ≈ 0.0099 over 100 shuffles.'],
@@ -144,26 +144,165 @@
   window.addEventListener('resize', function () { if (cur) place(cur); });
 
   // ---------- guide ----------
+  // Per section the column shows: where it sits in the workflow, how ANM decides there (from the page's
+  // GUIDE_CONFIG.sections[id].how), one real cell run through ANM's engine, and the terms that section uses.
+
+  // The worked example is the v0 demo cell under the soft rule. Inputs, scores and the CD16 flip come from
+  // outputs/anm_cite_bridge/bakeoff/bakeoff_results.json; the per-step levels from scripts/guide_engine_trace.py,
+  // which re-runs ANM's engine and checks that the last step equals the published scores.
+  var ENGINE = {
+    title: 'Inside ANM’s engine',
+    sub: 'one real cell, step by step',
+    steps: [
+      ['Evidence in', 'Each of TEDDY’s 9 predicted proteins is divided by its 95th-percentile value in training cells: 0 = absent, 1 = as high as it gets. The question then weights them (the soft rule leaves them as they are; the strict rule doubles CD19, CD3 and CD16).'],
+      ['Wire it up', 'Every marker becomes a node linked to its lineage: B ← CD19 CD72 CD22 · T ← CD3 CD2 CD5 · myeloid ← CD16 CD11c CD36.'],
+      ['Let it flow', 'Markers enter one per step, each as a pulse of its value. Every step, each node keeps 82% of its level and each lineage node takes in 16% of its markers’ levels. The field runs 4 more steps after the last marker.'],
+      ['Read out', 'A lineage’s final level is its score. The top score becomes the call if it reaches the question’s bar (soft 0.12 · strict 0.28 · key-marker 0.20); otherwise “no call”.'],
+      ['Check', 'The cell’s measured proteins, which the engine never sees, give the answer key. Leave-one-out and flip distance re-run this same engine.']
+    ],
+    cell: 'cite_site4_73511',
+    inputs: [['B', [['CD19', 0.111], ['CD72', 0.153], ['CD22', 0.128]]], ['T', [['CD3', 0.172], ['CD2', 0.477], ['CD5', 0.184]]], ['Myeloid', [['CD16', 0.931], ['CD11c', 0.413], ['CD36', 0.104]]]],
+    threshold: 0.12,
+    // lineage levels after each step: [B, T, myeloid]
+    levels: [[0.0178, 0, 0], [0.0537, 0, 0], [0.0966, 0, 0], [0.1228, 0.0276, 0], [0.1371, 0.1215, 0], [0.1433, 0.2104, 0], [0.1439, 0.2643, 0.149],
+      [0.1407, 0.2936, 0.3104], [0.1351, 0.3059, 0.4266], [0.1281, 0.3065, 0.4933], [0.1202, 0.2993, 0.5254], [0.1121, 0.2872, 0.5339], [0.1039, 0.272, 0.5263]],
+    ex: {
+      threshold: 0.12,
+      groups: [
+        { label: 'All 9 markers', bars: [['B', 0.104], ['T', 0.272], ['Myeloid', 0.526]], call: 'Myeloid' },
+        { label: 'Leave CD16 out', bars: [['B', 0.104], ['T', 0.272], ['Myeloid', 0.189]], call: 'T' }
+      ],
+      caption: 'Called myeloid, and the measured proteins agree. Leave CD16 out and the myeloid score falls by 0.338, so T wins: CD16 is the deciding marker. Its flip distance is 0.731: CD16 at 0.20 or lower would already flip the call.'
+    }
+  };
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+  function stepList(steps) {
+    return '<ol class="g-howl">' + steps.map(function (st) { return '<li><b>' + st[0] + '</b><span class="d">' + st[1] + '</span></li>'; }).join('') + '</ol>';
+  }
+  // final scores as small bars, one group per scenario; the winning lineage is filled, the bar is marked
+  function exampleBars(ex) {
+    if (!ex) return '';
+    var thr = (ex.threshold * 100).toFixed(1) + '%';
+    var groups = ex.groups.map(function (g) {
+      var rows = g.bars.map(function (b) {
+        var win = b[0] === g.call;
+        return '<div class="g-bar' + (win ? ' win' : '') + '"><span class="l">' + b[0] + '</span><span class="tr"><i style="width:' + (b[1] * 100).toFixed(1) + '%"></i><b class="thr" style="left:' + thr + '"></b></span><span class="v">' + b[1].toFixed(3) + '</span></div>';
+      }).join('');
+      return '<div class="g-grp-bars"><div class="g-ex-h"><span>' + g.label + '</span><em>→ ' + g.call + '</em></div>' + rows + '</div>';
+    }).join('');
+    return '<div class="g-ex">' + (ex.title ? '<div class="g-ex-t">' + ex.title + '</div>' : '') + groups +
+      '<div class="g-ex-leg"><span><b class="thr"></b>bar ' + ex.threshold.toFixed(2) + '</span><span><i></i>called lineage</span></div>' +
+      (ex.caption ? '<p class="g-ex-cap">' + ex.caption + '</p>' : '') + '</div>';
+  }
+  function inputGrid(inputs) {
+    return '<div class="g-inputs">' + inputs.map(function (g) {
+      return '<div class="g-in"><span class="lin">' + g[0] + '</span>' + g[1].map(function (m) {
+        return '<span class="mk"><span class="nm">' + m[0] + '</span><span class="mv">' + m[1].toFixed(3) + '</span><span class="mb"><i style="width:' + (m[1] * 100).toFixed(1) + '%"></i></span></span>';
+      }).join('') + '</div>';
+    }).join('') + '</div>';
+  }
+  // levels of the three lineage nodes over the steps, with the bar; hover or tap a step to read it
+  var TR = { W: 284, H: 164, l: 26, r: 50, t: 10, b: 34, max: 0.6 };
+  function traceSvg(E) {
+    var n = E.levels.length, pw = TR.W - TR.l - TR.r, ph = TR.H - TR.t - TR.b, dx = pw / (n - 1);
+    function X(i) { return TR.l + i * dx; }
+    function Y(v) { return TR.t + ph * (1 - v / TR.max); }
+    var names = ['B', 'T', 'Myeloid'], cls = ['lb', 'lt', 'lm'];
+    var g = '';
+    [0, 0.2, 0.4, 0.6].forEach(function (v) {
+      g += '<line class="gl" x1="' + TR.l + '" x2="' + (TR.l + pw) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '"/>' +
+        '<text class="tk" x="' + (TR.l - 5) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end">' + (v === 0 ? '0' : v.toFixed(1)) + '</text>';
+    });
+    g += '<line class="thr" x1="' + TR.l + '" x2="' + (TR.l + pw) + '" y1="' + Y(E.threshold).toFixed(1) + '" y2="' + Y(E.threshold).toFixed(1) + '"/>' +
+      '<text class="tl" x="' + (TR.l + 3) + '" y="' + (Y(E.threshold) - 4).toFixed(1) + '">bar ' + E.threshold.toFixed(2) + '</text>';
+    // which markers enter when (panel order = event time), then the 4 extra steps
+    var phases = [[0, 2, 'B'], [3, 5, 'T'], [6, 8, 'myeloid'], [9, n - 1, '+4 steps']];
+    g += '<line class="dv" x1="' + (X(8) + dx / 2).toFixed(1) + '" x2="' + (X(8) + dx / 2).toFixed(1) + '" y1="' + TR.t + '" y2="' + (TR.H - TR.b + 8) + '"/>';
+    phases.forEach(function (p) {
+      var x1 = X(p[0]) - (p[0] ? dx / 2 : 0) + 1.5, x2 = X(p[1]) + (p[1] < n - 1 ? dx / 2 : 0) - 1.5, y = TR.H - TR.b + 8;
+      g += '<line class="ph" x1="' + x1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y1="' + y + '" y2="' + y + '"/>' +
+        '<text class="pt" x="' + ((x1 + x2) / 2).toFixed(1) + '" y="' + (y + 12) + '" text-anchor="middle">' + p[2] + '</text>';
+    });
+    [2, 1, 0].forEach(function (k) {
+      var d = E.levels.map(function (row, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(row[k]).toFixed(1); }).join('');
+      var last = E.levels[n - 1][k], ly = Y(last);
+      g += '<path class="ln ' + cls[k] + '" d="' + d + '"/><circle class="dt ' + cls[k] + '" cx="' + X(n - 1).toFixed(1) + '" cy="' + ly.toFixed(1) + '" r="3.5"/>' +
+        '<text class="el" x="' + (X(n - 1) + 7) + '" y="' + (ly - 2).toFixed(1) + '">' + names[k] + '</text>' +
+        '<text class="ev" x="' + (X(n - 1) + 7) + '" y="' + (ly + 11).toFixed(1) + '">' + last.toFixed(3) + '</text>';
+    });
+    g += '<line class="xh" x1="0" x2="0" y1="' + TR.t + '" y2="' + (TR.t + ph) + '" style="display:none"/>' +
+      '<rect class="hit" x="' + (TR.l - dx / 2) + '" y="0" width="' + (pw + dx) + '" height="' + (TR.t + ph + 4) + '"/>';
+    return '<svg class="g-trace" viewBox="0 0 ' + TR.W + ' ' + TR.H + '" role="img" aria-label="Lineage scores of cell ' + E.cell + ' over ' + n +
+      ' steps: myeloid ends at ' + E.levels[n - 1][2].toFixed(3) + ', T at ' + E.levels[n - 1][1].toFixed(3) + ', B at ' + E.levels[n - 1][0].toFixed(3) + '.">' + g + '</svg>';
+  }
+  function traceTable(E) {
+    return '<details class="g-tbl"><summary>Numbers</summary><table><thead><tr><th>Step</th><th>B</th><th>T</th><th>Myeloid</th></tr></thead><tbody>' +
+      E.levels.map(function (r, i) { return '<tr><td>' + i + '</td><td>' + r[0].toFixed(3) + '</td><td>' + r[1].toFixed(3) + '</td><td>' + r[2].toFixed(3) + '</td></tr>'; }).join('') +
+      '</tbody></table></details>';
+  }
+  function wireTrace(root, E) {
+    var svg = root.querySelector('.g-trace'), out = root.querySelector('.g-trace-read');
+    if (!svg || !out) return;
+    var xh = svg.querySelector('.xh'), hit = svg.querySelector('.hit'), n = E.levels.length;
+    var pw = TR.W - TR.l - TR.r, dx = pw / (n - 1), idle = out.innerHTML;
+    function at(e) {
+      var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * TR.W / r.width;
+      var i = Math.max(0, Math.min(n - 1, Math.round((x - TR.l) / dx))), row = E.levels[i];
+      xh.setAttribute('x1', TR.l + i * dx); xh.setAttribute('x2', TR.l + i * dx); xh.style.display = '';
+      out.innerHTML = '<b>Step ' + i + '</b> · myeloid ' + row[2].toFixed(3) + ' · T ' + row[1].toFixed(3) + ' · B ' + row[0].toFixed(3);
+    }
+    function leave() { xh.style.display = 'none'; out.innerHTML = idle; }
+    hit.addEventListener('pointermove', at);
+    hit.addEventListener('pointerdown', at);
+    hit.addEventListener('pointerleave', leave);
+  }
+  function engineHtml(E) {
+    return '<details class="g-engine" open><summary><span>' + E.title + '</span><em>' + E.sub + '</em></summary><div class="g-eng">' +
+      stepList(E.steps) +
+      '<div class="g-ex-t">Cell <code>' + E.cell + '</code> · soft rule</div>' +
+      '<p class="g-mini">① Evidence in (scaled 0–1)</p>' + inputGrid(E.inputs) +
+      '<p class="g-mini">② The field fills up</p>' + traceSvg(E) +
+      '<p class="g-trace-read">Hover or tap a step to read its levels.</p>' +
+      '<p class="g-ex-cap">Markers enter one per step (B’s three, then T’s, then myeloid’s), then the field runs 4 more steps. Myeloid overtakes T once CD16 arrives.</p>' + traceTable(E) +
+      '<p class="g-mini">③ Read out, ④ check</p>' + exampleBars(E.ex) +
+      '</div></details>';
+  }
+  // workflow map: one row per group (TEDDY's steps, then ANM's), numbered stations on a line
+  function mapHtml(cfg) {
+    var groups = cfg.groups && cfg.groups.length ? cfg.groups : [{ before: cfg.steps[0].id, cls: '', label: '' }], idx = {};
+    cfg.steps.forEach(function (st, i) { idx[st.id] = i; });
+    var rows = groups.map(function (g, k) {
+      var to = k + 1 < groups.length ? idx[groups[k + 1].before] : cfg.steps.length;
+      return { g: g, steps: cfg.steps.slice(idx[g.before], to) };
+    });
+    var cols = Math.max.apply(null, rows.map(function (r) { return r.steps.length; }));
+    function node(st) {
+      return '<a class="g-node ' + (st.cls || '') + '" data-step="' + st.id + '" href="' + (st.href || '#') + '" title="' + esc(st.t + ': ' + st.d) + '">' +
+        '<span class="n">' + st.n + '</span><span class="s">' + (st.s || st.t) + '</span></a>';
+    }
+    return '<div class="g-map" style="--n:' + cols + '">' + rows.map(function (r) {
+      return '<div class="g-map-grp">' + (r.g.label ? '<span class="g-grp ' + r.g.cls + '">' + r.g.label + '</span>' : '') +
+        '<div class="g-map-row" style="--k:' + r.steps.length + '">' + r.steps.map(node).join('') + '</div></div>';
+    }).join('') + '</div>';
+  }
+
   function buildGuide(cfg) {
     var aside = document.getElementById('guide');
     if (!aside || !cfg) return;
-    var steps = cfg.steps, groups = cfg.groups || [];
-    var flow = '';
-    steps.forEach(function (s) {
-      groups.forEach(function (g) { if (g.before === s.id) flow += '<li class="g-grp ' + g.cls + '">' + g.label + '</li>'; });
-      flow += '<li><a class="g-step ' + (s.cls || '') + '" data-step="' + s.id + '" href="' + (s.href || '#') + '"><span class="n">' + s.n + '</span><span><b>' + s.t + '</b><span class="d">' + s.d + '</span></span></a></li>';
-    });
-    var concepts = cfg.concepts.map(function (id) {
-      var t = TERMS[id];
-      return t ? '<details><summary>' + t[0] + '</summary><p>' + t[1] + '</p></details>' : '';
-    }).join('');
-    var arms = cfg.arms ? '<p class="g-kick">Colours</p><div class="g-arms">' + cfg.arms.map(function (a) { return '<span><i style="background:' + a[0] + '"></i>' + a[1] + '</span>'; }).join('') + '</div>' : '';
+    var E = cfg.engine === false ? null : (cfg.engine || ENGINE);
+    var arms = cfg.arms ? '<p class="g-kick">Colours on this page</p><div class="g-arms">' + cfg.arms.map(function (a) { return '<span><i style="background:' + a[0] + '"></i>' + a[1] + '</span>'; }).join('') + '</div>' : '';
     aside.innerHTML = '<div class="g-inner">' +
-      '<div class="g-top"><span class="g-kick">Guide</span><button class="g-close" type="button" aria-label="Close guide">×</button></div>' +
-      '<p class="g-kick">You are reading</p><div class="g-now" aria-live="polite"><b id="g-now-t"></b><span id="g-now-d"></span></div>' +
-      '<p class="g-kick">' + (cfg.flowTitle || 'The whole workflow') + '</p><ol class="g-flow">' + flow + '</ol>' +
-      '<p class="g-kick">Key concepts · click to expand</p><div class="g-concepts">' + concepts + '</div>' + arms +
+      '<div class="g-top"><span class="g-kick">Guide · how ANM decides</span><button class="g-close" type="button" aria-label="Close guide">×</button></div>' +
+      '<div class="g-now" aria-live="polite"><span class="g-now-k">You are reading</span><b id="g-now-t"></b><span id="g-now-d"></span></div>' +
+      '<p class="g-kick">' + (cfg.flowTitle || 'Where this sits in the workflow') + '</p>' + mapHtml(cfg) +
+      '<p class="g-kick" id="g-how-k">How ANM decides here</p><div class="g-how" id="g-how"></div>' +
+      (E ? engineHtml(E) : '') +
+      '<div id="g-terms"><p class="g-kick">Terms in this section</p><div class="g-concepts" id="g-concepts"></div></div>' +
+      (cfg.allTerms ? '<a class="g-all" href="' + cfg.allTerms + '">' + (cfg.allTermsLabel || 'All terms') + ' →</a>' : '') + arms +
       '</div>';
+    decorateAll(aside);
+    if (E) wireTrace(aside, E);
 
     // a page can place its own opener (e.g. in the top bar); otherwise a floating button is added
     var fab = document.querySelector('.g-open');
@@ -181,30 +320,53 @@
     scrim.addEventListener('click', close);
     aside.querySelector('.g-close').addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-    [].slice.call(aside.querySelectorAll('.g-step')).forEach(function (a) { a.addEventListener('click', function () { if (window.innerWidth < 1200) close(); }); });
+    aside.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a.g-node, a.g-all'); if (a && window.innerWidth < 1200) close(); });
 
-    var stepEls = {};
-    [].slice.call(aside.querySelectorAll('.g-step')).forEach(function (a) { stepEls[a.getAttribute('data-step')] = a; });
+    var nodes = {};
+    [].slice.call(aside.querySelectorAll('.g-node')).forEach(function (a) { nodes[a.getAttribute('data-step')] = a; });
     var nowT = aside.querySelector('#g-now-t'), nowD = aside.querySelector('#g-now-d');
-    var visible = {}, currentId = null;
+    var howK = aside.querySelector('#g-how-k'), howEl = aside.querySelector('#g-how');
+    var terms = aside.querySelector('#g-terms'), conEl = aside.querySelector('#g-concepts');
+    var visible = {}, currentId = null, currentKey = null;
     function setNow(id) {
       var key = cfg.resolve ? cfg.resolve(id) : id;
       var sec = cfg.sections[key] || cfg.sections[id];
       if (!sec) return;
       currentId = id;
+      if (key === currentKey) return;
+      currentKey = key;
       nowT.textContent = sec.label; nowD.textContent = sec.plain;
-      Object.keys(stepEls).forEach(function (k) { stepEls[k].classList.toggle('on', (sec.steps || []).indexOf(k) > -1); });
+      Object.keys(nodes).forEach(function (k) {
+        var on = (sec.steps || []).indexOf(k) > -1;
+        nodes[k].classList.toggle('on', on);
+        if (on) nodes[k].setAttribute('aria-current', 'step'); else nodes[k].removeAttribute('aria-current');
+      });
+      var how = sec.how;
+      howK.textContent = (how && how.k) || 'How ANM decides here';
+      howK.hidden = howEl.hidden = !how;
+      howEl.innerHTML = how ? '<div class="g-how-t">' + how.t + '</div>' + stepList(how.steps) + exampleBars(how.ex) + (how.note ? '<p class="g-how-note">' + how.note + '</p>' : '') : '';
+      var ids = sec.concepts || cfg.concepts || [];
+      conEl.innerHTML = ids.map(function (tid) {
+        var t = TERMS[tid];
+        return t ? '<details><summary>' + t[0] + '</summary><p>' + t[1] + '</p></details>' : '';
+      }).join('');
+      terms.hidden = !ids.length;
+      decorateAll(howEl);
+      howEl.classList.remove('fade'); void howEl.offsetWidth; howEl.classList.add('fade');
     }
-    window.GUIDE_REFRESH = function () { if (currentId) setNow(currentId); };
+    window.GUIDE_REFRESH = function () { if (currentId) { currentKey = null; setNow(currentId); } };
     var ids = Object.keys(cfg.sections).filter(function (id) { return document.getElementById(id); });
+    // at the very bottom the last section may never reach the trigger band, so it wins there
+    function atBottom() { return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2; }
     function pick() {
+      if (atBottom() && ids.length) { setNow(ids[ids.length - 1]); return; }
       var best = null, bestDepth = -1;
       ids.forEach(function (id) {
         if (!visible[id]) return;
         var d = cfg.sections[id].depth || 1;
         if (d >= bestDepth) { best = id; bestDepth = d; }
       });
-      if (best && best !== currentId) setNow(best);
+      if (best) setNow(best);
     }
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
@@ -212,6 +374,8 @@
         pick();
       }, { rootMargin: '-30% 0px -60% 0px' });
       ids.forEach(function (id) { io.observe(document.getElementById(id)); });
+      var wasBottom = false;
+      window.addEventListener('scroll', function () { var bt = atBottom(); if (bt !== wasBottom) { wasBottom = bt; pick(); } }, { passive: true });
     }
     setNow(ids[0]);
   }

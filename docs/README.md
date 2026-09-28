@@ -3,7 +3,7 @@
 Open **[index.html](index.html)** for the public landing: problem → comparison protocol → six blocks (each with method, interactive chart, data table and what it proves) → claim boundary → reproduce.
 
 - `anm-loop.html` — interactive Block 6 report (veto → complement → verify, scoreboard by arm × metric)
-- `assets/site/guide.js`, `assets/site/guide.css` — shared by both pages: one plain-language definition per term (dotted underline, hover/focus/tap), auto-marking of abbreviations such as O0 or z_512, and the guide column (whole workflow, “you are reading”, key concepts)
+- `assets/site/guide.js`, `assets/site/guide.css` — shared by both pages: one plain-language definition per term (dotted underline, hover/focus/tap), auto-marking of abbreviations such as O0 or z_512, and the guide column. The column follows the section you are reading: where it sits in the workflow, “how ANM decides here” (set per section in each page’s `GUIDE_CONFIG.sections[id].how`), and “Inside ANM’s engine”, one real cell run step by step (rebuild and check it with `scripts/guide_engine_trace.py`)
 - `assets/infographics/` — icon-first story PNGs (light+dark); regenerate via `scripts/make_story_infographics.py`
 - `assets/hard_proof/`, `assets/missing_modality/` — proof GIFs/dashboards
 - `reports/` — HARD_PROOF, SCOPE_REFINE, MISSING_MODALITY, STAT_PROOF, BAKEOFF, v0 REPORT
