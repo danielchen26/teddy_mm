@@ -108,20 +108,20 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
   <div>
     <div class="brand"><i></i>TEDDY <span>×</span> ANM</div>
     <div class="h1">Keep <span class="t">TEDDY</span> frozen.<br />Make its answers editable, honest and auditable with <span class="a">ANM</span>.</div>
-    <p class="lede">A <b>declared decision layer</b> on top of TEDDY’s CITE-seq protein predictions: change the question without labels, abstain on weak evidence, explain every call. Tested head-to-head; <b>TEDDY is never retrained</b>.</p>
+    <p class="lede">A <b>declared decision layer</b> on top of TEDDY’s CITE-seq protein predictions: change the question without labels, decline when evidence is weak, explain every call. Tested head-to-head; <b>TEDDY is never retrained</b>.</p>
     <div class="meta"><i></i>CITE-seq · NeurIPS 2021 BMMC · site4 holdout · 16,750 cells</div>
   </div>
   <div class="pipe">
     <div class="pg pg-t">
       <span class="pg-lab">TEDDY · unchanged</span>
-      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>CITE-seq cell</b><span>RNA in; true ADT held out as the verifier</span></div></div>
-      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span><div><b>TEDDY-G 70M · frozen</b><span>mean-pooled embedding z_512</span></div></div>
-      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span><div><b>9-protein panel → typed evidence δu</b><span>B · T · myeloid lineage markers</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>CITE-seq cell</b><span>RNA in; measured proteins kept aside as the answer key</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span><div><b>TEDDY-G 70M · frozen</b><span>sums up each cell as a 512-number embedding</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span><div><b>9 predicted proteins → typed evidence</b><span>B · T · myeloid lineage markers</span></div></div>
     </div>
     <div class="pg pg-a">
       <span class="pg-lab">ANM · added</span>
-      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></svg></span><div><b>Declared observer O0 / O1 / O2</b><span>P_f workability · Q_f exactness</span></div></div>
-      <div class="outs"><div>call</div><div>abstain</div><div>why</div><div>trust</div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></svg></span><div><b>A written-down question (the observer)</b><span>soft · strict · key-marker rule — can it decide? was it right?</span></div></div>
+      <div class="outs"><div>call</div><div>decline</div><div>why</div><div>trust</div></div>
     </div>
   </div>
 </div>
@@ -134,25 +134,25 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
   </div>
   <div class="cards">
     <div class="card"><div class="k"><i>1</i>Edit the question</div><div class="v"><span class="to">0</span> <small>labels</small></div>
-      <p class="c">to switch the decision criterion O0 → O2. ANM abstentions follow it: 317 → 834 → 3,373.</p>
-      <div class="vs"><b>TEDDY alone</b> keeps its old rule and still answers 1,752 cells that O2 holds back.</div></div>
+      <p class="c">to switch from the soft rule to the key-marker rule. ANM’s “no calls” follow the question: 317 → 834 → 3,373.</p>
+      <div class="vs"><b>TEDDY alone</b> keeps its old rule and still answers 1,752 cells the new question holds back.</div></div>
     <div class="card"><div class="k"><i>2</i>Missing modality</div><div class="v"><span class="f">0</span> → <span class="to">1,664</span></div>
-      <p class="c">honest abstentions when RNA is missing (<span class="mono">adt_only</span>); mean P_f drops to 0.868.</p>
-      <div class="vs"><b>TEDDY alone</b> answers every cell anyway, at Q 0.63.</div></div>
+      <p class="c">honest “no calls” when RNA is missing; ANM still calls 86.8% of cells.</p>
+      <div class="vs"><b>TEDDY alone</b> answers every cell anyway, at accuracy 0.63.</div></div>
     <div class="card"><div class="k"><i>3</i>Attribution</div><div class="v"><span class="to">16,433</span></div>
-      <p class="c">cells get a per-marker reason: leave-one-out + flip distance on the declared field (p ≈ 0.0099).</p>
-      <div class="vs"><b>TEDDY alone</b> has no declared field to explain a call.</div></div>
+      <p class="c">cells get a per-marker reason: leave-one-out plus how far the call is from flipping (p ≈ 0.0099).</p>
+      <div class="vs"><b>TEDDY alone</b> has no written-down rule to explain a call.</div></div>
     <div class="card"><div class="k"><i>4</i>Scope gate</div><div class="v"><span class="f">0.945</span> → <span class="to">0.998</span></div>
-      <p class="c">Q of TEDDY’s own calls when keeping the top 40% by ANM soft_P.</p>
-      <div class="vs"><b>Hard cells</b> ANM flags score Q 0.810 vs 0.946 for random cells.</div></div>
+      <p class="c">accuracy of TEDDY’s own calls when keeping only the 40% ANM is most confident about.</p>
+      <div class="vs"><b>Hard cells</b> ANM flags reach accuracy 0.810 vs 0.946 for random cells.</div></div>
     <div class="card"><div class="k"><i>5</i>Zero-label transfer</div><div class="v"><span class="to">0</span> <small>vs</small> <span class="f">50–500</span></div>
-      <p class="c">new labels to reach ANM’s O2 operating point (ANM vs trained heads).</p>
+      <p class="c">new labelled cells to reach ANM’s key-marker answers (ANM vs trained heads).</p>
       <div class="vs"><b>Trained heads</b> can buy the numbers, not an editable field.</div></div>
     <div class="card"><div class="k"><i>6</i>Decision loop</div><div class="v"><span class="f">0.85</span> → <span class="to">0.40</span></div>
-      <p class="c">false agreement on myeloid↔T cells that TEDDY’s z_512 can’t tell apart (cos 0.982).</p>
-      <div class="vs"><b>Feature swap</b> into z⁺ makes the global must-rate worse (−0.27).</div></div>
+      <p class="c">false agreement on myeloid↔T cells that TEDDY’s embedding can’t tell apart (cosine 0.982).</p>
+      <div class="vs"><b>Gluing protein features</b> onto the embedding makes things worse overall (−0.27).</div></div>
   </div>
-  <div class="foot"><span><b>Accuracy is not the claim:</b> like-for-like Q among decided cells is within 0.02 of TEDDY alone.</span><span>Not clinical · no Pearson claim beyond ≈ 0.61</span></div>
+  <div class="foot"><span><b>Accuracy is not the claim:</b> like for like, ANM’s accuracy of calls made is within 0.02 of TEDDY alone.</span><span>Not clinical · no Pearson claim beyond ≈ 0.61</span></div>
 </div>
 
 <!-- =============== HOW =============== -->
@@ -160,20 +160,20 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
   <div class="fh"><div><p class="lead">ANM never touches TEDDY. It adds a declared decision layer on top of TEDDY’s predictions.</p></div></div>
   <div class="steps">
     <div class="step t"><span class="n">STEP 1</span><h3>TEDDY stays frozen</h3>
-      <ul><li>RNA → TEDDY-G 70M → z_512</li><li>Head predicts 9 surface proteins</li><li>Exported per cell as typed evidence δu</li></ul>
+      <ul><li>RNA → TEDDY-G 70M → a cell embedding</li><li>A small head predicts 9 surface proteins</li><li>Each prediction is handed on as typed evidence</li></ul>
       <span class="tag">export_cite_events.py</span></div>
     <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
     <div class="step o"><span class="n">STEP 2</span><h3>Declare the question</h3>
-      <ul><li>Observer O0 / O1 / O2</li><li>Threshold, key-marker boost, lineage weights</li><li>A config edit: no labels, no retrain</li></ul>
+      <ul><li>Soft, strict or key-marker rule (the observer)</li><li>Which markers count, how strong, when to decline</li><li>A written edit: no labels, no retrain</li></ul>
       <span class="tag">lineage_panels.py · CRITERIA</span></div>
     <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
     <div class="step a"><span class="n">STEP 3</span><h3>ANM decides, per cell</h3>
-      <ul><li>Call a lineage, or abstain</li><li>P_f workability · Q_f exactness</li><li>Leave-one-out reason + flip distance</li></ul>
+      <ul><li>Call a lineage, or say “no call”</li><li>Checks: can it decide? was it right?</li><li>A per-marker reason for every call</li></ul>
       <span class="tag">ANM finite_field</span></div>
   </div>
   <div class="vsrow">
     <span class="lbl">Compared against</span>
-    <div class="arm"><i style="background:var(--s-teddy)"></i><span><b>TEDDY alone</b> · same predictions, a fixed argmax rule</span></div>
+    <div class="arm"><i style="background:var(--s-teddy)"></i><span><b>TEDDY alone</b> · same predictions, one fixed rule</span></div>
     <div class="arm"><i style="background:var(--s-train)"></i><span><b>Train + Jev</b> · a head trained on new labels</span></div>
   </div>
 </div>

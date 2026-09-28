@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site/guide.css" />
 <style>
 :root {
   --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #efeee8;
@@ -54,18 +55,20 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
 @media (min-width: 700px) { .wrap { padding: 0 1.5rem; } }
 
 /* top bar */
-.topbar { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(12px);
+.topbar { position: sticky; top: 0; z-index: 30; height: 56px; backdrop-filter: blur(12px);
   background: color-mix(in srgb, var(--bg) 88%, transparent); border-bottom: 1px solid var(--line); }
 .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: .75rem 16px; max-width: var(--max); margin: 0 auto; }
+  height: 100%; padding: 0 16px; max-width: var(--max); margin: 0 auto; }
 .brand { font-weight: 700; letter-spacing: -.02em; text-decoration: none; color: var(--ink); }
 .brand span { color: var(--accent); }
-.nav { display: flex; gap: .4rem 1rem; align-items: center; flex-wrap: wrap; font-size: .86rem; }
+.nav { display: flex; gap: .4rem 1rem; align-items: center; font-size: .86rem; white-space: nowrap; }
 .nav a { color: var(--ink-muted); text-decoration: none; }
 .nav a:hover { color: var(--ink); }
 .theme-btn { border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink);
   border-radius: 999px; padding: .3rem .7rem; font: inherit; font-size: .78rem; cursor: pointer; }
-@media (max-width: 640px) { .nav a.opt { display: none; } }
+@media (max-width: 1000px) { .nav a.opt { display: none; } }
+@media (max-width: 760px) { .nav a.sec-link { display: none; } }
+main { container-type: inline-size; container-name: main; }
 
 /* hero */
 .hero { padding: 2.5rem 0 1.5rem; }
@@ -77,7 +80,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 
 /* story strip */
 .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin: 1.6rem 0 0; }
-@media (max-width: 760px) { .strip { grid-template-columns: 1fr 1fr; } }
+@container main (max-width: 760px) { .strip { grid-template-columns: 1fr 1fr; } }
 .beat { position: relative; background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
   padding: .85rem .95rem; box-shadow: var(--card-shadow); text-decoration: none; color: var(--ink); }
 .beat .n { font-family: var(--mono); font-size: .72rem; color: var(--ink-faint); }
@@ -90,7 +93,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 
 /* headline tiles */
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin: 1.25rem 0 0; }
-@media (max-width: 640px) { .tiles { grid-template-columns: 1fr; } }
+@container main (max-width: 640px) { .tiles { grid-template-columns: 1fr; } }
 .tile { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--card-shadow); }
 .tile .k { font-size: .78rem; color: var(--ink-muted); font-weight: 600; }
 .tile .v { font-size: 1.9rem; font-weight: 700; letter-spacing: -.02em; margin: .15rem 0 .1rem; font-variant-numeric: tabular-nums; }
@@ -116,10 +119,13 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .stepbtn[aria-selected="true"] { color: var(--ink); border-color: var(--ink); }
 .stepbtn[aria-selected="true"] .dot { background: var(--ink); color: var(--bg); }
 .stepbtn.done .dot { background: var(--accent-soft); color: var(--accent); }
-@media (max-width: 560px) {
+.stepbtn .st b { display: block; font-size: .88rem; }
+.stepbtn .st em { display: block; font-style: normal; font-weight: 500; font-size: .72rem; color: var(--ink-faint); }
+@container main (max-width: 560px) {
   .stepper-nav { display: grid; grid-template-columns: repeat(4, 1fr); overflow: visible; }
   .stepbtn { flex-direction: column; justify-content: center; gap: .3rem; padding: .55rem .2rem; font-size: .74rem; text-align: center; }
   .stepbtn .dot { width: 1.4rem; height: 1.4rem; }
+  .stepbtn .st b { font-size: .74rem; } .stepbtn .st em { font-size: .64rem; line-height: 1.25; }
 }
 .progress { height: 3px; background: var(--bg-soft); border-radius: 2px; margin: 0 0 1rem; overflow: hidden; }
 .progress i { display: block; height: 100%; background: var(--accent); width: 25%; transition: width .35s ease; }
@@ -127,7 +133,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .panel.on { display: block; animation: fade .3s ease; }
 @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .panel.on { animation: none; } .progress i { transition: none; } }
-@media (min-width: 700px) { .panel { padding: 1.6rem 1.75rem; } }
+@container main (min-width: 700px) { .panel { padding: 1.6rem 1.75rem; } }
 .panel h3 { margin: 0 0 .25rem; font-size: 1.2rem; letter-spacing: -.01em; }
 .panel .q { color: var(--ink-muted); margin: 0 0 1.1rem; }
 .panel-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.4rem;
@@ -137,10 +143,10 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .btn:disabled { opacity: .35; cursor: default; }
 .btn { white-space: nowrap; }
-@media (max-width: 560px) { .panel-foot .kbd { display: none; } .panel-foot .btn { padding: .45rem .8rem; font-size: .8rem; } }
+@container main (max-width: 560px) { .panel-foot .kbd { display: none; } .panel-foot .btn { padding: .45rem .8rem; font-size: .8rem; } }
 .kbd { font-size: .75rem; color: var(--ink-faint); }
 .two { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.25rem; align-items: start; }
-@media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
+@container main (max-width: 820px) { .two { grid-template-columns: 1fr; } }
 .box { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 12px; padding: .95rem 1rem; }
 .box h4 { margin: 0 0 .55rem; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-muted); }
 .say { border-left: 3px solid var(--ink-faint); padding: .6rem .9rem; margin: 1rem 0 0; font-size: .95rem; background: var(--bg-soft); border-radius: 0 10px 10px 0; }
@@ -155,15 +161,16 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .pipe .a { color: var(--ink-faint); }
 
 /* bars */
-.hbars { display: grid; gap: .45rem; }
-.hbar { display: grid; grid-template-columns: 9.5rem 1fr 3.6rem; align-items: center; gap: .6rem; font-size: .82rem; }
-@media (max-width: 520px) {
+.hbars { display: grid; gap: .45rem; container-type: inline-size; }
+.hbar { display: grid; grid-template-columns: var(--lab, 10rem) 1fr 3.6rem; align-items: center; gap: .6rem; font-size: .82rem; }
+.hbars.wide, #armbars { --lab: 15rem; }
+.hbar .lab { color: var(--ink-muted); line-height: 1.25; }
+@container (max-width: 460px) {
   .hbar { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "lab lab" "trk val"; row-gap: 3px; font-size: .78rem; }
-  .hbar .lab { grid-area: lab; white-space: normal; overflow: visible; }
+  .hbar .lab { grid-area: lab; }
   .hbar .trk { grid-area: trk; }
   .hbar .val { grid-area: val; min-width: 3.2rem; }
 }
-.hbar .lab { color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hbar .trk { height: 14px; position: relative; }
 .hbar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--bar-neutral); transition: width .45s ease; }
 .hbar .val { font-family: var(--mono); font-size: .78rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
@@ -196,7 +203,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 
 /* arm cards */
 .armgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
-@media (max-width: 820px) { .armgrid { grid-template-columns: 1fr; } }
+@container main (max-width: 820px) { .armgrid { grid-template-columns: 1fr; } }
 .arm { text-align: left; font: inherit; color: var(--ink); background: var(--bg-elev); border: 1px solid var(--line);
   border-radius: 12px; padding: .9rem 1rem; cursor: pointer; }
 .arm[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink) inset; }
@@ -211,7 +218,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 
 /* controls */
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 14px; padding: 2px; background: var(--bg-elev); flex-wrap: wrap; }
-@media (max-width: 560px) { .controls .seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); width: 100%; } .seg button { text-align: center; } }
+@container main (max-width: 560px) { .controls .seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); width: 100%; } .seg button { text-align: center; } }
 .seg button { border: 0; background: transparent; color: var(--ink-muted); font: inherit; font-size: .8rem; font-weight: 600;
   padding: .32rem .75rem; border-radius: 11px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
@@ -224,7 +231,7 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 
 /* waffle */
 .waffle-wrap { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem; align-items: center; }
-@media (max-width: 560px) { .waffle-wrap { grid-template-columns: 1fr; } }
+@container main (max-width: 560px) { .waffle-wrap { grid-template-columns: 1fr; } }
 .waffle { display: grid; grid-template-columns: repeat(10, 16px); gap: 3px; }
 .waffle i { width: 16px; height: 16px; border-radius: 3px; background: var(--bg-soft); border: 1px solid var(--line); transition: background .3s ease, border-color .3s ease; }
 .waffle i.fa { background: var(--bad); border-color: var(--bad); }
@@ -245,7 +252,7 @@ details.tv summary { cursor: pointer; font-size: .82rem; color: var(--ink-muted)
 
 /* versus */
 .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 820px) { .vs { grid-template-columns: 1fr; } }
+@container main (max-width: 820px) { .vs { grid-template-columns: 1fr; } }
 .vs .col { padding: 1.1rem 1.2rem; }
 .vs .col h3 { margin: 0 0 .2rem; font-size: 1.05rem; }
 .vs .col .sm { font-size: .84rem; color: var(--ink-muted); margin: 0 0 .9rem; }
@@ -262,7 +269,7 @@ details.tv summary { cursor: pointer; font-size: .82rem; color: var(--ink-muted)
 
 /* boundary */
 .bound { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 700px) { .bound { grid-template-columns: 1fr; } }
+@container main (max-width: 700px) { .bound { grid-template-columns: 1fr; } }
 .bound ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .45rem; }
 .bound li { font-size: .88rem; padding-left: 1.5rem; position: relative; }
 .bound li::before { position: absolute; left: 0; top: 0; font-weight: 700; font-family: var(--mono); }
@@ -299,42 +306,43 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <div class="topbar-inner">
     <a class="brand" href="./">TEDDY <span>×</span> ANM</a>
     <nav class="nav">
-      <a href="#loop">Loop</a>
+      <a href="#loop" class="sec-link">Loop</a>
       <a href="#verify-all" class="opt">Scoreboard</a>
-      <a href="#unique">Why ANM</a>
-      <a href="#boundary">Boundary</a>
+      <a href="#unique" class="sec-link">Why ANM</a>
+      <a href="#boundary" class="sec-link">Boundary</a>
       <a href="#posters" class="opt">Posters</a>
       <a href="./">← Home</a>
+      <button class="g-open" type="button" aria-controls="guide" aria-expanded="false"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span class="glabel">Guide</span></button>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle theme">Theme</button>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="hero">
+  <section class="hero" id="overview">
     <div class="wrap">
-      <span class="eyebrow">Mode B · must-separate pairs · site4/test</span>
+      <span class="eyebrow"><span>Mode B · must-separate pairs · held-out site4</span></span>
       <h1>TEDDY sees two cells as the same. They aren’t. Here’s how ANM catches it.</h1>
       <p class="lede">
-        Frozen TEDDY <code>z_512</code> puts myeloid and T cells at cosine <strong>0.982</strong>. A readout built on it
-        <strong>falsely agrees 85%</strong> of the time. ANM’s decision loop <strong>vetoes</strong> <code>z_512</code> as sufficient,
-        <strong>complements</strong> it with typed true-ADT evidence and an editable observer (O1), and <strong>verifies</strong> on the same pairs.
-        No TEDDY retrain.
+        TEDDY’s <span class="term" data-term="z512">embedding</span> puts some myeloid and T cells at cosine <strong>0.982</strong>, so a readout built on it
+        <strong>falsely agrees 85%</strong> of the time. ANM’s decision loop <strong><span class="term" data-term="veto">vetoes</span></strong> the embedding for these pairs,
+        <strong><span class="term" data-term="complement">adds</span></strong> the missing evidence (measured protein as <span class="term" data-term="evidence">typed evidence</span>) with the <span class="term" data-term="o1">strict rule</span>,
+        and <strong><span class="term" data-term="verify">checks</span></strong> the same pairs again. TEDDY is not retrained.
       </p>
 
       <div class="strip" role="list">
-        <a class="beat b1" href="#loop" data-go="0" role="listitem"><div class="n">01</div><div class="t">Expect</div><div class="d">Near <code>z</code> ⇒ same biology</div></a>
-        <a class="beat b2" href="#loop" data-go="1" role="listitem"><div class="n">02</div><div class="t">Veto</div><div class="d"><code>z_512</code> alone is insufficient</div></a>
-        <a class="beat b3" href="#loop" data-go="2" role="listitem"><div class="n">03</div><div class="t">Complement</div><div class="d">Typed true ADT + O1</div></a>
-        <a class="beat b4" href="#loop" data-go="3" role="listitem"><div class="n">04</div><div class="t">Verify</div><div class="d">Same pairs, new metrics</div></a>
+        <a class="beat b1" href="#loop" data-go="0" role="listitem"><div class="n">01</div><div class="t">Expect</div><div class="d">Look-alike cells get the same call</div></a>
+        <a class="beat b2" href="#loop" data-go="1" role="listitem"><div class="n">02</div><div class="t">Veto</div><div class="d">TEDDY’s embedding can’t separate them</div></a>
+        <a class="beat b3" href="#loop" data-go="2" role="listitem"><div class="n">03</div><div class="t">Complement</div><div class="d">Add measured protein as evidence</div></a>
+        <a class="beat b4" href="#loop" data-go="3" role="listitem"><div class="n">04</div><div class="t">Verify</div><div class="d">Score the same pairs again</div></a>
       </div>
 
       <div class="tiles">
-        <div class="tile"><div class="k">False agreement ↓</div><div class="v"><span class="from">0.85</span><span class="arrow">→</span><span class="to">0.40</span></div><div class="h">Both cells decided, same call, yet true ADT differs</div></div>
-        <div class="tile"><div class="k">Soft separation ↑</div><div class="v"><span class="from">0.17</span><span class="arrow">→</span><span class="to">0.63</span></div><div class="h">Pair split apart (different call or abstain)</div></div>
-        <div class="tile"><div class="k">Q among decided ↑</div><div class="v"><span class="from">0.74</span><span class="arrow">→</span><span class="to">0.99</span></div><div class="h">Decision quality where the observer commits</div></div>
+        <div class="tile"><div class="k"><span class="term" data-term="falseagree">False agreement</span> ↓</div><div class="v"><span class="from">0.85</span><span class="arrow">→</span><span class="to">0.40</span></div><div class="h">Both cells called, same call, yet their measured proteins differ</div></div>
+        <div class="tile"><div class="k"><span class="term" data-term="softsep">Soft separation</span> ↑</div><div class="v"><span class="from">0.17</span><span class="arrow">→</span><span class="to">0.63</span></div><div class="h">Pair told apart: different calls, or one declined</div></div>
+        <div class="tile"><div class="k"><span class="term" data-term="qdec">Accuracy of calls made</span> ↑</div><div class="v"><span class="from">0.74</span><span class="arrow">→</span><span class="to">0.99</span></div><div class="h">Correct calls among the calls made</div></div>
       </div>
-      <p class="srcnote">Myeloid↔T must-pairs, n = 1,490 · baseline = TEDDY pred + O0 → winner = true-ADT typed + O1 · source: <a href="reports/reverse_loop_small_stats.json">reverse_loop_small_stats.json</a></p>
+      <p class="srcnote">Myeloid↔T must-separate pairs, 1,490 · before = TEDDY alone, soft rule → after = measured protein as typed evidence, strict rule · source: <a href="reports/reverse_loop_small_stats.json">reverse_loop_small_stats.json</a></p>
     </div>
   </section>
 
@@ -342,120 +350,120 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="section" id="loop">
     <div class="wrap">
       <h2>The loop, one step at a time</h2>
-      <p class="sub">Click a step or use ← / → keys. Every number below is copied from the run’s stats files.</p>
+      <p class="sub">Click a step or use ← / → keys. Every number below is copied from the run’s stats files. Dotted words explain themselves on hover or tap.</p>
 
       <div class="stepper-nav" role="tablist" aria-label="Loop steps">
-        <button class="stepbtn" role="tab" aria-selected="true" aria-controls="p0" id="t0"><span class="dot">1</span>Expect</button>
-        <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p1" id="t1"><span class="dot">2</span>Veto</button>
-        <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p2" id="t2"><span class="dot">3</span>Complement</button>
-        <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p3" id="t3"><span class="dot">4</span>Verify</button>
+        <button class="stepbtn" role="tab" aria-selected="true" aria-controls="p0" id="t0"><span class="dot">1</span><span class="st"><b>Expect</b><em>what TEDDY assumes</em></span></button>
+        <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p1" id="t1"><span class="dot">2</span><span class="st"><b>Veto</b><em>find the gap</em></span></button>
+        <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p2" id="t2"><span class="dot">3</span><span class="st"><b>Complement</b><em>add evidence</em></span></button>
+        <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p3" id="t3"><span class="dot">4</span><span class="st"><b>Verify</b><em>check again</em></span></button>
       </div>
       <div class="progress"><i id="prog"></i></div>
 
       <div class="card">
         <!-- STEP 1 -->
         <div class="panel on" role="tabpanel" id="p0" aria-labelledby="t0">
-          <h3>1 · What TEDDY alone is expected to give you</h3>
-          <p class="q">A frozen RNA→protein map. Downstream readout treats cells with nearby <code>z</code> as the same biology.</p>
+          <h3>1 · What TEDDY alone assumes</h3>
+          <p class="q">A frozen RNA → protein map. A readout on top treats cells with nearby embeddings as the same biology.</p>
           <div class="pipe" aria-label="Pipeline">
             <span class="s">RNA</span><span class="a">→</span>
             <span class="s">frozen TEDDY-G</span><span class="a">→</span>
-            <span class="s hl">z_512</span><span class="a">→</span>
-            <span class="s">ADT preds</span><span class="a">→</span>
-            <span class="s">panel rules (O0)</span><span class="a">→</span>
+            <span class="s hl">embedding (z_512)</span><span class="a">→</span>
+            <span class="s">predicted proteins</span><span class="a">→</span>
+            <span class="s">soft rule</span><span class="a">→</span>
             <span class="s">call</span>
           </div>
           <div class="two" style="margin-top:1.2rem">
             <div class="box">
-              <h4>What <code>z_512</code> is</h4>
-              <div style="font-size:.88rem">Mean-pool of <b>last-layer</b> tokens at context <b>1024</b>, L2-normalized, full 512-D
-                (<code>z_rna_512.npy</code>, site4/test n = 16,750). Not pretrain 2048, not the disease token, not compact <code>z_keep=32</code>.</div>
+              <h4>What the embedding is</h4>
+              <div style="font-size:.88rem">TEDDY’s 512-number summary of a cell: the mean of its <b>last-layer</b> tokens at context <b>1024</b>, L2-normalized
+                (<code>z_rna_512.npy</code>, 16,750 held-out cells). Not the pretraining context 2048, not a disease token, not the compact 32-number export.</div>
             </div>
             <div class="box">
               <h4>The implicit promise</h4>
-              <div style="font-size:.88rem">If cos(<code>z</code><sub>i</sub>, <code>z</code><sub>j</sub>) ≥ 0.98, the readout gives both cells the same call.
-                Phase-1 full-ADT Pearson reference ≈ <b>0.61</b> — this page does not try to beat it.</div>
+              <div style="font-size:.88rem">If two cells’ embeddings have cosine ≥ 0.98, the readout gives both the same call.
+                TEDDY’s phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.61</span> is a reference; this page does not try to beat it.</div>
             </div>
           </div>
-          <div class="say">The question: <b>is <code>z_512</code> sufficient for the readout?</b> The cheapest probe that tests it — the must-separate autopsy — was the strongest of four cheap probes (primary metric <b>0.581</b>, rank 1 in <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES_RANKING</a>).</div>
+          <div class="say">The question: <b>is TEDDY’s embedding enough for the readout?</b> The cheapest test of it, the must-separate check, was the strongest of four cheap probes (score 0.581, rank 1 in <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES_RANKING</a>).</div>
           <div class="panel-foot"><button class="btn" data-prev disabled>← Back</button><span class="kbd">Step 1 of 4</span><button class="btn primary" data-next>Next: find the gap →</button></div>
         </div>
 
         <!-- STEP 2 -->
         <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
-          <h3>2 · Veto — near-identical <code>z</code>, different true biology</h3>
-          <p class="q">Take kNN pairs at cos ≥ 0.98 and check them against held-out true ADT. Many disagree on lineage.</p>
+          <h3>2 · Veto: cells TEDDY sees as the same, that aren’t</h3>
+          <p class="q">Take each cell’s nearest neighbours with cosine ≥ 0.98 and compare their measured proteins. Many pairs disagree on lineage: these are <span class="term" data-term="mustpair">must-separate pairs</span>.</p>
           <div class="two">
             <div>
               <div class="pair" aria-label="Example must-separate pair">
-                <div class="cell m"><div class="ct">Myeloid</div><div class="cs">by true ADT</div></div>
-                <div class="eq">cos ≈ 0.982<br />in z_512</div>
-                <div class="cell t"><div class="ct">T cell</div><div class="cs">by true ADT</div></div>
+                <div class="cell m"><div class="ct">Myeloid</div><div class="cs">by measured protein</div></div>
+                <div class="eq">cosine ≈ 0.982<br />in TEDDY’s embedding</div>
+                <div class="cell t"><div class="ct">T cell</div><div class="cs">by measured protein</div></div>
               </div>
               <div class="box" style="margin-top:1rem">
-                <h4>Myeloid↔T pair cosine (n = 1,490)</h4>
-                <div class="cosline" id="cosline" aria-label="Cosine distribution: min 0.9800, q25 0.9810, median 0.9822, q75 0.9838, max 0.9905"></div>
-                <div style="font-size:.78rem;color:var(--ink-muted)">Box = q25–q75, whiskers = min–max, dashed = must-pair threshold 0.98. All sit in a sliver near 1.</div>
+                <h4>Myeloid↔T pair cosine (1,490 pairs)</h4>
+                <div class="cosline" id="cosline" aria-label="Cosine distribution: min 0.9800, lower quartile 0.9810, median 0.9822, upper quartile 0.9838, max 0.9905"></div>
+                <div style="font-size:.78rem;color:var(--ink-muted)">Box = middle half of pairs, whiskers = min–max, dashed = the 0.98 cut. Every pair sits in a sliver near 1.</div>
               </div>
               <div class="box" style="margin-top:.8rem">
-                <h4>How big is the gap (REVERSE_STEP1, cos ≥ 0.98)</h4>
+                <h4>How big is the gap (cosine ≥ 0.98)</h4>
                 <div class="hbars" id="step1bars"></div>
               </div>
             </div>
             <div>
               <div class="box">
-                <h4>Of the 5,000 written must-pairs, how many differ…</h4>
+                <h4>Of the 5,000 pairs used, how many differ in…</h4>
                 <div class="hbars" id="flagbars"></div>
               </div>
               <div class="box" style="margin-top:.8rem">
-                <h4>Myeloid↔T: true ADT |Δ| on focus proteins</h4>
+                <h4>Myeloid↔T: measured protein difference on focus markers</h4>
                 <div class="controls" style="margin:0 0 .6rem"><div class="seg" id="deltaSeg">
-                  <button aria-pressed="true" data-k="mean">mean</button><button aria-pressed="false" data-k="median">median</button><button aria-pressed="false" data-k="q75">q75</button>
+                  <button aria-pressed="true" data-k="mean">mean</button><button aria-pressed="false" data-k="median">median</button><button aria-pressed="false" data-k="q75">75th percentile</button>
                 </div></div>
                 <div class="hbars" id="deltabars"></div>
               </div>
               <div class="box" style="margin-top:.8rem">
-                <h4>TEDDY-alone readout on these pairs (pred + O0)</h4>
+                <h4>TEDDY-alone readout on these pairs (soft rule)</h4>
                 <div class="hbars" id="basebars"></div>
               </div>
             </div>
           </div>
-          <div class="say bad"><b>Veto.</b> <code>z_512</code> is <b>insufficient</b> to separate these must-pairs: near-identical <code>z</code> carries disagreeing true ADT lineage / protein labels. Downstream readout must <b>abstain</b>, <b>rewrite the observer</b>, or <b>admit a complement evidence channel</b>.</div>
-          <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 2 of 4</span><button class="btn primary" data-next>Next: try complements →</button></div>
+          <div class="say bad"><b>Veto.</b> TEDDY’s embedding is <b>not enough</b> to separate these pairs: near-identical embeddings carry disagreeing measured lineages. A readout must <b>decline</b>, <b>ask a better question</b>, or <b>add a missing evidence channel</b>.</div>
+          <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 2 of 4</span><button class="btn primary" data-next>Next: try fixes →</button></div>
         </div>
 
         <!-- STEP 3 -->
         <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2">
-          <h3>3 · Complement — three cheap arms, no TEDDY retrain</h3>
-          <p class="q">Pick an arm to see what changes. Each is a different answer to “what should fill the gap?”</p>
+          <h3>3 · Complement: three cheap fixes, no TEDDY retrain</h3>
+          <p class="q">Pick a fix to see what changes. Each is a different answer to “what should fill the gap?”</p>
           <div class="armgrid" id="armgrid">
-            <button class="arm" aria-pressed="false" data-arm="a"><span class="tag obs">(a) observer only</span><div class="an">Rewrite the observer</div><div class="ad">O1 / O2 declarations. Same evidence, a different question.</div></button>
-            <button class="arm" aria-pressed="true" data-arm="b"><span class="tag typ">(b) typed evidence</span><div class="an">Admit true ADT as typed events</div><div class="ad">+ O0 or O1. New evidence channel in ANM.</div></button>
-            <button class="arm" aria-pressed="false" data-arm="c"><span class="tag geo">(c) feature swap</span><div class="an">Concatenate into z⁺</div><div class="ad">ADT features glued onto geometry.</div></button>
+            <button class="arm" aria-pressed="false" data-arm="a"><span class="tag obs">(a) question only</span><div class="an">Rewrite the question</div><div class="ad">Strict or key-marker rule. Same evidence.</div></button>
+            <button class="arm" aria-pressed="true" data-arm="b"><span class="tag typ">(b) typed evidence</span><div class="an">Add measured protein as evidence</div><div class="ad">Read by the soft or strict rule: a new evidence channel in ANM.</div></button>
+            <button class="arm" aria-pressed="false" data-arm="c"><span class="tag geo">(c) feature swap</span><div class="an">Glue proteins onto the embedding</div><div class="ad">z⁺: protein features concatenated onto TEDDY’s embedding.</div></button>
           </div>
           <div class="armdetail box" id="armdetail" aria-live="polite"></div>
-          <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 3 of 4</span><button class="btn primary" data-next>Next: verify →</button></div>
+          <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 3 of 4</span><button class="btn primary" data-next>Next: check again →</button></div>
         </div>
 
         <!-- STEP 4 -->
         <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3">
-          <h3>4 · Verify — same 1,490 myeloid↔T pairs, before vs after</h3>
+          <h3>4 · Verify: the same 1,490 pairs, before vs after</h3>
           <p class="q">Of every 100 pairs where both cells get a call, how many does the readout wrongly give the same call?</p>
           <div class="controls">
             <div class="seg" id="waffleSeg">
-              <button aria-pressed="false" data-w="before">Before · TEDDY pred + O0</button>
-              <button aria-pressed="true" data-w="after">After · true ADT + O1</button>
+              <button aria-pressed="false" data-w="before">Before · TEDDY alone</button>
+              <button aria-pressed="true" data-w="after">After · + measured protein, strict rule</button>
             </div>
           </div>
           <div class="waffle-wrap">
             <div class="waffle" id="waffle" aria-hidden="true"></div>
             <div>
-              <div class="wstat" id="wstat">40<small> / 100 false-agree</small></div>
+              <div class="wstat" id="wstat">40<small> / 100 falsely agree</small></div>
               <p style="font-size:.88rem;color:var(--ink-muted);margin:.6rem 0 0" id="wtext"></p>
-              <div class="legend"><span><i style="background:var(--bad)"></i>same call, true ADT disagrees</span><span><i style="background:var(--bar-win)"></i>different calls (separated)</span></div>
+              <div class="legend"><span><i style="background:var(--bad)"></i>same call, but measured proteins disagree</span><span><i style="background:var(--bar-win)"></i>different calls (told apart)</span></div>
             </div>
           </div>
-          <div class="say good"><b>Verified.</b> Winner = <code>complement_b_true_ADT_O1</code> (score = soft_sep + Q − false_agree ≈ <b>2.841</b>). Same story on all 5,000 written pairs: false_agree 0.893 → 0.586, Q 0.808 → 0.990, soft_sep 0.167 → 0.469. <a href="#verify-all">Full scoreboard ↓</a></div>
+          <div class="say good"><b>Verified.</b> Winner: measured protein as typed evidence with the strict rule (score = soft separation + accuracy − false agreement ≈ <b>2.841</b>). Same direction on all 5,000 pairs: false agreement 0.893 → 0.586, accuracy 0.808 → 0.990, soft separation 0.167 → 0.469. <a href="#verify-all">Full scoreboard ↓</a></div>
           <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 4 of 4</span><a class="btn primary" href="#verify-all" style="text-decoration:none">Scoreboard ↓</a></div>
         </div>
       </div>
@@ -465,27 +473,27 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <!-- ============ SCOREBOARD ============ -->
   <section class="section" id="verify-all">
     <div class="wrap">
-      <h2>Scoreboard — every arm, every metric</h2>
-      <p class="sub">Switch metric and pair set. Baseline in orange, winner in teal. Hatched = <code>z⁺</code> geometry proxy (cosine only — not a decision metric).</p>
+      <h2>Scoreboard: every fix, every metric</h2>
+      <p class="sub">Switch metric and pair set. TEDDY alone in orange, the winning fix in teal. Hatched = the feature swap z⁺, measured on distances only (not a decision).</p>
       <div class="card" style="padding:1.2rem 1.25rem">
         <div class="controls">
           <span class="cl">Metric</span>
           <div class="seg" id="metricSeg">
-            <button aria-pressed="true" data-m="fa">false_agree ↓</button>
-            <button aria-pressed="false" data-m="ss">soft_sep ↑</button>
-            <button aria-pressed="false" data-m="q">Q ↑</button>
-            <button aria-pressed="false" data-m="cs">correct_sep ↑</button>
-            <button aria-pressed="false" data-m="ab">abstain_pair</button>
+            <button aria-pressed="true" data-m="fa">False agreement ↓</button>
+            <button aria-pressed="false" data-m="ss">Soft separation ↑</button>
+            <button aria-pressed="false" data-m="q">Accuracy ↑</button>
+            <button aria-pressed="false" data-m="cs">Correct separation ↑</button>
+            <button aria-pressed="false" data-m="ab">Pairs with a “no call”</button>
           </div>
           <span class="cl">Pairs</span>
           <div class="seg" id="scopeSeg">
             <button aria-pressed="true" data-s="mt">myeloid↔T · 1,490</button>
-            <button aria-pressed="false" data-s="all">all written · 5,000</button>
+            <button aria-pressed="false" data-s="all">all 5,000</button>
           </div>
         </div>
         <p class="metric-def" id="metricDef"></p>
-        <div class="hbars" id="scorebars"></div>
-        <div class="legend"><span><i style="background:var(--bar-base)"></i>baseline (TEDDY pred + O0)</span><span><i style="background:var(--bar-win)"></i>winner (true ADT + O1)</span><span><i style="background:var(--bar-neutral)"></i>other complements</span><span><i style="background:repeating-linear-gradient(135deg,var(--bar-neutral) 0 3px,transparent 3px 5px);border:1px solid var(--bar-neutral)"></i>z⁺ geometry proxy</span></div>
+        <div class="hbars wide" id="scorebars"></div>
+        <div class="legend"><span><i style="background:var(--bar-base)"></i>TEDDY alone · soft rule</span><span><i style="background:var(--bar-win)"></i>winner · + measured protein, strict rule</span><span><i style="background:var(--bar-neutral)"></i>other fixes</span><span><i style="background:repeating-linear-gradient(135deg,var(--bar-neutral) 0 3px,transparent 3px 5px);border:1px solid var(--bar-neutral)"></i>feature swap z⁺ (distances only)</span></div>
         <p class="srcnote" id="honest"></p>
         <details class="tv">
           <summary>Table view</summary>
@@ -498,30 +506,30 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <!-- ============ UNIQUE ============ -->
   <section class="section" id="unique">
     <div class="wrap">
-      <h2>What ANM uniquely adds — vs just swapping features</h2>
-      <p class="sub">If true ADT is the fix, why not concatenate it into the embedding? Because geometry that separates a fixed list is not a readout that owns its decisions.</p>
+      <h2>What ANM adds, compared with just swapping features</h2>
+      <p class="sub">If measured protein is the fix, why not glue it onto the embedding? Because distances that separate one fixed list are not a readout that owns its decisions.</p>
       <div class="vs">
         <div class="card col geo">
-          <h3>Feature swap: <code>z⁺</code> = z_512 ⊕ ADT features</h3>
-          <p class="sm">On the <b>fixed</b> myeloid↔T list, fraction of pairs still at cos ≥ 0.98:</p>
+          <h3>Feature swap: z⁺ = embedding ⊕ protein features</h3>
+          <p class="sm">On the <b>fixed</b> myeloid↔T list, share of pairs still at cosine ≥ 0.98:</p>
           <div class="hbars" id="zplusbars"></div>
-          <p class="sm" style="margin-top:.9rem">True-ADT <code>z⁺</code> separates this fixed list; predicted-ADT <code>z⁺</code> does not. But on the prior <b>global</b> probe (held lineage = myeloid), relative must-reduction vs <code>z_512</code>:</p>
+          <p class="sm" style="margin-top:.9rem">With measured proteins, z⁺ separates this fixed list; with predicted proteins it does not. But across all cells (the earlier global test, myeloid held out), the change in the must-separate rate compared with TEDDY’s embedding is:</p>
           <div style="display:flex;gap:1.2rem;flex-wrap:wrap;align-items:baseline">
-            <div><div class="bignum">−0.273</div><div style="font-size:.76rem;color:var(--ink-muted)">z⁺ true ADT</div></div>
-            <div><div class="bignum" style="font-size:1.4rem">−0.274</div><div style="font-size:.76rem;color:var(--ink-muted)">z⁺ pred ADT</div></div>
-            <div><div class="bignum" style="font-size:1.4rem">−0.251</div><div style="font-size:.76rem;color:var(--ink-muted)">pred all-9 leak-check</div></div>
+            <div><div class="bignum">−0.273</div><div style="font-size:.76rem;color:var(--ink-muted)">z⁺ · measured protein</div></div>
+            <div><div class="bignum" style="font-size:1.4rem">−0.274</div><div style="font-size:.76rem;color:var(--ink-muted)">z⁺ · predicted protein</div></div>
+            <div><div class="bignum" style="font-size:1.4rem">−0.251</div><div style="font-size:.76rem;color:var(--ink-muted)">predicted, all 9 proteins (leak check)</div></div>
           </div>
-          <div class="say warn" style="font-size:.86rem">Negative ⇒ <code>z⁺</code> alone <b>worsens</b> the must-rate among its own new near-neighbourhoods. It moves the problem, it doesn’t own it.</div>
+          <div class="say warn" style="font-size:.86rem">Negative means z⁺ alone makes the must-separate rate <b>worse</b> among its own new neighbours. It moves the problem instead of solving it.</div>
         </div>
         <div class="card col anm">
           <h3>ANM decision loop</h3>
-          <p class="sm">Four things a concatenated vector can’t give you:</p>
+          <p class="sm">Four things a glued-on vector can’t give you:</p>
           <div class="cap4">
             <div class="row"><div class="hd">ANM</div><div class="hd">Feature-swap substitute</div></div>
-            <div class="row"><div class="a"><b>Typed evidence</b><br />δu events into ANM <code>finite_field</code>, each with a declared source</div><div class="g">Floats concatenated into <code>z⁺</code> — no decision semantics</div></div>
-            <div class="row"><div class="a"><b>Editable observer</b><br />O0 → O1 declaration (threshold 0.12→0.28, key-marker boost ×2)</div><div class="g">Retrain / retune readout weights</div></div>
-            <div class="row"><div class="a"><b>Abstain</b><br />Declared silence when evidence is insufficient</div><div class="g">Softmax still answers</div></div>
-            <div class="row"><div class="a"><b>Verify</b><br />Same must-pairs → false_agree / Q / soft_sep</div><div class="g">Cosine drop ≠ decision ownership</div></div>
+            <div class="row"><div class="a"><b>Typed evidence</b><br />each input has a declared source and goes to <span class="term" data-term="finitefield">ANM’s decision engine</span></div><div class="g">numbers concatenated into z⁺, with no decision meaning</div></div>
+            <div class="row"><div class="a"><b>An editable question</b><br />soft → strict rule is a written change (threshold 0.12 → 0.28, key markers ×2)</div><div class="g">retrain or re-tune readout weights</div></div>
+            <div class="row"><div class="a"><b>An honest “no call”</b><br />it declines when the evidence is insufficient</div><div class="g">a softmax always answers</div></div>
+            <div class="row"><div class="a"><b>Verify</b><br />the same must-separate pairs → false agreement, accuracy, soft separation</div><div class="g">a cosine drop is not a decision</div></div>
           </div>
         </div>
       </div>
@@ -532,25 +540,25 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="section" id="boundary">
     <div class="wrap">
       <h2>Claim boundary</h2>
-      <p class="sub">“Reverse loop” here is a <b>decision</b> loop. It is not a representation-response loop.</p>
+      <p class="sub">“Reverse loop” here is a <b>decision</b> loop: we change what the readout sees and asks, not TEDDY’s representation.</p>
       <div class="bound">
-        <div class="card col in"><h3>Claimed (Mode B)</h3><ul>
+        <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>Veto → complement → verify on must-separate pairs</li>
-          <li><code>z_512</code> alone is insufficient for readout on these pairs</li>
-          <li>True ADT as typed <b>complement</b> evidence — explicit probe only</li>
-          <li>Editable observer declaration (O1) without TEDDY retrain</li>
-          <li>Production path keeps holdout ADT <b>verifier-only</b></li>
+          <li>TEDDY’s embedding alone is not enough for the readout on these pairs</li>
+          <li>Measured protein as typed <b>complement</b> evidence, in this explicit test only</li>
+          <li>A rewritten question (the strict rule) without retraining TEDDY</li>
+          <li>In normal use measured protein stays the <b>answer key</b></li>
         </ul></div>
         <div class="card col out"><h3>Not claimed</h3><ul>
-          <li>Mode A: residual stream as field, layer Jacobian, in-silico gene perturbs</li>
-          <li>Reverse closed loop as representation response to perturbs</li>
-          <li>Pearson &gt; phase-1 full-ADT ~0.61</li>
+          <li>Studying TEDDY’s internals: residual stream, layer Jacobians, in-silico gene perturbations (Mode A)</li>
+          <li>The loop as TEDDY’s representation responding to perturbations</li>
+          <li>Pearson above phase-1 ≈ 0.61</li>
           <li>Fusion audit · clinical superiority</li>
-          <li>TEDDY <code>best.pt</code> retrain</li>
+          <li>Retraining TEDDY (<code>best.pt</code>)</li>
         </ul></div>
       </div>
       <div class="proof">
-        On reverse_step1 must-separate pairs (5,000 written; 1,490 myeloid↔T with median cos 0.982), TEDDY <code>z_512</code> alone is insufficient for readout (baseline false_agree 0.85, soft_sep 0.17, Q 0.74). The Mode B ANM decision loop vetoes sufficiency, admits true-ADT typed evidence + editable O1 observer as complement, and verifies false_agree → 0.40, soft_sep → 0.63, Q → 0.99 — without TEDDY retrain. Swapping features into <code>z⁺</code> is not enough (global relative_must_reduction −0.27). Not Mode A. Not Pearson &gt; ~0.61. Not clinical.
+        On 5,000 must-separate pairs (1,490 myeloid↔T, median cosine 0.982), TEDDY’s embedding alone is not enough for the readout: false agreement 0.85, soft separation 0.17, accuracy 0.74. ANM’s decision loop vetoes the embedding for these pairs, adds measured protein as typed evidence with the strict rule, and verifies false agreement → 0.40, soft separation → 0.63, accuracy → 0.99, without retraining TEDDY. Gluing features onto the embedding is not enough (global change −0.27). Not a study of TEDDY’s internals, not a Pearson claim, not clinical.
       </div>
     </div>
   </section>
@@ -576,7 +584,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
     <div class="wrap">
       <h2>Reproduce</h2>
       <div class="code">cd teddy_mm
-.venv/bin/python bridge_anm/reverse_step1_must_separate.py          # must-pairs
+.venv/bin/python bridge_anm/reverse_step1_must_separate.py          # must-separate pairs
 PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # veto → complement → verify
 /usr/bin/python3 scripts/make_anm_helps_teddy_loop_figures.py      # posters</div>
       <div class="links">
@@ -591,19 +599,55 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
   </section>
 </main>
 
-<footer><div class="wrap">TEDDY × ANM · ANM decision loop report · numbers from <code>reverse_loop_small_stats.json</code>, <code>REVERSE_STEP1.md</code>, <code>CHEAP_PROBES_RANKING.md</code> only.</div></footer>
+<footer><div class="wrap">TEDDY × ANM · decision-loop report · numbers from <code>reverse_loop_small_stats.json</code>, <code>REVERSE_STEP1.md</code>, <code>CHEAP_PROBES_RANKING.md</code> only.</div></footer>
+<aside class="guide" id="guide" aria-label="Guide: the loop and key concepts"></aside>
 <div id="tip" role="tooltip"></div>
 
+<script>
+window.GUIDE_CONFIG = {
+  flowTitle: 'The loop · click a step',
+  groups: [{ before: 'expect', cls: 't', label: 'TEDDY alone' }, { before: 'veto', cls: 'a', label: 'ANM decision loop' }],
+  steps: [
+    { id: 'expect', n: 1, cls: 't', t: 'Expect', d: 'Cells with nearly the same embedding should get the same call.', href: '#loop-1' },
+    { id: 'veto', n: 2, cls: 'a', t: 'Veto', d: 'Find look-alike pairs whose measured proteins disagree; flag the embedding as not enough there.', href: '#loop-2' },
+    { id: 'complement', n: 3, cls: 'a', t: 'Complement', d: 'Add the missing evidence or change the question. No retrain.', href: '#loop-3' },
+    { id: 'verify', n: 4, cls: 'a', t: 'Verify', d: 'Score the same pairs again: false agreement, separation, accuracy.', href: '#loop-4' },
+    { id: 'scoreboard', n: 5, cls: 'a', t: 'Compare every fix', d: 'All fixes on every metric, on both pair sets.', href: '#verify-all' }
+  ],
+  // the open stepper panel decides which loop step "You are reading" shows
+  resolve: function (id) {
+    if (id !== 'loop') return id;
+    var on = document.querySelector('.panel.on');
+    return 'loop-' + (on ? +on.id.slice(1) + 1 : 1);
+  },
+  sections: {
+    overview: { label: 'Overview', plain: 'TEDDY sees some myeloid and T cells as the same; ANM notices, adds the missing evidence and checks again.', steps: ['expect', 'veto', 'complement', 'verify', 'scoreboard'] },
+    loop: { label: 'The loop', plain: 'Four steps: expect → veto → complement → verify.', steps: ['expect', 'veto', 'complement', 'verify'] },
+    'loop-1': { label: 'Step 1 · Expect', plain: 'What a readout on TEDDY’s embedding assumes: look-alike cells get the same call.', steps: ['expect'] },
+    'loop-2': { label: 'Step 2 · Veto', plain: 'Look-alike pairs (cosine ≥ 0.98) whose measured proteins disagree: the embedding is not enough there.', steps: ['veto'] },
+    'loop-3': { label: 'Step 3 · Complement', plain: 'Three cheap fixes; adding measured protein as evidence is the one that works.', steps: ['complement'] },
+    'loop-4': { label: 'Step 4 · Verify', plain: 'The same 1,490 myeloid↔T pairs before and after: false agreement 0.85 → 0.40.', steps: ['verify'] },
+    'verify-all': { label: 'Scoreboard', plain: 'Every fix we tried, by metric and pair set. Orange = TEDDY alone, teal = winner.', steps: ['verify', 'scoreboard'] },
+    unique: { label: 'Why ANM, not a feature swap', plain: 'Gluing proteins onto the embedding can separate one list, but it can’t decline, explain or be re-asked.', steps: ['complement'] },
+    boundary: { label: 'Claim boundary', plain: 'What this loop claims, and what it doesn’t.', steps: [] },
+    posters: { label: 'Posters', plain: 'The same numbers as static slides.', steps: [] },
+    rerun: { label: 'Reproduce', plain: 'The two scripts behind every number here.', steps: [] }
+  },
+  concepts: ['mustpair', 'veto', 'complement', 'verify', 'falseagree', 'softsep', 'corrsep', 'qdec', 'abstain', 'observer', 'o0', 'o1', 'evidence', 'adt', 'z512', 'zplus', 'modeb', 'modea'],
+  arms: [['var(--bar-base)', 'TEDDY alone · soft rule'], ['var(--bar-win)', 'winning fix (ANM)'], ['var(--bar-neutral)', 'other fixes']]
+};
+</script>
+<script src="assets/site/guide.js"></script>
 <script>
 (function () {
   /* ---------- verified data (reverse_loop_small_stats.json) ---------- */
   var ARMS = [
-    { id: 'baseline_pred_O0', label: 'TEDDY pred + O0', kind: 'base' },
-    { id: 'complement_a_O1_abstain', label: '(a) O1 abstain', kind: '' },
-    { id: 'complement_a_O2_observer', label: '(a) O2 observer', kind: '' },
-    { id: 'complement_b_true_ADT_O0', label: '(b) true ADT + O0', kind: '' },
-    { id: 'complement_b_true_ADT_O1', label: '(b) true ADT + O1', kind: 'win' },
-    { id: 'complement_c_zplus_geometry', label: '(c) z⁺ geometry*', kind: 'proxy' }
+    { id: 'baseline_pred_O0', label: 'TEDDY alone · soft rule', kind: 'base' },
+    { id: 'complement_a_O1_abstain', label: '(a) question only · strict rule', kind: '' },
+    { id: 'complement_a_O2_observer', label: '(a) question only · key-marker rule', kind: '' },
+    { id: 'complement_b_true_ADT_O0', label: '(b) + measured protein · soft rule', kind: '' },
+    { id: 'complement_b_true_ADT_O1', label: '(b) + measured protein · strict rule', kind: 'win' },
+    { id: 'complement_c_zplus_geometry', label: '(c) feature swap z⁺*', kind: 'proxy' }
   ];
   var D = {
     mt: {
@@ -623,12 +667,13 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
     }
   };
   var DEFS = {
-    fa: '<b>false_agree</b> — among pairs where both cells are decided, fraction given the same call although true ADT says they differ. Lower is better.',
-    ss: '<b>soft_sep</b> — fraction of must-pairs the readout splits apart (different calls, or one abstains). Higher is better.',
-    q:  '<b>Q among decided</b> — decision quality on cells the observer commits to. Higher is better.',
-    cs: '<b>correct_sep</b> — fraction of pairs split into the right, different calls. Higher is better.',
-    ab: '<b>abstain_pair</b> — fraction of pairs with an abstaining cell. Context, not a score: some abstain is the honest answer.'
+    fa: '<span class="term" data-term="falseagree"><b>False agreement</b></span>: among must-separate pairs where both cells get a call, the share given the same call although their measured proteins differ. Lower is better.',
+    ss: '<span class="term" data-term="softsep"><b>Soft separation</b></span>: the share of must-separate pairs the readout tells apart (different calls, or one cell declined). Higher is better.',
+    q:  '<span class="term" data-term="qdec"><b>Accuracy of calls made</b></span>: correct calls among the calls actually made. Higher is better.',
+    cs: '<span class="term" data-term="corrsep"><b>Correct separation</b></span>: the share of pairs split into the right, different calls. Higher is better.',
+    ab: '<b>Pairs with a “no call”</b>: the share of pairs where at least one cell was declined. Context, not a score: sometimes declining is the honest answer.'
   };
+
 
   /* ---------- tooltip ---------- */
   var tip = document.getElementById('tip');
@@ -670,47 +715,47 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
   })();
 
   bars(document.getElementById('step1bars'), [
-    { label: 'near pairs', v: 177704, txt: '177,704', tip: 'Undirected near pairs, cos ≥ 0.98: <b>177,704</b>' },
-    { label: 'must-separate', v: 9723, txt: '9,723', cls: 'base', tip: 'Must-separate pairs: <b>9,723</b> (0.0547 of near)' },
-    { label: 'written to loop', v: 5000, txt: '5,000', cls: 'base', tip: 'Pairs written for the loop: <b>5,000</b> (2,872 unique cells)' }
+    { label: 'look-alike pairs', v: 177704, txt: '177,704', tip: 'Nearest-neighbour pairs with cosine ≥ 0.98: <b>177,704</b>' },
+    { label: 'must-separate pairs', v: 9723, txt: '9,723', cls: 'base', tip: 'Look-alike pairs whose measured proteins disagree: <b>9,723</b> (5.47% of look-alike pairs)' },
+    { label: 'pairs used in the loop', v: 5000, txt: '5,000', cls: 'base', tip: 'Pairs used for the loop: <b>5,000</b> (2,872 distinct cells)' }
   ], 177704, 0);
   document.getElementById('step1bars').insertAdjacentHTML('afterend',
-    '<div style="font-size:.78rem;color:var(--ink-muted);margin-top:.5rem">3,666 cells (21.9%) have ≥ 1 must-separate neighbour.</div>');
+    '<div style="font-size:.78rem;color:var(--ink-muted);margin-top:.5rem">3,666 cells (21.9%) have at least one must-separate neighbour.</div>');
 
   bars(document.getElementById('flagbars'), [
     { label: 'protein profile', v: 4639, txt: '4,639' },
     { label: 'key-marker lineage', v: 3287, txt: '3,287' },
-    { label: 'ADT lineage', v: 2059, txt: '2,059', cls: 'base' },
+    { label: 'measured lineage', v: 2059, txt: '2,059', cls: 'base' },
     { label: 'coarse cell type', v: 790, txt: '790' },
-    { label: '… of which myeloid↔T', v: 1490, txt: '1,490', cls: 'base', tip: 'Myeloid↔T lineage pairs: <b>1,490</b> (0.298 of written) — the focus set' }
-  ].map(function (r) { if (!r.tip) r.tip = 'diff ' + r.label + ': <b>' + r.txt + '</b> / 5,000'; return r; }), 5000, 0);
+    { label: '… of which myeloid vs T', v: 1490, txt: '1,490', cls: 'base', tip: 'Myeloid vs T pairs: <b>1,490</b> (29.8% of the pairs used), the focus set' }
+  ].map(function (r) { if (!r.tip) r.tip = 'Pairs that differ in ' + r.label + ': <b>' + r.txt + '</b> of 5,000'; return r; }), 5000, 0);
 
   var DELTA = { CD16: { mean: 1.065, median: 0.907, q75: 1.776 }, CD5: { mean: 0.716, median: 0.408, q75: 1.087 }, CD3: { mean: 0.698, median: 0.362, q75: 0.866 } };
   function drawDelta(k) {
     bars(document.getElementById('deltabars'), ['CD16', 'CD5', 'CD3'].map(function (p) {
-      return { label: p, v: DELTA[p][k], cls: 'base', tip: p + ' |Δ| mean <b>' + DELTA[p].mean + '</b> · median <b>' + DELTA[p].median + '</b> · q75 <b>' + DELTA[p].q75 + '</b>' };
+      return { label: p, v: DELTA[p][k], cls: 'base', tip: p + ': measured difference within a pair, mean <b>' + DELTA[p].mean + '</b> · median <b>' + DELTA[p].median + '</b> · 75th percentile <b>' + DELTA[p].q75 + '</b>' };
     }), 1.8, 3);
   }
   drawDelta('mean');
   segment('deltaSeg', function (b) { drawDelta(b.dataset.k); });
 
   bars(document.getElementById('basebars'), [
-    { label: 'false_agree', v: 0.8537, cls: 'base' },
-    { label: 'soft_sep', v: 0.1738 },
-    { label: 'Q among decided', v: 0.7410 }
+    { label: 'false agreement', v: 0.8537, cls: 'base' },
+    { label: 'soft separation', v: 0.1738 },
+    { label: 'accuracy of calls made', v: 0.7410 }
   ], 1, 2);
 
   /* ---------- step 3 arms ---------- */
   var ARMTXT = {
-    a: '<b>Observer rewrite, same TEDDY evidence.</b> O1 raises the decision threshold 0.12→0.28 and doubles the key-marker boost; O2 prioritises key markers. ' +
+    a: '<b>Change the question only; same TEDDY evidence.</b> The strict rule raises the threshold 0.12 → 0.28 and counts key markers double; the key-marker rule trusts only CD19, CD3 and CD16. ' +
        '<div class="hbars" style="margin-top:.8rem" id="armbars"></div>' +
-       '<div class="say" style="font-size:.86rem">Helps a little (Q 0.74 → 0.78 / 0.88) but false_agree stays ≈ 0.83–0.84. <b>You can’t reason your way out of missing evidence</b> — the observer alone can abstain more, not see more.</div>',
-    b: '<b>Admit holdout true ADT as typed ANM source events</b> (δu into <code>finite_field</code>), read by O0 or the edited O1. This is an explicit complement probe; production keeps holdout ADT verifier-only. ' +
+       '<div class="say" style="font-size:.86rem">Helps a little (accuracy 0.74 → 0.78 / 0.88), but false agreement stays ≈ 0.83–0.84. <b>A better question can’t see missing evidence</b>: it can only decline more often.</div>',
+    b: '<b>Add the measured proteins as typed evidence</b> for ANM, read by the soft or the strict rule. This is an explicit test; in normal use the measured proteins stay the answer key. ' +
        '<div class="hbars" style="margin-top:.8rem" id="armbars"></div>' +
-       '<div class="say good" style="font-size:.86rem">The evidence channel is what moves false_agree (0.85 → 0.46 → 0.40). O1 on top buys the highest Q (0.987) by abstaining where evidence is thin. <b>Evidence + observer together win.</b></div>',
-    c: '<b>Concatenate ADT features into the embedding</b> (z⁺ = z_512 ⊕ panel ADT) and hope geometry separates the pairs. No observer, no abstain, no typed source. ' +
+       '<div class="say good" style="font-size:.86rem">The new evidence is what moves false agreement (0.85 → 0.46 → 0.40). The strict rule on top gives the highest accuracy (0.987) by declining where evidence is thin. <b>Evidence plus the right question wins.</b></div>',
+    c: '<b>Glue protein features onto the embedding</b> (z⁺ = embedding ⊕ proteins) and hope distances separate the pairs. No question, no “no call”, no typed source. ' +
        '<div class="hbars" style="margin-top:.8rem" id="armbars"></div>' +
-       '<div class="say warn" style="font-size:.86rem">True-ADT z⁺ pushes 72% of these fixed pairs below cos 0.95 — but that is geometry, not a decision. Globally, z⁺ <b>worsens</b> must-rate (relative reduction −0.27). <a href="#unique">Why ↓</a></div>'
+       '<div class="say warn" style="font-size:.86rem">With measured proteins, z⁺ pushes 72% of these pairs below cosine 0.95, but that is geometry, not a decision. Across all cells z⁺ makes the must-separate rate worse (−0.27). <a href="#unique">Why ↓</a></div>'
   };
   function drawArm(k) {
     document.getElementById('armdetail').innerHTML = ARMTXT[k];
@@ -720,16 +765,16 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
     if (ids) {
       bars(el, ids.map(function (id) {
         var a = ARMS.filter(function (x) { return x.id === id; })[0], r = D.mt[id];
-        return { label: a.label, v: r.fa, cls: a.kind, tip: a.label + ' · false_agree <b>' + fmt(r.fa) + '</b> · soft_sep <b>' + fmt(r.ss) + '</b> · Q <b>' + fmt(r.q) + '</b>' };
+        return { label: a.label, v: r.fa, cls: a.kind, tip: a.label + '<br>false agreement <b>' + fmt(r.fa) + '</b> · soft separation <b>' + fmt(r.ss) + '</b> · accuracy <b>' + fmt(r.q) + '</b>' };
       }), 1, 2);
-      el.insertAdjacentHTML('beforebegin', '<div style="font-size:.72rem;color:var(--ink-faint);margin-top:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase">false_agree on myeloid↔T (lower is better)</div>');
+      el.insertAdjacentHTML('beforebegin', '<div style="font-size:.72rem;color:var(--ink-faint);margin-top:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase">false agreement on myeloid↔T pairs (lower is better)</div>');
     } else {
       bars(el, [
-        { label: 'z_512', v: 1.0, cls: 'base', tip: 'z_512: frac still ≥ 0.98 = <b>1.000</b>' },
-        { label: 'z⁺ pred ADT', v: 0.8349, tip: 'z⁺ pred: frac still ≥ 0.98 = <b>0.835</b>; frac &lt; 0.95 = 0.076' },
-        { label: 'z⁺ true ADT', v: 0.0940, cls: 'proxy', tip: 'z⁺ true: frac still ≥ 0.98 = <b>0.094</b>; frac &lt; 0.95 = 0.721' }
+        { label: 'TEDDY embedding', v: 1.0, cls: 'base', tip: 'TEDDY embedding: share still at cosine ≥ 0.98 = <b>1.000</b>' },
+        { label: 'z⁺ · predicted protein', v: 0.8349, tip: 'z⁺ with predicted protein: share still ≥ 0.98 = <b>0.835</b>; below 0.95 = 0.076' },
+        { label: 'z⁺ · measured protein', v: 0.0940, cls: 'proxy', tip: 'z⁺ with measured protein: share still ≥ 0.98 = <b>0.094</b>; below 0.95 = 0.721' }
       ], 1, 3);
-      el.insertAdjacentHTML('beforebegin', '<div style="font-size:.72rem;color:var(--ink-faint);margin-top:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase">fraction of myeloid↔T pairs still at cos ≥ 0.98</div>');
+      el.insertAdjacentHTML('beforebegin', '<div style="font-size:.72rem;color:var(--ink-faint);margin-top:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase">share of myeloid↔T pairs still at cosine ≥ 0.98</div>');
     }
   }
   drawArm('b');
@@ -737,15 +782,15 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
 
   /* ---------- step 4 waffle ---------- */
   var W = {
-    before: { fa: 85, txt: 'TEDDY pred + O0: 1,442 pairs both decided, <b>1,231</b> given the same call (false_agree 0.854). The readout mostly treats myeloid and T as one.' },
-    after:  { fa: 40, txt: 'True ADT typed + O1: 1,407 pairs both decided, only <b>558</b> given the same call (false_agree 0.397). 849 pairs now get different calls.' }
+    before: { fa: 85, txt: 'TEDDY alone, soft rule: in 1,442 pairs both cells get a call, and <b>1,231</b> get the same call (false agreement 0.854). The readout mostly treats myeloid and T as one.' },
+    after:  { fa: 40, txt: 'Measured protein as typed evidence, strict rule: in 1,407 pairs both cells get a call, and only <b>558</b> get the same call (false agreement 0.397). 849 pairs now get different calls.' }
   };
   var waffle = document.getElementById('waffle');
   waffle.innerHTML = new Array(101).join('<i></i>');
   function drawWaffle(k) {
     var n = W[k].fa, cells = waffle.children;
     for (var i = 0; i < 100; i++) cells[i].className = i < n ? 'fa' : 'sep';
-    document.getElementById('wstat').innerHTML = n + '<small> / 100 false-agree</small>';
+    document.getElementById('wstat').innerHTML = n + '<small> / 100 falsely agree</small>';
     document.getElementById('wtext').innerHTML = W[k].txt;
   }
   drawWaffle('after');
@@ -757,38 +802,38 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
     var set = D[cur.s];
     var rows = ARMS.filter(function (a) { return set[a.id] && set[a.id][cur.m] !== null && set[a.id][cur.m] !== undefined; }).map(function (a) {
       var r = set[a.id];
-      var tip = a.label + (a.kind === 'proxy' ? ' (geometry proxy)' : '') + '<br>false_agree <b>' + fmt(r.fa) + '</b> · soft_sep <b>' + fmt(r.ss) + '</b><br>Q <b>' + fmt(r.q) + '</b> · correct_sep <b>' + fmt(r.cs) + '</b> · abstain <b>' + fmt(r.ab) + '</b>';
+      var tip = a.label + (a.kind === 'proxy' ? ' (distances only)' : '') + '<br>false agreement <b>' + fmt(r.fa) + '</b> · soft separation <b>' + fmt(r.ss) + '</b><br>accuracy <b>' + fmt(r.q) + '</b> · correct separation <b>' + fmt(r.cs) + '</b> · pairs with a “no call” <b>' + fmt(r.ab) + '</b>';
       return { label: a.label, v: r[cur.m], cls: a.kind, tip: tip };
     });
     bars(document.getElementById('scorebars'), rows, 1, 3);
     document.getElementById('metricDef').innerHTML = DEFS[cur.m];
     var h = '';
-    if (cur.m === 'fa' || cur.m === 'ss') h = cur.s === 'mt' ? '*z⁺ proxy: soft_sep ≈ frac cos dropped &lt; 0.95; false_agree ≈ frac still ≥ 0.98. Geometry leftover, not action agreement.' : 'z⁺ geometry was measured on myeloid↔T only.';
-    if (cur.s === 'all' && cur.m === 'ss') h += ' Honest note: on all 5,000 pairs O2 reaches higher soft_sep (0.595) than the winner (0.469) — mostly by abstaining (abstain_pair 0.484).';
-    if (cur.s === 'all' && cur.m === 'fa') h += ' Honest note: O1 alone slightly <i>raises</i> false_agree on all pairs (0.893 → 0.903).';
-    if (cur.m === 'cs') h = 'Honest note: true ADT + O0 separates correctly more often (' + fmt(set.complement_b_true_ADT_O0.cs) + ') than + O1 (' + fmt(set.complement_b_true_ADT_O1.cs) + '); O1 trades some correct splits for abstain and higher Q.';
-    if (cur.m === 'ab') h = 'Abstain is context, not a score. The winner abstains on ' + fmt(set.complement_b_true_ADT_O1.ab) + ' of pairs.';
-    if (cur.m === 'q' && cur.s === 'mt') h = 'Winner ranking (myeloid↔T) uses soft_sep + Q − false_agree: true ADT + O1 2.841 · true ADT + O0 2.610 · O2 1.784 · O1 1.395 · baseline 1.235.';
+    if (cur.m === 'fa' || cur.m === 'ss') h = cur.s === 'mt' ? '*The feature swap z⁺ is measured on distances only: its “soft separation” is the share of pairs pushed below cosine 0.95, its “false agreement” the share still at cosine ≥ 0.98. Geometry, not calls.' : 'The feature swap z⁺ was measured on the myeloid↔T pairs only.';
+    if (cur.s === 'all' && cur.m === 'ss') h += ' Honest note: on all 5,000 pairs the key-marker question alone reaches higher soft separation (0.595) than the winner (0.469), mostly by declining (pairs with a “no call” 0.484).';
+    if (cur.s === 'all' && cur.m === 'fa') h += ' Honest note: the strict question alone slightly <i>raises</i> false agreement on all pairs (0.893 → 0.903).';
+    if (cur.m === 'cs') h = 'Honest note: measured protein with the soft rule separates correctly more often (' + fmt(set.complement_b_true_ADT_O0.cs) + ') than with the strict rule (' + fmt(set.complement_b_true_ADT_O1.cs) + '); the strict rule trades some correct splits for “no calls” and higher accuracy.';
+    if (cur.m === 'ab') h = '“No calls” are context, not a score. The winner has a declined cell in ' + fmt(set.complement_b_true_ADT_O1.ab) + ' of pairs.';
+    if (cur.m === 'q' && cur.s === 'mt') h = 'Winner ranking (myeloid↔T) uses soft separation + accuracy − false agreement: measured protein + strict rule 2.841 · measured protein + soft rule 2.610 · key-marker question only 1.784 · strict question only 1.395 · TEDDY alone 1.235.';
     document.getElementById('honest').innerHTML = h;
   }
   function drawTable() {
     function t(set, title) {
-      var s = '<p style="font-size:.8rem;font-weight:600;margin:.8rem 0 .3rem">' + title + '</p><table class="tbl"><thead><tr><th>Arm</th><th>soft_sep</th><th>false_agree</th><th>Q</th><th>correct_sep</th><th>abstain</th></tr></thead><tbody>';
+      var s = '<p style="font-size:.8rem;font-weight:600;margin:.8rem 0 .3rem">' + title + '</p><table class="tbl"><thead><tr><th>Fix</th><th>Soft separation</th><th>False agreement</th><th>Accuracy</th><th>Correct separation</th><th>Pairs with a “no call”</th></tr></thead><tbody>';
       ARMS.forEach(function (a) { var r = D[set][a.id]; if (!r) return;
         s += '<tr class="' + (a.kind === 'win' ? 'win' : '') + '"><td>' + a.label + '</td><td>' + fmt(r.ss) + '</td><td>' + fmt(r.fa) + '</td><td>' + fmt(r.q) + '</td><td>' + fmt(r.cs) + '</td><td>' + fmt(r.ab) + '</td></tr>'; });
       return s + '</tbody></table>';
     }
-    document.getElementById('tablewrap').innerHTML = t('mt', 'Myeloid↔T · n = 1,490') + t('all', 'All written must-pairs · n = 5,000') +
-      '<p class="srcnote">*z⁺ row is a geometry proxy (cosine), not a decision metric.</p>';
+    document.getElementById('tablewrap').innerHTML = t('mt', 'Myeloid↔T · 1,490 pairs') + t('all', 'All must-separate pairs · 5,000') +
+      '<p class="srcnote">*The z⁺ row is measured on distances (cosine), not calls.</p>';
   }
   segment('metricSeg', function (b) { cur.m = b.dataset.m; drawScore(); });
   segment('scopeSeg', function (b) { cur.s = b.dataset.s; drawScore(); });
   drawScore(); drawTable();
 
   bars(document.getElementById('zplusbars'), [
-    { label: 'z_512', v: 1.0, cls: 'base' },
-    { label: 'z⁺ pred ADT', v: 0.8349 },
-    { label: 'z⁺ true ADT', v: 0.0940, cls: 'proxy' }
+    { label: 'TEDDY embedding', v: 1.0, cls: 'base' },
+    { label: 'z⁺ · predicted protein', v: 0.8349 },
+    { label: 'z⁺ · measured protein', v: 0.0940, cls: 'proxy' }
   ], 1, 3);
 
   /* ---------- stepper ---------- */
@@ -802,6 +847,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
     document.getElementById('prog').style.width = ((step + 1) * 25) + '%';
     if (focus) tabs[step].focus();
     try { history.replaceState(null, '', '#loop-' + (step + 1)); } catch (e) {}
+    if (window.GUIDE_REFRESH) window.GUIDE_REFRESH();
   }
   tabs.forEach(function (t, j) { t.addEventListener('click', function () { go(j); }); });
   document.querySelectorAll('[data-next]').forEach(function (b) { b.addEventListener('click', function () { go(step + 1); document.getElementById('loop').scrollIntoView(); }); });
@@ -813,6 +859,12 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py   # 
     if (r.bottom < 0 || r.top > window.innerHeight) return;
     if (e.key === 'ArrowRight') go(step + 1, true);
     if (e.key === 'ArrowLeft') go(step - 1, true);
+  });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#loop-"]');
+    var m = a && /^#loop-(\d)$/.exec(a.getAttribute('href'));
+    if (!m) return;
+    e.preventDefault(); go(+m[1] - 1); document.getElementById('loop').scrollIntoView();
   });
   var m = /#loop-(\d)/.exec(location.hash);
   if (m) { go(+m[1] - 1); setTimeout(function () { document.getElementById('loop').scrollIntoView(); }, 0); }

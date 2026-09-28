@@ -9,6 +9,7 @@
   <a href="https://danielchen26.github.io/teddy_mm/"><b>Live site</b></a> ·
   <a href="https://danielchen26.github.io/teddy_mm/anm-loop.html"><b>Decision-loop report</b></a> ·
   <a href="#quickstart">Quickstart</a> ·
+  <a href="#key-terms">Key terms</a> ·
   <a href="docs/reports/">Proof reports</a> ·
   <a href="#claim-boundary">Claim boundary</a>
 </p>
@@ -20,11 +21,13 @@
 
 </div>
 
+> Linked names (in blue) jump to [Key terms](#key-terms), where each one is explained in plain words. On the [live site](https://danielchen26.github.io/teddy_mm/) they are underlined and explain themselves on hover or tap, and a guide column shows the whole workflow.
+
 ## What this is
 
-**TEDDY** ([Merck TEDDY-G 70M](https://huggingface.co/Merck/TEDDY) · [paper](https://arxiv.org/abs/2503.03485)) is a single-cell foundation model. Kept frozen, it maps a cell's RNA to 9 surface proteins on CITE-seq (NeurIPS 2021 BMMC, holdout site4, phase-1 full-ADT Pearson ≈ 0.61).
+**[TEDDY](#t-teddy)** ([Merck TEDDY-G 70M](https://huggingface.co/Merck/TEDDY) · [paper](https://arxiv.org/abs/2503.03485)) is a single-cell foundation model. Kept frozen, it reads a cell's RNA and predicts 9 surface proteins on [CITE-seq](#t-citeseq) data (NeurIPS 2021 BMMC, [held-out site4](#t-holdout), phase-1 [Pearson ≈ 0.61](#t-pearson)).
 
-**ANM** (Active Neural Matter) is a decision layer. It reads TEDDY's predictions as *typed evidence* and decides per cell under a *declared observer*: call a lineage or abstain, with a workability score P<sub>f</sub>, an exactness check Q<sub>f</sub>, and a per-marker explanation.
+**[ANM](#t-anm)** (Active Neural Matter) is a decision layer. It reads TEDDY's predictions as [typed evidence](#t-evidence) and answers a written-down question, the [observer](#t-observer): call a lineage, or say an honest [“no call”](#t-abstain). Each answer comes with a [workability](#t-pf) check (can it decide?), an [exactness](#t-qf) check (was it right?) and a per-marker reason.
 
 **This repository** is the bridge between the two, plus six head-to-head tests of where ANM *helps* TEDDY. TEDDY's weights and predictions never change; only the decision layer does.
 
@@ -32,7 +35,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/why-dark.png">
-  <img alt="Six results: 0 labels to change the question; 0 → 1,664 honest abstentions with RNA missing; 16,433 explained cells; Q 0.945 → 0.998 when gating TEDDY's calls; 0 vs 50–500 labels to adopt a new criterion; false agreement 0.85 → 0.40" src="docs/assets/readme/why-light.png" width="100%">
+  <img alt="Six results: 0 labels to change the question; 0 → 1,664 honest no-calls with RNA missing; 16,433 explained calls; accuracy 0.945 → 0.998 when keeping only confident calls; 0 vs 50–500 labels to adopt a new question; false agreement 0.85 → 0.40" src="docs/assets/readme/why-light.png" width="100%">
 </picture>
 
 <details>
@@ -40,14 +43,14 @@
 
 | A biologist asks… | TEDDY alone | TEDDY + ANM |
 |---|---|---|
-| Can I change the question (O0 → O2)? | Keeps its old rule; answers 1,752 cells the new criterion holds back | A declaration edit with 0 labels; abstentions follow: 317 → 834 → 3,373 |
-| What if RNA is missing? | 0 abstentions at Q 0.63 | 1,664 abstentions; mean P<sub>f</sub> 0.868 |
-| Why this call? | No declared field to explain | Leave-one-out + flip distance on 16,433 cells (permutation p ≈ 0.0099) |
-| Which calls can I trust? | Every call looks equally sure | Q of TEDDY's calls 0.945 → 0.998 keeping the top 40% by soft_P |
-| What does a new criterion cost? | A trained head needs 50–500 new labels | 0 labels |
-| Can it tell apart cells that look identical to TEDDY? | False agreement 0.85 on myeloid↔T pairs | 0.40 after veto → complement → verify |
+| Can I change the question (soft → key-marker rule)? | Keeps its old rule; answers 1,752 cells the new question holds back | Written down with 0 labels; “no calls” follow the question: 317 → 834 → 3,373 |
+| What if RNA is missing? | 0 “no calls”, at accuracy 0.63 | 1,664 “no calls”; still calls 86.8% of cells |
+| Why this call? | No written-down rule to explain | [Leave-one-out](#t-loo) + [flip distance](#t-flip) on 16,433 cells ([permutation test](#t-permutation) p ≈ 0.0099) |
+| Which calls can I trust? | Every call looks equally sure | Accuracy of TEDDY's own calls 0.945 → 0.998 keeping the 40% ANM is most [confident](#t-softp) about |
+| What does a new question cost? | A [trained head](#t-train) needs 50–500 new labelled cells | 0 labels |
+| Can it tell apart cells that look identical to TEDDY? | [False agreement](#t-falseagree) 0.85 on myeloid↔T [must-separate pairs](#t-mustpair) | 0.40 after [veto](#t-veto) → [complement](#t-complement) → [verify](#t-verify) |
 
-Accuracy is not the claim: compared like for like (Q among decided cells), ANM is within 0.02 of TEDDY alone.
+Accuracy is not the claim: compared like for like ([accuracy of calls made](#t-qdec)), ANM is within 0.02 of TEDDY alone.
 
 </details>
 
@@ -55,47 +58,49 @@ Accuracy is not the claim: compared like for like (Q among decided cells), ANM i
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/how-dark.png">
-  <img alt="Step 1: TEDDY stays frozen and exports typed evidence. Step 2: declare the question as an observer. Step 3: ANM decides per cell and explains. Compared against TEDDY alone and a trained head." src="docs/assets/readme/how-light.png" width="100%">
+  <img alt="Step 1: TEDDY stays frozen and hands its predictions on as typed evidence. Step 2: write down the question. Step 3: ANM decides per cell and explains. Compared against TEDDY alone and a trained head." src="docs/assets/readme/how-light.png" width="100%">
 </picture>
 
-An observer is a short declaration, not a trained model. O1 is O0 with three numbers changed:
+A question (observer) is a short written declaration, not a trained model. The [strict rule](#t-o1) is the [soft rule](#t-o0) with three numbers changed:
 
 ```python
-# bridge_anm/lib/lineage_panels.py → CRITERIA  (readable mirror: bridge_anm/readouts/cite_lineage_O1.yaml)
-"O1": {
+# bridge_anm/lib/lineage_panels.py → CRITERIA  (readable copy: bridge_anm/readouts/cite_lineage_O1.yaml)
+"O1": {                          # strict rule
     "score_mode": "equal_panel_mean",
-    "readout_threshold": 0.28,   # O0: 0.12  → stricter calls
-    "key_marker_boost": 2.0,     # O0: 1.0   → CD19 / CD3 / CD16 count double
-    "expected_margin": 0.12,     # O0: 0.05
+    "readout_threshold": 0.28,   # soft rule (O0): 0.12  → stricter calls
+    "key_marker_boost": 2.0,     # soft rule (O0): 1.0   → CD19 / CD3 / CD16 count double
+    "expected_margin": 0.12,     # soft rule (O0): 0.05
     ...
 },
 ```
+
+The three questions used throughout: **soft rule** ([O0](#t-o0)), **strict rule** ([O1](#t-o1)) and **key-marker rule** ([O2](#t-o2)).
 
 ## How we test "ANM helps TEDDY"
 
 Every block follows the same protocol:
 
-- **Same frozen TEDDY.** `best.pt` is never retrained; every arm reads the same predicted 9-protein panel.
-- **Same cells.** Holdout site4/test, n = 16,750, with an out-of-site check on val_non_site4 (n = 2,000).
-- **Truth only verifies.** Holdout true ADT scores the calls and never enters ANM's evidence. The one labelled exception is Block 6's complement probe.
-- **Decision metrics first.** Abstention, label cost, attribution, coverage vs Q and false agreement. Accuracy is reported, never the win condition.
+- **Same frozen TEDDY.** `best.pt` is never retrained; every arm reads the same 9 predicted proteins per cell.
+- **Same cells.** 16,750 [held-out cells](#t-holdout) from site4, plus an [out-of-site check](#t-ood) on 2,000 more.
+- **Truth only checks answers.** The measured proteins ([ADT](#t-adt)) score the calls and never enter ANM's evidence. The one labelled exception is Block 6's complement test.
+- **Decision metrics first.** Declining when unsure, label cost, per-marker reasons, coverage vs accuracy, false agreement. Accuracy is reported, never the win condition.
 
-| Arm | What it is | Adopting a new criterion |
+| Arm | What it is | Adopting a new question |
 |---|---|---|
-| TEDDY alone | Predicted panel → lineage score → thresholded argmax | Re-tune the rule on new labels |
-| **TEDDY + ANM** | Same predictions as typed events → ANM `finite_field` under a declared observer | **Edit the declaration: 0 labels, no retrain** |
-| Train + Jev | A head trained on labels over the same features (logistic / MLP / grid; Jev-class stand-in) | Collect labels and retrain |
+| TEDDY alone | Predicted proteins → a score per lineage → pick the best one if it clears a threshold (the soft rule) | Re-tune the rule on new labels |
+| **TEDDY + ANM** | The same predictions as typed evidence → [ANM's decision engine](#t-finitefield) under a written-down question | **Edit the question: 0 labels, no retrain** |
+| [Train + Jev](#t-train) | A classifier trained on labels over the same features (logistic, MLP or threshold grid; a Jev-class stand-in) | Collect labels and retrain |
 
 ## Results by block
 
-| # | Block | Method | Key result | Report |
+| # | Block | What we do | Key result | Report |
 |---|---|---|---|---|
-| 1 | [Edit the question](https://danielchen26.github.io/teddy_mm/#edit) | Declare O0 / O1 / O2 → run field → compare abstention with TEDDY alone and an O0-trained head | ANM 317 → 834 → 3,373; head 185 flat; O0 → O2 rewrites 12.48% of calls | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
-| 2 | [Missing modality](https://danielchen26.github.io/teddy_mm/#missing) | `rna_only` / `adt_only` / `joint` masks as source ablation + a declared reliability gate | `adt_only`: abstain 0 → 1,664; O2 abstains on all 12,563 cells | [MISSING_MODALITY](docs/reports/MISSING_MODALITY_ANM_DEMO.md) |
-| 3 | [Attribution](https://danielchen26.github.io/teddy_mm/#attr) | Leave one typed event out → top marker → flip distance; bootstrap B = 200, permutation n = 100 | 16,433 cells · top-1 flip 0.277 · p ≈ 0.0099 | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
-| 4 | [Scope gate](https://danielchen26.github.io/teddy_mm/#scope) | Keep TEDDY's call only where ANM soft_P ≥ τ; ANM hard scope vs random same-n | Q 0.945 → 0.998 at 40% coverage; hard cells 0.810 vs 0.946 | [SCOPE_REFINE_PROOF](docs/reports/SCOPE_REFINE_PROOF.md) |
-| 5 | [Zero-label transfer](https://danielchen26.github.io/teddy_mm/#labels) | Heads on 50 → 10,619 O2 labels, gate calibrated to ANM's O2 abstain rate | Match needs ≈ 50 / 200 / 500 labels; ANM needs 0 | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
-| 6 | [Decision loop](https://danielchen26.github.io/teddy_mm/anm-loop.html) | Veto `z_512` on must-separate pairs → complement with typed true ADT + O1 → verify | False agreement 0.85 → 0.40; Q 0.74 → 0.99 | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) |
+| 1 | [Edit the question](https://danielchen26.github.io/teddy_mm/#edit) | Write the question three ways (soft → strict → key-marker); see who follows it without new labels | ANM “no calls” 317 → 834 → 3,373; trained head flat at 185; the key-marker rule changes 12.48% of expected answers | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 2 | [Missing modality](https://danielchen26.github.io/teddy_mm/#missing) | Take RNA away ([RNA only](#t-rnaonly) · [RNA missing](#t-adtonly) · [both](#t-joint)); write down how far to trust what's left | RNA missing: “no calls” 0 → 1,664, 86.8% of cells still called; the key-marker rule declines all 12,563 | [MISSING_MODALITY](docs/reports/MISSING_MODALITY_ANM_DEMO.md) |
+| 3 | [Attribution](https://danielchen26.github.io/teddy_mm/#attr) | Remove one marker's evidence at a time → the marker that decides → how far from flipping; [bootstrap](#t-bootstrap) 200×, permutation 100× | 16,433 cells · 27.7% of calls flip · p ≈ 0.0099 | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 4 | [Scope gate](https://danielchen26.github.io/teddy_mm/#scope) | Keep TEDDY's call only where ANM is confident ([soft_P](#t-softp) cut-off); compare hard cells with random ones | Accuracy 0.945 → 0.998 at 40% [coverage](#t-coverage); hard cells 0.810 vs 0.946 | [SCOPE_REFINE_PROOF](docs/reports/SCOPE_REFINE_PROOF.md) |
+| 5 | [Zero-label transfer](https://danielchen26.github.io/teddy_mm/#labels) | Train heads on 50 → 10,619 labels until they copy ANM's key-marker answers | Copying needs ≈ 50 / 200 / 500 labels; ANM needs 0 | [HARD_PROOF](docs/reports/HARD_PROOF.md) |
+| 6 | [Decision loop](https://danielchen26.github.io/teddy_mm/anm-loop.html) | Flag look-alike pairs TEDDY's [embedding](#t-z512) can't separate → add measured protein as evidence with the strict rule → check again | False agreement 0.85 → 0.40; accuracy 0.74 → 0.99; the [feature swap z⁺](#t-zplus) makes it worse (−0.27) | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) |
 
 Charts, data tables and every number's source: **[danielchen26.github.io/teddy_mm](https://danielchen26.github.io/teddy_mm/)**.
 
@@ -120,13 +125,13 @@ export PYTORCH_ENABLE_MPS_FALLBACK=1          # Apple silicon
 
 ```bash
 bash scripts/01_download_cite.sh               # GEO GSE194122, ~587 MB
-python scripts/02_prepare_cite.py              # holdout = site4
+python scripts/02_prepare_cite.py              # held-out site = site4
 python scripts/03_embed_rna.py --device mps --seq-len 1024 --batch-size 16
 python scripts/04_train.py --device mps
 python scripts/05_eval.py --device mps
 ```
 
-**3 · Export the predictions as typed evidence (δu)**
+**3 · Hand the predictions on as typed evidence**
 
 ```bash
 python bridge_anm/export_cite_events.py --n-cells 0 --ood-n 2000
@@ -148,7 +153,56 @@ Each script writes a Markdown report and a JSON file under `outputs/anm_cite_bri
 
 **5 · Ask a different question**
 
-Edit an observer's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](bridge_anm/lib/lineage_panels.py)): its threshold, key-marker boost or lineage weights. Keep its YAML mirror in [`bridge_anm/readouts/`](bridge_anm/readouts/) in sync, then re-run the proof script. A new observer id also needs adding to `CRIT_IDS` at the top of the proof script. TEDDY is not retrained and no labels are used; holdout truth only scores the result.
+Edit a question's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](bridge_anm/lib/lineage_panels.py)): its threshold, key-marker boost or lineage weights. Keep its readable YAML copy in [`bridge_anm/readouts/`](bridge_anm/readouts/) in sync, then re-run the proof script. A new question id also needs adding to `CRIT_IDS` at the top of the proof script. TEDDY is not retrained and no labels are used; the held-out proteins only score the result.
+
+## Key terms
+
+<details open>
+<summary>Every name used on this page and the site, in plain words (click to collapse)</summary>
+
+| Term | In plain words |
+|---|---|
+| <a name="t-teddy"></a>**TEDDY** | Merck’s single-cell foundation model (TEDDY-G, 70M parameters). Here it reads a cell’s RNA and, with a small head, predicts 9 surface proteins. It is never retrained. |
+| <a name="t-anm"></a>**ANM · Active Neural Matter** | A decision layer. It reads evidence, applies a written-down question (the observer) and returns a call or an honest “no call”, with checks attached. |
+| <a name="t-citeseq"></a>**CITE-seq** | A technology that measures RNA and surface proteins in the same cell. The measured proteins are the answer key we hold out. |
+| <a name="t-adt"></a>**ADT · measured surface protein** | CITE-seq’s protein readout (antibody-derived tags). Held out and used only to check answers, except where a test says otherwise. |
+| <a name="t-holdout"></a>**Held-out cells (site4)** | 16,750 cells from a site never used in training. Their measured proteins only score the answers. |
+| <a name="t-ood"></a>**Out-of-site check** | 2,000 cells from other sites (val_non_site4): a second check that the results hold elsewhere. |
+| <a name="t-lineage"></a>**Lineage call** | The decision per cell: B cell, T cell or myeloid, each judged from 3 markers (B: CD19 CD72 CD22 · T: CD3 CD2 CD5 · myeloid: CD16 CD11c CD36). |
+| <a name="t-evidence"></a>**Typed evidence (δu)** | TEDDY’s predicted value for each of the 9 panel proteins, handed to ANM as labelled inputs such as “CD19 is high”. |
+| <a name="t-observer"></a>**Observer · the question** | The question, written down: which markers count, how strong a signal must be, and when to decline. Changing it needs no labels and no retraining. |
+| <a name="t-o0"></a>**Soft rule (O0)** | The default lineage call. All 9 markers weigh equally; call the best lineage if its score reaches 0.12. |
+| <a name="t-o1"></a>**Strict rule (O1)** | The same question asked more strictly: key markers CD19, CD3 and CD16 count double and the score must reach 0.28. Same answers where both decide; declines more often. |
+| <a name="t-o2"></a>**Key-marker rule (O2)** | A different question: only CD19 (B), CD3 (T) and CD16 (myeloid) count, with B and T weighted up. It changes 12.48% of the expected answers. |
+| <a name="t-abstain"></a>**Decline to call (abstain)** | The readout says “no call” because the evidence does not meet the written-down rule: honest silence instead of a guess. |
+| <a name="t-pf"></a>**Workability (P_f)** | 1 if the observer can make a call from the evidence, 0 if it declines. Averaged over cells, it is the share of cells called. |
+| <a name="t-qf"></a>**Exactness (Q_f)** | 1 if a call matches the held-out protein truth. Averaged over labelled cells, a decline counts as a miss. |
+| <a name="t-qdec"></a>**Accuracy of calls made (Q)** | Correct calls divided by calls made, checked against the held-out proteins. Used to compare arms like for like. |
+| <a name="t-softp"></a>**Confidence score (soft_P)** | How strong ANM’s best option is for a cell. Keeping only high-score cells trades coverage for accuracy. |
+| <a name="t-coverage"></a>**Coverage** | The share of cells that still get a call once a confidence cut is applied. |
+| <a name="t-loo"></a>**Leave-one-out (LOO)** | Remove one protein’s evidence and decide again. The marker whose removal moves the score most is the reason for the call. |
+| <a name="t-flip"></a>**Flip distance** | How much one marker’s value must change before the call switches lineage. Small means a fragile call. |
+| <a name="t-bootstrap"></a>**Bootstrap** | Resample the cells with replacement (200 times) to see how stable a number is; gives a 95% interval. |
+| <a name="t-permutation"></a>**Permutation test** | Shuffle the data many times to see how often a pattern this strong appears by chance. Here p ≈ 0.0099 over 100 shuffles. |
+| <a name="t-train"></a>**Train + Jev · trained head** | The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over the same TEDDY features. A stand-in for a Jev-class learner, not the live Jev API. |
+| <a name="t-z512"></a>**TEDDY embedding (z_512)** | TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024. |
+| <a name="t-mustpair"></a>**Must-separate pair** | Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree, for example one myeloid and one T cell. |
+| <a name="t-veto"></a>**Veto** | ANM flags that TEDDY’s embedding cannot tell a pair apart, so a readout built on it should not be trusted there. |
+| <a name="t-complement"></a>**Complement** | Add a missing evidence channel (here, measured protein as typed evidence) instead of retraining TEDDY. |
+| <a name="t-verify"></a>**Verify** | Score the same pairs again after the change: false agreement, soft separation and accuracy. |
+| <a name="t-falseagree"></a>**False agreement** | Among must-separate pairs where both cells get a call, the share given the same call even though they differ. |
+| <a name="t-softsep"></a>**Soft separation** | The share of must-separate pairs the readout tells apart: different calls, or one cell declined. |
+| <a name="t-corrsep"></a>**Correct separation** | The share of must-separate pairs split into the right, different calls. |
+| <a name="t-zplus"></a>**z⁺ · feature swap** | TEDDY’s embedding with protein features glued on: the “just swap features” alternative to typed evidence. |
+| <a name="t-rnaonly"></a>**RNA only** | Evidence from the RNA-based predictions; no protein channel. |
+| <a name="t-adtonly"></a>**RNA missing (protein only)** | Evidence only from the protein channel of the phase-2 model, a weak channel (panel Pearson 0.446). |
+| <a name="t-joint"></a>**Both channels** | Evidence from the RNA and protein channels together. |
+| <a name="t-finitefield"></a>**Finite field · ANM’s engine** | ANM’s decision engine: it combines the typed evidence under the observer into a score per lineage, then calls or declines. |
+| <a name="t-pearson"></a>**Pearson ≈ 0.61** | How well TEDDY’s phase-1 head predicts all measured proteins (correlation on held-out cells). A reference point; we do not try to beat it. |
+| <a name="t-modeb"></a>**Mode B** | What this project does: treat TEDDY as an evidence source and study the decision layer on top of it. |
+| <a name="t-modea"></a>**Mode A (not done)** | Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Not claimed here. |
+
+</details>
 
 ## Repository layout
 
@@ -157,10 +211,10 @@ teddy_mm/
 ├── scripts/                   # phase 1: download → prepare → embed (frozen TEDDY) → train head → eval
 ├── teddy_mm/                  # TEDDY encoder wrapper, RNA → protein models, phase-2 scaffold
 ├── bridge_anm/                # TEDDY → ANM bridge
-│   ├── export_*.py            #   predictions → typed evidence events
+│   ├── export_*.py            #   predictions → typed evidence
 │   ├── run_*.py, reverse_*.py #   the six tests
-│   ├── lib/lineage_panels.py  #   marker panels + CRITERIA (the observers the code runs)
-│   ├── readouts/              #   readable YAML mirror of each observer
+│   ├── lib/lineage_panels.py  #   marker panels + CRITERIA (the questions the code runs)
+│   ├── readouts/              #   readable YAML copy of each question
 │   └── schemas/               #   ANM finite-field schema
 ├── configs/                   # phase-1 / phase-2 training configs
 ├── outputs/anm_cite_bridge/   # generated reports + JSON
@@ -169,24 +223,22 @@ teddy_mm/
 
 ## Claim boundary
 
-**Claimed (Mode B: TEDDY as a typed evidence source for ANM decisions)**
+**Claimed ([Mode B](#t-modeb): TEDDY as an evidence source for ANM decisions)**
 
-- TEDDY typed evidence → ANM `finite_field` decisions, with editable observer declarations (O0 / O1 / O2) and no TEDDY retrain
-- Missing-modality abstention; leave-one-out and flip attribution on decisions
-- Scope gate and zero-label observer transfer vs Train + Jev
-- A decision loop (veto → complement → verify) on must-separate pairs
+- TEDDY's predictions as typed evidence → ANM decisions, with questions that can be rewritten (soft, strict, key-marker) and no TEDDY retrain
+- Declining to call when an input is missing; per-marker reasons (leave-one-out, flip distance)
+- Confidence cut-offs, and zero-label adoption of a new question vs a trained head
+- A decision loop on must-separate pairs: flag → add evidence → check again
 
 **Not claimed**
 
-- Mode A: residual stream as field, layer Jacobian, in-silico gene perturbations
-- The reverse loop as a representation response to perturbations
-- Pearson above phase-1 full-ADT ≈ 0.61 · fusion audit · ATAC / chromatin · clinical superiority · the live Jev API
+- [Mode A](#t-modea): studying TEDDY's internals (residual stream, layer Jacobians, in-silico gene perturbations)
+- The loop as TEDDY's representation responding to perturbations
+- Pearson above phase-1 ≈ 0.61 · fusion audit · ATAC / chromatin · clinical superiority · the live Jev API
 
-**Honest weak spots.** ADT-only is a weak channel (panel Pearson 0.446). Block 4 trades coverage for Q, and O2 dips at very low coverage. Block 6 uses true ADT as an explicit complement probe; production keeps holdout ADT verifier-only.
+**Honest weak spots.** With RNA missing the channel is weak (panel Pearson 0.446). Block 4 trades coverage for accuracy, and under the key-marker rule accuracy dips at very low coverage. Block 6 uses measured protein as extra evidence in one explicit test; in normal use it stays the answer key.
 
-**`z_512`** is the mean-pool of last-layer tokens at context length 1024 (not pretrain 2048, not a disease token), L2-normalized 512-D (`z_rna_512.npy`).
-
-Full scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
+**TEDDY's embedding** (`z_512`) is the mean of its last-layer tokens at context length 1024 (not pretrain 2048, not a disease token), L2-normalized 512-D (`z_rna_512.npy`). Full scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
 
 ## Reports
 
@@ -200,7 +252,7 @@ Regenerate figures: `python scripts/make_story_infographics.py` (site posters) �
 - Data: NeurIPS 2021 BMMC CITE-seq (Open Problems multimodal), GEO [GSE194122](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE194122)
 - ANM: Active Neural Matter (research code, currently private)
 
-> **中文简介**：TEDDY 冻结不动（RNA→蛋白，Pearson ≈ 0.61）。ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层。六个模块（改问题 · 缺模态 · 归因 · 范围门控 · 零标签迁移 · 决策闭环）都用同一套对照：TEDDY alone vs TEDDY + ANM vs 训练头，只证明“帮助 TEDDY”，不证明 Pearson 胜利，不重训，非临床。
+> **中文简介**：TEDDY 冻结不动（RNA→蛋白，Pearson ≈ 0.61）。ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层。六个模块（改问题 · 缺模态 · 归因 · 范围门控 · 零标签迁移 · 决策闭环）都用同一套对照：TEDDY alone vs TEDDY + ANM vs 训练头，只证明“帮助 TEDDY”，不证明 Pearson 胜利，不重训，非临床。文中蓝色的名词都链接到上方 Key terms 的通俗解释；网站上则是虚线下划线，鼠标移上去即显示解释。
 
 <details>
 <summary><b>Phase-1 / phase-2 training notes (中文)</b></summary>
