@@ -67,8 +67,19 @@ code, .mono { font-family: var(--mono); font-size: .86em; }
 .nav a:hover { color: var(--ink); background: var(--bg-soft); }
 .nav a.ext { color: var(--accent); font-weight: 600; }
 .theme-btn { margin-left: 6px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); border-radius: 999px; padding: 5px 11px; font: inherit; font-size: .78rem; cursor: pointer; }
-@media (max-width: 900px) { .nav a.hide-md { display: none; } }
-@media (max-width: 560px) { .nav a.hide-sm { display: none; } }
+@media (max-width: 1000px) { .nav a.hide-1000 { display: none; } }
+@media (max-width: 760px) { .nav a.hide-760 { display: none; } }
+.mnav { display: none; position: relative; }
+@media (max-width: 760px) { .mnav { display: block; } }
+.mnav summary { list-style: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--ink);
+  padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev); }
+.mnav summary::-webkit-details-marker { display: none; }
+.mnav-panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(280px, calc(100vw - 32px)); max-height: calc(100vh - 80px); overflow-y: auto;
+  padding: 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-elev); box-shadow: var(--shadow); display: grid; gap: 2px; }
+.mnav-panel a { display: block; padding: 8px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .88rem; }
+.mnav-panel a:hover { background: var(--bg-soft); }
+.mnav-panel a.sub { padding-left: 22px; color: var(--ink-muted); font-size: .84rem; }
+.mnav-panel a.ext { color: var(--accent); font-weight: 600; border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; margin-top: 4px; padding-top: 10px; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; padding: 56px 0 48px; overflow: hidden; }
@@ -184,6 +195,18 @@ table.capm { width: 100%; border-collapse: collapse; font-size: .86rem; min-widt
 .capm tbody tr:last-child th, .capm tbody tr:last-child td { border-bottom: 0; }
 .capm td.win { color: var(--ink); font-weight: 600; background: color-mix(in srgb, var(--s-anm) 6%, transparent); }
 .capm td { color: var(--ink-muted); }
+@media (max-width: 700px) {
+  table.capm { min-width: 0; }
+  .capm thead { display: none; }
+  .capm, .capm tbody, .capm tr, .capm th, .capm td { display: block; width: 100%; }
+  .capm tbody tr { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .capm tbody tr:last-child { border-bottom: 0; }
+  .capm tbody th { padding: 0 0 6px; border: 0; width: auto; color: var(--ink); font-size: .88rem; }
+  .capm td { padding: 5px 0 5px 10px; border: 0; border-left: 3px solid transparent; margin: 3px 0; font-size: .84rem; }
+  .capm td::before { content: attr(data-arm) " · "; font-weight: 600; color: var(--ink); }
+  .capm td.c-t { border-left-color: var(--s-teddy); } .capm td.c-a { border-left-color: var(--s-anm); } .capm td.c-r { border-left-color: var(--s-train); }
+  .capm td.win { background: color-mix(in srgb, var(--s-anm) 7%, transparent); }
+}
 
 /* observer explorer */
 .obsx { margin-top: 20px; overflow: hidden; }
@@ -194,6 +217,7 @@ table.capm { width: 100%; border-collapse: collapse; font-size: .86rem; min-widt
 @media (max-width: 820px) { .obsx-body { grid-template-columns: 1fr; } }
 pre.yaml { margin: 0; padding: 16px 18px; font-family: var(--mono); font-size: .76rem; line-height: 1.75; background: var(--bg-sunk); color: var(--ink); overflow-x: auto; white-space: pre; min-height: 230px; }
 .yaml .k { color: var(--accent); } .yaml .c { color: var(--ink-faint); } .yaml .chg { background: color-mix(in srgb, var(--s-anm) 18%, transparent); border-radius: 3px; }
+@media (max-width: 600px) { pre.yaml { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .72rem; min-height: 0; } }
 .obsx-eff { padding: 16px 18px; display: grid; gap: 10px; align-content: start; }
 .eff { display: grid; grid-template-columns: 12px 1fr; gap: 10px; font-size: .86rem; }
 .eff .sw { margin-top: 6px; }
@@ -236,6 +260,7 @@ table.matrix { width: 100%; border-collapse: collapse; font-size: .85rem; }
 .bn a i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--bg-soft); font-style: normal; font-family: var(--mono); font-size: .7rem; }
 .bn a.on { color: var(--ink); border-color: var(--ink); }
 .bn a.on i { background: var(--ink); color: var(--bg); }
+@media (max-width: 600px) { .bn { padding: 7px 0; } .bn a { font-size: .74rem; padding: 3px 10px 3px 3px; } .bn a i { width: 19px; height: 19px; font-size: .64rem; } .block { scroll-margin-top: 100px; } }
 
 .block { padding: 64px 0 8px; scroll-margin-top: 112px; }
 .block + .block { border-top: 1px dashed var(--line); margin-top: 56px; }
@@ -281,6 +306,13 @@ ol.wf li b { font-weight: 600; }
 .seg button { border: 0; background: transparent; font: inherit; font-size: .76rem; font-weight: 600; color: var(--ink-muted); padding: 5px 11px; border-radius: 9px; cursor: pointer; }
 .seg button:hover { color: var(--ink); }
 .seg button[aria-pressed="true"] { background: var(--bg-elev); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); }
+@media (max-width: 600px) {
+  .figctl .cl { display: none; }
+  .figctl .seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); width: 100%; }
+  .figctl .seg button { padding: 7px 8px; text-align: center; }
+  .obsx-head .seg { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }
+  .obsx-head .seg button { padding: 7px 4px; }
+}
 .chart { width: 100%; min-height: 180px; }
 .chart svg { display: block; overflow: visible; }
 .lgd { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .76rem; color: var(--ink-muted); margin-top: 10px; }
@@ -291,12 +323,19 @@ ol.wf li b { font-weight: 600; }
 .figcap { font-size: .8rem; color: var(--ink-muted); margin: 10px 0 0; line-height: 1.55; }
 .pane img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
 .pane .imgcap { font-size: .78rem; color: var(--ink-muted); margin: 8px 0 0; }
-.tblwrap { overflow-x: auto; }
+.tblwrap { overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background: linear-gradient(to left, var(--bg-elev) 40%, transparent) right center / 28px 100% no-repeat local,
+    radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.16), transparent) right center / 12px 100% no-repeat scroll; }
+.tblwrap .shint { display: none; font-size: .72rem; color: var(--ink-faint); margin: 0 0 8px; font-family: var(--mono); }
+.tblwrap.scrolls .shint { display: block; }
+.dt td.w { white-space: normal; min-width: 96px; }
+@media (max-width: 600px) { .dt th, .dt td { padding: 6px 6px; } .dt td { font-size: .72rem; } .dt td:first-child { font-size: .76rem; } }
 .tblwrap h5 { font-size: .78rem; margin: 14px 0 6px; font-weight: 600; }
 .tblwrap h5:first-child { margin-top: 0; }
 table.dt { width: 100%; border-collapse: collapse; font-size: .78rem; }
 .dt th, .dt td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.dt th:first-child, .dt td:first-child { text-align: left; white-space: normal; }
+.dt th:first-child, .dt td:first-child { text-align: left; white-space: normal; position: sticky; left: 0; z-index: 1; background: var(--bg-elev); min-width: 150px; box-shadow: 1px 0 0 var(--line); }
+@media (max-width: 600px) { .dt th:first-child, .dt td:first-child { min-width: 124px; } }
 .dt th { font-size: .68rem; color: var(--ink-muted); font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
 .dt td { font-family: var(--mono); font-size: .76rem; }
 .dt td:first-child { font-family: var(--font); font-size: .8rem; }
@@ -331,7 +370,9 @@ table.dt { width: 100%; border-collapse: collapse; font-size: .78rem; }
 .bkpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 24px; }
 @media (max-width: 880px) { .bkpis { grid-template-columns: repeat(2, 1fr); } }
 .bk { padding: 14px 14px 12px; border-radius: 14px; background: var(--bg-elev); border: 1px solid var(--line); }
-.bk .v { font-size: 1.32rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.bk .v { font-size: 1.32rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.2; white-space: nowrap; }
+@media (max-width: 1100px) and (min-width: 881px) { .bk .v { font-size: 1.14rem; } }
+@media (max-width: 560px) { .bkpis { grid-template-columns: 1fr; } .bk { display: grid; grid-template-columns: minmax(0, 1fr); } }
 .bk .v.a { color: var(--s-anm); } .bk .v.t { color: var(--s-teddy); } .bk .v.r { color: var(--s-train); }
 .bk .d { font-size: .78rem; color: var(--ink-muted); margin-top: 4px; line-height: 1.45; }
 .bproof { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 10px; margin-top: 10px; }
@@ -394,12 +435,29 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="topbar-inner">
     <a class="brand" href="#top" aria-label="TEDDY × ANM home"><span class="brand-mark" aria-hidden="true"></span>TEDDY <span class="x">×</span> ANM</a>
     <nav class="nav" aria-label="Sections">
-      <a href="#problem" class="hide-sm">Problem</a>
-      <a href="#protocol" class="hide-sm">How we compare</a>
-      <a href="#blocks">Six blocks</a>
-      <a href="#claims" class="hide-md">Boundary</a>
-      <a href="#rerun" class="hide-md">Reproduce</a>
-      <a href="anm-loop.html" class="ext hide-sm">Loop report ↗</a>
+      <a href="#problem" class="hide-760">Problem</a>
+      <a href="#protocol" class="hide-760">How we compare</a>
+      <a href="#blocks" class="hide-760">Six blocks</a>
+      <a href="#claims" class="hide-1000">Boundary</a>
+      <a href="#rerun" class="hide-1000">Reproduce</a>
+      <a href="anm-loop.html" class="ext hide-760">Loop report ↗</a>
+      <details class="mnav">
+        <summary aria-label="Open section menu"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</summary>
+        <div class="mnav-panel">
+          <a href="#problem">01 · The problem</a>
+          <a href="#protocol">02 · How we compare</a>
+          <a href="#blocks">03 · Six blocks</a>
+          <a href="#edit" class="sub">1 · Edit the question</a>
+          <a href="#missing" class="sub">2 · Missing modality</a>
+          <a href="#attr" class="sub">3 · Attribution</a>
+          <a href="#scope" class="sub">4 · Scope gate</a>
+          <a href="#labels" class="sub">5 · Zero-label transfer</a>
+          <a href="#anm-loop" class="sub">6 · Decision loop</a>
+          <a href="#claims">04 · Claim boundary</a>
+          <a href="#rerun">05 · Reproduce</a>
+          <a href="anm-loop.html" class="ext">Decision-loop report ↗</a>
+        </div>
+      </details>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle light or dark theme">Theme</button>
     </nav>
   </div>
@@ -454,7 +512,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
             <span class="pg-lab">ANM · added</span>
             <div class="node">
               <span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></svg></span>
-              <div><b>Declared decision field</b><span>observer YAML O0 / O1 / O2 → P<sub>f</sub> (workability) · Q<sub>f</sub> (exactness)</span></div>
+              <div><b>Declared decision field</b><span>declared observer O0 / O1 / O2 → P<sub>f</sub> (workability) · Q<sub>f</sub> (exactness)</span></div>
             </div>
             <div class="outs">
               <a href="#edit"><b>call</b><span>1 · 5</span></a>
@@ -521,7 +579,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <p class="subh">Three arms</p>
           <div class="arms">
             <div class="arm card"><span class="sw bg-teddy"></span><div><span class="role">Baseline</span><h3>TEDDY alone</h3><p>Predicted panel → lineage score → argmax with a threshold (the O0 rule). What TEDDY gives out of the box.</p></div></div>
-            <div class="arm card"><span class="sw bg-anm"></span><div><span class="role">Treatment</span><h3>TEDDY + ANM</h3><p>The same predictions as typed evidence events → ANM <code>finite_field</code> under a declared observer (YAML) → call or abstain, with P<sub>f</sub> and Q<sub>f</sub>.</p></div></div>
+            <div class="arm card"><span class="sw bg-anm"></span><div><span class="role">Treatment</span><h3>TEDDY + ANM</h3><p>The same predictions as typed evidence events → ANM <code>finite_field</code> under a declared observer (O0 / O1 / O2) → call or abstain, with P<sub>f</sub> and Q<sub>f</sub>.</p></div></div>
             <div class="arm card"><span class="sw bg-train"></span><div><span class="role">Control</span><h3>Train + Jev</h3><p>A head trained on labels over the same frozen features: log-loss logistic, MLP or threshold grid. A Jev-class stand-in, not the live Jev API. Asks: “could any trained head do this?”</p></div></div>
           </div>
         </div>
@@ -536,17 +594,17 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <table class="capm">
           <thead><tr><th scope="col">What each arm can do</th><th scope="col"><i class="bg-teddy"></i>TEDDY alone</th><th scope="col"><i class="bg-anm"></i>TEDDY + ANM</th><th scope="col"><i class="bg-train"></i>Train + Jev</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Adopt a new criterion</th><td>Re-tune the rule on new labels</td><td class="win">Edit YAML · 0 labels · no retrain</td><td>Collect labels and retrain</td></tr>
-            <tr><th scope="row">Abstention follows the criterion</th><td>No: keeps its old rule</td><td class="win">Yes: 317 → 834 → 3,373</td><td>No: 185 → 185 → 185</td></tr>
-            <tr><th scope="row">Per-marker attribution</th><td>Panel heuristic, no declared field</td><td class="win">Closed-form LOO + flip distance on the declared field</td><td>Learned coefficient × feature (opaque)</td></tr>
-            <tr><th scope="row">Needs endpoint labels</th><td>Yes, to re-tune</td><td class="win">No, truth only verifies</td><td>Yes, to train</td></tr>
+            <tr><th scope="row">Adopt a new criterion</th><td class="c-t" data-arm="TEDDY alone">Re-tune the rule on new labels</td><td class="win c-a" data-arm="TEDDY + ANM">Edit the declaration · 0 labels · no retrain</td><td class="c-r" data-arm="Train + Jev">Collect labels and retrain</td></tr>
+            <tr><th scope="row">Abstention follows the criterion</th><td class="c-t" data-arm="TEDDY alone">No: keeps its old rule</td><td class="win c-a" data-arm="TEDDY + ANM">Yes: 317 → 834 → 3,373</td><td class="c-r" data-arm="Train + Jev">No: 185 → 185 → 185</td></tr>
+            <tr><th scope="row">Per-marker attribution</th><td class="c-t" data-arm="TEDDY alone">Panel heuristic, no declared field</td><td class="win c-a" data-arm="TEDDY + ANM">Closed-form LOO + flip distance on the declared field</td><td class="c-r" data-arm="Train + Jev">Learned coefficient × feature (opaque)</td></tr>
+            <tr><th scope="row">Needs endpoint labels</th><td class="c-t" data-arm="TEDDY alone">Yes, to re-tune</td><td class="win c-a" data-arm="TEDDY + ANM">No, truth only verifies</td><td class="c-r" data-arm="Train + Jev">Yes, to train</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="obsx card">
         <div class="obsx-head">
-          <div><b>The observer is the question, declared in YAML</b><span>Pick one to see exactly what changes. TEDDY’s predictions don’t.</span></div>
+          <div><b>The observer is the question, written as a declaration</b><span>Pick one to see exactly what changes. TEDDY’s predictions don’t. Shown as the YAML mirror in <code>bridge_anm/readouts/</code>; the copy the code runs is <code>CRITERIA</code> in <code>bridge_anm/lib/lineage_panels.py</code>.</span></div>
           <div class="seg" data-ctl="obs" role="group" aria-label="Observer">
             <button type="button" data-v="O0" aria-pressed="true">O0 · soft</button>
             <button type="button" data-v="O1" aria-pressed="false">O1 · strict</button>
@@ -561,7 +619,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
       <dl class="gloss">
         <div class="gl"><dt>δu · typed evidence</dt><dd>TEDDY’s predicted value for each of the 9 panel proteins, exported as a typed source event.</dd></div>
-        <div class="gl"><dt>Observer O0 / O1 / O2</dt><dd>The decision criterion: thresholds, marker weights, what counts as a confident call. Lives in <code>readouts/cite_lineage_O*.yaml</code>.</dd></div>
+        <div class="gl"><dt>Observer O0 / O1 / O2</dt><dd>The decision criterion: thresholds, marker weights, what counts as a confident call. Declared in <code>CRITERIA</code> (<code>bridge_anm/lib/lineage_panels.py</code>), mirrored as YAML in <code>bridge_anm/readouts/</code>.</dd></div>
         <div class="gl"><dt>P<sub>f</sub> · workability</dt><dd>1 if the declared observer can call from the evidence, else abstain. Mean P<sub>f</sub> = share of cells called.</dd></div>
         <div class="gl"><dt>Q · among decided</dt><dd>Share of calls that match holdout true ADT. Holdout truth is used only here, as a verifier.</dd></div>
         <div class="gl"><dt>soft_P</dt><dd>max(action_scores) of the declared field: the continuous signal under binary P<sub>f</sub>, used to gate.</dd></div>
@@ -581,7 +639,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <table class="matrix">
           <thead><tr><th scope="col">Block</th><th scope="col">TEDDY-alone gap</th><th scope="col">Compared</th><th scope="col">Method</th><th scope="col">Key result</th><th scope="col">Proves ANM helps TEDDY by…</th></tr></thead>
           <tbody>
-            <tr data-go="edit"><td><span class="mb"><i>1</i>Edit the question</span></td><td data-l="Gap">Keeps answering the old question</td><td data-l="Compared">3 arms × O0 / O1 / O2 · n = 16,750</td><td data-l="Method">Declare the observer in YAML → run field → abstention vs declaration</td><td data-l="Result" class="res">ANM abstain 317 → 834 → 3,373; head 185 flat</td><td data-l="Proves" class="pr">serving a new question with 0 labels, no retrain</td></tr>
+            <tr data-go="edit"><td><span class="mb"><i>1</i>Edit the question</span></td><td data-l="Gap">Keeps answering the old question</td><td data-l="Compared">3 arms × O0 / O1 / O2 · n = 16,750</td><td data-l="Method">Declare the observer → run field → abstention vs declaration</td><td data-l="Result" class="res">ANM abstain 317 → 834 → 3,373; head 185 flat</td><td data-l="Proves" class="pr">serving a new question with 0 labels, no retrain</td></tr>
             <tr data-go="missing"><td><span class="mb"><i>2</i>Missing modality</span></td><td data-l="Gap">Never abstains when RNA is missing</td><td data-l="Compared">TEDDY vs ANM × 3 masks · 12,563 cells / mask</td><td data-l="Method">Masks as source ablation + declared reliability gate</td><td data-l="Result" class="res">adt_only abstain 0 → 1,664; P<sub>f</sub> 0.868</td><td data-l="Proves" class="pr">honest silence when TEDDY’s input is weak</td></tr>
             <tr data-go="attr"><td><span class="mb"><i>3</i>Attribution</span></td><td data-l="Gap">No per-marker explanation</td><td data-l="Compared">ANM LOO on all cells · bootstrap + permutation</td><td data-l="Method">Leave one typed event out → top marker → flip distance</td><td data-l="Result" class="res">16,433 cells · flip 0.277 · p ≈ 0.0099</td><td data-l="Proves" class="pr">an auditable “why” for every TEDDY-based call</td></tr>
             <tr data-go="scope"><td><span class="mb"><i>4</i>Scope gate</span></td><td data-l="Gap">No graded trust signal</td><td data-l="Compared">Coverage–Q sweep · ANM hard scope vs random</td><td data-l="Method">Gate on soft_P; hard scope = LOO flip-sensitive cells</td><td data-l="Result" class="res">O0 Q 0.945 → 0.998 at 40% coverage; hard Q 0.810 vs 0.946</td><td data-l="Proves" class="pr">showing where TEDDY’s calls can be trusted</td></tr>
@@ -619,7 +677,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
               <span class="chip m">site4/test n = 16,750</span><span class="chip m">O0 → O1 → O2</span></div></div>
             <div class="bpart"><h4>Workflow</h4><ol class="wf">
               <li><b>Freeze.</b> Export TEDDY’s predicted 9-protein panel per cell as typed δu events.</li>
-              <li><b>Declare.</b> Write each observer as YAML. O1: threshold 0.12 → 0.28, key-marker ×2. O2: key-marker priority with lineage weights. No labels.</li>
+              <li><b>Declare.</b> Write each observer as a declaration (a <code>CRITERIA</code> entry, mirrored in YAML). O1: threshold 0.12 → 0.28, key-marker ×2. O2: key-marker priority with lineage weights. No labels.</li>
               <li><b>Run.</b> ANM <code>finite_field</code> per cell under each observer → call or abstain, with P<sub>f</sub> / Q<sub>f</sub>.</li>
               <li><b>Compare.</b> TEDDY alone kept on its O0 rule; an O0-trained head scored under O1 / O2.</li>
               <li><b>Verify.</b> Against holdout true ADT (verifier only).</li>
@@ -655,7 +713,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <div class="proves"><b>Proves (helps TEDDY)</b>TEDDY’s unchanged predictions can serve a new question by declaration alone. The abstention follows the criterion, with zero labels and no retrain.</div>
           <div class="limits"><b>Does not prove</b>An accuracy win. Q among decided cells: 0.947 vs 0.950 (O0), 0.974 vs 0.972 (O1), 0.943 vs 0.960 (O2). Out-of-site (n = 2,000): O2 Q 0.917 → 0.978 while abstaining 111 → 431.</div>
         </div>
-        <p class="zh">改 YAML 即改问题：弃权随声明走，零标签、不重训 TEDDY；训练头的弃权不跟随（185 不变）。</p>
+        <p class="zh">改声明即改问题：弃权随声明走，零标签、不重训 TEDDY；训练头的弃权不跟随（185 不变）。</p>
       </article>
 
       <!-- ---------- BLOCK 2 ---------- -->
@@ -861,7 +919,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           </div>
         </div>
         <div class="bkpis">
-          <div class="bk"><div class="v a">0</div><div class="d">labels for ANM to adopt O2 (a YAML edit).</div></div>
+          <div class="bk"><div class="v a">0</div><div class="d">labels for ANM to adopt O2 (a declaration edit).</div></div>
           <div class="bk"><div class="v r">≈ 50</div><div class="d">labels for a threshold grid to match (strict 0.823, abstain 0.206).</div></div>
           <div class="bk"><div class="v r">≈ 200</div><div class="d">labels for an MLP head (strict 0.802, abstain 0.198).</div></div>
           <div class="bk"><div class="v r">≈ 500</div><div class="d">labels for a logistic head, the Jev stand-in (strict 0.813, abstain 0.203).</div></div>
@@ -936,7 +994,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <div class="bound">
         <div class="card col in"><h3>Claimed · Mode B</h3><ul>
           <li>TEDDY typed evidence → ANM <code>finite_field</code> decisions</li>
-          <li>Editable observer YAML (O0 → O1 → O2), no TEDDY retrain</li>
+          <li>Editable observer declarations (O0 → O1 → O2), no TEDDY retrain</li>
           <li>Missing-modality abstention; LOO / flip attribution on decisions</li>
           <li>Scope gate and zero-label observer transfer vs Train + Jev</li>
           <li>Decision loop: <code>z_512</code> alone is insufficient on must-separate pairs → veto → complement → verify</li>
@@ -1122,8 +1180,20 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
   window.addEventListener('scroll', hideTip, { passive: true });
 
   /* =================== chart kit =================== */
+  // text is measured with the page fonts so labels can be placed without collisions
+  var _cv = document.createElement('canvas').getContext('2d');
+  function tw(txt, size, weight, mono) {
+    _cv.font = (weight || 400) + ' ' + size + 'px ' + (mono ? '"IBM Plex Mono", ui-monospace, Menlo, monospace' : '"IBM Plex Sans", system-ui, sans-serif');
+    return _cv.measureText(String(txt).replace(/<[^>]+>/g, '')).width;
+  }
+  function hitRect(a, b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h; }
+  function textRect(x, base, w, anchor, size) {
+    var h = size * 1.2, left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x;
+    return { x: left - 2, y: base - size * 0.95, w: w + 4, h: h + 1 };
+  }
+
   function groupedBars(host, cfg) {
-    var W = Math.max(280, width(host)), H = cfg.h || 280;
+    var W = Math.max(260, width(host)), H = cfg.h || 280;
     var m = { t: 26, r: 6, b: cfg.mb || 44, l: 46 };
     var iw = W - m.l - m.r, ih = H - m.t - m.b;
     var all = [];
@@ -1137,7 +1207,11 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
     });
     var nc = cfg.cats.length, ns = cfg.series.length, gw = iw / nc, gap = 3;
     var bw = Math.max(8, Math.min(cfg.maxBar || 46, (gw * 0.74 - gap * (ns - 1)) / ns));
-    var labelAll = bw >= 34;
+    // label every bar only if every value fits over its own bar; otherwise label the focus series
+    var labelAll = true;
+    cfg.series.forEach(function (s) { s.vals.forEach(function (v) { if (v !== null && v !== undefined && tw(cfg.vFmt(v), 11, 500, true) > bw + gap - 1) labelAll = false; }); });
+    var focusFits = true;
+    cfg.series[cfg.focus || 0].vals.forEach(function (v) { if (v !== null && v !== undefined && tw(cfg.vFmt(v), 11, 700, true) > gw - 6) focusFits = false; });
     cfg.cats.forEach(function (c, i) {
       var gx = m.l + gw * i + (gw - (bw * ns + gap * (ns - 1))) / 2;
       cfg.series.forEach(function (s, j) {
@@ -1148,38 +1222,63 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
         } else {
           var by = y(v), bh = m.t + ih - by;
           if (v > 0) o += '<path class="' + s.cls + '" d="' + vbarPath(bx, Math.min(by, m.t + ih - 2), bw, Math.max(bh, 2), 4) + '"/>';
-          if (labelAll || j === cfg.focus) o += '<text class="val' + (j === cfg.focus ? ' strong' : '') + '" x="' + (bx + bw / 2) + '" y="' + (Math.min(by, m.t + ih - 2) - 6) + '" text-anchor="middle">' + cfg.vFmt(v) + '</text>';
+          if (labelAll || (j === cfg.focus && focusFits)) o += '<text class="val' + (j === cfg.focus ? ' strong' : '') + '" x="' + (bx + bw / 2) + '" y="' + (Math.min(by, m.t + ih - 2) - 6) + '" text-anchor="middle">' + cfg.vFmt(v) + '</text>';
         }
         o += '<rect class="hit" x="' + bx + '" y="' + m.t + '" width="' + bw + '" height="' + ih + '" data-tip="' + esc(tp) + '"/>';
       });
-      String(c).split('\n').forEach(function (ln, k) {
-        o += '<text class="' + (k ? 'catsub' : 'cat') + '" x="' + (m.l + gw * i + gw / 2) + '" y="' + (m.t + ih + 18 + k * 15) + '" text-anchor="middle">' + ln + '</text>';
+      // category label, then its sub-line; fall back to the short sub-line, then drop it
+      var lines = String(c).split('\n');
+      if (lines[1] && tw(lines[1], 10.5, 400, true) > gw - 8) lines[1] = cfg.catsShort ? cfg.catsShort[i] : '';
+      if (lines[1] && tw(lines[1], 10.5, 400, true) > gw - 8) lines[1] = '';
+      lines.forEach(function (ln, k) {
+        if (ln) o += '<text class="' + (k ? 'catsub' : 'cat') + '" x="' + (m.l + gw * i + gw / 2) + '" y="' + (m.t + ih + 18 + k * 15) + '" text-anchor="middle">' + ln + '</text>';
       });
     });
     o += '<line class="axis" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + (m.t + ih) + '" y2="' + (m.t + ih) + '"/>';
     host.innerHTML = o + '</svg>';
   }
 
+  // horizontal bars: labels in a side column when there is room, stacked above each bar otherwise
   function hBars(host, cfg) {
-    var W = Math.max(280, width(host)), small = W < 460;
-    var rowH = cfg.rowH || 32, lw = small ? (cfg.lwSm || 110) : (cfg.lw || 170), vw = cfg.vw || 70;
-    var top = 4, H = cfg.rows.length * rowH + top + 6;
-    var x0 = lw, iw = W - lw - vw;
-    var o = svgOpen(W, H, cfg.aria);
-    cfg.rows.forEach(function (r, i) {
-      var y0 = top + i * rowH, bh = Math.min(16, rowH - 12), by = y0 + (rowH - bh) / 2;
-      var w = r.v === null ? 0 : Math.max(0, Math.abs(r.v) / cfg.max * iw);
-      o += '<text class="lab' + (r.strong ? ' strong' : '') + '" x="' + (x0 - 10) + '" y="' + (by + bh / 2 + 4) + '" text-anchor="end">' + (small && r.short ? r.short : r.label) + '</text>';
-      if (w > 0) o += '<path class="' + r.cls + '" d="' + hbarPath(x0, by, Math.max(w, 2), bh, 4) + '"/>';
-      o += '<text class="val' + (r.strong ? ' strong' : '') + '" x="' + (x0 + w + 8) + '" y="' + (by + bh / 2 + 4) + '">' + r.txt + '</text>';
-      o += '<rect class="hit" x="0" y="' + y0 + '" width="' + W + '" height="' + rowH + '" data-tip="' + esc(r.tip) + '"/>';
+    var W = Math.max(260, width(host)), top = 4;
+    var maxLab = 0, maxVal = 0;
+    cfg.rows.forEach(function (r) {
+      maxLab = Math.max(maxLab, tw(r.label, 12, r.strong ? 600 : 400));
+      maxVal = Math.max(maxVal, tw(r.txt, 11, r.strong ? 700 : 500, true));
     });
-    o += '<line class="axis" x1="' + x0 + '" x2="' + x0 + '" y1="' + top + '" y2="' + (H - 6) + '"/>';
+    var vw = Math.ceil(maxVal) + 16, side = W >= 520 && maxLab + 20 <= W * 0.42, o, H;
+    if (side) {
+      var rowH = cfg.rowH || 32, x0 = Math.ceil(maxLab) + 20, iw = W - x0 - vw;
+      H = cfg.rows.length * rowH + top + 6;
+      o = svgOpen(W, H, cfg.aria);
+      cfg.rows.forEach(function (r, i) {
+        var y0 = top + i * rowH, bh = Math.min(16, rowH - 12), by = y0 + (rowH - bh) / 2;
+        var w = r.v === null ? 0 : Math.max(0, Math.abs(r.v) / cfg.max * iw);
+        o += '<text class="lab' + (r.strong ? ' strong' : '') + '" x="' + (x0 - 10) + '" y="' + (by + bh / 2 + 4) + '" text-anchor="end">' + r.label + '</text>';
+        if (w > 0) o += '<path class="' + r.cls + '" d="' + hbarPath(x0, by, Math.max(w, 2), bh, 4) + '"/>';
+        o += '<text class="val' + (r.strong ? ' strong' : '') + '" x="' + (x0 + w + 8) + '" y="' + (by + bh / 2 + 4) + '">' + r.txt + '</text>';
+        o += '<rect class="hit" x="0" y="' + y0 + '" width="' + W + '" height="' + rowH + '" data-tip="' + esc(r.tip) + '"/>';
+      });
+      o += '<line class="axis" x1="' + x0 + '" x2="' + x0 + '" y1="' + top + '" y2="' + (H - 6) + '"/>';
+    } else {
+      var rh = 42, iw2 = W - vw - 2;
+      H = cfg.rows.length * rh + top;
+      o = svgOpen(W, H, cfg.aria);
+      cfg.rows.forEach(function (r, i) {
+        var y0 = top + i * rh, by = y0 + 20, bh = 14;
+        var w = r.v === null ? 0 : Math.max(0, Math.abs(r.v) / cfg.max * iw2);
+        o += '<text class="lab' + (r.strong ? ' strong' : '') + '" x="0" y="' + (y0 + 13) + '">' + r.label + '</text>';
+        o += '<line class="axis" x1="0.5" x2="0.5" y1="' + (by - 2) + '" y2="' + (by + bh + 2) + '"/>';
+        if (w > 0) o += '<path class="' + r.cls + '" d="' + hbarPath(1, by, Math.max(w, 2), bh, 4) + '"/>';
+        o += '<text class="val' + (r.strong ? ' strong' : '') + '" x="' + (1 + w + 8) + '" y="' + (by + bh / 2 + 4) + '">' + r.txt + '</text>';
+        o += '<rect class="hit" x="0" y="' + y0 + '" width="' + W + '" height="' + rh + '" data-tip="' + esc(r.tip) + '"/>';
+      });
+    }
     host.innerHTML = o + '</svg>';
   }
 
   function lineChart(host, cfg) {
-    var W = Math.max(280, width(host)), H = cfg.h || 290;
+    var W = Math.max(260, width(host)), H = cfg.h || 290;
     var m = { t: 26, r: 18, b: 46, l: 50 };
     var iw = W - m.l - m.r, ih = H - m.t - m.b, X = cfg.x, Y = cfg.y;
     function xs(v) {
@@ -1199,11 +1298,56 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
         '<text x="' + xs(t) + '" y="' + (m.t + ih + 17) + '" text-anchor="middle">' + X.fmt(t) + '</text>';
     });
     o += '<line class="axis" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + (m.t + ih) + '" y2="' + (m.t + ih) + '"/>';
-    o += '<text class="axt" x="' + (m.l + iw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + X.label + '</text>';
+    var xl = W < 460 && X.labelSm ? X.labelSm : X.label;
+    o += '<text class="axt" x="' + (m.l + iw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + xl + '</text>';
     o += '<text class="axt" x="' + m.l + '" y="12">' + Y.label + '</text>';
+
+    // geometry used to keep annotations clear of the data
+    var polys = cfg.series.map(function (s) { return s.pts.map(function (p) { return [xs(p.x), ys(p.y)]; }); });
+    var placed = [{ x: m.l - 2, y: 0, w: tw(Y.label, 11.5, 400) + 4, h: 16 }];
+    // 0 = free; otherwise how badly a label box would collide (bounds, labels, points, line segments)
+    function collides(r) {
+      var n = 0;
+      if (r.x < m.l + 1 || r.x + r.w > W - m.r + 2 || r.y < m.t - 14 || r.y + r.h > m.t + ih - 1) n += 50;
+      for (var i = 0; i < placed.length; i++) if (hitRect(r, placed[i])) n += 20;
+      var pad = { x: r.x - 3, y: r.y - 3, w: r.w + 6, h: r.h + 6 };
+      for (var k = 0; k < polys.length; k++) {
+        var pl = polys[k];
+        for (var j = 0; j < pl.length; j++) {
+          if (pl[j][0] > pad.x - 6 && pl[j][0] < pad.x + pad.w + 6 && pl[j][1] > pad.y - 6 && pl[j][1] < pad.y + pad.h + 6) n += 5;
+          if (j) {
+            var x1 = pl[j - 1][0], y1 = pl[j - 1][1], x2 = pl[j][0], y2 = pl[j][1], L = Math.hypot(x2 - x1, y2 - y1);
+            for (var t = 0; t <= L; t += 2) { var px = x1 + (x2 - x1) * t / L, py = y1 + (y2 - y1) * t / L; if (px > pad.x && px < pad.x + pad.w && py > pad.y && py < pad.y + pad.h) n += 1; }
+          }
+        }
+      }
+      return n;
+    }
+    function place(cands, size, weight, mono, txt) {
+      var w = tw(txt, size, weight, mono), best = null, bestN = 1e9;
+      for (var i = 0; i < cands.length; i++) {
+        var c = cands[i], r = textRect(c.x, c.y, w, c.a, size), sc = collides(r);
+        if (sc < bestN) { bestN = sc; best = c; best.r = r; }
+        if (sc === 0) break;
+      }
+      placed.push(best.r);
+      return best;
+    }
+
+    var refOut = '';
     (cfg.refs || []).forEach(function (r) {
-      o += '<line class="ref ' + r.k + '" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + ys(r.y) + '" y2="' + ys(r.y) + '"/>';
-      o += '<rect class="hit" x="' + m.l + '" y="' + (ys(r.y) - 6) + '" width="' + iw + '" height="12" data-tip="' + esc(r.tip) + '"/>';
+      var ry = ys(r.y);
+      o += '<line class="ref ' + r.k + '" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + ry + '" y2="' + ry + '"/>';
+      o += '<rect class="hit" x="' + m.l + '" y="' + (ry - 6) + '" width="' + iw + '" height="12" data-tip="' + esc(r.tip) + '"/>';
+      var rl = W < 460 && r.labelSm ? r.labelSm : r.label;
+      if (!rl) return;
+      // try both ends, inset ends and several points along the line, above then below
+      var spots = [{ x: W - m.r - 4, a: 'end' }, { x: m.l + 6, a: 'start' }, { x: W - m.r - 26, a: 'end' }, { x: m.l + 26, a: 'start' },
+        { x: m.l + iw * 0.5, a: 'middle' }, { x: m.l + iw * 0.3, a: 'middle' }, { x: m.l + iw * 0.7, a: 'middle' }];
+      var cands = [];
+      [-7, 15].forEach(function (dy) { spots.forEach(function (sp) { cands.push({ x: sp.x, y: ry + dy, a: sp.a }); }); });
+      var c = place(cands, 11, 500, true, rl);
+      refOut += '<text class="val muted" x="' + c.x + '" y="' + c.y + '" text-anchor="' + c.a + '">' + rl + '</text>';
     });
     var pts = [];
     cfg.series.forEach(function (s) {
@@ -1214,13 +1358,15 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
       });
     });
     (cfg.marks || []).forEach(function (mk) {
-      var mx = xs(mk.x), my = ys(mk.y), anchor = mx > m.l + iw * 0.7 ? 'end' : 'start', dx = anchor === 'end' ? -10 : 10;
-      o += '<text class="ann" x="' + (mx + dx) + '" y="' + (my - 10) + '" text-anchor="' + anchor + '">' + mk.t + '</text>';
+      var mx = xs(mk.x), my = ys(mk.y);
+      var c = place([
+        { x: mx - 10, y: my - 10, a: 'end' }, { x: mx + 10, y: my - 10, a: 'start' }, { x: mx, y: my - 14, a: 'middle' },
+        { x: mx + 10, y: my + 19, a: 'start' }, { x: mx - 10, y: my + 19, a: 'end' }, { x: mx + 12, y: my + 4, a: 'start' }, { x: mx - 12, y: my + 4, a: 'end' },
+        { x: mx - 10, y: my - 24, a: 'end' }, { x: mx + 10, y: my + 32, a: 'start' }
+      ], 11.5, 600, false, mk.t);
+      o += '<text class="ann" x="' + c.x + '" y="' + c.y + '" text-anchor="' + c.a + '">' + mk.t + '</text>';
     });
-    (cfg.refs || []).forEach(function (r) {
-      var rl = W < 460 && r.labelSm ? r.labelSm : r.label;
-      if (rl) o += '<text class="val muted" x="' + (r.left ? m.l + 6 : W - m.r - 4) + '" y="' + (ys(r.y) + (r.below ? 15 : -7)) + '" text-anchor="' + (r.left ? 'start' : 'end') + '">' + rl + '</text>';
-    });
+    o += refOut;
     o += '<line class="guide" x1="0" x2="0" y1="' + m.t + '" y2="' + (m.t + ih) + '"/><circle class="focus" r="6" cx="0" cy="0"/>';
     o += '<rect class="lc-hit" x="' + m.l + '" y="' + m.t + '" width="' + iw + '" height="' + ih + '" fill="transparent"/>';
     host.innerHTML = o + '</svg>';
@@ -1239,9 +1385,12 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
     hit.addEventListener('pointerleave', leave);
   }
 
+  // before → after per metric; labels sit left of the row when there is room, above it otherwise
   function dumbbell(host, cfg) {
-    var W = Math.max(280, width(host)), small = W < 460;
-    var lw = small ? 108 : 170, rowH = 62, top = 30, H = top + cfg.rows.length * rowH + 20;
+    var W = Math.max(260, width(host)), side = W >= 520;
+    var maxLab = 0;
+    cfg.rows.forEach(function (r) { maxLab = Math.max(maxLab, tw(r.label, 12, 600), tw(r.dir, 10.5, 400, true)); });
+    var lw = side ? Math.ceil(maxLab) + 22 : 14, rowH = side ? 62 : 74, top = side ? 30 : 16, H = top + cfg.rows.length * rowH + 20;
     var x0 = lw, x1 = W - 22, iw = x1 - x0;
     function xs(v) { return x0 + v * iw; }
     var o = svgOpen(W, H, cfg.aria);
@@ -1249,42 +1398,52 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
       o += '<line class="grid" x1="' + xs(t) + '" x2="' + xs(t) + '" y1="' + (top - 8) + '" y2="' + (H - 18) + '"/>' +
         '<text x="' + xs(t) + '" y="' + (H - 4) + '" text-anchor="middle">' + f(t, 2) + '</text>';
     });
-    o += '<text class="val muted" x="' + xs(0) + '" y="12">before → after</text>';
+    if (side) o += '<text class="val muted" x="' + xs(0) + '" y="12">before → after</text>';
     cfg.rows.forEach(function (r, i) {
-      var cy = top + i * rowH + rowH / 2, xa = xs(r.a), xb = xs(r.b);
-      o += '<text class="lab strong" x="' + (x0 - 12) + '" y="' + (cy - 2) + '" text-anchor="end">' + r.label + '</text>' +
-        '<text class="catsub" x="' + (x0 - 12) + '" y="' + (cy + 13) + '" text-anchor="end">' + r.dir + '</text>';
+      var cy = top + i * rowH + (side ? rowH / 2 : rowH - 22), xa = xs(r.a), xb = xs(r.b);
+      if (side) {
+        o += '<text class="lab strong" x="' + (x0 - 12) + '" y="' + (cy - 2) + '" text-anchor="end">' + r.label + '</text>' +
+          '<text class="catsub" x="' + (x0 - 12) + '" y="' + (cy + 13) + '" text-anchor="end">' + r.dir + '</text>';
+      } else {
+        o += '<text class="lab strong" x="0" y="' + (cy - 30) + '">' + r.label + '<tspan class="catsub" dx="8">' + r.dir + '</tspan></text>';
+      }
       o += '<line class="conn" x1="' + xa + '" x2="' + xb + '" y1="' + cy + '" y2="' + cy + '"/>';
       var ah = xb > xa ? -1 : 1;
       o += '<path class="f-anm" d="M' + (xb + ah * 9) + ',' + (cy - 5) + 'L' + (xb + ah * 2) + ',' + cy + 'L' + (xb + ah * 9) + ',' + (cy + 5) + 'Z" opacity=".55"/>';
       o += '<circle class="dot f-teddy" cx="' + xa + '" cy="' + cy + '" r="7.5"/><circle class="dot f-anm" cx="' + xb + '" cy="' + cy + '" r="7.5"/>';
-      o += '<text class="val muted" x="' + xa + '" y="' + (cy - 14) + '" text-anchor="middle">' + f(r.a, 2) + '</text>' +
-        '<text class="val strong" x="' + xb + '" y="' + (cy - 14) + '" text-anchor="middle">' + f(r.b, 2) + '</text>';
+      o += '<text class="val muted" x="' + xa + '" y="' + (cy - 13) + '" text-anchor="middle">' + f(r.a, 2) + '</text>' +
+        '<text class="val strong" x="' + xb + '" y="' + (cy - 13) + '" text-anchor="middle">' + f(r.b, 2) + '</text>';
       o += '<rect class="hit" x="0" y="' + (cy - rowH / 2) + '" width="' + W + '" height="' + rowH + '" data-tip="' + esc(r.tip) + '"/>';
     });
     host.innerHTML = o + '</svg>';
   }
 
   function sigStrip(host) {
-    var d = DATA.b3, W = Math.max(280, width(host)), small = W < 460;
-    var lw = small ? 112 : 190, H = 170, x0 = lw, x1 = W - 26, iw = x1 - x0, lo = 0.15, hi = 0.26;
+    var d = DATA.b3, W = Math.max(260, width(host)), side = W >= 520;
+    var rowsDef = [
+      { lab: 'Null · max share, permuted', sub: 'n = 100 permutations', lo: d.perm.lo, hi: d.perm.hi, mid: d.perm.mean, cls: 'f-neutral', tip: 'Permutation null: max top-1 share mean <b>' + f(d.perm.mean, 4) + '</b>, 95% CI ' + f(d.perm.lo, 4) + '–' + f(d.perm.hi, 4) + ' (n = 100)' },
+      { lab: 'Observed · CD5 top-1 share', sub: 'bootstrap B = 200', lo: d.boot.lo, hi: d.boot.hi, mid: d.boot.frac, cls: 'f-anm', tip: 'Observed CD5 share <b>' + f(d.boot.frac, 4) + '</b>, bootstrap 95% CI ' + f(d.boot.lo, 4) + '–' + f(d.boot.hi, 4) + ' (B = 200)' }
+    ];
+    var maxLab = 0;
+    rowsDef.forEach(function (r) { maxLab = Math.max(maxLab, tw(r.lab, 12, 600), tw(r.sub, 10.5, 400, true)); });
+    var lw = side ? Math.ceil(maxLab) + 22 : 20, x0 = lw, x1 = W - 26, iw = x1 - x0, lo = 0.15, hi = 0.26;
+    var rowY = side ? [52, 108] : [62, 150], H = side ? 170 : 208;
     function xs(v) { return x0 + (v - lo) / (hi - lo) * iw; }
     var o = svgOpen(W, H, 'Permutation null versus observed CD5 top-1 share');
     [0.15, 0.18, 0.21, 0.24].forEach(function (t) {
       o += '<line class="grid" x1="' + xs(t) + '" x2="' + xs(t) + '" y1="18" y2="' + (H - 26) + '"/><text x="' + xs(t) + '" y="' + (H - 10) + '" text-anchor="middle">' + f(t, 2) + '</text>';
     });
-    var rows = [
-      { y: 52, lab: small ? 'Null (permuted)' : 'Null · max share, permuted', sub: 'n = 100 permutations', lo: d.perm.lo, hi: d.perm.hi, mid: d.perm.mean, cls: 'f-neutral', tip: 'Permutation null: max top-1 share mean <b>' + f(d.perm.mean, 4) + '</b>, 95% CI ' + f(d.perm.lo, 4) + '–' + f(d.perm.hi, 4) + ' (n = 100)' },
-      { y: 108, lab: small ? 'Observed CD5' : 'Observed · CD5 top-1 share', sub: 'bootstrap B = 200', lo: d.boot.lo, hi: d.boot.hi, mid: d.boot.frac, cls: 'f-anm', tip: 'Observed CD5 share <b>' + f(d.boot.frac, 4) + '</b>, bootstrap 95% CI ' + f(d.boot.lo, 4) + '–' + f(d.boot.hi, 4) + ' (B = 200)' }
-    ];
-    rows.forEach(function (r) {
-      o += '<text class="lab strong" x="' + (x0 - 12) + '" y="' + (r.y - 1) + '" text-anchor="end">' + r.lab + '</text><text class="catsub" x="' + (x0 - 12) + '" y="' + (r.y + 14) + '" text-anchor="end">' + r.sub + '</text>';
-      o += '<rect class="' + r.cls + '" x="' + xs(r.lo) + '" y="' + (r.y - 9) + '" width="' + Math.max(3, xs(r.hi) - xs(r.lo)) + '" height="18" rx="4" opacity=".35"/>';
-      o += '<circle class="dot ' + r.cls + '" cx="' + xs(r.mid) + '" cy="' + r.y + '" r="7"/>';
-      o += '<text class="val strong" x="' + xs(r.mid) + '" y="' + (r.y - 15) + '" text-anchor="middle">' + f(r.mid, 3) + '</text>';
-      o += '<rect class="hit" x="0" y="' + (r.y - 24) + '" width="' + W + '" height="48" data-tip="' + esc(r.tip) + '"/>';
+    rowsDef.forEach(function (r, i) {
+      var y = rowY[i];
+      if (side) o += '<text class="lab strong" x="' + (x0 - 12) + '" y="' + (y - 1) + '" text-anchor="end">' + r.lab + '</text><text class="catsub" x="' + (x0 - 12) + '" y="' + (y + 14) + '" text-anchor="end">' + r.sub + '</text>';
+      else o += '<text class="lab strong" x="0" y="' + (y - 32) + '">' + r.lab + '<tspan class="catsub" dx="8">' + r.sub + '</tspan></text>';
+      o += '<rect class="' + r.cls + '" x="' + xs(r.lo) + '" y="' + (y - 9) + '" width="' + Math.max(3, xs(r.hi) - xs(r.lo)) + '" height="18" rx="4" opacity=".35"/>';
+      o += '<circle class="dot ' + r.cls + '" cx="' + xs(r.mid) + '" cy="' + y + '" r="7"/>';
+      o += '<text class="val strong" x="' + xs(r.mid) + '" y="' + (y - 15) + '" text-anchor="middle">' + f(r.mid, 3) + '</text>';
+      o += '<rect class="hit" x="0" y="' + (y - 24) + '" width="' + W + '" height="48" data-tip="' + esc(r.tip) + '"/>';
     });
-    o += '<text class="ann" x="' + ((xs(d.perm.hi) + xs(d.boot.lo)) / 2) + '" y="84" text-anchor="middle">p ≈ ' + d.perm.p + '</text>';
+    var py = side ? 84 : 98;
+    o += '<text class="ann" x="' + ((xs(d.perm.hi) + xs(d.boot.lo)) / 2) + '" y="' + py + '" text-anchor="middle">p ≈ ' + d.perm.p + '</text>';
     host.innerHTML = o + '</svg>';
   }
 
@@ -1298,12 +1457,12 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
       h += '<h5>' + g.title + '</h5><table class="dt"><thead><tr>' + g.cols.map(function (c) { return '<th>' + c + '</th>'; }).join('') + '</tr></thead><tbody>';
       g.rows.forEach(function (r) {
         var hl = r.hl; var cells = r.c || r;
-        h += '<tr' + (hl ? ' class="hl"' : '') + '>' + cells.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>';
+        h += '<tr' + (hl ? ' class="hl"' : '') + '>' + cells.map(function (c) { return '<td' + (String(c).indexOf(' → ') > -1 ? ' class="w"' : '') + '>' + c + '</td>'; }).join('') + '</tr>';
       });
       h += '</tbody></table>';
     });
     if (note) h += '<p class="tnote">' + note + '</p>';
-    $(sel).innerHTML = h;
+    $(sel).innerHTML = '<p class="shint">← scroll sideways for more columns →</p>' + h;
   }
 
   /* =================== block renderers =================== */
@@ -1323,7 +1482,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
         ],
         tip: function (s, i, v) {
           if (s.cls === 'f-teddy') return 'TEDDY alone keeps its O0 rule: <b>' + n(v) + '</b> abstentions' + (d.teddyOver[i] ? '<br>answers <b>' + n(d.teddyOver[i]) + '</b> cells ' + d.obs[i] + ' holds back' : '');
-          if (s.cls === 'f-anm') return 'TEDDY + ANM under ' + d.obs[i] + ': <b>' + n(v) + '</b> abstentions (' + pct(v / 16750) + ')<br>0 new labels · YAML edit';
+          if (s.cls === 'f-anm') return 'TEDDY + ANM under ' + d.obs[i] + ': <b>' + n(v) + '</b> abstentions (' + pct(v / 16750) + ')<br>0 new labels · declaration edit';
           return 'O0-trained head scored on ' + d.obs[i] + ' labels: <b>' + n(v) + '</b> abstentions (same confidence gate)';
         }
       });
@@ -1353,6 +1512,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
     groupedBars(host, {
       aria: 'Abstentions per evidence mask, TEDDY alone versus TEDDY plus ANM', mb: 50, focus: 1, maxBar: 54, yFmt: kfmt, vFmt: n,
       cats: d.masks.map(function (mk, i) { return mk + '\nANM P_f ' + f(o.pf[i], 3); }),
+      catsShort: d.masks.map(function (mk, i) { return 'P_f ' + f(o.pf[i], 3); }),
       series: [
         { name: 'TEDDY alone', cls: 'f-teddy', vals: o.teddyAb },
         { name: 'TEDDY + ANM', cls: 'f-anm', vals: o.anmAb }
@@ -1423,7 +1583,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
     var nm = { O0: 'O0', O2: 'O2', adt: 'adt_only · O0' }[S.b4];
     lineChart(host, {
       aria: 'Coverage versus Q under soft_P gating, ' + nm,
-      x: { min: 0, max: 1, reverse: true, ticks: [1, 0.8, 0.6, 0.4, 0.2, 0], ticksSm: [1, 0.6, 0.2], fmt: function (v) { return Math.round(v * 100) + '%'; }, label: 'coverage: share of cells answered (gate tightens →)' },
+      x: { min: 0, max: 1, reverse: true, ticks: [1, 0.8, 0.6, 0.4, 0.2, 0], ticksSm: [1, 0.6, 0.2], fmt: function (v) { return Math.round(v * 100) + '%'; }, label: 'coverage: share of cells answered (gate tightens →)', labelSm: 'coverage (gate tightens →)' },
       y: { min: yCfg.min, max: yCfg.max, ticks: yCfg.ticks, fmt: function (v) { return f(v, 2); }, label: 'Q among decided' },
       series: [{ k: 'k-anm', f: 'f-anm', pts: c.pts.map(function (p) {
         return { x: p[1], y: p[2], tip: 'τ = ' + f(p[0], 4) + ' · coverage <b>' + pct(p[1]) + '</b><br>Q <b>' + f(p[2], 4) + '</b> · ' + n(p[3]) + ' labelled cells answered' };
@@ -1444,18 +1604,18 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
     var d = DATA.b5, host = $('#c-b5');
     if (!width(host)) return;
     if (S.b5 === 'match') {
-      var rows = [{ label: 'TEDDY + ANM · YAML', short: 'ANM · YAML', cls: 'f-anm', v: 0, txt: '0 labels', strong: true, tip: 'ANM declared O2: <b>0</b> labels<br>abstain ' + f(d.target.ab, 3) + ' · strict ' + f(d.target.strict, 3) + ' · Q ' + f(d.target.q, 3) }];
+      var rows = [{ label: 'TEDDY + ANM · declared', short: 'ANM · declared', cls: 'f-anm', v: 0, txt: '0 labels', strong: true, tip: 'ANM declared O2: <b>0</b> labels<br>abstain ' + f(d.target.ab, 3) + ' · strict ' + f(d.target.strict, 3) + ' · Q ' + f(d.target.q, 3) }];
       d.match.forEach(function (m) {
         rows.push({ label: m[0].replace(' (Jev stand-in)', ''), short: m[0].replace(' head', '').replace(' (Jev stand-in)', '').replace('Threshold ', ''), cls: 'f-train', v: m[1], txt: '≈ ' + n(m[1]),
           tip: m[0] + ': matched at <b>' + n(m[1]) + '</b> O2 labels<br>strict ' + f(m[2], 3) + ' · abstain ' + f(m[3], 3) + ' · Q ' + f(m[4], 3) });
       });
       hBars(host, { aria: 'O2 labels needed to match ANM', max: 540, lw: 170, lwSm: 96, rowH: 40, rows: rows });
       legend('#l-b5', [['bg-anm', 'TEDDY + ANM · declared O2'], ['bg-train', 'Train + Jev heads · calibrated to ANM’s abstain rate']]);
-      cap('#cap-b5', 'O2 labels a trained head needs to reach ANM’s declared O2 operating point (abstain ≈ 0.20, strict ≈ 0.82). For ANM, adopting O2 is a YAML edit. The heads pay again at every later change of criterion.');
+      cap('#cap-b5', 'O2 labels a trained head needs to reach ANM’s declared O2 operating point (abstain ≈ 0.20, strict ≈ 0.82). For ANM, adopting O2 is a declaration edit. The heads pay again at every later change of criterion.');
     } else {
       lineChart(host, {
         aria: 'Logistic head Q versus number of O2 labels',
-        x: { min: 40, max: 13000, log: true, ticks: [50, 100, 200, 500, 1000, 2000, 5000, 10000], ticksSm: [50, 500, 5000], fmt: kfmt, label: 'O2 labels used to train (log scale)' },
+        x: { min: 40, max: 13000, log: true, ticks: [50, 100, 200, 500, 1000, 2000, 5000, 10000], ticksSm: [50, 500, 5000], fmt: kfmt, label: 'O2 labels used to train (log scale)', labelSm: 'O2 labels (log scale)' },
         y: { min: 0.93, max: 0.98, ticks: [0.93, 0.94, 0.95, 0.96, 0.97, 0.98], fmt: function (v) { return f(v, 2); }, label: 'Q among decided (abstain ≈ 0.20)' },
         series: [{ k: 'k-train', f: 'f-train', pts: d.curve.map(function (p) {
           return { x: p[0], y: p[2], tip: 'Logistic head, <b>' + n(p[0]) + '</b> O2 labels<br>Q <b>' + f(p[2], 4) + '</b> · abstain ' + f(p[1], 4) };
@@ -1576,7 +1736,13 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
 
   /* =================== wiring =================== */
   function renderBlock(key) { if (R[key]) R[key](); }
-  function renderAll() { Object.keys(R).forEach(renderBlock); }
+  function markScroll() {
+    $$('.tblwrap').forEach(function (w) {
+      var tbls = $$('table', w), over = tbls.some(function (t) { return t.scrollWidth > w.clientWidth + 1; });
+      w.classList.toggle('scrolls', over);
+    });
+  }
+  function renderAll() { Object.keys(R).forEach(renderBlock); markScroll(); }
 
   $$('.seg[data-ctl]').forEach(function (seg) {
     var key = seg.getAttribute('data-ctl'), btns = $$('button', seg);
@@ -1596,6 +1762,7 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
         tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
         panes.forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pane') === t.getAttribute('data-pane')); });
         if (t.getAttribute('data-pane') === 'chart') renderBlock(key);
+        if (t.getAttribute('data-pane') === 'data') markScroll();
       });
     });
   });
@@ -1632,6 +1799,12 @@ PYTHONPATH=/path/to/ANM:. .venv/bin/python bridge_anm/reverse_loop_small.py
     raf = requestAnimationFrame(renderAll);
   }
   window.addEventListener('resize', onResize);
+
+  var mnav = $('.mnav');
+  if (mnav) {
+    $$('.mnav-panel a', mnav).forEach(function (a) { a.addEventListener('click', function () { mnav.open = false; }); });
+    document.addEventListener('click', function (e) { if (mnav.open && !mnav.contains(e.target)) mnav.open = false; });
+  }
 
   /* =================== theme =================== */
   var root = document.documentElement, btn = $('#themeBtn'), stored = null;

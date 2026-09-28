@@ -116,6 +116,11 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .stepbtn[aria-selected="true"] { color: var(--ink); border-color: var(--ink); }
 .stepbtn[aria-selected="true"] .dot { background: var(--ink); color: var(--bg); }
 .stepbtn.done .dot { background: var(--accent-soft); color: var(--accent); }
+@media (max-width: 560px) {
+  .stepper-nav { display: grid; grid-template-columns: repeat(4, 1fr); overflow: visible; }
+  .stepbtn { flex-direction: column; justify-content: center; gap: .3rem; padding: .55rem .2rem; font-size: .74rem; text-align: center; }
+  .stepbtn .dot { width: 1.4rem; height: 1.4rem; }
+}
 .progress { height: 3px; background: var(--bg-soft); border-radius: 2px; margin: 0 0 1rem; overflow: hidden; }
 .progress i { display: block; height: 100%; background: var(--accent); width: 25%; transition: width .35s ease; }
 .panel { display: none; padding: 1.25rem; }
@@ -131,6 +136,8 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
   padding: .45rem .95rem; font: inherit; font-size: .86rem; font-weight: 600; cursor: pointer; }
 .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .btn:disabled { opacity: .35; cursor: default; }
+.btn { white-space: nowrap; }
+@media (max-width: 560px) { .panel-foot .kbd { display: none; } .panel-foot .btn { padding: .45rem .8rem; font-size: .8rem; } }
 .kbd { font-size: .75rem; color: var(--ink-faint); }
 .two { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.25rem; align-items: start; }
 @media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
@@ -150,7 +157,12 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 /* bars */
 .hbars { display: grid; gap: .45rem; }
 .hbar { display: grid; grid-template-columns: 9.5rem 1fr 3.6rem; align-items: center; gap: .6rem; font-size: .82rem; }
-@media (max-width: 520px) { .hbar { grid-template-columns: 6.8rem 1fr 3.2rem; font-size: .76rem; } }
+@media (max-width: 520px) {
+  .hbar { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "lab lab" "trk val"; row-gap: 3px; font-size: .78rem; }
+  .hbar .lab { grid-area: lab; white-space: normal; overflow: visible; }
+  .hbar .trk { grid-area: trk; }
+  .hbar .val { grid-area: val; min-width: 3.2rem; }
+}
 .hbar .lab { color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hbar .trk { height: 14px; position: relative; }
 .hbar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--bar-neutral); transition: width .45s ease; }
@@ -198,9 +210,10 @@ h1 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.12; letter-spacing:
 .armdetail { margin-top: .9rem; }
 
 /* controls */
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--bg-elev); flex-wrap: wrap; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 14px; padding: 2px; background: var(--bg-elev); flex-wrap: wrap; }
+@media (max-width: 560px) { .controls .seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); width: 100%; } .seg button { text-align: center; } }
 .seg button { border: 0; background: transparent; color: var(--ink-muted); font: inherit; font-size: .8rem; font-weight: 600;
-  padding: .32rem .75rem; border-radius: 999px; cursor: pointer; }
+  padding: .32rem .75rem; border-radius: 11px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .controls { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: center; margin: 0 0 1rem; }
 .controls .cl { font-size: .75rem; color: var(--ink-faint); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
@@ -416,7 +429,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
           <h3>3 · Complement — three cheap arms, no TEDDY retrain</h3>
           <p class="q">Pick an arm to see what changes. Each is a different answer to “what should fill the gap?”</p>
           <div class="armgrid" id="armgrid">
-            <button class="arm" aria-pressed="false" data-arm="a"><span class="tag obs">(a) observer only</span><div class="an">Rewrite the observer</div><div class="ad">O1 / O2 YAML. Same evidence, stricter question.</div></button>
+            <button class="arm" aria-pressed="false" data-arm="a"><span class="tag obs">(a) observer only</span><div class="an">Rewrite the observer</div><div class="ad">O1 / O2 declarations. Same evidence, a different question.</div></button>
             <button class="arm" aria-pressed="true" data-arm="b"><span class="tag typ">(b) typed evidence</span><div class="an">Admit true ADT as typed events</div><div class="ad">+ O0 or O1. New evidence channel in ANM.</div></button>
             <button class="arm" aria-pressed="false" data-arm="c"><span class="tag geo">(c) feature swap</span><div class="an">Concatenate into z⁺</div><div class="ad">ADT features glued onto geometry.</div></button>
           </div>
@@ -506,7 +519,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
           <div class="cap4">
             <div class="row"><div class="hd">ANM</div><div class="hd">Feature-swap substitute</div></div>
             <div class="row"><div class="a"><b>Typed evidence</b><br />δu events into ANM <code>finite_field</code>, each with a declared source</div><div class="g">Floats concatenated into <code>z⁺</code> — no decision semantics</div></div>
-            <div class="row"><div class="a"><b>Editable observer</b><br />O0 → O1 YAML (threshold 0.12→0.28, key-marker boost ×2)</div><div class="g">Retrain / retune readout weights</div></div>
+            <div class="row"><div class="a"><b>Editable observer</b><br />O0 → O1 declaration (threshold 0.12→0.28, key-marker boost ×2)</div><div class="g">Retrain / retune readout weights</div></div>
             <div class="row"><div class="a"><b>Abstain</b><br />Declared silence when evidence is insufficient</div><div class="g">Softmax still answers</div></div>
             <div class="row"><div class="a"><b>Verify</b><br />Same must-pairs → false_agree / Q / soft_sep</div><div class="g">Cosine drop ≠ decision ownership</div></div>
           </div>
@@ -525,7 +538,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
           <li>Veto → complement → verify on must-separate pairs</li>
           <li><code>z_512</code> alone is insufficient for readout on these pairs</li>
           <li>True ADT as typed <b>complement</b> evidence — explicit probe only</li>
-          <li>Editable observer YAML (O1) without TEDDY retrain</li>
+          <li>Editable observer declaration (O1) without TEDDY retrain</li>
           <li>Production path keeps holdout ADT <b>verifier-only</b></li>
         </ul></div>
         <div class="card col out"><h3>Not claimed</h3><ul>

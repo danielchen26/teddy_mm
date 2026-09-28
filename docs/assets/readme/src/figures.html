@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>README figures</title>
+<!-- Source for docs/assets/readme/*.png. Render: node scripts/render_readme_figures.mjs -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #f0efe9;
+  --ink: #16181a; --ink-muted: #565b62; --ink-faint: #868b92; --line: #dcd9d0;
+  --accent: #0d6e6e; --accent-soft: #dcefee;
+  --s-teddy: #c8641f; --s-anm: #008c7e; --s-train: #6554c9;
+  --dot: rgba(22,24,26,.075);
+  --font: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --bg-elev: #161b22; --bg-soft: #1c2129;
+  --ink: #e6edf3; --ink-muted: #9da7b3; --ink-faint: #6e7681; --line: #30363d;
+  --accent: #5ec4c4; --accent-soft: #10302f;
+  --s-teddy: #d27a3a; --s-anm: #12a394; --s-train: #9180ea;
+  --dot: rgba(230,237,243,.06);
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 20px; background: #888; font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.fig { width: 1000px; background: var(--bg); border-radius: 18px; position: relative; overflow: hidden; margin-bottom: 24px; }
+.mono { font-family: var(--mono); }
+
+/* ---------- hero ---------- */
+#hero { padding: 40px 44px 38px; display: grid; grid-template-columns: 1.08fr .92fr; gap: 36px; align-items: center; }
+#hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(var(--dot) 1px, transparent 1.3px); background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(115deg, #000 20%, transparent 85%); mask-image: linear-gradient(115deg, #000 20%, transparent 85%); }
+#hero > * { position: relative; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+.brand i { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--s-teddy), var(--s-anm)); }
+.brand span { color: var(--ink-faint); font-weight: 500; }
+.h1 { font-size: 42px; line-height: 1.07; letter-spacing: -.035em; font-weight: 700; margin: 22px 0 14px; }
+.h1 .t { color: var(--s-teddy); } .h1 .a { color: var(--s-anm); }
+.lede { font-size: 16px; line-height: 1.55; color: var(--ink-muted); margin: 0; max-width: 470px; }
+.lede b { color: var(--ink); font-weight: 600; }
+.meta { margin-top: 20px; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--ink-muted);
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; }
+.meta i { width: 6px; height: 6px; border-radius: 50%; background: var(--s-anm); }
+.pipe { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 18px; padding: 22px 16px 14px; }
+.pg { position: relative; border-radius: 13px; padding: 8px 12px; border: 1px solid var(--line); }
+.pg + .pg { margin-top: 20px; }
+.pg-t { background: color-mix(in srgb, var(--s-teddy) 7%, var(--bg-elev)); border-color: color-mix(in srgb, var(--s-teddy) 35%, var(--line)); }
+.pg-a { background: color-mix(in srgb, var(--s-anm) 9%, var(--bg-elev)); border-color: color-mix(in srgb, var(--s-anm) 48%, var(--line)); }
+.pg-lab { position: absolute; top: -10px; left: 12px; font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  padding: 1px 8px; border-radius: 999px; background: var(--bg-elev); border: 1px solid currentColor; }
+.pg-t .pg-lab { color: var(--s-teddy); } .pg-a .pg-lab { color: var(--s-anm); }
+.node { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 7px 0; }
+.node + .node { border-top: 1px dashed color-mix(in srgb, var(--ink-faint) 35%, transparent); }
+.ico { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--bg-elev); border: 1px solid var(--line); color: var(--ink-muted); }
+.pg-a .ico { color: var(--s-anm); }
+.node b { display: block; font-size: 14px; line-height: 1.3; }
+.node span { display: block; font-size: 12px; color: var(--ink-muted); line-height: 1.35; }
+.outs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 6px 0 4px; }
+.outs div { text-align: center; font-size: 12.5px; font-weight: 600; padding: 6px 2px; border-radius: 9px; background: var(--bg-elev); border: 1px solid var(--line); }
+
+/* ---------- why ---------- */
+#why { padding: 26px 36px 26px; }
+.fh { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 20px; }
+.fh h2 { margin: 0; font-size: 26px; letter-spacing: -.03em; }
+.fh p { margin: 4px 0 0; font-size: 14px; color: var(--ink-muted); }
+.fh p.lead { margin: 0; font-size: 15px; color: var(--ink); font-weight: 500; }
+.legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink-muted); white-space: nowrap; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 15px; padding: 16px 16px 14px; display: flex; flex-direction: column; }
+.card .k { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--ink-muted); }
+.card .k i { font-style: normal; width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; background: var(--ink); color: var(--bg); font-family: var(--mono); font-size: 11.5px; }
+.card .v { font-size: 30px; font-weight: 700; letter-spacing: -.03em; margin: 10px 0 4px; font-variant-numeric: tabular-nums; line-height: 1.1; white-space: nowrap; }
+.card .v .f { color: var(--ink-faint); font-weight: 500; } .card .v .to { color: var(--s-anm); } .card .v small { font-size: 16px; color: var(--ink-faint); font-weight: 500; }
+.card .c { font-size: 13.5px; line-height: 1.45; margin: 0 0 12px; flex: 1; }
+.card .vs { font-size: 12.5px; line-height: 1.45; color: var(--ink-muted); padding: 8px 10px; border-radius: 10px; background: color-mix(in srgb, var(--s-teddy) 7%, var(--bg-elev));
+  border: 1px solid color-mix(in srgb, var(--s-teddy) 22%, var(--line)); }
+.card .vs b { color: var(--s-teddy); font-weight: 600; }
+.foot { margin-top: 16px; display: flex; justify-content: space-between; gap: 16px; font-size: 12.5px; color: var(--ink-muted); }
+.foot b { color: var(--ink); font-weight: 600; }
+
+/* ---------- how ---------- */
+#how { padding: 26px 36px 28px; }
+.steps { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: stretch; }
+.step { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 15px; padding: 16px 16px 14px; }
+.step.t { border-top: 3px solid var(--s-teddy); } .step.o { border-top: 3px solid var(--ink-faint); } .step.a { border-top: 3px solid var(--s-anm); }
+.step .n { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing: .05em; }
+.step h3 { margin: 4px 0 8px; font-size: 17px; letter-spacing: -.015em; }
+.step ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.step li { font-size: 13px; line-height: 1.4; color: var(--ink-muted); padding-left: 14px; position: relative; }
+.step li::before { content: ""; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-faint); }
+.step .tag { display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 11.5px; padding: 3px 8px; border-radius: 7px; border: 1px solid var(--line); color: var(--ink); background: var(--bg-soft); }
+.arrow { display: grid; place-items: center; color: var(--ink-faint); }
+.vsrow { margin-top: 16px; display: grid; grid-template-columns: auto 1fr 1fr; gap: 10px; align-items: center; }
+.vsrow .lbl { font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint); padding-right: 6px; }
+.vsrow .arm { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-elev); font-size: 13px; color: var(--ink-muted); }
+.vsrow .arm i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.vsrow .arm b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- =============== HERO =============== -->
+<div class="fig" id="hero">
+  <div>
+    <div class="brand"><i></i>TEDDY <span>×</span> ANM</div>
+    <div class="h1">Keep <span class="t">TEDDY</span> frozen.<br />Make its answers editable, honest and auditable with <span class="a">ANM</span>.</div>
+    <p class="lede">A <b>declared decision layer</b> on top of TEDDY’s CITE-seq protein predictions: change the question without labels, abstain on weak evidence, explain every call. Tested head-to-head; <b>TEDDY is never retrained</b>.</p>
+    <div class="meta"><i></i>CITE-seq · NeurIPS 2021 BMMC · site4 holdout · 16,750 cells</div>
+  </div>
+  <div class="pipe">
+    <div class="pg pg-t">
+      <span class="pg-lab">TEDDY · unchanged</span>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>CITE-seq cell</b><span>RNA in; true ADT held out as the verifier</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span><div><b>TEDDY-G 70M · frozen</b><span>mean-pooled embedding z_512</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span><div><b>9-protein panel → typed evidence δu</b><span>B · T · myeloid lineage markers</span></div></div>
+    </div>
+    <div class="pg pg-a">
+      <span class="pg-lab">ANM · added</span>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></svg></span><div><b>Declared observer O0 / O1 / O2</b><span>P_f workability · Q_f exactness</span></div></div>
+      <div class="outs"><div>call</div><div>abstain</div><div>why</div><div>trust</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============== WHY =============== -->
+<div class="fig" id="why">
+  <div class="fh">
+    <div><p class="lead">Same frozen TEDDY predictions in every comparison. Holdout truth only verifies.</p></div>
+    <div class="legend"><span><i style="background:var(--s-anm)"></i>TEDDY + ANM</span><span><i style="background:var(--s-teddy)"></i>TEDDY alone / alternative</span></div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="k"><i>1</i>Edit the question</div><div class="v"><span class="to">0</span> <small>labels</small></div>
+      <p class="c">to switch the decision criterion O0 → O2. ANM abstentions follow it: 317 → 834 → 3,373.</p>
+      <div class="vs"><b>TEDDY alone</b> keeps its old rule and still answers 1,752 cells that O2 holds back.</div></div>
+    <div class="card"><div class="k"><i>2</i>Missing modality</div><div class="v"><span class="f">0</span> → <span class="to">1,664</span></div>
+      <p class="c">honest abstentions when RNA is missing (<span class="mono">adt_only</span>); mean P_f drops to 0.868.</p>
+      <div class="vs"><b>TEDDY alone</b> answers every cell anyway, at Q 0.63.</div></div>
+    <div class="card"><div class="k"><i>3</i>Attribution</div><div class="v"><span class="to">16,433</span></div>
+      <p class="c">cells get a per-marker reason: leave-one-out + flip distance on the declared field (p ≈ 0.0099).</p>
+      <div class="vs"><b>TEDDY alone</b> has no declared field to explain a call.</div></div>
+    <div class="card"><div class="k"><i>4</i>Scope gate</div><div class="v"><span class="f">0.945</span> → <span class="to">0.998</span></div>
+      <p class="c">Q of TEDDY’s own calls when keeping the top 40% by ANM soft_P.</p>
+      <div class="vs"><b>Hard cells</b> ANM flags score Q 0.810 vs 0.946 for random cells.</div></div>
+    <div class="card"><div class="k"><i>5</i>Zero-label transfer</div><div class="v"><span class="to">0</span> <small>vs</small> <span class="f">50–500</span></div>
+      <p class="c">new labels to reach ANM’s O2 operating point (ANM vs trained heads).</p>
+      <div class="vs"><b>Trained heads</b> can buy the numbers, not an editable field.</div></div>
+    <div class="card"><div class="k"><i>6</i>Decision loop</div><div class="v"><span class="f">0.85</span> → <span class="to">0.40</span></div>
+      <p class="c">false agreement on myeloid↔T cells that TEDDY’s z_512 can’t tell apart (cos 0.982).</p>
+      <div class="vs"><b>Feature swap</b> into z⁺ makes the global must-rate worse (−0.27).</div></div>
+  </div>
+  <div class="foot"><span><b>Accuracy is not the claim:</b> like-for-like Q among decided cells is within 0.02 of TEDDY alone.</span><span>Not clinical · no Pearson claim beyond ≈ 0.61</span></div>
+</div>
+
+<!-- =============== HOW =============== -->
+<div class="fig" id="how">
+  <div class="fh"><div><p class="lead">ANM never touches TEDDY. It adds a declared decision layer on top of TEDDY’s predictions.</p></div></div>
+  <div class="steps">
+    <div class="step t"><span class="n">STEP 1</span><h3>TEDDY stays frozen</h3>
+      <ul><li>RNA → TEDDY-G 70M → z_512</li><li>Head predicts 9 surface proteins</li><li>Exported per cell as typed evidence δu</li></ul>
+      <span class="tag">export_cite_events.py</span></div>
+    <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="step o"><span class="n">STEP 2</span><h3>Declare the question</h3>
+      <ul><li>Observer O0 / O1 / O2</li><li>Threshold, key-marker boost, lineage weights</li><li>A config edit: no labels, no retrain</li></ul>
+      <span class="tag">lineage_panels.py · CRITERIA</span></div>
+    <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="step a"><span class="n">STEP 3</span><h3>ANM decides, per cell</h3>
+      <ul><li>Call a lineage, or abstain</li><li>P_f workability · Q_f exactness</li><li>Leave-one-out reason + flip distance</li></ul>
+      <span class="tag">ANM finite_field</span></div>
+  </div>
+  <div class="vsrow">
+    <span class="lbl">Compared against</span>
+    <div class="arm"><i style="background:var(--s-teddy)"></i><span><b>TEDDY alone</b> · same predictions, a fixed argmax rule</span></div>
+    <div class="arm"><i style="background:var(--s-train)"></i><span><b>Train + Jev</b> · a head trained on new labels</span></div>
+  </div>
+</div>
+
+<script>
+  var t = (location.search.match(/theme=(\w+)/) || [])[1];
+  if (t) document.documentElement.setAttribute('data-theme', t);
+</script>
+</body>
+</html>
