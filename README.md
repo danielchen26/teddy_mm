@@ -123,7 +123,7 @@ The three questions used throughout: **soft rule** ([O0](#t-o0)), **strict rule*
 
 Every block follows the same protocol:
 
-- **Same frozen TEDDY.** `best.pt` is never retrained; TEDDY alone and ANM read the same 9 predicted proteins per cell, and the trained head also gets the first 32 numbers of TEDDY's embedding. Exception: without RNA TEDDY can't run, so a protein-only [stand-in](#t-adtonly) supplies the evidence in Block 2's RNA-missing condition (and Block 4's RNA-missing view, which reuses it); Block 2's [both](#t-joint) condition averages TEDDY's predictions with it.
+- **Same frozen TEDDY.** `best.pt` is never retrained; TEDDY alone and ANM read the same 9 predicted proteins per cell, and in Blocks 1 and 5 the trained heads also get the first 32 numbers of TEDDY's embedding. Exception: without RNA TEDDY can't run, so a protein-only [stand-in](#t-adtonly) supplies the evidence in Block 2's RNA-missing condition (and Block 4's RNA-missing view, which reuses it); Block 2's [both](#t-joint) condition averages TEDDY's predictions with it.
 - **Same cells.** 16,750 [held-out cells](#t-holdout) from site4, plus an [out-of-site check](#t-ood) on 2,000 more.
 - **Truth only checks answers.** The measured proteins ([ADT](#t-adt)) score the calls. Labelled exceptions also feed them into the evidence: Block 2's RNA-missing [stand-in](#t-adtonly) reconstructs the panel from them (half of [both](#t-joint) too; reused in Block 4's RNA-missing view), and Block 6's [complement](#t-complement) test uses them directly.
 - **Decision metrics first.** Declining when unsure, label cost, per-marker reasons, coverage vs accuracy, false agreement. Accuracy is reported, never the win condition.
@@ -132,7 +132,7 @@ Every block follows the same protocol:
 |---|---|---|
 | TEDDY alone | Predicted proteins → a score per lineage → pick the best one if it clears a threshold (the soft rule) | Re-tune the rule on new labels |
 | **TEDDY + ANM** | The same predictions as typed evidence → [ANM's decision engine](#t-finitefield) under a written-down question | **Edit the question: 0 labels, no retrain** |
-| [Train + Jev](#t-train) | A classifier trained on labels over TEDDY's 9 predictions plus 32 numbers of its embedding (logistic, MLP; the threshold grid uses the 9 only; a Jev-class stand-in) | Collect labels and retrain |
+| [Train + Jev](#t-train) | A classifier trained on labels, standing in for a Jev-class judge: logistic/MLP heads on TEDDY's 9 predictions plus 32 embedding numbers (Blocks 1, 5), heads on the 9 values only (Blocks 2, 4), and a re-tuned threshold grid (Block 5). Not TypeSafe AI's [Jev](#t-jev), which can't be trained on labels and was never called here | Collect labels and retrain |
 
 ## Results by block
 
@@ -227,7 +227,8 @@ Edit a question's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](brid
 | <a name="t-flip"></a>**Flip distance** | How much one marker’s value must change before the call switches lineage. Small means a fragile call. |
 | <a name="t-bootstrap"></a>**Bootstrap** | Resample the cells with replacement (200 times) to see how stable a number is; gives a 95% interval. |
 | <a name="t-permutation"></a>**Permutation test** | Shuffle the data many times to see how often a pattern this strong appears by chance. Here p ≈ 0.0099 over 100 shuffles. |
-| <a name="t-train"></a>**Train + Jev · trained head** | The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over TEDDY’s outputs: the 9 predictions plus the first 32 numbers of TEDDY’s embedding (the threshold grid uses the 9 only). A stand-in for a Jev-class learner, not the live Jev API. |
+| <a name="t-train"></a>**Train + Jev · trained head (Jev-class stand-in)** | The “just train harder” control: a small classifier fitted on labelled cells, playing the role of a Jev-class judge (one probability per option, trained on the task’s own labels, as in the anm-jev repo). It is not TypeSafe AI’s Jev, which is zero-shot, cannot be trained on labels and was never called here. Its inputs depend on the block: logistic and MLP heads on TEDDY’s 9 predictions plus the first 32 embedding numbers (Blocks 1 and 5), heads on the 9 values only (Blocks 2 and 4), and in Block 5 also a re-tuned threshold grid on TEDDY alone’s rule. |
+| <a name="t-jev"></a>**Jev (TypeSafe AI)** | TypeSafe AI’s “System One” decision model (jev-1.13), closed and reached only through its API. It answers typed questions (a Choice over named options, a Score, or yes/no) with calibrated probabilities and no rationale text. TypeSafe post-trains it (RLCD); it is used zero-shot and cannot be trained or fine-tuned on your labels. This repo never calls it. |
 | <a name="t-z512"></a>**TEDDY embedding (z_512)** | TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024. |
 | <a name="t-mustpair"></a>**Must-separate pair** | Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree under the 3-lineage answer key, for example one keyed myeloid and one keyed T. Many of the “myeloid” cells in these pairs are NK cells, which the key has no class for. |
 | <a name="t-veto"></a>**Veto** | The loop’s first check, a step outside ANM’s engine: it flags pairs that TEDDY’s embedding puts together (cosine ≥ 0.98) although their measured proteins disagree, so a readout built on the embedding should not be trusted there. |
@@ -279,7 +280,7 @@ teddy_mm/
 
 - [Mode A](#t-modea): studying TEDDY's internals (residual stream, layer Jacobians, in-silico gene perturbations)
 - The loop as TEDDY's representation responding to perturbations
-- Pearson above phase-1 ≈ 0.61 · fusion audit · ATAC / chromatin · clinical superiority · the live Jev API
+- Pearson above phase-1 ≈ 0.61 · fusion audit · ATAC / chromatin · clinical superiority · anything about TypeSafe AI's Jev itself (never called here)
 
 **Honest weak spots.** With RNA missing TEDDY can’t run: Block 2’s evidence then comes from a weak protein-only stand-in (panel Pearson 0.446), and its “no calls” follow a trust factor we declared (0.35). Block 4 trades coverage for accuracy, and under the key-marker rule accuracy dips at very low coverage. Block 6 uses measured protein as the evidence, in place of TEDDY's predictions, in one explicit test; in normal use it stays the answer key.
 

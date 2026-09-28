@@ -43,6 +43,43 @@ aside.guide [hidden] { display: none !important; }
 .g-node.on .n { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .g-node.on .s { color: var(--ink); font-weight: 600; }
 
+/* phase × mode plane: x = phase (building the evidence), y = mode (how ANM uses TEDDY); origin bottom-left */
+.g-plane { position: relative; padding: 0 0 18px 16px; }
+.gp-grid { display: grid; grid-template-columns: 4.4rem minmax(0, 1fr) minmax(0, 1fr); gap: 5px; border-left: 2px solid var(--ink-faint); border-bottom: 2px solid var(--ink-faint); padding: 0 0 5px 5px; }
+.gp-rl, .gp-cl { font-size: .66rem; line-height: 1.25; color: var(--ink-muted); }
+.gp-rl { display: flex; flex-direction: column; justify-content: center; }
+.gp-cl { text-align: center; padding-top: 3px; }
+.gp-rl .term, .gp-cl .term { font-weight: 700; color: var(--ink); font-size: .72rem; }
+.gp-rl small, .gp-cl small { display: block; font-size: .6rem; color: var(--ink-faint); }
+.gp-corner { min-height: 0; }
+.gp-cell { position: relative; border-radius: 9px; padding: 6px 7px 7px; border: 1px solid var(--line); background: var(--g-card); min-height: 58px; transition: box-shadow .2s ease, border-color .2s ease; }
+.gp-cell .gp-st { display: inline-block; font-family: var(--mono); font-size: .56rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 1px 6px; border-radius: 999px; }
+.gp-cell .gp-tx { display: block; margin-top: 4px; font-size: .64rem; line-height: 1.3; color: var(--ink-muted); }
+.gp-cell.done { background: color-mix(in srgb, var(--g-anm) 12%, var(--g-card)); border-color: color-mix(in srgb, var(--g-anm) 40%, var(--line)); }
+.gp-cell.done .gp-st { background: var(--g-anm); color: var(--bg); }
+.gp-cell.part { background: color-mix(in srgb, var(--g-teddy) 9%, var(--g-card)); border-color: color-mix(in srgb, var(--g-teddy) 35%, var(--line)); border-style: dashed; }
+.gp-cell.part .gp-st { background: color-mix(in srgb, var(--g-teddy) 22%, transparent); color: var(--ink); }
+.gp-cell.no { background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--ink) 4%, transparent) 6px 12px), var(--g-card); }
+.gp-cell.no .gp-st { background: var(--g-track); color: var(--ink-muted); }
+.gp-cell.on { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent); }
+.gp-pin { display: none; position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+.gp-cell.on .gp-pin { display: block; }
+.gp-axes { position: absolute; left: 0; right: 0; bottom: 0; top: 0; pointer-events: none; font-family: var(--mono); font-size: .58rem; font-weight: 600; color: var(--ink-faint); letter-spacing: .04em; }
+.gp-axes span:first-child { position: absolute; left: -2px; top: 0; writing-mode: vertical-rl; transform: rotate(180deg); }
+.gp-axes span:last-child { position: absolute; right: 0; bottom: 0; }
+/* larger copy on the page */
+.g-plane.big { max-width: 640px; padding-left: 20px; --g-card: var(--bg-elev); --g-track: color-mix(in srgb, var(--ink) 9%, transparent);
+  --g-teddy: var(--s-teddy, var(--bar-base, #c8641f)); --g-anm: var(--s-anm, var(--bar-win, #008c7e)); }
+.g-plane.big .gp-grid { grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.g-plane.big .gp-rl, .g-plane.big .gp-cl { font-size: .8rem; }
+.g-plane.big .gp-rl .term, .g-plane.big .gp-cl .term { font-size: .88rem; }
+.g-plane.big .gp-rl small, .g-plane.big .gp-cl small { font-size: .72rem; }
+.g-plane.big .gp-cell { padding: 10px 12px 11px; min-height: 76px; }
+.g-plane.big .gp-cell .gp-st { font-size: .64rem; }
+.g-plane.big .gp-cell .gp-tx { font-size: .8rem; }
+.g-plane.big .gp-axes { font-size: .66rem; }
+@container main (max-width: 480px) { .g-plane.big .gp-grid { grid-template-columns: 4.6rem minmax(0, 1fr) minmax(0, 1fr); } .g-plane.big .gp-cell .gp-tx { font-size: .7rem; } }
+
 /* how ANM decides here: a numbered workflow */
 .g-how-t { font-size: .92rem; font-weight: 700; line-height: 1.35; margin-bottom: 10px; }
 .g-howl { list-style: none; margin: 0; padding: 0; counter-reset: gh; }

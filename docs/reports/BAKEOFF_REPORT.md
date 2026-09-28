@@ -1,5 +1,7 @@
 # 3-way Bakeoff: TEDDY alone × TEDDY+ANM × TEDDY+Jev-class
 
+> **Reading note on “Jev”.** Jev is TypeSafe AI’s closed “System One” decision model: used zero-shot through its API, it cannot be trained or fine-tuned on task labels. The “Jev-class” / “TEDDY+Jev 站位” arm in this report is a label-trained stand-in (log-loss logistic regression and an MLP on TEDDY’s 9 predictions plus 32 embedding numbers), in the spirit of `anm-jev`’s Jev-class judge. It is not Jev, the real Jev API was never called in this repo, and “RLCD stand-in” means a supervised log-loss analogue, not RLCD itself.
+
 ## 中文摘要（给 Daniel）
 
 在 **同一批 CITE test/site4 细胞**（500 eval / 1500 train pool）上做三臂对照，证明 ANM 带来的根本变化：**准则可声明编辑**（O0→O1 只改 YAML/阈值/key-marker boost，**零端点标签拟合**），并给出场上的 **留一归因 + 翻转距离**；Jev-class 站位与 TEDDY-alone 在准则切换时必须 **用新准则标签重调/重训**，否则准确率漂移或「静默错误」。

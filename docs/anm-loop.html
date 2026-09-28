@@ -625,6 +625,8 @@ window.GUIDE_CONFIG = (function () {
       return 'loop-' + (on ? +on.id.slice(1) + 1 : 1);
     },
     allTerms: 'index.html#gloss', allTermsLabel: 'All terms (homepage)',
+    // the whole loop is Mode B on phase-1 evidence; the claim boundary also points at Mode A
+    planeDefault: ['B1'], planeBySection: { boundary: ['B1', 'A1', 'A2'] },
     sections: {
       overview: {
         label: 'Overview', plain: 'TEDDY sees some myeloid and T cells as the same; the loop flags them, swaps in the missing evidence and checks again.', steps: ['expect', 'veto', 'complement', 'verify', 'scoreboard'],

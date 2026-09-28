@@ -154,6 +154,7 @@ h1 .a { color: var(--s-anm); }
 .intro b { color: var(--ink); }
 
 /* setup */
+.plane-host { margin: 4px 0 14px; }
 .roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 @container main (max-width: 900px) { .roles { grid-template-columns: 1fr; } }
 .rolec { padding: 18px 20px 16px; border-top: 3px solid var(--line); }
@@ -617,20 +618,35 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </div>
       </div>
 
+      <p class="subh" style="margin-top:28px">Two separate axes: phases build the evidence, modes say how ANM uses TEDDY</p>
+      <div id="plane-main" class="plane-host"></div>
+      <div class="capwrap card">
+        <table class="capm axes">
+          <thead><tr><th scope="col"></th><th scope="col">Axis</th><th scope="col">What it is</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="term" data-term="phase1">Phase 1</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">Frozen TEDDY turns RNA into an embedding once; a small head trained in this repo maps it to all 134 surface proteins. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595).</td><td class="win" data-arm="Status">Done. Every block uses its predictions.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">A multimodal fusion model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both). No ANM inside.</td><td data-arm="Status">Unfinished: a 6-epoch scaffold run, test Pearson 0.25–0.27. Used only as the RNA-missing stand-in: in Block 2 (and half of “both”), reused in Block 4’s RNA-missing view.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM as a decision layer on TEDDY’s outputs: the phase-1 predictions, with labelled exceptions that use the phase-2 stand-in or measured protein.</td><td class="win" data-arm="Status">Done: the six blocks (Block 6 under review).</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM inside TEDDY: its residual stream as ANM’s field, layer Jacobians, in-silico gene perturbations.</td><td data-arm="Status">Not done.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-note"><b>Why two words.</b> Phases are steps in building the model that supplies the evidence: phase 2 was meant to extend phase 1. Modes are not steps but two alternative ways for ANM to engage with TEDDY: on its outputs (B) or inside it (A). The axes are independent. Even unfinished, phase 2 already feeds Mode B as the RNA-missing stand-in (Blocks 2 and 4). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against TEDDY’s; that would still be Mode B, not Mode A.</p>
+
       <p class="subh" style="margin-top:28px">What we compare · three arms, six questions</p>
       <div class="arms3">
         <div class="arm card"><span class="sw bg-teddy"></span><div><span class="role">Baseline</span><h3>TEDDY alone</h3><p>TEDDY’s predictions plus its fixed rule: average each lineage’s markers, call the best if it clears a bar.</p></div></div>
         <div class="arm card"><span class="sw bg-anm"></span><div><span class="role">Treatment</span><h3>TEDDY + ANM</h3><p>The same predictions, decided by ANM under a written-down question.</p></div></div>
-        <div class="arm card"><span class="sw bg-train"></span><div><span class="role">Control</span><h3>Train + Jev</h3><p>“Just train harder”: a classifier fitted on labels over TEDDY’s outputs.</p></div></div>
+        <div class="arm card"><span class="sw bg-train"></span><div><span class="role">Control</span><h3>Train + Jev</h3><p>“Just train harder”: a classifier fitted on labels over TEDDY’s outputs, a stand-in for a <span class="term" data-term="train">Jev-class</span> judge. Not TypeSafe AI’s <span class="term" data-term="jev">Jev</span>, which can’t be trained on labels and wasn’t called here.</p></div></div>
       </div>
       <div class="capwrap card">
         <table class="capm cmp6">
           <thead><tr><th scope="col">Question (block)</th><th scope="col"><i class="bg-teddy"></i>TEDDY alone</th><th scope="col"><i class="bg-anm"></i>TEDDY + ANM</th><th scope="col"><i class="bg-train"></i>Train + Jev</th></tr></thead>
           <tbody>
             <tr><th scope="row"><a href="#edit">1 · Change the question</a></th><td class="c-t" data-arm="TEDDY alone">Keeps its old rule until re-tuned on labels; answers 1,752 cells the key-marker question holds back</td><td class="win c-a" data-arm="TEDDY + ANM">Edit the written question, 0 labels: “no calls” follow it, 317 → 834 → 3,373</td><td class="c-r" data-arm="Train + Jev">“No calls” stay at 185 until retrained on new labels</td></tr>
-            <tr><th scope="row"><a href="#missing">2 · RNA is missing</a></th><td class="c-t" data-arm="TEDDY alone">TEDDY can’t run; its rule on a protein-only stand-in answers every cell (accuracy 0.63)</td><td class="win c-a" data-arm="TEDDY + ANM">Follows a declared trust (0.35) in the stand-in: 1,664 “no calls”, 86.8% still called</td><td class="c-r" data-arm="Train + Jev">Re-tuned on the stand-in: accuracy 0.68–0.70 even with 1,000 labels</td></tr>
+            <tr><th scope="row"><a href="#missing">2 · RNA is missing</a></th><td class="c-t" data-arm="TEDDY alone">TEDDY can’t run; its rule on a protein-only stand-in answers every cell (accuracy 0.63)</td><td class="win c-a" data-arm="TEDDY + ANM">Follows a declared trust (0.35) in the stand-in: 1,664 “no calls”, 86.8% still called</td><td class="c-r" data-arm="Train + Jev">A logistic head on the stand-in’s 9 values, re-tuned with up to 1,000 key-marker labels: accuracy 0.68–0.70</td></tr>
             <tr><th scope="row"><a href="#attr">3 · Why this call?</a></th><td class="c-t" data-arm="TEDDY alone">No written rule; only a heuristic on its averaging</td><td class="win c-a" data-arm="TEDDY + ANM">Leave-one-out and flip distance on the rule that decided, all 16,433 calls (p ≈ 0.0099)</td><td class="c-r" data-arm="Train + Jev">Learned weights (opaque)</td></tr>
-            <tr><th scope="row"><a href="#scope">4 · Which calls to trust?</a></th><td class="c-t" data-arm="TEDDY alone">Every call looks equally sure</td><td class="win c-a" data-arm="TEDDY + ANM">Its score gates TEDDY’s calls: accuracy 0.945 → 0.998 keeping the 40% it is surest of</td><td class="c-r" data-arm="Train + Jev">A small head trained on hard-cell labels gains little over random labels (+0.034 at 50, −0.003 at 100)</td></tr>
+            <tr><th scope="row"><a href="#scope">4 · Which calls to trust?</a></th><td class="c-t" data-arm="TEDDY alone">Every call looks equally sure</td><td class="win c-a" data-arm="TEDDY + ANM">Its score gates TEDDY’s calls: accuracy 0.945 → 0.998 keeping the 40% it is surest of</td><td class="c-r" data-arm="Train + Jev">A small head on the 9 predictions only, trained on hard-cell labels, gains little over random labels (+0.034 at 50, −0.003 at 100)</td></tr>
             <tr><th scope="row"><a href="#labels">5 · Cost of a new question</a></th><td class="c-t" data-arm="TEDDY alone">New labels to re-tune</td><td class="win c-a" data-arm="TEDDY + ANM">0 labels</td><td class="c-r" data-arm="Train + Jev">≈ 50–500 labelled cells to match, again at every change</td></tr>
             <tr><th scope="row"><a href="#anm-loop">6 · Cells TEDDY can’t tell apart</a></th><td class="c-t" data-arm="TEDDY alone">Same call in 85% of look-alike pairs the key labels myeloid vs T</td><td class="c-a" data-arm="TEDDY + ANM">Flags the pairs and swaps in measured protein as evidence. Under review: the current headline also changes the question, and the key counts NK cells as myeloid</td><td class="c-r" data-arm="Train + Jev">Not tested; the alternative tried is a feature swap (z⁺), worse overall (−0.27)</td></tr>
           </tbody>
@@ -657,20 +673,6 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           </tbody>
         </table>
       </div>
-
-      <p class="subh" style="margin-top:28px">Two separate axes: phases build the evidence, modes say how ANM uses TEDDY</p>
-      <div class="capwrap card">
-        <table class="capm axes">
-          <thead><tr><th scope="col"></th><th scope="col">Axis</th><th scope="col">What it is</th><th scope="col">Status</th></tr></thead>
-          <tbody>
-            <tr><th scope="row"><span class="term" data-term="phase1">Phase 1</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">Frozen TEDDY turns RNA into an embedding once; a small head trained in this repo maps it to all 134 surface proteins. An MLP head beat a latent flow-matching head (test Pearson 0.610 vs 0.595).</td><td class="win" data-arm="Status">Done. Every block uses its predictions.</td></tr>
-            <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="Axis">Building the evidence</td><td data-arm="What">A multimodal fusion model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both). No ANM inside.</td><td data-arm="Status">Unfinished: a 6-epoch scaffold run, test Pearson 0.25–0.27. Used only as the RNA-missing stand-in: in Block 2 (and half of “both”), reused in Block 4’s RNA-missing view.</td></tr>
-            <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM as a decision layer on TEDDY’s outputs: the phase-1 predictions, with labelled exceptions that use the phase-2 stand-in or measured protein.</td><td class="win" data-arm="Status">Done: the six blocks (Block 6 under review).</td></tr>
-            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="Axis">How ANM uses TEDDY</td><td data-arm="What">ANM inside TEDDY: its residual stream as ANM’s field, layer Jacobians, in-silico gene perturbations.</td><td data-arm="Status">Not done.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="cmp-note"><b>Why two words.</b> Phases are steps in building the model that supplies the evidence: phase 2 was meant to extend phase 1. Modes are not steps but two alternative ways for ANM to engage with TEDDY: on its outputs (B) or inside it (A). The axes are independent. Even unfinished, phase 2 already feeds Mode B as the RNA-missing stand-in (Blocks 2 and 4). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against TEDDY’s; that would still be Mode B, not Mode A.</p>
 
       <p class="subh" style="margin-top:28px">Two ways to study a foundation model</p>
       <div class="modes">
@@ -726,7 +728,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <div>
           <p class="subh">Four rules</p>
           <div class="rules card">
-            <div class="rule"><span class="ri">R1</span><div><b>Same frozen TEDDY</b><span><code>best.pt</code> is never retrained. TEDDY alone and ANM read the same 9 predicted proteins per cell, the <span class="term" data-term="evidence">typed evidence</span>; the trained head also gets the first 32 numbers of TEDDY’s embedding. Exception: without RNA TEDDY can’t run, so a protein-only stand-in supplies the evidence in Block 2’s RNA-missing condition (and Block 4’s RNA-missing view, which reuses it); Block 2’s “both” condition averages TEDDY’s predictions with it.</span></div></div>
+            <div class="rule"><span class="ri">R1</span><div><b>Same frozen TEDDY</b><span><code>best.pt</code> is never retrained. TEDDY alone and ANM read the same 9 predicted proteins per cell, the <span class="term" data-term="evidence">typed evidence</span>; the trained heads in Blocks 1 and 5 also get the first 32 numbers of TEDDY’s embedding. Exception: without RNA TEDDY can’t run, so a protein-only stand-in supplies the evidence in Block 2’s RNA-missing condition (and Block 4’s RNA-missing view, which reuses it); Block 2’s “both” condition averages TEDDY’s predictions with it.</span></div></div>
             <div class="rule"><span class="ri">R2</span><div><b>Same cells</b><span><span class="term" data-term="holdout">16,750 held-out cells</span> from site4, plus an <span class="term" data-term="ood">out-of-site check</span> on 2,000 more.</span></div></div>
             <div class="rule"><span class="ri">R3</span><div><b>Truth only checks answers</b><span>The measured proteins score the calls. Labelled exceptions also feed them into the evidence: Block 2’s RNA-missing stand-in reconstructs the panel from them (half of “both” too; reused in Block 4’s RNA-missing view), and Block 6’s complement test uses them directly.</span></div></div>
             <div class="rule"><span class="ri">R4</span><div><b>Decision metrics first</b><span>Declining when unsure, label cost, per-marker reasons, coverage vs accuracy, false agreement. Accuracy is reported, never the win condition.</span></div></div>
@@ -737,14 +739,14 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <div class="arms">
             <div class="arm card"><span class="sw bg-teddy"></span><div><span class="role">Baseline</span><h3>TEDDY alone</h3><p>Predicted proteins → a score per lineage → pick the best one if it clears a threshold (the <span class="term" data-term="o0">soft rule</span>). What TEDDY gives out of the box.</p></div></div>
             <div class="arm card"><span class="sw bg-anm"></span><div><span class="role">Treatment</span><h3>TEDDY + ANM</h3><p>The same predictions as typed evidence → <span class="term" data-term="finitefield">ANM’s decision engine</span> under a written-down question (the <span class="term" data-term="observer">observer</span>) → a call or a “no call”, with <span class="term" data-term="pf">workability</span> and <span class="term" data-term="qf">exactness</span> checks.</p></div></div>
-            <div class="arm card"><span class="sw bg-train"></span><div><span class="role">Control</span><h3>Train + Jev</h3><p>The “just train harder” control: a classifier fitted on labels over TEDDY’s outputs: the 9 predictions plus 32 numbers of its embedding (logistic, MLP; the threshold grid uses the 9 only). A <span class="term" data-term="train">Jev-class stand-in</span>, not the live Jev API.</p></div></div>
+            <div class="arm card"><span class="sw bg-train"></span><div><span class="role">Control</span><h3>Train + Jev</h3><p>The “just train harder” control: a classifier fitted on labelled cells, standing in for a <span class="term" data-term="train">Jev-class</span> judge. In Blocks 1 and 5 it reads TEDDY’s 9 predictions plus 32 embedding numbers; in Blocks 2 and 4, the 9 values only. It is not TypeSafe AI’s <span class="term" data-term="jev">Jev</span>: that model is used zero-shot, cannot be trained on labels, and was never called in this repo.</p></div></div>
           </div>
         </div>
       </div>
 
       <div class="helps">
         <p class="eq">help = (<span class="a">TEDDY + ANM</span>) − (<span class="t">TEDDY alone</span>) on the same predictions, &nbsp;with <span class="r">Train + Jev</span> as the “just train harder” control</p>
-        <p>So a block only counts if the difference comes from the decision layer. Within a block, TEDDY alone and ANM read the same evidence (except in Block 6, where the evidence itself is what changes), so their difference comes from the decision layer. The trained head also sees 32 embedding numbers, which can only favour it.</p>
+        <p>So a block only counts if the difference comes from the decision layer. Within a block, TEDDY alone and ANM read the same evidence (except in Block 6, where the evidence itself is what changes), so their difference comes from the decision layer. In Blocks 1 and 5 the trained heads also see 32 embedding numbers, which can only favour them.</p>
       </div>
 
       <p class="cmp-note" style="margin-top:20px">How each arm does on all six questions is summarised up front in <a href="#setup">00 · The setup</a>.</p>
@@ -1067,7 +1069,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <div class="bk"><div class="v a">0</div><div class="d">labels for ANM to adopt the key-marker rule: write it down.</div></div>
           <div class="bk"><div class="v r">≈ 50</div><div class="d">labels for a threshold grid to match (exactness 0.823, declines 20.6%).</div></div>
           <div class="bk"><div class="v r">≈ 200</div><div class="d">labels for an MLP head (exactness 0.802, declines 19.8%).</div></div>
-          <div class="bk"><div class="v r">≈ 500</div><div class="d">labels for a logistic head, the Jev stand-in (exactness 0.813, declines 20.3%).</div></div>
+          <div class="bk"><div class="v r">≈ 500</div><div class="d">labels for a logistic head, the <span class="term" data-term="train">Jev-class stand-in</span> (exactness 0.813, declines 20.3%).</div></div>
         </div>
         <div class="bproof">
           <div class="proves"><b>Proves (helps TEDDY)</b>The same TEDDY evidence answers a new question at zero label cost. The trained control shows the price of the other way, paid again every time the question changes.</div>
@@ -1150,7 +1152,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <li>The loop as TEDDY’s representation responding to perturbations · gated ±ε nudges</li>
           <li>Pearson above phase-1 ≈ 0.61</li>
           <li>Fusion audit · ATAC / chromatin · clinical superiority</li>
-          <li>The live Jev API (Train + Jev is a stand-in)</li>
+          <li>Anything about TypeSafe AI’s <span class="term" data-term="jev">Jev</span> itself: it was never called here (Train + Jev is a label-trained stand-in)</li>
         </ul></div>
       </div>
       <div class="weak card">
@@ -1243,6 +1245,9 @@ window.GUIDE_CONFIG = (function () {
       { id: 'check', n: 6, s: 'Explain · verify', cls: 'a', t: 'Explain · trust · verify', d: 'Why this call, how sure it is, and whether it was right.', href: '#attr' }
     ],
     allTerms: '#gloss',
+    // cell(s) of the phase × mode plane each section belongs to (B1 = Mode B × phase 1, B2 = Mode B × phase 2, A* = Mode A)
+    planeBySection: { overview: ['B1', 'B2'], setup: ['B1', 'B2', 'A1', 'A2'], problem: ['B1'], protocol: ['B1'], blocks: ['B1', 'B2'], edit: ['B1'], missing: ['B1', 'B2'],
+      attr: ['B1'], scope: ['B1', 'B2'], labels: ['B1'], 'anm-loop': ['B1'], claims: ['B1', 'A1', 'A2'], rerun: ['B1', 'B2'] },
     sections: {
       overview: {
         label: 'Overview', plain: 'TEDDY stays frozen; ANM adds a decision layer on top of its predictions.', steps: ['cell', 'teddy', 'evidence', 'observer', 'decide', 'check'],
@@ -1293,10 +1298,10 @@ window.GUIDE_CONFIG = (function () {
         how: {
           t: 'Same evidence, three ways to decide',
           steps: [
-            ['Same input', 'TEDDY alone and ANM read the same 9 predicted proteins (the trained head also gets 32 embedding numbers) for the same 16,750 ' + T('holdout', 'held-out cells') + '. TEDDY is never retrained. (Block 2 scores 12,563 of them; with RNA missing a protein-only stand-in supplies the evidence, since TEDDY can’t run without RNA.)'],
+            ['Same input', 'TEDDY alone and ANM read the same 9 predicted proteins (in Blocks 1 and 5 the trained heads also get 32 embedding numbers) for the same 16,750 ' + T('holdout', 'held-out cells') + '. TEDDY is never retrained. (Block 2 scores 12,563 of them; with RNA missing a protein-only stand-in supplies the evidence, since TEDDY can’t run without RNA.)'],
             ['TEDDY alone', 'Averages each lineage’s markers and calls the best one if it reaches the bar.'],
             ['TEDDY + ANM', 'Runs the same predictions through ANM’s engine under a written-down question: a call, or “no call”.'],
-            ['Train + Jev', 'Fits a classifier on labelled cells over TEDDY’s 9 predictions plus 32 numbers of its embedding: the “just train harder” control.'],
+            ['Train + Jev', 'Fits a classifier on labelled cells: the “just train harder” control, a stand-in for a Jev-class judge. It is not TypeSafe AI’s ' + T('jev', 'Jev') + ', which is zero-shot and was never called here.'],
             ['Scoring', 'Measured proteins are the answer key. They reach the evidence only in labelled places: Block 2’s stand-in reconstructs the panel from them (reused in Block 4’s RNA-missing view), and Block 6’s complement test uses them directly. Arms are compared on ' + T('qdec', 'accuracy of calls made') + '.']
           ]
         },
@@ -1309,7 +1314,7 @@ window.GUIDE_CONFIG = (function () {
           steps: [
             ['One change per block', 'The question (Blocks 1 and 5), the input (2), a re-run with one marker left out (3), a cut-off on ANM’s score (4), or the evidence the decision reads (6).'],
             ['Everything else fixed', 'TEDDY, its predictions, the cells, ANM’s engine and the answer key. Exception: when RNA is missing (Block 2, and Block 4’s RNA-missing view) a protein-only stand-in replaces TEDDY’s predictions.'],
-            ['So', 'Within a block TEDDY alone and ANM read the same evidence (except Block 6, where the evidence itself is what changes), so any difference between them comes from the decision layer, not from TEDDY. The trained head also sees 32 embedding numbers, which can only favour it.']
+            ['So', 'Within a block TEDDY alone and ANM read the same evidence (except Block 6, where the evidence itself is what changes), so any difference between them comes from the decision layer, not from TEDDY. In Blocks 1 and 5 the trained heads also see 32 embedding numbers, which can only favour them.']
           ]
         },
         concepts: ['observer', 'evidence', 'finitefield']
@@ -1386,7 +1391,7 @@ window.GUIDE_CONFIG = (function () {
             ['ANM', 'Writes the ' + T('o2', 'key-marker question') + ' down (a few lines in CRITERIA) and runs the same engine: 0 labels. It declines 20.1% of cells and is 0.960 accurate on the calls it makes.'],
             ['Trained heads', 'Logistic, MLP and threshold-grid heads learn the same question from 50 up to 10,619 labelled cells, on TEDDY’s 9 predictions plus 32 embedding numbers (the grid: the 9 only).'],
             ['Like for like', 'Each head’s confidence cut is tuned so it declines as often as ANM.'],
-            ['Labels to match', 'About 50 for the threshold grid, 200 for the MLP and 500 for the logistic head, the Jev stand-in.'],
+            ['Labels to match', 'About 50 for the threshold grid, 200 for the MLP and 500 for the logistic head, the Jev-class stand-in.'],
             ['What labels don’t buy', 'A rule you can read and edit, and leave-one-out reasons. The next new question costs labels again.']
           ]
         },
@@ -1415,7 +1420,7 @@ window.GUIDE_CONFIG = (function () {
             [T('modeb', 'Mode B'), 'ANM reads TEDDY’s predictions and decides on top of them. Every claim here is about that decision layer.'],
             ['Not ' + T('modea', 'Mode A'), 'Nothing opens TEDDY up: no residual stream, layer Jacobians or in-silico gene perturbations.'],
             ['The answer key', 'Measured proteins only score the answers, except in Block 6’s one labelled test.'],
-            ['Not claimed', 'Pearson above ≈ 0.61, a clinical result, or the live Jev API.']
+            ['Not claimed', 'Pearson above ≈ 0.61, a clinical result, or anything about TypeSafe AI’s ' + T('jev', 'Jev') + ' itself, which was never called here.']
           ]
         },
         concepts: ['modeb', 'modea', 'adt', 'pearson', 'train']
@@ -1484,7 +1489,7 @@ window.GUIDE_CONFIG = (function () {
     },
     b5: { // HARD_PROOF label-cost arm
       target: { ab: 0.2014, strict: 0.8208, q: 0.9603 },
-      match: [['Threshold grid', 50, 0.8227, 0.2063, 0.9666], ['MLP head', 200, 0.8020, 0.1976, 0.9515], ['Logistic head (Jev stand-in)', 500, 0.8129, 0.2025, 0.9633]],
+      match: [['Threshold grid (TEDDY alone’s rule, re-tuned)', 50, 0.8227, 0.2063, 0.9666], ['MLP head', 200, 0.8020, 0.1976, 0.9515], ['Logistic head (Jev-class stand-in)', 500, 0.8129, 0.2025, 0.9633]],
       curve: [[50, 0.1959, 0.9383], [100, 0.2047, 0.9456], [200, 0.1975, 0.9480], [500, 0.2025, 0.9633], [1000, 0.1996, 0.9656], [2000, 0.1997, 0.9707], [5000, 0.2030, 0.9740], [10619, 0.1992, 0.9741]]
     },
     b6: { // reverse_loop_small_stats.json
@@ -1978,11 +1983,11 @@ window.GUIDE_CONFIG = (function () {
     if (S.b5 === 'match') {
       var rows = [{ label: 'TEDDY + ANM · written down', cls: 'f-anm', v: 0, txt: '0 labels', strong: true, tip: 'ANM, key-marker rule written down: <b>0</b> labels<br>declines ' + pct(d.target.ab) + ' · exactness ' + f(d.target.strict, 3) + ' · accuracy ' + f(d.target.q, 3) }];
       d.match.forEach(function (m) {
-        rows.push({ label: m[0].replace(' (Jev stand-in)', ' (Jev stand-in)'), cls: 'f-train', v: m[1], txt: '≈ ' + n(m[1]),
+        rows.push({ label: m[0], cls: 'f-train', v: m[1], txt: '≈ ' + n(m[1]),
           tip: m[0] + ': matches ANM at <b>' + n(m[1]) + '</b> labelled cells<br>exactness ' + f(m[2], 3) + ' · declines ' + pct(m[3]) + ' · accuracy ' + f(m[4], 3) });
       });
       hBars(host, { aria: 'Labelled cells needed to match ANM on the key-marker question', max: 540, rowH: 40, rows: rows });
-      legend('#l-b5', [['bg-anm', 'TEDDY + ANM · key-marker rule written down'], ['bg-train', 'Train + Jev heads · tuned to decline as often as ANM']]);
+      legend('#l-b5', [['bg-anm', 'TEDDY + ANM · key-marker rule written down'], ['bg-train', 'Fitted on labels: logistic and MLP heads (Jev-class stand-ins) and a re-tuned threshold grid · each set to decline as often as ANM']]);
       cap('#cap-b5', 'Labelled cells a trained head needs to reach ANM’s key-marker answers (declines ≈ 20%, exactness ≈ 0.82). For ANM, adopting the new question is writing it down; the heads pay again at every later change.');
     } else {
       lineChart(host, {
@@ -1995,7 +2000,7 @@ window.GUIDE_CONFIG = (function () {
         refs: [{ y: d.target.q, k: 'k-anm', label: 'ANM · written down · 0 labels · ' + f(d.target.q, 3), labelSm: 'ANM · 0 labels', tip: 'ANM, key-marker rule written down, <b>0</b> labels: accuracy <b>' + f(d.target.q, 4) + '</b> · declines ' + pct(d.target.ab) }]
       });
       legend('#l-b5', [['bg-train', 'Train + Jev · logistic head, cut tuned to ANM’s decline rate'], ['dash anm', 'TEDDY + ANM · 0 labels']]);
-      cap('#cap-b5', 'The logistic head (the Jev stand-in) reaches ANM’s accuracy at about 500 labels and keeps climbing to 0.974. Labels can buy the numbers; they can’t buy a written-down, editable rule or its per-marker reasons.');
+      cap('#cap-b5', 'The logistic head (the Jev-class stand-in) reaches ANM’s accuracy at about 500 labels and keeps climbing to 0.974. Labels can buy the numbers; they can’t buy a written-down, editable rule or its per-marker reasons.');
     }
   };
 
@@ -2106,7 +2111,7 @@ window.GUIDE_CONFIG = (function () {
       ['The question · Blocks 1 and 5', ['observer', 'o0', 'o1', 'o2', 'abstain']],
       ['Inputs · Block 2', ['rnaonly', 'adtonly', 'joint']],
       ['Checks and metrics · Blocks 1–5', ['pf', 'qf', 'qdec', 'softp', 'coverage', 'loo', 'flip', 'bootstrap', 'permutation']],
-      ['Data and controls', ['holdout', 'ood', 'train', 'pearson']],
+      ['Data and controls', ['holdout', 'ood', 'train', 'jev', 'pearson']],
       ['Decision loop · Block 6', ['mustpair', 'veto', 'complement', 'verify', 'falseagree', 'softsep', 'corrsep', 'zplus']]
     ];
     var seen = {};

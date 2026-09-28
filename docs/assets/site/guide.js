@@ -27,7 +27,8 @@
     flip: ['Flip distance', 'How much one marker’s value must change before the call switches lineage. Small means a fragile call.'],
     holdout: ['Held-out cells (site4)', '16,750 cells from a site never used in training. Their measured proteins score the answers; labelled tests also use them as input (Block 2’s RNA-missing stand-in, reused in Block 4’s RNA-missing view; Block 6’s complement test).'],
     ood: ['Out-of-site check', '2,000 cells from other sites (val_non_site4): a second check that the results hold elsewhere.'],
-    train: ['Train + Jev · trained head', 'The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over TEDDY’s outputs: the 9 predictions plus the first 32 numbers of TEDDY’s embedding (the threshold grid uses the 9 only). A stand-in for a Jev-class learner, not the live Jev API.'],
+    train: ['Train + Jev · trained head (Jev-class stand-in)', 'The “just train harder” control: a small classifier fitted on labelled cells, playing the role of a Jev-class judge (one probability per option, trained on the task’s own labels, as in the anm-jev repo). It is not TypeSafe AI’s Jev, which is zero-shot, cannot be trained on labels and was never called here. Its inputs depend on the block: logistic and MLP heads on TEDDY’s 9 predictions plus the first 32 embedding numbers (Blocks 1 and 5), heads on the 9 values only (Blocks 2 and 4), and in Block 5 also a re-tuned threshold grid on TEDDY alone’s rule.'],
+    jev: ['Jev (TypeSafe AI)', 'TypeSafe AI’s “System One” decision model (jev-1.13), closed and reached only through its API. It answers typed questions (a Choice over named options, a Score, or yes/no) with calibrated probabilities and no rationale text. TypeSafe post-trains it (RLCD); it is used zero-shot and cannot be trained or fine-tuned on your labels. This repo never calls it.'],
     z512: ['TEDDY embedding (z_512)', 'TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024.'],
     mustpair: ['Must-separate pair', 'Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree under the 3-lineage answer key, for example one keyed myeloid and one keyed T. Many of the “myeloid” cells in these pairs are NK cells, which the key has no class for.'],
     falseagree: ['False agreement', 'Among must-separate pairs where both cells get a call, the share given the same call even though they differ.'],
@@ -64,8 +65,9 @@
 
   // abbreviations marked automatically in prose (headings, buttons, links and code are skipped)
   var AUTO = [
+    ['Train + Jev', 'train'], ['Train+Jev', 'train'],   // the arm's name: link it to the arm, not to TypeSafe's Jev
     ['O0', 'o0'], ['O1', 'o1'], ['O2', 'o2'], ['soft_P', 'softp'], ['z_512', 'z512'], ['z⁺', 'zplus'], ['LOO', 'loo'], ['δu', 'evidence'],
-    ['Mode B', 'modeb'], ['Mode A', 'modea'], ['CITE-seq', 'citeseq'], ['ADT', 'adt'], ['P_f', 'pf'], ['Q_f', 'qf'], ['Jev', 'train'],
+    ['Mode B', 'modeb'], ['Mode A', 'modea'], ['CITE-seq', 'citeseq'], ['ADT', 'adt'], ['P_f', 'pf'], ['Q_f', 'qf'], ['Jev', 'jev'],
     ['site4', 'holdout'], ['adt_only', 'adtonly'], ['rna_only', 'rnaonly'],
     ['must-separate', 'mustpair'], ['must-pairs', 'mustpair'], ['must-pair', 'mustpair'], ['false_agree', 'falseagree'], ['soft_sep', 'softsep'], ['correct_sep', 'corrsep']
   ];
@@ -299,6 +301,31 @@
     }).join('') + '</div>';
   }
 
+  // The phase × mode plane: phases build the evidence (x), modes say how ANM uses TEDDY (y).
+  // Origin (bottom-left) = phase 1 × Mode B, where this repo's results are.
+  var PLANE = {
+    x: [['phase1', 'Phase 1', 'TEDDY + small head'], ['phase2', 'Phase 2', 'fusion model']],
+    y: [['modeb', 'Mode B', 'on TEDDY’s outputs'], ['modea', 'Mode A', 'inside TEDDY']],
+    cells: {
+      B1: ['done', 'Done', 'Blocks 1–6'],
+      B2: ['part', 'Partial', 'the unfinished phase 2 is only the RNA-missing stand-in (Blocks 2, 4)'],
+      A1: ['no', 'Not done', 'residual stream, Jacobians, gene perturbations'],
+      A2: ['no', 'Not done', 'inside the fusion model']
+    }
+  };
+  function planeHtml(big) {
+    function term(t) { return '<span class="term" data-term="' + t[0] + '">' + t[1] + '</span>'; }
+    function cell(id) {
+      var c = PLANE.cells[id];
+      return '<div class="gp-cell ' + c[0] + '" data-cell="' + id + '"><span class="gp-st">' + c[1] + '</span><span class="gp-tx">' + c[2] + '</span><i class="gp-pin" aria-hidden="true"></i></div>';
+    }
+    var row = function (yi, key) { var y = PLANE.y[yi]; return '<div class="gp-rl">' + term(y) + '<small>' + y[2] + '</small></div>' + cell(key + '1') + cell(key + '2'); };
+    return '<div class="g-plane' + (big ? ' big' : '') + '" role="group" aria-label="Phase × mode plane: which part of the project each section belongs to">' +
+      '<div class="gp-grid">' + row(1, 'A') + row(0, 'B') +
+      '<div class="gp-corner"></div>' + PLANE.x.map(function (x) { return '<div class="gp-cl">' + term(x) + '<small>' + x[2] + '</small></div>'; }).join('') + '</div>' +
+      '<div class="gp-axes"><span>Mode →</span><span>Phase →</span></div></div>'  // the Mode label is rotated, so its → reads as ↑;
+  }
+
   function buildGuide(cfg) {
     var aside = document.getElementById('guide');
     if (!aside || !cfg) return;
@@ -309,6 +336,7 @@
       '<button class="g-hide" type="button" aria-label="Hide guide" title="Hide the guide (drag its left edge to resize)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>' +
       '<button class="g-close" type="button" aria-label="Close guide">×</button></span></div>' +
       '<div class="g-now" aria-live="polite"><span class="g-now-k">You are reading</span><b id="g-now-t"></b><span id="g-now-d"></span></div>' +
+      '<p class="g-kick">Where it sits · phase × mode</p>' + planeHtml(false) +
       '<p class="g-kick">' + (cfg.flowTitle || 'Where this sits in the workflow') + '</p>' + mapHtml(cfg) +
       '<p class="g-kick" id="g-how-k">How ANM decides here</p><div class="g-how" id="g-how"></div>' +
       (E ? engineHtml(E) : '') +
@@ -412,6 +440,8 @@
       if (key === currentKey) return;
       currentKey = key;
       nowT.textContent = sec.label; nowD.textContent = sec.plain;
+      var here = sec.plane || (cfg.planeBySection && cfg.planeBySection[key]) || cfg.planeDefault || ['B1'];
+      [].slice.call(aside.querySelectorAll('.gp-cell')).forEach(function (c) { c.classList.toggle('on', here.indexOf(c.getAttribute('data-cell')) > -1); });
       Object.keys(nodes).forEach(function (k) {
         var on = (sec.steps || []).indexOf(k) > -1;
         nodes[k].classList.toggle('on', on);
@@ -459,6 +489,8 @@
   // ---------- init ----------
   function init() {
     var main = document.querySelector('main') || document.body;
+    var pm = document.getElementById('plane-main');
+    if (pm) { pm.innerHTML = planeHtml(true); decorateAll(pm); }
     decorateAll(document);
     autowrap(main);
     buildGuide(window.GUIDE_CONFIG);
