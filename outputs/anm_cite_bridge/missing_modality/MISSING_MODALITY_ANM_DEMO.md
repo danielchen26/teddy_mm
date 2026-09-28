@@ -11,6 +11,12 @@
 - O0→O2 criterion edit without TEDDY retrain.
 - No Perturb / GFlowNet / 160M / ATAC. Not clinical.
 
+## Reading note (TEDDY's role)
+
+- **`adt_only` = RNA missing, so TEDDY does not run.** Its evidence comes from the phase-2 BidirectionalCite model run with its RNA input off: it reads the cell's 134 measured proteins and reconstructs the 9 panel proteins (panel Pearson 0.446). The same measured proteins also set the answer key.
+- **Arm names in the tables below.** "TEDDY alone" is the fixed rule with no ANM layer, reading each mask's predicted panel unscaled (O0: average each lineage's 3 markers, call the highest if it reaches 0.12; O2: key marker only × lineage weight B 1.5 / T 1.3 / myeloid 0.5, bar 0.20). "TEDDY+ANM" is ANM on the same evidence (×0.35 for `adt_only`). Under `adt_only` neither arm involves TEDDY, so those rows are labelled "Fixed rule (stand-in)" and "ANM (stand-in)".
+- **The `adt_only` abstentions follow the declared trust factor 0.35** (`modality_reliability`), which was chosen, not estimated. Under O2 (key-marker rule) no score can reach the 0.20 bar with that factor: the best case is 0.126 (`scripts/missing_modality_bounds.py`), so all `adt_only` cells are declined by construction.
+
 ## Key tables by mask
 
 ### Mask `rna_only` (n=12563)
@@ -37,13 +43,13 @@
 
 | arm | crit | Q | abstain | mean_P_f |
 |---|---|---:|---:|---:|
-| TEDDY alone | O0 | 0.6277291648967802 | 0 | None |
-| TEDDY alone | O2 | 0.6488896816195487 | 253 | None |
-| TEDDY+ANM | O0 | 0.6493620337002045 | 1664 | 0.8675475602961076 |
-| TEDDY+ANM | O2 | None | 12563 | 0.0 |
+| Fixed rule (stand-in) | O0 | 0.6277291648967802 | 0 | None |
+| Fixed rule (stand-in) | O2 | 0.6488896816195487 | 253 | None |
+| ANM (stand-in) | O0 | 0.6493620337002045 | 1664 | 0.8675475602961076 |
+| ANM (stand-in) | O2 | None | 12563 | 0.0 |
 
 - LOO attribution (O0): n_attr=1056 / requested=1200; top1_flip_rate=0.7102272727272727; top1_dist=`{'CD22': 115, 'CD5': 435, 'CD36': 150, 'CD11c': 168, 'CD16': 29, 'CD19': 12, 'CD2': 133, 'CD72': 13, 'CD3': 1}`.
-- TEDDY-alone silent over-answer O0 vs O2 decl: count=253 rate=0.020138501950171136.
+- Fixed rule (stand-in) silent over-answer O0 vs O2 decl: count=253 rate=0.020138501950171136.
 - Train-retune O2 label curve (logistic, calibrated abstain≈0.2):
 
 | n_O2_labels | abstain | Q | strict |
@@ -75,7 +81,7 @@
 
 ## Contrast summary
 
-| mask | TEDDY O0 Q | TEDDY O0 abstain | ANM O0 Q | ANM O0 abstain | ANM O0 mean_P_f | ANM O2 abstain |
+| mask | Fixed rule O0 Q | Fixed rule O0 abstain | ANM O0 Q | ANM O0 abstain | ANM O0 mean_P_f | ANM O2 abstain |
 |---|---:|---:|---:|---:|---:|---:|
 | rna_only | 0.945026847353618 | 76 | 0.9478880494505495 | 233 | 0.9814534744885776 | 2459 |
 | adt_only | 0.6277291648967802 | 0 | 0.6493620337002045 | 1664 | 0.8675475602961076 | 12563 |
@@ -83,14 +89,14 @@
 
 ## Proof sentence
 
-> On the same TEDDY δu base cells (site4/test n=16750), three modality masks (rna_only, adt_only, joint) act as source ablation: ANM declared P_f/abstain tracks evidence availability (rna_only: ANM abstain=233/P_f=0.9814534744885776; adt_only: ANM abstain=1664/P_f=0.8675475602961076; joint: ANM abstain=0/P_f=1.0), O0→O2 observer edits are YAML-only (no TEDDY retrain), and LOO/flip attribution remains auditable per mask; TEDDY-alone silently over-answers where the declared observer abstains; train-retune must consume O2 labels per mask/observer and still lacks editable-field attribution. Pearson is secondary — do not claim win over phase-1 ~0.61. Not clinical.
+> On 16,750 site4/test base cells (12,563 scored per mask; 4,187 held for re-tuning), three masks act as source ablation: rna_only = TEDDY phase-1 predictions; adt_only = RNA missing, so TEDDY does not run and the phase-2 protein-only stand-in supplies the evidence; joint = the average of the two. ANM's P_f/abstain follow the declared per-source trust (rna_only/joint 1.0, adt_only 0.35, chosen not estimated) (rna_only: ANM abstain=233/P_f=0.9814534744885776; adt_only: ANM abstain=1664/P_f=0.8675475602961076; joint: ANM abstain=0/P_f=1.0), O0→O2 observer edits are YAML-only (no TEDDY retrain), and LOO/flip attribution remains auditable per mask; the fixed rule (TEDDY alone's rule, no trust setting) answers every adt_only cell at O0; train-retune must consume O2 labels per mask/observer and still lacks editable-field attribution. Pearson is secondary — do not claim win over phase-1 ~0.61. Not clinical.
 
 ## Blockers / honesty
 
 - **Choice documented:** no usable phase-2 RNA pearson (test rna_only≈0.254, adt_only≈0.268, joint≈0.276 ≪ phase-1 0.61). Export = **hybrid_phase1_rna_phase2_adt**: phase-1 MLP for `rna_only` / hybrid joint; phase-2 BidirectionalCite for `adt_only`.
 - Panel Pearson (lineage 9-protein): rna_only≈0.915, adt_only≈0.446, joint≈0.870 — **do not inflate**; full-ADT phase-1 remains the 0.61 reference.
-- Declared missing-RNA reliability gate: `adt_only` event values ×0.35 (criterion edit, no TEDDY retrain) so P_f/abstain track key-evidence absence.
-- Under `adt_only`, TEDDY-alone O0 abstain=0 (over-answers) while ANM O0 abstain=1664 / O2 abstain=all — declaration advantage, not Pearson win.
+- Declared missing-RNA trust: `adt_only` event values ×0.35 in ANM only (chosen, not estimated; no TEDDY retrain). P_f/abstain follow this declaration; ANM does not detect weak evidence by itself.
+- Under `adt_only` (RNA missing, so TEDDY does not run), the fixed rule on the phase-2 stand-in answers every cell at O0 (abstain=0, Q≈0.628). ANM with the declared ×0.35 trust abstains on 1664/12563 at O0 and on all 12563 at O2; the O2 result follows from the 0.35 (best case 0.126 < bar 0.20), not from ANM detecting weak evidence. Not a Pearson win.
 - Train-retune under `adt_only` plateaus at Q≈0.68–0.70 even with 1000 O2 labels — cannot buy editable-field LOO/flip (flip_rate≈0.71 under weak ADT channel).
 - No best.pt backbone retrain (phase-2 train was inference-only). No Perturb/GFlowNet/160M/ATAC. Not clinical.
 

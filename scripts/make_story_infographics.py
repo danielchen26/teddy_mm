@@ -377,22 +377,23 @@ def draw_01(theme="light"):
 def draw_02(theme="light"):
     fig, ax, tk = new_fig(theme)
     header(ax, tk, "CASE 2  ·  MISSING MODALITY  ·  MISSING_MODALITY",
-           "Weak channel → honest silence. Don’t silently over-answer.",
-           "Same site4 cells  ·  rna_only / adt_only / joint")
+           "Without RNA TEDDY can’t run  ·  ANM follows a declared trust",
+           "Same 12,563 site4 cells  ·  Fixed = TEDDY alone’s rule on each condition’s evidence")
 
+    # with RNA missing TEDDY can't run: that column's evidence is the protein-only stand-in, so the bar is "Fixed" (the rule), not TEDDY
     masks = [
-        ("rna_only", True, False, 233, 76, 0.9815, tk["rna"]),
-        ("adt_only", False, True, 1664, 0, 0.8675, tk["adt"]),
-        ("joint", True, True, 0, 0, 1.0000, tk["good"]),
+        ("rna_only", "RNA → TEDDY", True, False, 233, 76, 0.9815, tk["rna"]),
+        ("adt_only", "RNA missing → stand-in", False, True, 1664, 0, 0.8675, tk["adt"]),
+        ("joint", "both · averaged", True, True, 0, 0, 1.0000, tk["good"]),
     ]
 
-    for i, (name, has_rna, has_adt, anm_a, teddy_a, pf, color) in enumerate(masks):
+    for i, (name, title, has_rna, has_adt, anm_a, teddy_a, pf, color) in enumerate(masks):
         x = 60 + i * 510
         is_bad = name == "adt_only"
         bg = tk["bad_bg"] if is_bad else tk["panel"]
         ec = tk["bad"] if is_bad else tk["line"]
         box(ax, x, 160, 480, 640, bg, ec, lw=1.6 if is_bad else 1.2, r=18, z=1)
-        stage_label(ax, x + 240, 200, name, color)
+        stage_label(ax, x + 240, 200, title, color)
 
         # channel glyphs
         # RNA
@@ -402,7 +403,7 @@ def draw_02(theme="light"):
             draw_rna(ax, rx, ry, tk["rna"], scale=0.7)
         else:
             draw_x(ax, rx, ry, tk["bad"], size=22)
-        ax.text(rx, ry + 70, "RNA", fontproperties=fp("semibold", 12),
+        ax.text(rx, ry + 70, "RNA" if has_rna else "RNA · no TEDDY", fontproperties=fp("semibold", 12),
                 color=tk["rna"] if has_rna else tk["bad"], ha="center", zorder=4)
 
         # ADT
@@ -420,11 +421,11 @@ def draw_02(theme="light"):
         ax.text(x + 240, 460, "ABSTAIN", fontproperties=fp("semibold", 11),
                 color=tk["muted"], ha="center", zorder=4)
 
-        # TEDDY bar
+        # fixed-rule bar; bars stop short of the panel edge so the value label stays inside it
         max_a = 1664
-        tw = max(8, 360 * (teddy_a / max_a)) if teddy_a else 8
-        aw = max(8, 360 * (anm_a / max_a)) if anm_a else 8
-        ax.text(x + 40, 510, "TEDDY", fontproperties=fp("medium", 11), color=tk["gray"], va="center", zorder=4)
+        tw = max(8, 280 * (teddy_a / max_a)) if teddy_a else 8
+        aw = max(8, 280 * (anm_a / max_a)) if anm_a else 8
+        ax.text(x + 40, 510, "Fixed", fontproperties=fp("medium", 11), color=tk["gray"], va="center", zorder=4)
         box(ax, x + 110, 495, tw, 30, tk["gray"], r=6, z=2)
         ax.text(x + 110 + tw + 12, 510, str(teddy_a), fontproperties=fp("bold", 13),
                 color=tk["bad"] if teddy_a == 0 and is_bad else tk["ink"], va="center", zorder=4)
@@ -442,10 +443,10 @@ def draw_02(theme="light"):
                 color=tk["muted"], ha="center", va="center", zorder=3)
 
         if is_bad:
-            ax.text(x + 240, 760, "silent over-answer → honest abstain",
+            ax.text(x + 240, 760, "fixed rule answers all · ANM holds back",
                     fontproperties=fp("semibold", 12), color=tk["bad"], ha="center", zorder=4)
 
-    footer(ax, tk, "MISSING_MODALITY · O2 under adt_only abstains on all 12,563")
+    footer(ax, tk, "MISSING_MODALITY · key-marker rule × 0.35 trust: all 12,563 declined by construction (max 0.126 < bar 0.20)")
     return save(fig, tk, "02_missing_modality", theme)
 
 

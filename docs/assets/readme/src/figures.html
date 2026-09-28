@@ -129,16 +129,16 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
 <!-- =============== WHY =============== -->
 <div class="fig" id="why">
   <div class="fh">
-    <div><p class="lead">Same frozen TEDDY predictions in every comparison. Holdout truth only verifies.</p></div>
-    <div class="legend"><span><i style="background:var(--s-anm)"></i>TEDDY + ANM</span><span><i style="background:var(--s-teddy)"></i>TEDDY alone / alternative</span></div>
+    <div><p class="lead">TEDDY frozen throughout; within each card the arms read the same evidence (card 6 swaps in measured protein).</p></div>
+    <div class="legend"><span><i style="background:var(--s-anm)"></i>With ANM</span><span><i style="background:var(--s-teddy)"></i>Without ANM (TEDDY alone or alternative)</span></div>
   </div>
   <div class="cards">
     <div class="card"><div class="k"><i>1</i>Edit the question</div><div class="v"><span class="to">0</span> <small>labels</small></div>
       <p class="c">to switch from the soft rule to the key-marker rule. ANM’s “no calls” follow the question: 317 → 834 → 3,373.</p>
       <div class="vs"><b>TEDDY alone</b> keeps its old rule and still answers 1,752 cells the new question holds back.</div></div>
     <div class="card"><div class="k"><i>2</i>Missing modality</div><div class="v"><span class="f">0</span> → <span class="to">1,664</span></div>
-      <p class="c">honest “no calls” when RNA is missing; ANM still calls 86.8% of cells.</p>
-      <div class="vs"><b>TEDDY alone</b> answers every cell anyway, at accuracy 0.63.</div></div>
+      <p class="c">“no calls” when RNA is missing and TEDDY can’t run: ANM trusts the weaker stand-in at a declared 0.35 and still calls 86.8% of cells.</p>
+      <div class="vs"><b>Fixed rule</b> on the stand-in answers every cell, at accuracy 0.63.</div></div>
     <div class="card"><div class="k"><i>3</i>Attribution</div><div class="v"><span class="to">16,433</span></div>
       <p class="c">cells get a per-marker reason: leave-one-out plus how far the call is from flipping (p ≈ 0.0099).</p>
       <div class="vs"><b>TEDDY alone</b> has no written-down rule to explain a call.</div></div>
@@ -152,7 +152,7 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
       <p class="c">false agreement on myeloid↔T cells that TEDDY’s embedding can’t tell apart (cosine 0.982).</p>
       <div class="vs"><b>Gluing protein features</b> onto the embedding makes things worse overall (−0.27).</div></div>
   </div>
-  <div class="foot"><span><b>Accuracy is not the claim:</b> like for like, ANM’s accuracy of calls made is within 0.02 of TEDDY alone.</span><span>Not clinical · no Pearson claim beyond ≈ 0.61</span></div>
+  <div class="foot"><span><b>Accuracy is not the claim:</b> in Block 1, like for like, ANM’s accuracy of calls made is within 0.02 of TEDDY alone.</span><span>Not clinical · no Pearson claim beyond ≈ 0.61</span></div>
 </div>
 
 <!-- =============== HOW =============== -->

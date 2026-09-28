@@ -470,6 +470,12 @@ def write_report(out: dict, path: Path):
     lines.append("- O0→O2 criterion edit without TEDDY retrain.")
     lines.append("- No Perturb / GFlowNet / 160M / ATAC. Not clinical.")
     lines.append("")
+    lines.append("## Reading note (TEDDY's role)")
+    lines.append('')
+    lines.append("- **`adt_only` = RNA missing, so TEDDY does not run.** Its evidence comes from the phase-2 BidirectionalCite model run with its RNA input off: it reads the cell's 134 measured proteins and reconstructs the 9 panel proteins (panel Pearson 0.446). The same measured proteins also set the answer key.")
+    lines.append('- **Arm names in the tables below.** "TEDDY alone" is the fixed rule with no ANM layer, reading each mask\'s predicted panel unscaled (O0: average each lineage\'s 3 markers, call the highest if it reaches 0.12; O2: key marker only × lineage weight B 1.5 / T 1.3 / myeloid 0.5, bar 0.20). "TEDDY+ANM" is ANM on the same evidence (×0.35 for `adt_only`). Under `adt_only` neither arm involves TEDDY, so those rows are labelled "Fixed rule (stand-in)" and "ANM (stand-in)".')
+    lines.append('- **The `adt_only` abstentions follow the declared trust factor 0.35** (`modality_reliability`), which was chosen, not estimated. Under O2 (key-marker rule) no score can reach the 0.20 bar with that factor: the best case is 0.126 (`scripts/missing_modality_bounds.py`), so all `adt_only` cells are declined by construction.')
+    lines.append('')
     lines.append("## Key tables by mask")
     lines.append("")
     for m in MASKS:
@@ -478,9 +484,11 @@ def write_report(out: dict, path: Path):
         lines.append("")
         lines.append("| arm | crit | Q | abstain | mean_P_f |")
         lines.append("|---|---|---:|---:|---:|")
+        # with RNA missing TEDDY does not run: both arms read the phase-2 stand-in
+        stand_in = m == "adt_only"
         for arm_key, arm_name in [
-            ("teddy_alone", "TEDDY alone"),
-            ("anm", "TEDDY+ANM"),
+            ("teddy_alone", "Fixed rule (stand-in)" if stand_in else "TEDDY alone"),
+            ("anm", "ANM (stand-in)" if stand_in else "TEDDY+ANM"),
         ]:
             arm = block[arm_key]
             for c in CRIT_IDS:
@@ -499,7 +507,7 @@ def write_report(out: dict, path: Path):
         )
         silent = block["teddy_alone"].get("silent_over_answer_O0_vs_O2", {})
         lines.append(
-            f"- TEDDY-alone silent over-answer O0 vs O2 decl: "
+            f"- {'Fixed rule (stand-in)' if stand_in else 'TEDDY-alone'} silent over-answer O0 vs O2 decl: "
             f"count={silent.get('count')} rate={silent.get('rate')}."
         )
         tr = block.get("train_retune", {})
@@ -519,7 +527,7 @@ def write_report(out: dict, path: Path):
             lines.append("")
     lines.append("## Contrast summary")
     lines.append("")
-    lines.append("| mask | TEDDY O0 Q | TEDDY O0 abstain | ANM O0 Q | ANM O0 abstain | ANM O0 mean_P_f | ANM O2 abstain |")
+    lines.append("| mask | Fixed rule O0 Q | Fixed rule O0 abstain | ANM O0 Q | ANM O0 abstain | ANM O0 mean_P_f | ANM O2 abstain |")
     lines.append("|---|---:|---:|---:|---:|---:|---:|")
     for m in MASKS:
         b = out["by_mask"][m]
@@ -673,12 +681,15 @@ def main():
         bits.append(
             f"{m}: ANM abstain={a0['abstain_count']}/P_f={a0.get('mean_P_f')}"
         )
+    n_eval = len(eval_base)
     results["proof_sentence"] = (
-        f"On the same TEDDY δu base cells (site4/test n={n_base}), three modality masks "
-        f"({', '.join(MASKS)}) act as source ablation: ANM declared P_f/abstain tracks "
-        f"evidence availability ({'; '.join(bits)}), O0→O2 observer edits are YAML-only "
+        f"On {n_base:,} site4/test base cells ({n_eval:,} scored per mask; {n_base - n_eval:,} held for re-tuning), "
+        f"three masks act as source ablation: rna_only = TEDDY phase-1 predictions; adt_only = RNA missing, so TEDDY "
+        f"does not run and the phase-2 protein-only stand-in supplies the evidence; joint = the average of the two. "
+        f"ANM's P_f/abstain follow the declared per-source trust (rna_only/joint 1.0, adt_only 0.35, chosen not estimated) "
+        f"({'; '.join(bits)}), O0→O2 observer edits are YAML-only "
         f"(no TEDDY retrain), and LOO/flip attribution remains auditable per mask; "
-        f"TEDDY-alone silently over-answers where the declared observer abstains; "
+        f"the fixed rule (TEDDY alone's rule, no trust setting) answers every adt_only cell at O0; "
         f"train-retune must consume O2 labels per mask/observer and still lacks editable-field "
         f"attribution. Pearson is secondary — do not claim win over phase-1 ~0.61. Not clinical."
     )

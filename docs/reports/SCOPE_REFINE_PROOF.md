@@ -43,6 +43,8 @@
 
 #### Missing-modality `adt_only` (n=16750)
 
+> Reading note: with `adt_only` (RNA missing) TEDDY does not run. "TEDDY always" here is TEDDY alone's fixed rule applied to the phase-2 protein-only stand-in (see MISSING_MODALITY_ANM_DEMO.md), so this curve gates the stand-in's calls, not TEDDY's.
+
 - **O0**: TEDDY always Q=0.6288; ΔQ_peak=0.32061029112476147 (Q 0.6288279111224295→0.949438202247191 @cov 0.010626865671641792); best@cov≥0.4 Δ=0.14510126778587418; nondec frac=1.0.
 
 | τ (soft_P) | coverage | Q | n_lab_ans |
@@ -118,7 +120,7 @@
 
 ### 一句话证明
 
-> On the same TEDDY δu (site4/test n=16750), ANM soft_P gating raises conditional Q O0 0.9453→1.0000 (ΔQ_peak=0.0547; @cov≥0.4 best=0.9984) and O2 0.9149→0.9703 (ΔQ_peak=0.0554; mid operating region — extreme-low coverage can dip). ANM LOO flip-sensitive cells Q=0.8099 vs random same-n 0.9458 (Δ=-0.1359). On missing-modality adt_only O0, soft_P gate lifts Q 0.6288→0.9494 (ΔQ_peak=0.3206). Label-budget: frozen-feature head on ANM flip-hard cells beats random labels on hard holdout at n=50 (ΔQ=+0.0342). Conditional correctness / label efficiency only — not clinical; no best.pt retrain.
+> On the same TEDDY δu (site4/test n=16750), ANM soft_P gating raises conditional Q O0 0.9453→1.0000 (ΔQ_peak=0.0547; @cov≥0.4 best=0.9984) and O2 0.9149→0.9703 (ΔQ_peak=0.0554; mid operating region — extreme-low coverage can dip). ANM LOO flip-sensitive cells Q=0.8099 vs random same-n 0.9458 (Δ=-0.1359). Separately, on missing-modality adt_only O0 (RNA missing, so TEDDY does not run; these are TEDDY alone's fixed rule's calls on the phase-2 protein-only stand-in), soft_P gate lifts Q 0.6288→0.9494 (ΔQ_peak=0.3206); not a gain on TEDDY's calls. Label-budget: frozen-feature head on ANM flip-hard cells beats random labels on hard holdout at n=50 (ΔQ=+0.0342). Conditional correctness / label efficiency only — not clinical; no best.pt retrain.
 
 ### 声明边界
 

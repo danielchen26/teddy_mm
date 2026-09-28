@@ -483,9 +483,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <h1>Keep <span class="t">TEDDY</span> frozen.<br />Make its answers editable, honest and auditable with <span class="a">ANM</span>.</h1>
           <p class="lede">
             <span class="term" data-term="teddy">TEDDY</span> reads a cell’s RNA and predicts its surface proteins (phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.61</span>).
-            On its own it can’t <b>change the question</b> without new labels, <b>stay silent</b> when evidence is weak, <b>explain</b> a call,
+            On its own it can’t <b>change the question</b> without new labels, <b>hold back</b> by a declared trust in each input source, <b>explain</b> a call,
             show <b>where it can be trusted</b>, or <b>notice</b> when two different cells look identical to it.
-            We add <span class="term" data-term="anm">ANM</span> on top of TEDDY’s unchanged predictions and test each of these head-to-head.
+            We add <span class="term" data-term="anm">ANM</span> on top of TEDDY’s unchanged predictions and test each of these head-to-head (Block 2’s RNA-missing condition uses a protein-only stand-in, since TEDDY can’t run without RNA).
           </p>
           <div class="cta-row">
             <a class="btn pri" href="#blocks">See the six blocks ↓</a>
@@ -494,7 +494,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           </div>
           <ul class="guards" aria-label="Guardrails">
             <li>TEDDY never retrained</li>
-            <li>Held-out truth only checks answers</li>
+            <li>Held-out truth checks answers (labelled exceptions: Blocks 2, 4, 6)</li>
             <li>Accuracy is not the claim</li>
             <li>Not clinical</li>
           </ul>
@@ -536,7 +536,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
       <div class="kpis">
         <a class="kpi card" href="#labels"><div class="kv">0 <span class="from" style="font-size:1rem">labels</span></div><div class="kd">to switch from the soft rule to the key-marker rule. A trained head needs 50–500 labelled cells to match the numbers.</div><span class="kb">Blocks 1 · 5 →</span></a>
-        <a class="kpi card" href="#missing"><div class="kv"><span class="from">0</span> → <span class="to">1,664</span></div><div class="kd">honest “no calls” when RNA is missing (TEDDY alone → TEDDY + ANM).</div><span class="kb">Block 2 →</span></a>
+        <a class="kpi card" href="#missing"><div class="kv"><span class="from">0</span> → <span class="to">1,664</span></div><div class="kd">“no calls” when RNA is missing and TEDDY can’t run: a weaker stand-in, trusted at a declared 0.35 (fixed rule → ANM).</div><span class="kb">Block 2 →</span></a>
         <a class="kpi card" href="#attr"><div class="kv">16,433</div><div class="kd">cells with a per-marker reason for the call; permutation test p ≈ 0.0099.</div><span class="kb">Block 3 →</span></a>
         <a class="kpi card" href="#anm-loop"><div class="kv"><span class="from">0.85</span> → <span class="to">0.40</span></div><div class="kd">false agreement on myeloid↔T cells that TEDDY’s embedding can’t tell apart.</div><span class="kb">Block 6 →</span></a>
       </div>
@@ -553,8 +553,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <div class="gaps">
         <a class="gap card" href="#edit"><span class="gn">GAP 1</span><h3>Change the question</h3><p class="gq">Can I switch to a stricter question, or one that trusts only key markers?</p>
           <p class="ga"><span class="who">TEDDY alone</span>Its rule is hard-wired. A new question means re-tuning on labels; until then it keeps answering the old one, on 1,752 cells the key-marker question would hold back.</p><span class="go">Block 1 · Edit the question →</span></a>
-        <a class="gap card" href="#missing"><span class="gn">GAP 2</span><h3>Weak or missing input</h3><p class="gq">What if RNA is missing and only protein was measured?</p>
-          <p class="ga"><span class="who">TEDDY alone</span>Answers every cell anyway: 0 “no calls”, with accuracy 0.63.</p><span class="go">Block 2 · Missing modality →</span></a>
+        <a class="gap card" href="#missing"><span class="gn">GAP 2</span><h3>Missing input</h3><p class="gq">What if RNA is missing, so TEDDY can’t run, and only a weaker protein-only model is available?</p>
+          <p class="ga"><span class="who">TEDDY alone</span>Has no prediction without RNA. Its fixed rule on the stand-in answers every cell: 0 “no calls”, accuracy 0.63.</p><span class="go">Block 2 · Missing modality →</span></a>
         <a class="gap card" href="#attr"><span class="gn">GAP 3</span><h3>Explain a call</h3><p class="gq">Which marker drove this call, and how close was it to flipping?</p>
           <p class="ga"><span class="who">TEDDY alone</span>No written-down rule, so no per-marker leave-one-out and no flip distance.</p><span class="go">Block 3 · Attribution →</span></a>
         <a class="gap card" href="#scope"><span class="gn">GAP 4</span><h3>Know where to trust it</h3><p class="gq">Which calls are safe to act on, and which need follow-up?</p>
@@ -573,15 +573,15 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     <div class="wrap">
       <p class="kicker">02 — How we compare</p>
       <h2>One fair test, reused in every block</h2>
-      <p class="intro">Every block runs the same three arms on the same frozen predictions. <b>“ANM helps TEDDY”</b> means TEDDY + ANM beats TEDDY alone on a <i>decision</i> property with TEDDY unchanged, and a trained head can’t get there without buying labels.</p>
+      <p class="intro">Every block runs the same three arms on the same frozen predictions (labelled exceptions in R1 and R3: Blocks 2, 4 and 6). <b>“ANM helps TEDDY”</b> means TEDDY + ANM beats TEDDY alone on a <i>decision</i> property with TEDDY unchanged, and a trained head can’t get there without buying labels.</p>
 
       <div class="proto">
         <div>
           <p class="subh">Four rules</p>
           <div class="rules card">
-            <div class="rule"><span class="ri">R1</span><div><b>Same frozen TEDDY</b><span><code>best.pt</code> is never retrained. Every arm reads the same 9 predicted proteins per cell, the <span class="term" data-term="evidence">typed evidence</span>.</span></div></div>
+            <div class="rule"><span class="ri">R1</span><div><b>Same frozen TEDDY</b><span><code>best.pt</code> is never retrained. Every arm reads the same 9 predicted proteins per cell, the <span class="term" data-term="evidence">typed evidence</span>. Exception: without RNA TEDDY can’t run, so a protein-only stand-in supplies the evidence in Block 2’s RNA-missing condition (and Block 4’s RNA-missing view, which reuses it); Block 2’s “both” condition averages TEDDY’s predictions with it.</span></div></div>
             <div class="rule"><span class="ri">R2</span><div><b>Same cells</b><span><span class="term" data-term="holdout">16,750 held-out cells</span> from site4, plus an <span class="term" data-term="ood">out-of-site check</span> on 2,000 more.</span></div></div>
-            <div class="rule"><span class="ri">R3</span><div><b>Truth only checks answers</b><span>The measured proteins score the calls and never enter ANM’s evidence. One labelled exception: Block 6’s complement test.</span></div></div>
+            <div class="rule"><span class="ri">R3</span><div><b>Truth only checks answers</b><span>The measured proteins score the calls. Labelled exceptions also feed them into the evidence: Block 2’s RNA-missing stand-in reconstructs the panel from them (half of “both” too; reused in Block 4’s RNA-missing view), and Block 6’s complement test uses them directly.</span></div></div>
             <div class="rule"><span class="ri">R4</span><div><b>Decision metrics first</b><span>Declining when unsure, label cost, per-marker reasons, coverage vs accuracy, false agreement. Accuracy is reported, never the win condition.</span></div></div>
           </div>
         </div>
@@ -597,7 +597,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
       <div class="helps">
         <p class="eq">help = (<span class="a">TEDDY + ANM</span>) − (<span class="t">TEDDY alone</span>) on the same predictions, &nbsp;with <span class="r">Train + Jev</span> as the “just train harder” control</p>
-        <p>So a block only counts if the difference comes from the decision layer. TEDDY’s evidence is identical in every arm.</p>
+        <p>So a block only counts if the difference comes from the decision layer. Within a block, every arm reads the same evidence, except in Block 6, where the evidence itself is what changes.</p>
       </div>
 
       <div class="capwrap card">
@@ -607,7 +607,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
             <tr><th scope="row">Adopt a new question</th><td class="c-t" data-arm="TEDDY alone">Re-tune the rule on new labels</td><td class="win c-a" data-arm="TEDDY + ANM">Edit the written question · 0 labels · no retrain</td><td class="c-r" data-arm="Train + Jev">Collect labels and retrain</td></tr>
             <tr><th scope="row">“No calls” follow the question</th><td class="c-t" data-arm="TEDDY alone">No: keeps its old rule</td><td class="win c-a" data-arm="TEDDY + ANM">Yes: 317 → 834 → 3,373 (soft → strict → key-marker)</td><td class="c-r" data-arm="Train + Jev">No: 185 → 185 → 185</td></tr>
             <tr><th scope="row">Per-marker reason for a call</th><td class="c-t" data-arm="TEDDY alone">Panel heuristic, no written rule</td><td class="win c-a" data-arm="TEDDY + ANM">Leave-one-out + flip distance on the written rule</td><td class="c-r" data-arm="Train + Jev">Learned weights (opaque)</td></tr>
-            <tr><th scope="row">Needs labelled cells</th><td class="c-t" data-arm="TEDDY alone">Yes, to re-tune</td><td class="win c-a" data-arm="TEDDY + ANM">No: truth only checks answers</td><td class="c-r" data-arm="Train + Jev">Yes, to train</td></tr>
+            <tr><th scope="row">Needs labelled cells</th><td class="c-t" data-arm="TEDDY alone">Yes, to re-tune</td><td class="win c-a" data-arm="TEDDY + ANM">No: labels only score the calls</td><td class="c-r" data-arm="Train + Jev">Yes, to train</td></tr>
           </tbody>
         </table>
       </div>
@@ -637,13 +637,13 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     <div class="wrap">
       <p class="kicker">03 — Six blocks</p>
       <h2>What we tested, how, and what each one proves</h2>
-      <p class="intro">One row per block. Click a row to jump to its method, chart and numbers. Every block uses the protocol above: same frozen TEDDY, same cells, truth only checks answers.</p>
+      <p class="intro">One row per block. Click a row to jump to its method, chart and numbers. Every block uses the protocol above: same frozen TEDDY, same cells, truth only checks answers (with the labelled exceptions listed there: Blocks 2, 4 and 6).</p>
       <div class="matrix-card card">
         <table class="matrix">
           <thead><tr><th scope="col">Block</th><th scope="col">TEDDY-alone gap</th><th scope="col">Compared</th><th scope="col">What we do</th><th scope="col">Key result</th><th scope="col">Proves ANM helps TEDDY by…</th></tr></thead>
           <tbody>
             <tr data-go="edit"><td><span class="mb"><i>1</i>Edit the question</span></td><td data-l="Gap">Keeps answering the old question</td><td data-l="Compared">3 arms × 3 questions (soft · strict · key-marker) · 16,750 cells</td><td data-l="What we do">Write the question down → ANM answers → see who follows it</td><td data-l="Result" class="res">ANM “no calls” 317 → 834 → 3,373; trained head flat at 185</td><td data-l="Proves" class="pr">answering a new question with 0 labels, no retrain</td></tr>
-            <tr data-go="missing"><td><span class="mb"><i>2</i>Missing modality</span></td><td data-l="Gap">Never declines when RNA is missing</td><td data-l="Compared">TEDDY vs ANM × 3 input conditions · 12,563 cells each</td><td data-l="What we do">Remove an input channel; write down how far to trust what’s left</td><td data-l="Result" class="res">RNA missing: “no calls” 0 → 1,664; 86.8% of cells still called</td><td data-l="Proves" class="pr">honest silence when TEDDY’s input is weak</td></tr>
+            <tr data-go="missing"><td><span class="mb"><i>2</i>Missing modality</span></td><td data-l="Gap">No RNA, no TEDDY: the fixed rule on the stand-in answers every cell</td><td data-l="Compared">Fixed rule vs ANM × 3 input conditions · 12,563 cells each</td><td data-l="What we do">Remove RNA (TEDDY can’t run); declare how far to trust the stand-in</td><td data-l="Result" class="res">RNA missing: “no calls” 0 → 1,664; 86.8% of cells still called</td><td data-l="Proves" class="pr">calls follow a declared trust per evidence source</td></tr>
             <tr data-go="attr"><td><span class="mb"><i>3</i>Attribution</span></td><td data-l="Gap">No per-marker reason</td><td data-l="Compared">ANM leave-one-out on every called cell + statistical tests</td><td data-l="What we do">Remove one marker’s evidence at a time → the marker that decides → how far from flipping</td><td data-l="Result" class="res">16,433 cells · 27.7% flip · p ≈ 0.0099</td><td data-l="Proves" class="pr">an auditable “why” for every TEDDY-based call</td></tr>
             <tr data-go="scope"><td><span class="mb"><i>4</i>Scope gate</span></td><td data-l="Gap">No graded trust signal</td><td data-l="Compared">Confidence cut-off sweep · hard cells vs random cells</td><td data-l="What we do">Keep TEDDY’s call only where ANM is confident; flag cells whose call is fragile</td><td data-l="Result" class="res">accuracy 0.945 → 0.998 at 40% coverage; hard cells 0.810 vs 0.946</td><td data-l="Proves" class="pr">showing where TEDDY’s calls can be trusted</td></tr>
             <tr data-go="labels"><td><span class="mb"><i>5</i>Zero-label transfer</span></td><td data-l="Gap">A new question costs labels</td><td data-l="Compared">ANM (0 labels) vs heads trained on 50 → 10,619 labels</td><td data-l="What we do">Train heads until they copy ANM’s key-marker answers</td><td data-l="Result" class="res">copying needs ≈ 50 / 200 / 500 labels</td><td data-l="Proves" class="pr">new questions for free on the same evidence</td></tr>
@@ -715,7 +715,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </div>
         <div class="bproof">
           <div class="proves"><b>Proves (helps TEDDY)</b>TEDDY’s unchanged predictions can answer a new question just by writing it down. The “no calls” follow the question, with zero labels and no retrain.</div>
-          <div class="limits"><b>Does not prove</b>An accuracy win. <span class="term" data-term="qdec">Accuracy of calls made</span>: 0.947 vs 0.950 (soft), 0.974 vs 0.972 (strict), 0.943 vs 0.960 (key-marker). Out-of-site (2,000 cells): key-marker accuracy 0.917 → 0.978 while declining 111 → 431.</div>
+          <div class="limits"><b>Does not prove</b>An accuracy win. <span class="term" data-term="qdec">Accuracy of calls made</span>: 0.947 vs 0.950 (soft), 0.973 vs 0.972 (strict), 0.943 vs 0.960 (key-marker). Out-of-site (2,000 cells): key-marker accuracy 0.917 → 0.978 while declining 111 → 431.</div>
         </div>
         <p class="zh">改写问题（规则）即可：ANM 的“不作答”随问题变化，零标签、不重训 TEDDY；训练头的“不作答”不跟随（185 不变）。</p>
       </article>
@@ -724,21 +724,21 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <article class="block" id="missing">
         <header class="bhead">
           <span class="bnum">2</span>
-          <div><span class="bk-kick">Block 2 · take an input away</span><h3>Missing modality</h3><p class="bq">When one input is weak or absent, does the readout go quiet, or keep answering?</p></div>
+          <div><span class="bk-kick">Block 2 · take an input away</span><h3>Missing modality</h3><p class="bq">If RNA is missing, TEDDY can’t run. When the pipeline falls back on a weaker source, does the readout hold back or keep answering?</p></div>
           <a class="bsrc" href="reports/MISSING_MODALITY_ANM_DEMO.md">MISSING_MODALITY ↗</a>
         </header>
-        <div class="plain"><span class="pl">In plain words</span><p>We remove one input at a time (RNA only, RNA missing, or both) and watch whether the readout goes quiet when its evidence gets weak, instead of guessing.</p></div>
+        <div class="plain"><span class="pl">In plain words</span><p>TEDDY reads RNA, so without RNA it predicts nothing. We compare three input conditions: RNA (TEDDY’s predictions), RNA missing (a weaker protein-only model has to stand in) and both (the two averaged). Then we check who holds back on the weak stand-in instead of guessing.</p></div>
         <div class="bgrid">
           <div>
-            <div class="bpart"><h4>Problem · TEDDY alone</h4><p>A missing modality is the everyday case: RNA absent, only protein measured. TEDDY alone has no notion of how much evidence it has, so it keeps calling every cell.</p></div>
+            <div class="bpart"><h4>Problem · TEDDY alone</h4><p>Without RNA, TEDDY has no input and makes no prediction, so a pipeline has to fall back on another model. TEDDY alone’s fixed rule (call the top-scoring lineage if it clears a fixed bar) is not told that this evidence is weaker, so it keeps answering: every cell under the soft rule, 12,310 of 12,563 under the key-marker rule.</p></div>
             <div class="bpart"><h4>Compared</h4><div class="chips">
-              <span class="chip"><i class="bg-teddy"></i>TEDDY alone</span><span class="chip"><i class="bg-anm"></i>TEDDY + ANM</span><span class="chip"><i class="bg-train"></i>re-tuned head</span>
-              <span class="chip m">RNA only · RNA missing · both</span><span class="chip m">12,563 cells each</span></div></div>
+              <span class="chip"><i class="bg-teddy"></i>Fixed rule (TEDDY alone’s rule)</span><span class="chip"><i class="bg-anm"></i>ANM · declared trust</span><span class="chip"><i class="bg-train"></i>re-tuned head</span>
+              <span class="chip m">RNA · RNA missing · both</span><span class="chip m">12,563 cells each</span></div></div>
             <div class="bpart"><h4>What we do, step by step</h4><ol class="wf">
-              <li><b>Make three input conditions</b> for the same 16,750 cells: <span class="term" data-term="rnaonly">RNA only</span>, <span class="term" data-term="adtonly">RNA missing</span> (only the protein channel) and <span class="term" data-term="joint">both</span>.</li>
-              <li><b>Turn each condition’s predictions into typed evidence:</b> the phase-1 model for RNA, the phase-2 model for the protein channel.</li>
-              <li><b>Write down how far to trust the protein-only channel:</b> its evidence is scaled by 0.35. A declared rule, not retraining.</li>
-              <li><b>Let everyone answer.</b> ANM with the soft and key-marker rules; TEDDY alone with its rules; a classifier re-tuned on 50–1,000 labels.</li>
+              <li><b>Three input conditions</b> for the same 12,563 held-out cells: <span class="term" data-term="rnaonly">RNA</span> (TEDDY’s phase-1 predictions), <span class="term" data-term="adtonly">RNA missing</span> (TEDDY can’t run; this repo’s phase-2 model, run on protein only, reconstructs the 9 panel proteins from the cell’s measured proteins) and <span class="term" data-term="joint">both</span> (the two averaged). Another 4,187 cells supply the re-tuned head’s labels.</li>
+              <li><b>Turn each condition’s predictions into typed evidence,</b> tagged with where it came from.</li>
+              <li><b>Declare how far to trust each source:</b> RNA and both 1.0, the protein-only stand-in 0.35. We chose that number; it is not estimated from data, and nothing is retrained.</li>
+              <li><b>Let everyone answer.</b> ANM with the soft and key-marker rules; the fixed rule on the same predicted proteins without the 0.35 (it has no trust setting); a classifier re-tuned on 50–1,000 key-marker labels.</li>
               <li><b>Check the answers</b> against the held-out proteins.</li>
             </ol><p class="wf-src"><code>export_missing_modality_events.py</code> → <code>run_missing_modality_demo.py</code></p></div>
           </div>
@@ -758,21 +758,21 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
               <p class="figcap" id="cap-b2"></p>
             </div>
             <div class="pane" data-pane="data"><div class="tblwrap" id="t-b2"></div></div>
-            <div class="pane" data-pane="poster"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/infographics/02_missing_modality_dark.png" /><img src="assets/infographics/02_missing_modality_light.png" alt="Poster: weak channel leads to honest silence" width="1600" height="900" loading="lazy" /></picture></div>
-            <div class="pane" data-pane="anim"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/missing_modality/missing_modality_masks_dark.gif" /><img src="assets/missing_modality/missing_modality_masks_light.gif" alt="Animation: RNA only, RNA missing, both" width="1080" height="600" loading="lazy" /></picture><p class="imgcap">RNA only → RNA missing → both. <a href="assets/missing_modality/missing_modality_dashboard_light.png">Dashboard</a>.</p></div>
+            <div class="pane" data-pane="poster"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/infographics/02_missing_modality_dark.png" /><img src="assets/infographics/02_missing_modality_light.png" alt="Poster: without RNA TEDDY can’t run; ANM follows the declared trust in the weaker stand-in" width="1600" height="900" loading="lazy" /></picture></div>
+            <div class="pane" data-pane="anim"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/missing_modality/missing_modality_masks_dark.gif" /><img src="assets/missing_modality/missing_modality_masks_light.gif" alt="Animation: RNA only, RNA missing, both" width="1080" height="600" loading="lazy" /></picture><p class="imgcap">RNA (TEDDY) → RNA missing (protein-only stand-in, no TEDDY) → both. <a href="assets/missing_modality/missing_modality_dashboard_light.png">Dashboard</a>.</p></div>
           </div>
         </div>
         <div class="bkpis">
-          <div class="bk"><div class="v"><span style="color:var(--s-teddy)">0</span> → <span style="color:var(--s-anm)">1,664</span></div><div class="d">“no calls” when RNA is missing (TEDDY alone → ANM, soft rule).</div></div>
-          <div class="bk"><div class="v a">86.8%</div><div class="d">of cells ANM still calls when RNA is missing (<span class="term" data-term="pf">workability</span> 0.868), vs 98.2% with RNA only and 100% with both.</div></div>
-          <div class="bk"><div class="v a">12,563 / 12,563</div><div class="d">RNA-missing cells ANM declines under the key-marker rule: its key markers can’t be read from the weak channel.</div></div>
-          <div class="bk"><div class="v r">≈ 0.68–0.70</div><div class="d">accuracy of a re-tuned head with RNA missing, even with 1,000 labels.</div></div>
+          <div class="bk"><div class="v"><span style="color:var(--s-teddy)">0</span> → <span style="color:var(--s-anm)">1,664</span></div><div class="d">“no calls” with RNA missing (fixed rule → ANM, soft rule), set by the declared 0.35 trust.</div></div>
+          <div class="bk"><div class="v a">86.8%</div><div class="d">of RNA-missing cells ANM still calls (<span class="term" data-term="pf">workability</span> 0.868), vs 98.1% with RNA and 100% with both.</div></div>
+          <div class="bk"><div class="v a">12,563 / 12,563</div><div class="d">RNA-missing cells ANM declines under the key-marker rule. By construction: with one marker per lineage and the 0.35 trust, no score can reach the 0.20 bar (best case 0.126).</div></div>
+          <div class="bk"><div class="v r">≈ 0.68–0.70</div><div class="d">accuracy of calls made by a head re-tuned on the stand-in with key-marker labels, tuned to decline about 20%, even with 1,000 labels.</div></div>
         </div>
         <div class="bproof">
-          <div class="proves"><b>Proves (helps TEDDY)</b>When TEDDY’s input is weak, ANM calls fewer cells and says so, instead of over-answering. TEDDY’s predictions are untouched.</div>
-          <div class="limits"><b>Does not prove</b>A Pearson or accuracy win. With RNA missing the channel is weak (panel Pearson 0.446; RNA only 0.915, both 0.870) and accuracy barely moves (0.628 → 0.649). The 0.35 trust factor is a declared rule.</div>
+          <div class="proves"><b>Proves (helps a TEDDY pipeline)</b>When TEDDY can’t run and the pipeline falls back on a weaker source, ANM’s calls follow the trust declared for each source: it holds back on the weak stand-in instead of answering every cell. No retraining, and TEDDY’s predictions are unchanged wherever RNA exists.</div>
+          <div class="limits"><b>Does not prove</b>That ANM detects weak evidence by itself: the “no calls” come from the 0.35 we declared. Anything about TEDDY’s accuracy: with RNA missing TEDDY is not involved. The stand-in reads the cell’s measured proteins, the same ones that set the answer key, yet stays weak (panel Pearson 0.446, vs 0.915 for TEDDY), and accuracy barely moves (0.628 → 0.649).</div>
         </div>
-        <p class="zh">输入变弱（缺 RNA）时 ANM 诚实地少答（0 → 1,664 个“不作答”），而不是硬答；TEDDY 预测不变，不是 Pearson 胜利。</p>
+        <p class="zh">缺 RNA 时 TEDDY 无法运行，只能用一个较弱的纯蛋白模型顶替；ANM 按事先声明的可信度（×0.35）少答（0 → 1,664 个“不作答”），固定规则则全部照答。这说明决策会遵循声明的可信度，不说明 ANM 自己发现了证据变弱，也与 TEDDY 的准确性无关。</p>
       </article>
 
       <!-- ---------- BLOCK 3 ---------- -->
@@ -875,7 +875,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <div class="bkpis">
           <div class="bk"><div class="v a">+0.053</div><div class="d">soft rule: accuracy 0.945 → 0.998 keeping the most confident 40%.</div></div>
           <div class="bk"><div class="v a">+0.055</div><div class="d">key-marker rule: 0.915 → 0.970 at 77% coverage.</div></div>
-          <div class="bk"><div class="v a">+0.145</div><div class="d">RNA missing: 0.629 → 0.774 at 40% coverage (+0.321 at the strictest cut).</div></div>
+          <div class="bk"><div class="v a">+0.145</div><div class="d">RNA missing (protein-only stand-in, no TEDDY): 0.629 → 0.774 at 40% coverage (+0.321 at the strictest cut).</div></div>
           <div class="bk"><div class="v">0.810 <span style="color:var(--ink-faint);font-weight:500">vs</span> 0.946</div><div class="d">accuracy on the hard cells ANM flags vs random cells.</div></div>
         </div>
         <div class="bproof">
@@ -1019,7 +1019,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <div class="weak card">
         <h3>Honest weak spots</h3>
         <ul>
-          <li>With RNA missing the channel is weak (panel Pearson 0.446). Block 2 shows honest silence, not a better model.</li>
+          <li>With RNA missing TEDDY can’t run. Block 2’s evidence then comes from a weak protein-only stand-in (panel Pearson 0.446), and its “no calls” follow a trust factor we declared (0.35): the decision follows that declaration; it is not a better model.</li>
           <li>Accuracy is roughly tied in Block 1. <a href="reports/HARD_PROOF.md">HARD_PROOF</a>’s three-arm table lists ANM’s <span class="term" data-term="qf">exactness</span>, which counts a decline as a miss (0.939 / 0.958 / 0.821). This page compares accuracy of calls made for every arm.</li>
           <li>Block 4 trades coverage for accuracy; under the key-marker rule accuracy dips at very low coverage; label-budget gains are small and mixed.</li>
           <li>Block 6 uses measured protein as the evidence, in place of TEDDY’s predictions, in one explicit test. In normal use it stays the answer key.</li>
@@ -1128,7 +1128,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'TEDDY alone decides with one fixed recipe',
           steps: [
             ['The recipe', 'Average each lineage’s 3 predicted markers (scaled 0–1) and call the highest if it reaches 0.12: the ' + T('o0', 'soft rule') + ', hard-wired.'],
-            ['What it can’t do', 'Change the question without re-tuning on labels, decline when the input is weak, say which marker decided, rank its calls by confidence, or notice two different cells that look the same to it.'],
+            ['What it can’t do', 'Change the question without re-tuning on labels, weigh each input source by a declared trust (its fixed 0.12 bar is the only way it declines), say which marker decided, rank its calls by confidence, or notice two different cells that look the same to it.'],
             ['What ANM replaces', 'Only this last step. The recipe becomes a written-down question run by ANM’s engine, with checks attached. TEDDY and its predictions stay exactly the same.']
           ],
           note: 'Each gap is one block, tested against TEDDY alone and a trained head.'
@@ -1140,11 +1140,11 @@ window.GUIDE_CONFIG = (function () {
         how: {
           t: 'Same evidence, three ways to decide',
           steps: [
-            ['Same input', 'Every arm reads the same 9 predicted proteins for the same 16,750 ' + T('holdout', 'held-out cells') + '. TEDDY is never retrained.'],
+            ['Same input', 'Every arm reads the same 9 predicted proteins for the same 16,750 ' + T('holdout', 'held-out cells') + '. TEDDY is never retrained. (Block 2 scores 12,563 of them; with RNA missing a protein-only stand-in supplies the evidence, since TEDDY can’t run without RNA.)'],
             ['TEDDY alone', 'Averages each lineage’s markers and calls the best one if it reaches the bar.'],
             ['TEDDY + ANM', 'Runs the same predictions through ANM’s engine under a written-down question: a call, or “no call”.'],
             ['Train + Jev', 'Fits a classifier on labelled cells over the same features: the “just train harder” control.'],
-            ['Scoring', 'Measured proteins are the answer key and never enter ANM’s evidence (one labelled exception: Block 6). Arms are compared on ' + T('qdec', 'accuracy of calls made') + '.']
+            ['Scoring', 'Measured proteins are the answer key. They reach the evidence only in labelled places: Block 2’s stand-in reconstructs the panel from them (reused in Block 4’s RNA-missing view), and Block 6’s complement test uses them directly. Arms are compared on ' + T('qdec', 'accuracy of calls made') + '.']
           ]
         },
         concepts: ['evidence', 'observer', 'o0', 'train', 'holdout', 'ood', 'adt', 'qdec']
@@ -1155,8 +1155,8 @@ window.GUIDE_CONFIG = (function () {
           t: 'Six tests, one engine',
           steps: [
             ['One change per block', 'The question (Blocks 1 and 5), the input (2), a re-run with one marker left out (3), a cut-off on ANM’s score (4), or the evidence the decision reads (6).'],
-            ['Everything else fixed', 'TEDDY, its predictions, the cells, ANM’s engine and the answer key.'],
-            ['So', 'Any difference comes from the decision layer, not from TEDDY.']
+            ['Everything else fixed', 'TEDDY, its predictions, the cells, ANM’s engine and the answer key. Exception: when RNA is missing (Block 2, and Block 4’s RNA-missing view) a protein-only stand-in replaces TEDDY’s predictions.'],
+            ['So', 'Within a block every arm reads the same evidence (except Block 6, where the evidence itself is what changes), so any difference between arms comes from the decision layer, not from TEDDY.']
           ]
         },
         concepts: ['observer', 'evidence', 'finitefield']
@@ -1176,16 +1176,17 @@ window.GUIDE_CONFIG = (function () {
         concepts: ['observer', 'o0', 'o1', 'o2', 'abstain', 'qdec', 'train']
       },
       missing: {
-        label: 'Block 2 · Missing modality', plain: 'Take RNA away; see who goes quiet instead of guessing.', steps: ['evidence', 'decide'], depth: 2,
+        label: 'Block 2 · Missing modality', plain: 'Without RNA, TEDDY can’t run; see who holds back on the weaker stand-in instead of guessing.', steps: ['evidence', 'decide'], depth: 2,
         how: {
-          t: 'Weak input → lower scores → honest “no call”',
+          t: 'No RNA → no TEDDY → a weaker stand-in → declared trust → fewer calls',
           steps: [
-            ['Tag the channel', 'Every evidence item records where it came from: ' + T('rnaonly', 'RNA') + ', the ' + T('adtonly', 'protein-only channel') + ', or ' + T('joint', 'both') + '.'],
-            ['Declare how far to trust it', 'The protein-only channel is weak (panel Pearson 0.446), so the question multiplies its evidence by 0.35 before the engine runs. A written rule, not retraining.'],
-            ['Scores shrink', 'With RNA missing, every lineage scores lower, so more cells miss the bar.'],
-            ['Soft rule', 'ANM declines 1,664 RNA-missing cells and still calls 86.8% of them. TEDDY alone calls every one, at accuracy 0.63.'],
-            ['Key-marker rule', 'Its key markers can’t be read from the weak channel: no cell reaches the 0.20 bar, so all 12,563 are declined.']
-          ]
+            ['What TEDDY can do here', 'Nothing when RNA is missing: TEDDY reads RNA. Its predictions enter only the ' + T('rnaonly', 'RNA') + ' and ' + T('joint', 'both') + ' conditions.'],
+            ['The stand-in', 'With ' + T('adtonly', 'RNA missing') + ', this repo’s phase-2 model, run with its RNA input switched off, reconstructs the 9 panel proteins from the cell’s measured proteins. It is weak: panel Pearson 0.446.'],
+            ['Declare the trust', 'The question multiplies every stand-in evidence item by 0.35 before ANM’s engine runs (the fixed rule sees the values unscaled). We chose that number; ANM does not estimate it.'],
+            ['Soft rule', 'Scores shrink, so ANM declines 1,664 cells and still calls 86.8%. The fixed rule answers every cell, at accuracy 0.63 (ANM’s calls: 0.65).'],
+            ['Key-marker rule', 'Only one marker per lineage counts, so with the 0.35 trust no score can reach the 0.20 bar (best case 0.126): all 12,563 are declined by construction.']
+          ],
+          note: 'What this shows: ANM’s calls follow a declared trust per evidence source. It does not show that ANM detects weak evidence on its own, and it says nothing about TEDDY’s accuracy.'
         },
         concepts: ['rnaonly', 'adtonly', 'joint', 'pf', 'abstain']
       },
@@ -1217,7 +1218,7 @@ window.GUIDE_CONFIG = (function () {
           steps: [
             ['Confidence', 'For each cell, ANM’s ' + T('softp', 'confidence') + ' is its best lineage score: 0.526 for the example cell.'],
             ['Rank and cut', 'Keep TEDDY’s own call only where the confidence clears a cut-off; the rest go to follow-up.'],
-            ['Accuracy rises', 'Soft rule: 0.945 → 0.998 keeping the top 40%. Key-marker rule: 0.915 → 0.970 at 77%. RNA missing: 0.629 → 0.774 at 40%.'],
+            ['Accuracy rises', 'Soft rule: 0.945 → 0.998 keeping the top 40%. Key-marker rule: 0.915 → 0.970 at 77%. RNA missing (protein-only stand-in, no TEDDY): 0.629 → 0.774 at 40%.'],
             ['Hard cells', 'Cells whose call flips under leave-one-out (4,557) are where TEDDY is weakest: accuracy 0.810 vs 0.946 on random cells.'],
             ['The price', 'Accuracy is bought with ' + T('coverage', 'coverage') + ', and the key-marker rule dips at very low coverage (0.881 at 14%).']
           ]
@@ -1297,7 +1298,7 @@ window.GUIDE_CONFIG = (function () {
       obs: ['O0', 'O1', 'O2'],
       anmAb: [317, 834, 3373], anmQ: [0.9496, 0.9723, 0.9603], anmStrict: [0.9394, 0.9578, 0.8208],
       teddyKeepAb: [101, 101, 101], teddyOver: [null, 780, 1752],
-      teddyCodedAb: [101, 881, 1796], teddyCodedQ: [0.9472, 0.9735, 0.9428],
+      teddyCodedAb: [101, 881, 1796], teddyCodedQ: [0.9471936657940107, 0.9734587838786687, 0.9428168019767031],
       trainAb: [185, 185, 185], trainQ: [0.9552, 0.9733, 0.8277],
       trainRetrainAb: [185, 157, 50], trainRetrainQ: [0.9552, 0.9740, 0.9232], // STAT_PROOF
       rewrite: [['O0 → O1', 0, 14488], ['O0 → O2', 1794, 14379], ['O1 → O2', 1414, 13400]],
@@ -1305,9 +1306,9 @@ window.GUIDE_CONFIG = (function () {
     },
     b2: { // MISSING_MODALITY_ANM_DEMO
       masks: ['rna_only', 'adt_only', 'joint'], pearson: [0.915, 0.446, 0.870],
-      O0: { teddyAb: [76, 0, 0], anmAb: [233, 1664, 0], teddyQ: [0.9450, 0.6277, 0.9150], anmQ: [0.9479, 0.6494, 0.9214], pf: [0.9815, 0.8675, 1.0] },
-      O2: { teddyAb: [1282, 253, 371], anmAb: [2459, 12563, 785], teddyQ: [0.9400, 0.6489, 0.8867], anmQ: [0.9590, null, 0.7584], pf: [0.8043, 0.0, 0.9375] },
-      retune: [[50, 0.6844], [200, 0.6759], [500, 0.6931], [1000, 0.6966]]
+      O0: { teddyAb: [76, 0, 0], anmAb: [233, 1664, 0], teddyQ: [0.9450, 0.6277, 0.9150], anmQ: [0.9479, 0.6494, 0.9214], pf: [0.9814534744885776, 0.8675475602961076, 1.0] },
+      O2: { teddyAb: [1282, 253, 371], anmAb: [2459, 12563, 785], teddyQ: [0.9400, 0.6489, 0.8867], anmQ: [0.9590, null, 0.7584], pf: [0.8042664968558465, 0.0, 0.9375149247791132] },
+      retune: [[50, 0.1933, 0.6844], [200, 0.2081, 0.6759], [500, 0.1984, 0.6931], [1000, 0.1994, 0.6966]] // [labels, declined, accuracy of calls made] · key-marker labels
     },
     b3: { // HARD_PROOF attribution (O0 field, full n)
       nAttr: 16433,
@@ -1435,6 +1436,7 @@ window.GUIDE_CONFIG = (function () {
       });
       // category label, then its sub-line; fall back to the short sub-line, then drop it
       var lines = String(c).split('\n');
+      if (cfg.catsNarrow && tw(lines[0], 12, 600) > gw - 6) lines[0] = cfg.catsNarrow[i];
       if (lines[1] && tw(lines[1], 10.5, 400, true) > gw - 8) lines[1] = cfg.catsShort ? cfg.catsShort[i] : '';
       if (lines[1] && tw(lines[1], 10.5, 400, true) > gw - 8) lines[1] = '';
       lines.forEach(function (ln, k) {
@@ -1716,25 +1718,27 @@ window.GUIDE_CONFIG = (function () {
   };
 
   R.b2 = function () {
-    var d = DATA.b2, o = d[S.b2], host = $('#c-b2'), names = ['RNA only', 'RNA missing', 'Both'];
+    // with RNA missing TEDDY can't run: the evidence there comes from the protein-only stand-in, so the baseline is "the fixed rule", not TEDDY
+    var d = DATA.b2, o = d[S.b2], host = $('#c-b2'), names = ['RNA · TEDDY', 'RNA missing · stand-in', 'Both · averaged'];
     if (!width(host)) return;
     groupedBars(host, {
-      aria: '“No calls” per input condition, TEDDY alone versus TEDDY plus ANM', mb: 50, focus: 1, maxBar: 54, yFmt: kfmt, vFmt: n,
+      aria: '“No calls” per input condition, fixed rule versus ANM with declared trust', mb: 50, focus: 1, maxBar: 54, yFmt: kfmt, vFmt: n,
       cats: names.map(function (nm, i) { return nm + '\ncalled ' + pct(o.pf[i]); }),
       catsShort: names.map(function (nm, i) { return pct(o.pf[i]); }),
+      catsNarrow: ['RNA', 'No RNA', 'Both'],
       series: [
-        { name: 'TEDDY alone', cls: 'f-teddy', vals: o.teddyAb },
-        { name: 'TEDDY + ANM', cls: 'f-anm', vals: o.anmAb }
+        { name: 'Fixed rule', cls: 'f-teddy', vals: o.teddyAb },
+        { name: 'ANM · declared trust', cls: 'f-anm', vals: o.anmAb }
       ],
       tip: function (s, i, v) {
         var q = s.cls === 'f-teddy' ? o.teddyQ[i] : o.anmQ[i];
         return s.name + ' · ' + names[i] + ' · ' + (S.b2 === 'O0' ? 'soft rule' : 'key-marker rule') + '<br><b>' + n(v) + '</b> “no calls” of 12,563' + (s.cls === 'f-anm' ? ' · calls <b>' + pct(o.pf[i]) + '</b> of cells' : '') + '<br>accuracy of calls made ' + f(q, 3) + ' · panel Pearson ' + f(d.pearson[i], 3);
       }
     });
-    legend('#l-b2', [['bg-teddy', 'TEDDY alone'], ['bg-anm', 'TEDDY + ANM · “called” = share of cells ANM still calls']]);
+    legend('#l-b2', [['bg-teddy', 'Fixed rule · TEDDY alone’s rule on each condition’s evidence'], ['bg-anm', 'ANM · declared trust · “called” = share of cells ANM still calls']]);
     cap('#cap-b2', S.b2 === 'O0'
-      ? '“No calls” under each input condition (12,563 cells each). With RNA missing, TEDDY alone never declines; ANM holds back 1,664 cells and still calls 86.8% of them. With both channels neither declines.'
-      : 'Under the key-marker rule ANM declines every RNA-missing cell (12,563; workability 0) because the key markers can’t be read from the weak channel. TEDDY alone still answers 12,310 of them.');
+      ? '“No calls” per input condition (12,563 cells each). With RNA missing TEDDY can’t run, so the evidence comes from the protein-only stand-in. The fixed rule never declines; ANM, told to trust that source at 0.35, holds back 1,664 cells and still calls 86.8%. With both channels neither declines.'
+      : 'Under the key-marker rule only one marker per lineage counts. With the 0.35 trust no RNA-missing cell can reach the 0.20 bar (best case 0.126), so ANM declines all 12,563 by construction. The fixed rule still answers 12,310 of them.');
   };
 
   R.b3 = function () {
@@ -1793,6 +1797,8 @@ window.GUIDE_CONFIG = (function () {
       adt: { min: 0.6, max: 1.0, ticks: [0.6, 0.7, 0.8, 0.9, 1.0] }
     }[S.b4];
     var nm = { O0: 'soft rule', O2: 'key-marker rule', adt: 'RNA missing, soft rule' }[S.b4];
+    // with RNA missing TEDDY can't run: the calls being gated are the fixed rule's calls on the protein-only stand-in
+    var base = S.b4 === 'adt' ? 'Fixed rule on the stand-in' : 'TEDDY alone';
     lineChart(host, {
       aria: 'Coverage versus accuracy when keeping only confident calls, ' + nm,
       x: { min: 0, max: 1, reverse: true, ticks: [1, 0.8, 0.6, 0.4, 0.2, 0], ticksSm: [1, 0.6, 0.2], fmt: function (v) { return Math.round(v * 100) + '%'; }, label: 'coverage: share of cells still called (cut tightens →)', labelSm: 'coverage (cut tightens →)' },
@@ -1800,14 +1806,16 @@ window.GUIDE_CONFIG = (function () {
       series: [{ k: 'k-anm', f: 'f-anm', pts: c.pts.map(function (p) {
         return { x: p[1], y: p[2], tip: 'confidence cut ' + f(p[0], 4) + ' · coverage <b>' + pct(p[1]) + '</b><br>accuracy <b>' + f(p[2], 4) + '</b> · ' + n(p[3]) + ' labelled cells still called' };
       }) }],
-      refs: [{ y: c.base, k: 'k-teddy', label: 'TEDDY alone, calls every cell: ' + f(c.base, 3), labelSm: 'TEDDY alone ' + f(c.base, 3), tip: 'TEDDY alone calls every cell: accuracy <b>' + f(c.base, 4) + '</b>' }],
+      refs: [{ y: c.base, k: 'k-teddy', label: base + ', calls every cell: ' + f(c.base, 3), labelSm: (S.b4 === 'adt' ? 'Fixed rule ' : 'TEDDY alone ') + f(c.base, 3), tip: base + ' calls every cell: accuracy <b>' + f(c.base, 4) + '</b>' }],
       marks: [{ x: c.mark[0], y: c.mark[1], t: c.mark[2] }]
     });
-    legend('#l-b4', [['bg-anm', 'TEDDY’s calls, kept where ANM is confident'], ['dash teddy', 'TEDDY alone · calls every cell']]);
+    legend('#l-b4', S.b4 === 'adt'
+      ? [['bg-anm', 'Fixed-rule calls on the protein-only stand-in, kept where ANM is confident'], ['dash teddy', 'Fixed rule on the stand-in · calls every cell']]
+      : [['bg-anm', 'TEDDY’s calls, kept where ANM is confident'], ['dash teddy', 'TEDDY alone · calls every cell']]);
     cap('#cap-b4', {
       O0: 'Keep TEDDY’s own call only where ANM’s confidence clears a cut. As the cut tightens, accuracy climbs from 0.945 to 0.998 at 40% coverage and reaches 1.000 at the strictest cut.',
       O2: 'Under the key-marker rule accuracy peaks at 0.970 with 77% coverage (+0.055), then dips at very low coverage (0.881 at 14%): a useful middle range, not a straight climb.',
-      adt: 'With RNA missing the cut matters most: accuracy 0.629 → 0.774 at 40% coverage and 0.949 at the strictest cut (1% coverage, +0.321). It rises at every step.'
+      adt: 'With RNA missing TEDDY can’t run, so these are the fixed rule’s calls on the protein-only stand-in. The cut matters most here: accuracy 0.629 → 0.774 at 40% coverage and 0.949 at the strictest cut (1% coverage, +0.321). It rises at every step.'
     }[S.b4]);
   };
 
@@ -1871,12 +1879,12 @@ window.GUIDE_CONFIG = (function () {
       { title: 'Out-of-site check · 2,000 cells from other sites', cols: ['Question', 'TEDDY accuracy', 'TEDDY no calls', 'ANM accuracy', 'ANM no calls'], rows: QN.map(function (o, i) { return [o, f(b1.ood.teddyQ[i], 4), n(b1.ood.teddyAb[i]), f(b1.ood.anmQ[i], 4), n(b1.ood.anmAb[i])]; }) }
     ], 'Accuracy = correct calls ÷ calls made, for every arm. HARD_PROOF.md’s three-arm table lists ANM’s exactness (Q_f), which counts a decline as a miss (' + b1.anmStrict.map(function (v) { return f(v, 4); }).join(' / ') + '). “Retrained for each question” is from STAT_PROOF and uses new labels.');
 
-    var b2 = DATA.b2, names = ['RNA only', 'RNA missing', 'Both'];
+    var b2 = DATA.b2, names = ['RNA · TEDDY', 'RNA missing · stand-in', 'Both · averaged'];
     table('#t-b2', [
-      { title: 'Per input condition · 12,563 cells each', cols: ['Input', 'Panel Pearson', 'TEDDY no calls · soft', 'ANM no calls · soft', 'ANM calls · soft', 'TEDDY accuracy · soft', 'ANM accuracy · soft', 'TEDDY no calls · key-marker', 'ANM no calls · key-marker', 'ANM calls · key-marker'],
+      { title: 'Per input condition · 12,563 cells each', cols: ['Input', 'Panel Pearson', 'Fixed rule no calls · soft', 'ANM no calls · soft', 'ANM calls · soft', 'Fixed rule accuracy · soft', 'ANM accuracy · soft', 'Fixed rule no calls · key-marker', 'ANM no calls · key-marker', 'ANM calls · key-marker'],
         rows: names.map(function (mk, i) { return [mk, f(b2.pearson[i], 3), n(b2.O0.teddyAb[i]), n(b2.O0.anmAb[i]), pct(b2.O0.pf[i]), f(b2.O0.teddyQ[i], 3), f(b2.O0.anmQ[i], 3), n(b2.O2.teddyAb[i]), n(b2.O2.anmAb[i]), pct(b2.O2.pf[i])]; }) },
-      { title: 'Re-tuned logistic head with RNA missing (labelled cells → accuracy)', cols: ['Labelled cells', 'Accuracy'], rows: b2.retune.map(function (r) { return [n(r[0]), f(r[1], 3)]; }) }
-    ], '“ANM calls” = share of cells ANM still calls (workability, P_f). Base cells 16,750 (12,563 scored, 4,187 for re-tuning). RNA paths use the phase-1 model; the RNA-missing path uses the phase-2 protein channel, scaled by a declared trust factor of 0.35. Under the key-marker rule with RNA missing ANM calls no cells, so its accuracy is undefined.');
+      { title: 'Logistic head re-tuned on the RNA-missing stand-in · key-marker labels · cut tuned to decline ≈ 20% · scored on 11,387 labelled cells', cols: ['Labelled cells', 'Declined', 'Accuracy of calls made'], rows: b2.retune.map(function (r) { return [n(r[0]), pct(r[1]), f(r[2], 3)]; }) }
+    ], '“ANM calls” = share of cells ANM still calls (workability, P_f). Base cells 16,750 (12,563 scored, 4,187 for re-tuning). RNA = TEDDY’s phase-1 predictions. With RNA missing TEDDY can’t run: the evidence comes from the phase-2 model run on protein only (input: the cell’s 134 measured proteins), which ANM scales by a declared trust factor of 0.35. Both = the average of the two. The fixed rule is TEDDY alone’s rule applied to each condition’s predicted panel, unscaled (it has no trust setting). Under the key-marker rule with RNA missing ANM calls no cells (by construction), so its accuracy is undefined.');
 
     var b3 = DATA.b3;
     table('#t-b3', [

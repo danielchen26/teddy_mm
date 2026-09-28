@@ -650,6 +650,12 @@ def write_report(path: Path, results: dict) -> None:
         lines.append("")
         lines.append(f"#### Missing-modality `adt_only` (n={ga['n_cells']})")
         lines.append("")
+        lines.append(
+            "> Reading note: with `adt_only` (RNA missing) TEDDY does not run. \"TEDDY always\" here is TEDDY alone's "
+            "fixed rule applied to the phase-2 protein-only stand-in (see MISSING_MODALITY_ANM_DEMO.md), so this curve "
+            "gates the stand-in's calls, not TEDDY's."
+        )
+        lines.append("")
         for crit_id, block in ga["criteria"].items():
             mono = block["monotonicity_teddy"]
             base = block["baseline"]
@@ -812,9 +818,10 @@ def build_proof_sentence(results: dict) -> str:
     if adt:
         am = adt["monotonicity_teddy"]
         adt_bit = (
-            f" On missing-modality adt_only O0, soft_P gate lifts Q "
+            f" Separately, on missing-modality adt_only O0 (RNA missing, so TEDDY does not run; these are TEDDY alone's "
+            f"fixed rule's calls on the phase-2 protein-only stand-in), soft_P gate lifts Q "
             f"{am.get('Q_at_fullish'):.4f}→{am.get('Q_peak'):.4f} "
-            f"(ΔQ_peak={am.get('delta_Q_peak'):.4f})."
+            f"(ΔQ_peak={am.get('delta_Q_peak'):.4f}); not a gain on TEDDY's calls."
         )
     lb_bit = ""
     if delta50 is not None:
