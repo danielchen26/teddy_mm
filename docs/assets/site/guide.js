@@ -29,7 +29,7 @@
     ood: ['Out-of-site check', '2,000 cells from other sites (val_non_site4): a second check that the results hold elsewhere.'],
     train: ['Train + Jev · trained head', 'The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over TEDDY’s outputs: the 9 predictions plus the first 32 numbers of TEDDY’s embedding (the threshold grid uses the 9 only). A stand-in for a Jev-class learner, not the live Jev API.'],
     z512: ['TEDDY embedding (z_512)', 'TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024.'],
-    mustpair: ['Must-separate pair', 'Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree, for example one myeloid and one T cell.'],
+    mustpair: ['Must-separate pair', 'Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree under the 3-lineage answer key, for example one keyed myeloid and one keyed T. Many of the “myeloid” cells in these pairs are NK cells, which the key has no class for.'],
     falseagree: ['False agreement', 'Among must-separate pairs where both cells get a call, the share given the same call even though they differ.'],
     softsep: ['Soft separation', 'The share of must-separate pairs the readout tells apart: different calls, or one cell declined.'],
     corrsep: ['Correct separation', 'The share of must-separate pairs split into the right, different calls.'],
@@ -49,6 +49,13 @@
     bootstrap: ['Bootstrap', 'Resample the cells with replacement (200 times) to see how stable a number is; gives a 95% interval.']
   };
   window.TEDDY_ANM_TERMS = TERMS;
+
+  // apply the remembered guide width / hidden state now, before the page draws its charts
+  try {
+    var savedW = parseInt(window.localStorage.getItem('teddyGuide.width'), 10);
+    if (savedW) document.documentElement.style.setProperty('--gw', Math.max(260, Math.min(Math.max(260, Math.min(640, window.innerWidth - 640)), savedW)) + 'px');
+    if (window.localStorage.getItem('teddyGuide.collapsed') === '1') document.documentElement.classList.add('g-collapsed');
+  } catch (e) {}
 
   // abbreviations marked automatically in prose (headings, buttons, links and code are skipped)
   var AUTO = [
@@ -293,7 +300,9 @@
     var E = cfg.engine === false ? null : (cfg.engine || ENGINE);
     var arms = cfg.arms ? '<p class="g-kick">Colours on this page</p><div class="g-arms">' + cfg.arms.map(function (a) { return '<span><i style="background:' + a[0] + '"></i>' + a[1] + '</span>'; }).join('') + '</div>' : '';
     aside.innerHTML = '<div class="g-inner">' +
-      '<div class="g-top"><span class="g-kick">Guide · how ANM decides</span><button class="g-close" type="button" aria-label="Close guide">×</button></div>' +
+      '<div class="g-top"><span class="g-kick">Guide · how ANM decides</span><span class="g-btns">' +
+      '<button class="g-hide" type="button" aria-label="Hide guide" title="Hide the guide (drag its left edge to resize)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>' +
+      '<button class="g-close" type="button" aria-label="Close guide">×</button></span></div>' +
       '<div class="g-now" aria-live="polite"><span class="g-now-k">You are reading</span><b id="g-now-t"></b><span id="g-now-d"></span></div>' +
       '<p class="g-kick">' + (cfg.flowTitle || 'Where this sits in the workflow') + '</p>' + mapHtml(cfg) +
       '<p class="g-kick" id="g-how-k">How ANM decides here</p><div class="g-how" id="g-how"></div>' +
@@ -314,9 +323,71 @@
     }
     var scrim = document.createElement('div'); scrim.className = 'g-scrim';
     document.body.appendChild(scrim);
-    function open() { aside.classList.add('open'); scrim.classList.add('on'); fab.setAttribute('aria-expanded', 'true'); }
+    function open() {
+      if (wide()) { setCollapsed(false); return; }
+      aside.classList.add('open'); scrim.classList.add('on'); fab.setAttribute('aria-expanded', 'true');
+    }
     function close() { aside.classList.remove('open'); scrim.classList.remove('on'); fab.setAttribute('aria-expanded', 'false'); }
     fab.addEventListener('click', open);
+
+    // wide screens: the column floats on the right; it can be hidden to a tab on the edge and resized from its left edge.
+    // Both choices are remembered per browser (a convenience only; the page works without storage).
+    var root = document.documentElement, W_MIN = 260, W_DEF = 320;
+    function wide() { return window.innerWidth >= 1200; }
+    function wMax() { return Math.max(W_MIN, Math.min(640, window.innerWidth - 640)); }
+    function load(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+    function save(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+    var relayoutT = null;
+    function relayout(delay) { clearTimeout(relayoutT); relayoutT = setTimeout(function () { window.dispatchEvent(new Event('resize')); }, delay || 0); }
+    var handle = document.createElement('div');
+    handle.className = 'g-resize'; handle.setAttribute('role', 'separator'); handle.setAttribute('aria-orientation', 'vertical');
+    handle.setAttribute('aria-label', 'Resize the guide'); handle.setAttribute('aria-controls', 'guide'); handle.tabIndex = 0;
+    handle.title = 'Drag to resize · double-click to reset';
+    var tab = document.createElement('button');
+    tab.className = 'g-tab'; tab.type = 'button'; tab.setAttribute('aria-controls', 'guide'); tab.setAttribute('aria-label', 'Show the guide');
+    tab.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span>Guide</span>';
+    document.body.appendChild(handle); document.body.appendChild(tab);
+    var width = W_DEF;
+    function setWidth(w, persist) {
+      width = Math.round(Math.max(W_MIN, Math.min(wMax(), w)));
+      root.style.setProperty('--gw', width + 'px');
+      handle.setAttribute('aria-valuemin', W_MIN); handle.setAttribute('aria-valuemax', wMax()); handle.setAttribute('aria-valuenow', width);
+      if (persist) save('teddyGuide.width', String(width));
+    }
+    function setCollapsed(c) {
+      root.classList.toggle('g-collapsed', c);
+      tab.setAttribute('aria-expanded', String(!c));
+      save('teddyGuide.collapsed', c ? '1' : '0');
+      relayout(260);
+    }
+    setWidth(parseInt(load('teddyGuide.width'), 10) || W_DEF);
+    if (load('teddyGuide.collapsed') === '1') root.classList.add('g-collapsed');
+    // a non-default layout: let the charts re-measure once the column has its final size
+    if (width !== W_DEF || root.classList.contains('g-collapsed')) relayout(0);
+    aside.querySelector('.g-hide').addEventListener('click', function () { setCollapsed(true); tab.focus(); });
+    tab.addEventListener('click', function () { setCollapsed(false); });
+    var dragging = false, lastEmit = 0;
+    handle.addEventListener('pointerdown', function (e) {
+      if (!wide()) return;
+      dragging = true; handle.setPointerCapture(e.pointerId); root.classList.add('g-dragging'); e.preventDefault();
+    });
+    handle.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      setWidth(window.innerWidth - e.clientX);
+      var now = e.timeStamp || 0;
+      if (now - lastEmit > 120) { lastEmit = now; relayout(0); }
+    });
+    function endDrag() { if (!dragging) return; dragging = false; root.classList.remove('g-dragging'); setWidth(width, true); relayout(0); }
+    handle.addEventListener('pointerup', endDrag);
+    handle.addEventListener('pointercancel', endDrag);
+    handle.addEventListener('dblclick', function () { setWidth(W_DEF, true); relayout(0); });
+    handle.addEventListener('keydown', function (e) {
+      var d = { ArrowLeft: 20, ArrowRight: -20 }[e.key];
+      if (d) { setWidth(width + d, true); relayout(150); e.preventDefault(); }
+      else if (e.key === 'Home') { setWidth(W_MIN, true); relayout(0); e.preventDefault(); }
+      else if (e.key === 'End') { setWidth(wMax(), true); relayout(0); e.preventDefault(); }
+    });
+    window.addEventListener('resize', function (e) { if (e.isTrusted && width > wMax()) setWidth(width); });
     scrim.addEventListener('click', close);
     aside.querySelector('.g-close').addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });

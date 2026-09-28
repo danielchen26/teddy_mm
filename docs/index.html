@@ -179,6 +179,12 @@ table.capm.feeds tbody th a:hover { color: var(--accent); }
 .mode p { margin: 0; font-size: .88rem; color: var(--ink-muted); line-height: 1.55; }
 .mode .mq { margin-top: 8px; color: var(--ink); font-weight: 600; font-size: .86rem; }
 
+.arms3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+@container main (max-width: 900px) { .arms3 { grid-template-columns: 1fr; } }
+table.capm.cmp6 tbody th a { color: var(--ink); text-decoration: none; }
+table.capm.cmp6 tbody th a:hover { color: var(--accent); }
+.cmp-note { margin: 10px 0 0; font-size: .84rem; color: var(--ink-muted); }
+
 /* problem */
 .gaps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 @container main (max-width: 940px) { .gaps { grid-template-columns: repeat(2, 1fr); } }
@@ -255,7 +261,9 @@ pre.yaml { margin: 0; padding: 16px 18px; font-family: var(--mono); font-size: .
 .eff-rw { font-size: .86rem; padding: 10px 12px; border-radius: 10px; background: var(--bg-soft); border: 1px solid var(--line); }
 .eff-rw b { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
 
-.gloss { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin: 20px 0 0; }
+.gloss { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin: 8px 0 0; }
+.glg + .glg { margin-top: 20px; }
+.glh { margin: 14px 0 0; font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); }
 .gl { padding: 12px 14px; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--line); margin: 0; }
 .gl dt { font-family: var(--mono); font-size: .8rem; font-weight: 600; }
 .gl dd { margin: 3px 0 0; font-size: .82rem; color: var(--ink-muted); line-height: 1.5; }
@@ -609,6 +617,27 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </div>
       </div>
 
+      <p class="subh" style="margin-top:28px">What we compare · three arms, six questions</p>
+      <div class="arms3">
+        <div class="arm card"><span class="sw bg-teddy"></span><div><span class="role">Baseline</span><h3>TEDDY alone</h3><p>TEDDY’s predictions plus its fixed rule: average each lineage’s markers, call the best if it clears a bar.</p></div></div>
+        <div class="arm card"><span class="sw bg-anm"></span><div><span class="role">Treatment</span><h3>TEDDY + ANM</h3><p>The same predictions, decided by ANM under a written-down question.</p></div></div>
+        <div class="arm card"><span class="sw bg-train"></span><div><span class="role">Control</span><h3>Train + Jev</h3><p>“Just train harder”: a classifier fitted on labels over TEDDY’s outputs.</p></div></div>
+      </div>
+      <div class="capwrap card">
+        <table class="capm cmp6">
+          <thead><tr><th scope="col">Question (block)</th><th scope="col"><i class="bg-teddy"></i>TEDDY alone</th><th scope="col"><i class="bg-anm"></i>TEDDY + ANM</th><th scope="col"><i class="bg-train"></i>Train + Jev</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a href="#edit">1 · Change the question</a></th><td class="c-t" data-arm="TEDDY alone">Keeps its old rule until re-tuned on labels; answers 1,752 cells the key-marker question holds back</td><td class="win c-a" data-arm="TEDDY + ANM">Edit the written question, 0 labels: “no calls” follow it, 317 → 834 → 3,373</td><td class="c-r" data-arm="Train + Jev">“No calls” stay at 185 until retrained on new labels</td></tr>
+            <tr><th scope="row"><a href="#missing">2 · RNA is missing</a></th><td class="c-t" data-arm="TEDDY alone">TEDDY can’t run; its rule on a protein-only stand-in answers every cell (accuracy 0.63)</td><td class="win c-a" data-arm="TEDDY + ANM">Follows a declared trust (0.35) in the stand-in: 1,664 “no calls”, 86.8% still called</td><td class="c-r" data-arm="Train + Jev">Re-tuned on the stand-in: accuracy 0.68–0.70 even with 1,000 labels</td></tr>
+            <tr><th scope="row"><a href="#attr">3 · Why this call?</a></th><td class="c-t" data-arm="TEDDY alone">No written rule; only a heuristic on its averaging</td><td class="win c-a" data-arm="TEDDY + ANM">Leave-one-out and flip distance on the rule that decided, all 16,433 calls (p ≈ 0.0099)</td><td class="c-r" data-arm="Train + Jev">Learned weights (opaque)</td></tr>
+            <tr><th scope="row"><a href="#scope">4 · Which calls to trust?</a></th><td class="c-t" data-arm="TEDDY alone">Every call looks equally sure</td><td class="win c-a" data-arm="TEDDY + ANM">Its score gates TEDDY’s calls: accuracy 0.945 → 0.998 keeping the 40% it is surest of</td><td class="c-r" data-arm="Train + Jev">A small head trained on hard-cell labels gains little over random labels (+0.034 at 50, −0.003 at 100)</td></tr>
+            <tr><th scope="row"><a href="#labels">5 · Cost of a new question</a></th><td class="c-t" data-arm="TEDDY alone">New labels to re-tune</td><td class="win c-a" data-arm="TEDDY + ANM">0 labels</td><td class="c-r" data-arm="Train + Jev">≈ 50–500 labelled cells to match, again at every change</td></tr>
+            <tr><th scope="row"><a href="#anm-loop">6 · Cells TEDDY can’t tell apart</a></th><td class="c-t" data-arm="TEDDY alone">Same call in 85% of look-alike pairs the key labels myeloid vs T</td><td class="c-a" data-arm="TEDDY + ANM">Flags the pairs and swaps in measured protein as evidence. Under review: the current headline also changes the question, and the key counts NK cells as myeloid</td><td class="c-r" data-arm="Train + Jev">Not tested; the alternative tried is a feature swap (z⁺), worse overall (−0.27)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-note">Accuracy is not the claim: in Block 1, like for like, ANM is within 0.02 of TEDDY alone. Each row links to its block.</p>
+
       <div class="qa card">
         <p class="qa-q">Is this a multimodal model?</p>
         <p class="qa-a">TEDDY is not: it reads only RNA, and nothing fuses protein into it. The <i>data</i> are multimodal (RNA and protein measured in the same cell), and normally the protein is only the answer key. It also reaches the evidence in labelled places: in Block 2, with RNA missing, this repo’s phase-2 model (trained on TEDDY’s embedding plus protein, run here with its RNA input off) <span class="term" data-term="adtonly">stands in</span>, and the “both” condition averages TEDDY’s predictions with it (Block 4’s RNA-missing view reuses the stand-in); Block 6 uses measured protein to pick look-alike pairs and, in its complement test, as ANM’s evidence.</p>
@@ -704,17 +733,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <p>So a block only counts if the difference comes from the decision layer. Within a block, TEDDY alone and ANM read the same evidence (except in Block 6, where the evidence itself is what changes), so their difference comes from the decision layer. The trained head also sees 32 embedding numbers, which can only favour it.</p>
       </div>
 
-      <div class="capwrap card">
-        <table class="capm">
-          <thead><tr><th scope="col">What each arm can do</th><th scope="col"><i class="bg-teddy"></i>TEDDY alone</th><th scope="col"><i class="bg-anm"></i>TEDDY + ANM</th><th scope="col"><i class="bg-train"></i>Train + Jev</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Adopt a new question</th><td class="c-t" data-arm="TEDDY alone">Re-tune the rule on new labels</td><td class="win c-a" data-arm="TEDDY + ANM">Edit the written question · 0 labels · no retrain</td><td class="c-r" data-arm="Train + Jev">Collect labels and retrain</td></tr>
-            <tr><th scope="row">“No calls” follow the question</th><td class="c-t" data-arm="TEDDY alone">No: keeps its old rule</td><td class="win c-a" data-arm="TEDDY + ANM">Yes: 317 → 834 → 3,373 (soft → strict → key-marker)</td><td class="c-r" data-arm="Train + Jev">No: 185 → 185 → 185</td></tr>
-            <tr><th scope="row">Per-marker reason for a call</th><td class="c-t" data-arm="TEDDY alone">Panel heuristic, no written rule</td><td class="win c-a" data-arm="TEDDY + ANM">Leave-one-out + flip distance on the written rule</td><td class="c-r" data-arm="Train + Jev">Learned weights (opaque)</td></tr>
-            <tr><th scope="row">Needs labelled cells</th><td class="c-t" data-arm="TEDDY alone">Yes, to re-tune</td><td class="win c-a" data-arm="TEDDY + ANM">No: labels only score the calls</td><td class="c-r" data-arm="Train + Jev">Yes, to train</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <p class="cmp-note" style="margin-top:20px">How each arm does on all six questions is summarised up front in <a href="#setup">00 · The setup</a>.</p>
 
       <div class="obsx card">
         <div class="obsx-head">
@@ -731,8 +750,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </div>
       </div>
 
-      <p class="subh" style="margin-top:28px">Key concepts</p>
-      <dl class="gloss no-terms" id="gloss"></dl>
+      <p class="subh" style="margin-top:28px">Key terms · every term used on this site, in plain words</p>
+      <div class="glossgrp no-terms" id="gloss"></div>
     </div>
   </section>
 
@@ -1235,6 +1254,7 @@ window.GUIDE_CONFIG = (function () {
             ['ANM: decision', 'Normally reads only TEDDY’s outputs (the 9 predictions), never RNA and never TEDDY’s internals; the labelled exceptions are listed next. A written-down question turns them into a call or “no call”. ANM has no learned weights.'],
             ['Measured proteins: grading', 'Kept aside and used to grade the calls (3 lineages, no NK class). Labelled exceptions also use them as input: Block 2’s stand-in and its “both” average (the stand-in is reused in Block 4), and Block 6 (pair selection and the complement test).'],
             ['Is it multimodal?', 'The data are, TEDDY is not: it reads only RNA and nothing fuses protein into it. The one combination is Block 2’s “both”, an average of TEDDY’s predictions and the protein-only stand-in.'],
+            ['What we compare', 'Three arms on the same cells: TEDDY alone (its fixed rule), TEDDY + ANM, and a trained head (Train + Jev), across six questions, one per block. The table here gives each arm’s result.'],
             [T('modeb', 'Mode B') + ', not ' + T('modea', 'Mode A'), 'We study the decision on top of TEDDY’s outputs. Opening TEDDY up (its layers, gene perturbations) is Mode A and is not done here.']
           ]
         },
@@ -2065,8 +2085,23 @@ window.GUIDE_CONFIG = (function () {
   function buildGloss() {
     var T = window.TEDDY_ANM_TERMS, host = $('#gloss');
     if (!T || !host) return;
-    host.innerHTML = ['evidence', 'observer', 'abstain', 'pf', 'qf', 'qdec', 'softp', 'loo', 'flip', 'holdout', 'train', 'mustpair'].map(function (id) {
-      return '<div class="gl"><dt>' + T[id][0] + '</dt><dd>' + T[id][1] + '</dd></div>';
+    // every term in the shared dictionary, grouped; anything not listed lands in "Other"
+    var groups = [
+      ['The setup', ['teddy', 'anm', 'finitefield', 'citeseq', 'adt', 'z512', 'evidence', 'lineage', 'modeb', 'modea']],
+      ['The question · Blocks 1 and 5', ['observer', 'o0', 'o1', 'o2', 'abstain']],
+      ['Inputs · Block 2', ['rnaonly', 'adtonly', 'joint']],
+      ['Checks and metrics · Blocks 1–5', ['pf', 'qf', 'qdec', 'softp', 'coverage', 'loo', 'flip', 'bootstrap', 'permutation']],
+      ['Data and controls', ['holdout', 'ood', 'train', 'pearson']],
+      ['Decision loop · Block 6', ['mustpair', 'veto', 'complement', 'verify', 'falseagree', 'softsep', 'corrsep', 'zplus']]
+    ];
+    var seen = {};
+    groups.forEach(function (g) { g[1].forEach(function (id) { seen[id] = 1; }); });
+    var rest = Object.keys(T).filter(function (id) { return !seen[id]; });
+    if (rest.length) groups.push(['Other', rest]);
+    host.innerHTML = groups.map(function (g) {
+      return '<div class="glg"><p class="glh">' + g[0] + '</p><dl class="gloss">' + g[1].filter(function (id) { return T[id]; }).map(function (id) {
+        return '<div class="gl"><dt>' + T[id][0] + '</dt><dd>' + T[id][1] + '</dd></div>';
+      }).join('') + '</dl></div>';
     }).join('');
   }
   function renderObs() {

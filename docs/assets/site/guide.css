@@ -141,11 +141,35 @@ aside.guide [hidden] { display: none !important; }
 .g-open[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
 .g-scrim { display: none; }
 
-/* wide screens: a fixed column on the right; page content makes room for it */
+/* wide screens: a floating column on the right; the page makes room for it. It can be resized from its
+   left edge (--gw) and hidden to a tab on the right edge (html.g-collapsed). */
+:root { --gw: 320px; }
+.g-btns { display: flex; align-items: center; gap: 6px; }
+.g-hide { display: none; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); cursor: pointer; place-items: center; padding: 0; }
+.g-hide:hover { border-color: var(--accent); color: var(--accent); }
+.g-resize, .g-tab { display: none; }
+.g-trace { max-width: 440px; }
 @media (min-width: 1200px) {
-  main, footer { margin-right: 320px; }
-  aside.guide { position: fixed; top: 56px; right: 0; bottom: 0; width: 320px; overflow-y: auto; overscroll-behavior: contain;
-    border-left: 1px solid var(--line); background: var(--bg); z-index: 20; }
+  main, footer { margin-right: var(--gw); transition: margin-right .22s ease; }
+  aside.guide { position: fixed; top: 56px; right: 0; bottom: 0; width: var(--gw); overflow-y: auto; overscroll-behavior: contain;
+    border-left: 1px solid var(--line); background: var(--bg); z-index: 20; box-shadow: -10px 0 28px rgba(0,0,0,.05); transition: transform .22s ease; }
+  .g-hide { display: grid; }
+  .g-resize { display: block; position: fixed; top: 56px; bottom: 0; right: calc(var(--gw) - 5px); width: 10px; z-index: 26; cursor: col-resize; touch-action: none; }
+  .g-resize::after { content: ""; position: absolute; left: 4px; top: 0; bottom: 0; width: 2px; border-radius: 1px; background: transparent; transition: background .15s ease; }
+  .g-resize:hover::after, .g-resize:focus-visible::after { background: color-mix(in srgb, var(--accent) 60%, transparent); }
+  .g-resize:focus-visible { outline: none; }
+  html.g-dragging, html.g-dragging * { cursor: col-resize !important; user-select: none !important; }
+  html.g-dragging main, html.g-dragging footer, html.g-dragging aside.guide { transition: none; }
+  html.g-dragging .g-resize::after { background: var(--accent); }
+  html.g-collapsed main, html.g-collapsed footer { margin-right: 0; }
+  html.g-collapsed aside.guide { transform: translateX(100%); visibility: hidden; transition: transform .22s ease, visibility 0s linear .22s; }
+  html.g-collapsed .g-resize { display: none; }
+  html.g-collapsed .g-tab { display: flex; }
+  .g-tab { position: fixed; right: 0; top: 50%; z-index: 26; transform: translateY(-50%); flex-direction: column; align-items: center; gap: 6px;
+    padding: 12px 7px; border: 1px solid var(--line); border-right: 0; border-radius: 12px 0 0 12px; background: var(--bg-elev); color: var(--ink);
+    font: inherit; font-size: .76rem; font-weight: 600; cursor: pointer; box-shadow: -6px 0 18px rgba(0,0,0,.1); }
+  .g-tab span { writing-mode: vertical-rl; letter-spacing: .04em; }
+  .g-tab:hover { color: var(--accent); border-color: var(--accent); }
 }
 /* narrower screens: a drawer opened from the top bar (or a floating button) */
 @media (max-width: 1199px) {
@@ -160,5 +184,5 @@ aside.guide [hidden] { display: none !important; }
   .g-scrim { display: block; position: fixed; inset: 0; z-index: 70; background: rgba(0,0,0,.28); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
   .g-scrim.on { opacity: 1; pointer-events: auto; }
 }
-@media (prefers-reduced-motion: reduce) { aside.guide, .g-scrim, #termtip { transition: none !important; } .g-how.fade { animation: none; } }
+@media (prefers-reduced-motion: reduce) { aside.guide, .g-scrim, #termtip, main, footer { transition: none !important; } .g-how.fade { animation: none; } }
 @media (max-width: 400px) { .g-open .glabel { display: none; } .g-open { padding: 6px 9px; } }
