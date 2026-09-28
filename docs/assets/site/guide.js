@@ -8,7 +8,7 @@
   'use strict';
 
   var TERMS = {
-    teddy: ['TEDDY', 'Merck’s single-cell foundation model (TEDDY-G, 70M parameters). Here it reads a cell’s RNA and, with a small head, predicts 9 surface proteins. It is never retrained.'],
+    teddy: ['TEDDY', 'Merck’s single-cell foundation model (TEDDY-G, 70M parameters). Here it reads a cell’s RNA and, with a small head trained in this repo, predicts the cell’s 134 surface proteins; 9 of them go to ANM. TEDDY itself is never retrained.'],
     anm: ['ANM · Active Neural Matter', 'A decision layer. It reads evidence, applies a written-down question (the observer) and returns a call or an honest “no call”, with checks attached.'],
     citeseq: ['CITE-seq', 'A technology that measures RNA and surface proteins in the same cell. The measured proteins are the answer key we hold out.'],
     adt: ['ADT · measured surface protein', 'CITE-seq’s protein readout (antibody-derived tags). Held out and used only to check answers, except where a test says otherwise.'],
@@ -27,7 +27,7 @@
     flip: ['Flip distance', 'How much one marker’s value must change before the call switches lineage. Small means a fragile call.'],
     holdout: ['Held-out cells (site4)', '16,750 cells from a site never used in training. Their measured proteins score the answers; labelled tests also use them as input (Block 2’s RNA-missing stand-in, reused in Block 4’s RNA-missing view; Block 6’s complement test).'],
     ood: ['Out-of-site check', '2,000 cells from other sites (val_non_site4): a second check that the results hold elsewhere.'],
-    train: ['Train + Jev · trained head', 'The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over the same TEDDY features. A stand-in for a Jev-class learner, not the live Jev API.'],
+    train: ['Train + Jev · trained head', 'The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over TEDDY’s outputs: the 9 predictions plus the first 32 numbers of TEDDY’s embedding (the threshold grid uses the 9 only). A stand-in for a Jev-class learner, not the live Jev API.'],
     z512: ['TEDDY embedding (z_512)', 'TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024.'],
     mustpair: ['Must-separate pair', 'Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree, for example one myeloid and one T cell.'],
     falseagree: ['False agreement', 'Among must-separate pairs where both cells get a call, the share given the same call even though they differ.'],
@@ -41,7 +41,7 @@
     joint: ['Both (averaged)', 'The average of TEDDY’s prediction and the stand-in’s protein-only reconstruction.'],
     lineage: ['Lineage call', 'The decision per cell: B cell, T cell or myeloid, each judged from 3 markers (B: CD19 CD72 CD22 · T: CD3 CD2 CD5 · myeloid: CD16 CD11c CD36).'],
     pearson: ['Pearson ≈ 0.61', 'How well TEDDY’s phase-1 head predicts all measured proteins (correlation on held-out cells). A reference point; we do not try to beat it.'],
-    veto: ['Veto', 'ANM flags that TEDDY’s embedding cannot tell a pair apart, so a readout built on it should not be trusted there.'],
+    veto: ['Veto', 'The loop’s first check, a step outside ANM’s engine: it flags pairs that TEDDY’s embedding puts together (cosine ≥ 0.98) although their measured proteins disagree, so a readout built on the embedding should not be trusted there.'],
     complement: ['Complement', 'Give the decision the evidence it lacks (here, measured protein as typed evidence, in place of TEDDY’s predictions) instead of retraining TEDDY.'],
     verify: ['Verify', 'Score the same pairs again after the change: false agreement, soft separation and accuracy.'],
     finitefield: ['Finite field · ANM’s engine', 'ANM’s decision engine: it combines the typed evidence under the observer into a score per lineage, then calls or declines.'],

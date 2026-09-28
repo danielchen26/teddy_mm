@@ -8,6 +8,7 @@
 <p>
   <a href="https://danielchen26.github.io/teddy_mm/"><b>Live site</b></a> ·
   <a href="https://danielchen26.github.io/teddy_mm/anm-loop.html"><b>Decision-loop report</b></a> ·
+  <a href="#how-anm-and-teddy-connect">How ANM connects to TEDDY</a> ·
   <a href="#quickstart">Quickstart</a> ·
   <a href="#key-terms">Key terms</a> ·
   <a href="docs/reports/">Proof reports</a> ·
@@ -25,11 +26,42 @@
 
 ## What this is
 
-**[TEDDY](#t-teddy)** ([Merck TEDDY-G 70M](https://huggingface.co/Merck/TEDDY) · [paper](https://arxiv.org/abs/2503.03485)) is a single-cell foundation model. Kept frozen, it reads a cell's RNA and predicts 9 surface proteins on [CITE-seq](#t-citeseq) data (NeurIPS 2021 BMMC, [held-out site4](#t-holdout), phase-1 [Pearson ≈ 0.61](#t-pearson)).
+**[TEDDY](#t-teddy)** ([Merck TEDDY-G 70M](https://huggingface.co/Merck/TEDDY) · [paper](https://arxiv.org/abs/2503.03485)) is a single-cell foundation model. Kept frozen, it reads a cell's RNA and turns it into an [embedding](#t-z512); a small head trained in this repo on those embeddings predicts the cell's surface proteins (134; we use 9) on [CITE-seq](#t-citeseq) data (NeurIPS 2021 BMMC, [held-out site4](#t-holdout), phase-1 [Pearson ≈ 0.61](#t-pearson)).
 
 **[ANM](#t-anm)** (Active Neural Matter) is a decision layer. It reads TEDDY's predictions as [typed evidence](#t-evidence) and answers a written-down question, the [observer](#t-observer): call a lineage, or say an honest [“no call”](#t-abstain). Each answer comes with a [workability](#t-pf) check (can it decide?), an [exactness](#t-qf) check (was it right?) and a per-marker reason.
 
 **This repository** is the bridge between the two, plus six head-to-head tests of where ANM *helps* TEDDY. TEDDY's weights and predictions never change; only the decision layer does.
+
+## How ANM and TEDDY connect
+
+Three roles, one direction. Nothing flows back into TEDDY.
+
+| Role | Reads | Produces | Trained? |
+|---|---|---|---|
+| **[TEDDY](#t-teddy)** · evidence source | the cell's RNA only | a 512-number [embedding](#t-z512); a small head trained in this repo predicts 134 surface proteins, 9 of which go to ANM | TEDDY-G 70M frozen, never retrained; the head was trained once in this repo |
+| **[ANM](#t-anm)** · decision layer | normally TEDDY's outputs only (the 9 predictions as [typed evidence](#t-evidence)); labelled exceptions: the protein-only stand-in when RNA is missing (Block 2, reused in Block 4) and its average with TEDDY in “both”, measured protein in Block 6's complement test. Block 6's look-alike pairs are picked by a separate step outside ANM | a lineage call or [“no call”](#t-abstain), with checks | no learned weights: the [question](#t-observer) and the engine's settings are a few declared numbers |
+| **Measured proteins** · answer key | (held out) | the grade for each call, keyed per question (soft/strict: plain mean of each lineage's 3 markers, no key-marker doubling, with that rule's margin; key-marker: weighted key marker), when the top lineage clearly leads | none. The key has 3 classes and no NK class, so most NK cells, which carry CD16, count as “myeloid” (1,342 of 1,690 under the soft rule; [script](scripts/answer_key_vs_annotation.py)) |
+
+**Is this a multimodal model?** TEDDY is not: it reads only RNA, and nothing fuses protein into it. The *data* are multimodal (RNA and protein measured in the same cell), and normally the protein is only the answer key. It also reaches the evidence in labelled places: in Block 2, with RNA missing, this repo's phase-2 model (trained on TEDDY's embedding plus protein, run here with its RNA input off) [stands in](#t-adtonly), and the [both](#t-joint) condition averages TEDDY's predictions with it (Block 4's RNA-missing view reuses the stand-in); Block 6 uses measured protein to pick look-alike pairs and, in its [complement](#t-complement) test, as ANM's evidence.
+
+**What ANM reads in each block**
+
+| Block | ANM's evidence | Graded against |
+|---|---|---|
+| 1 · Edit the question | TEDDY's 9 predictions, asked three ways (soft · strict · key-marker) | measured proteins, keyed per question |
+| 2 · Missing modality | RNA: TEDDY's predictions · RNA missing: the protein-only stand-in, no TEDDY · both: their average | measured proteins |
+| 3 · Attribution | TEDDY's 9 predictions, then the same with one marker removed at a time | measured proteins |
+| 4 · Scope gate | TEDDY's 9 predictions (RNA-missing view: the stand-in) | measured proteins |
+| 5 · Zero-label transfer | TEDDY's 9 predictions, 0 labels. The trained heads it is compared with learn from those 9 plus 32 numbers of TEDDY's embedding (the threshold grid uses the 9 only) | measured proteins |
+| 6 · Decision loop | Pairs are picked outside ANM: neighbours in TEDDY's embedding whose measured proteins disagree. ANM then calls each cell from TEDDY's predictions, and from measured protein in the complement test | measured proteins |
+
+**Two ways to study a foundation model**
+
+| | [Mode B](#t-modeb) · this repo | [Mode A](#t-modea) · not done |
+|---|---|---|
+| What | Decide on top of TEDDY: TEDDY stays a closed box that supplies evidence | Look inside TEDDY: residual stream, layer Jacobians, in-silico gene perturbations |
+| Answers | How should we decide from TEDDY's outputs? (edit the question, decline, explain, trust, label cost) | Why does TEDDY predict what it predicts, e.g. which genes drive its CD16 prediction? |
+| Claimed here | Yes | No |
 
 ## Why ANM
 
@@ -80,7 +112,7 @@ The three questions used throughout: **soft rule** ([O0](#t-o0)), **strict rule*
 
 Every block follows the same protocol:
 
-- **Same frozen TEDDY.** `best.pt` is never retrained; every arm reads the same 9 predicted proteins per cell. Exception: without RNA TEDDY can't run, so a protein-only [stand-in](#t-adtonly) supplies the evidence in Block 2's RNA-missing condition (and Block 4's RNA-missing view, which reuses it); Block 2's [both](#t-joint) condition averages TEDDY's predictions with it.
+- **Same frozen TEDDY.** `best.pt` is never retrained; TEDDY alone and ANM read the same 9 predicted proteins per cell, and the trained head also gets the first 32 numbers of TEDDY's embedding. Exception: without RNA TEDDY can't run, so a protein-only [stand-in](#t-adtonly) supplies the evidence in Block 2's RNA-missing condition (and Block 4's RNA-missing view, which reuses it); Block 2's [both](#t-joint) condition averages TEDDY's predictions with it.
 - **Same cells.** 16,750 [held-out cells](#t-holdout) from site4, plus an [out-of-site check](#t-ood) on 2,000 more.
 - **Truth only checks answers.** The measured proteins ([ADT](#t-adt)) score the calls. Labelled exceptions also feed them into the evidence: Block 2's RNA-missing [stand-in](#t-adtonly) reconstructs the panel from them (half of [both](#t-joint) too; reused in Block 4's RNA-missing view), and Block 6's [complement](#t-complement) test uses them directly.
 - **Decision metrics first.** Declining when unsure, label cost, per-marker reasons, coverage vs accuracy, false agreement. Accuracy is reported, never the win condition.
@@ -89,7 +121,7 @@ Every block follows the same protocol:
 |---|---|---|
 | TEDDY alone | Predicted proteins → a score per lineage → pick the best one if it clears a threshold (the soft rule) | Re-tune the rule on new labels |
 | **TEDDY + ANM** | The same predictions as typed evidence → [ANM's decision engine](#t-finitefield) under a written-down question | **Edit the question: 0 labels, no retrain** |
-| [Train + Jev](#t-train) | A classifier trained on labels over the same features (logistic, MLP or threshold grid; a Jev-class stand-in) | Collect labels and retrain |
+| [Train + Jev](#t-train) | A classifier trained on labels over TEDDY's 9 predictions plus 32 numbers of its embedding (logistic, MLP; the threshold grid uses the 9 only; a Jev-class stand-in) | Collect labels and retrain |
 
 ## Results by block
 
@@ -162,7 +194,7 @@ Edit a question's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](brid
 
 | Term | In plain words |
 |---|---|
-| <a name="t-teddy"></a>**TEDDY** | Merck’s single-cell foundation model (TEDDY-G, 70M parameters). Here it reads a cell’s RNA and, with a small head, predicts 9 surface proteins. It is never retrained. |
+| <a name="t-teddy"></a>**TEDDY** | Merck’s single-cell foundation model (TEDDY-G, 70M parameters). Here it reads a cell’s RNA and, with a small head trained in this repo, predicts the cell’s 134 surface proteins; 9 of them go to ANM. TEDDY itself is never retrained. |
 | <a name="t-anm"></a>**ANM · Active Neural Matter** | A decision layer. It reads evidence, applies a written-down question (the observer) and returns a call or an honest “no call”, with checks attached. |
 | <a name="t-citeseq"></a>**CITE-seq** | A technology that measures RNA and surface proteins in the same cell. The measured proteins are the answer key we hold out. |
 | <a name="t-adt"></a>**ADT · measured surface protein** | CITE-seq’s protein readout (antibody-derived tags). Held out and used only to check answers, except where a test says otherwise. |
@@ -184,10 +216,10 @@ Edit a question's entry in `CRITERIA` ([`bridge_anm/lib/lineage_panels.py`](brid
 | <a name="t-flip"></a>**Flip distance** | How much one marker’s value must change before the call switches lineage. Small means a fragile call. |
 | <a name="t-bootstrap"></a>**Bootstrap** | Resample the cells with replacement (200 times) to see how stable a number is; gives a 95% interval. |
 | <a name="t-permutation"></a>**Permutation test** | Shuffle the data many times to see how often a pattern this strong appears by chance. Here p ≈ 0.0099 over 100 shuffles. |
-| <a name="t-train"></a>**Train + Jev · trained head** | The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over the same TEDDY features. A stand-in for a Jev-class learner, not the live Jev API. |
+| <a name="t-train"></a>**Train + Jev · trained head** | The “just train harder” control: a classifier (logistic, MLP or threshold grid) fitted on labels over TEDDY’s outputs: the 9 predictions plus the first 32 numbers of TEDDY’s embedding (the threshold grid uses the 9 only). A stand-in for a Jev-class learner, not the live Jev API. |
 | <a name="t-z512"></a>**TEDDY embedding (z_512)** | TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens at context length 1024. |
 | <a name="t-mustpair"></a>**Must-separate pair** | Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree, for example one myeloid and one T cell. |
-| <a name="t-veto"></a>**Veto** | ANM flags that TEDDY’s embedding cannot tell a pair apart, so a readout built on it should not be trusted there. |
+| <a name="t-veto"></a>**Veto** | The loop’s first check, a step outside ANM’s engine: it flags pairs that TEDDY’s embedding puts together (cosine ≥ 0.98) although their measured proteins disagree, so a readout built on the embedding should not be trusted there. |
 | <a name="t-complement"></a>**Complement** | Give the decision the evidence it lacks (here, measured protein as typed evidence, in place of TEDDY’s predictions) instead of retraining TEDDY. |
 | <a name="t-verify"></a>**Verify** | Score the same pairs again after the change: false agreement, soft separation and accuracy. |
 | <a name="t-falseagree"></a>**False agreement** | Among must-separate pairs where both cells get a call, the share given the same call even though they differ. |
