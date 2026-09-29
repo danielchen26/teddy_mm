@@ -13,13 +13,14 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import sys
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT.parent / "ANM"))
+sys.path.insert(0, os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM")))
 
 from active_neural_matter.field.finite_field_runner import build_graph, validate_source_events  # noqa: E402
 from bridge_anm.lib.lineage_panels import ACTIONS, LINEAGE_PANELS, MODALITY_FOR_LINEAGE  # noqa: E402

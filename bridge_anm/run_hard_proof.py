@@ -14,6 +14,10 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import multiprocessing as mp
+import os
+import re
+import subprocess
 import sys
 import time
 from collections import Counter, defaultdict
@@ -26,11 +30,12 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
-ANM_ROOT = ROOT.parent / "ANM"
+ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM")))
 sys.path.insert(0, str(ANM_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lib.lineage_panels import (  # noqa: E402
+    anm_readout_threshold,
     ACTIONS,
     CRITERIA,
     all_panel_proteins,
@@ -49,6 +54,122 @@ from active_neural_matter.field.finite_field_runner import (  # noqa: E402
 
 PROTEINS = all_panel_proteins()
 CRIT_IDS = ["O0", "O1", "O2"]
+LINEAGES = [a["id"] for a in ACTIONS]
+
+# -------------------- annotation map (cell_type -> scope group) --------------------
+# Explicit map of every CITE ``cell_type`` seen in cite_cells_meta.jsonl. The three
+# in-scope groups are the declared actions (B / T / myeloid); everything else is
+# out of scope for this 3-lineage question and any *call* on it is an over-answer.
+# pDC is put in "other" (not myeloid): it lacks the CD16/CD11c/CD36 myeloid panel.
+IN_SCOPE_GROUPS = ("b_lineage", "t_lineage", "myeloid")
+OUT_OF_SCOPE_GROUPS = ("nk", "ilc", "erythroid", "progenitor", "other")
+CELL_TYPE_GROUP: dict[str, str] = {
+    # B lineage (incl. plasma cells / plasmablasts)
+    "B1 B IGKC+": "b_lineage",
+    "B1 B IGKC-": "b_lineage",
+    "Naive CD20+ B IGKC+": "b_lineage",
+    "Naive CD20+ B IGKC-": "b_lineage",
+    "Transitional B": "b_lineage",
+    "Plasma cell IGKC+": "b_lineage",
+    "Plasma cell IGKC-": "b_lineage",
+    "Plasmablast IGKC+": "b_lineage",
+    "Plasmablast IGKC-": "b_lineage",
+    # T lineage
+    "CD4+ T activated": "t_lineage",
+    "CD4+ T activated integrinB7+": "t_lineage",
+    "CD4+ T naive": "t_lineage",
+    "CD4+ T CD314+ CD45RA+": "t_lineage",
+    "CD8+ T CD49f+": "t_lineage",
+    "CD8+ T CD57+ CD45RA+": "t_lineage",
+    "CD8+ T CD57+ CD45RO+": "t_lineage",
+    "CD8+ T CD69+ CD45RA+": "t_lineage",
+    "CD8+ T CD69+ CD45RO+": "t_lineage",
+    "CD8+ T TIGIT+ CD45RA+": "t_lineage",
+    "CD8+ T TIGIT+ CD45RO+": "t_lineage",
+    "CD8+ T naive": "t_lineage",
+    "MAIT": "t_lineage",
+    "T reg": "t_lineage",
+    "gdT CD158b+": "t_lineage",
+    "gdT TCRVD2+": "t_lineage",
+    "dnT": "t_lineage",
+    # myeloid
+    "CD14+ Mono": "myeloid",
+    "CD16+ Mono": "myeloid",
+    "cDC2": "myeloid",
+    # out of scope
+    "NK": "nk",
+    "NK CD158e1+": "nk",
+    "ILC": "ilc",
+    "ILC1": "ilc",
+    "Erythroblast": "erythroid",
+    "Normoblast": "erythroid",
+    "Proerythroblast": "erythroid",
+    "Reticulocyte": "erythroid",
+    "HSC": "progenitor",
+    "G/M prog": "progenitor",
+    "Lymph prog": "progenitor",
+    "MK/E prog": "progenitor",
+    "pDC": "other",
+}
+
+
+def cell_type_group(cell_type: str | None) -> str:
+    """Scope group of an annotated cell type; unknown types are out of scope ("other")."""
+    return CELL_TYPE_GROUP.get(str(cell_type), "other")
+
+
+def annotation_graded(preds, cell_types):
+    """Grade calls against the annotation: in-scope accuracy, out-of-scope call share."""
+    groups = [cell_type_group(ct) for ct in cell_types]
+    unmapped = sorted({str(ct) for ct in cell_types if str(ct) not in CELL_TYPE_GROUP})
+    ins = [i for i, g in enumerate(groups) if g in IN_SCOPE_GROUPS]
+    n_in = len(ins)
+    called_in = [i for i in ins if preds[i] is not None]
+    correct = sum(1 for i in called_in if preds[i] == groups[i])
+    per_lin = {}
+    for lin in IN_SCOPE_GROUPS:
+        idx = [i for i in ins if groups[i] == lin]
+        c = [i for i in idx if preds[i] is not None]
+        per_lin[lin] = {
+            "n": len(idx),
+            "n_called": len(c),
+            "n_correct": sum(1 for i in c if preds[i] == lin),
+            "accuracy_strict": (sum(1 for i in c if preds[i] == lin) / len(idx)) if idx else None,
+            "call_counts": dict(Counter(preds[i] for i in c)),
+        }
+    outs = [i for i, g in enumerate(groups) if g not in IN_SCOPE_GROUPS]
+    called_out = [i for i in outs if preds[i] is not None]
+    per_out = {}
+    for g in OUT_OF_SCOPE_GROUPS:
+        idx = [i for i in outs if groups[i] == g]
+        c = [i for i in idx if preds[i] is not None]
+        per_out[g] = {
+            "n": len(idx),
+            "n_called": len(c),
+            "call_share": (len(c) / len(idx)) if idx else None,
+            "call_counts": dict(Counter(preds[i] for i in c)),
+        }
+    return {
+        "in_scope": {
+            "n": n_in,
+            "n_called": len(called_in),
+            "n_correct": correct,
+            "abstain_rate": ((n_in - len(called_in)) / n_in) if n_in else None,
+            "accuracy_strict": (correct / n_in) if n_in else None,
+            "accuracy_among_called": (correct / len(called_in)) if called_in else None,
+            "per_lineage": per_lin,
+        },
+        "out_of_scope": {
+            "n": len(outs),
+            "n_called": len(called_out),
+            "call_share": (len(called_out) / len(outs)) if outs else None,
+            "share_of_all_calls": (
+                len(called_out) / max(len(called_in) + len(called_out), 1)
+            ),
+            "per_group": per_out,
+        },
+        "unmapped_cell_types": unmapped,
+    }
 
 
 def _load_jsonl(path: Path):
@@ -227,16 +348,115 @@ def anm_run_one(schema, instance):
 
 def schema_for(crit_id, base_schema):
     schema = copy.deepcopy(base_schema)
-    thr = float(CRITERIA[crit_id]["readout_threshold"])
+    # v2: rule threshold mapped onto the ANM field scale; legacy: declared value.
+    thr = float(anm_readout_threshold(CRITERIA[crit_id], base_schema))
     schema["field_representation"]["readout_threshold"] = thr
     schema["criterion_overlay"] = {"readout_threshold": thr}
     return schema
 
 
+# -------------------- parallel runner (spawn-safe) --------------------
+# Workers hold the per-criterion schemas and the O0 instances of the attribution
+# cells; tasks are top-level functions so they pickle by reference under spawn.
+# Results come back in task order (imap), and every random draw happens in the
+# parent, so --workers N gives the same numbers as --workers 1.
+_WSTATE: dict[str, Any] = {}
+
+
+def _winit(schemas, o0_insts, scoring=None):
+    # Schemas are built in the parent so a parent-side scoring switch
+    # (lineage_panels.set_scoring) is honoured by spawn workers too.
+    if scoring is not None:
+        import lib.lineage_panels as _lp
+
+        if hasattr(_lp, "set_scoring") and getattr(_lp, "SCORING", None) != scoring:
+            _lp.set_scoring(scoring)
+    _WSTATE["schemas"] = schemas
+    _WSTATE["o0"] = o0_insts or {}
+
+
+def _t_anm(arg):
+    crit_id, inst = arg
+    return anm_run_one(_WSTATE["schemas"][crit_id], inst)
+
+
+def _t_loo(arg):
+    cid, flip_grid = arg
+    return _loo_top_for_instance(_WSTATE["schemas"]["O0"], _WSTATE["o0"][cid], flip_grid=flip_grid)
+
+
+def _t_perm(arg):
+    cid, vals = arg
+    inst = _WSTATE["o0"][cid]
+    events = copy.deepcopy(inst["proposed_source_events"])
+    for e, v in zip(events, vals):
+        e["value"] = float(v)
+    return _perm_top_for_instance(_WSTATE["schemas"]["O0"], {**inst, "proposed_source_events": events})
+
+
+def default_workers() -> int:
+    return max(1, (os.cpu_count() or 2) - 1)
+
+
+class Runner:
+    """Ordered map over top-level task functions, in-process or on a spawn pool."""
+
+    def __init__(self, workers, base_schema, o0_insts=None):
+        self.workers = max(1, int(workers))
+        self.pool = None
+        import lib.lineage_panels as _lp
+
+        schemas = {c: schema_for(c, base_schema) for c in CRIT_IDS}
+        init = (schemas, o0_insts or {}, getattr(_lp, "SCORING", None))
+        if self.workers > 1:
+            ctx = mp.get_context("spawn")
+            self.pool = ctx.Pool(self.workers, initializer=_winit, initargs=init)
+        else:
+            _winit(*init)
+
+    def map(self, fn, args):
+        args = list(args)
+        if self.pool is None:
+            return [fn(a) for a in args]
+        if not args:
+            return []
+        cs = max(1, len(args) // (self.workers * 8))
+        return list(self.pool.imap(fn, args, chunksize=cs))
+
+    def close(self):
+        if self.pool is not None:
+            self.pool.close()
+            self.pool.join()
+            self.pool = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+
+
 # -------------------- TEDDY alone --------------------
-def run_teddy_arm(eval_ids, train_ids, cells, p95):
+TEDDY_EDIT_COST = {
+    "needs_endpoint_labels": False,
+    "needs_retrain_or_retune": False,
+    "mechanism": (
+        "apply the declared criterion (lineage scores + readout threshold) directly to "
+        "TEDDY's predicted panel; label-free, no retraining"
+    ),
+    "lacks_vs_anm": "no field P_f / verifier readout, no LOO attribution or flip distance",
+}
+TEDDY_EDIT_COST_LEGACY = {
+    "needs_endpoint_labels": True,
+    "needs_retrain_or_retune": True,
+    "mechanism": "threshold/boost grid or classifier head on new-criterion labels",
+}
+
+
+def run_teddy_arm(eval_ids, train_ids, cells, p95, *, legacy_edit_cost=False):
     arm = {"arm": "TEDDY_alone", "criteria": {}}
     silent = {}
+    ctypes = [cells[cid].get("cell_type") for cid in eval_ids]
     for cid_name in CRIT_IDS:
         crit = CRITERIA[cid_name]
         preds, labels = [], []
@@ -245,6 +465,7 @@ def run_teddy_arm(eval_ids, train_ids, cells, p95):
             preds.append(decide_argmax(sc, crit["readout_threshold"]))
             labels.append(expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit))
         m = score_predictions(preds, labels)
+        m["annotation_graded"] = annotation_graded(preds, ctypes)
         arm["criteria"][cid_name] = {
             "rule": {
                 "readout_threshold": crit["readout_threshold"],
@@ -270,25 +491,27 @@ def run_teddy_arm(eval_ids, train_ids, cells, p95):
             "rate": n_silent / max(len(eval_ids), 1),
         }
     arm["silent_over_answer"] = silent
-    arm["criterion_edit_cost"] = {
-        "needs_endpoint_labels": True,
-        "needs_retrain_or_retune": True,
-        "mechanism": "threshold/boost grid or classifier head on new-criterion labels",
-    }
+    arm["criterion_edit_cost"] = dict(TEDDY_EDIT_COST_LEGACY if legacy_edit_cost else TEDDY_EDIT_COST)
     return arm
 
 
 # -------------------- ANM arm (metrics + full-n attribution) --------------------
-def run_anm_metrics(eval_ids, cells, by_cell, p95, base_schema):
+def run_anm_metrics(eval_ids, cells, by_cell, p95, base_schema, *, runner=None, per_cell=None):
+    """ANM metrics per criterion. If ``per_cell`` is a dict it receives
+    ``{crit: {"preds": [...], "labels": [...]}}`` aligned with ``eval_ids``."""
+    own = runner is None
+    runner = runner or Runner(1, base_schema)
     criteria_out = {}
+    ctypes = [cells[cid].get("cell_type") for cid in eval_ids]
     for cid_name in CRIT_IDS:
         crit = CRITERIA[cid_name]
-        schema = schema_for(cid_name, base_schema)
         preds, labels = [], []
         p_sum = q_sum = q_n = 0.0
-        for cid in eval_ids:
-            inst = make_instance(cid, cells[cid], by_cell[cid], crit, p95)
-            out = anm_run_one(schema, inst)
+        outs = runner.map(
+            _t_anm,
+            ((cid_name, make_instance(cid, cells[cid], by_cell[cid], crit, p95)) for cid in eval_ids),
+        )
+        for out in outs:
             preds.append(out["recommended_action"])
             labels.append(out.get("expected_action"))
             p_sum += float(out.get("P_f") or 0.0)
@@ -296,6 +519,9 @@ def run_anm_metrics(eval_ids, cells, by_cell, p95, base_schema):
                 q_sum += float(out["Q_f"])
                 q_n += 1
         m = score_predictions(preds, labels)
+        m["annotation_graded"] = annotation_graded(preds, ctypes)
+        if per_cell is not None:
+            per_cell[cid_name] = {"preds": list(preds), "labels": list(labels)}
         criteria_out[cid_name] = {
             "rule": {
                 "criterion": cid_name,
@@ -315,6 +541,8 @@ def run_anm_metrics(eval_ids, cells, by_cell, p95, base_schema):
             "mean_Q_f_defined": (q_sum / q_n) if q_n else None,
             "n_Q_f_defined": int(q_n),
         }
+    if own:
+        runner.close()
     return criteria_out
 
 
@@ -368,12 +596,102 @@ def _loo_top_for_instance(schema, inst, flip_grid=21):
     }
 
 
+def _perm_top_for_instance(schema, inst):
+    """Top-1 LOO protein of an instance (permutation null; no flip grid) or None."""
+    events = inst["proposed_source_events"]
+    base = anm_run_one(schema, inst)
+    if base["recommended_action"] is None:
+        return None
+    base_action = base["recommended_action"]
+    base_scores = base["action_scores"]
+    best_prot, best_abs = None, -1.0
+    for i, ev in enumerate(events):
+        ablated = {**inst, "proposed_source_events": [e for j, e in enumerate(events) if j != i]}
+        out = anm_run_one(schema, ablated)
+        d = abs(
+            float(
+                (out["action_scores"].get(base_action, 0.0) or 0.0)
+                - (base_scores.get(base_action, 0.0) or 0.0)
+            )
+        )
+        if d > best_abs:
+            best_abs = d
+            best_prot = str(ev["event_id"].rsplit(":", 1)[-1])
+    return best_prot
+
+
+PERM_NULLS = ("within_lineage", "within_cell")
+
+
+def permute_event_values(events, rng, mode="within_lineage"):
+    """Shuffled copy of the event values (list aligned with ``events``).
+
+    ``within_lineage`` (default): values move only among events of the same
+    lineage (``action``), so each lineage keeps its evidence multiset and the null
+    asks whether *which protein inside a lineage* carries the evidence matters.
+    ``within_cell`` (legacy): values move across all events of the cell; this
+    also scrambles the lineage call itself, so it is a weaker null.
+    """
+    vals = [e["value"] for e in events]
+    if mode == "within_cell":
+        rng.shuffle(vals)
+        return vals
+    if mode != "within_lineage":
+        raise ValueError(f"unknown permutation null {mode!r}")
+    groups: dict[str, list[int]] = {}
+    for i, e in enumerate(events):
+        groups.setdefault(str(e["action"]), []).append(i)
+    for idx in groups.values():
+        sub = [vals[i] for i in idx]
+        rng.shuffle(sub)
+        for i, v in zip(idx, sub):
+            vals[i] = v
+    return vals
+
+
+def bootstrap_mode(tops, rng, n_boot):
+    """Bootstrap of the top-1 mode fraction; same draws and tie-breaking as
+    ``Counter(rng.choice(tops, n, replace=True)).most_common(1)`` (first seen wins)."""
+    rates, prots = [], []
+    if not len(tops):
+        return rates, prots
+    uniq, codes = np.unique(np.asarray(tops), return_inverse=True)
+    n = len(codes)
+    for _ in range(n_boot):
+        sample = rng.choice(codes, size=n, replace=True)
+        counts = np.bincount(sample, minlength=len(uniq))
+        mx = counts.max()
+        tied = np.flatnonzero(counts == mx)
+        if len(tied) == 1:
+            code = int(tied[0])
+        else:
+            first = {int(c): int(np.argmax(sample == c)) for c in tied}
+            code = min(first, key=first.get)
+        rates.append(int(mx) / n)
+        prots.append(str(uniq[code]))
+    return rates, prots
+
+
 def run_full_attribution(
-    attr_ids, cells, by_cell, p95, base_schema, *, flip_grid=21, n_boot=200, n_perm=100, seed=17
+    attr_ids,
+    cells,
+    by_cell,
+    p95,
+    base_schema,
+    *,
+    flip_grid=21,
+    n_boot=200,
+    n_perm=100,
+    seed=17,
+    perm_null="within_lineage",
+    runner=None,
 ):
-    schema0 = schema_for("O0", base_schema)
     crit0 = CRITERIA["O0"]
     rng = np.random.default_rng(seed)
+    kept_ids = [cid for cid in attr_ids if cid in cells]
+    o0_insts = {cid: make_instance(cid, cells[cid], by_cell[cid], crit0, p95) for cid in kept_ids}
+    own = runner is None
+    runner = runner or Runner(1, base_schema, o0_insts)
 
     cell_ids = []
     top_proteins = []
@@ -382,11 +700,8 @@ def run_full_attribution(
     deltas = []
 
     t_attr0 = time.time()
-    for k, cid in enumerate(attr_ids):
-        if cid not in cells:
-            continue
-        inst = make_instance(cid, cells[cid], by_cell[cid], crit0, p95)
-        row = _loo_top_for_instance(schema0, inst, flip_grid=flip_grid)
+    rows = runner.map(_t_loo, ((cid, flip_grid) for cid in kept_ids))
+    for cid, row in zip(kept_ids, rows):
         if row is None:
             continue
         cell_ids.append(cid)
@@ -394,68 +709,31 @@ def run_full_attribution(
         flip_flags.append(1.0 if row["flipped"] else 0.0)
         flip_dists.append(row["flip_distance"])
         deltas.append(row["delta_chosen_score"])
-        if (k + 1) % 2000 == 0:
-            print(f"  attribution {k+1}/{len(attr_ids)} kept={len(top_proteins)}", flush=True)
     attr_sec = time.time() - t_attr0
     print(f"  attribution done n={len(top_proteins)} in {attr_sec:.1f}s", flush=True)
 
     tops = np.array(top_proteins)
-    # Bootstrap stability of mode fraction
-    boot_mode_rate = []
-    boot_mode_prot = []
+    # Bootstrap stability of mode fraction (vectorised; draws identical to the old loop)
+    boot_mode_rate, boot_mode_prot = bootstrap_mode(tops, rng, n_boot)
     if len(tops):
-        for _ in range(n_boot):
-            sample = rng.choice(tops, size=len(tops), replace=True)
-            mode_p, mode_n = Counter(sample).most_common(1)[0]
-            boot_mode_rate.append(mode_n / len(sample))
-            boot_mode_prot.append(mode_p)
         mode_prot, mode_n = Counter(tops).most_common(1)[0]
     else:
         mode_prot, mode_n = None, 0
 
     obs_frac = mode_n / max(len(tops), 1)
 
-    # Permutation: shuffle values within cell, recompute top-1
+    # Permutation: shuffle values (within lineage by default), recompute top-1.
+    # All shuffles are drawn here in the parent, in (perm, cell) order.
     null_max_fracs = []
     null_mode_match_fracs = []
     t_perm0 = time.time()
+    perm_cells = [cid for cid in kept_ids if o0_insts[cid]["proposed_source_events"]]
     for pi in range(n_perm):
-        perm_tops = []
-        for cid in attr_ids:
-            if cid not in cells:
-                continue
-            inst = make_instance(cid, cells[cid], by_cell[cid], crit0, p95)
-            events = copy.deepcopy(inst["proposed_source_events"])
-            if not events:
-                continue
-            vals = [e["value"] for e in events]
-            rng.shuffle(vals)
-            for e, v in zip(events, vals):
-                e["value"] = float(v)
-            inst["proposed_source_events"] = events
-            base = anm_run_one(schema0, inst)
-            if base["recommended_action"] is None:
-                continue
-            base_action = base["recommended_action"]
-            base_scores = base["action_scores"]
-            best_prot, best_abs = None, -1.0
-            for i, ev in enumerate(events):
-                ablated = {
-                    **inst,
-                    "proposed_source_events": [e for j, e in enumerate(events) if j != i],
-                }
-                out = anm_run_one(schema0, ablated)
-                d = abs(
-                    float(
-                        (out["action_scores"].get(base_action, 0.0) or 0.0)
-                        - (base_scores.get(base_action, 0.0) or 0.0)
-                    )
-                )
-                if d > best_abs:
-                    best_abs = d
-                    best_prot = str(ev["event_id"].rsplit(":", 1)[-1])
-            if best_prot is not None:
-                perm_tops.append(best_prot)
+        tasks = [
+            (cid, permute_event_values(o0_insts[cid]["proposed_source_events"], rng, perm_null))
+            for cid in perm_cells
+        ]
+        perm_tops = [p for p in runner.map(_t_perm, tasks) if p is not None]
         if perm_tops:
             mc = Counter(perm_tops).most_common(1)[0]
             null_max_fracs.append(mc[1] / len(perm_tops))
@@ -465,6 +743,8 @@ def run_full_attribution(
             print(f"  perm {pi+1}/{n_perm}", flush=True)
     perm_sec = time.time() - t_perm0
     print(f"  permutation done in {perm_sec:.1f}s", flush=True)
+    if own:
+        runner.close()
 
     p_value = (
         (1 + sum(1 for f in null_max_fracs if f >= obs_frac)) / max(len(null_max_fracs) + 1, 1)
@@ -533,7 +813,14 @@ def run_full_attribution(
             "null_mode_match_fraction_mean": (
                 float(np.mean(null_mode_match_fracs)) if null_mode_match_fracs else None
             ),
-            "note": "Shuffle event values within cell; compare max top-1 protein fraction to observed",
+            "null": perm_null,
+            "note": (
+                "Shuffle event values within each lineage (values stay in their lineage); "
+                "compare max top-1 protein fraction to observed"
+                if perm_null == "within_lineage"
+                else "Shuffle event values within cell (legacy null); "
+                "compare max top-1 protein fraction to observed"
+            ),
         },
         "runtime_sec": {"attribution": attr_sec, "permutation": perm_sec},
     }
@@ -541,78 +828,183 @@ def run_full_attribution(
 
 
 # -------------------- Train+ANM (label cost curves) --------------------
+LABEL_COST_SPLITS = ("disjoint", "legacy")
+
+
+def split_label_cost(ids, perm, train_frac, mode="disjoint"):
+    """Train pool / evaluation cells for the label-cost arm.
+
+    ``disjoint`` (default): train pool = first ``int(n*train_frac)`` cells of
+    ``perm``; evaluation = the remaining cells (no overlap).
+    ``legacy``: evaluation = all ``ids`` and train pool =
+    ``perm[:max(n_train, min(2000, n))]`` of the same ids (overlapping).
+    Returns ``(train_pool_ids, eval_ids)``.
+    """
+    n = len(ids)
+    n_train = int(n * train_frac)
+    if mode == "legacy":
+        return [ids[i] for i in perm[: max(n_train, min(2000, n))]], list(ids)
+    if mode != "disjoint":
+        raise ValueError(f"unknown label-cost split {mode!r}")
+    train = [ids[i] for i in perm[:n_train]]
+    ev = sorted(ids[i] for i in perm[n_train:])
+    return train, ev
+
+
+def _predict_proba_gate(proba, classes, conf_thr):
+    preds = []
+    for i in range(len(proba)):
+        j = int(np.argmax(proba[i]))
+        preds.append(classes[j] if float(proba[i, j]) >= conf_thr else None)
+    return preds
+
+
+def calibrate_thr_to_abstain(proba, classes, target_rate, grid=None):
+    """Confidence threshold whose abstain rate on ``proba``'s cells is closest to target."""
+    if grid is None:
+        grid = np.linspace(0.34, 0.95, 62)
+    best_thr, best_gap = 0.45, 1e9
+    n = len(proba)
+    for thr in grid:
+        preds = _predict_proba_gate(proba, classes, float(thr))
+        rate = sum(1 for p in preds if p is None) / max(n, 1)
+        gap = abs(rate - target_rate)
+        if gap < best_gap:
+            best_gap = gap
+            best_thr = float(thr)
+    return best_thr
+
+
+def _grid_crit(thr, boost, mode):
+    fake = dict(CRITERIA["O0"] if mode == "equal_panel_mean" else CRITERIA["O2"])
+    fake["readout_threshold"] = thr
+    fake["key_marker_boost"] = boost
+    fake["score_mode"] = mode
+    if mode == "key_marker_priority":
+        fake["secondary_weight"] = 0.0
+        fake["lineage_weights"] = {"b_lineage": 1.5, "t_lineage": 1.3, "myeloid": 0.5}
+    return fake
+
+
+def _scores_matrix(ids_, cells, p95, crit):
+    """(n, n_lineages) lineage scores in dict order, plus that key order."""
+    rows, keys = [], None
+    for cid in ids_:
+        sc = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, crit)
+        if keys is None:
+            keys = list(sc)
+        rows.append([sc[k] for k in keys])
+    if keys is None:
+        keys = list(LINEAGES)
+    return np.asarray(rows, dtype=np.float64).reshape(len(rows), len(keys)), keys
+
+
+def _decide_vec(S, keys, thr):
+    """Vectorised ``decide_argmax`` (no margin): first max wins, None below thr."""
+    if not len(S):
+        return []
+    j = S.argmax(axis=1)
+    m = S[np.arange(len(S)), j]
+    return [None if m[i] < thr else keys[int(j[i])] for i in range(len(S))]
+
+
+GRID_THR = [0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.36]
+GRID_BOOST = [1.0, 1.5, 2.0, 2.5, 3.0]
+GRID_MODES = ("equal_panel_mean", "key_marker_priority")
+
+
 def run_train_plus_anm_curves(
-    eval_ids, train_pool_ids, cells, p95, anm_o2_targets, *, seed=17
+    eval_ids,
+    train_pool_ids,
+    cells,
+    p95,
+    anm_o2_targets,
+    *,
+    seed=17,
+    calib_ids=None,
+    calib_target_abstain=None,
 ):
-    """How many O2 labels does training need to approach ANM's declared O2 behavior?"""
+    """How many O2 labels does training need to approach ANM's declared O2 behavior?
+
+    Abstain-calibrated thresholds are chosen on ``calib_ids`` (the train pool,
+    label-free: only predicted confidences / scores are used) against
+    ``calib_target_abstain`` (ANM's declared O2 abstain rate on those cells).
+    ``calib_ids=None`` is the legacy behaviour: thresholds chosen on ``eval_ids``
+    against the eval target.
+    """
     rng = np.random.default_rng(seed)
     crit_o2 = CRITERIA["O2"]
     target_abstain = float(anm_o2_targets["abstain_rate"])
     target_q = float(anm_o2_targets["Q_analogue"] or 0.0)
     target_q_strict = float(anm_o2_targets.get("accuracy_strict_labeled") or 0.0)
+    legacy_calib = calib_ids is None
+    if legacy_calib:
+        calib_ids = list(eval_ids)
+        calib_target = target_abstain
+    else:
+        calib_ids = list(calib_ids)
+        calib_target = float(
+            target_abstain if calib_target_abstain is None else calib_target_abstain
+        )
+
+    def feats(ids_):
+        return np.stack(
+            [
+                feature_vector(cells[c]["adt_pred_panel"], p95, cells[c].get("z_rna_compressed"))
+                for c in ids_
+            ]
+        )
 
     # Labeled train pool under O2
-    labeled_train = []
-    for cid in train_pool_ids:
-        lab = expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit_o2)
-        if lab is not None:
-            labeled_train.append(cid)
+    o2_lab = {
+        cid: expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit_o2)
+        for cid in train_pool_ids
+    }
+    labeled_train = [cid for cid in train_pool_ids if o2_lab[cid] is not None]
     rng.shuffle(labeled_train)
 
     # Eval labels/features once
-    eval_X = np.stack(
-        [
-            feature_vector(cells[c]["adt_pred_panel"], p95, cells[c].get("z_rna_compressed"))
-            for c in eval_ids
-        ]
-    )
+    eval_X = feats(eval_ids)
     eval_y_o2 = [
         expected_from_true(cells[c]["adt_true_panel_holdout"], p95, crit_o2) for c in eval_ids
     ]
+    calib_X = eval_X if legacy_calib else feats(calib_ids)
 
     budgets = [50, 100, 200, 500, 1000, 2000, 5000, len(labeled_train)]
     budgets = sorted({b for b in budgets if 0 < b <= len(labeled_train)})
 
-    def predict_proba_gate(proba, classes, conf_thr):
-        preds = []
-        for i in range(len(proba)):
-            j = int(np.argmax(proba[i]))
-            preds.append(classes[j] if float(proba[i, j]) >= conf_thr else None)
-        return preds
+    predict_proba_gate = _predict_proba_gate
 
-    def calibrate_thr_to_abstain(proba, classes, target_rate, grid=None):
-        """Pick confidence threshold so abstain_rate ≈ ANM O2 abstain (on eval)."""
-        if grid is None:
-            grid = np.linspace(0.34, 0.95, 62)
-        best_thr, best_gap = 0.45, 1e9
-        n = len(proba)
-        for thr in grid:
-            preds = predict_proba_gate(proba, classes, float(thr))
-            rate = sum(1 for p in preds if p is None) / max(n, 1)
-            gap = abs(rate - target_rate)
-            if gap < best_gap:
-                best_gap = gap
-                best_thr = float(thr)
-        return best_thr
+    # Grid lineage scores are deterministic per (combo, cell): compute once per
+    # combo over the (prefix-nested) labeled train pool and reuse across budgets.
+    grid_combos = [(t, b, m) for t in GRID_THR for b in GRID_BOOST for m in GRID_MODES]
+    _grid_S: dict[tuple, tuple] = {}
+
+    def grid_scores(combo, n_):
+        S, keys = _grid_S.get(combo, (None, None))
+        if S is None or len(S) < n_:
+            done = 0 if S is None else len(S)
+            extra, keys = _scores_matrix(labeled_train[done:n_], cells, p95, _grid_crit(*combo))
+            S = extra if S is None else np.concatenate([S, extra])
+            _grid_S[combo] = (S, keys)
+        return S[:n_], keys
+
+    def best_scores(best_, ids_):
+        return _scores_matrix(ids_, cells, p95, _grid_crit(best_["thr"], best_["boost"], best_["mode"]))
 
     curve_logistic = []
     curve_mlp = []
     curve_grid = []
 
+    metric_keys = (
+        "abstain_count", "abstain_rate", "Q_analogue",
+        "accuracy_strict_labeled", "n_decided_labeled",
+    )
+
     for nlab in budgets:
         subset = labeled_train[:nlab]
-        Xtr = np.stack(
-            [
-                feature_vector(cells[c]["adt_pred_panel"], p95, cells[c].get("z_rna_compressed"))
-                for c in subset
-            ]
-        )
-        ytr = np.array(
-            [
-                expected_from_true(cells[c]["adt_true_panel_holdout"], p95, crit_o2)
-                for c in subset
-            ]
-        )
+        Xtr = feats(subset)
+        ytr = np.array([o2_lab[c] for c in subset])
         # --- logistic (Jev stand-in) ---
         sc = StandardScaler().fit(Xtr)
         try:
@@ -624,25 +1016,18 @@ def run_train_plus_anm_curves(
             # default gate
             preds_def = predict_proba_gate(proba, classes, 0.45)
             m_def = score_predictions(preds_def, eval_y_o2)
-            # calibrate abstain to ANM O2
-            thr_cal = calibrate_thr_to_abstain(proba, classes, target_abstain)
+            # calibrate abstain to ANM O2 (on the calibration set only)
+            proba_cal = proba if legacy_calib else clf.predict_proba(sc.transform(calib_X))
+            thr_cal = calibrate_thr_to_abstain(proba_cal, classes, calib_target)
             preds_cal = predict_proba_gate(proba, classes, thr_cal)
             m_cal = score_predictions(preds_cal, eval_y_o2)
             curve_logistic.append(
                 {
                     "n_o2_labels": int(nlab),
-                    "default_conf_0.45": {
-                        **{k: m_def[k] for k in (
-                            "abstain_count", "abstain_rate", "Q_analogue",
-                            "accuracy_strict_labeled", "n_decided_labeled",
-                        )},
-                    },
+                    "default_conf_0.45": {k: m_def[k] for k in metric_keys},
                     "abstain_calibrated_to_anm_o2": {
                         "conf_threshold": thr_cal,
-                        **{k: m_cal[k] for k in (
-                            "abstain_count", "abstain_rate", "Q_analogue",
-                            "accuracy_strict_labeled", "n_decided_labeled",
-                        )},
+                        **{k: m_cal[k] for k in metric_keys},
                         "abstain_gap_vs_anm": abs(m_cal["abstain_rate"] - target_abstain),
                         "Q_gap_vs_anm": (
                             abs((m_cal["Q_analogue"] or 0) - target_q)
@@ -670,24 +1055,17 @@ def run_train_plus_anm_curves(
                 classes_m = list(mlp.classes_)
                 preds_m = predict_proba_gate(proba_m, classes_m, 0.45)
                 m_m = score_predictions(preds_m, eval_y_o2)
-                thr_m = calibrate_thr_to_abstain(proba_m, classes_m, target_abstain)
+                proba_mcal = proba_m if legacy_calib else mlp.predict_proba(sc.transform(calib_X))
+                thr_m = calibrate_thr_to_abstain(proba_mcal, classes_m, calib_target)
                 preds_mc = predict_proba_gate(proba_m, classes_m, thr_m)
                 m_mc = score_predictions(preds_mc, eval_y_o2)
                 curve_mlp.append(
                     {
                         "n_o2_labels": int(nlab),
-                        "default_conf_0.45": {
-                            **{k: m_m[k] for k in (
-                                "abstain_count", "abstain_rate", "Q_analogue",
-                                "accuracy_strict_labeled", "n_decided_labeled",
-                            )},
-                        },
+                        "default_conf_0.45": {k: m_m[k] for k in metric_keys},
                         "abstain_calibrated_to_anm_o2": {
                             "conf_threshold": thr_m,
-                            **{k: m_mc[k] for k in (
-                                "abstain_count", "abstain_rate", "Q_analogue",
-                                "accuracy_strict_labeled", "n_decided_labeled",
-                            )},
+                            **{k: m_mc[k] for k in metric_keys},
                             "abstain_gap_vs_anm": abs(m_mc["abstain_rate"] - target_abstain),
                             "Q_gap_vs_anm": (
                                 abs((m_mc["Q_analogue"] or 0) - target_q)
@@ -705,73 +1083,39 @@ def run_train_plus_anm_curves(
             curve_mlp.append({"n_o2_labels": int(nlab), "error": str(e)})
 
         # --- thr×boost grid retune (TEDDY-alone style, fit on O2 labels) ---
-        # Search on the labeled subset; evaluate on full eval
+        # Search on the labeled subset; evaluate on eval
         best = {"acc": -1.0, "thr": None, "boost": None, "mode": None}
-        for thr in [0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.36]:
-            for boost in [1.0, 1.5, 2.0, 2.5, 3.0]:
-                for mode in ("equal_panel_mean", "key_marker_priority"):
-                    fake = dict(CRITERIA["O0"] if mode == "equal_panel_mean" else CRITERIA["O2"])
-                    fake["readout_threshold"] = thr
-                    fake["key_marker_boost"] = boost
-                    fake["score_mode"] = mode
-                    if mode == "key_marker_priority":
-                        fake["secondary_weight"] = 0.0
-                        fake["lineage_weights"] = {"b_lineage": 1.5, "t_lineage": 1.3, "myeloid": 0.5}
-                    tr_preds, tr_lab = [], []
-                    for cid in subset:
-                        sc_ = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, fake)
-                        tr_preds.append(decide_argmax(sc_, thr))
-                        tr_lab.append(
-                            expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit_o2)
-                        )
-                    acc = score_predictions(tr_preds, tr_lab)["accuracy_strict_labeled"] or 0.0
-                    if acc > best["acc"]:
-                        best = {"acc": acc, "thr": thr, "boost": boost, "mode": mode}
-        fake = dict(CRITERIA["O0"] if best["mode"] == "equal_panel_mean" else CRITERIA["O2"])
-        fake["readout_threshold"] = best["thr"]
-        fake["key_marker_boost"] = best["boost"]
-        fake["score_mode"] = best["mode"]
-        if best["mode"] == "key_marker_priority":
-            fake["secondary_weight"] = 0.0
-            fake["lineage_weights"] = {"b_lineage": 1.5, "t_lineage": 1.3, "myeloid": 0.5}
-        ev_preds = []
-        for cid in eval_ids:
-            sc_ = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, fake)
-            ev_preds.append(decide_argmax(sc_, best["thr"]))
+        tr_lab = np.array([o2_lab[c] for c in subset], dtype=object)
+        for combo in grid_combos:
+            thr, boost, mode = combo
+            S_tr, keys_tr = grid_scores(combo, nlab)
+            tr_preds = np.array(_decide_vec(S_tr, keys_tr, thr), dtype=object)
+            acc = float(int(np.sum(tr_preds == tr_lab)) / len(subset)) if len(subset) else 0.0
+            if acc > best["acc"]:
+                best = {"acc": acc, "thr": thr, "boost": boost, "mode": mode}
+        ev_S, ev_keys = best_scores(best, eval_ids)
+        ev_preds = _decide_vec(ev_S, ev_keys, best["thr"])
         m_g = score_predictions(ev_preds, eval_y_o2)
-        # Also try matching abstain by raising thr further on eval (post-hoc, still needs labels to know target)
+        # Abstain-matching threshold (label-free), chosen on the calibration set
+        cal_S = ev_S if legacy_calib else best_scores(best, calib_ids)[0]
         best_thr_ab, best_gap = best["thr"], 1e9
+        cal_max = cal_S.max(axis=1) if len(cal_S) else np.zeros(0)
         for thr_try in np.linspace(0.05, 0.55, 51):
-            preds_try = []
-            for cid in eval_ids:
-                sc_ = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, fake)
-                preds_try.append(decide_argmax(sc_, float(thr_try)))
-            rate = sum(1 for p in preds_try if p is None) / max(len(eval_ids), 1)
-            gap = abs(rate - target_abstain)
+            rate = int(np.sum(cal_max < float(thr_try))) / max(len(calib_ids), 1)
+            gap = abs(rate - calib_target)
             if gap < best_gap:
                 best_gap = gap
                 best_thr_ab = float(thr_try)
-        preds_ab = []
-        for cid in eval_ids:
-            sc_ = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, fake)
-            preds_ab.append(decide_argmax(sc_, best_thr_ab))
+        preds_ab = _decide_vec(ev_S, ev_keys, best_thr_ab)
         m_ab = score_predictions(preds_ab, eval_y_o2)
         curve_grid.append(
             {
                 "n_o2_labels": int(nlab),
                 "best_grid": best,
-                "eval_at_best_grid": {
-                    **{k: m_g[k] for k in (
-                        "abstain_count", "abstain_rate", "Q_analogue",
-                        "accuracy_strict_labeled", "n_decided_labeled",
-                    )},
-                },
+                "eval_at_best_grid": {k: m_g[k] for k in metric_keys},
                 "abstain_calibrated_thr": {
                     "thr": best_thr_ab,
-                    **{k: m_ab[k] for k in (
-                        "abstain_count", "abstain_rate", "Q_analogue",
-                        "accuracy_strict_labeled", "n_decided_labeled",
-                    )},
+                    **{k: m_ab[k] for k in metric_keys},
                     "abstain_gap_vs_anm": abs(m_ab["abstain_rate"] - target_abstain),
                     "Q_gap_vs_anm": (
                         abs((m_ab["Q_analogue"] or 0) - target_q)
@@ -783,7 +1127,7 @@ def run_train_plus_anm_curves(
         )
         print(f"  train+ANM curves nlab={nlab}", flush=True)
 
-    # Headline: minimal n_labels where calibrated logistic Q within 0.02 of ANM Q
+    # Headline: minimal n_labels where calibrated strict accuracy within 0.02 of ANM
     # AND abstain within 0.02 — or report never
     def find_match(curve, key_path=("abstain_calibrated_to_anm_o2",), q_tol=0.02, ab_tol=0.02):
         # Match abstain AND strict accuracy to ANM O2 declared operating point.
@@ -826,12 +1170,7 @@ def run_train_plus_anm_curves(
         lab = expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, CRITERIA["O0"])
         if lab is not None:
             labeled_o0.append(cid)
-    X0 = np.stack(
-        [
-            feature_vector(cells[c]["adt_pred_panel"], p95, cells[c].get("z_rna_compressed"))
-            for c in labeled_o0
-        ]
-    )
+    X0 = feats(labeled_o0)
     y0 = np.array(
         [
             expected_from_true(cells[c]["adt_true_panel_holdout"], p95, CRITERIA["O0"])
@@ -852,13 +1191,23 @@ def run_train_plus_anm_curves(
         ]
         zs_track[cid_name] = score_predictions(zs_preds, labs)
 
+    overlap = len(set(train_pool_ids) & set(eval_ids))
     return {
         "arm": "Train_plus_ANM_label_cost",
         "anm_o2_targets": {
             "abstain_rate": target_abstain,
             "Q_analogue": target_q,
             "accuracy_strict_labeled": target_q_strict,
-            "source": "TEDDY+ANM declared O2 on same eval",
+            "source": "TEDDY+ANM declared O2 on the label-cost evaluation cells",
+        },
+        "split": {
+            "n_train_pool": len(train_pool_ids),
+            "n_eval": len(eval_ids),
+            "train_eval_overlap": overlap,
+            "threshold_selection_set": "eval (legacy)" if legacy_calib else "train_pool",
+            "n_threshold_selection_cells": len(calib_ids),
+            "threshold_selection_target_abstain": calib_target,
+            "threshold_selection_uses_labels": False,
         },
         "n_labeled_train_pool_o2": len(labeled_train),
         "budgets": budgets,
@@ -891,16 +1240,17 @@ def run_train_plus_anm_curves(
     }
 
 
-
-def ood_summary(ood_cells, p95, base_schema, events_path):
+def ood_summary(ood_cells, p95, base_schema, events_path, *, runner=None):
     if not ood_cells:
         return {"n": 0, "note": "no OOD cells exported"}
+    own = runner is None
+    runner = runner or Runner(1, base_schema)
     ids = sorted(ood_cells)
     by = events_by_cell(events_path, ids)
+    ctypes = [ood_cells[cid].get("cell_type") for cid in ids]
     out = {"n": len(ids), "slice": ood_cells[ids[0]].get("slice"), "criteria": {}}
     for cid_name in CRIT_IDS:
         crit = CRITERIA[cid_name]
-        schema = schema_for(cid_name, base_schema)
         t_preds, t_lab = [], []
         a_preds, a_lab = [], []
         p_sum = 0.0
@@ -908,19 +1258,74 @@ def ood_summary(ood_cells, p95, base_schema, events_path):
             sc = lineage_scores_from_panel(ood_cells[cid]["adt_pred_panel"], p95, crit)
             t_preds.append(decide_argmax(sc, crit["readout_threshold"]))
             t_lab.append(expected_from_true(ood_cells[cid]["adt_true_panel_holdout"], p95, crit))
-            inst = make_instance(cid, ood_cells[cid], by[cid], crit, p95)
-            out_a = anm_run_one(schema, inst)
+        outs = runner.map(
+            _t_anm,
+            ((cid_name, make_instance(cid, ood_cells[cid], by[cid], crit, p95)) for cid in ids),
+        )
+        for out_a in outs:
             a_preds.append(out_a["recommended_action"])
             a_lab.append(out_a.get("expected_action"))
             p_sum += float(out_a.get("P_f") or 0.0)
         out["criteria"][cid_name] = {
-            "teddy_alone": score_predictions(t_preds, t_lab),
+            "teddy_alone": {
+                **score_predictions(t_preds, t_lab),
+                "annotation_graded": annotation_graded(t_preds, ctypes),
+            },
             "anm": {
                 **score_predictions(a_preds, a_lab),
                 "mean_P_f": p_sum / max(len(ids), 1),
+                "annotation_graded": annotation_graded(a_preds, ctypes),
             },
         }
+    if own:
+        runner.close()
     return out
+
+
+def _git(*args, strip=True):
+    try:
+        out = subprocess.run(
+            ["git", *args], cwd=str(ROOT), capture_output=True, text=True, timeout=10
+        ).stdout
+        return out.strip() if strip else out
+    except Exception:
+        return None
+
+
+def run_metadata(args, manifest, argv=None):
+    """Provenance for the results JSON: git commit, flags, export size factor."""
+    size_keys = {k: v for k, v in manifest.items() if re.search(r"size[_ -]?factor", k, re.I)}
+    import lib.lineage_panels as _lp
+
+    return {
+        "git_commit": _git("rev-parse", "HEAD"),
+        "git_branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
+        "git_dirty_files": [
+            ln[3:]
+            for ln in (_git("status", "--porcelain", "--untracked-files=no", strip=False) or "").splitlines()
+            if ln.strip()
+        ],
+        "argv": list(sys.argv if argv is None else argv),
+        "flags": {k: (str(v) if isinstance(v, Path) else v) for k, v in sorted(vars(args).items())},
+        "export_size_factor": size_keys if size_keys else None,
+        "export_size_factor_note": (
+            None if size_keys else "export_manifest.json has no size-factor key (older export)"
+        ),
+        "lineage_scoring": getattr(_lp, "SCORING", None),
+        "anm_root": str(ANM_ROOT),
+        "anm_git_commit": _git_at(ANM_ROOT),
+        "python": sys.version.split()[0],
+        "numpy": np.__version__,
+    }
+
+
+def _git_at(path):
+    try:
+        return subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=str(path), capture_output=True, text=True, timeout=10
+        ).stdout.strip() or None
+    except Exception:
+        return None
 
 
 def write_report(path: Path, results: dict):
@@ -968,7 +1373,12 @@ def write_report(path: Path, results: dict):
             cells.append(str(b.get("abstain_count")))
         lines.append(f"| {label} | " + " | ".join(cells) + f" | {cost} |")
 
-    row_arm("（1）TEDDY alone", d["arms"]["teddy_alone"], "需标签重调")
+    t_cost = d["arms"]["teddy_alone"]["criterion_edit_cost"]
+    row_arm(
+        "（1）TEDDY alone",
+        d["arms"]["teddy_alone"],
+        "需标签重调" if t_cost.get("needs_endpoint_labels") else "改声明（无标签），但无场/归因",
+    )
     row_arm("（2）TEDDY+ANM", d["arms"]["anm"], "仅改声明")
 
     anm_attr = d["arms"]["anm"]["attribution"]
@@ -1005,7 +1415,30 @@ def write_report(path: Path, results: dict):
     zs = train["zero_shot_o0_model_abstain_does_not_track_observer"]
     lines.append(f"- Train 臂 O0 模型零样本弃权不跟随：`{zs['abstain_counts']}`")
 
+    lines.append("\n### 注释分级（cell_type；范围内 B/T/myeloid 准确率，范围外调用占比）\n")
+    lines.append("| 臂 | crit | 范围内 n | 范围内准确率(strict) | 范围外 n | 范围外调用 | 范围外调用率 |")
+    lines.append("|---|---|---:|---:|---:|---:|---:|")
+    for arm_key, arm_lab in (("teddy_alone", "TEDDY alone"), ("anm", "TEDDY+ANM")):
+        for c in CRIT_IDS:
+            ag = d["arms"][arm_key]["criteria"][c].get("annotation_graded")
+            if not ag:
+                continue
+            i_, o_ = ag["in_scope"], ag["out_of_scope"]
+            acc = i_["accuracy_strict"]
+            sh = o_["call_share"]
+            lines.append(
+                f"| {arm_lab} | {c} | {i_['n']} | {'NA' if acc is None else f'{acc:.4f}'} | "
+                f"{o_['n']} | {o_['n_called']} | {'NA' if sh is None else f'{sh:.4f}'} |"
+            )
+    lines.append("")
+
     lines.append("\n### （3）Train+ANM 标签成本曲线（逼近声明 O2）\n")
+    sp = d["arms"]["train_plus_anm"].get("split", {})
+    lines.append(
+        f"划分：mode={sp.get('mode')}，train_pool={sp.get('n_train_pool')}，"
+        f"eval={sp.get('n_eval')}，overlap={sp.get('train_eval_overlap')}，"
+        f"阈值选择集={sp.get('threshold_selection_set')}。\n"
+    )
     lines.append(
         f"目标（ANM 声明 O2）：abstain_rate={train['anm_o2_targets']['abstain_rate']:.4f}，"
         f"Q={train['anm_o2_targets']['Q_analogue']:.4f}。\n"
@@ -1064,7 +1497,8 @@ def write_report(path: Path, results: dict):
     lines.append("cd /Users/tianchichen/Documents/GitHub/teddy_mm")
     lines.append(
         "PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. "
-        ".venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100"
+        ".venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100 "
+        "--workers 9  # add --label-cost-split legacy --perm-null within_cell for the old numbers"
     )
     lines.append("```\n")
     lines.append(
@@ -1075,7 +1509,7 @@ def write_report(path: Path, results: dict):
     path.write_text("\n".join(lines))
 
 
-def main():
+def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--bridge-dir", type=Path, default=ROOT / "outputs/anm_cite_bridge")
     ap.add_argument("--out-dir", type=Path, default=None)
@@ -1093,7 +1527,35 @@ def main():
     ap.add_argument("--seed", type=int, default=17)
     ap.add_argument("--skip-ood", action="store_true")
     ap.add_argument("--skip-perm", action="store_true")
-    args = ap.parse_args()
+    ap.add_argument(
+        "--label-cost-split",
+        choices=LABEL_COST_SPLITS,
+        default="disjoint",
+        help=(
+            "disjoint (default): label-cost train pool and evaluation cells do not overlap and "
+            "abstain thresholds are chosen on the train pool; legacy: evaluate on all cells, "
+            "train pool is a subset of them, thresholds chosen on the evaluation cells"
+        ),
+    )
+    ap.add_argument(
+        "--perm-null",
+        choices=PERM_NULLS,
+        default="within_lineage",
+        help="attribution permutation null: shuffle values within each lineage (default) "
+        "or within the whole cell (legacy)",
+    )
+    ap.add_argument(
+        "--legacy-teddy-edit-cost",
+        action="store_true",
+        help="report the old (incorrect) needs_endpoint_labels=True for the TEDDY-alone rule",
+    )
+    ap.add_argument(
+        "--workers",
+        type=int,
+        default=default_workers(),
+        help="processes for the per-cell ANM runs (default: cpu_count-1); results do not depend on it",
+    )
+    args = ap.parse_args(argv)
 
     out_dir = args.out_dir or (args.bridge_dir / "hard_proof")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -1121,9 +1583,8 @@ def main():
         ids = sorted(rng.choice(ids, size=args.eval_n, replace=False).tolist())
     n = len(ids)
     perm = rng.permutation(n)
-    n_train = int(n * args.train_frac)
-    eval_ids = ids
-    train_ids = [ids[i] for i in perm[: max(n_train, min(2000, n))]]
+    eval_ids = ids  # label-free arms (TEDDY alone, ANM, attribution) use every cell
+    train_ids, lc_eval_ids = split_label_cost(ids, perm, args.train_frac, args.label_cost_split)
 
     p95 = p95_from_events(args.bridge_dir / "cite_typed_events.jsonl", ids)
     by_cell = events_by_cell(args.bridge_dir / "cite_typed_events.jsonl", ids)
@@ -1137,11 +1598,14 @@ def main():
         )
 
     n_perm = 0 if args.skip_perm else args.n_perm
+    metadata = run_metadata(args, manifest, argv)
 
     t0 = time.time()
     print(
-        f"n_site4={len(ids)} train_fit={len(train_ids)} attr={len(attr_ids)} "
-        f"ood={len(ood_cells)} boot={args.n_boot} perm={n_perm}",
+        f"n_site4={len(ids)} label_cost_split={args.label_cost_split} "
+        f"train_pool={len(train_ids)} label_cost_eval={len(lc_eval_ids)} attr={len(attr_ids)} "
+        f"ood={len(ood_cells)} boot={args.n_boot} perm={n_perm} null={args.perm_null} "
+        f"workers={args.workers}",
         flush=True,
     )
 
@@ -1153,23 +1617,49 @@ def main():
     )
 
     print("TEDDY arm...", flush=True)
-    teddy = run_teddy_arm(eval_ids, train_ids, cells, p95)
-
-    print("ANM metrics...", flush=True)
-    anm_crit = run_anm_metrics(eval_ids, cells, by_cell, p95, base_schema)
-
-    print("ANM full attribution...", flush=True)
-    attribution, compact = run_full_attribution(
-        attr_ids,
-        cells,
-        by_cell,
-        p95,
-        base_schema,
-        flip_grid=args.flip_grid,
-        n_boot=args.n_boot,
-        n_perm=n_perm,
-        seed=args.seed,
+    teddy = run_teddy_arm(
+        eval_ids, train_ids, cells, p95, legacy_edit_cost=args.legacy_teddy_edit_cost
     )
+
+    crit0 = CRITERIA["O0"]
+    o0_insts = {
+        cid: make_instance(cid, cells[cid], by_cell[cid], crit0, p95)
+        for cid in attr_ids
+        if cid in cells
+    }
+    phase_sec = {}
+    with Runner(args.workers, base_schema, o0_insts) as runner:
+        print("ANM metrics...", flush=True)
+        t_ = time.time()
+        anm_per_cell: dict[str, dict] = {}
+        anm_crit = run_anm_metrics(
+            eval_ids, cells, by_cell, p95, base_schema, runner=runner, per_cell=anm_per_cell
+        )
+        phase_sec["anm_metrics"] = time.time() - t_
+
+        print("ANM full attribution...", flush=True)
+        t_ = time.time()
+        attribution, compact = run_full_attribution(
+            attr_ids,
+            cells,
+            by_cell,
+            p95,
+            base_schema,
+            flip_grid=args.flip_grid,
+            n_boot=args.n_boot,
+            n_perm=n_perm,
+            seed=args.seed,
+            perm_null=args.perm_null,
+            runner=runner,
+        )
+        phase_sec["attribution_boot_perm"] = time.time() - t_
+
+        print("OOD...", flush=True)
+        t_ = time.time()
+        ood = ood_summary(
+            ood_cells, p95, base_schema, args.bridge_dir / "cite_typed_events.jsonl", runner=runner
+        )
+        phase_sec["ood"] = time.time() - t_
     np.savez_compressed(out_dir / "attr_compact.npz", **compact)
 
     anm = {
@@ -1183,24 +1673,46 @@ def main():
         "attribution": attribution,
     }
 
+    # ANM declared O2 operating point on a subset of the (label-free) ANM run
+    pos = {cid: i for i, cid in enumerate(eval_ids)}
+
+    def anm_o2_on(sub_ids):
+        pc = anm_per_cell["O2"]
+        return score_predictions(
+            [pc["preds"][pos[c]] for c in sub_ids], [pc["labels"][pos[c]] for c in sub_ids]
+        )
+
     print("Train+ANM label-cost curves...", flush=True)
-    train_arm = run_train_plus_anm_curves(
-        eval_ids,
-        train_ids,
-        cells,
-        p95,
-        {
+    t_ = time.time()
+    if args.label_cost_split == "legacy":
+        targets = {
             "abstain_rate": anm_crit["O2"]["abstain_rate"],
             "Q_analogue": anm_crit["O2"]["mean_Q_f_defined"],
             "accuracy_strict_labeled": anm_crit["O2"]["accuracy_strict_labeled"],
-        },
-        seed=args.seed,
-    )
-
-    print("OOD...", flush=True)
-    ood = ood_summary(
-        ood_cells, p95, base_schema, args.bridge_dir / "cite_typed_events.jsonl"
-    )
+        }
+        train_arm = run_train_plus_anm_curves(
+            lc_eval_ids, train_ids, cells, p95, targets, seed=args.seed
+        )
+    else:
+        m_ev = anm_o2_on(lc_eval_ids)
+        m_tr = anm_o2_on(train_ids)
+        targets = {
+            "abstain_rate": m_ev["abstain_rate"],
+            "Q_analogue": m_ev["Q_analogue"],
+            "accuracy_strict_labeled": m_ev["accuracy_strict_labeled"],
+        }
+        train_arm = run_train_plus_anm_curves(
+            lc_eval_ids,
+            train_ids,
+            cells,
+            p95,
+            targets,
+            seed=args.seed,
+            calib_ids=train_ids,
+            calib_target_abstain=m_tr["abstain_rate"],
+        )
+    train_arm["split"]["mode"] = args.label_cost_split
+    phase_sec["train_plus_anm"] = time.time() - t_
 
     mh = train_arm["match_headline"]
     parts = []
@@ -1231,6 +1743,7 @@ def main():
     results = {
         "timestamp_local": time.strftime("%Y-%m-%d %H:%M:%S %Z"),
         "tier": "hard",
+        "run_metadata": metadata,
         "n_site4": len(ids),
         "n_ood": len(ood_cells),
         "ood_slice": manifest.get("ood_slice"),
@@ -1248,6 +1761,12 @@ def main():
                 "phase1_mlp_pearson_quoted",
             )
         },
+        "annotation_map": {
+            "in_scope_groups": list(IN_SCOPE_GROUPS),
+            "out_of_scope_groups": list(OUT_OF_SCOPE_GROUPS),
+            "cell_type_group": dict(CELL_TYPE_GROUP),
+            "unknown_cell_type_group": "other",
+        },
         "disagreement_rates": dis,
         "arms": {
             "teddy_alone": teddy,
@@ -1260,6 +1779,7 @@ def main():
         "n_perm": n_perm,
         "label_cost_headline": label_cost_headline,
         "runtime_sec": time.time() - t0,
+        "runtime_phase_sec": phase_sec,
         "disk_note": disk_note,
         "claim_boundary": "local_response_diagnosis_only_not_clinical",
         "no_retrain_best_pt": True,
@@ -1283,6 +1803,7 @@ def main():
                 "perm_p": attribution["permutation_test"]["p_value_one_sided"],
                 "label_cost_headline": label_cost_headline[:240],
                 "runtime_sec": results["runtime_sec"],
+                "runtime_phase_sec": phase_sec,
             },
             indent=2,
         ),
