@@ -25,6 +25,14 @@ def main():
     p.add_argument("--hidden", type=int, default=512)
     p.add_argument("--fm-steps", type=int, default=20)
     p.add_argument("--device", default="auto")
+    p.add_argument(
+        "--size-factor",
+        choices=("train-median", "one", "measured"),
+        default="train-median",
+        help="ADT size factor for RNA-only test prediction: train-median (default, "
+        "constant median over split=='train'), one, or measured (legacy: test cells' "
+        "own measured ADT depth, which leaks ADT library size)",
+    )
     args = p.parse_args()
 
     device = resolve_device(args.device)
@@ -34,7 +42,16 @@ def main():
     mask = pack["split"] == "test"
     zt = torch.from_numpy(z[mask]).to(device)
     y = pack["adt"][mask]
-    sf = torch.from_numpy(pack["adt_size_factor"][mask]).to(device)
+    sf_all = np.asarray(pack["adt_size_factor"], dtype=np.float32)
+    n_test = int(mask.sum())
+    if args.size_factor == "measured":
+        sf_np = sf_all[mask]
+    elif args.size_factor == "one":
+        sf_np = np.ones(n_test, dtype=np.float32)
+    else:
+        sf_np = np.full(n_test, np.median(sf_all[pack["split"] == "train"]), dtype=np.float32)
+    print(f"size_factor={args.size_factor} value={'per-cell' if args.size_factor == 'measured' else float(sf_np[0])}")
+    sf = torch.from_numpy(sf_np).to(device)
 
     z_dim, n_adt = z.shape[1], y.shape[1]
     mlp = MLP(z_dim, z_dim, hidden=args.hidden).to(device)
@@ -60,6 +77,7 @@ def main():
                 "protein": str(name),
                 "pearson_mlp": float(np.corrcoef(y[:, j], pred_mlp[:, j])[0, 1]),
                 "pearson_fm": float(np.corrcoef(y[:, j], pred_fm[:, j])[0, 1]),
+                "size_factor": args.size_factor,
             }
         )
     rows.sort(key=lambda r: -r["pearson_fm"])

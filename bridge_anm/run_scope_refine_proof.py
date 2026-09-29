@@ -22,6 +22,9 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import math
+import multiprocessing as mp
+import os
 import sys
 import time
 import warnings
@@ -32,16 +35,17 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import numpy as np
-from sklearn.linear_model import LogisticRegression
-from sklearn.neural_network import MLPClassifier
-from sklearn.preprocessing import StandardScaler
+
+# sklearn is imported lazily inside run_label_budget: it is slow to import and
+# the --workers processes (which re-import this module) never need it.
 
 ROOT = Path(__file__).resolve().parents[1]
-ANM_ROOT = ROOT.parent / "ANM"
+ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM")))
 sys.path.insert(0, str(ANM_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lib.lineage_panels import (  # noqa: E402
+    anm_readout_threshold,
     ACTIONS,
     CRITERIA,
     LINEAGE_PANELS,
@@ -50,6 +54,7 @@ from lib.lineage_panels import (  # noqa: E402
     expected_from_true,
     lineage_scores_from_panel,
 )
+import lib.lineage_panels as _lp  # noqa: E402
 from active_neural_matter.field.finite_field_runner import (  # noqa: E402
     build_graph,
     evolve_field,
@@ -86,7 +91,8 @@ def decide_argmax(scores: dict[str, float], thr: float | None = None):
 
 def schema_for(crit_id: str, base_schema: dict) -> dict:
     schema = copy.deepcopy(base_schema)
-    thr = float(CRITERIA[crit_id]["readout_threshold"])
+    # v2: rule threshold mapped onto the ANM field scale; legacy: declared value.
+    thr = float(anm_readout_threshold(CRITERIA[crit_id], base_schema))
     schema["field_representation"]["readout_threshold"] = thr
     schema["criterion_overlay"] = {"readout_threshold": thr}
     return schema
@@ -140,6 +146,88 @@ def anm_run_one(schema, instance):
         "soft_P": soft_p,
         "margin": margin,
     }
+
+
+def gate_row(schema: dict, crit_id: str, cid: str, cell: dict, events: list, p95: dict) -> dict:
+    """Everything claim 1 needs for one (criterion, cell): ANM run + TEDDY-alone rule."""
+    crit = CRITERIA[crit_id]
+    inst = make_instance(cid, cell, events, crit, p95)
+    out = anm_run_one(schema, inst)
+    sc = lineage_scores_from_panel(cell["adt_pred_panel"], p95, crit)
+    return {
+        "cell_id": cid,
+        "label": out.get("expected_action"),
+        "P_f": out["P_f"],
+        "soft_P": out["soft_P"],
+        "margin": out["margin"],
+        "anm_action": out["recommended_action"],
+        "teddy_always": decide_argmax(sc, thr=None),
+        "teddy_thr": decide_argmax(sc, thr=float(crit["readout_threshold"])),
+        "teddy_margin": teddy_lineage_margin(sc),
+    }
+
+
+_WORKER_CTX: dict[str, Any] = {}
+
+
+def _worker_init(schemas: dict[str, dict], p95: dict, scoring: str | None) -> None:
+    # Spawned children re-import lineage_panels with the env default; match the parent.
+    if scoring is not None and hasattr(_lp, "set_scoring"):
+        _lp.set_scoring(scoring)
+    _WORKER_CTX.update(schemas=schemas, p95=p95)
+
+
+def _worker_run(task: tuple) -> dict:
+    crit_id, cid, cell, events = task
+    return gate_row(_WORKER_CTX["schemas"][crit_id], crit_id, cid, cell, events, _WORKER_CTX["p95"])
+
+
+def map_gate_rows(schemas: dict[str, dict], tasks: list[tuple], p95: dict, workers: int = 1) -> list[dict]:
+    """``gate_row`` over (crit_id, cell_id, cell, events) tasks; output order == input order.
+
+    Each row is a pure function of its inputs, so the list is identical for any
+    ``workers`` value; only wall time changes. Uses the ``spawn`` context.
+    """
+    if workers <= 1 or len(tasks) < 2:
+        return [gate_row(schemas[c], c, cid, cell, ev, p95) for c, cid, cell, ev in tasks]
+    workers = min(int(workers), len(tasks))
+    chunk = max(1, math.ceil(len(tasks) / (workers * 8)))
+    scoring = _lp.get_scoring() if hasattr(_lp, "get_scoring") else None
+    ctx = mp.get_context("spawn")
+    with ctx.Pool(workers, initializer=_worker_init, initargs=(schemas, p95, scoring)) as pool:
+        return pool.map(_worker_run, tasks, chunksize=chunk)
+
+
+def teddy_lineage_margin(scores: dict[str, float]) -> float:
+    """TEDDY's own confidence: top-1 minus top-2 lineage score of its predicted panel."""
+    ranked = sorted(scores.values(), reverse=True)
+    return float(ranked[0] - ranked[1]) if len(ranked) > 1 else float(ranked[0])
+
+
+def q_at_coverage(rows: list[dict], pred_key: str, score_key: str, coverages) -> list[dict]:
+    """Q when answering exactly the top-ceil(c*n) cells by ``score_key`` (ties by cell_id).
+
+    Lets two gates (ANM soft_P vs TEDDY lineage margin) be compared at the same coverage.
+    """
+    order = sorted(rows, key=lambda r: (-float(r[score_key]), r["cell_id"]))
+    n = len(order)
+    out = []
+    for c in coverages:
+        k = min(n, max(1, math.ceil(float(c) * n))) if n else 0
+        ans = [r for r in order[:k] if r.get(pred_key) is not None and r.get("label") is not None]
+        cor = sum(1 for r in ans if r[pred_key] == r["label"])
+        out.append(
+            {
+                "coverage": float(c),
+                "n_answered": k,
+                "n_labeled_answered": len(ans),
+                "Q": (cor / len(ans)) if ans else None,
+            }
+        )
+    return out
+
+
+MATCHED_COVERAGES = (1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1)
 
 
 def load_site4_cells(cells_path: Path) -> dict[str, dict]:
@@ -252,33 +340,18 @@ def run_gate_claim(
     crit_ids: list[str],
     n_tau: int = 16,
     tag: str = "site4_rna_export",
+    workers: int = 1,
 ) -> dict:
     ids = sorted(cells)
-    results = {"tag": tag, "n_cells": len(ids), "criteria": {}}
-    for crit_id in crit_ids:
-        crit = CRITERIA[crit_id]
-        schema = schema_for(crit_id, base_schema)
-        rows = []
-        t0 = time.time()
-        for cid in ids:
-            inst = make_instance(cid, cells[cid], by_cell[cid], crit, p95)
-            out = anm_run_one(schema, inst)
-            sc = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, crit)
-            teddy_always = decide_argmax(sc, thr=None)
-            teddy_thr = decide_argmax(sc, thr=float(crit["readout_threshold"]))
-            rows.append(
-                {
-                    "cell_id": cid,
-                    "label": out.get("expected_action"),
-                    "P_f": out["P_f"],
-                    "soft_P": out["soft_P"],
-                    "margin": out["margin"],
-                    "anm_action": out["recommended_action"],
-                    "teddy_always": teddy_always,
-                    "teddy_thr": teddy_thr,
-                }
-            )
-        elapsed = time.time() - t0
+    results = {"tag": tag, "n_cells": len(ids), "workers": int(workers), "criteria": {}}
+    schemas = {c: schema_for(c, base_schema) for c in crit_ids}
+    t0 = time.time()
+    tasks = [(crit_id, cid, cells[cid], by_cell.get(cid, [])) for crit_id in crit_ids for cid in ids]
+    all_rows = map_gate_rows(schemas, tasks, p95, workers=workers)
+    anm_elapsed = time.time() - t0
+    for ci, crit_id in enumerate(crit_ids):
+        rows = all_rows[ci * len(ids) : (ci + 1) * len(ids)]
+        elapsed = anm_elapsed / max(len(crit_ids), 1)
         soft = np.array([r["soft_P"] for r in rows], dtype=np.float64)
         taus = np.unique(np.quantile(soft, np.linspace(0.0, 1.0, n_tau)))
         # also include 0 for "answer always" anchor on soft_P
@@ -303,6 +376,26 @@ def run_gate_claim(
         curve_anm = coverage_q_curve(rows, "anm_action", "soft_P", taus, len(ids))
         # binary P_f gate (equiv. ANM built-in abstain): two-point
         binary_curve = coverage_q_curve(rows, "teddy_always", "P_f", np.array([0.0, 0.5, 1.0]), len(ids))
+        # TEDDY's own confidence gate: its lineage margin (top1 - top2 score).
+        tm = np.array([r["teddy_margin"] for r in rows], dtype=np.float64)
+        taus_m = np.unique(np.concatenate([[0.0], np.quantile(tm, np.linspace(0.0, 1.0, n_tau))]))
+        curve_teddy_margin = coverage_q_curve(rows, "teddy_always", "teddy_margin", taus_m, len(ids))
+        matched_soft = q_at_coverage(rows, "teddy_always", "soft_P", MATCHED_COVERAGES)
+        matched_margin = q_at_coverage(rows, "teddy_always", "teddy_margin", MATCHED_COVERAGES)
+        matched = []
+        for a_, b_ in zip(matched_soft, matched_margin):
+            d = (a_["Q"] - b_["Q"]) if a_["Q"] is not None and b_["Q"] is not None else None
+            matched.append(
+                {
+                    "coverage": a_["coverage"],
+                    "n_answered": a_["n_answered"],
+                    "Q_gate_anm_soft_P": a_["Q"],
+                    "Q_gate_teddy_margin": b_["Q"],
+                    "delta_Q_soft_P_minus_teddy_margin": d,
+                    "n_labeled_answered_soft_P": a_["n_labeled_answered"],
+                    "n_labeled_answered_teddy_margin": b_["n_labeled_answered"],
+                }
+            )
 
         results["criteria"][crit_id] = {
             "elapsed_sec": elapsed,
@@ -322,24 +415,51 @@ def run_gate_claim(
             "coverage_Q_curve_teddy_gated_by_soft_P": curve_teddy,
             "coverage_Q_curve_anm_gated_by_soft_P": curve_anm,
             "coverage_Q_curve_teddy_gated_by_binary_P_f": binary_curve,
+            "coverage_Q_curve_teddy_gated_by_teddy_margin": curve_teddy_margin,
+            "teddy_margin_quantiles": {
+                str(q): float(np.quantile(tm, q)) for q in [0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0]
+            },
+            "matched_coverage_soft_P_vs_teddy_margin": matched,
             "monotonicity_teddy": monotonic_q_rise(curve_teddy),
             "monotonicity_anm": monotonic_q_rise(curve_anm),
+            "monotonicity_teddy_margin": monotonic_q_rise(curve_teddy_margin),
         }
     return results
 
 
-def Q_on_cells(cell_ids, cells, p95, crit_id="O0", force_always=True):
+def cell_labels(cells, p95, crit_id="O0") -> dict:
+    """Answer-key label per cell (depends only on the holdout truth; compute once)."""
+    crit = CRITERIA[crit_id]
+    return {cid: expected_from_true(c["adt_true_panel_holdout"], p95, crit) for cid, c in cells.items()}
+
+
+def teddy_always_preds(cells, p95, crit_id="O0") -> dict:
+    crit = CRITERIA[crit_id]
+    return {
+        cid: decide_argmax(lineage_scores_from_panel(c["adt_pred_panel"], p95, crit), None)
+        for cid, c in cells.items()
+    }
+
+
+def Q_on_cells(cell_ids, cells, p95, crit_id="O0", force_always=True, labels=None, preds=None):
+    """``labels`` / ``preds`` (from cell_labels / teddy_always_preds) are optional caches."""
     crit = CRITERIA[crit_id]
     correct = decided = n_lab = 0
     for cid in cell_ids:
         if cid not in cells:
             continue
-        lab = expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit)
+        if labels is not None:
+            lab = labels[cid]
+        else:
+            lab = expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit)
         if lab is None:
             continue
         n_lab += 1
-        sc = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, crit)
-        pred = decide_argmax(sc, None if force_always else float(crit["readout_threshold"]))
+        if preds is not None and force_always:
+            pred = preds[cid]
+        else:
+            sc = lineage_scores_from_panel(cells[cid]["adt_pred_panel"], p95, crit)
+            pred = decide_argmax(sc, None if force_always else float(crit["readout_threshold"]))
         if pred is None:
             continue
         decided += 1
@@ -352,12 +472,15 @@ def Q_on_cells(cell_ids, cells, p95, crit_id="O0", force_always=True):
     }
 
 
-def Q_protein_subset(prot_subset, cells, p95, crit_id="O0"):
+def Q_protein_subset(prot_subset, cells, p95, crit_id="O0", labels=None):
     crit = CRITERIA[crit_id]
     subset = set(prot_subset)
     correct = decided = n_lab = 0
     for cid, c in cells.items():
-        lab = expected_from_true(c["adt_true_panel_holdout"], p95, crit)
+        if labels is not None:
+            lab = labels[cid]
+        else:
+            lab = expected_from_true(c["adt_true_panel_holdout"], p95, crit)
         if lab is None:
             continue
         n_lab += 1
@@ -375,6 +498,33 @@ def Q_protein_subset(prot_subset, cells, p95, crit_id="O0"):
     }
 
 
+_SUBSET_CTX: dict[str, Any] = {}
+
+
+def _subset_init(cells, p95, crit_id, labels, scoring) -> None:
+    if scoring is not None and hasattr(_lp, "set_scoring"):
+        _lp.set_scoring(scoring)
+    _SUBSET_CTX.update(cells=cells, p95=p95, crit_id=crit_id, labels=labels)
+
+
+def _subset_run(subset) -> dict:
+    c = _SUBSET_CTX
+    return Q_protein_subset(subset, c["cells"], c["p95"], c["crit_id"], labels=c["labels"])
+
+
+def map_protein_subsets(subsets, cells, p95, crit_id="O0", labels=None, workers: int = 1) -> list[dict]:
+    """Q_protein_subset over many subsets; order preserved, identical for any ``workers``."""
+    if workers <= 1 or len(subsets) < 2:
+        return [Q_protein_subset(sub, cells, p95, crit_id, labels=labels) for sub in subsets]
+    workers = min(int(workers), len(subsets))
+    scoring = _lp.get_scoring() if hasattr(_lp, "get_scoring") else None
+    ctx = mp.get_context("spawn")
+    with ctx.Pool(
+        workers, initializer=_subset_init, initargs=(cells, p95, crit_id, labels, scoring)
+    ) as pool:
+        return pool.map(_subset_run, list(subsets), chunksize=1)
+
+
 def balanced_priority_proteins(flip_top_counts: Counter, k_per_lineage: int = 1) -> list[str]:
     """Pick top flip-sensitive protein(s) within each lineage (avoids myeloid-only collapse)."""
     chosen = []
@@ -386,6 +536,54 @@ def balanced_priority_proteins(flip_top_counts: Counter, k_per_lineage: int = 1)
     return chosen
 
 
+def coarse_cell_type(ct: str | None) -> str:
+    """Coarse group for a fine CITE cell_type label (keyword rules, display only)."""
+    if not ct:
+        return "unknown"
+    s = ct.lower()
+    if "plasma" in s or s.startswith("b1 b") or " b " in f" {s} " or s.endswith(" b") or "b igkc" in s:
+        return "B / plasma"
+    if "nk" in s or s.startswith("ilc"):
+        return "NK / ILC"
+    if "mono" in s or "dc" in s:
+        return "myeloid (mono/DC)"
+    if "prog" in s or s == "hsc":
+        return "progenitor"
+    if "erythro" in s or "reticulocyte" in s or "normoblast" in s:
+        return "erythroid"
+    if "t " in f"{s} " or "mait" in s or "treg" in s or "t reg" in s:
+        return "T"
+    return "other"
+
+
+def cell_type_composition(flagged: list[str], cells: dict) -> dict:
+    """cell_type mix of the flagged cells vs all cells (count, fraction, enrichment)."""
+    all_ids = sorted(cells)
+    out: dict[str, Any] = {"n_flagged": len(flagged), "n_all": len(all_ids)}
+    for key, fn in (("fine", lambda c: cells[c].get("cell_type") or "unknown"),
+                    ("coarse", lambda c: coarse_cell_type(cells[c].get("cell_type")))):
+        cf = Counter(fn(c) for c in flagged)
+        ca = Counter(fn(c) for c in all_ids)
+        rows = []
+        for ct, n_all in sorted(ca.items(), key=lambda kv: (-cf.get(kv[0], 0), -kv[1], kv[0])):
+            n_f = cf.get(ct, 0)
+            frac_f = n_f / max(len(flagged), 1)
+            frac_a = n_all / max(len(all_ids), 1)
+            rows.append(
+                {
+                    "cell_type": ct,
+                    "n_flagged": n_f,
+                    "frac_of_flagged": frac_f,
+                    "n_all": n_all,
+                    "frac_of_all": frac_a,
+                    "flag_rate": n_f / max(n_all, 1),
+                    "enrichment": (frac_f / frac_a) if frac_a > 0 else None,
+                }
+            )
+        out[key] = rows
+    return out
+
+
 def run_attribution_claim(
     cells: dict,
     p95: dict,
@@ -393,6 +591,7 @@ def run_attribution_claim(
     crit_id: str = "O0",
     n_random: int = 40,
     seed: int = 0,
+    workers: int = 1,
 ) -> dict:
     attr = np.load(attr_path, allow_pickle=True)
     cid_top = {str(c): str(t) for c, t in zip(attr["cell_id"], attr["top_protein"])}
@@ -402,13 +601,15 @@ def run_attribution_claim(
     all_ids = sorted(cells)
     rng = np.random.default_rng(seed)
 
-    q_all = Q_on_cells(all_ids, cells, p95, crit_id)
-    q_flip = Q_on_cells(flip_cells, cells, p95, crit_id)
-    q_nonflip = Q_on_cells(nonflip_cells, cells, p95, crit_id)
+    labels = cell_labels(cells, p95, crit_id)
+    preds = teddy_always_preds(cells, p95, crit_id)
+    q_all = Q_on_cells(all_ids, cells, p95, crit_id, labels=labels, preds=preds)
+    q_flip = Q_on_cells(flip_cells, cells, p95, crit_id, labels=labels, preds=preds)
+    q_nonflip = Q_on_cells(nonflip_cells, cells, p95, crit_id, labels=labels, preds=preds)
     rand_cell_qs = []
     for i in range(n_random):
         rs = list(rng.choice(all_ids, size=min(len(flip_cells), len(all_ids)), replace=False))
-        rand_cell_qs.append(Q_on_cells(rs, cells, p95, crit_id)["Q"])
+        rand_cell_qs.append(Q_on_cells(rs, cells, p95, crit_id, labels=labels, preds=preds)["Q"])
 
     flip_tops = Counter(cid_top[c] for c in flip_cells if c in cid_top)
     overall_tops = Counter(cid_top.values())
@@ -418,22 +619,25 @@ def run_attribution_claim(
     prio_flip = [p for p, _ in flip_tops.most_common(k)]
     prio_overall = [p for p, _ in overall_tops.most_common(k)]
     prio_balanced = balanced_priority_proteins(flip_tops, k_per_lineage=1)
-    q_prio_flip = Q_protein_subset(prio_flip, cells, p95, crit_id)
-    q_prio_overall = Q_protein_subset(prio_overall, cells, p95, crit_id)
-    q_prio_bal = Q_protein_subset(prio_balanced, cells, p95, crit_id)
-    q_full = Q_protein_subset(PROTEINS, cells, p95, crit_id)
-
-    rand_prot_qs = []
-    for i in range(n_random):
-        rs = list(rng.choice(PROTEINS, size=len(prio_flip), replace=False))
-        rand_prot_qs.append(Q_protein_subset(rs, cells, p95, crit_id)["Q"])
-    rand_bal_qs = []
-    for i in range(n_random):
-        # random 1-per-lineage
-        rs = [rng.choice(prots) for prots in LINEAGE_PANELS.values()]
-        rand_bal_qs.append(Q_protein_subset(rs, cells, p95, crit_id)["Q"])
+    # Draw every random subset first, in the original rng order, then evaluate all
+    # subsets in one (optionally parallel) map -> identical numbers for any workers.
+    rand_prot_sets = [
+        list(rng.choice(PROTEINS, size=len(prio_flip), replace=False)) for _ in range(n_random)
+    ]
+    # random 1-per-lineage
+    rand_bal_sets = [
+        [rng.choice(prots) for prots in LINEAGE_PANELS.values()] for _ in range(n_random)
+    ]
+    fixed = [prio_flip, prio_overall, prio_balanced, list(PROTEINS)]
+    qs = map_protein_subsets(
+        fixed + rand_prot_sets + rand_bal_sets, cells, p95, crit_id, labels=labels, workers=workers
+    )
+    q_prio_flip, q_prio_overall, q_prio_bal, q_full = qs[:4]
+    rand_prot_qs = [q["Q"] for q in qs[4 : 4 + n_random]]
+    rand_bal_qs = [q["Q"] for q in qs[4 + n_random :]]
 
     return {
+        "hard_cell_type_composition": cell_type_composition(sorted(flip_cells), cells),
         "attr_n": int(len(attr["cell_id"])),
         "n_flip_sensitive": len(flip_cells),
         "n_nonflip": len(nonflip_cells),
@@ -496,6 +700,10 @@ def run_label_budget(
     n_seeds: int = 10,
     seed: int = 42,
 ) -> dict:
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.neural_network import MLPClassifier
+    from sklearn.preprocessing import StandardScaler
+
     attr = np.load(attr_path, allow_pickle=True)
     cid_flip = {str(c): bool(f > 0.5) for c, f in zip(attr["cell_id"], attr["flipped"])}
     crit = CRITERIA[crit_id]
@@ -506,8 +714,12 @@ def run_label_budget(
     train_ids = list(perm[:n_train])
     eval_ids = list(perm[n_train:])
 
+    _lab_cache: dict = {}
+
     def lab(cid):
-        return expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit)
+        if cid not in _lab_cache:
+            _lab_cache[cid] = expected_from_true(cells[cid]["adt_true_panel_holdout"], p95, crit)
+        return _lab_cache[cid]
 
     train_lab = [c for c in train_ids if lab(c) is not None]
     eval_lab = [c for c in eval_ids if lab(c) is not None]
@@ -527,7 +739,7 @@ def run_label_budget(
 
     def fit_Q(train_sel, nlab, eval_cids, s, kind):
         rng2 = np.random.default_rng(s)
-        if len(train_sel) < nlab:
+        if nlab < 2 or len(train_sel) < nlab or not eval_cids:
             return None
         sel = list(rng2.choice(train_sel, size=nlab, replace=False))
         X = np.stack([_feats(c, cells, p95) for c in sel])
@@ -586,6 +798,30 @@ def run_label_budget(
     }
 
 
+def _f(x, spec: str = ".4f") -> str:
+    return "NA" if x is None else format(x, spec)
+
+
+def _report_margin_gate(lines: list[str], block: dict) -> None:
+    mm = block.get("monotonicity_teddy_margin")
+    if mm is None:
+        return
+    lines.append("")
+    lines.append(
+        f"- TEDDY 自身 lineage margin 门控（top1−top2）：baseline Q={_f(mm.get('Q_at_fullish'))}; "
+        f"peak Q={_f(mm.get('Q_peak'))} @cov={_f(mm.get('coverage_at_peak'))} "
+        f"(ΔQ_peak={_f(mm.get('delta_Q_peak'))}); best@cov≥0.4 Δ={_f(mm.get('delta_Q_best_cov_ge_0.4'))}."
+    )
+    lines.append("")
+    lines.append("| coverage | Q gate=ANM soft_P | Q gate=TEDDY margin | Δ (soft_P − margin) |")
+    lines.append("|---:|---:|---:|---:|")
+    for r in block["matched_coverage_soft_P_vs_teddy_margin"]:
+        lines.append(
+            f"| {r['coverage']:.2f} | {_f(r['Q_gate_anm_soft_P'])} | {_f(r['Q_gate_teddy_margin'])} | "
+            f"{_f(r['delta_Q_soft_P_minus_teddy_margin'], '+.4f')} |"
+        )
+
+
 def write_report(path: Path, results: dict) -> None:
     lines: list[str] = []
     lines.append("# SCOPE_REFINE_PROOF — ANM × TEDDY CITE")
@@ -617,7 +853,7 @@ def write_report(path: Path, results: dict) -> None:
         lines.append(f"#### {crit_id}")
         lines.append("")
         lines.append(
-            f"- TEDDY always Q={base['teddy_always_Q']:.4f} (n_lab={base['teddy_always_n_labeled']}); "
+            f"- TEDDY always Q={_f(base['teddy_always_Q'])} (n_lab={base['teddy_always_n_labeled']}); "
             f"TEDDY thr Q={base['teddy_thr_Q']}; ANM default Q={base['anm_default_Q']} "
             f"(abstain={base['anm_abstain_count']}); mean binary P_f={block['mean_P_f_binary']:.4f}."
         )
@@ -644,6 +880,7 @@ def write_report(path: Path, results: dict) -> None:
             lines.append(
                 f"| {row['tau']:.4f} | {row['coverage']:.4f} | {q} | {row['n_labeled_answered']} |"
             )
+        _report_margin_gate(lines, block)
 
     if "claim1_gate_adt_only" in results:
         ga = results["claim1_gate_adt_only"]
@@ -660,7 +897,7 @@ def write_report(path: Path, results: dict) -> None:
             mono = block["monotonicity_teddy"]
             base = block["baseline"]
             lines.append(
-                f"- **{crit_id}**: TEDDY always Q={base['teddy_always_Q']:.4f}; "
+                f"- **{crit_id}**: TEDDY always Q={_f(base['teddy_always_Q'])}; "
                 f"ΔQ_peak={mono.get('delta_Q_peak')} "
                 f"(Q {mono.get('Q_at_fullish')}→{mono.get('Q_peak')} @cov {mono.get('coverage_at_peak')}); "
                 f"best@cov≥0.4 Δ={mono.get('delta_Q_best_cov_ge_0.4')}; "
@@ -679,6 +916,7 @@ def write_report(path: Path, results: dict) -> None:
                 lines.append(
                     f"| {row['tau']:.4f} | {row['coverage']:.4f} | {q} | {row['n_labeled_answered']} |"
                 )
+            _report_margin_gate(lines, block)
 
     # Claim 2
     a = results["claim2_attribution"]
@@ -695,13 +933,13 @@ def write_report(path: Path, results: dict) -> None:
     lines.append("| cell scope | Q | n_decided |")
     lines.append("|---|---:|---:|")
     lines.append(
-        f"| full panel cells | {cs['full_panel_cells']['Q']:.4f} | {cs['full_panel_cells']['n_decided']} |"
+        f"| full panel cells | {_f(cs['full_panel_cells']['Q'])} | {cs['full_panel_cells']['n_decided']} |"
     )
     lines.append(
-        f"| flip-sensitive (ANM LOO flipped) | {cs['flip_sensitive_cells']['Q']:.4f} | {cs['flip_sensitive_cells']['n_decided']} |"
+        f"| flip-sensitive (ANM LOO flipped) | {_f(cs['flip_sensitive_cells']['Q'])} | {cs['flip_sensitive_cells']['n_decided']} |"
     )
     lines.append(
-        f"| nonflip | {cs['nonflip_cells']['Q']:.4f} | {cs['nonflip_cells']['n_decided']} |"
+        f"| nonflip | {_f(cs['nonflip_cells']['Q'])} | {cs['nonflip_cells']['n_decided']} |"
     )
     rc = cs["random_cells_same_n_as_flip"]
     lines.append(
@@ -713,6 +951,28 @@ def write_report(path: Path, results: dict) -> None:
         f"- ΔQ (flip − random same-n) = **{cs['delta_Q_flip_minus_random']:.4f}** "
         "→ attributed-hard scope 明显更难。"
     )
+    comp = a.get("hard_cell_type_composition")
+    if comp:
+        lines.append("")
+        lines.append(
+            f"#### ANM-flagged hard cells — cell_type composition (n_flagged={comp['n_flagged']} / {comp['n_all']})"
+        )
+        lines.append("")
+        lines.append("| coarse cell_type | n_flagged | % of flagged | % of all | flag rate | enrichment |")
+        lines.append("|---|---:|---:|---:|---:|---:|")
+        for r in comp["coarse"]:
+            lines.append(
+                f"| {r['cell_type']} | {r['n_flagged']} | {100 * r['frac_of_flagged']:.1f}% | "
+                f"{100 * r['frac_of_all']:.1f}% | {100 * r['flag_rate']:.1f}% | {_f(r['enrichment'], '.2f')} |"
+            )
+        lines.append("")
+        lines.append("| fine cell_type (top 12 by n_flagged) | n_flagged | % of flagged | flag rate | enrichment |")
+        lines.append("|---|---:|---:|---:|---:|")
+        for r in comp["fine"][:12]:
+            lines.append(
+                f"| {r['cell_type']} | {r['n_flagged']} | {100 * r['frac_of_flagged']:.1f}% | "
+                f"{100 * r['flag_rate']:.1f}% | {_f(r['enrichment'], '.2f')} |"
+            )
     lines.append("")
     lines.append("| protein scope | subset | Q |")
     lines.append("|---|---|---:|")
@@ -752,7 +1012,7 @@ def write_report(path: Path, results: dict) -> None:
         lines.append(
             f"- Train labeled={lb['n_train_labeled']} (hard={lb['n_hard_train']}); "
             f"eval labeled={lb['n_eval_labeled']} (hard={lb['n_hard_eval']}). "
-            f"TEDDY Q eval={lb['teddy_Q_eval']:.4f}, hard-eval={lb['teddy_Q_hard_eval']:.4f}."
+            f"TEDDY Q eval={_f(lb['teddy_Q_eval'])}, hard-eval={_f(lb['teddy_Q_hard_eval'])}."
         )
         lines.append(f"- {lb['note']}")
         for kind, rows in lb["curves"].items():
@@ -764,9 +1024,9 @@ def write_report(path: Path, results: dict) -> None:
             for row in rows:
                 lines.append(
                     f"| {row['n_labels']} | "
-                    f"{row['hard_labels_Q_on_hard_eval_mean']:.4f}±{row['hard_labels_Q_on_hard_eval_std']:.4f} | "
-                    f"{row['random_labels_Q_on_hard_eval_mean']:.4f}±{row['random_labels_Q_on_hard_eval_std']:.4f} | "
-                    f"{row['delta_mean']:+.4f} |"
+                    f"{_f(row['hard_labels_Q_on_hard_eval_mean'])}±{_f(row['hard_labels_Q_on_hard_eval_std'])} | "
+                    f"{_f(row['random_labels_Q_on_hard_eval_mean'])}±{_f(row['random_labels_Q_on_hard_eval_std'])} | "
+                    f"{_f(row['delta_mean'], '+.4f')} |"
                 )
 
     lines.append("")
@@ -793,8 +1053,10 @@ def write_report(path: Path, results: dict) -> None:
     lines.append("```")
     lines.append("")
     lines.append(
-        "Outputs: `outputs/anm_cite_bridge/scope_refine/SCOPE_REFINE_PROOF.md`, "
-        "`scope_refine_results.json`."
+        f"Inputs: `{results.get('paths', {}).get('bridge_dir', 'outputs/anm_cite_bridge')}`. "
+        "Outputs: `SCOPE_REFINE_PROOF.md`, `scope_refine_results.json` in the chosen `--out-dir` "
+        "(default `outputs/anm_cite_bridge/scope_refine`). Flags: `--bridge-dir`, `--workers N`, "
+        "`--skip-adt-only`, `--max-cells N`."
     )
     lines.append("")
     lines.append(f"Generated: {results['timestamp_local']}")
@@ -813,9 +1075,9 @@ def build_proof_sentence(results: dict) -> str:
             lb["curves"]["logreg"][0],
         )
         delta50 = row.get("delta_mean")
-    adt = results.get("claim1_gate_adt_only", {}).get("criteria", {}).get("O0")
+    adt = (results.get("claim1_gate_adt_only") or {}).get("criteria", {}).get("O0")
     adt_bit = ""
-    if adt:
+    if adt and adt["monotonicity_teddy"].get("Q_peak") is not None:
         am = adt["monotonicity_teddy"]
         adt_bit = (
             f" Separately, on missing-modality adt_only O0 (RNA missing, so TEDDY does not run; these are TEDDY alone's "
@@ -829,6 +1091,8 @@ def build_proof_sentence(results: dict) -> str:
             f" Label-budget: frozen-feature head on ANM flip-hard cells beats random "
             f"labels on hard holdout at n=50 (ΔQ={delta50:+.4f})."
         )
+    if g0.get("Q_peak") is None or g2.get("Q_peak") is None or a["flip_sensitive_cells"]["Q"] is None:
+        return "Too few labeled cells for a proof sentence (subset run)."
     return (
         f"On the same TEDDY δu (site4/test n={results['claim1_gate']['n_cells']}), "
         f"ANM soft_P gating raises conditional Q O0 {g0.get('Q_at_fullish'):.4f}→"
@@ -861,6 +1125,37 @@ def main():
         help="Skip missing-modality adt_only gate curve",
     )
     ap.add_argument(
+        "--bridge-dir",
+        type=Path,
+        default=ROOT / "outputs/anm_cite_bridge",
+        help="Input folder with cite_cells_meta.jsonl, cite_typed_events.jsonl, "
+        "hard_proof/attr_compact.npz, missing_modality/ (default: outputs/anm_cite_bridge)",
+    )
+    ap.add_argument(
+        "--attr-path",
+        type=Path,
+        default=None,
+        help="LOO attribution npz (default: <bridge-dir>/hard_proof/attr_compact.npz)",
+    )
+    ap.add_argument(
+        "--mm-dir",
+        type=Path,
+        default=None,
+        help="Missing-modality export folder (default: <bridge-dir>/missing_modality)",
+    )
+    ap.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help="Processes for the per-cell ANM runs (1 = serial, old behaviour; results identical)",
+    )
+    ap.add_argument(
+        "--max-cells",
+        type=int,
+        default=0,
+        help="Keep only the first N site4 cells by cell_id (0 = all; for smoke tests)",
+    )
+    ap.add_argument(
         "--adt-only-frac",
         type=float,
         default=1.0,
@@ -870,17 +1165,23 @@ def main():
     out_dir: Path = args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    bridge_out = ROOT / "outputs/anm_cite_bridge"
+    bridge_out: Path = args.bridge_dir
     cells_path = bridge_out / "cite_cells_meta.jsonl"
     events_path = bridge_out / "cite_typed_events.jsonl"
     schema_path = ROOT / "bridge_anm/schemas/cite_lineage_finite_field_v0.json"
-    attr_path = bridge_out / "hard_proof/attr_compact.npz"
-    mm_cells = bridge_out / "missing_modality/missing_modality_cells.jsonl"
-    mm_events = bridge_out / "missing_modality/missing_modality_events.jsonl"
+    attr_path = args.attr_path or (bridge_out / "hard_proof/attr_compact.npz")
+    mm_dir = args.mm_dir or (bridge_out / "missing_modality")
+    mm_cells = mm_dir / "missing_modality_cells.jsonl"
+    mm_events = mm_dir / "missing_modality_events.jsonl"
+    for need in (cells_path, events_path, attr_path):
+        if not need.exists():
+            ap.error(f"missing input: {need}")
 
     t_all = time.time()
-    print(f"[{_now()}] loading site4 cells…")
+    print(f"[{_now()}] loading site4 cells… (bridge_dir={bridge_out}, workers={args.workers})")
     cells = load_site4_cells(cells_path)
+    if args.max_cells and args.max_cells > 0:
+        cells = {k: cells[k] for k in sorted(cells)[: args.max_cells]}
     print(f"  n_cells={len(cells)}")
     print(f"[{_now()}] loading events…")
     by_cell, p95 = load_events_for(events_path, set(cells))
@@ -889,13 +1190,30 @@ def main():
 
     print(f"[{_now()}] claim1 gate O0/O2…")
     claim1 = run_gate_claim(
-        cells, by_cell, p95, base_schema, crit_ids=["O0", "O2"], n_tau=args.n_tau, tag="site4_phase1_export"
+        cells,
+        by_cell,
+        p95,
+        base_schema,
+        crit_ids=["O0", "O2"],
+        n_tau=args.n_tau,
+        tag="site4_phase1_export",
+        workers=args.workers,
     )
 
     claim1_adt = None
-    if not args.skip_adt_only and mm_cells.exists() and mm_events.exists():
+    adt_only_status = "skipped_by_flag"
+    if args.skip_adt_only:
+        pass
+    elif not (mm_cells.exists() and mm_events.exists()):
+        adt_only_status = "skipped_missing_files"
+        print(f"  WARNING: missing-modality files not found under {mm_dir}; skipping adt_only")
+    else:
+        adt_only_status = "ran"
         print(f"[{_now()}] claim1 gate adt_only (frac={args.adt_only_frac})…")
         mm_c, mm_by, mm_p95 = load_mm_adt_only(mm_cells, mm_events, eval_fraction_keep=args.adt_only_frac)
+        if args.max_cells and args.max_cells > 0:
+            keep = sorted(mm_c)[: args.max_cells]
+            mm_c = {k: mm_c[k] for k in keep}
         # p95 from mm events; fall back
         if not mm_p95:
             mm_p95 = p95
@@ -907,12 +1225,15 @@ def main():
             crit_ids=["O0", "O2"],
             n_tau=args.n_tau,
             tag="missing_modality_adt_only",
+            workers=args.workers,
         )
-    else:
-        print("  skip adt_only")
+    if claim1_adt is None:
+        print(f"  skip adt_only ({adt_only_status})")
 
     print(f"[{_now()}] claim2 attribution scope…")
-    claim2 = run_attribution_claim(cells, p95, attr_path, crit_id="O0", n_random=args.n_random)
+    claim2 = run_attribution_claim(
+        cells, p95, attr_path, crit_id="O0", n_random=args.n_random, workers=args.workers
+    )
 
     print(f"[{_now()}] claim2b label budget…")
     claim2b = run_label_budget(
@@ -927,13 +1248,24 @@ def main():
             "Verifier P_f is binary (1 if recommended_action in actions else 0). "
             "τ-sweep uses continuous soft_P=max(ANM action_scores) from the same field readout."
         ),
+        "run_args": {
+            "scoring": getattr(_lp, "get_scoring", lambda: "legacy")(),
+            "workers": int(args.workers),
+            "max_cells": int(args.max_cells),
+            "n_tau": int(args.n_tau),
+            "n_random": int(args.n_random),
+            "n_seeds": int(args.n_seeds),
+            "adt_only_frac": float(args.adt_only_frac),
+            "adt_only_status": adt_only_status,
+        },
         "paths": {
+            "bridge_dir": str(bridge_out),
             "cells": str(cells_path),
             "events": str(events_path),
             "attr": str(attr_path),
             "schema": str(schema_path),
-            "mm_cells": str(mm_cells),
-            "mm_events": str(mm_events),
+            "mm_cells": str(mm_cells) if claim1_adt is not None else None,
+            "mm_events": str(mm_events) if claim1_adt is not None else None,
         },
         "claim1_gate": claim1,
         "claim2_attribution": claim2,

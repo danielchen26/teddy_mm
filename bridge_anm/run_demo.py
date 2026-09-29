@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -17,7 +18,7 @@ from typing import Any
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-ANM_ROOT = ROOT.parent / "ANM"
+ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM")))
 sys.path.insert(0, str(ANM_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 

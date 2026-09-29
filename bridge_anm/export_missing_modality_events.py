@@ -35,6 +35,13 @@ from lib.lineage_panels import (
     all_panel_proteins,
     protein_to_lineage,
 )
+from export_cite_events import (
+    EVENT_TIMINGS,
+    SIZE_FACTORS,
+    event_time,
+    git_commit,
+    resolve_size_factor,
+)
 
 MASKS = ("rna_only", "adt_only", "joint")
 
@@ -117,6 +124,20 @@ def main() -> None:
         default=0.35,
         help="If phase-2 rna_only pearson below this, fall back to simulate",
     )
+    p.add_argument(
+        "--event-timing",
+        choices=EVENT_TIMINGS,
+        default="simultaneous",
+        help="simultaneous: all panel events at t=0 (default); panel-order: legacy",
+    )
+    p.add_argument(
+        "--size-factor",
+        choices=SIZE_FACTORS,
+        default="train-median",
+        help="ADT size factor for the RNA-only path (phase-1 and phase-2 rna_only): "
+        "train-median (default), one, or measured (legacy). adt_only/joint masks "
+        "observe ADT, so they keep the measured size factor.",
+    )
     args = p.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -158,7 +179,10 @@ def main() -> None:
     z_dim = int(z.shape[1])
     n_adt = len(adt_names)
     adt_pick = npz["adt"][pick].astype(np.float32)
-    sf_pick = npz["adt_size_factor"][pick].astype(np.float32)
+    # Measured ADT depth: legitimate only when ADT is observed (adt_only/joint).
+    sf_measured = npz["adt_size_factor"][pick].astype(np.float32)
+    sf_rna, sf_info = resolve_size_factor(args.size_factor, npz["adt_size_factor"], split, pick)
+    print(f"rna_only size_factor={sf_info}")
     z_pick = z[pick]
 
     # Always compute phase-1 baseline (strong unidirectional ~0.61)
@@ -169,7 +193,7 @@ def main() -> None:
     dec.load_state_dict(blob1["dec"])
     mlp.eval()
     dec.eval()
-    phase1_pred = _infer_phase1(mlp, dec, z_pick, sf_pick, device, args.batch_size)
+    phase1_pred = _infer_phase1(mlp, dec, z_pick, sf_rna, device, args.batch_size)
     phase1_pearson = _pearson_mean(adt_pick, phase1_pred)
     print(f"phase-1 rna_only pearson (full ADT)={phase1_pearson:.4f}")
 
@@ -189,7 +213,8 @@ def main() -> None:
             model.eval()
             for m in MASKS:
                 preds_by_mask[m] = _infer_phase2(
-                    model, z_pick, adt_pick, sf_pick, m, device, args.batch_size, args.fm_steps
+                    model, z_pick, adt_pick, sf_rna if m == "rna_only" else sf_measured,
+                    m, device, args.batch_size, args.fm_steps,
                 )
                 phase2_metrics[f"{m}_pearson"] = _pearson_mean(adt_pick, preds_by_mask[m])
                 print(f"phase-2 {m} pearson={phase2_metrics[f'{m}_pearson']:.4f}")
@@ -282,7 +307,8 @@ def main() -> None:
                         "event_id": f"{cell_id}:{prot}",
                         "cell_id": cell_id,
                         "base_cell_id": base_id,
-                        "time": t_i,
+                        "time": event_time(args.event_timing, t_i),
+                        "panel_order": t_i,
                         "protein": prot,
                         "action": lin,
                         "modality": MODALITY_FOR_LINEAGE[lin],
@@ -337,6 +363,11 @@ def main() -> None:
         "events_path": str(events_path),
         "cells_path": str(cells_path),
         "same_cells_across_masks": True,
+        "event_timing": args.event_timing,
+        "size_factor_rna_only": sf_info,
+        "size_factor_adt_observed_masks": "measured",
+        "flags": {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
+        "git_commit": git_commit(),
         "anm_semantics": (
             "missing modality = source ablation / channel-restricted typed evidence; "
             "P_f workability drops when key evidence absent; Q_f vs holdout GT only"

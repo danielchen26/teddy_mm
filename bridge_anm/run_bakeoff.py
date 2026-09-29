@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import sys
 import time
 from collections import Counter, defaultdict
@@ -447,7 +448,7 @@ def run_anm_arm(out_dir: Path, eval_ids: list[str]) -> dict[str, Any]:
     # Extra attribution examples beyond the demo's first cell
     schema0 = json.loads((out_dir / "schema_O0.json").read_text())
     bundle0 = json.loads((out_dir / "anm_instances_O0.json").read_text())
-    ANM_ROOT = ROOT.parent / "ANM"
+    ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM")))
     sys.path.insert(0, str(ANM_ROOT))
     from active_neural_matter.field.finite_field_runner import (  # noqa: E402
         build_graph,
