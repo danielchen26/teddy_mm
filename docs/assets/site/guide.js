@@ -282,7 +282,7 @@
       '<p class="g-mini">① Evidence in (scaled 0–1)</p>' + inputGrid(E.inputs) +
       '<p class="g-mini">② The field fills up</p>' + traceSvg(E) +
       '<p class="g-trace-read">Hover or tap a step to read its levels.</p>' +
-      '<p class="g-ex-cap">Markers enter one per step (B’s three, then T’s, then myeloid’s), then the field runs 4 more steps. Myeloid overtakes T once CD16 arrives. This order was a hidden weight; the corrected rerun enters all markers at once.</p>' + traceTable(E) +
+      '<p class="g-ex-cap">Markers enter one per step (B’s three, then T’s, then myeloid’s), then the field runs 4 more steps. Myeloid overtakes T once CD16 arrives. This order was a hidden weight, not a real processing order: the nine predictions come out of one prediction. The corrected rerun enters all markers at once.</p>' + traceTable(E) +
       '<p class="g-mini">③ Read out, ④ check</p>' + exampleBars(E.ex) +
       '</div></details>';
   }

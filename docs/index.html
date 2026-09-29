@@ -236,7 +236,9 @@ table.capm.cmp6 tbody th a:hover { color: var(--accent); }
 .lead-pts li b { color: var(--ink); }
 .lead-src { margin: 14px 0 0; font-size: .78rem; color: var(--ink-faint); }
 .brings3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
-@container main (max-width: 900px) { .brings3 { grid-template-columns: 1fr; } }
+/* 3 columns only when the 4-column coverage table fits; else 2 + a full-width coverage card; 1 column on narrow screens */
+@container main (max-width: 1040px) { .brings3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .brings3 > .bring:last-child { grid-column: 1 / -1; } }
+@container main (max-width: 680px) { .brings3 { grid-template-columns: 1fr; } }
 .bring { padding: 18px 18px 16px; display: flex; flex-direction: column; min-width: 0; }
 .bring .brk { font-family: var(--mono); font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
 .bring h3 { font-size: 1.04rem; margin: 4px 0 6px; letter-spacing: -.012em; line-height: 1.3; }
@@ -283,6 +285,7 @@ table.mini { width: 100%; border-collapse: collapse; font-size: .8rem; margin: 1
 .eqn { font-family: var(--mono); font-size: .82rem; color: var(--ink); background: var(--bg-elev); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; margin: 0 0 8px; line-height: 1.9; overflow-x: auto; }
 .eqn sub { font-size: .72em; line-height: 0; }
 .eqn .ar { color: var(--ink-faint); margin: 0 4px; }
+.eqn .eqp { white-space: nowrap; }
 .scope-line { margin: 12px 0 0; font-size: .86rem; color: var(--ink-muted); max-width: 40rem; line-height: 1.55; }
 
 /* problem */
@@ -628,7 +631,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
             After the bridge fixes, ANM does <b>not</b> make TEDDY more accurate: on all 16,750 held-out cells and all three questions its calls equal the fixed rule’s, by construction. What it brings is a way to <b>measure where TEDDY loses information</b> and <b>how far each call can be trusted</b>.
             The clearest case is a <span class="term" data-term="sufficiency">sufficiency test</span>: TEDDY’s embedding nearly merges NK and T cells, and its predictions keep only a quarter to two-thirds of their measured protein differences (<a href="#brings">see how</a>).
           </p>
-          <p class="scope-line">Scope: teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM’s <span class="term" data-term="timestep">step</span> is any real processing order, and TEDDY’s layers are one (<a href="#timestep">why</a>).</p>
+          <p class="scope-line">Scope: teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM’s <span class="term" data-term="timestep">step</span> is any real processing order, not necessarily physical time, and TEDDY’s layers are one (<a href="#timestep">why</a>).</p>
           <div class="cta-row">
             <a class="btn pri" href="#brings">What ANM brings TEDDY ↓</a>
             <a class="btn" href="#blocks">See the six experiments ↓</a>
@@ -716,7 +719,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
       <article class="lead card" aria-labelledby="lead-h">
         <span class="lead-tag">★ Most useful · the sufficiency test</span>
-        <h3 id="lead-h">TEDDY’s embedding nearly merges NK and T cells, and squeezes the protein differences between them</h3>
+        <h3 id="lead-h">TEDDY’s embedding nearly merges NK and T cells, and its predictions squeeze the protein differences between them</h3>
         <p class="lead-rule"><b>The principle:</b> the same retained state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something. Here the state is TEDDY’s <span class="term" data-term="z512">embedding</span>; the readout, the proteins TEDDY predicts from it.</p>
         <div class="lead-grid">
           <figure class="lf">
@@ -783,7 +786,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
             <div><span class="dv">0.985 → <b>0.917</b></span><span class="dl">lineage accuracy</span></div>
           </div>
           <p><b>TEDDY is robust to shallow sequencing.</b> A declared per-depth trust performs like one tuned threshold at matched coverage.</p>
-          <p class="cav">1,500 validation cells (donor 18303); the held-out site was not used. From the Experiment 2 redesign prototype.</p>
+          <p class="cav">1,500 validation cells (donor 18303); the held-out site was not used. From the Experiment 2 redesign prototype (the experiment itself stays withdrawn).</p>
           <a class="go" href="#missing">Experiment 2 · When RNA is missing →</a>
         </article>
         <article class="bring card">
@@ -1389,7 +1392,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </ul></div>
       </div>
       <div class="tstep card" id="timestep">
-        <h3>“Dynamics not tested” is not “no time here”: ANM’s step is an order, not a clock</h3>
+        <h3>“Dynamics not tested” is not “no time here”: ANM’s step is an order, not necessarily a clock</h3>
         <p>ANM’s <span class="term" data-term="timestep">step t</span> is any declared processing order, not necessarily physical time; memory, feedback and delay are defined over those steps. What matters is that <b>the order is real</b>: the system actually processes in that order.</p>
         <div class="ts2">
           <div class="tso no">
@@ -1401,7 +1404,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <div class="tso yes">
             <span class="tk">A real order</span>
             <b class="tt">TEDDY’s transformer layers</b>
-            <div class="eqn">h<sub>l+1</sub> = h<sub>l</sub> + f<sub>l</sub>(h<sub>l</sub>)<span class="ar">⇒</span>δh<sub>l+1</sub> = (I + ∂f<sub>l</sub>/∂h) δh<sub>l</sub></div>
+            <div class="eqn"><span class="eqp">h<sub>l+1</sub> = h<sub>l</sub> + f<sub>l</sub>(h<sub>l</sub>)</span><span class="ar">⇒</span> <span class="eqp">δh<sub>l+1</sub> = (I + ∂f<sub>l</sub>/∂h) δh<sub>l</sub></span></div>
             <p>The residual stream is the retained state, and attention couples the gene tokens.</p>
           </div>
         </div>
