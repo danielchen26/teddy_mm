@@ -344,7 +344,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
         <div class="tile"><div class="k"><span class="term" data-term="softsep">Soft separation</span> ↑</div><div class="v"><span class="from">0.17</span><span class="arrow">→</span><span class="to">0.63</span></div><div class="h">Pair told apart: different calls, or one declined</div></div>
         <div class="tile"><div class="k"><span class="term" data-term="qdec">Accuracy of calls made</span> ↑</div><div class="v"><span class="from">0.74</span><span class="arrow">→</span><span class="to">0.99</span></div><div class="h">Correct calls among the calls made</div></div>
       </div>
-      <div class="say warn" style="margin-top:1rem;font-size:.86rem"><b>Corrections in progress (29 Sep 2026).</b> This page is Experiment 6, Look-alike cells, and its headline is <b>withdrawn pending redesign</b>; the numbers below are kept as a record. Known issues: markers were entered one per step in panel order, a hidden weight (being rerun with simultaneous markers); predictions were scaled by a per-cell factor computed from measured protein (being rerun with a train-median factor); the answer key has no NK or out-of-scope class. Donor 15078 is in training at other sites and is 32.6% of site4 test cells, and the 9 panel proteins were chosen by test-set Pearson.</div>
+      <div class="say warn" style="margin-top:1rem;font-size:.86rem"><b>Corrections (29 Sep 2026).</b> This page is Experiment 6, Look-alike cells. It stays <b>withdrawn pending redesign</b> and was not rerun; the numbers below are the first run’s, kept as a record. The corrected rerun is done for Experiments 1, 3, 4 and 5 (<a href="index.html#corrections">see the homepage</a>): with all markers entering at once and a train-median size factor, ANM makes the same call as the fixed rule on every cell. Known issues here: markers were entered one per step in panel order, a hidden weight; predictions were scaled by a per-cell factor computed from measured protein; the answer key has no NK or out-of-scope class. Redesign prototype: TEDDY’s evidence cannot separate NK–T look-alikes, and 72% of site4 NK–T pairs involve “gdT CD158b+” cells that look NK by protein. Donor 15078 is in training at other sites and is 32.6% of site4 test cells, and the 9 panel proteins were chosen by test-set Pearson.</div>
       <p class="srcnote">Myeloid↔T must-separate pairs, 1,490 · before = TEDDY + fixed rule (soft) → after = measured protein as typed evidence, strict rule · source: <a href="reports/reverse_loop_small_stats.json">reverse_loop_small_stats.json</a></p>
     </div>
   </section>
@@ -385,7 +385,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
             <div class="box">
               <h4>The implicit promise</h4>
               <div style="font-size:.88rem">If two cells’ embeddings have cosine ≥ 0.98, the readout gives both the same call.
-                TEDDY’s phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.61</span> is a reference; this page does not try to beat it.</div>
+                TEDDY’s phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.60</span> is a reference; this page does not try to beat it.</div>
             </div>
           </div>
           <div class="say">The question: <b>is TEDDY’s embedding enough for the readout?</b> The cheapest test of it, the must-separate check, was the strongest of four cheap probes (score 0.581, rank 1 in <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES_RANKING</a>).</div>
@@ -556,7 +556,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
         <div class="card col out"><h3>Not claimed</h3><ul>
           <li>Studying TEDDY’s internals: residual stream, layer Jacobians, in-silico gene perturbations (Mode A)</li>
           <li>The loop as TEDDY’s representation responding to perturbations</li>
-          <li>Pearson above phase-1 ≈ 0.61</li>
+          <li>Pearson above phase-1 ≈ 0.60</li>
           <li>Fusion audit · clinical superiority</li>
           <li>ANM’s dynamics: state feedback, operator memory, delays (open-loop only)</li>
           <li>A final headline for this experiment: withdrawn pending redesign</li>
@@ -564,7 +564,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
         </ul></div>
       </div>
       <div class="proof">
-        On 5,000 must-separate pairs (1,490 myeloid↔T, median cosine 0.982), TEDDY’s embedding alone is not enough for the readout: false agreement 0.85, soft separation 0.17, accuracy 0.74. ANM’s decision loop vetoes the embedding for these pairs, swaps in measured protein as typed evidence with the strict rule, and verifies false agreement → 0.40, soft separation → 0.63, accuracy → 0.99, without retraining TEDDY. Gluing features onto the embedding is not enough (global change −0.27). Not a study of TEDDY’s internals, not a Pearson claim, not clinical. Headline withdrawn pending redesign (29 Sep 2026): markers entered one per step in panel order, predictions scaled by a per-cell factor from measured protein, no NK or out-of-scope class in the answer key.
+        On 5,000 must-separate pairs (1,490 myeloid↔T, median cosine 0.982), TEDDY’s embedding alone is not enough for the readout: false agreement 0.85, soft separation 0.17, accuracy 0.74. ANM’s decision loop vetoes the embedding for these pairs, swaps in measured protein as typed evidence with the strict rule, and verifies false agreement → 0.40, soft separation → 0.63, accuracy → 0.99, without retraining TEDDY. Gluing features onto the embedding is not enough (global change −0.27). Not a study of TEDDY’s internals, not a Pearson claim, not clinical. Withdrawn pending redesign (29 Sep 2026): markers entered one per step in panel order, predictions scaled by a per-cell factor from measured protein, no NK or out-of-scope class in the answer key. The redesign prototype finds TEDDY’s evidence cannot separate NK–T look-alikes; 72% of site4 NK–T pairs involve “gdT CD158b+” cells that look NK by protein.
       </div>
     </div>
   </section>
@@ -694,7 +694,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'Three cheap fixes, same engine',
           steps: [
             ['(a) Question only', 'Rewrite the question (' + T('o1', 'strict') + ' or ' + T('o2', 'B/T-priority') + ' rule) on the same predictions. False agreement stays at 0.83–0.84: a better question can’t see evidence that isn’t there.'],
-            ['(b) Typed evidence', 'Feed the measured proteins in as the 9 evidence items, in place of TEDDY’s predictions and scaled the same way (a per-cell factor computed from measured protein; being rerun with a train-median factor). False agreement: 0.46 with the soft rule, 0.40 with the strict rule.'],
+            ['(b) Typed evidence', 'Feed the measured proteins in as the 9 evidence items, in place of TEDDY’s predictions and scaled the same way (in this first run, a per-cell factor computed from measured protein; the rerun of the other experiments uses a train-median factor). False agreement: 0.46 with the soft rule, 0.40 with the strict rule.'],
             ['(c) Feature swap', 'Glue proteins onto TEDDY’s embedding (' + T('zplus', 'z⁺') + ') and hope distances separate the pairs. No question, no “no call”.'],
             ['Why (b) works', 'It changes what the decision reads, while the engine and the question stay written down and checkable.']
           ]
@@ -751,7 +751,7 @@ window.GUIDE_CONFIG = (function () {
             ['Never changes', 'TEDDY’s weights or its embedding. Nothing opens TEDDY up (' + T('modea', 'Mode A') + ').'],
             ['Open-loop only', 'TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.'],
             ['Measured protein', 'Used as evidence in this one explicit test. In normal use it stays the answer key.'],
-            ['Not claimed', 'Pearson above ≈ 0.61, or a clinical result.']
+            ['Not claimed', 'Pearson above ≈ 0.60, or a clinical result.']
           ]
         },
         concepts: ['modeb', 'modea', 'adt', 'pearson']
