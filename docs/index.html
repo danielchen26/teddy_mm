@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TEDDY × ANM — editable decisions on frozen CITE evidence</title>
-<meta name="description" content="TEDDY stays frozen. ANM adds an editable, honest, auditable decision layer on its CITE-seq protein predictions. One fair-test protocol, six experiments; corrected rerun of Experiments 1, 3, 4 and 5, with ANM making the same calls as the fixed rule by construction." />
+<meta name="description" content="TEDDY stays frozen. ANM adds an editable, honest, auditable decision layer on its CITE-seq protein predictions. After the bridge fixes ANM makes the same calls as the fixed rule; what it brings is a way to measure where TEDDY loses information (a sufficiency test finds NK and T cells nearly merged in TEDDY’s embedding) and how far each call can be trusted." />
 <meta name="color-scheme" content="light dark" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -72,6 +72,7 @@ main { container-type: inline-size; container-name: main; }
 .theme-btn { margin-left: 6px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); border-radius: 999px; padding: 5px 11px; font: inherit; font-size: .78rem; cursor: pointer; }
 @media (max-width: 1000px) { .nav a.hide-1000 { display: none; } }
 @media (max-width: 1100px) { .nav a.hide-1100 { display: none; } }
+@media (max-width: 1199px) { .nav a.hide-1200 { display: none; } }
 @media (max-width: 760px) { .nav a.hide-760 { display: none; } }
 .mnav { display: none; position: relative; }
 @media (max-width: 760px) { .mnav { display: block; } }
@@ -81,6 +82,7 @@ main { container-type: inline-size; container-name: main; }
 @media (max-width: 480px) { .mnav .mlabel { display: none; } .mnav summary { padding: 6px 9px; } }
 .mnav-panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(280px, calc(100vw - 32px)); max-height: calc(100vh - 80px); overflow-y: auto;
   padding: 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-elev); box-shadow: var(--shadow); display: grid; gap: 2px; }
+@media (max-width: 760px) { .mnav-panel { position: fixed; top: 64px; right: 12px; width: min(300px, calc(100vw - 24px)); } }
 .mnav-panel a { display: block; padding: 8px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .88rem; }
 .mnav-panel a:hover { background: var(--bg-soft); }
 .mnav-panel a.sub { padding-left: 22px; color: var(--ink-muted); font-size: .84rem; }
@@ -186,6 +188,102 @@ table.capm.feeds tbody th a:hover { color: var(--accent); }
 table.capm.cmp6 tbody th a { color: var(--ink); text-decoration: none; }
 table.capm.cmp6 tbody th a:hover { color: var(--accent); }
 .cmp-note { margin: 10px 0 0; font-size: .84rem; color: var(--ink-muted); }
+
+/* what ANM brings TEDDY now */
+.sec.brings { background: linear-gradient(to bottom, color-mix(in srgb, var(--accent) 6%, var(--bg)), var(--bg) 62%); }
+.lead { padding: 24px 24px 20px; border: 1.5px solid color-mix(in srgb, var(--accent) 55%, var(--line)); background: color-mix(in srgb, var(--accent) 5%, var(--bg-elev));
+  box-shadow: 0 1px 2px rgba(22,24,26,.04), 0 18px 44px color-mix(in srgb, var(--accent) 14%, transparent); }
+@container main (max-width: 600px) { .lead { padding: 18px 14px 16px; } }
+.lead-tag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--bg); background: var(--accent); padding: 3px 10px; border-radius: 999px; }
+.lead h3 { font-size: clamp(1.3rem, 2.6vw, 1.75rem); letter-spacing: -.026em; line-height: 1.18; margin: 12px 0 10px; max-width: 46rem; }
+.lead-rule { margin: 0; font-size: .98rem; color: var(--ink-muted); max-width: 50rem; line-height: 1.55; }
+.lead-rule b { color: var(--ink); }
+.lead-grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: 14px; margin: 20px 0 16px; }
+@container main (max-width: 820px) { .lead-grid { grid-template-columns: 1fr; } }
+.lf { margin: 0; padding: 14px 16px 12px; border-radius: 14px; background: var(--bg-elev); border: 1px solid var(--line); min-width: 0; }
+@container main (max-width: 600px) { .lf { padding: 12px 12px 10px; } }
+.lf-h { display: block; margin: 0 0 10px; }
+.lf-h b { display: block; font-size: .92rem; line-height: 1.35; }
+.lf-h span { display: block; font-size: .78rem; color: var(--ink-muted); margin-top: 2px; line-height: 1.45; }
+.db-row + .db-row { margin-top: 6px; }
+.db-lab { display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: .8rem; color: var(--ink-muted); }
+.db-lab b { color: var(--ink); font-weight: 600; }
+.db-lab .mono { font-size: .76rem; }
+.db-track { position: relative; height: 40px; margin: 0 12px; }
+.db-track::before { content: ""; position: absolute; left: -12px; right: -12px; top: 26px; height: 2px; background: var(--grid); border-radius: 1px; }
+.db-seg { position: absolute; top: 25px; height: 4px; border-radius: 2px; background: currentColor; opacity: .55; }
+.db-dot { position: absolute; top: 27px; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 2px var(--bg-elev); }
+.db-dot.t { background: var(--bg-elev); border: 2.5px solid currentColor; }
+.db-k { position: absolute; top: 2px; transform: translateX(-50%); font-family: var(--mono); font-size: .66rem; font-weight: 700; line-height: 1.2; }
+.db-row.pred { color: var(--s-teddy); }
+.db-row.meas { color: var(--ink); }
+.db-note { margin: 8px 0 0; font-size: .76rem; color: var(--ink-muted); line-height: 1.45; }
+.rb { position: relative; padding-left: 58px; padding-right: 8px; }
+.rb-tracks { position: relative; padding: 4px 0; }
+.rb-band { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--ink-faint) 18%, transparent); border-radius: 6px; }
+.rb-one { position: absolute; top: -6px; bottom: 0; border-left: 1.5px dashed var(--ink-muted); }
+.rb-row { position: relative; height: 30px; }
+.rb-row .rl { position: absolute; left: -58px; top: 50%; transform: translateY(-50%); font-size: .8rem; font-weight: 600; color: var(--ink); }
+.rb-row i { position: absolute; left: 0; top: 50%; height: 14px; margin-top: -7px; border-radius: 0 4px 4px 0; background: var(--s-teddy); }
+.rb-row .rv { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 6px; font-family: var(--mono); font-size: .74rem; font-weight: 600; color: var(--ink); }
+.rb-axis { position: relative; height: 20px; border-top: 1px solid var(--line-strong); }
+.rb-axis span { position: absolute; top: 3px; transform: translateX(-50%); font-family: var(--mono); font-size: .66rem; color: var(--ink-faint); }
+.lgd i.band { background: color-mix(in srgb, var(--ink-faint) 28%, transparent); }
+.lead-pts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 22px; }
+@container main (max-width: 700px) { .lead-pts { grid-template-columns: 1fr; } }
+.lead-pts li { font-size: .88rem; color: var(--ink-muted); line-height: 1.5; padding-left: 12px; border-left: 2px solid color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.lead-pts li b { color: var(--ink); }
+.lead-src { margin: 14px 0 0; font-size: .78rem; color: var(--ink-faint); }
+.brings3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+@container main (max-width: 900px) { .brings3 { grid-template-columns: 1fr; } }
+.bring { padding: 18px 18px 16px; display: flex; flex-direction: column; min-width: 0; }
+.bring .brk { font-family: var(--mono); font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+.bring h3 { font-size: 1.04rem; margin: 4px 0 6px; letter-spacing: -.012em; line-height: 1.3; }
+.bring p { margin: 0; font-size: .86rem; color: var(--ink-muted); line-height: 1.5; }
+.bring p + p, .bring table + p, .bring .drop + p { margin-top: 8px; }
+.bring p b { color: var(--ink); }
+.bring .cav { margin-top: 12px; font-size: .8rem; }
+.bring .cav::before { content: ""; display: block; border-top: 1px dashed var(--line); margin-bottom: 8px; }
+.bring .go { margin-top: auto; padding-top: 12px; font-size: .8rem; font-weight: 600; }
+.mini thead th, .mini tbody th .term, .mini .ok, .mini .no, .mini .nc { white-space: nowrap; }
+table.mini { width: 100%; border-collapse: collapse; font-size: .8rem; margin: 10px 0 0; }
+.mini th, .mini td { padding: 6px 6px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.4; }
+.mini th:first-child, .mini td:first-child { padding-left: 0; }
+.mini thead th { font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+.mini tbody th { font-weight: 600; color: var(--ink); }
+.mini td { color: var(--ink-muted); }
+.mini td.num { font-family: var(--mono); font-size: .76rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+.mini tr:last-child th, .mini tr:last-child td { border-bottom: 0; }
+.mini .ok { color: var(--good); font-weight: 600; } .mini .no { color: var(--bad); font-weight: 600; } .mini .nc { color: var(--ink-faint); font-weight: 600; }
+.drop { display: grid; gap: 8px; margin: 10px 0 0; }
+.drop > div { padding: 10px 12px; border-radius: 10px; background: var(--bg-soft); border: 1px solid var(--line); }
+.drop .dv { display: block; font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.2; color: var(--ink-faint); }
+.drop .dv b { color: var(--s-teddy); }
+.drop .dl { display: block; font-size: .78rem; color: var(--ink-muted); margin-top: 2px; }
+.notbrought { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 16px 0 0; padding: 12px 16px; border-radius: 12px; border: 1px dashed color-mix(in srgb, var(--bad) 45%, var(--line));
+  background: color-mix(in srgb, var(--bad-bg) 55%, var(--bg)); font-size: .9rem; color: var(--ink-muted); }
+.notbrought .nb-k { font-family: var(--mono); font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--bad); }
+.notbrought b { color: var(--ink); }
+
+/* time steps (claim boundary) */
+.tstep { margin-top: 16px; padding: 20px 22px; border-left: 3px solid var(--accent); scroll-margin-top: 72px; }
+@container main (max-width: 600px) { .tstep { padding: 16px 14px; } }
+.tstep h3 { margin: 0 0 8px; font-size: 1.08rem; letter-spacing: -.012em; line-height: 1.3; }
+.tstep > p { margin: 0; font-size: .9rem; color: var(--ink-muted); line-height: 1.55; max-width: 62rem; }
+.tstep > p b { color: var(--ink); }
+.ts2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 14px 0; }
+@container main (max-width: 760px) { .ts2 { grid-template-columns: 1fr; } }
+.tso { padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-soft); min-width: 0; }
+.tso .tk { font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+.tso.no .tk { color: var(--bad); } .tso.yes .tk { color: var(--good); }
+.tso .tt { display: block; font-size: .95rem; margin: 2px 0 6px; color: var(--ink); }
+.tso p { margin: 0; font-size: .85rem; color: var(--ink-muted); line-height: 1.5; }
+.tso .markers { margin: 0 0 8px; }
+.eqn { font-family: var(--mono); font-size: .82rem; color: var(--ink); background: var(--bg-elev); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; margin: 0 0 8px; line-height: 1.9; overflow-x: auto; }
+.eqn sub { font-size: .72em; line-height: 0; }
+.eqn .ar { color: var(--ink-faint); margin: 0 4px; }
+.scope-line { margin: 12px 0 0; font-size: .86rem; color: var(--ink-muted); max-width: 40rem; line-height: 1.55; }
 
 /* problem */
 .gaps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -480,9 +578,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="topbar-inner">
     <a class="brand" href="#top" aria-label="TEDDY × ANM home"><span class="brand-mark" aria-hidden="true"></span>TEDDY <span class="x">×</span> ANM</a>
     <nav class="nav" aria-label="Sections">
+      <a href="#brings" class="hide-760">What it brings</a>
       <a href="#setup" class="hide-760">Setup</a>
       <a href="#problem" class="hide-760">Problem</a>
-      <a href="#protocol" class="hide-760">How we compare</a>
+      <a href="#protocol" class="hide-760 hide-1200">How we compare</a>
       <a href="#blocks" class="hide-760">Six experiments</a>
       <a href="#claims" class="hide-1000">Boundary</a>
       <a href="#rerun" class="hide-1000 hide-1100">Reproduce</a>
@@ -490,6 +589,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <details class="mnav">
         <summary aria-label="Open section menu"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mlabel">Menu</span></summary>
         <div class="mnav-panel">
+          <a href="#brings">★ · What ANM brings TEDDY now</a>
           <a href="#setup">00 · The setup</a>
           <a href="#problem">01 · The problem</a>
           <a href="#protocol">02 · How we compare</a>
@@ -525,10 +625,13 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
             <span class="term" data-term="teddy">TEDDY</span> reads a cell’s RNA and predicts its surface proteins (phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.60</span>).
             Read by its fixed rule, it can’t <b>change the question</b> without re-coding or new labels, <b>explain</b> a call, or say <b>which calls to trust</b>.
             We add <span class="term" data-term="anm">ANM</span> on top of TEDDY’s unchanged predictions and test each of these head-to-head.
-            After the corrected rerun, with all markers entering at once, ANM makes the same call as the re-coded fixed rule on every cell <b>by construction</b>: its value is a declared, auditable decision layer (a written question, checks, per-marker reasons), not better calls. teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.
+            After the bridge fixes, ANM does <b>not</b> make TEDDY more accurate: on all 16,750 held-out cells and all three questions its calls equal the fixed rule’s, by construction. What it brings is a way to <b>measure where TEDDY loses information</b> and <b>how far each call can be trusted</b>.
+            The clearest case is a <span class="term" data-term="sufficiency">sufficiency test</span>: TEDDY’s embedding nearly merges NK and T cells, and its predictions keep only a quarter to two-thirds of their measured protein differences (<a href="#brings">see how</a>).
           </p>
+          <p class="scope-line">Scope: teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM’s <span class="term" data-term="timestep">step</span> is any real processing order, and TEDDY’s layers are one (<a href="#timestep">why</a>).</p>
           <div class="cta-row">
-            <a class="btn pri" href="#blocks">See the six experiments ↓</a>
+            <a class="btn pri" href="#brings">What ANM brings TEDDY ↓</a>
+            <a class="btn" href="#blocks">See the six experiments ↓</a>
             <a class="btn" href="#setup">How ANM connects to TEDDY</a>
             <a class="btn" href="#protocol">How we compare</a>
           </div>
@@ -600,7 +703,107 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </ul>
         <p style="margin:.6rem 0 0;font-size:.84rem">Reports: <a href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2</a> (Experiments 1, 3, 5) · <a href="reports/SCOPE_REFINE_PROOF_V2.md">SCOPE_REFINE_PROOF_V2</a> (Experiment 4). The first-run reports stay linked as a record.</p>
       </div>
-      <p class="zh-hero">中文：TEDDY 不动；ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层（开环：TEDDY 不读取场，ANM 的动力学未在此检验）。六个实验，每个都对照 TEDDY + fixed rule 与训练分类器。修正后重跑（实验 1、3、4、5）：所有标记同时进入、训练集中位数缩放因子 0.92663、统一打分，ANM 与按问题重写的固定规则在每个 site4 细胞上判定完全相同（由构造决定）；ANM 的价值是可声明、可审计的决策层，而非更好的判定。实验 2、6 撤回待重新设计。带虚线下划线的词，鼠标移上去（或点一下）就有解释；右侧是整体流程与关键概念。</p>
+      <p class="zh-hero">中文：TEDDY 不动；ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层（开环：TEDDY 不读取场，ANM 的动力学尚未检验，但并非不可能：ANM 的时间步是任何真实的处理顺序，不必是物理时间，TEDDY 的层就是一种）。六个实验，每个都对照 TEDDY + fixed rule 与训练分类器。修正后重跑（实验 1、3、4、5）：所有标记同时进入、训练集中位数缩放因子 0.92663、统一打分，ANM 与按问题重写的固定规则在每个 site4 细胞上判定完全相同（由构造决定）；ANM 的价值是可声明、可审计的决策层，而非更好的判定；它带来的是一种测量：TEDDY 在哪里丢失信息、每个判定有多可信，最有用的一条是下面的充分性检验。实验 2、6 撤回待重新设计。带虚线下划线的词，鼠标移上去（或点一下）就有解释；右侧是整体流程与关键概念。</p>
+    </div>
+  </section>
+
+  <!-- ================= WHAT ANM BRINGS ================= -->
+  <section class="sec brings" id="brings">
+    <div class="wrap">
+      <p class="kicker">After the fixes · the short answer</p>
+      <h2>What ANM brings TEDDY now</h2>
+      <p class="intro">After the bridge fixes, ANM does not make TEDDY more accurate: on all 16,750 held-out cells and all three questions its calls equal the fixed rule’s. What it brings is <b>a way to measure where TEDDY loses information and how far each call can be trusted.</b> Four things, most useful first.</p>
+
+      <article class="lead card" aria-labelledby="lead-h">
+        <span class="lead-tag">★ Most useful · the sufficiency test</span>
+        <h3 id="lead-h">TEDDY’s embedding nearly merges NK and T cells, and squeezes the protein differences between them</h3>
+        <p class="lead-rule"><b>The principle:</b> the same retained state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something. Here the state is TEDDY’s <span class="term" data-term="z512">embedding</span>; the readout, the proteins TEDDY predicts from it.</p>
+        <div class="lead-grid">
+          <figure class="lf">
+            <figcaption class="lf-h"><b>One neighbour pair · cosine 0.985</b><span>An NK cell and a CD8+ T CD57+ CD45RO+ cell, almost the same point in TEDDY’s embedding. Their CD3, a T-cell marker:</span></figcaption>
+            <div role="img" aria-label="CD3 for one NK–T pair: TEDDY predicts NK 0.56 and T 0.68, close together; measured NK 0.17 and T 0.98, far apart.">
+              <div class="db-row pred">
+                <div class="db-lab"><b>TEDDY predicts</b><span class="mono">NK 0.56 · T 0.68</span></div>
+                <div class="db-track"><span class="db-seg" style="left:56%;width:12%"></span><span class="db-dot" style="left:56%"></span><span class="db-dot t" style="left:68%"></span><span class="db-k" style="left:56%">NK</span><span class="db-k" style="left:68%">T</span></div>
+              </div>
+              <div class="db-row meas">
+                <div class="db-lab"><b>Measured</b><span class="mono">NK 0.17 · T 0.98</span></div>
+                <div class="db-track"><span class="db-seg" style="left:17%;width:81%"></span><span class="db-dot" style="left:17%"></span><span class="db-dot t" style="left:98%"></span><span class="db-k" style="left:17%">NK</span><span class="db-k" style="left:98%">T</span></div>
+              </div>
+            </div>
+            <p class="db-note">TEDDY puts the two cells close together; the measured proteins put them far apart.</p>
+          </figure>
+          <figure class="lf">
+            <figcaption class="lf-h"><b>How much of the measured difference TEDDY keeps</b><span>361 NK–T neighbour pairs at held-out site 4: median predicted gap ÷ median measured gap</span></figcaption>
+            <div class="rb" role="img" aria-label="Share of the measured NK–T difference that TEDDY’s predictions keep: CD3 0.26, CD56 0.31, CD94 0.46, CD335 0.69. For random NK–T pairs that are not neighbours the same ratio is 0.8 to 1.5.">
+              <div class="rb-tracks">
+                <span class="rb-band" style="left:50%;width:43.75%"></span>
+                <span class="rb-one" style="left:62.5%"></span>
+                <div class="rb-row"><span class="rl">CD3</span><i style="width:16.25%"></i><span class="rv" style="left:16.25%">0.26</span></div>
+                <div class="rb-row"><span class="rl">CD56</span><i style="width:19.375%"></i><span class="rv" style="left:19.375%">0.31</span></div>
+                <div class="rb-row"><span class="rl">CD94</span><i style="width:28.75%"></i><span class="rv" style="left:28.75%">0.46</span></div>
+                <div class="rb-row"><span class="rl">CD335</span><i style="width:43.125%"></i><span class="rv" style="left:43.125%">0.69</span></div>
+              </div>
+              <div class="rb-axis"><span style="left:0">0</span><span style="left:31.25%">0.5</span><span style="left:62.5%">1</span><span style="left:93.75%">1.5</span></div>
+            </div>
+            <div class="lgd"><span><i style="background:var(--s-teddy)"></i>NK–T neighbours</span><span><i class="band"></i>random NK–T pairs, not neighbours: 0.8–1.5</span><span><i class="dash neutral"></i>1 = the whole measured difference</span></div>
+          </figure>
+        </div>
+        <ul class="lead-pts">
+          <li><b>Right direction.</b> NK has the higher predicted CD56 in 73% of the pairs; TEDDY compresses the differences to a quarter to two-thirds of the measured ones.</li>
+          <li><b>Not generic shrinkage.</b> For random NK–T pairs that are not neighbours the same ratios are 0.8–1.5, so the prediction head does not simply shrink everything.</li>
+          <li><b>Side finding.</b> 918 of the 1,279 pairs involve “gdT CD158b+” cells, which TEDDY and measured protein both call NK-like, so that label is likely wrong. They are left out above.</li>
+          <li><b>Next step (Mode A).</b> Repeat the test layer by layer inside TEDDY to find where the difference shrinks.</li>
+        </ul>
+        <p class="lead-src">From the Experiment 6 redesign prototype (the experiment itself stays withdrawn) · <a href="#anm-loop">Experiment 6 · Look-alike cells →</a></p>
+      </article>
+
+      <div class="brings3">
+        <article class="bring card">
+          <span class="brk">2 · Audit</span>
+          <h3>Every call carries an audit record</h3>
+          <p>The written question, the evidence, the deciding marker, the distance to flip, and “no call” when the evidence is weak. Cell <code>cite_site4_75462</code>, annotated CD8+ T naive:</p>
+          <table class="mini">
+            <thead><tr><th scope="col">Question</th><th scope="col">Call</th><th scope="col">Flips if</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="term" data-term="o0">Soft</span></th><td><span class="no">B · wrong</span></td><td>CD22 falls 0.09 → T</td></tr>
+              <tr><th scope="row"><span class="term" data-term="o1">Strict</span></th><td><span class="nc">no call</span></td><td>–</td></tr>
+              <tr><th scope="row"><span class="term" data-term="o2">B/T-priority</span></th><td><span class="ok">T · right</span></td><td>CD3 moves 0.003 → B</td></tr>
+            </tbody>
+          </table>
+          <p class="cav"><b>Honest caveat:</b> a fixed rule plus some code can compute this too; ANM makes it a standard, reproducible record.</p>
+          <a class="go" href="#attr">Experiment 3 · Why this call? →</a>
+        </article>
+        <article class="bring card">
+          <span class="brk">3 · Response</span>
+          <h3>Push the input, follow the state, read the output</h3>
+          <p>Thin each cell’s RNA counts and let TEDDY predict again. At 5% of the counts (median 305 UMIs):</p>
+          <div class="drop">
+            <div><span class="dv">0.937 → <b>0.805</b></span><span class="dl">panel-protein Pearson</span></div>
+            <div><span class="dv">0.985 → <b>0.917</b></span><span class="dl">lineage accuracy</span></div>
+          </div>
+          <p><b>TEDDY is robust to shallow sequencing.</b> A declared per-depth trust performs like one tuned threshold at matched coverage.</p>
+          <p class="cav">1,500 validation cells (donor 18303); the held-out site was not used. From the Experiment 2 redesign prototype.</p>
+          <a class="go" href="#missing">Experiment 2 · When RNA is missing →</a>
+        </article>
+        <article class="bring card">
+          <span class="brk">4 · Coverage vs accuracy</span>
+          <h3>Nested readouts make the trade explicit</h3>
+          <p>Soft → strict → B/T-priority, on the same evidence:</p>
+          <table class="mini">
+            <thead><tr><th scope="col"></th><th scope="col">Soft</th><th scope="col">Strict</th><th scope="col">B/T-priority</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="term" data-term="abstain">No calls</span></th><td class="num">448</td><td class="num">2,014</td><td class="num">3,169</td></tr>
+              <tr><th scope="row"><span class="term" data-term="qdec">Accuracy of calls</span></th><td class="num">0.953</td><td class="num">0.978</td><td class="num">0.964</td></tr>
+            </tbody>
+          </table>
+          <p>They also expose a gap in the answer key: <b>64–91% of out-of-scope cells still receive a call</b>, so the key needs NK and out-of-scope classes.</p>
+          <a class="go" href="#edit">Experiment 1 · Change the question →</a>
+        </article>
+      </div>
+
+      <p class="notbrought"><span class="nb-k">✕ Not brought</span><span><b>Higher accuracy.</b> On all 16,750 held-out cells and all three questions, ANM’s calls equal the fixed rule’s (<a href="#edit">Experiment 1</a>).</span></p>
+      <p class="zh">修正后 ANM 不提高准确率：16,750 个留出细胞、三个问题上，判定与固定规则完全相同。它带来的是一种测量：TEDDY 在哪里丢失信息、每个判定有多可信。① 最有用：充分性检验。同一保留状态必须给出同一读出；NK 与 T 细胞在 TEDDY 嵌入中几乎重合，TEDDY 方向判断正确（73% 的对中 NK 的预测 CD56 更高），但把差异压缩到实测的四分之一到三分之二（CD3 0.26、CD56 0.31、CD94 0.46、CD335 0.69；随机非近邻 NK–T 对为 0.8–1.5，所以不是整体收缩）；“gdT CD158b+” 这个标签很可能有误；下一步在 Mode A 中逐层重复。② 每个判定都带审计记录。③ 响应测量：RNA 计数稀释到 5% 时，Pearson 0.937 → 0.805，谱系准确率 0.985 → 0.917。④ 嵌套读出让覆盖率与准确率的取舍显式化。</p>
     </div>
   </section>
 
@@ -628,7 +831,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <ul>
             <li>Normally reads only TEDDY’s outputs: the 9 predictions as <span class="term" data-term="evidence">typed evidence</span>. Labelled exceptions, both in withdrawn experiments: the protein-only stand-in when RNA is missing (Experiment 2) and its average with TEDDY in “both”; measured protein in Experiment 6’s complement test. Experiment 6’s look-alike pairs are picked by a separate step outside ANM.</li>
             <li>Applies a written-down question, the <span class="term" data-term="observer">observer</span>: marker weights and a bar. It returns a lineage call or “no call”, with checks attached. All markers enter at once, so its call equals the fixed rule’s under the same question.</li>
-            <li>No learned weights: the question and the engine’s settings are a few declared numbers. Open loop: TEDDY does not read ANM’s field, so ANM’s dynamics are not tested here.</li>
+            <li>No learned weights: the question and the engine’s settings are a few declared numbers. Open loop: TEDDY does not read ANM’s field, so ANM’s dynamics are not tested here. Not yet tested, not impossible: ANM’s <span class="term" data-term="timestep">step</span> can be any real processing order, such as TEDDY’s layers (<a href="#timestep">why</a>).</li>
           </ul>
         </div>
         <div class="rolec card rk3">
@@ -703,7 +906,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <div class="mode card on">
           <span class="mtag">This repo</span>
           <h3><span class="term" data-term="modeb">Mode B</span> · decide on top of TEDDY</h3>
-          <p>TEDDY stays a closed box that supplies evidence. teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. We study the decision made from its outputs: editing the question, declining, per-marker reasons, confidence, label cost, the decision loop.</p>
+          <p>TEDDY stays a closed box that supplies evidence. teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here; that is “not yet”, not “impossible” (<a href="#timestep">why</a>). We study the decision made from its outputs: editing the question, declining, per-marker reasons, confidence, label cost, the decision loop.</p>
           <p class="mq">Answers: how should we decide from TEDDY’s outputs?</p>
         </div>
         <div class="mode card">
@@ -1164,7 +1367,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     <div class="wrap">
       <p class="kicker">04 — Claim boundary</p>
       <h2>What we claim, and what we don’t</h2>
-      <p class="intro">This is <span class="term" data-term="modeb">Mode B</span>: we treat TEDDY as an evidence source and study the decision layer on top. teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. <span class="term" data-term="modea">Mode A</span>, studying TEDDY’s internals, is not attempted.</p>
+      <p class="intro">This is <span class="term" data-term="modeb">Mode B</span>: we treat TEDDY as an evidence source and study the decision layer on top. teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here: not yet tested, which is not the same as impossible (<a href="#timestep">see below</a>). <span class="term" data-term="modea">Mode A</span>, studying TEDDY’s internals, is not attempted.</p>
       <div class="bound">
         <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>TEDDY’s predictions as typed evidence → ANM decisions</li>
@@ -1178,12 +1381,31 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <li>A confidence gate only ANM has, or a better one (TEDDY’s own margin gates calls as well)</li>
           <li>Experiments 2 (RNA missing) and 6 (look-alike cells): withdrawn pending redesign</li>
           <li>Studying TEDDY’s internals: residual stream, layer Jacobians, in-silico gene perturbations</li>
-          <li>ANM’s dynamics: state feedback, operator memory, delays (the loop here is open: TEDDY does not read the field)</li>
+          <li>ANM’s dynamics: state feedback, operator memory, delays (the loop here is open: TEDDY does not read the field). Not yet tested, not impossible: see the note on time steps below</li>
           <li>The loop as TEDDY’s representation responding to perturbations · gated ±ε nudges</li>
           <li>Pearson above phase-1 ≈ 0.60</li>
           <li>Fusion audit · ATAC / chromatin · clinical superiority</li>
           <li>Anything about TypeSafe AI’s <span class="term" data-term="jev">Jev</span> itself: it was never called here (TEDDY + trained classifier is a stand-in modelled on Jev’s interface)</li>
         </ul></div>
+      </div>
+      <div class="tstep card" id="timestep">
+        <h3>“Dynamics not tested” is not “no time here”: ANM’s step is an order, not a clock</h3>
+        <p>ANM’s <span class="term" data-term="timestep">step t</span> is any declared processing order, not necessarily physical time; memory, feedback and delay are defined over those steps. What matters is that <b>the order is real</b>: the system actually processes in that order.</p>
+        <div class="ts2">
+          <div class="tso no">
+            <span class="tk">Not a real order</span>
+            <b class="tt">Panel order of the nine markers</b>
+            <div class="markers" aria-hidden="true"><em>CD19</em><em>CD72</em><em>CD22</em><em>CD3</em><em>CD2</em><em>CD5</em><em>CD16</em><em>CD11c</em><em>CD36</em></div>
+            <p>The nine marker predictions for one cell come out of one prediction, with no processing order. Feeding them in panel order made memory decay act as a hidden weight: the bug fixed by entering them all at once.</p>
+          </div>
+          <div class="tso yes">
+            <span class="tk">A real order</span>
+            <b class="tt">TEDDY’s transformer layers</b>
+            <div class="eqn">h<sub>l+1</sub> = h<sub>l</sub> + f<sub>l</sub>(h<sub>l</sub>)<span class="ar">⇒</span>δh<sub>l+1</sub> = (I + ∂f<sub>l</sub>/∂h) δh<sub>l</sub></div>
+            <p>The residual stream is the retained state, and attention couples the gene tokens.</p>
+          </div>
+        </div>
+        <p><b>So field dynamics on TEDDY are not yet tested, not impossible.</b> The natural place is <span class="term" data-term="modea">Mode A</span>, over layers. It must be a pre-registered test: in the ANM–Jev multimodal tests the field gained only when arrival order carried information (+1.4 points), and a simple 2-step window beat it by 7 points.</p>
       </div>
       <div class="weak card">
         <h3>Honest weak spots</h3>
@@ -1282,7 +1504,7 @@ window.GUIDE_CONFIG = (function () {
     ],
     allTerms: '#gloss',
     // cell(s) of the phase × mode plane each section belongs to (B1 = Mode B × phase 1, B2 = Mode B × phase 2, A* = Mode A)
-    planeBySection: { overview: ['B1', 'B2'], setup: ['B1', 'B2', 'A1', 'A2'], problem: ['B1'], protocol: ['B1'], blocks: ['B1', 'B2'], edit: ['B1'], missing: ['B1', 'B2'],
+    planeBySection: { overview: ['B1', 'B2'], brings: ['B1'], setup: ['B1', 'B2', 'A1', 'A2'], problem: ['B1'], protocol: ['B1'], blocks: ['B1', 'B2'], edit: ['B1'], missing: ['B1', 'B2'],
       attr: ['B1'], scope: ['B1', 'B2'], labels: ['B1'], 'anm-loop': ['B1'], claims: ['B1', 'A1', 'A2'], rerun: ['B1', 'B2'] },
     sections: {
       overview: {
@@ -1296,9 +1518,25 @@ window.GUIDE_CONFIG = (function () {
             ['Score, then call or decline', 'ANM’s engine links each marker to its lineage node, with a back-edge of weight 0.15 from each lineage node to its markers, and turns the evidence into one score per lineage. All markers enter at once, so each score is a fixed multiple of the rule’s weighted sum and ANM makes the rule’s call on every cell. The best lineage is called if it clears the bar; otherwise “no call”. (The first run entered markers one per step in panel order, a hidden weight.)'],
             ['Check', 'Held-out measured proteins mark each call right or wrong. Re-running without one marker names the marker behind the call.']
           ],
-          note: 'Open loop: TEDDY does not read the field, so ANM’s dynamics are not tested. Below: one real cell through ANM’s engine as the first run did it (markers one per step), every number included.'
+          note: 'Open loop: TEDDY does not read the field, so ANM’s dynamics are not tested (not yet: ANM’s ' + T('timestep', 'step') + ' can be any real processing order, such as TEDDY’s layers). Below: one real cell through ANM’s engine as the first run did it (markers one per step), every number included.'
         },
         concepts: ['teddy', 'anm', 'evidence', 'observer', 'lineage', 'abstain', 'finitefield', 'holdout']
+      },
+      brings: {
+        label: 'What ANM brings TEDDY now', short: '★', plain: 'Not higher accuracy: a way to measure where TEDDY loses information and how far each call can be trusted.', steps: ['teddy', 'decide', 'check'],
+        how: {
+          k: 'How ANM measures here',
+          t: 'The sufficiency test, step by step',
+          steps: [
+            ['The principle', 'The same retained state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something.'],
+            ['Find look-alikes', 'NK and T cells that are neighbours in TEDDY’s ' + T('z512', 'embedding') + ' at held-out site 4: 1,279 pairs. 918 involve “gdT CD158b+” cells, which TEDDY and measured protein both call NK-like (a label that is likely wrong); 361 remain.'],
+            ['Compare the gaps', 'Within each pair, the gap in TEDDY’s predicted CD3, CD56, CD94 and CD335 against the measured gap. Median predicted ÷ median measured: 0.26, 0.31, 0.46, 0.69. The direction is right (NK has the higher predicted CD56 in 73% of pairs).'],
+            ['Control', 'Random NK–T pairs that are not neighbours: 0.8–1.5. So this is not generic shrinkage of the prediction head.'],
+            ['Next (' + T('modea', 'Mode A') + ')', 'Repeat the test layer by layer inside TEDDY to find where the difference shrinks.']
+          ],
+          note: 'Also brought: an audit record for every call, a response measurement on thinned RNA, and coverage vs accuracy per question. Not brought: higher accuracy.'
+        },
+        concepts: ['sufficiency', 'timestep', 'z512', 'flip', 'abstain', 'qdec']
       },
       setup: {
         label: '00 · The setup', plain: 'Who does what: TEDDY gives evidence, ANM decides, the measured proteins grade.', steps: ['cell', 'teddy', 'evidence', 'observer', 'decide', 'check'],
@@ -1306,7 +1544,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'Three roles, one direction',
           steps: [
             ['TEDDY: evidence', 'Reads only the cell’s RNA. Frozen TEDDY-G 70M plus a small head trained in this repo predict the surface proteins; ANM gets 9 of them.'],
-            ['ANM: decision', 'Normally reads only TEDDY’s outputs (the 9 predictions), never RNA and never TEDDY’s internals; the labelled exceptions are listed next. A written-down question turns them into a call or “no call”. ANM has no learned weights. ' + 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.'],
+            ['ANM: decision', 'Normally reads only TEDDY’s outputs (the 9 predictions), never RNA and never TEDDY’s internals; the labelled exceptions are listed next. A written-down question turns them into a call or “no call”. ANM has no learned weights. ' + 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here (not yet tested, not impossible).'],
             ['Measured proteins: grading', 'Kept aside and used to grade the calls with the same scoring function as the rule and ANM (3 lineages, no NK or out-of-scope class). Labelled exceptions, both withdrawn, also used them as input: Experiment 2’s stand-in and its “both” average, and Experiment 6 (pair selection and the complement test).'],
             ['Is it multimodal?', 'The data are, TEDDY is not: it reads only RNA and nothing fuses protein into it. The one combination was Experiment 2’s “both” (withdrawn), an average of TEDDY’s predictions and the protein-only stand-in.'],
             ['Phases vs modes', 'Phase 1 (TEDDY plus a small head, done) and phase 2 (a fusion model, unfinished) build the evidence. Mode B (ANM on TEDDY’s outputs, done) and Mode A (ANM inside TEDDY, not done) are two ways for ANM to use TEDDY. The axes are independent.'],
@@ -1456,12 +1694,13 @@ window.GUIDE_CONFIG = (function () {
             [T('modeb', 'Mode B'), 'ANM reads TEDDY’s predictions and decides on top of them. Every claim here is about that decision layer.'],
             ['Not ' + T('modea', 'Mode A'), 'Nothing opens TEDDY up: no residual stream, layer Jacobians or in-silico gene perturbations.'],
             ['Open loop', 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.'],
+            ['Not yet, not never', 'ANM’s ' + T('timestep', 'step') + ' is any real processing order, not only physical time. Panel order was not one: the nine predictions come from one prediction, so feeding them in that order made memory decay act as a hidden weight. TEDDY’s layers are one, so the natural test of the dynamics is ' + T('modea', 'Mode A') + ', over layers, pre-registered.'],
             ['Same calls', 'With all markers entering at once ANM makes the fixed rule’s call on every cell; the claim is the declared, auditable layer, not better calls.'],
             ['The answer key', 'Measured proteins only score the answers, except in the labelled tests (Experiments 2 and 6, both withdrawn). Corrected: predictions now use one train-median size factor, not a per-cell factor computed from measured protein.'],
             ['Not claimed', 'Better calls than the fixed rule, Pearson above ≈ 0.60, a clinical result, or anything about TypeSafe AI’s ' + T('jev', 'Jev') + ' itself, which was never called here.']
           ]
         },
-        concepts: ['modeb', 'modea', 'adt', 'pearson', 'train']
+        concepts: ['modeb', 'modea', 'timestep', 'adt', 'pearson', 'train']
       },
       rerun: {
         label: '05 · Reproduce', plain: 'The scripts and reports behind every number.', steps: [],
@@ -2178,6 +2417,7 @@ window.GUIDE_CONFIG = (function () {
     // every term in the shared dictionary, grouped; anything not listed lands in "Other"
     var groups = [
       ['The setup', ['teddy', 'anm', 'finitefield', 'phase1', 'phase2', 'citeseq', 'adt', 'z512', 'evidence', 'lineage', 'modeb', 'modea']],
+      ['What ANM brings · measurement and time steps', ['sufficiency', 'timestep']],
       ['The question · Experiments 1 and 5', ['observer', 'o0', 'o1', 'o2', 'abstain']],
       ['Inputs · Experiment 2', ['rnaonly', 'adtonly', 'joint']],
       ['Checks and metrics · Experiments 1–5', ['pf', 'qf', 'qdec', 'softp', 'coverage', 'loo', 'flip', 'bootstrap', 'permutation']],

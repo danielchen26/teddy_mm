@@ -544,7 +544,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
     <div class="wrap">
       <h2>Claim boundary</h2>
       <p class="sub">“Reverse loop” here is a <b>decision</b> loop: we change what the readout sees and asks, not TEDDY’s representation.</p>
-      <p class="sub">teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.</p>
+      <p class="sub">teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM’s <span class="term" data-term="timestep">step</span> is any real processing order, not necessarily physical time. The nine marker predictions come out of one prediction with no order (entering them in panel order was the hidden weight); TEDDY’s transformer layers are a real order, so the natural test is Mode A, over layers (<a href="index.html#timestep">details</a>).</p>
       <div class="bound">
         <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>Veto → complement → verify on must-separate pairs</li>
@@ -558,7 +558,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
           <li>The loop as TEDDY’s representation responding to perturbations</li>
           <li>Pearson above phase-1 ≈ 0.60</li>
           <li>Fusion audit · clinical superiority</li>
-          <li>ANM’s dynamics: state feedback, operator memory, delays (open-loop only)</li>
+          <li>ANM’s dynamics: state feedback, operator memory, delays (open-loop only; not yet tested, not impossible)</li>
           <li>A final headline for this experiment: withdrawn pending redesign</li>
           <li>Retraining TEDDY (<code>best.pt</code>)</li>
         </ul></div>
@@ -749,7 +749,7 @@ window.GUIDE_CONFIG = (function () {
           steps: [
             ['Changes', 'What the readout sees (its evidence) and asks (its question).'],
             ['Never changes', 'TEDDY’s weights or its embedding. Nothing opens TEDDY up (' + T('modea', 'Mode A') + ').'],
-            ['Open-loop only', 'TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.'],
+            ['Open-loop only', 'TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested, not impossible: ANM’s ' + T('timestep', 'step') + ' is any real processing order, and TEDDY’s layers are one (a ' + T('modea', 'Mode A') + ' test).'],
             ['Measured protein', 'Used as evidence in this one explicit test. In normal use it stays the answer key.'],
             ['Not claimed', 'Pearson above ≈ 0.60, or a clinical result.']
           ]

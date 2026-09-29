@@ -8,6 +8,7 @@
 <p>
   <a href="https://danielchen26.github.io/teddy_mm/"><b>Live site</b></a> ·
   <a href="https://danielchen26.github.io/teddy_mm/anm-loop.html"><b>Decision-loop report</b></a> ·
+  <a href="#what-anm-brings-teddy-now">What ANM brings TEDDY now</a> ·
   <a href="#how-anm-and-teddy-connect">How ANM connects to TEDDY</a> ·
   <a href="#quickstart">Quickstart</a> ·
   <a href="#key-terms">Key terms</a> ·
@@ -21,6 +22,21 @@
 <img alt="numbers: from committed reports" src="https://img.shields.io/badge/numbers-from%20committed%20reports-4c566a?style=flat-square">
 
 </div>
+
+## What ANM brings TEDDY now
+
+After the bridge fixes, ANM does **not** make TEDDY more accurate: on all 16,750 held-out cells and all three questions its calls equal the fixed rule's. What it brings is **a way to measure where TEDDY loses information and how far each call can be trusted.** Most useful first:
+
+> [!IMPORTANT]
+> **1 · The [sufficiency test](#t-sufficiency) finds a gap in TEDDY's representation.** The same retained state must give the same readout: if two inputs reach (almost) the same state but need different readouts, the state is missing something. NK and T cells nearly coincide in TEDDY's [embedding](#t-z512) (example pair: NK vs CD8+ T CD57+ CD45RO+, cosine 0.985; TEDDY predicts CD3 0.56 vs 0.68, measured 0.17 vs 0.98). On 361 NK–T neighbour pairs at held-out site 4 (excluding "gdT CD158b+" cells), TEDDY gets the direction right (NK has the higher predicted CD56 in 73% of pairs) but compresses the differences to a quarter to two-thirds of the measured ones: median predicted gap ÷ median measured gap **CD3 0.26 · CD56 0.31 · CD94 0.46 · CD335 0.69**. This is not generic shrinkage of the prediction head: for random NK–T pairs that are not neighbours the ratios are 0.8–1.5.
+>
+> Side finding: 918 of the 1,279 pairs involve "gdT CD158b+" cells, which TEDDY and measured protein both call NK-like, so that label is likely wrong. Next step ([Mode A](#t-modea)): repeat the test layer by layer inside TEDDY to find where the difference shrinks. *(From the Experiment 6 redesign prototype; the experiment itself stays withdrawn.)*
+
+2. **Every call carries an audit record:** the written question, the evidence, the deciding marker, the distance to flip, and [“no call”](#t-abstain) when the evidence is weak. Example cell `cite_site4_75462` (CD8+ T naive): soft question → B (wrong), flips to T if CD22 falls 0.09; strict → no call; B/T-priority → T (right), flips to B if CD3 moves 0.003. Honest caveat: a fixed rule plus some code can compute this too; ANM makes it a standard, reproducible record.
+3. **Response measurement** (push the input, follow the state, read the output): thinning each cell's RNA counts to 5% (median 305 UMIs) takes panel-protein Pearson 0.937 → 0.805 and lineage accuracy 0.985 → 0.917, on 1,500 validation cells (donor 18303; the held-out site was not used). TEDDY is robust to shallow sequencing; a declared per-depth trust performs like one tuned threshold at matched coverage. *(Experiment 2 redesign prototype.)*
+4. **Nested readouts make coverage vs accuracy explicit:** "no calls" 448 / 2,014 / 3,169 and [accuracy of calls made](#t-qdec) 0.953 / 0.978 / 0.964 (soft / strict / B/T-priority). They also expose that 64–91% of out-of-scope cells still receive a call, so the answer key needs NK and out-of-scope classes.
+
+**Not brought:** higher accuracy. (Separately, ANM's field dynamics are not yet tested on TEDDY, which is not the same as impossible: ANM's step is an order, not a clock; see [time steps](#time-steps).)
 
 ## Corrections (29 Sep 2026): rerun done for Experiments 1, 3, 4 and 5
 
@@ -51,7 +67,7 @@
 
 **This repository** is the bridge between the two, plus six head-to-head experiments on where ANM *helps* TEDDY. TEDDY's weights and predictions never change; only the decision layer does. After the corrected rerun, ANM makes the same calls as TEDDY's fixed rule written for the same question, by construction; its value is a declared, auditable decision layer, not better calls.
 
-**Scope.** teddy_mm runs ANM's open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM's dynamics (state feedback, operator memory, delays) are not tested here.
+**Scope.** teddy_mm runs ANM's open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM's dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM's [step](#t-timestep) is any real processing order, and TEDDY's layers are one ([time steps](#time-steps)).
 
 ## How ANM and TEDDY connect
 
@@ -276,6 +292,8 @@ Old → new names: Block N → Experiment N · arm → method · TEDDY alone →
 | <a name="t-phase2"></a>**Phase 2 · fusion scaffold (unfinished)** | A multimodal model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both) and a latent flow-matching decoder. Only a 6-epoch scaffold run exists. Its recorded test Pearson (0.25–0.27) scores one random flow-matching sample per cell; decoded directly it reaches 0.56 from RNA alone, still below phase 1’s 0.61 before its re-evaluation (scripts/phase2_decode_check.py). It contains no ANM; the withdrawn Experiment 2 used it as the RNA-missing stand-in (and half of “both”). |
 | <a name="t-modeb"></a>**Mode B** | What this project does: treat TEDDY as an evidence source and study the decision layer on top of it. It runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. |
 | <a name="t-modea"></a>**Mode A (not done)** | Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Not claimed here. |
+| <a name="t-sufficiency"></a>**Sufficiency test** | A check that a retained state holds what the readout needs: the same state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something. Here: NK and T cells that are neighbours in TEDDY’s embedding, whose predicted protein differences TEDDY compresses to a quarter to two-thirds of the measured ones. |
+| <a name="t-timestep"></a>**ANM’s step (t)** | Any declared processing order, not necessarily physical time; memory, feedback and delay are defined over these steps. The order must be real: the system actually processes in that order. TEDDY’s transformer layers are one (`h_{l+1} = h_l + f_l(h_l)`). The nine marker predictions for one cell are not: they come out of one prediction, so feeding them in panel order made memory decay act as a hidden weight. |
 
 </details>
 
@@ -310,9 +328,11 @@ teddy_mm/
 - A confidence gate only ANM has, or a better one
 - Experiments 2 (RNA missing) and 6 (look-alike cells): withdrawn pending redesign
 - [Mode A](#t-modea): studying TEDDY's internals (residual stream, layer Jacobians, in-silico gene perturbations)
-- ANM's dynamics: teddy_mm runs ANM's open-loop decision layer; TEDDY is a prescribed evidence source and does not read the field, so state feedback, operator memory and delays are not tested here
+- ANM's dynamics: teddy_mm runs ANM's open-loop decision layer; TEDDY is a prescribed evidence source and does not read the field, so state feedback, operator memory and delays are not tested here. Not yet tested, not impossible: see [time steps](#time-steps) below
 - The loop as TEDDY's representation responding to perturbations
 - Pearson above phase-1 ≈ 0.60 · fusion audit · ATAC / chromatin · clinical superiority · anything about TypeSafe AI's Jev itself (never called here)
+
+<a name="time-steps"></a>**Time steps: "not tested" is not "no time here".** ANM's [step *t*](#t-timestep) is any declared processing order, not necessarily physical time; memory, feedback and delay are defined over those steps. What matters is that the order is real, i.e. the system actually processes in that order. The nine marker predictions for one cell come out of one prediction with no processing order, so feeding them in panel order made memory decay act as a hidden weight (the bug fixed by simultaneous entry). TEDDY's transformer layers are a real order: $h_{l+1} = h_l + f_l(h_l)$, so $\delta h_{l+1} = (I + \partial f_l/\partial h)\,\delta h_l$; the residual stream is the retained state and attention couples gene tokens. So field dynamics on TEDDY are not yet tested, not impossible; the natural place is [Mode A](#t-modea), over layers. In the ANM–Jev multimodal tests the field gained only when arrival order carried information (+1.4 points), and a simple 2-step window beat it by 7 points, so this must be a pre-registered test.
 
 **Honest weak spots.** The first run's differences between ANM and the rule came from a hidden weight (markers entering one per step) and from ANM declining more; at the same coverage the old rule was as accurate or more. The answer key has three classes and no NK or out-of-scope class: out-of-scope cells (NK, ILC, erythroid, progenitor) still get a call 64–91% of the time, from ANM and the rule alike, and they make up most of Experiment 4's hard cells. Experiment 4 trades coverage for accuracy, and TEDDY's own margin gates as well. Phase 1's mean R² (0.111 MLP, 0.046 flow matching) is low next to its Pearson, possibly a scale mismatch; not investigated.
 
@@ -332,7 +352,7 @@ Regenerate figures: `python scripts/make_story_infographics.py` (site posters, s
 - Data: NeurIPS 2021 BMMC CITE-seq (Open Problems multimodal), GEO [GSE194122](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE194122)
 - ANM: Active Neural Matter (research code, currently private)
 
-> **中文简介**：TEDDY 冻结不动（RNA→蛋白，Pearson ≈ 0.60）。ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层。六个实验（改问题 · RNA 缺失时 · 为什么这样判 · 哪些判定可信 · 新问题的代价 · 相似细胞）都用同一套对照：TEDDY + fixed rule vs TEDDY + ANM vs TEDDY + trained classifier，只证明“帮助 TEDDY”，不证明 Pearson 胜利，不重训，非临床。文中蓝色的名词都链接到上方 Key terms 的通俗解释；网站上则是虚线下划线，鼠标移上去即显示解释。更正（2026-09-29）：实验 1、3、4、5 已按修正重跑（所有标记同时进入、训练集中位数缩放因子 0.92663、统一打分），ANM 与按问题重写的固定规则在每个细胞上判定相同（由构造决定），价值在于可声明、可审计的决策层；实验 2、6 撤回待重新设计。TEDDY 预处理与官方流程不同（512 token、真实 token 平均、无基因中位数归一化）。见页首 Corrections。
+> **中文简介**：TEDDY 冻结不动（RNA→蛋白，Pearson ≈ 0.60）。ANM 在同一份冻结预测上加一层可编辑、会弃权、可审计的决策层。六个实验（改问题 · RNA 缺失时 · 为什么这样判 · 哪些判定可信 · 新问题的代价 · 相似细胞）都用同一套对照：TEDDY + fixed rule vs TEDDY + ANM vs TEDDY + trained classifier，只证明“帮助 TEDDY”，不证明 Pearson 胜利，不重训，非临床。文中蓝色的名词都链接到上方 Key terms 的通俗解释；网站上则是虚线下划线，鼠标移上去即显示解释。更正（2026-09-29）：实验 1、3、4、5 已按修正重跑（所有标记同时进入、训练集中位数缩放因子 0.92663、统一打分），ANM 与按问题重写的固定规则在每个细胞上判定相同（由构造决定），价值在于可声明、可审计的决策层；实验 2、6 撤回待重新设计。TEDDY 预处理与官方流程不同（512 token、真实 token 平均、无基因中位数归一化）。修正后 ANM 不提高准确率；它带来的是一种测量：TEDDY 在哪里丢失信息、每个判定有多可信。最有用的一条是充分性检验：NK 与 T 细胞在 TEDDY 嵌入中几乎重合，TEDDY 把两者的蛋白差异压缩到实测的四分之一到三分之二。ANM 的时间步是任何真实的处理顺序，不必是物理时间；TEDDY 的层就是一种，所以场动力学尚未检验，而非不可能。见页首 What ANM brings TEDDY now 与 Corrections。
 
 <details>
 <summary><b>Phase-1 / phase-2 training notes (中文)</b></summary>
