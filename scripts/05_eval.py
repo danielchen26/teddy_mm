@@ -17,11 +17,24 @@ from teddy_mm.device import resolve_device
 from teddy_mm.models import AdtDecoder, MLP, VelocityNet, integrate_fm
 
 
+def _r2(y_true, y_pred):
+    ss_res = float(((y_true - y_pred) ** 2).sum())
+    ss_tot = float(((y_true - y_true.mean()) ** 2).sum())
+    return 1.0 - ss_res / ss_tot if ss_tot > 0 else float("nan")
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--processed", type=Path, default=ROOT / "data/processed/cite")
     p.add_argument("--ckpt", type=Path, default=ROOT / "outputs/cite_phase1/best.pt")
-    p.add_argument("--out", type=Path, default=ROOT / "outputs/cite_phase1")
+    p.add_argument(
+        "--out-dir",
+        "--out",
+        dest="out",
+        type=Path,
+        default=ROOT / "outputs/cite_phase1",
+        help="directory for test_per_protein.json (default: outputs/cite_phase1)",
+    )
     p.add_argument("--hidden", type=int, default=512)
     p.add_argument("--fm-steps", type=int, default=20)
     p.add_argument("--device", default="auto")
@@ -77,13 +90,18 @@ def main():
                 "protein": str(name),
                 "pearson_mlp": float(np.corrcoef(y[:, j], pred_mlp[:, j])[0, 1]),
                 "pearson_fm": float(np.corrcoef(y[:, j], pred_fm[:, j])[0, 1]),
+                "r2_mlp": _r2(y[:, j], pred_mlp[:, j]),
+                "r2_fm": _r2(y[:, j], pred_fm[:, j]),
                 "size_factor": args.size_factor,
             }
         )
     rows.sort(key=lambda r: -r["pearson_fm"])
+    args.out.mkdir(parents=True, exist_ok=True)
     out = args.out / "test_per_protein.json"
     out.write_text(json.dumps(rows, indent=2))
     print(f"wrote {out}  n_proteins={len(rows)}")
+    for k in ("pearson_mlp", "pearson_fm", "r2_mlp", "r2_fm"):
+        print(f"  mean {k} = {np.mean([r[k] for r in rows]):.4f}")
     print("top 8 FM proteins:")
     for r in rows[:8]:
         print(f"  {r['protein']:20s}  mlp={r['pearson_mlp']:.3f}  fm={r['pearson_fm']:.3f}")
