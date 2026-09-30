@@ -46,7 +46,7 @@ export default function create(ctx) {
   const HS = [1.15, 1.0, 1.3, 0.95, 0.85, 1.1];              // stand-in bars (illustrative)
   const WOB = [[3, 0.1], [4, 0.55], [3, 0.8], [5, 0.3], [4, 0.9], [3, 0.45]];
   const SX = -2.3, SY = -1.45, SW = 2.6, SH = 1.1, SY0 = -6.4, SR = SX + SW / 2, PV = 0.3;
-  const STX = 4.6, BELT = -2.85, R = 0.27, CY = BELT + 0.35, SP = 1.0, STAMP = 3, X0 = STX - STAMP * SP, N = 7;
+  const STX = 4.6, BELT = -2.55, R = 0.27, CY = BELT + 0.35, SP = 1.0, STAMP = 3, X0 = STX - STAMP * SP, N = 7;
   const PAD = 1.1, PH = 0.62, HNDL = 0.4, KNOB = 0.2, TRAVEL = 0.5;
 
   /* ── 1 · RNA beads flowing into TEDDY ── */
@@ -84,7 +84,8 @@ export default function create(ctx) {
   put(ctx.line([[SOX + 0.07, YA], [AX, YA]], { color: 'line', width: 1.5 }), 0, 0, 0.5);
   put(ctx.line([[AX, BY + 2.05], [AX, BY], [BX[5] + BW / 2 + 0.2, BY]], { color: 'line', width: 1.5 }), 0, 0, 0.5);
   lab('predicted\nproteins', AX, BY - 0.12, { anchor: 'top-left' });
-  const noPred = lab('no prediction', (AX + BX[5] + BW / 2) / 2, BY + 0.95);
+  /* inside the emptied chart, clear of its axis on the left and of the feed arrow on the right */
+  const noPred = lab('no prediction', AX + 0.2, BY + 0.55, { anchor: 'left', size: 10.5 });
   const tBars = HT.map((h, i) => put(ctx.box(1, 1, { color: 'teddy', radius: 0, order: 3 }), BX[i], BY, 1));
   const HALO = [[0.08, 0.3, 0.16], [0.16, 0.62, 0.09], [0.24, 0.95, 0.05]];   // extra width, height, opacity
   const sBars = HS.map((h, i) => ({
@@ -105,7 +106,7 @@ export default function create(ctx) {
   const sTip = put(ctx.box(0.16, 0.34, { color: 'faint', radius: 0.04, order: 2 }), PX, YA, 1.6);
 
   /* ── the fixed rule: reads the bars, stamps the cell under it ── */
-  const feed = put(ctx.arrow([BX[5] + 0.4, YA + 0.15], [STX, -0.28], { color: 'faint', width: 1.4, head: 7, bend: 0.22, opacity: 0.6 }), 0, 0, 0.5);
+  const feed = put(ctx.arrow([BX[5] + 0.4, YA + 0.15], [STX, BELT + 2.57], { color: 'faint', width: 1.4, head: 7, bend: 0.22, opacity: 0.6 }), 0, 0, 0.5);
   const ev = put(ctx.dot([0, 0], { px: 3.6, color: 'teddy', opacity: 0 }), 0, 0, 2);
   put(ctx.line([[X0 + 0.75 * SP, BELT], [X0 + 6.8 * SP, BELT]], { color: 'line', width: 1.5 }), 0, 0, 0);
   const cells = Array.from({ length: N }, () => {

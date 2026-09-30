@@ -88,18 +88,23 @@ export default function create(ctx) {
 
   function layout() {
     const ppu = ctx.ppu(), px = (p) => p / ppu;
-    const [rx, ry, rw, rh] = L.reg, [tx, ty, tw, th] = L.tag, [g0, g1, gy] = L.g, [by, bh, bw, bdx] = L.bt;
+    let [rx, ry, rw, rh] = L.reg;
+    const [tx, ty, tw, th] = L.tag, [g0, g1, gy] = L.g, [by, bh, bw, bdx] = L.bt;
+    /* the page's "withdrawn · first run" badge covers the stage's top-left 8–29 px: the panel's top stays below it */
+    const top = camera.top - px(38), bot = ry - rh / 2;
+    if (ry + rh / 2 > top) { rh = top - bot; ry = bot + rh / 2; }
     for (const b of [reg, regT, regM]) { b.setSize(rw, rh, 0.22); at(b, rx, ry); }
     at(titleT, rx - rw / 2 + 0.2, ry + rh / 2 - 0.15); at(titleM, titleT.position.x, titleT.position.y);
     const rp = clamp(L.r * ppu, 7, 14), rr = px(rp), yc = ry + 0.05 * rh;
     const lw = px(Math.max(...cells.map((c) => textW(c.name, 13 * ctx.textScale))));
-    const ax = Math.max(1.4 * rr, Math.min(0.3 * rw, rw / 2 - 0.22 - lw - rr - px(8)));
+    /* a label sits px(6) beyond its dot and keeps px(10) clear of the panel's edge */
+    const ax = Math.max(1.4 * rr, Math.min(0.3 * rw, rw / 2 - px(10) - lw - rr - px(6)));
     cells.forEach((c) => {
       c.dot.setPx(rp); c.ring.setPx(rp * 1.45);
       c.start = [rx + c.side * ax, yc + c.side * 0.24 * rh];
       c.near = [rx + c.side * rr * 0.55, yc];
       c.apart = [rx + c.side * ax, yc];
-      c.off = rr + px(8);
+      c.off = rr + px(6);
     });
     at(cosine, rx, yc - rr * 1.45 - px(6));
     tagT.size(tw, th, tx, ty); tagA.size(tw, th, tx, ty);

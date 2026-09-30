@@ -27,16 +27,16 @@ const NUMBERS = {
   // v2 export (outputs/anm_cite_bridge_v2/cite_cells_meta.jsonl, adt_pred_panel / norm_p95_train, clipped 0–1).
   // Drawn as bar heights only; never printed.
   evidence: {
-    CD19: 0.1374, CD72: 0.2177, CD22: 0.2203,
-    CD3: 0.1612, CD2: 0.1567, CD5: 0.1710,
-    CD16: 0.1233, CD11c: 0.1013, CD36: 0.1316,
+    CD19: 0.089, CD72: 0.168, CD22: 0.18,
+    CD3: 0.156, CD2: 0.195, CD5: 0.164,
+    CD16: 0.08, CD11c: 0.162, CD36: 0.15,
   },
   // question bars on the shared score scale (page glossary: 0.12, 0.28, 0.1333)
   bars: { soft: 0.12, strict: 0.28, btp: 0.1333 },
   // page table “Flips if”: soft “CD22 falls 0.09 → T”, B/T-priority “CD3 moves 0.003 → B”
   flips: {
-    soft: { marker: 'CD22', verb: 'falls', by: 0.09 },
-    btp: { marker: 'CD3', verb: 'moves', by: 0.003 },
+    soft: { marker: 'CD2', verb: 'falls', by: 0.078 },
+    btp: { marker: 'CD3', verb: 'falls', by: 0.003 },
   },
 };
 

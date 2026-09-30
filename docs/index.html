@@ -595,6 +595,8 @@ main .anim.a-hero { margin: 0 0 18px; }
 /* the last bring card spans both columns here: a wider stage so its 4:3 figure doesn't tower */
 @container main (min-width: 681px) and (max-width: 1040px) { .brings3 > .bring:last-child .anim > .anim-stage { aspect-ratio: 21 / 9; } }
 .tstep .anim.a-inset { margin: 14px 0 0; }
+/* narrow inset stages: the play button shows its icon only, so "Paused" never covers the scene's top-right labels */
+main .anim.a-inset .anim-btn-t { display: none; }
 main .anim.a-thumb { margin: 0 0 12px; }
 main .anim.a-card { margin: 14px 14px 12px; }
 .anim.withdrawn > .anim-stage::before { content: "withdrawn · first run"; position: absolute; top: 8px; left: 8px; z-index: 3; pointer-events: none;
@@ -673,10 +675,10 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="eyebrow"><i></i><span>CITE-seq · NeurIPS 2021 BMMC · held-out site4 · 16,750 cells</span></span>
           <h1>Keep <span class="t">TEDDY</span> frozen.<br />Make the calls built on it editable, honest and auditable with <span class="a">ANM</span>.</h1>
           <p class="lede">
-            <span class="term" data-term="teddy">TEDDY</span>, an RNA foundation model, embeds each cell’s RNA; our head predicts 134 surface proteins from that embedding (phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.60</span>).
+            <span class="term" data-term="teddy">TEDDY</span>, an RNA foundation model, embeds each cell’s RNA; our head predicts 134 surface proteins from that embedding (phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.60</span>). All numbers use TEDDY-G’s official preprocessing; the earlier non-official preprocessing gave the same phase-1 Pearson.
             <span class="term" data-term="anm">ANM</span>’s calls on them <b>equal the fixed rule’s on all 16,750 cells and three questions, by construction</b>; it adds a way to <b>measure where the pipeline loses information</b> and <b>how far each call can be trusted</b>.
           </p>
-          <a class="hero-find" href="#brings"><span class="hf-k">★ Most useful finding · TEDDY’s embedding + our head</span><span>NK and T cells nearly merge in the embedding (cosine 0.985 for one pair); the head’s predictions keep <b>a quarter to two-thirds</b> of their measured differences. Embedding or head? Mode A will tell. <u>See how ↓</u></span></a>
+          <a class="hero-find" href="#brings"><span class="hf-k">★ Most useful finding · TEDDY’s embedding + our head</span><span>NK and T cells nearly merge in the embedding (cosine 0.970 for one pair); the head’s predictions keep <b>a quarter to a third</b> of their measured differences (CD335 0.88). Linear probes on every TEDDY layer do no better (Mode A), so the loss is not specific to our head. <u>See how ↓</u></span></a>
           <p class="scope-line"><span class="term" data-term="modeb">Open loop</span>: ANM’s dynamics aren’t tested here; not yet, not impossible (<a href="#timestep">why ↓</a>).</p>
           <div class="cta-row">
             <a class="btn pri" href="#brings">What ANM brings TEDDY ↓</a>
@@ -743,34 +745,34 @@ details.fr-method .bpart { max-width: 52rem; }
 
       <article class="lead card" aria-labelledby="lead-h">
         <span class="lead-tag">★ Most useful · the sufficiency test</span>
-        <h3 id="lead-h">NK and T cells nearly merge in TEDDY’s embedding, and our head’s predictions squeeze the protein differences between them</h3>
+        <h3 id="lead-h">NK and T cells nearly merge in TEDDY’s embedding, and the protein differences predicted from it are squeezed</h3>
         <p class="lead-rule"><b>The principle:</b> the same retained state must give the same readout; here the state is TEDDY’s <span class="term" data-term="z512">embedding</span> and the readout the proteins our head predicts from it, so this tests <b>TEDDY’s embedding + our head</b> together.</p>
-        <figure class="anim a-inset" data-anim="idx-brings-sufficiency" style="--ar:21/8;--ar-sm:16/10"><div class="anim-stage" role="img" aria-label="Animation: an NK cell and a T cell nearly merge in TEDDY’s embedding (cosine 0.985); their predicted CD3 values stay close (0.56 and 0.68) while measured CD3 is far apart (0.17 and 0.98); bars show the predictions keep 0.26 to 0.69 of the measured differences, versus 0.8 to 1.5 for non-neighbour pairs; an open fork asks whether the embedding or our head loses the difference."></div><figcaption>Neighbours in the embedding; predicted gap shrinks; measured gap doesn’t.</figcaption></figure>
+        <figure class="anim a-inset" data-anim="idx-brings-sufficiency" style="--ar:21/8;--ar-sm:16/10"><div class="anim-stage" role="img" aria-label="Animation: an NK cell and a T cell nearly merge in TEDDY’s embedding (cosine 0.970); their predicted CD3 values stay close (0.10 and 0.28) while measured CD3 is far apart (0.30 and 1.00); bars show the predictions keep 0.24 to 0.88 of the measured differences, versus 0.8 to 1.5 for non-neighbour pairs; linear probes on every TEDDY layer keep about as little, so the loss is not specific to our head."></div><figcaption>Neighbours in the embedding; predicted gap shrinks; measured gap doesn’t.</figcaption></figure>
         <div class="lead-grid">
           <figure class="lf">
-            <figcaption class="lf-h"><b>One neighbour pair · cosine 0.985</b><span>An NK cell and a CD8+ T CD57+ CD45RO+ cell, almost the same point in TEDDY’s embedding. Their CD3, a T-cell marker:</span></figcaption>
-            <div role="img" aria-label="CD3 for one NK–T pair: predicted (TEDDY + head) NK 0.56 and T 0.68, close together; measured NK 0.17 and T 0.98, far apart.">
+            <figcaption class="lf-h"><b>One neighbour pair · cosine 0.970</b><span>An NK cell and a CD8+ T TIGIT+ CD45RA+ cell, almost the same point in TEDDY’s embedding. Their CD3, a T-cell marker:</span></figcaption>
+            <div role="img" aria-label="CD3 for one NK–T pair: predicted (TEDDY + head) NK 0.10 and T 0.28, close together; measured NK 0.30 and T 1.00, far apart.">
               <div class="db-row pred">
-                <div class="db-lab"><b>Predicted (TEDDY + head)</b><span class="mono">NK 0.56 · T 0.68</span></div>
-                <div class="db-track"><span class="db-seg" style="left:56%;width:12%"></span><span class="db-dot" style="left:56%"></span><span class="db-dot t" style="left:68%"></span><span class="db-k" style="left:56%">NK</span><span class="db-k" style="left:68%">T</span></div>
+                <div class="db-lab"><b>Predicted (TEDDY + head)</b><span class="mono">NK 0.10 · T 0.28</span></div>
+                <div class="db-track"><span class="db-seg" style="left:10%;width:18%"></span><span class="db-dot" style="left:10%"></span><span class="db-dot t" style="left:28%"></span><span class="db-k" style="left:10%">NK</span><span class="db-k" style="left:28%">T</span></div>
               </div>
               <div class="db-row meas">
-                <div class="db-lab"><b>Measured</b><span class="mono">NK 0.17 · T 0.98</span></div>
-                <div class="db-track"><span class="db-seg" style="left:17%;width:81%"></span><span class="db-dot" style="left:17%"></span><span class="db-dot t" style="left:98%"></span><span class="db-k" style="left:17%">NK</span><span class="db-k" style="left:98%">T</span></div>
+                <div class="db-lab"><b>Measured</b><span class="mono">NK 0.30 · T 1.00</span></div>
+                <div class="db-track"><span class="db-seg" style="left:30%;width:70%"></span><span class="db-dot" style="left:30%"></span><span class="db-dot t" style="left:100%"></span><span class="db-k" style="left:30%">NK</span><span class="db-k" style="left:100%">T</span></div>
               </div>
             </div>
             <p class="db-note">The predictions (TEDDY + head) put the two cells close together; the measured proteins put them far apart.</p>
           </figure>
           <figure class="lf">
-            <figcaption class="lf-h"><b>How much of the measured difference the predictions keep</b><span>361 NK–T neighbour pairs at held-out site 4: median predicted gap ÷ median measured gap</span></figcaption>
-            <div class="rb" role="img" aria-label="Share of the measured NK–T difference that the TEDDY + head predictions keep: CD3 0.26, CD56 0.31, CD94 0.46, CD335 0.69. For random NK–T pairs that are not neighbours the same ratio is 0.8 to 1.5.">
+            <figcaption class="lf-h"><b>How much of the measured difference the predictions keep</b><span>453 NK–T neighbour pairs at held-out site 4: median predicted gap ÷ median measured gap</span></figcaption>
+            <div class="rb" role="img" aria-label="Share of the measured NK–T difference that the TEDDY + head predictions keep: CD3 0.27, CD56 0.24, CD94 0.31, CD335 0.88. For random NK–T pairs that are not neighbours the same ratio is 0.8 to 1.5.">
               <div class="rb-tracks">
                 <span class="rb-band" style="left:50%;width:43.75%"></span>
                 <span class="rb-one" style="left:62.5%"></span>
-                <div class="rb-row"><span class="rl">CD3</span><i style="width:16.25%"></i><span class="rv" style="left:16.25%">0.26</span></div>
-                <div class="rb-row"><span class="rl">CD56</span><i style="width:19.375%"></i><span class="rv" style="left:19.375%">0.31</span></div>
-                <div class="rb-row"><span class="rl">CD94</span><i style="width:28.75%"></i><span class="rv" style="left:28.75%">0.46</span></div>
-                <div class="rb-row"><span class="rl">CD335</span><i style="width:43.125%"></i><span class="rv" style="left:43.125%">0.69</span></div>
+                <div class="rb-row"><span class="rl">CD3</span><i style="width:16.875%"></i><span class="rv" style="left:16.875%">0.27</span></div>
+                <div class="rb-row"><span class="rl">CD56</span><i style="width:15%"></i><span class="rv" style="left:15%">0.24</span></div>
+                <div class="rb-row"><span class="rl">CD94</span><i style="width:19.375%"></i><span class="rv" style="left:19.375%">0.31</span></div>
+                <div class="rb-row"><span class="rl">CD335</span><i style="width:55%"></i><span class="rv" style="left:55%">0.88</span></div>
               </div>
               <div class="rb-axis"><span style="left:0">0</span><span style="left:31.25%">0.5</span><span style="left:62.5%">1</span><span style="left:93.75%">1.5</span></div>
             </div>
@@ -778,11 +780,11 @@ details.fr-method .bpart { max-width: 52rem; }
           </figure>
         </div>
         <ul class="lead-pts">
-          <li><b>Right direction, compressed.</b> NK has the higher predicted CD56 in 73% of pairs, but predicted gaps are a quarter to two-thirds of measured ones.</li>
-          <li><b>Not generic shrinkage.</b> Non-neighbour NK–T pairs keep 0.8–1.5, so the loss is tied to near-merged cells. Our head may be failing to use a difference the embedding keeps.</li>
-          <li><b>Next (Mode A).</b> Probes on the embedding and on each TEDDY layer will tell whether TEDDY or our head loses the difference, and where.</li>
+          <li><b>Right direction, compressed.</b> NK has the higher predicted CD56 in 68% of pairs, but predicted gaps are a quarter to a third of measured ones (CD335 0.88).</li>
+          <li><b>Not generic shrinkage.</b> Non-neighbour NK–T pairs keep 0.8–1.5, so the loss is tied to near-merged cells.</li>
+          <li><b>Not specific to our head (Mode A).</b> A linear probe tells NK from T at every TEDDY layer (held-out AUC 0.991–0.997), yet linear protein probes from every layer, input to embedding, keep only about a fifth to two-fifths of these pairs’ measured differences; our head does no worse. Caveats: linear probes only; gene-mean pooling may hide token-level information; the pairs are chosen for closeness in the embedding.</li>
         </ul>
-        <p class="lead-src">Experiment 6 redesign prototype (the experiment stays withdrawn). Left out: 918 of the 1,279 pairs, “gdT CD158b+” cells that look NK-like in both predicted and measured protein, likely mislabelled · <a href="#anm-loop">Experiment 6 →</a></p>
+        <p class="lead-src">Experiment 6 redesign prototype (the experiment stays withdrawn). Left out: 1053 of the 1,506 pairs, “gdT CD158b+” cells that look NK-like in both predicted and measured protein, likely mislabelled · <a href="#anm-loop">Experiment 6 →</a></p>
       </article>
 
       <div class="brings3">
@@ -790,13 +792,13 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="brk">2 · Audit</span>
           <h3>Every call carries an audit record</h3>
           <p>Question, evidence, deciding marker, distance to flip, or “no call”. Cell <code>cite_site4_75462</code>, annotated CD8+ T naive:</p>
-          <figure class="anim a-inset" data-anim="idx-brings-audit-receipt" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: an audit receipt for one CD8+ T cell prints the call under three questions; dragging CD22 down by 0.09 flips the soft call to T, the strict question gives no call, and CD3 moving 0.003 flips the B/T-priority call."></div><figcaption>Each call prints its question, deciding marker and flip distance.</figcaption></figure>
+          <figure class="anim a-inset" data-anim="idx-brings-audit-receipt" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: an audit receipt for one CD8+ T cell prints the call under three questions; the soft call is T by a hair and flips to B if CD2 falls 0.078, the strict question gives no call, and CD3 falling 0.003 turns the B/T-priority call into no call."></div><figcaption>Each call prints its question, deciding marker and flip distance.</figcaption></figure>
           <table class="mini">
             <thead><tr><th scope="col">Question</th><th scope="col">Call</th><th scope="col">Flips if</th></tr></thead>
             <tbody>
-              <tr><th scope="row"><span class="term" data-term="o0">Soft</span></th><td><span class="no">B · wrong</span></td><td>CD22 falls 0.09 → T</td></tr>
+              <tr><th scope="row"><span class="term" data-term="o0">Soft</span></th><td><span class="ok">T · right</span></td><td>CD2 falls 0.078 → B</td></tr>
               <tr><th scope="row"><span class="term" data-term="o1">Strict</span></th><td><span class="nc">no call</span></td><td>–</td></tr>
-              <tr><th scope="row"><span class="term" data-term="o2">B/T-priority</span></th><td><span class="ok">T · right</span></td><td>CD3 moves 0.003 → B</td></tr>
+              <tr><th scope="row"><span class="term" data-term="o2">B/T-priority</span></th><td><span class="ok">T · right</span></td><td>CD3 falls 0.003 → no call</td></tr>
             </tbody>
           </table>
           <p class="cav"><b>Caveat:</b> a fixed rule plus some code can compute this too; ANM makes it a standard record.</p>
@@ -806,12 +808,12 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="brk">3 · Response</span>
           <h3>Push the input, follow the state, read the output</h3>
           <p>Thin each cell’s RNA, re-embed with TEDDY, let our head predict again. At 5% of counts (median 305 UMIs):</p>
-          <figure class="anim a-inset" data-anim="idx-brings-depth-thinning" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: a depth dial thins the RNA reaching TEDDY down to 5% of counts; the embedding and predicted proteins wobble and two gauges fall, Pearson from 0.937 to 0.805 and lineage accuracy from 0.985 to 0.917, on 1,500 validation cells."></div><figcaption>Thin the RNA to 5%; follow the drop to calls.</figcaption></figure>
+          <figure class="anim a-inset" data-anim="idx-brings-depth-thinning" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: a depth dial thins the RNA reaching TEDDY down to 5% of counts; the embedding and predicted proteins wobble and two gauges fall, Pearson from 0.936 to 0.855 and lineage accuracy from 0.983 to 0.959, on 1,500 validation cells."></div><figcaption>Thin the RNA to 5%; follow the drop to calls.</figcaption></figure>
           <div class="drop">
-            <div><span class="dv">0.937 → <b>0.805</b></span><span class="dl">panel-protein Pearson</span></div>
-            <div><span class="dv">0.985 → <b>0.917</b></span><span class="dl">lineage accuracy</span></div>
+            <div><span class="dv">0.936 → <b>0.855</b></span><span class="dl">panel-protein Pearson</span></div>
+            <div><span class="dv">0.983 → <b>0.959</b></span><span class="dl">lineage accuracy</span></div>
           </div>
-          <p><b>The TEDDY + head pipeline is robust to shallow sequencing</b>; a declared per-depth trust performs like one tuned threshold at matched coverage.</p>
+          <p><b>The TEDDY + head pipeline is robust to shallow sequencing</b>, more so with the official preprocessing than with the earlier one; a declared per-depth trust performs like one tuned threshold at matched coverage.</p>
           <p class="cav">1,500 validation cells (donor 18303), held-out site unused; Experiment 2 redesign prototype (the experiment stays withdrawn).</p>
           <a class="go" href="#missing">Experiment 2 · When RNA is missing →</a>
         </article>
@@ -819,29 +821,29 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="brk">4 · Coverage vs accuracy</span>
           <h3>Nested readouts make the trade explicit</h3>
           <p>Soft → strict → B/T-priority, on the same evidence:</p>
-          <figure class="anim a-inset" data-anim="idx-brings-nested-gates" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: cells fall through three nested gates; stricter questions hold back 448, 2,014 and 3,169 cells, while grey out-of-scope cells still pass and get a call 64 to 91 percent of the time."></div><figcaption>Stricter questions call fewer cells; out-of-scope cells still slip through.</figcaption></figure>
+          <figure class="anim a-inset" data-anim="idx-brings-nested-gates" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: cells fall through three nested gates; stricter questions hold back 272, 1,493 and 2,551 cells, while grey out-of-scope cells still pass and get a call 73 to 95 percent of the time."></div><figcaption>Stricter questions call fewer cells; out-of-scope cells still slip through.</figcaption></figure>
           <table class="mini">
             <thead><tr><th scope="col"></th><th scope="col">Soft</th><th scope="col">Strict</th><th scope="col">B/T-priority</th></tr></thead>
             <tbody>
-              <tr><th scope="row"><span class="term" data-term="abstain">No calls</span></th><td class="num">448</td><td class="num">2,014</td><td class="num">3,169</td></tr>
-              <tr><th scope="row"><span class="term" data-term="qdec">Accuracy of calls</span></th><td class="num">0.953</td><td class="num">0.978</td><td class="num">0.964</td></tr>
+              <tr><th scope="row"><span class="term" data-term="abstain">No calls</span></th><td class="num">272</td><td class="num">1,493</td><td class="num">2,551</td></tr>
+              <tr><th scope="row"><span class="term" data-term="qdec">Accuracy of calls</span></th><td class="num">0.943</td><td class="num">0.967</td><td class="num">0.955</td></tr>
             </tbody>
           </table>
-          <p class="cav"><b>64–91% of out-of-scope cells still get a call</b>: the key needs NK and out-of-scope classes.</p>
+          <p class="cav"><b>73–95% of out-of-scope cells still get a call</b>: the key needs NK and out-of-scope classes.</p>
           <a class="go" href="#edit">Experiment 1 · Change the question →</a>
         </article>
       </div>
 
       <p class="notbrought"><span class="nb-k">✕ Not brought</span><span><b>Higher accuracy.</b> On all 16,750 held-out cells and all three questions, ANM’s calls equal the fixed rule’s (<a href="#edit">Experiment 1</a>).</span></p>
-      <p class="zh">修正后 ANM 不提高准确率（判定与固定规则完全相同）。它带来测量：① 充分性检验：NK 与 T 在 TEDDY 嵌入中几乎重合，head 预测的差异只剩实测的四分之一到三分之二（非近邻对 0.8–1.5），尚不能确定是嵌入还是 head 丢失；② 审计记录；③ 稀释 RNA 的响应；④ 覆盖率与准确率的取舍。</p>
+      <p class="zh">修正后 ANM 不提高准确率（判定与固定规则完全相同）。它带来测量：① 充分性检验：NK 与 T 在 TEDDY 嵌入中几乎重合，head 预测的差异只剩实测的四分之一到三分之一（CD335 为 0.88；非近邻对 0.8–1.5）；Mode A 线性探针显示差异在 TEDDY 各层已被压缩，线性探针下损失并非 head 特有；② 审计记录；③ 稀释 RNA 的响应；④ 覆盖率与准确率的取舍。</p>
     </div>
     <div class="wrap">
       <p class="kicker" style="margin-top:28px">The experiments at a glance</p>
       <div class="kpis">
         <a class="kpi card" href="#edit"><div class="kv">100%</div><div class="kd">of site4 cells: same call from ANM and the re-coded fixed rule, all three questions, by construction.</div><span class="kb">Experiment 1 →</span></a>
-        <a class="kpi card" href="#labels"><div class="kv">0 <span class="from" style="font-size:1rem">labels</span></div><div class="kd">to switch to the B/T-priority rule, as for any written rule; a trained classifier needs 50–2,000.</div><span class="kb">Experiments 1 · 5 →</span></a>
-        <a class="kpi card" href="#attr"><div class="kv">16,302</div><div class="kd">calls with a per-marker reason; CD5 decides 19.5% (p ≈ 0.0099), from the evidence, not ANM.</div><span class="kb">Experiment 3 →</span></a>
-        <a class="kpi card" href="#scope"><div class="kv"><span class="to">0.9981</span> <span class="from" style="font-size:1rem">vs</span> <span class="from">0.9985</span></div><div class="kd">accuracy keeping 40% (B/T-priority): ANM’s confidence gate vs the rule’s own margin. No better.</div><span class="kb">Experiment 4 →</span></a>
+        <a class="kpi card" href="#labels"><div class="kv">0 <span class="from" style="font-size:1rem">labels</span></div><div class="kd">to switch to the B/T-priority rule, as for any written rule; a trained classifier needs 50–1,000.</div><span class="kb">Experiments 1 · 5 →</span></a>
+        <a class="kpi card" href="#attr"><div class="kv">16,478</div><div class="kd">calls with a per-marker reason; CD2 decides most often, 17.9% (p ≈ 0.0099; CD5 17.3%), from the evidence, not ANM.</div><span class="kb">Experiment 3 →</span></a>
+        <a class="kpi card" href="#scope"><div class="kv"><span class="to">0.9988</span> <span class="from" style="font-size:1rem">vs</span> <span class="from">0.9988</span></div><div class="kd">accuracy keeping 40% (B/T-priority): ANM’s confidence gate vs the rule’s own margin. Never better, at any coverage.</div><span class="kb">Experiment 4 →</span></a>
       </div>
       <details class="more corr" id="corrections">
         <summary>Corrections and disclosures (29 Sep 2026): Experiments 1, 3, 4, 5 rerun; 2 and 6 withdrawn</summary>
@@ -849,16 +851,16 @@ details.fr-method .bpart { max-width: 52rem; }
         <ul>
           <li><b>Marker order: fixed.</b> ANM’s engine entered the markers one per step in panel order, a hidden weight. In the rerun all markers enter at once, and the answer key, the fixed rule and ANM share one scoring function. ANM’s scores are then a fixed multiple of the rule’s, so ANM makes the same call as TEDDY + fixed rule (re-coded for each question) on every site4 cell, for all three questions. What ANM adds is a declared, auditable layer: the question is written down, the checks come with it, and every call has a per-marker reason.</li>
           <li><b>Per-cell scaling: fixed.</b> The head’s predictions were scaled by a per-cell factor computed from the cell’s measured protein, the answer key. The rerun uses one train-median factor, 0.92663 (67,405 training cells).</li>
-          <li><b>Which change moved which number.</b> The fixed rule’s “no calls” under the soft and B/T-priority rules (101 → 448, 1,796 → 3,169) moved because of the new size factor alone; the shared scoring leaves them unchanged. The strict rule is <b>redefined</b> (a weighted mean with key markers at weight 2): its “no calls” go 881 → 1,277 from the scoring and 1,277 → 2,014 from the size factor.</li>
+          <li><b>Which change moved which number.</b> The fixed rule’s “no calls” under the soft and B/T-priority rules (101 → 448, 1,796 → 3,169) moved because of the new size factor alone; the shared scoring leaves them unchanged. The strict rule is <b>redefined</b> (a weighted mean with key markers at weight 2): its “no calls” go 881 → 1,277 from the scoring and 1,277 → 2,014 from the size factor. The official TEDDY-G preprocessing then gives 272 / 1,493 / 2,551.</li>
           <li><b>The old ANM accuracy edge came only from declining more.</b> Old run, B/T-priority rule: ANM 0.960 vs rule 0.943 on calls made, but at ANM’s coverage (3,373 declined) the old rule scored 0.966.</li>
-          <li><b>Experiment 3:</b> CD5 decides 23.6% → 19.5% of calls; the shuffle now keeps values within their lineage (p ≈ 0.0099, the smallest 100 shuffles can give). With all markers at once the deciding marker is the protein with the largest normalised value in the called lineage, so it is not specific to ANM.</li>
-          <li><b>Experiment 4:</b> ANM’s confidence (soft_P) gates no better than the rule’s own margin at the same coverage (B/T-priority, 40%: 0.9981 vs 0.9985). soft_P reaches 1.11, so it is a score, not a probability. The hard cells are mostly out of scope: NK/ILC 3.4× and erythroid 3.7× over-represented.</li>
-          <li><b>Experiment 5:</b> labels are now drawn from a pool disjoint from the scored cells (11,725 / 5,025). Labels to match ANM: logistic 500, MLP 2,000 (was 200), threshold grid 50.</li>
-          <li><b>Answer key.</b> It still has three classes (B, T, myeloid) and no NK or out-of-scope class. Out-of-scope cells (NK, ILC, erythroid, progenitor) still get a call 64–91% of the time, from ANM and the rule alike.</li>
+          <li><b>Experiment 3:</b> CD5 decided 23.6% of calls in the first run; now CD2 decides most often (17.9%), CD5 close behind (17.3%); the shuffle now keeps values within their lineage (p ≈ 0.0099, the smallest 100 shuffles can give). With all markers at once the deciding marker is the protein with the largest normalised value in the called lineage, so it is not specific to ANM.</li>
+          <li><b>Experiment 4:</b> ANM’s confidence (soft_P) never gates better than the rule’s own margin at the same coverage (every difference ≤ 0; B/T-priority, 40%: 0.9988 vs 0.9988). soft_P reaches 1.11, so it is a score, not a probability. The hard cells are mostly out of scope: NK/ILC 3.1× and erythroid 3.4× over-represented.</li>
+          <li><b>Experiment 5:</b> labels are now drawn from a pool disjoint from the scored cells (11,725 / 5,025). Labels to match ANM: logistic 500, MLP 1,000 (was 200), threshold grid 50.</li>
+          <li><b>Answer key.</b> It still has three classes (B, T, myeloid) and no NK or out-of-scope class. Out-of-scope cells (NK, ILC, erythroid, progenitor) still get a call 73–95% of the time, from ANM and the rule alike.</li>
           <li><b>Experiment 2 (RNA missing): withdrawn pending redesign.</b> Prototype: with degraded RNA fed to TEDDY, ANM with a declared trust per level makes the same decisions as the fixed rule with a stricter bar per level.</li>
-          <li><b>Experiment 6 (look-alike cells): withdrawn pending redesign.</b> Prototype: the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 361 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738.</li>
-          <li><b>Phase 1 re-evaluated</b> with the train-median factor: test Pearson 0.610 → 0.603 (MLP) and 0.596 → 0.588 (flow matching); panel proteins drop by at most 0.013.</li>
-          <li><b>TEDDY preprocessing deviates from the official pipeline; a rerun with the official preprocessing is in progress.</b> teddy_mm’s embedding is a mean over real tokens at 512 tokens with no gene-median normalisation. Official TEDDY-G returns token 0 by default; its tutorial mean-pools over 2,048 positions after gene-median normalisation. With the medians applied, the cosine to the stored embedding is 0.649.</li>
+          <li><b>Experiment 6 (look-alike cells): withdrawn pending redesign.</b> Prototype: the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a third of the measured ones (CD335 0.88). On site4, 1053 of the 1,506 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 453 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.148 / 0.100 / 0.364 / 0.205 vs measured 0.621 / 0.321 / 0.413 / 0.756.</li>
+          <li><b>Phase 1 re-evaluated</b> with the train-median factor: test Pearson 0.610 → 0.603 (MLP) and 0.596 → 0.588 (flow matching); panel proteins drop by at most 0.013. With the official preprocessing: 0.603 (MLP) and 0.582 (flow matching), T-cell panel markers slightly lower.</li>
+          <li><b>TEDDY preprocessing: now official.</b> The earlier embedding was a mean over real tokens at 512 tokens with no gene-median normalisation. Every number on this page now comes from TEDDY-G’s official preprocessing (counts ÷ total × 10⁴, ÷ TEDDY’s non-zero gene medians, top-2,048 rank tokens, no CLS token, mean over gene tokens); phase-1 Pearson is unchanged (0.603 vs 0.603).</li>
           <li><b>“0 labels for a new question”</b> holds for any written rule, including the fixed rule; it is not specific to ANM.</li>
           <li><b>Cells.</b> Donor 15078 is in training at other sites and is 32.6% of the site4 test cells. The “out-of-site check” is held-out donor 18303 at a training site, which was also the validation set. The 9 panel proteins were chosen by test-set Pearson.</li>
         </ul>
@@ -882,7 +884,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <ul>
             <li>Frozen TEDDY reads only <b>RNA</b> → a 512-number <span class="term" data-term="z512">embedding</span>; never retrained or opened.</li>
             <li>Our head, trained once on training sites’ proteins, predicts 134 (<span class="term" data-term="pearson">Pearson ≈ 0.60</span>); 9 picked by test-set Pearson.</li>
-            <li>Preprocessing deviates from the official pipeline; a rerun with the official one is in progress.</li>
+            <li>Embedding from TEDDY-G’s official preprocessing; the earlier non-official one gave the same Pearson.</li>
           </ul>
         </div>
         <div class="rolec card ra">
@@ -914,7 +916,7 @@ details.fr-method .bpart { max-width: 52rem; }
             <tr><th scope="row"><span class="term" data-term="phase1">Phase 1</span></th><td data-arm="What">Frozen TEDDY embeds RNA once; our head maps it to 134 proteins (test Pearson 0.603).</td><td class="win" data-arm="Status">Done. Every experiment uses the head’s predictions.</td></tr>
             <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="What">A fusion model: TEDDY’s embedding plus a protein encoder, one modality dropped. No ANM.</td><td data-arm="Status">Unfinished scaffold. Only the RNA-missing stand-in in Experiment 2 (withdrawn).</td></tr>
             <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="What">ANM decides on the phase-1 predictions (our head on TEDDY’s embedding); labelled exceptions.</td><td class="win" data-arm="Status">Done: Experiments 1, 3, 4, 5 rerun; 2 and 6 withdrawn pending redesign.</td></tr>
-            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="What">ANM inside TEDDY: residual stream as field, layer Jacobians, gene perturbations.</td><td data-arm="Status">Not done.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="What">ANM inside TEDDY: residual stream as field, layer Jacobians, gene perturbations.</td><td data-arm="Status">Started: linear probes of each layer for Experiment 6; the rest not done.</td></tr>
           </tbody>
         </table>
       </div>
@@ -930,12 +932,12 @@ details.fr-method .bpart { max-width: 52rem; }
         <table class="capm cmp6">
           <thead><tr><th scope="col">Question (experiment)</th><th scope="col"><i class="bg-teddy"></i>TEDDY + fixed rule</th><th scope="col"><i class="bg-anm"></i>TEDDY + ANM</th><th scope="col"><i class="bg-train"></i>TEDDY + trained classifier</th></tr></thead>
           <tbody>
-            <tr><th scope="row"><a href="#edit">1 · Change the question</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Kept soft, answers 2,726 cells B/T-priority holds back; re-coded (0 labels): exactly ANM’s calls</td><td class="c-a" data-arm="TEDDY + ANM">0 labels: “no calls” follow the question, 448 → 2,014 → 3,169; same calls as the re-coded rule</td><td class="c-r" data-arm="TEDDY + trained classifier">“No calls” stay at 40 until retrained on new labels</td></tr>
+            <tr><th scope="row"><a href="#edit">1 · Change the question</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Kept soft, answers 2,726 cells B/T-priority holds back; re-coded (0 labels): exactly ANM’s calls</td><td class="c-a" data-arm="TEDDY + ANM">0 labels: “no calls” follow the question, 272 → 1,493 → 2,551; same calls as the re-coded rule</td><td class="c-r" data-arm="TEDDY + trained classifier">“No calls” stay at 40 until retrained on new labels</td></tr>
             <tr><th scope="row"><a href="#missing">2 · When RNA is missing</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Withdrawn pending redesign</td><td class="c-a" data-arm="TEDDY + ANM">Withdrawn. Prototype: a declared trust per RNA level = the fixed rule with a stricter bar</td><td class="c-r" data-arm="TEDDY + trained classifier">Withdrawn</td></tr>
-            <tr><th scope="row"><a href="#attr">3 · Why this call?</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Reports no reason; once written down, the same leave-one-out runs on it</td><td class="win c-a" data-arm="TEDDY + ANM">Leave-one-out on all 16,302 calls; CD5 decides 19.5% (p ≈ 0.0099), the largest normalised value</td><td class="c-r" data-arm="TEDDY + trained classifier">Learned weights (opaque)</td></tr>
-            <tr><th scope="row"><a href="#scope">4 · Which calls to trust?</a></th><td class="win c-t" data-arm="TEDDY + fixed rule">Its own score margin gates as well: 0.9985 keeping 40% (B/T-priority)</td><td class="c-a" data-arm="TEDDY + ANM">Confidence gate: 0.915 → 0.9981 keeping 40% (B/T-priority), no better than the margin</td><td class="c-r" data-arm="TEDDY + trained classifier">Hard-cell labels gain little over random: +0.055 at 50, +0.003 at 100</td></tr>
-            <tr><th scope="row"><a href="#labels">5 · Cost of a new question</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Re-code the rule (0 labels) or re-tune on labels</td><td class="c-a" data-arm="TEDDY + ANM">0 labels, like any written rule (the fixed rule too)</td><td class="c-r" data-arm="TEDDY + trained classifier">≈ 50 (grid), 500 (logistic) or 2,000 (MLP) labels to match, again at every change</td></tr>
-            <tr><th scope="row"><a href="#anm-loop">6 · Look-alike cells</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Withdrawn pending redesign</td><td class="c-a" data-arm="TEDDY + ANM">Withdrawn. Prototype: right direction, compressed (CD56 gap 0.176 vs 0.563, 361 pairs)</td><td class="c-r" data-arm="TEDDY + trained classifier">Withdrawn</td></tr>
+            <tr><th scope="row"><a href="#attr">3 · Why this call?</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Reports no reason; once written down, the same leave-one-out runs on it</td><td class="win c-a" data-arm="TEDDY + ANM">Leave-one-out on all 16,478 calls; CD2 decides most often, 17.9% (p ≈ 0.0099; CD5 17.3%), the largest normalised value</td><td class="c-r" data-arm="TEDDY + trained classifier">Learned weights (opaque)</td></tr>
+            <tr><th scope="row"><a href="#scope">4 · Which calls to trust?</a></th><td class="win c-t" data-arm="TEDDY + fixed rule">Its own score margin gates as well: 0.9988 keeping 40% (B/T-priority)</td><td class="c-a" data-arm="TEDDY + ANM">Confidence gate: 0.911 → 0.9988 keeping 40% (B/T-priority), never better than the margin</td><td class="c-r" data-arm="TEDDY + trained classifier">Hard-cell labels gain little over random: +0.058 at 50, +0.018 at 100</td></tr>
+            <tr><th scope="row"><a href="#labels">5 · Cost of a new question</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Re-code the rule (0 labels) or re-tune on labels</td><td class="c-a" data-arm="TEDDY + ANM">0 labels, like any written rule (the fixed rule too)</td><td class="c-r" data-arm="TEDDY + trained classifier">≈ 50 (grid), 500 (logistic) or 1,000 (MLP) labels to match, again at every change</td></tr>
+            <tr><th scope="row"><a href="#anm-loop">6 · Look-alike cells</a></th><td class="c-t" data-arm="TEDDY + fixed rule">Withdrawn pending redesign</td><td class="c-a" data-arm="TEDDY + ANM">Withdrawn. Prototype: right direction, compressed (CD56 gap 0.148 vs 0.621, 453 pairs), already in TEDDY’s layers (Mode A probes)</td><td class="c-r" data-arm="TEDDY + trained classifier">Withdrawn</td></tr>
           </tbody>
         </table>
       </div>
@@ -962,7 +964,7 @@ details.fr-method .bpart { max-width: 52rem; }
       </div>
 
       <p class="subh" style="margin-top:28px">Two ways to study a foundation model</p>
-      <figure class="anim a-wide" data-anim="idx-setup-mode-b-vs-a" style="--ar:21/7;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: TEDDY as a stack of layers; in Mode B, done here, ANM reads only the predicted proteins outside the stack; in Mode A, not done, probes would sit between the layers."></div><figcaption>Mode B decides on outputs; Mode A would probe TEDDY’s layers.</figcaption></figure>
+      <figure class="anim a-wide" data-anim="idx-setup-mode-b-vs-a" style="--ar:21/7;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: TEDDY as a stack of layers; in Mode B, done here, ANM reads only the predicted proteins outside the stack; in Mode A, first linear probes done, probes sit between the layers."></div><figcaption>Mode B decides on outputs; Mode A would probe TEDDY’s layers.</figcaption></figure>
       <div class="modes">
         <div class="mode card on">
           <span class="mtag">This repo</span>
@@ -971,13 +973,13 @@ details.fr-method .bpart { max-width: 52rem; }
           <p class="mq">Answers: how should we decide from the TEDDY + head outputs?</p>
         </div>
         <div class="mode card">
-          <span class="mtag off">Not done</span>
+          <span class="mtag off">Started</span>
           <h3><span class="term" data-term="modea">Mode A</span> · look inside TEDDY</h3>
           <p>Open TEDDY up: its residual stream, layer Jacobians, in-silico gene perturbations.</p>
-          <p class="mq">Would answer: what TEDDY’s layers keep and lose, and whether the NK–T difference is lost in TEDDY or by our head. Nothing here claims that.</p>
+          <p class="mq">Would answer: what TEDDY’s layers keep and lose. First result, linear probes only: the NK–T difference is already compressed in TEDDY’s layers, from the input on, not lost by our head (Experiment 6).</p>
         </div>
       </div>
-      <p class="zh">三种角色、单向流动：TEDDY 只读 RNA、给出 512 维嵌入，我们训练的 head 从中预测蛋白（证据）；ANM 通常只读 head 的输出并判定或拒答；实测蛋白只负责打分（撤回的实验 2、6 有标明的例外）。我们做 Mode B，不做 Mode A。</p>
+      <p class="zh">三种角色、单向流动：TEDDY 只读 RNA、给出 512 维嵌入，我们训练的 head 从中预测蛋白（证据）；ANM 通常只读 head 的输出并判定或拒答；实测蛋白只负责打分（撤回的实验 2、6 有标明的例外）。我们做 Mode B；Mode A 只做了线性层探针：NK–T 差异在 TEDDY 各层已被压缩，并非 head 特有（仅线性探针）。</p>
     </div>
   </section>
 
@@ -998,7 +1000,7 @@ details.fr-method .bpart { max-width: 52rem; }
         <article class="gap card" data-go="scope"><figure class="anim a-thumb anim--compact" data-anim="idx-q-where-to-trust" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: a queue of calls all carry the same badge, and a small follow-up basket hovers over them without being able to tell which calls are fragile."></div><figcaption>Every call looks equally sure; where should follow-up go?</figcaption></figure><span class="gn">GAP 4</span><h3>Know where to trust it</h3><p class="gq">Which calls are safe to act on?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>Its score margin is a graded confidence it doesn’t report.</p><a class="go" href="#scope">Experiment 4 →</a></article>
         <article class="gap card" data-go="labels"><figure class="anim a-thumb anim--compact" data-anim="idx-q-price-of-question" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: each new question must be paid for with stacks of labelled cells, 50 to 2,000, at a trained readout, and the charge starts again with the next question."></div><figcaption>A trained readout charges labels again for every new question.</figcaption></figure><span class="gn">GAP 5</span><h3>Price of a new question</h3><p class="gq">What does B/T-priority cost a trained readout?</p>
-          <p class="ga"><span class="who">Trained readout</span>50–2,000 new labelled cells, again at every change.</p><a class="go" href="#labels">Experiment 5 →</a></article>
+          <p class="ga"><span class="who">Trained readout</span>50–1,000 new labelled cells, again at every change.</p><a class="go" href="#labels">Experiment 5 →</a></article>
         <article class="gap card" data-go="anm-loop"><figure class="anim a-thumb anim--compact" data-anim="idx-q-embedding-enough" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: two cells whose measured proteins differ drift to almost the same point in TEDDY’s embedding, get the same call from the readout, and nothing flags the problem."></div><figcaption>Different cells, nearly the same embedding, same call, no flag.</figcaption></figure><span class="gn">GAP 6</span><h3>Is the embedding enough?</h3><p class="gq">Can it flag cells TEDDY’s embedding nearly merges?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>Some myeloid and T cells sit at cosine 0.982. Withdrawn.</p><a class="go" href="#anm-loop">Experiment 6 (withdrawn) →</a></article>
       </div>
@@ -1072,11 +1074,11 @@ details.fr-method .bpart { max-width: 52rem; }
         <table class="matrix">
           <thead><tr><th scope="col">Experiment</th><th scope="col">Fixed-rule gap</th><th scope="col">Compared</th><th scope="col">Key result</th><th scope="col">Proves ANM helps TEDDY by…</th></tr></thead>
           <tbody>
-            <tr data-go="edit"><td><span class="mb"><i>1</i>Change the question</span></td><td data-l="Gap">Keeps answering the old question</td><td data-l="Compared">3 methods × 3 questions · 16,750 cells</td><td data-l="Result" class="res">ANM “no calls” 448 → 2,014 → 3,169, same calls as the re-coded rule; trained head flat at 40</td><td data-l="Proves" class="pr">a declared question, edited with 0 labels (any written rule); not better calls</td></tr>
+            <tr data-go="edit"><td><span class="mb"><i>1</i>Change the question</span></td><td data-l="Gap">Keeps answering the old question</td><td data-l="Compared">3 methods × 3 questions · 16,750 cells</td><td data-l="Result" class="res">ANM “no calls” 272 → 1,493 → 2,551, same calls as the re-coded rule; trained head flat at 40</td><td data-l="Proves" class="pr">a declared question, edited with 0 labels (any written rule); not better calls</td></tr>
             <tr data-go="missing"><td><span class="mb"><i>2</i>When RNA is missing</span></td><td data-l="Gap">No RNA, no TEDDY (withdrawn)</td><td data-l="Compared">Fixed rule vs ANM × 3 inputs · 12,563 cells each</td><td data-l="Result" class="res">Withdrawn (first run: “no calls” 0 → 1,664)</td><td data-l="Proves" class="pr">withdrawn: trust per level = the fixed rule, stricter bar</td></tr>
-            <tr data-go="attr"><td><span class="mb"><i>3</i>Why this call?</span></td><td data-l="Gap">No per-marker reason</td><td data-l="Compared">Leave-one-out on every call + statistical tests</td><td data-l="Result" class="res">16,302 cells · 27.5% flip · CD5 decides 19.5% (p ≈ 0.0099)</td><td data-l="Proves" class="pr">an auditable “why” per call; top marker = largest normalised value</td></tr>
-            <tr data-go="scope"><td><span class="mb"><i>4</i>Which calls to trust?</span></td><td data-l="Gap">Its own margin is not reported</td><td data-l="Compared">ANM confidence vs the rule’s margin · hard vs random cells</td><td data-l="Result" class="res">0.945 → 0.9987 at 40% coverage (rule margin 0.9988); hard cells 0.818 vs 0.945</td><td data-l="Proves" class="pr">a confidence gate, no better than the rule’s own margin</td></tr>
-            <tr data-go="labels"><td><span class="mb"><i>5</i>Cost of a new question</span></td><td data-l="Gap">A new question costs labels</td><td data-l="Compared">ANM (0 labels) vs heads on 50 → 10,619 labels</td><td data-l="Result" class="res">≈ 50 / 500 / 2,000 labels (grid / logistic / MLP)</td><td data-l="Proves" class="pr">new questions free on the same evidence, like any written rule</td></tr>
+            <tr data-go="attr"><td><span class="mb"><i>3</i>Why this call?</span></td><td data-l="Gap">No per-marker reason</td><td data-l="Compared">Leave-one-out on every call + statistical tests</td><td data-l="Result" class="res">16,478 cells · 30.0% flip · CD2 decides most often, 17.9% (p ≈ 0.0099)</td><td data-l="Proves" class="pr">an auditable “why” per call; top marker = largest normalised value</td></tr>
+            <tr data-go="scope"><td><span class="mb"><i>4</i>Which calls to trust?</span></td><td data-l="Gap">Its own margin is not reported</td><td data-l="Compared">ANM confidence vs the rule’s margin · hard vs random cells</td><td data-l="Result" class="res">0.938 → 0.9993 at 40% coverage (rule margin 0.9994); hard cells 0.791 vs 0.939</td><td data-l="Proves" class="pr">a confidence gate, never better than the rule’s own margin</td></tr>
+            <tr data-go="labels"><td><span class="mb"><i>5</i>Cost of a new question</span></td><td data-l="Gap">A new question costs labels</td><td data-l="Compared">ANM (0 labels) vs heads on 50 → 10,619 labels</td><td data-l="Result" class="res">≈ 50 / 500 / 1,000 labels (grid / logistic / MLP)</td><td data-l="Proves" class="pr">new questions free on the same evidence, like any written rule</td></tr>
             <tr data-go="anm-loop"><td><span class="mb"><i>6</i>Look-alike cells</span></td><td data-l="Gap">Can’t flag where the embedding fails</td><td data-l="Compared">5,000 look-alike pairs · 1,490 myeloid↔T</td><td data-l="Result" class="res">withdrawn (first run: false agreement 0.85 → 0.40)</td><td data-l="Proves" class="pr">withdrawn pending redesign</td></tr>
           </tbody>
         </table>
@@ -1103,7 +1105,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2 ↗</a>
         </header>
         <div class="plain"><span class="pl">In plain words</span><p>A collaborator changes the question: who can follow it without new training data?</p></div>
-        <figure class="anim a-wide" data-anim="idx-exp-edit-rewrite" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: the evidence stays fixed while the written question changes from soft to strict to B/T-priority; ANM’s no-calls follow, 448, 2,014 and 3,169, with no new labels; a re-coded fixed rule overlaps ANM exactly and the trained classifier stays at 40."></div><figcaption>Rewrite the question; no-calls follow; the re-coded rule matches exactly.</figcaption></figure>
+        <figure class="anim a-wide" data-anim="idx-exp-edit-rewrite" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: the evidence stays fixed while the written question changes from soft to strict to B/T-priority; ANM’s no-calls follow, 272, 1,493 and 2,551, with no new labels; a re-coded fixed rule overlaps ANM exactly and the trained classifier stays at 40."></div><figcaption>Rewrite the question; no-calls follow; the re-coded rule matches exactly.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · TEDDY + fixed rule</h4><p>Hard-wired to the <span class="term" data-term="o0">soft rule</span>, it answers cells a <span class="term" data-term="o1">strict</span> or <span class="term" data-term="o2">B/T-priority</span> question holds back, until re-coded or re-tuned.</p></div>
@@ -1139,16 +1141,16 @@ details.fr-method .bpart { max-width: 52rem; }
           </div>
         </div>
         <div class="bkpis">
-          <div class="bk"><div class="v a">448 → 2,014 → 3,169</div><div class="d">ANM’s “no calls” follow the question, with 0 new labels.</div></div>
+          <div class="bk"><div class="v a">272 → 1,493 → 2,551</div><div class="d">ANM’s “no calls” follow the question, with 0 new labels.</div></div>
           <div class="bk"><div class="v">100%</div><div class="d">of the 16,750 cells: same call as the re-coded rule, by construction.</div></div>
           <div class="bk"><div class="v r">40 · 40 · 40</div><div class="d">The trained classifier’s “no calls” don’t move.</div></div>
           <div class="bk"><div class="v t">2,726</div><div class="d">cells the kept soft rule answers that B/T-priority holds back (strict: 1,566).</div></div>
         </div>
         <div class="bproof">
           <div class="proves"><b>Proves (helps TEDDY)</b>Written down, a new question is answered from the unchanged TEDDY + head predictions with zero labels and no retrain; re-coded, the fixed rule makes exactly ANM’s calls.</div>
-          <div class="limits"><b>Does not prove</b>Better calls: <span class="term" data-term="qdec">accuracy of calls made</span> is identical, 0.953 / 0.978 / 0.964. The first run’s edge (0.960 vs 0.943) came from declining more; at matched coverage the rule scored 0.966. Donor 18303: identical too, 0.922 with 155 declined.</div>
+          <div class="limits"><b>Does not prove</b>Better calls: <span class="term" data-term="qdec">accuracy of calls made</span> is identical, 0.943 / 0.967 / 0.955. The first run’s edge (0.960 vs 0.943) came from declining more; at matched coverage the rule scored 0.966. Donor 18303: identical too, 0.922 with 129 declined.</div>
         </div>
-        <p class="zh">改写问题即可：“不作答”随之变化（448 → 2,014 → 3,169），零标签、不重训；重写的固定规则判定完全相同；训练分类器不跟随（40）。</p>
+        <p class="zh">改写问题即可：“不作答”随之变化（272 → 1,493 → 2,551），零标签、不重训；重写的固定规则判定完全相同；训练分类器不跟随（40）。</p>
       </article>
 
       <!-- ---------- BLOCK 2 ---------- -->
@@ -1214,12 +1216,12 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2 ↗</a>
         </header>
         <div class="plain"><span class="pl">In plain words</span><p>Drop one protein at a time; decide again.</p></div>
-        <figure class="anim a-wide" data-anim="idx-exp-attr-leave-one-out" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: one cell’s nine markers are removed one at a time; removing the deciding marker flips the call, and scanning it shows the flip distance; across 16,302 calls CD5 decides 19.5 percent versus 14.4 percent under shuffling."></div><figcaption>Lift one marker at a time; see which call depends on it.</figcaption></figure>
+        <figure class="anim a-wide" data-anim="idx-exp-attr-leave-one-out" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: one cell’s nine markers are removed one at a time; removing the deciding marker flips the call, and scanning it shows the flip distance; across 16,478 calls CD2 decides most often, 17.9 percent versus 15.7 percent under shuffling, with CD5 close at 17.3 percent."></div><figcaption>Lift one marker at a time; see which call depends on it.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · TEDDY + fixed rule</h4><p>Its call is the top lineage score, no reason; written down, the rule gets the same leave-one-out; a trained head, only learned weights.</p></div>
             <div class="bpart"><h4>Compared</h4><div class="chips">
-              <span class="chip"><i class="bg-anm"></i>TEDDY + ANM (soft rule)</span><span class="chip m">all 16,302 called cells</span>
+              <span class="chip"><i class="bg-anm"></i>TEDDY + ANM (soft rule)</span><span class="chip m">all 16,478 called cells</span>
               <span class="chip m">bootstrap 200×</span><span class="chip m">permutation 100×</span></div></div>
             <div class="bpart"><h4>What we do, step by step</h4><ol class="wf">
               <li><b>Decide every cell</b> under the soft rule.</li>
@@ -1251,16 +1253,16 @@ details.fr-method .bpart { max-width: 52rem; }
           </div>
         </div>
         <div class="bkpis">
-          <div class="bk"><div class="v a">16,302</div><div class="d">called cells, each with a named deciding marker.</div></div>
-          <div class="bk"><div class="v">27.5%</div><div class="d">of calls flip without their deciding marker (first run 27.7%).</div></div>
+          <div class="bk"><div class="v a">16,478</div><div class="d">called cells, each with a named deciding marker.</div></div>
+          <div class="bk"><div class="v">30.0%</div><div class="d">of calls flip without their deciding marker (first run 27.7%).</div></div>
           <div class="bk"><div class="v">0.69</div><div class="d">median flip distance (middle half 0.41–0.80; first run 0.75).</div></div>
-          <div class="bk"><div class="v a">p ≈ 0.0099</div><div class="d">CD5 decides 19.5% (first run 23.6%) vs 14.4% shuffled; the 100-shuffle floor.</div></div>
+          <div class="bk"><div class="v a">p ≈ 0.0099</div><div class="d">CD2 decides most often, 17.9% vs 15.7% shuffled (CD5 17.3%, first run 23.6%); the 100-shuffle floor.</div></div>
         </div>
         <div class="bproof">
           <div class="proves"><b>Proves (helps TEDDY)</b>Each call on the TEDDY + head evidence gets a checkable per-marker reason from the written rule: no surrogate model.</div>
           <div class="limits"><b>Does not prove</b>Anything ANM-specific or about TEDDY’s internals: the deciding marker is the largest normalised value in the called lineage. Not SHAP, not <span class="term" data-term="modea">Mode A</span>: it explains the decision, not the representation.</div>
         </div>
-        <p class="zh">每个判定都有逐蛋白理由（留一法 + 翻转距离，16,302 个细胞）；CD5 主导 19.5%（p≈0.0099），即所判谱系中归一化值最大的蛋白，并非 ANM 特有。</p>
+        <p class="zh">每个判定都有逐蛋白理由（留一法 + 翻转距离，16,478 个细胞）；CD2 最常主导（17.9%，p≈0.0099），CD5 接近（17.3%），即所判谱系中归一化值最大的蛋白，并非 ANM 特有。</p>
       </article>
 
       <!-- ---------- BLOCK 4 ---------- -->
@@ -1270,8 +1272,8 @@ details.fr-method .bpart { max-width: 52rem; }
           <div><span class="bk-kick">Experiment 4 · scope gate</span><h3>Which calls to trust?</h3><p class="bq">Which fixed-rule calls can we act on, and which cells are genuinely hard?</p></div>
           <a class="bsrc" href="reports/SCOPE_REFINE_PROOF_V2.md">SCOPE_REFINE_V2 ↗</a>
         </header>
-        <div class="plain"><span class="pl">In plain words</span><p>Keeping only calls ANM is confident about raises accuracy; the rule’s own margin does it just as well.</p></div>
-        <figure class="anim a-wide" data-anim="idx-exp-scope-gate" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: cells ranked by ANM’s confidence and by the fixed rule’s margin are cut down to 40 percent; accuracy rises to 0.9987 and 0.9988, nearly equal; the 4,476 hard cells glow and turn out to be mostly NK, ILC and erythroid cells."></div><figcaption>Keep confident calls: accuracy climbs, but the rule’s margin ties.</figcaption></figure>
+        <div class="plain"><span class="pl">In plain words</span><p>Keeping only calls ANM is confident about raises accuracy; the rule’s own margin does it at least as well.</p></div>
+        <figure class="anim a-wide" data-anim="idx-exp-scope-gate" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: cells ranked by ANM’s confidence and by the fixed rule’s margin are cut down to 40 percent; accuracy rises to 0.9993 and 0.9994, nearly equal; the 4,942 hard cells glow and turn out to be mostly NK, ILC and erythroid cells."></div><figcaption>Keep confident calls: accuracy climbs, but the rule’s margin ties.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · TEDDY + fixed rule</h4><p>It reports a call, not how sure it is; its own score margin (top minus runner-up) could.</p></div>
@@ -1282,7 +1284,7 @@ details.fr-method .bpart { max-width: 52rem; }
               <li><b>Score:</b> ANM’s <span class="term" data-term="softp">confidence</span> (a score, not a probability).</li>
               <li><b>Cut:</b> keep the rule’s calls only for the most confident cells.</li>
               <li><b>Compare:</b> rank by the rule’s own margin at the same <span class="term" data-term="coverage">coverage</span> (100% to 10%).</li>
-              <li><b>Hard cells:</b> calls that flip under leave-one-out (4,476) vs 40 random draws.</li>
+              <li><b>Hard cells:</b> calls that flip under leave-one-out (4,942) vs 40 random draws.</li>
               <li><b>Budget:</b> a small head trained on hard vs random labels, tested on hard cells.</li>
             </ol><p class="wf-src"><code>bridge_anm/run_scope_refine_proof.py --bridge-dir outputs/anm_cite_bridge_v2 --skip-adt-only</code></p></div>
           </div>
@@ -1307,16 +1309,16 @@ details.fr-method .bpart { max-width: 52rem; }
           </div>
         </div>
         <div class="bkpis">
-          <div class="bk"><div class="v"><span style="color:var(--s-anm)">0.9987</span> <span style="color:var(--ink-faint);font-weight:500">vs</span> <span style="color:var(--s-teddy)">0.9988</span></div><div class="d">soft rule, keeping 40%: ANM vs the rule’s margin (all cells 0.945).</div></div>
-          <div class="bk"><div class="v"><span style="color:var(--s-anm)">0.9981</span> <span style="color:var(--ink-faint);font-weight:500">vs</span> <span style="color:var(--s-teddy)">0.9985</span></div><div class="d">B/T-priority rule, keeping 40%: the same (all cells 0.915).</div></div>
-          <div class="bk"><div class="v">0.818 <span style="color:var(--ink-faint);font-weight:500">vs</span> 0.945</div><div class="d">accuracy on the 4,476 hard cells vs random cells.</div></div>
-          <div class="bk"><div class="v t">3.4× · 3.7×</div><div class="d">NK/ILC and erythroid over-represented: 73% of hard cells, out of scope.</div></div>
+          <div class="bk"><div class="v"><span style="color:var(--s-anm)">0.9993</span> <span style="color:var(--ink-faint);font-weight:500">vs</span> <span style="color:var(--s-teddy)">0.9994</span></div><div class="d">soft rule, keeping 40%: ANM vs the rule’s margin (all cells 0.938).</div></div>
+          <div class="bk"><div class="v"><span style="color:var(--s-anm)">0.9988</span> <span style="color:var(--ink-faint);font-weight:500">vs</span> <span style="color:var(--s-teddy)">0.9988</span></div><div class="d">B/T-priority rule, keeping 40%: the same (all cells 0.911).</div></div>
+          <div class="bk"><div class="v">0.791 <span style="color:var(--ink-faint);font-weight:500">vs</span> 0.939</div><div class="d">accuracy on the 4,942 hard cells vs random cells.</div></div>
+          <div class="bk"><div class="v t">3.1× · 3.4×</div><div class="d">NK/ILC and erythroid over-represented: 65% of hard cells, out of scope.</div></div>
         </div>
         <div class="bproof">
           <div class="proves"><b>Shows</b>A graded trust signal: calls kept where ANM is confident are more accurate, and hard cells show where the 3-class question fits worst.</div>
-          <div class="limits"><b>Does not prove</b>A gate only ANM has, or a better one: the rule’s margin ties or beats it, apart from +0.0026 at 80% (soft) and ≤ 0.0004 elsewhere. Confidence reaches 1.11: not a probability. Label-budget gains are small: +0.055 at 50, +0.003 at 100.</div>
+          <div class="limits"><b>Does not prove</b>A gate only ANM has, or a better one: the rule’s margin ties or beats it at every matched coverage, under both rules. Confidence reaches 1.11: not a probability. Label-budget gains are small: +0.058 at 50, +0.018 at 100.</div>
         </div>
-        <p class="zh">用 ANM 的置信分给固定规则的判定把关：保留 40% 时 0.9987 / 0.9981，与固定规则自身分数差（0.9988 / 0.9985）相当；难例准确率 0.818（随机 0.945），多为范围外细胞。</p>
+        <p class="zh">用 ANM 的置信分给固定规则的判定把关：保留 40% 时 0.9993 / 0.9988，任何覆盖率下都不优于固定规则自身分数差（0.9994 / 0.9988）；难例准确率 0.791（随机 0.939），多为范围外细胞。</p>
       </article>
 
       <!-- ---------- BLOCK 5 ---------- -->
@@ -1336,7 +1338,7 @@ details.fr-method .bpart { max-width: 52rem; }
               <span class="chip m">50 → 10,619 labels</span></div></div>
             <div class="bpart"><h4>What we do, step by step</h4><ol class="wf">
               <li><b>Split:</b> 11,725 label-pool cells, 5,025 scored cells, no overlap.</li>
-              <li><b>Target:</b> ANM’s B/T-priority answers, 0 labels (declines 19.0%, <span class="term" data-term="qf">exactness</span> 0.835).</li>
+              <li><b>Target:</b> ANM’s B/T-priority answers, 0 labels (declines 15.3%, <span class="term" data-term="qf">exactness</span> 0.857).</li>
               <li><b>Train:</b> logistic, MLP and threshold-grid heads, 50 to 10,619 labels.</li>
               <li><b>Calibrate:</b> tune each cut on the pool, label-free, to decline like ANM.</li>
               <li><b>Match:</b> the smallest budget reaching ANM’s decline rate and exactness.</li>
@@ -1364,15 +1366,15 @@ details.fr-method .bpart { max-width: 52rem; }
         </div>
         <div class="bkpis">
           <div class="bk"><div class="v a">0</div><div class="d">labels to adopt the B/T-priority rule: write it down, like any rule.</div></div>
-          <div class="bk"><div class="v r">≈ 50</div><div class="d">for a threshold grid (exactness 0.840, declines 18.0%).</div></div>
-          <div class="bk"><div class="v r">≈ 500</div><div class="d">for a logistic head, the <span class="term" data-term="train">trained classifier</span> (exactness 0.819, declines 18.9%).</div></div>
-          <div class="bk"><div class="v r">≈ 2,000</div><div class="d">for an MLP head (exactness 0.824, declines 18.8%); the first run’s 200 overlapped.</div></div>
+          <div class="bk"><div class="v r">≈ 50</div><div class="d">for a threshold grid (exactness 0.858, declines 15.0%).</div></div>
+          <div class="bk"><div class="v r">≈ 500</div><div class="d">for a logistic head, the <span class="term" data-term="train">trained classifier</span> (exactness 0.841, declines 14.9%).</div></div>
+          <div class="bk"><div class="v r">≈ 1,000</div><div class="d">for an MLP head (exactness 0.838, declines 15.7%); the first run’s 200 overlapped.</div></div>
         </div>
         <div class="bproof">
           <div class="proves"><b>Proves (helps TEDDY)</b>On the TEDDY + head evidence a new question costs zero labels, as for any written rule; trained heads pay at every change.</div>
           <div class="limits"><b>Does not prove</b>That labels can’t buy the numbers: with enough, a head matches or beats them (accuracy 0.972 at 10,619 labels), without an editable rule or leave-one-out reasons.</div>
         </div>
-        <p class="zh">新问题零标签（任何书面规则皆然）；训练与评估不重叠后，训练分类器约需 50 / 500 / 2,000 个标签才追平，且没有可编辑规则与逐蛋白理由。</p>
+        <p class="zh">新问题零标签（任何书面规则皆然）；训练与评估不重叠后，训练分类器约需 50 / 500 / 1,000 个标签才追平，且没有可编辑规则与逐蛋白理由。</p>
       </article>
 
       <!-- ---------- BLOCK 6 ---------- -->
@@ -1382,7 +1384,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <div><span class="bk-kick">Experiment 6 · decision loop · withdrawn pending redesign</span><h3>Look-alike cells</h3><p class="bq">When TEDDY’s embedding can’t tell two cells apart, can the pipeline flag it, and can the decision layer fix it without a retrain?</p></div>
           <a class="bsrc" href="anm-loop.html">Interactive report ↗</a>
         </header>
-        <div class="plain"><span class="pl">Withdrawn</span><p><b>Withdrawn pending redesign; the numbers below are the first run’s.</b> Prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences; whether TEDDY’s embedding or our head loses them is still open (Mode A probes).</p></div>
+        <div class="plain"><span class="pl">Withdrawn</span><p><b>Withdrawn pending redesign; the numbers below are the first run’s.</b> Prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences. Mode A layer probes find the same compression in TEDDY’s embedding from the input layer on, so it is not specific to our head (linear probes only).</p></div>
         <div class="figpanel card" data-block="b6">
             <div class="ftabs" role="tablist">
               <button class="ftab" role="tab" aria-selected="true" data-pane="chart">Chart</button>
@@ -1420,7 +1422,7 @@ details.fr-method .bpart { max-width: 52rem; }
               <li><b><span class="term" data-term="verify">Verify</span>:</b> score the same pairs again: false agreement, soft separation, accuracy.</li>
             </ol><p class="wf-src"><code>reverse_step1_must_separate.py</code> → <code>reverse_loop_small.py</code></p></div>
             <div class="bproof in-det">
-              <div class="proves"><b>Headline withdrawn pending redesign</b>The test also changes the question (soft → strict), and the answer key has no NK or out-of-scope class, so many “myeloid” cells in these pairs are NK cells. Redesign prototype: the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 361 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738. Kept for the record: ANM can flag where the readout on TEDDY’s embedding is insufficient and add a typed evidence channel, without retraining TEDDY or our head.</div>
+              <div class="proves"><b>Headline withdrawn pending redesign</b>The test also changes the question (soft → strict), and the answer key has no NK or out-of-scope class, so many “myeloid” cells in these pairs are NK cells. Redesign prototype: the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a third of the measured ones (CD335 0.88). On site4, 1053 of the 1,506 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 453 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.148 / 0.100 / 0.364 / 0.205 vs measured 0.621 / 0.321 / 0.413 / 0.756. Kept for the record: ANM can flag where the readout on TEDDY’s embedding is insufficient and add a typed evidence channel, without retraining TEDDY or our head.</div>
               <div class="limits"><b>Does not prove</b>A production fix: measured protein replaces the TEDDY + head predictions as the evidence in this one test; in normal use it stays the answer key. Gains are smaller on all 5,000 pairs (0.893 → 0.586). A decision loop, not a study of TEDDY’s internals.</div>
             </div>
           </details>
@@ -1435,7 +1437,7 @@ details.fr-method .bpart { max-width: 52rem; }
     <div class="wrap">
       <p class="kicker">04 — Claim boundary</p>
       <h2>What we claim, and what we don’t</h2>
-      <p class="intro"><span class="term" data-term="modeb">Mode B</span>: TEDDY + our head are the evidence source, we study the decision on top, the loop is open (<a href="#timestep">below</a>); <span class="term" data-term="modea">Mode A</span> is not attempted.</p>
+      <p class="intro"><span class="term" data-term="modeb">Mode B</span>: TEDDY + our head are the evidence source, we study the decision on top, the loop is open (<a href="#timestep">below</a>); <span class="term" data-term="modea">Mode A</span> is only started (linear layer probes for Experiment 6).</p>
       <div class="bound">
         <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>The TEDDY + head predictions as typed evidence → ANM decisions</li>
@@ -1448,7 +1450,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <li>Better calls than TEDDY + fixed rule: identical by construction</li>
           <li>A better or ANM-only confidence gate: the rule’s margin gates as well</li>
           <li>Experiments 2 and 6: withdrawn pending redesign</li>
-          <li>TEDDY’s internals or representation response (Jacobians, perturbations, ±ε nudges)</li>
+          <li>TEDDY’s internals beyond linear layer probes (Jacobians, perturbations, ±ε nudges)</li>
           <li>ANM’s dynamics (feedback, memory, delays): open loop, not yet tested</li>
           <li>Pearson above phase-1 ≈ 0.60</li>
           <li>Fusion audit · ATAC / chromatin · clinical superiority</li>
@@ -1479,15 +1481,15 @@ details.fr-method .bpart { max-width: 52rem; }
         <h3>Honest weak spots</h3>
         <ul>
           <li>ANM and the rule make the same calls once written alike; first-run gaps came from a hidden weight and declining more (rule 0.966 vs 0.960).</li>
-          <li>The 3-class key has no NK or out-of-scope class: those cells get a call 64–91% of the time and fill Experiment 4’s hard cells.</li>
-          <li><a href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2</a> lists ANM’s <span class="term" data-term="qf">exactness</span>, a decline counted as a miss (0.938 / 0.927 / 0.835); this page compares accuracy of calls made.</li>
-          <li>Experiment 4 trades coverage for accuracy; the rule’s own margin gates as well as ANM’s confidence, and label-budget gains are small.</li>
-          <li><b>Preprocessing deviates from official TEDDY-G</b> (see the <span class="term" data-term="z512">embedding</span>): with gene medians applied, cosine to the stored embedding is 0.649 (median, 48 cells); a rerun with official preprocessing is in progress.</li>
-          <li>Phase 1 re-evaluated (train-median factor): Pearson 0.603 / 0.588, but mean R² only 0.111 / 0.046, possibly a scale mismatch; not investigated.</li>
+          <li>The 3-class key has no NK or out-of-scope class: those cells get a call 73–95% of the time and fill Experiment 4’s hard cells.</li>
+          <li><a href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2</a> lists ANM’s <span class="term" data-term="qf">exactness</span>, a decline counted as a miss (0.934 / 0.931 / 0.856); this page compares accuracy of calls made.</li>
+          <li>Experiment 4 trades coverage for accuracy; the rule’s own margin gates at least as well as ANM’s confidence at every coverage, and label-budget gains are small.</li>
+          <li><b>Preprocessing now follows official TEDDY-G</b> (see the <span class="term" data-term="z512">embedding</span>); the earlier non-official preprocessing gave the same phase-1 Pearson. The Mode A result rests on linear probes of a gene-mean embedding, which may hide token-level information, on pairs chosen for closeness in it.</li>
+          <li>Phase 1 (official preprocessing, train-median factor): Pearson 0.603 / 0.582, but mean R² only 0.026 / 0.046, possibly a scale mismatch; not investigated.</li>
           <li>Donor 15078 (32.6% of site4) is in training at other sites; the “out-of-site check” (donor 18303) was the validation set; panel proteins were chosen by test-set Pearson.</li>
         </ul>
       </div>
-      <p class="zdef"><b>TEDDY’s embedding</b> (<code>z_512</code>): the last-layer mean over real tokens at context 512, L2-normalized; full definition in the <span class="term" data-term="z512">term</span>, scope in <a href="MODE_B_SCOPE.md">MODE_B_SCOPE.md</a>.</p>
+      <p class="zdef"><b>TEDDY’s embedding</b> (<code>z_512</code>): TEDDY-G’s official preprocessing (counts ÷ total × 10⁴, ÷ gene medians, top-2,048 rank tokens, no CLS), last-layer mean over gene tokens, L2-normalized; full definition in the <span class="term" data-term="z512">term</span>, scope in <a href="MODE_B_SCOPE.md">MODE_B_SCOPE.md</a>.</p>
     </div>
   </section>
 
@@ -1496,7 +1498,7 @@ details.fr-method .bpart { max-width: 52rem; }
     <div class="wrap">
       <p class="kicker">05 — Reproduce</p>
       <h2>Every number has a script and a report</h2>
-      <p class="intro">None retrain TEDDY or our head (<code>best.pt</code>, the head’s checkpoint); ANM goes on <code>PYTHONPATH</code>. The rerun (<code>fix/anm-bridge-corrections</code>, <code>bf76d00</code>) writes <code>outputs/anm_cite_bridge_v2/</code> with the defaults <code>--event-timing simultaneous --size-factor train-median</code>; <code>ANM_BRIDGE_SCORING=legacy</code> with <code>--event-timing panel-order --size-factor measured</code> reproduces the first run.</p>
+      <p class="intro">None retrain TEDDY or our head (<code>best.pt</code>, the head’s checkpoint); ANM goes on <code>PYTHONPATH</code>. The rerun (<code>fix/anm-bridge-corrections</code>, <code>bf76d00</code>) writes <code>outputs/anm_cite_bridge_v2/</code> with the defaults <code>--event-timing simultaneous --size-factor train-median</code>; <code>ANM_BRIDGE_SCORING=legacy</code> with <code>--event-timing panel-order --size-factor measured</code> reproduces the first run. The official-preprocessing rerun behind this page’s numbers writes <code>outputs/anm_cite_bridge_official/</code> and, for Mode A, <code>outputs/mode_a_official/</code>.</p>
       <div class="repro card">
         <table class="rp">
           <thead><tr><th>Experiment</th><th>Script</th><th>Report</th></tr></thead>
@@ -1598,10 +1600,10 @@ window.GUIDE_CONFIG = (function () {
           t: 'The sufficiency test, step by step',
           steps: [
             ['The principle', 'The same retained state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something.'],
-            ['Find look-alikes', 'NK and T cells that are neighbours in TEDDY’s ' + T('z512', 'embedding') + ' at held-out site 4: 1,279 pairs. 918 involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (a label that is likely wrong); 361 remain.'],
-            ['Compare the gaps', 'Within each pair, the gap in predicted (TEDDY + head) CD3, CD56, CD94 and CD335 against the measured gap. Median predicted ÷ median measured: 0.26, 0.31, 0.46, 0.69. The direction is right (NK has the higher predicted CD56 in 73% of pairs).'],
-            ['Control', 'Random NK–T pairs that are not neighbours: 0.8–1.5. So our head does not shrink everything: the compression is tied to cells the embedding nearly merges. It could still be our head failing to use a difference the embedding keeps.'],
-            ['Next (' + T('modea', 'Mode A') + ')', 'Probe the embedding and each of TEDDY’s layers: that separates “TEDDY loses it” from “our head fails to use it”, and finds where.']
+            ['Find look-alikes', 'NK and T cells that are neighbours in TEDDY’s ' + T('z512', 'embedding') + ' at held-out site 4: 1,506 pairs. 1053 involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (a label that is likely wrong); 453 remain.'],
+            ['Compare the gaps', 'Within each pair, the gap in predicted (TEDDY + head) CD3, CD56, CD94 and CD335 against the measured gap. Median predicted ÷ median measured: 0.27, 0.24, 0.31, 0.88. The direction is right (NK has the higher predicted CD56 in 68% of pairs).'],
+            ['Control', 'Random NK–T pairs that are not neighbours: 0.8–1.5. So our head does not shrink everything: the compression is tied to cells the embedding nearly merges.'],
+            [T('modea', 'Mode A') + ' probes', 'A linear probe separates NK from T at every TEDDY layer (held-out AUC 0.991–0.997), yet linear protein probes from every layer, input to embedding, keep only about a fifth to two-fifths of these pairs’ measured differences (embedding: CD56 0.28, CD94 0.40, CD335 0.40, CD3 0.28); our head does no worse. So, as far as linear probes can tell, the gap sits in TEDDY’s gene-mean representation rather than in our head. Linear probes only; the pairs are chosen for closeness in the embedding.']
           ],
           note: 'Also brought: an audit record for every call, a response measurement on thinned RNA, and coverage vs accuracy per question. Not brought: higher accuracy.'
         },
@@ -1616,9 +1618,9 @@ window.GUIDE_CONFIG = (function () {
             ['ANM: decision', 'Normally reads only the head’s outputs (9 predicted proteins), never RNA and never TEDDY’s internals; the labelled exceptions are listed next. A written-down question turns them into a call or “no call”. ANM has no learned weights. ' + 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here (not yet tested, not impossible).'],
             ['Measured proteins: grading', 'Kept aside and used to grade the calls with the same scoring function as the rule and ANM (3 lineages, no NK or out-of-scope class): soft averages each lineage’s 3 markers; strict weights the key marker 2 to 1; B/T-priority uses the weighted key marker. A cell counts only when its top lineage clearly leads (by that rule’s margin); most NK cells, which carry CD16, count as “myeloid” (1,342 of 1,690 under the soft rule). Labelled exceptions, both withdrawn, also used them as input: Experiment 2’s stand-in and its “both” average, and Experiment 6 (pair selection and the complement test).'],
             ['Is it multimodal?', 'The data are, TEDDY is not: it reads only RNA and nothing fuses protein into it. The one combination was Experiment 2’s “both” (withdrawn), an average of the TEDDY + head predictions and the protein-only stand-in.'],
-            ['Phases vs modes', 'Phase 1 (TEDDY plus a small head, done) and phase 2 (a fusion model, unfinished) build the evidence. Mode B (ANM on the TEDDY + head outputs, done) and Mode A (ANM inside TEDDY, not done) are two ways for ANM to use TEDDY. The axes are independent. Even unfinished, phase 2 fed Mode B as the RNA-missing stand-in (Experiment 2, now withdrawn). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against the TEDDY + head predictions; that would still be Mode B, not Mode A.'],
+            ['Phases vs modes', 'Phase 1 (TEDDY plus a small head, done) and phase 2 (a fusion model, unfinished) build the evidence. Mode B (ANM on the TEDDY + head outputs, done) and Mode A (ANM inside TEDDY; only linear layer probes so far) are two ways for ANM to use TEDDY. The axes are independent. Even unfinished, phase 2 fed Mode B as the RNA-missing stand-in (Experiment 2, now withdrawn). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against the TEDDY + head predictions; that would still be Mode B, not Mode A.'],
             ['What we compare', 'Three methods on the same cells: TEDDY + fixed rule, TEDDY + ANM, and TEDDY + trained classifier, across six questions, one per experiment. The table here gives each method’s result. With all markers entering at once, ANM and the fixed rule written for the same question make identical calls.'],
-            [T('modeb', 'Mode B') + ', not ' + T('modea', 'Mode A'), 'We study the decision on top of the TEDDY + head outputs. Opening TEDDY up (its layers, gene perturbations) is Mode A and is not done here.']
+            [T('modeb', 'Mode B') + ', not ' + T('modea', 'Mode A'), 'We study the decision on top of the TEDDY + head outputs. Opening TEDDY up (its layers, gene perturbations) is Mode A; here only linear probes of its layers, for Experiment 6.']
           ]
         },
         concepts: ['teddy', 'anm', 'phase1', 'phase2', 'evidence', 'citeseq', 'adt', 'modeb', 'modea']
@@ -1670,7 +1672,7 @@ window.GUIDE_CONFIG = (function () {
             ['Keep the evidence', 'Each cell’s 9 predicted proteins stay exactly as our head produced them from TEDDY’s embedding.'],
             ['Rewrite the question', T('o0', 'Soft') + ': every marker counts the same, bar 0.12. ' + T('o1', 'Strict') + ': a weighted mean with CD19, CD3 and CD16 at weight 2 (redefined in the rerun), bar 0.28. ' + T('o2', 'B/T-priority') + ': only those three count (×3), then B ×1.5, T ×1.3, myeloid ×0.5; bar 0.20 as declared, 0.1333 on the shared score scale.'],
             ['Re-score', 'The same engine runs again, all markers at once; the re-weighted evidence gives every lineage a new score, a fixed multiple of the rule’s.'],
-            ['Call or decline', 'Cells whose best score misses the new bar get “no call”: 448 → 2,014 → 3,169. Calls made stay accurate: 0.953 · 0.978 · 0.964, identical to the re-coded rule, cell for cell.'],
+            ['Call or decline', 'Cells whose best score misses the new bar get “no call”: 272 → 1,493 → 2,551. Calls made stay accurate: 0.943 · 0.967 · 0.955, identical to the re-coded rule, cell for cell.'],
             ['No labels, no retraining', 'TEDDY + fixed rule kept as the soft rule still answers 2,726 cells the B/T-priority question holds back; re-coding it needs no labels and gives ANM’s calls exactly. The trained classifier’s “no calls” stay at 40.']
           ]
         },
@@ -1700,7 +1702,7 @@ window.GUIDE_CONFIG = (function () {
             ['Leave one out', 'Remove one of the 9 evidence items and run the engine again. Repeat for all 9 (' + T('loo', 'leave-one-out') + ').'],
             ['Name the reason', 'The deciding marker is the one whose removal moves the chosen score most. Here it is CD16: −0.338, and the call flips to T.'],
             ['Measure the margin', 'Scan that marker from 0 to 1 in 21 steps. The smallest change that switches the call is the ' + T('flip', 'flip distance') + ': 0.731 here.'],
-            ['At scale', 'Rerun, all markers at once: over 16,302 called cells, 27.5% flip without their deciding marker. CD5 decides 19.5% of calls (first run 23.6%); with values shuffled within each lineage the top marker reaches 14.4% (' + T('permutation', 'p ≈ 0.0099') + ', the floor for 100 shuffles). With simultaneous markers the deciding marker is the largest normalised value in the called lineage, which the rule could report too.']
+            ['At scale', 'Rerun, all markers at once: over 16,478 called cells, 30.0% flip without their deciding marker. CD2 decides the most calls, 17.9%, with CD5 close behind at 17.3% (first run: CD5, 23.6%); with values shuffled within each lineage the top marker reaches 15.7% (' + T('permutation', 'p ≈ 0.0099') + ', the floor for 100 shuffles). With simultaneous markers the deciding marker is the largest normalised value in the called lineage, which the rule could report too.']
           ],
           ex: {
             threshold: 0.12,
@@ -1719,8 +1721,8 @@ window.GUIDE_CONFIG = (function () {
           steps: [
             ['Confidence', 'For each cell, ANM’s ' + T('softp', 'confidence') + ' is its best lineage score. It reaches 1.11, so it is a score, not a probability.'],
             ['Rank and cut', 'Keep the fixed rule’s own call only where the confidence clears a cut-off; the rest go to follow-up. Then do the same with the rule’s own margin (top score minus runner-up) and compare at the same coverage.'],
-            ['Accuracy rises, for both', 'Keeping 40%: soft rule 0.945 → 0.9987 (margin 0.9988); B/T-priority 0.915 → 0.9981 (margin 0.9985). ANM’s gate is no better than the rule’s margin.'],
-            ['Hard cells', 'Cells whose call flips under leave-one-out (4,476): accuracy 0.818 vs 0.945 on random cells. Most are NK/ILC (3.4× over-represented) or erythroid (3.7×), outside the 3-class key.'],
+            ['Accuracy rises, for both', 'Keeping 40%: soft rule 0.938 → 0.9993 (margin 0.9994); B/T-priority 0.911 → 0.9988 (margin 0.9988). ANM’s gate is never better than the rule’s margin, at any coverage.'],
+            ['Hard cells', 'Cells whose call flips under leave-one-out (4,942): accuracy 0.791 vs 0.939 on random cells. Most are NK/ILC (3.1× over-represented) or erythroid (3.4×), outside the 3-class key.'],
             ['The price', 'Accuracy is bought with ' + T('coverage', 'coverage') + '.']
           ]
         },
@@ -1731,10 +1733,10 @@ window.GUIDE_CONFIG = (function () {
         how: {
           t: 'Write the question down, or learn it from labels',
           steps: [
-            ['ANM', 'Writes the ' + T('o2', 'B/T-priority question') + ' down (a few lines in CRITERIA) and runs the same engine: 0 labels, as any written rule would need, the fixed rule included. On the 5,025 scored cells it declines 19.0% and is 0.963 accurate on the calls it makes.'],
+            ['ANM', 'Writes the ' + T('o2', 'B/T-priority question') + ' down (a few lines in CRITERIA) and runs the same engine: 0 labels, as any written rule would need, the fixed rule included. On the 5,025 scored cells it declines 15.3% and is 0.955 accurate on the calls it makes.'],
             ['Trained heads', 'Logistic, MLP and threshold-grid heads learn the same question from 50 up to 10,619 labelled cells, on the 9 predicted proteins plus 32 embedding numbers (the grid: the 9 only). The labels come from a pool of 11,725 cells kept apart from the 5,025 scored.'],
             ['Like for like', 'Each head’s confidence cut is tuned on the pool, without labels, so it declines as often as ANM.'],
-            ['Labels to match', 'About 50 for the threshold grid, 500 for the logistic head (TEDDY + trained classifier) and 2,000 for the MLP (200 on the first run’s overlapping split).'],
+            ['Labels to match', 'About 50 for the threshold grid, 500 for the logistic head (TEDDY + trained classifier) and 1,000 for the MLP (200 on the first run’s overlapping split).'],
             ['What labels don’t buy', 'A rule you can read and edit, and leave-one-out reasons. The next new question costs labels again.']
           ]
         },
@@ -1749,7 +1751,7 @@ window.GUIDE_CONFIG = (function () {
             [T('veto', 'Veto'), 'Of 177,704 near pairs, 9,723 have measured proteins that disagree: ' + T('mustpair', 'must-separate pairs') + '. On 1,490 myeloid↔T pairs (median cosine 0.982), the TEDDY + head predictions read by the soft rule give both cells the same call in 85% of the pairs where both are called.'],
             [T('complement', 'Complement'), 'Same engine, different evidence: the 9 inputs come from the measured proteins instead of the TEDDY + head predictions, read by the strict rule. Also tried: the question alone, and gluing proteins onto the embedding (' + T('zplus', 'z⁺') + ').'],
             [T('verify', 'Verify'), 'The same pairs again: false agreement 0.85 → 0.40, pairs told apart 0.17 → 0.63, accuracy of calls made 0.74 → 0.99.'],
-            ['What it showed', 'Headline withdrawn pending redesign (it also changes the question; the key has no NK class). Redesign prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 361 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.176 vs measured 0.563). As run, only changing the evidence the decision reads fixes these pairs. The question alone leaves false agreement at 0.83–0.84, and z⁺ makes the global must-separate rate worse (−0.27).']
+            ['What it showed', 'Headline withdrawn pending redesign (it also changes the question; the key has no NK class). Redesign prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 453 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.148 vs measured 0.621); Mode A probes find the same compression at every TEDDY layer, so it is not specific to our head (linear probes). As run, only changing the evidence the decision reads fixes these pairs. The question alone leaves false agreement at 0.83–0.84, and z⁺ makes the global must-separate rate worse (−0.27).']
           ]
         },
         concepts: ['z512', 'mustpair', 'veto', 'complement', 'verify', 'falseagree', 'softsep', 'zplus']
@@ -1761,7 +1763,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'ANM works on the TEDDY + head outputs only',
           steps: [
             [T('modeb', 'Mode B'), 'ANM reads the TEDDY + head predictions and decides on top of them. Every claim here is about that decision layer.'],
-            ['Not ' + T('modea', 'Mode A'), 'Nothing opens TEDDY up: no residual stream, layer Jacobians or in-silico gene perturbations.'],
+            ['Not ' + T('modea', 'Mode A'), 'Beyond linear probes of its layers (Experiment 6), nothing opens TEDDY up: no layer Jacobians or in-silico gene perturbations.'],
             ['Open loop', 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.'],
             ['Not yet, not never', 'ANM’s ' + T('timestep', 'step') + ' is any real processing order, not only physical time. Panel order was not one: the nine predictions come from one prediction, so feeding them in that order made memory decay act as a hidden weight. TEDDY’s layers are one, so the natural test of the dynamics is ' + T('modea', 'Mode A') + ', over layers, pre-registered.'],
             ['Same calls', 'With all markers entering at once ANM makes the fixed rule’s call on every cell; the claim is the declared, auditable layer, not better calls.'],
@@ -1800,12 +1802,12 @@ window.GUIDE_CONFIG = (function () {
   var DATA = {
     b1: { // HARD_PROOF_V2 + outputs/anm_cite_bridge_v2/hard_proof/hard_proof_results.json (Q = accuracy of calls made for every arm)
       obs: ['O0', 'O1', 'O2'],
-      anmAb: [448, 2014, 3169], anmQ: [0.9530, 0.9776, 0.9635], anmStrict: [0.9379, 0.9273, 0.8345],
-      teddyKeepAb: [448, 448, 448], teddyOver: [null, 1566, 2726],
-      teddyCodedAb: [448, 2014, 3169], teddyCodedQ: [0.9530, 0.9776, 0.9635], // identical calls to ANM on every cell (exactness_matched_coverage_v2.json)
+      anmAb: [272, 1493, 2551], anmQ: [0.9429, 0.9667, 0.9545], anmStrict: [0.9336, 0.9312, 0.8559],
+      teddyKeepAb: [272, 272, 272], teddyOver: [null, 1566, 2726],
+      teddyCodedAb: [272, 1493, 2551], teddyCodedQ: [0.9429, 0.9667, 0.9545], // identical calls to ANM on every cell (exactness_matched_coverage_v2.json)
       trainAb: [40, 40, 40], trainQ: [0.9515, 0.9647, 0.8279],
       rewrite: [['O0 → O1', 16, 14433], ['O0 → O2', 1794, 14379], ['O1 → O2', 1082, 13732]],
-      ood: { teddyQ: [0.9817, 0.9907, 0.9217], teddyAb: [2, 79, 155], anmQ: [0.9817, 0.9907, 0.9217], anmAb: [2, 79, 155] },
+      ood: { teddyQ: [0.9817, 0.9907, 0.9217], teddyAb: [1, 57, 129], anmQ: [0.9817, 0.9907, 0.9217], anmAb: [1, 57, 129] },
       // first run (panel-order markers, per-cell size factor): outputs/anm_cite_bridge/hard_proof + exactness_matched_coverage_legacy.json
       old: { anmAb: [317, 834, 3373], anmQ: [0.9496, 0.9723, 0.9603], anmStrict: [0.9394, 0.9578, 0.8208], ruleAb: [101, 881, 1796], ruleQ: [0.9472, 0.9735, 0.9428], ruleStrict: [0.9442, 0.9569, 0.8798], exact: [0.9681, 0.9883, 0.8947], ruleAtAnmQ: [0.9506, 0.9735, 0.9657] }
     },
@@ -1816,11 +1818,11 @@ window.GUIDE_CONFIG = (function () {
       retune: [[50, 0.1933, 0.6844], [200, 0.2081, 0.6759], [500, 0.1984, 0.6931], [1000, 0.1994, 0.6966]] // [labels, declined, accuracy of calls made] · key-marker labels
     },
     b3: { // HARD_PROOF_V2 attribution (O0 field, full n, all markers at once)
-      nAttr: 16302,
-      top1: [['CD5', 'T', 3178], ['CD36', 'M', 2336], ['CD16', 'M', 2195], ['CD3', 'T', 2194], ['CD19', 'B', 1763], ['CD2', 'T', 1562], ['CD72', 'B', 1232], ['CD11c', 'M', 952], ['CD22', 'B', 890]],
-      flipRate: 0.2746, flipQ: [0.415, 0.686, 0.80], nFlipDist: 4474,
-      boot: { frac: 0.1949, lo: 0.1886, hi: 0.2008, B: 200 },
-      perm: { mean: 0.1441, lo: 0.1422, hi: 0.1470, p: 0.0099, n: 100 },
+      nAttr: 16478,
+      top1: [['CD2', 'T', 2945], ['CD5', 'T', 2849], ['CD19', 'B', 2749], ['CD36', 'M', 2500], ['CD16', 'M', 2221], ['CD11c', 'M', 1049], ['CD3', 'T', 1011], ['CD72', 'B', 869], ['CD22', 'B', 285]],
+      flipRate: 0.2999, flipQ: [0.415, 0.686, 0.80], nFlipDist: 4474,
+      boot: { frac: 0.1787, lo: 0.1734, hi: 0.1836, B: 200 },
+      perm: { mean: 0.1573, lo: 0.1548, hi: 0.1601, p: 0.0099, n: 100 },
       old: { nAttr: 16433, frac: 0.2362, permMean: 0.1713, flipRate: 0.2773 },
       cell: { // REPORT.md v0 demo, cite_site4_73511 (first run: markers one per step, per-cell size factor)
         id: 'cite_site4_73511', call: 'myeloid', flipDist: 0.7313,
@@ -1829,23 +1831,23 @@ window.GUIDE_CONFIG = (function () {
     },
     b4: { // SCOPE_REFINE_PROOF_V2 + outputs/anm_cite_bridge_v2/scope_refine/scope_refine_results.json
       // matched coverage: [coverage, accuracy gated by ANM soft_P, accuracy gated by the fixed rule's own margin, cells kept]
-      O0: { base: 0.9452, thrQ: 0.9530, abst: 448, softMax: 1.1101,
-            m: [[1.0, 0.9452, 0.9452, 16750], [0.9, 0.9662, 0.9732, 15075], [0.8, 0.9881, 0.9855, 13400], [0.7, 0.9955, 0.9969, 11725], [0.6, 0.9976, 0.9981, 10050], [0.5, 0.9986, 0.9986, 8375], [0.4, 0.9987, 0.9988, 6700], [0.3, 0.9996, 0.9992, 5025], [0.2, 0.9997, 0.9997, 3350], [0.1, 0.9994, 1.0, 1675]],
+      O0: { base: 0.9381, thrQ: 0.9429, abst: 272, softMax: 1.1101,
+            m: [[1.0, 0.9381, 0.9381, 16750], [0.9, 0.9627, 0.9696, 15075], [0.8, 0.9816, 0.9874, 13400], [0.7, 0.9926, 0.9968, 11725], [0.6, 0.9965, 0.9978, 10050], [0.5, 0.9983, 0.9984, 8375], [0.4, 0.9993, 0.9994, 6700], [0.3, 1.0, 1.0, 5025], [0.2, 1.0, 1.0, 3350], [0.1, 1.0, 1.0, 1675]],
             // soft_P cut curve: [cut, coverage, accuracy, labelled cells still called]
-            pts: [[0, 1, 0.9452, 15711], [0.2684, 0.9333, 0.9616, 14983], [0.4224, 0.8, 0.9881, 13078], [0.4877, 0.6667, 0.9963, 11131], [0.6563, 0.5333, 0.9984, 8924], [0.7731, 0.4, 0.9987, 6694], [0.8519, 0.2667, 0.9996, 4466], [0.9413, 0.1334, 0.9996, 2233], [1.1101, 0.0164, 1.0, 273]] },
-      O2: { base: 0.9148, thrQ: 0.9635, abst: 3169, softMax: 0.3700,
-            m: [[1.0, 0.9148, 0.9148, 16750], [0.9, 0.9399, 0.9419, 15075], [0.8, 0.9658, 0.9665, 13400], [0.7, 0.9879, 0.9891, 11725], [0.6, 0.9957, 0.9956, 10050], [0.5, 0.9977, 0.9977, 8375], [0.4, 0.9981, 0.9985, 6700], [0.3, 0.9988, 0.999, 5025], [0.2, 0.9991, 0.9991, 3350], [0.1, 0.9994, 1.0, 1675]],
-            pts: [[0, 1, 0.9148, 15180], [0.0314, 0.9333, 0.9302, 14618], [0.0511, 0.8, 0.9658, 13001], [0.1233, 0.7219, 0.9858, 11890], [0.1904, 0.5333, 0.9976, 8915], [0.2214, 0.4, 0.9981, 6693], [0.2718, 0.2667, 0.9991, 4465], [0.3484, 0.1334, 0.9991, 2234], [0.37, 0.1011, 0.9994, 1694]] },
-      scope: [['All decided cells', 0.9452, 15711, 'neutral'], ['ANM non-flip cells', 0.9954, 11776, 'anm'], ['ANM flip-sensitive (hard)', 0.8177, 3686, 'anm'], ['Random same-n · 40 draws', 0.9454, 4476, 'neutral']],
-      randomSd: 0.0034, nHard: 4476,
+            pts: [[0, 1, 0.9381, 15711], [0.2684, 0.9333, 0.9616, 14983], [0.4224, 0.8, 0.9881, 13078], [0.4877, 0.6667, 0.9963, 11131], [0.6563, 0.5333, 0.9984, 8924], [0.7731, 0.4, 0.9993, 6694], [0.8519, 0.2667, 0.9996, 4466], [0.9413, 0.1334, 0.9996, 2233], [1.1101, 0.0164, 1.0, 273]] },
+      O2: { base: 0.9108, thrQ: 0.9545, abst: 2551, softMax: 0.3700,
+            m: [[1.0, 0.9108, 0.9108, 16750], [0.9, 0.9343, 0.9364, 15075], [0.8, 0.9644, 0.9645, 13400], [0.7, 0.988, 0.9886, 11725], [0.6, 0.9972, 0.9973, 10050], [0.5, 0.9987, 0.9987, 8375], [0.4, 0.9988, 0.9988, 6700], [0.3, 0.9988, 0.9988, 5025], [0.2, 1.0, 1.0, 3350], [0.1, 1.0, 1.0, 1675]],
+            pts: [[0, 1, 0.9108, 15180], [0.0314, 0.9333, 0.9302, 14618], [0.0511, 0.8, 0.9658, 13001], [0.1233, 0.7219, 0.9858, 11890], [0.1904, 0.5333, 0.9976, 8915], [0.2214, 0.4, 0.9988, 6693], [0.2718, 0.2667, 0.9991, 4465], [0.3484, 0.1334, 0.9991, 2234], [0.37, 0.1011, 0.9994, 1694]] },
+      scope: [['All decided cells', 0.9381, 15711, 'neutral'], ['ANM non-flip cells', 0.9954, 11776, 'anm'], ['ANM flip-sensitive (hard)', 0.7913, 3686, 'anm'], ['Random same-n · 40 draws', 0.9388, 4942, 'neutral']],
+      randomSd: 0.0034, nHard: 4942,
       // coarse cell type: [group, hard cells, all cells, share of all, share of hard, hard rate, enrichment]
-      who: [['NK / ILC', 1780, 1940, 0.1158, 0.3977, 0.9175, 3.43], ['erythroid', 1475, 1477, 0.0882, 0.3295, 0.9986, 3.74], ['progenitor', 432, 1609, 0.0961, 0.0965, 0.2685, 1.00], ['T', 421, 7015, 0.4188, 0.0941, 0.0600, 0.22], ['myeloid (mono/DC)', 275, 1763, 0.1053, 0.0614, 0.1560, 0.58], ['B / plasma', 93, 2946, 0.1759, 0.0208, 0.0316, 0.12]],
-      budget: { logreg: [[50, 0.7968, 0.7419, 0.0549], [100, 0.8063, 0.8038, 0.0025], [200, 0.8173, 0.8100, 0.0073], [400, 0.8228, 0.8186, 0.0042]],
-                mlp: [[50, 0.7954, 0.7413, 0.0541], [100, 0.8028, 0.8078, -0.0050], [200, 0.8191, 0.8084, 0.0107], [400, 0.8252, 0.8123, 0.0129]] }
+      who: [['NK / ILC', 1756, 1940, 0.1158, 0.3553, 0.9052, 3.07], ['erythroid', 1475, 1477, 0.0882, 0.2985, 0.9986, 3.38], ['progenitor', 620, 1609, 0.0961, 0.1255, 0.3853, 1.31], ['T', 729, 7015, 0.4188, 0.1475, 0.1039, 0.35], ['myeloid (mono/DC)', 268, 1763, 0.1053, 0.0542, 0.1520, 0.52], ['B / plasma', 94, 2946, 0.1759, 0.0190, 0.0319, 0.11]],
+      budget: { logreg: [[50, 0.7875, 0.7290, 0.0585], [100, 0.8086, 0.7905, 0.0181], [200, 0.8137, 0.7982, 0.0155], [400, 0.8189, 0.8072, 0.0116]],
+                mlp: [[50, 0.7804, 0.7236, 0.0568], [100, 0.8089, 0.7906, 0.0183], [200, 0.8119, 0.7990, 0.0129], [400, 0.8237, 0.8046, 0.0191]] }
     },
     b5: { // HARD_PROOF_V2 label-cost arm · disjoint split: 11,725 training pool / 5,025 scored
-      target: { ab: 0.1897, strict: 0.8347, q: 0.9628 },
-      match: [['Threshold grid (the fixed rule, re-tuned)', 50, 0.8404, 0.1799, 0.9607], ['Logistic head (TEDDY + trained classifier)', 500, 0.8189, 0.1887, 0.9557], ['MLP head', 2000, 0.8242, 0.1877, 0.9614]],
+      target: { ab: 0.1534, strict: 0.8570, q: 0.9553 },
+      match: [['Threshold grid (the fixed rule, re-tuned)', 50, 0.8579, 0.1504, 0.9544], ['Logistic head (TEDDY + trained classifier)', 500, 0.8415, 0.1493, 0.9477], ['MLP head', 1000, 0.8382, 0.1572, 0.9484]],
       curve: [[50, 0.1906, 0.9380], [100, 0.1936, 0.9399], [200, 0.1813, 0.9438], [500, 0.1887, 0.9557], [1000, 0.1986, 0.9626], [2000, 0.1930, 0.9674], [5000, 0.1914, 0.9705], [10619, 0.1932, 0.9722]]
     },
     b6: { // reverse_loop_small_stats.json (first run; Experiment 6 withdrawn)
@@ -2145,14 +2147,14 @@ window.GUIDE_CONFIG = (function () {
     var d = DATA.b3, W = Math.max(260, width(host)), side = W >= 520;
     var rowsDef = [
       { lab: 'Shuffled in lineage · top marker', sub: '100 shuffles', lo: d.perm.lo, hi: d.perm.hi, mid: d.perm.mean, cls: 'f-neutral', tip: 'Values shuffled within each lineage: the top marker decides <b>' + pct(d.perm.mean) + '</b> of calls on average, 95% range ' + pct(d.perm.lo) + '–' + pct(d.perm.hi) + ' (100 shuffles)' },
-      { lab: 'Observed · CD5’s share', sub: '200 resamples', lo: d.boot.lo, hi: d.boot.hi, mid: d.boot.frac, cls: 'f-anm', tip: 'Observed: CD5 decides <b>' + pct(d.boot.frac) + '</b> of calls, bootstrap 95% range ' + pct(d.boot.lo) + '–' + pct(d.boot.hi) + ' (200 resamples)' }
+      { lab: 'Observed · CD2’s share', sub: '200 resamples', lo: d.boot.lo, hi: d.boot.hi, mid: d.boot.frac, cls: 'f-anm', tip: 'Observed: CD2 decides <b>' + pct(d.boot.frac) + '</b> of calls, bootstrap 95% range ' + pct(d.boot.lo) + '–' + pct(d.boot.hi) + ' (200 resamples)' }
     ];
     var maxLab = 0;
     rowsDef.forEach(function (r) { maxLab = Math.max(maxLab, tw(r.lab, 12, 600), tw(r.sub, 10.5, 400, true)); });
     var lw = side ? Math.ceil(maxLab) + 22 : 20, x0 = lw, x1 = W - 26, iw = x1 - x0, lo = 0.13, hi = 0.21;
     var rowY = side ? [52, 108] : [62, 150], H = side ? 170 : 208;
     function xs(v) { return x0 + (v - lo) / (hi - lo) * iw; }
-    var o = svgOpen(W, H, 'Shuffled data versus the observed share of calls decided by CD5');
+    var o = svgOpen(W, H, 'Shuffled data versus the observed share of calls decided by CD2');
     [0.13, 0.15, 0.17, 0.19, 0.21].forEach(function (t) {
       o += '<line class="grid" x1="' + xs(t) + '" x2="' + xs(t) + '" y1="18" y2="' + (H - 26) + '"/><text x="' + xs(t) + '" y="' + (H - 10) + '" text-anchor="middle">' + f(t, 2) + '</text>';
     });
@@ -2212,7 +2214,7 @@ window.GUIDE_CONFIG = (function () {
         }
       });
       legend('#l-b1', [['bg-teddy', 'TEDDY + fixed rule · keeps its soft rule'], ['bg-anm', 'TEDDY + ANM · follows the written question'], ['bg-train', 'TEDDY + trained classifier · trained for the soft rule']]);
-      cap('#cap-b1', '“No calls” under each question, 16,750 held-out cells. ANM’s follow the question; the others don’t move. If each written rule is hand-copied into the fixed-rule readout, its “no calls” move too, to exactly ANM’s (448 / 2,014 / 3,169), and so do its calls, cell for cell: ANM’s question re-implemented outside ANM, without the workability and exactness checks or the per-marker reasons.');
+      cap('#cap-b1', '“No calls” under each question, 16,750 held-out cells. ANM’s follow the question; the others don’t move. If each written rule is hand-copied into the fixed-rule readout, its “no calls” move too, to exactly ANM’s (272 / 1,493 / 2,551), and so do its calls, cell for cell: ANM’s question re-implemented outside ANM, without the workability and exactness checks or the per-marker reasons.');
     } else {
       groupedBars(host, {
         aria: 'Accuracy of calls made under each question', cats: cats, catsShort: ['O0', 'O1', 'O2'], focus: 1, yTicks: [0, 0.25, 0.5, 0.75, 1], yFmt: function (t) { return f(t, 2); }, vFmt: function (v) { return f(v, 3); },
@@ -2227,7 +2229,7 @@ window.GUIDE_CONFIG = (function () {
         }
       });
       legend('#l-b1', [['bg-teddy', 'TEDDY + fixed rule · each rule hand-coded'], ['bg-anm', 'TEDDY + ANM · follows the written question'], ['bg-train', 'TEDDY + trained classifier · trained for the soft rule, not retrained']]);
-      cap('#cap-b1', 'Accuracy is not the claim. With all markers entering at once, ANM and the hand-coded rule make the same call on every cell, so their accuracy of calls made is identical by construction (0.953 / 0.978 / 0.964). The first run’s ANM edge under the B/T-priority rule came only from declining more. The classifier trained for the soft rule drops to 0.828 on the B/T-priority question.');
+      cap('#cap-b1', 'Accuracy is not the claim. With all markers entering at once, ANM and the hand-coded rule make the same call on every cell, so their accuracy of calls made is identical by construction (0.943 / 0.967 / 0.955). The first run’s ANM edge under the B/T-priority rule came only from declining more. The classifier trained for the soft rule drops to 0.828 on the B/T-priority question.');
     }
   };
 
@@ -2261,14 +2263,14 @@ window.GUIDE_CONFIG = (function () {
     if (S.b3 === 'top1') {
       var lin = { B: 'B cell', T: 'T cell', M: 'myeloid' };
       hBars(host, {
-        aria: 'Deciding marker across 16,302 called cells', max: 3178, rowH: 28,
+        aria: 'Deciding marker across 16,478 called cells', max: 2945, rowH: 28,
         rows: d.top1.map(function (r, i) {
           return { label: r[0] + ' · ' + r[1], cls: 'f-anm', v: r[2], txt: n(r[2]) + (i === 0 ? ' · ' + pct(r[2] / d.nAttr) : ''), strong: i === 0,
             tip: r[0] + ' (' + lin[r[1]] + ' marker) decides the call for <b>' + n(r[2]) + '</b> cells (' + pct(r[2] / d.nAttr) + ')' };
         })
       });
       legend('#l-b3', [['bg-anm', 'TEDDY + ANM · soft rule · deciding marker (leave-one-out)']]);
-      cap('#cap-b3', 'Which protein decides the call most often (the one whose removal moves the score most), over all 16,302 called cells, all markers entering at once. Letters give its lineage: B, T or M (myeloid). CD5, a T-cell marker, leads with 19.5% (first run 23.6%). With simultaneous markers the deciding marker is the largest normalised value in the called lineage, so this describes the evidence, not ANM.');
+      cap('#cap-b3', 'Which protein decides the call most often (the one whose removal moves the score most), over all 16,478 called cells, all markers entering at once. Letters give its lineage: B, T or M (myeloid). CD2, a T-cell marker, leads with 17.9%, CD5 close behind at 17.3% (first run: CD5, 23.6%). With simultaneous markers the deciding marker is the largest normalised value in the called lineage, so this describes the evidence, not ANM.');
     } else if (S.b3 === 'cell') {
       hBars(host, {
         aria: 'Leave-one-out for one example cell', max: 0.36, rowH: 34,
@@ -2282,8 +2284,8 @@ window.GUIDE_CONFIG = (function () {
       cap('#cap-b3', 'One cell from the first run (v0 demo, markers entering one per step, <code>' + d.cell.id + '</code>), called myeloid. Removing CD16 lowers the myeloid score by 0.338 and flips the call to T; changing CD16 by ' + f(d.cell.flipDist, 3) + ' is enough to flip it. The other markers barely matter.');
     } else {
       sigStrip(host);
-      legend('#l-b3', [['bg-neutral', 'values shuffled within each lineage: the top marker’s share (95% range)'], ['bg-anm', 'observed: CD5’s share (bootstrap 95% range)']]);
-      cap('#cap-b3', 'Is the pattern real? CD5 decides 19.5% of calls, above what the top marker reaches when values are shuffled within each lineage (14.4% on average): p ≈ 0.0099 over 100 shuffles, the smallest p they can give; bootstrap 95% range 18.9–20.1%, CD5 on top in all 200 resamples.');
+      legend('#l-b3', [['bg-neutral', 'values shuffled within each lineage: the top marker’s share (95% range)'], ['bg-anm', 'observed: CD2’s share (bootstrap 95% range)']]);
+      cap('#cap-b3', 'Is the pattern real? CD2 decides 17.9% of calls, above what the top marker reaches when values are shuffled within each lineage (15.7% on average): p ≈ 0.0099 over 100 shuffles, the smallest p they can give; bootstrap 95% range 17.3–18.4%. CD5 is close behind at 17.3%.');
     }
   };
 
@@ -2302,7 +2304,7 @@ window.GUIDE_CONFIG = (function () {
         })
       });
       legend('#l-b4', [['bg-anm', 'groups found by ANM’s leave-one-out'], ['bg-neutral', 'all cells / random control']]);
-      cap('#cap-b4', 'Fixed-rule accuracy on cells whose call flips under ANM’s leave-one-out (4,476 cells; 3,686 of them have a clear answer key) vs 40 random draws of the same size: 0.818 vs 0.945 (−0.128). Cells whose call doesn’t flip reach 0.995. “Who is hard?” shows which cells these are.');
+      cap('#cap-b4', 'Fixed-rule accuracy on cells whose call flips under ANM’s leave-one-out (4,942 cells; 3,686 of them have a clear answer key) vs 40 random draws of the same size: 0.791 vs 0.939 (−0.148). Cells whose call doesn’t flip reach 0.995. “Who is hard?” shows which cells these are.');
       return;
     }
     if (S.b4 === 'who') {
@@ -2315,7 +2317,7 @@ window.GUIDE_CONFIG = (function () {
         })
       });
       legend('#l-b4', [['bg-anm', 'over-represented among hard cells'], ['bg-neutral', 'at or below their share of all cells']]);
-      cap('#cap-b4', 'Which cells are hard? Share of hard cells divided by share of all cells, by annotated cell type. NK/ILC (3.4×) and erythroid cells (3.7×) are 73% of the hard cells; both lie outside the 3-class question (B, T, myeloid), so these are mostly out-of-scope cells, not borderline in-scope calls.');
+      cap('#cap-b4', 'Which cells are hard? Share of hard cells divided by share of all cells, by annotated cell type. NK/ILC (3.1×) and erythroid cells (3.4×) are 65% of the hard cells; both lie outside the 3-class question (B, T, myeloid), so these are mostly out-of-scope cells, not borderline in-scope calls.');
       return;
     }
     var c = d[S.b4], yCfg = {
@@ -2337,8 +2339,8 @@ window.GUIDE_CONFIG = (function () {
     });
     legend('#l-b4', [['bg-anm', 'Fixed-rule calls, kept where ANM is most confident'], ['dash teddy', 'Fixed-rule calls, kept where the rule’s own margin is largest'], ['dash neutral', 'TEDDY + fixed rule · calls every cell']]);
     cap('#cap-b4', {
-      O0: 'Soft rule: keep the fixed rule’s own call only for the cells ANM is most confident about, or for those with the largest rule margin (top score minus runner-up). At the same coverage the two gates are within 0.007 everywhere: 0.9987 vs 0.9988 keeping 40%. ANM is ahead only at 80% (+0.0026) and 30% (+0.0004).',
-      O2: 'B/T-priority rule: accuracy climbs from 0.915 to 0.9981 keeping 40%, and the rule’s own margin does as well at every coverage (0.9981 vs 0.9985 at 40%). ANM’s confidence tops out at 0.370 here and 1.11 under the soft rule: a score, not a probability.'
+      O0: 'Soft rule: keep the fixed rule’s own call only for the cells ANM is most confident about, or for those with the largest rule margin (top score minus runner-up). At the same coverage ANM is never ahead: the margin ties or beats it everywhere, by at most 0.007 (0.9993 vs 0.9994 keeping 40%).',
+      O2: 'B/T-priority rule: accuracy climbs from 0.911 to 0.9988 keeping 40%, and the rule’s own margin does as well at every coverage (0.9988 vs 0.9988 at 40%). ANM’s confidence tops out at 0.370 here and 1.11 under the soft rule: a score, not a probability.'
     }[S.b4]);
   };
 
@@ -2353,7 +2355,7 @@ window.GUIDE_CONFIG = (function () {
       });
       hBars(host, { aria: 'Labelled cells needed to match ANM on the B/T-priority question', max: 2100, rowH: 40, rows: rows });
       legend('#l-b5', [['bg-anm', 'TEDDY + ANM · B/T-priority rule written down'], ['bg-train', 'TEDDY + trained classifier: logistic and MLP heads and a re-tuned threshold grid · each set to decline as often as ANM']]);
-      cap('#cap-b5', 'Labelled cells a trained classifier needs to reach ANM’s B/T-priority answers (declines ≈ 19%, exactness ≈ 0.83), with labels drawn from a pool kept apart from the 5,025 scored cells. For ANM, as for any written rule, adopting the new question is writing it down; the classifiers pay again at every later change.');
+      cap('#cap-b5', 'Labelled cells a trained classifier needs to reach ANM’s B/T-priority answers (declines ≈ 15%, exactness ≈ 0.86), with labels drawn from a pool kept apart from the 5,025 scored cells. For ANM, as for any written rule, adopting the new question is writing it down; the classifiers pay again at every later change.');
     } else {
       lineChart(host, {
         aria: 'Logistic head accuracy versus number of labelled cells',
@@ -2365,7 +2367,7 @@ window.GUIDE_CONFIG = (function () {
         refs: [{ y: d.target.q, k: 'k-anm', label: 'ANM · written down · 0 labels · ' + f(d.target.q, 3), labelSm: 'ANM · 0 labels', tip: 'ANM, B/T-priority rule written down, <b>0</b> labels: accuracy <b>' + f(d.target.q, 4) + '</b> · declines ' + pct(d.target.ab) }]
       });
       legend('#l-b5', [['bg-train', 'TEDDY + trained classifier · logistic head, cut tuned to ANM’s decline rate'], ['dash anm', 'TEDDY + ANM · 0 labels']]);
-      cap('#cap-b5', 'The logistic head (TEDDY + trained classifier) matches ANM’s decline rate and exactness at 500 labels, reaches its accuracy of calls made (0.963) at about 1,000 and keeps climbing to 0.972. Labels can buy the numbers; they can’t buy a written-down, editable rule or its per-marker reasons.');
+      cap('#cap-b5', 'The logistic head (TEDDY + trained classifier) matches ANM’s decline rate and exactness at 500 labels, reaches its accuracy of calls made (0.955) at about 1,000 and keeps climbing to 0.972. Labels can buy the numbers; they can’t buy a written-down, editable rule or its per-marker reasons.');
     }
   };
 
@@ -2401,7 +2403,7 @@ window.GUIDE_CONFIG = (function () {
         ['ANM · strict', n(b1.old.anmAb[1]) + ' → ' + n(b1.anmAb[1]), f(b1.old.anmQ[1], 4) + ' → ' + f(b1.anmQ[1], 4), f(b1.old.anmStrict[1], 4) + ' → ' + f(b1.anmStrict[1], 4), 'marker order, scoring (question redefined), size factor'],
         ['ANM · B/T-priority', n(b1.old.anmAb[2]) + ' → ' + n(b1.anmAb[2]), f(b1.old.anmQ[2], 4) + ' → ' + f(b1.anmQ[2], 4), f(b1.old.anmStrict[2], 4) + ' → ' + f(b1.anmStrict[2], 4), 'marker order + size factor'],
         ['Fixed rule, hand-coded · soft', n(b1.old.ruleAb[0]) + ' → ' + n(b1.teddyCodedAb[0]), f(b1.old.ruleQ[0], 4) + ' → ' + f(b1.teddyCodedQ[0], 4), f(b1.old.ruleStrict[0], 4) + ' → ' + f(b1.anmStrict[0], 4), 'size factor only'],
-        ['Fixed rule, hand-coded · strict', n(b1.old.ruleAb[1]) + ' → ' + n(b1.teddyCodedAb[1]), f(b1.old.ruleQ[1], 4) + ' → ' + f(b1.teddyCodedQ[1], 4), f(b1.old.ruleStrict[1], 4) + ' → ' + f(b1.anmStrict[1], 4), 'scoring 881 → 1,277 (redefined), then size factor → 2,014'],
+        ['Fixed rule, hand-coded · strict', n(b1.old.ruleAb[1]) + ' → ' + n(b1.teddyCodedAb[1]), f(b1.old.ruleQ[1], 4) + ' → ' + f(b1.teddyCodedQ[1], 4), f(b1.old.ruleStrict[1], 4) + ' → ' + f(b1.anmStrict[1], 4), 'scoring 881 → 1,277 (redefined), then size factor → 1,493'],
         ['Fixed rule, hand-coded · B/T-priority', n(b1.old.ruleAb[2]) + ' → ' + n(b1.teddyCodedAb[2]), f(b1.old.ruleQ[2], 4) + ' → ' + f(b1.teddyCodedQ[2], 4), f(b1.old.ruleStrict[2], 4) + ' → ' + f(b1.anmStrict[2], 4), 'size factor only']
       ] },
       { title: 'First run: ANM vs the rule at ANM’s coverage (the old accuracy edge came only from declining more)', cols: ['Question', 'Same call as rule', 'ANM accuracy', 'Rule accuracy at the same coverage'], rows: QN.map(function (o, i) { return [o, pct(b1.old.exact[i], 1) + ' → 100%', f(b1.old.anmQ[i], 4), f(b1.old.ruleAtAnmQ[i], 4)]; }) },
@@ -2423,7 +2425,7 @@ window.GUIDE_CONFIG = (function () {
       { title: 'Statistics', cols: ['Quantity', 'Value'], rows: [
         ['Calls that flip when the deciding marker is removed', f(b3.flipRate, 4)],
         ['Flip distance, quartiles (' + n(b3.nFlipDist) + ' cells with a finite distance)', b3.flipQ.map(function (v) { return f(v, 3); }).join(' / ')],
-        ['Bootstrap: CD5’s share · 95% range (200 resamples)', f(b3.boot.frac, 4) + ' · ' + f(b3.boot.lo, 4) + '–' + f(b3.boot.hi, 4)],
+        ['Bootstrap: CD2’s share · 95% range (200 resamples)', f(b3.boot.frac, 4) + ' · ' + f(b3.boot.lo, 4) + '–' + f(b3.boot.hi, 4)],
         ['Values shuffled within each lineage: the top marker’s share · 95% range (100 shuffles)', f(b3.perm.mean, 4) + ' · ' + f(b3.perm.lo, 4) + '–' + f(b3.perm.hi, 4)],
         ['Permutation p (one-sided; 0.0099 is the floor for 100 shuffles)', f(b3.perm.p, 4)],
         ['First run (markers one per step, per-cell factor, shuffle within each cell)', 'CD5 ' + pct(b3.old.frac) + ' · shuffled ' + pct(b3.old.permMean) + ' · flip rate ' + f(b3.old.flipRate, 4) + ' · ' + n(b3.old.nAttr) + ' cells']
@@ -2445,7 +2447,7 @@ window.GUIDE_CONFIG = (function () {
       { title: 'Label budget · small head on the 9 predicted proteins → accuracy on hard cells', cols: ['Head · labels', 'Labels from hard cells', 'Random labels', 'Difference'], rows:
         b4.budget.logreg.map(function (r) { return ['logistic · ' + r[0], f(r[1], 4), f(r[2], 4), (r[3] > 0 ? '+' : '') + f(r[3], 4)]; }).concat(
         b4.budget.mlp.map(function (r) { return ['MLP · ' + r[0], f(r[1], 4), f(r[2], 4), (r[3] > 0 ? '+' : '') + f(r[3], 4)]; })) }
-    ], 'Matched coverage: both gates keep the same number of cells (the top-ranked, ties broken by cell id). The rule’s margin = its top lineage score minus the runner-up. soft_P reaches 1.11 under the soft rule, so it is a score, not a probability. Label budget: 3,925 labelled training cells (940 hard); 11,786 scored (2,746 hard). The first run’s RNA-missing view was not rerun.');
+    ], 'Matched coverage: both gates keep the same number of cells (the top-ranked, ties broken by cell id). The rule’s margin = its top lineage score minus the runner-up. soft_P reaches 1.11 under the soft rule, so it is a score, not a probability. Label budget: 3,925 labelled training cells (1026 hard); 11,786 scored (3,042 hard). The first run’s RNA-missing view was not rerun.');
 
     var b5 = DATA.b5;
     table('#t-b5', [
@@ -2466,7 +2468,7 @@ window.GUIDE_CONFIG = (function () {
         ['… · embedding + predicted protein (z⁺)', f(b6.zplus.predFrac98, 4)],
         ['Global change in the must-separate rate (measured / predicted / predicted, all 9 proteins)', b6.zplus.global.map(function (v) { return f(v, 4); }).join(' / ')]
       ] }
-    ], 'First run. Full fix-by-fix scoreboard: <a href="anm-loop.html#verify-all">anm-loop.html</a>. Withdrawn pending redesign: the prototype finds the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 361 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.176 vs measured 0.563).');
+    ], 'First run. Full fix-by-fix scoreboard: <a href="anm-loop.html#verify-all">anm-loop.html</a>. Withdrawn pending redesign: the prototype finds the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 453 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.148 vs measured 0.621).');
   }
 
   /* =================== observer explorer =================== */
@@ -2476,9 +2478,9 @@ window.GUIDE_CONFIG = (function () {
     O2: '<span class="c"># readouts/cite_lineage_O2.yaml · B/T-priority rule</span>\n<span class="k">criterion_id</span>: O2\n<span class="k">P_f</span>:\n  <span class="k">panels</span>: <span class="c"># same as O0</span>\n<span class="chg">  <span class="k">key_marker_boost</span>: 3.0</span>\n<span class="chg">  <span class="k">secondary_weight</span>: 0.0        <span class="c"># only CD19 / CD3 / CD16 count</span></span>\n<span class="chg">  <span class="k">lineage_weights</span>: {b: 1.5, t: 1.3, myeloid: 0.5}</span>\n<span class="chg">  <span class="k">readout_threshold</span>: 0.20       <span class="c"># 0.1333 on shared scale</span></span>\n<span class="k">Q_f</span>:\n<span class="chg">  <span class="k">expected_from</span>: true_adt_key_marker_weighted</span>\n<span class="chg">  <span class="k">expected_margin</span>: 0.06         <span class="c"># 0.04 on shared scale</span></span>\n<span class="c"># rewrites expected calls, not just stricter</span>'
   };
   var EFF = {
-    O0: { rw: '<b>—</b> the baseline question', note: 'The default lineage call: all 9 markers weigh equally, with a soft threshold.', anm: '448 “no calls” (2.7%)', teddy: '448 “no calls”: this is its own rule, and it makes ANM’s calls exactly', train: '40 “no calls” after training for this rule' },
-    O1: { rw: '<b>16</b> of 14,433 expected answers change (0.11%)', note: 'Stricter, and redefined in the rerun as a weighted mean with key markers at weight 2: almost the same answers, mostly more “no calls”.', anm: '2,014 “no calls”, 0 new labels', teddy: 'keeps the soft rule unless re-coded: answers 1,566 cells this question holds back; re-coded, it makes ANM’s calls exactly', train: '40: unchanged unless retrained' },
-    O2: { rw: '<b>1,794</b> of 14,379 expected answers change (12.48%)', note: 'A different question, mostly myeloid → B (1,097) and myeloid → T (538).', anm: '3,169 “no calls”, 0 new labels', teddy: 'keeps the soft rule unless re-coded: answers 2,726 cells this question holds back; re-coded, it makes ANM’s calls exactly', train: '40: unchanged unless retrained on new labels' }
+    O0: { rw: '<b>—</b> the baseline question', note: 'The default lineage call: all 9 markers weigh equally, with a soft threshold.', anm: '272 “no calls” (1.6%)', teddy: '272 “no calls”: this is its own rule, and it makes ANM’s calls exactly', train: '40 “no calls” after training for this rule' },
+    O1: { rw: '<b>16</b> of 14,433 expected answers change (0.11%)', note: 'Stricter, and redefined in the rerun as a weighted mean with key markers at weight 2: almost the same answers, mostly more “no calls”.', anm: '1,493 “no calls”, 0 new labels', teddy: 'keeps the soft rule unless re-coded: answers 1,566 cells this question holds back; re-coded, it makes ANM’s calls exactly', train: '40: unchanged unless retrained' },
+    O2: { rw: '<b>1,794</b> of 14,379 expected answers change (12.48%)', note: 'A different question, mostly myeloid → B (1,097) and myeloid → T (538).', anm: '2,551 “no calls”, 0 new labels', teddy: 'keeps the soft rule unless re-coded: answers 2,726 cells this question holds back; re-coded, it makes ANM’s calls exactly', train: '40: unchanged unless retrained on new labels' }
   };
   function buildGloss() {
     var T = window.TEDDY_ANM_TERMS, host = $('#gloss');

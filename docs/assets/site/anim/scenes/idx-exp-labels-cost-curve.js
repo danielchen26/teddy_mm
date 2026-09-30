@@ -24,14 +24,14 @@
 const NUMBERS = {
   poolCells: 11725,        // label-pool cells (training side of the wall)
   scoredCells: 5025,       // scored cells, no overlap with the pool
-  anmDeclines: 0.19,       // ANM, B/T-priority written down, 0 labels: declines 19.0%
-  anmExactness: 0.835,     // exactness
-  anmAccuracy: 0.963,      // accuracy of calls made
+  anmDeclines: 0.153,       // ANM, B/T-priority written down, 0 labels: declines 19.0%
+  anmExactness: 0.857,     // exactness
+  anmAccuracy: 0.955,      // accuracy of calls made
   minLabels: 50,           // smallest training budget
   maxLabels: 10619,        // largest training budget
   matchGrid: 50,           // labels for the re-tuned threshold grid to match ANM's decline rate and exactness
   matchLogistic: 500,      // logistic head
-  matchMlp: 2000,          // MLP head
+  matchMlp: 1000,          // MLP head
   logisticAccAtMax: 0.972, // logistic head accuracy of calls made at 10,619 labels
   ruleWeights: { B: 1.5, T: 1.3, myeloid: 0.5 },
 };

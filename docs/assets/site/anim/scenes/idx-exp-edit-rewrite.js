@@ -24,7 +24,7 @@
 const NUMBERS = {
   cells: 16750,                     // held-out cells
   proteins: 9,                      // predicted proteins ANM reads
-  noCall: [448, 2014, 3169],        // ANM “no calls”: soft, strict, B/T-priority
+  noCall: [272, 1493, 2551],        // ANM “no calls”: soft, strict, B/T-priority
   classifierNoCall: [40, 40, 40],   // trained classifier “no calls”, same three questions
   sameCalls: '100%',                // cells where ANM and the re-coded fixed rule make the same call
   newLabels: 0,

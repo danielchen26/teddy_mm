@@ -24,8 +24,8 @@ const NUMBERS = {
   depthFull: '100%',          // dial top stop, all counts kept
   depthLow: '5%',             // dial bottom stop
   umisLow: 305,               // median UMIs per cell at 5% of counts
-  pearson: [0.937, 0.805],    // panel-protein Pearson, full depth → 5% of counts
-  accuracy: [0.985, 0.917],   // lineage accuracy, full depth → 5% of counts
+  pearson: [0.936, 0.855],    // panel-protein Pearson, full depth → 5% of counts
+  accuracy: [0.983, 0.959],   // lineage accuracy, full depth → 5% of counts
   cells: 1500,                // validation cells
   donor: '18303',
   /* kept fractions of the dial’s stops (anm-framework.html #teddy-depth); never printed here,

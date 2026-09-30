@@ -5,8 +5,10 @@
  * The decision loop (a teal ring around ANM) runs outside the capsule and touches two things only: the evidence
  * (measured protein swapped in for predicted) and the question (soft rule → strict rule). Measured protein
  * normally flows to the answer key; it reaches the evidence only through one gate, "this test only".
- * A tag on the ring: withdrawn · pending redesign. Illustrative only: no values. 12 s seamless loop.
- * Two layouts: the page's 21:6 strip, and 16:9 on narrow screens (the page's --ar-sm).
+ * The page marks the figure "withdrawn · first run" with a badge over the stage's top-left corner (8–157 px across,
+ * 8–29 px down) and the loader puts the play button over the top-right (up to 83 px in, 36 px down): nothing is drawn
+ * under either. Illustrative only: no values. 12 s seamless loop.
+ * Two layouts: the page's 21:6 strip, and 3:2 on narrow screens (the page's --ar-sm).
  */
 export default function create(ctx) {
   const { THREE, ease, seg, pulse, clamp, lerp } = ctx;
@@ -17,12 +19,11 @@ export default function create(ctx) {
   const LAY = {
     /* wide: measured protein → answer key on the right; the gated path drops from it and runs left into the evidence */
     wide: { fw: 21, fh: 6, capL: -10.3, capR: -3.9, capY: -0.3, ring: [0.3, 0.1, 2.6, 1.5], meas: [5.2, 0.1],
-      branch: false, eLeg: 'bottom', measText: 'measured\nprotein', tagA: 0.62, tag: [3.0, 1.45], tagSize: 10.5,
-      tagText: 'withdrawn · pending redesign', loop: [-2.05, 0.95, 'bottom-right'] },
-    /* narrow: measured protein → answer key along the bottom; the gated path branches up into the evidence */
-    narrow: { fw: 16, fh: 9, capL: -7.7, capR: -0.6, capY: 1.4, ring: [2.65, 0.9, 2.1, 1.45], meas: [null, -3.5],
-      branch: true, eLeg: 'right', measText: 'measured protein', tagA: 0, tag: null, tagSize: 10,
-      tagText: 'withdrawn\npending\nredesign', loop: null },
+      branch: false, eLeg: 'bottom', measText: 'measured\nprotein', small: 10.5, gate: 11, loop: [-2.05, 0.95, 'bottom-right'] },
+    /* narrow: measured protein → answer key along the bottom; the gated path branches up into the evidence.
+       The ring sits low enough that the question card clears the play button; the smallest labels are a size larger. */
+    narrow: { fw: 16, fh: 16 / 1.5, capL: -7.7, capR: -0.6, capY: 2.1, ring: [2.65, 0.9, 1.95, 1.5], meas: [null, null],
+      branch: true, eLeg: 'right', measText: 'measured protein', small: 11.5, gate: 11.5, loop: 'right' },
   };
   let L = LAY.wide, dead = false;
   const R = { x: 0, y: 0, rx: 1, ry: 1 };
@@ -80,12 +81,6 @@ export default function create(ctx) {
   const gateLab = text('this test only', { size: 11, weight: 600, anchor: 'top' });
   let gb = 0.3;
 
-  /* the tag hanging on the ring */
-  const str = put(ctx.line([[0, 0], [1, 1]], { color: 'faint', width: 1.2 }), 0, 0, 2.1);
-  const knot = put(ctx.dot([0, 0], { px: 2.5, color: 'faint' }), 0, 0, 2.1);
-  const tagBox = put(ctx.box(1, 1, { color: 'card', stroke: 'bad', radius: 0.1 }), 0, 0, 2.2);
-  const tagLab = text(L.tagText, { size: 10.5, weight: 600, color: 'bad' });
-
   /* text widths in CSS px, so boxes fit their labels and nothing collides at small stage widths */
   const mc = document.createElement('canvas').getContext('2d');
   const cs = () => getComputedStyle(ctx.figure);
@@ -100,15 +95,24 @@ export default function create(ctx) {
 
   function layout() {
     const p = ctx.ppu(), ts = ctx.textScale, W = (px) => px / p;
+    /* the two things the ring touches: sized first, so the ring can be placed around them */
+    for (const n of [card, plug]) {
+      n.w = W(Math.max(...n.states.map((s) => tw(s, 12.5)), tw(n.legend, L.small) + 12) + 24);
+      n.h = Math.max(0.9, W(12.5 * ts * 1.25 + 14));
+      n.leg.setSize(L.small);
+    }
     [R.x, R.y, R.rx, R.ry] = L.ring;
+    /* narrow: the question card on top of the ring stays below the play button (36 px down, plus a gap) */
+    if (L.branch) R.y = Math.min(R.y, camera.top - W(44) - card.h - R.ry);
     /* capsule: two boxes side by side; labels shrink a little if the capsule would not fit */
     const m = Math.max(0.22, W(7)), gap = Math.max(0.6, W(22)), avail = L.capR - L.capL;
     const T = Math.max(tw('TEDDY', 12.5), tw('our head', 12.5));
     const k = clamp((((avail - gap - 2 * m) * p) / 2 - 14) / T, 0.78, 1);
-    tLab.setSize(12.5 * k); hLab.setSize(12.5 * k); tSub.setSize(10.5 * k); hSub.setSize(10.5 * k);
-    const bw = W(T * k + 14), bh = Math.max(0.85, W(12.5 * ts * k * 1.25 + 14)), subH = W(10.5 * ts * k * 1.25 + 4);
+    tLab.setSize(12.5 * k); hLab.setSize(12.5 * k); tSub.setSize(L.small * k); hSub.setSize(L.small * k);
+    const bw = W(T * k + 14), bh = Math.max(0.85, W(12.5 * ts * k * 1.25 + 14)), subH = W(L.small * ts * k * 1.25 + 4);
     const cw = Math.max(2 * bw + gap + 2 * m, Math.min(avail, 5.6)), ch = bh + subH + 2 * m + 0.1;
-    const cx = L.capR - cw / 2, cy = L.capY, by = cy + ch / 2 - m - bh / 2, cr = Math.min(ch / 2, 0.6);
+    /* the capsule's top stays below the page's badge (29 px down, plus a gap) */
+    const cx = L.capR - cw / 2, cy = Math.min(L.capY, camera.top - W(38) - ch / 2), by = cy + ch / 2 - m - bh / 2, cr = Math.min(ch / 2, 0.6);
     fit(cap, cx, cy, cw, ch, cr); fit(capIn, cx, cy, cw - 0.16, ch - 0.16, cr - 0.08);
     const tx = cx - cw / 2 + m + bw / 2, hx = cx + cw / 2 - m - bw / 2;
     fit(tBox, tx, by, bw, bh); fit(tTint, tx, by, bw, bh); fit(hBox, hx, by, bw, bh);
@@ -116,18 +120,16 @@ export default function create(ctx) {
     tSub.position.set(tx, by - bh / 2 - 0.05, 6); hSub.position.set(hx, by - bh / 2 - 0.05, 6);
     inArrow.set([tx + bw / 2 + 0.06, by], [hx - bw / 2 - 0.06, by]);
     const lk = clamp(11 / (0.26 * p), 1, 2.2), ly = cy - ch / 2 - 0.2 * lk;
-    lock.scale.setScalar(lk); lock.position.set(cx, ly, 0.3); sealLab.position.set(cx + 0.26 * lk, ly, 6);
+    lock.scale.setScalar(lk); lock.position.set(cx, ly, 0.3); sealLab.position.set(cx + 0.26 * lk, ly, 6); sealLab.setSize(L.gate);
     /* ring, ANM, and the two things the ring touches (tangent at top and bottom) */
     const pts = [];
     for (let i = 0; i < 120; i++) { const a = (i / 120) * 2 * PI; pts.push([R.x + R.rx * Math.cos(a), R.y + R.ry * Math.sin(a)]); }
     ring.setPoints(pts);
     const aw = W(tw('ANM', 13, 700) + 26), ah = Math.max(0.8, W(13 * ts * 1.25 + 14));
     fit(anm, R.x, R.y, aw, ah, 0.18); fit(anmTint, R.x, R.y, aw, ah, 0.18); anmLab.position.set(R.x, R.y, 6);
-    loopLab.visible = !!L.loop;
-    if (L.loop) { loopLab.position.set(L.loop[0], L.loop[1], 6); loopLab.setAnchor(L.loop[2]); }
+    if (L.loop === 'right') { loopLab.position.set(R.x + R.rx + W(8), R.y, 6); loopLab.setAnchor('left'); }
+    else { loopLab.position.set(L.loop[0], L.loop[1], 6); loopLab.setAnchor(L.loop[2]); }
     for (const [n, side] of [[card, 1], [plug, -1]]) {
-      n.w = W(Math.max(...n.states.map((s) => tw(s, 12.5)), tw(n.legend, 10.5) + 12) + 24);
-      n.h = Math.max(0.9, W(12.5 * ts * 1.25 + 14));
       n.x = R.x; n.y = R.y + side * (R.ry + n.h / 2);
       [n.base, n.tint, n.hi].forEach((b) => fit(b, n.x, n.y, n.w, n.h, 0.18));
       n.labs.forEach((l) => l.position.set(n.x, n.y, 6));
@@ -142,7 +144,12 @@ export default function create(ctx) {
     measLab.setText(L.measText);
     const mw = W(tw(L.measText, 12) + 22), mh = Math.max(0.9, W(th(L.measText, 12) + 14));
     const kw = W(tw('answer key', 12) + 22), kh = Math.max(0.9, W(th('answer key', 12) + 14));
-    const mx = L.meas[0] == null ? L.capL + mw / 2 : L.meas[0], my = L.meas[1], kx = L.fw / 2 - 0.12 - kw / 2;
+    /* the answer key keeps 8 px off the stage's right edge; on a short wide strip measured protein moves left (never
+       into the ring) so its arrow to the answer key keeps ~44 px */
+    const kx = camera.right - Math.max(0.12, W(8)) - kw / 2;
+    const mx = L.meas[0] == null ? camera.left + Math.max(0.3, W(8)) + mw / 2
+      : Math.max(R.x + R.rx + W(16) + mw / 2, Math.min(L.meas[0], kx - kw / 2 - W(44) - mw / 2));
+    const my = L.meas[1] == null ? camera.bottom + W(16) + mh / 2 : L.meas[1];
     fit(meas, mx, my, mw, mh); measLab.position.set(mx, my, 6);
     fit(key, kx, my, kw, kh); keyLab.position.set(kx, my, 6);
     pathA = [[mx + mw / 2 + 0.06, my], [kx - kw / 2 - 0.08, my]];
@@ -156,15 +163,9 @@ export default function create(ctx) {
     const gx = L.branch ? plug.x : (plug.x + plug.w / 2 + mx) / 2, gy = L.branch ? (my + pb) / 2 : plug.y;
     gate.position.set(gx, gy, 2.5); gate.rotation.z = L.branch ? PI / 2 : 0;
     halves.forEach((h, i) => h.setPoints([[0, 0], [0, (i ? -1 : 1) * gb]]));
+    gateLab.setSize(L.gate);
     if (L.branch) { gateLab.position.set(gx - 1.7 * gb - 0.1, gy, 6); gateLab.setAnchor('right'); }
     else { gateLab.position.set(gx, gy - 1.7 * gb - 0.06, 6); gateLab.setAnchor('top'); }
-    /* the tag, tied to the ring */
-    tagLab.setText(L.tagText); tagLab.setSize(L.tagSize);
-    const tgw = W(tw(L.tagText, L.tagSize) + 14), tgh = W(th(L.tagText, L.tagSize) + 10);
-    const ax = R.x + R.rx * Math.cos(L.tagA), ay = R.y + R.ry * Math.sin(L.tagA);
-    const [qx, qy] = L.tag || [ax + 0.3, ay], tcx = qx + tgw / 2;
-    fit(tagBox, tcx, qy, tgw, tgh, 0.1); tagLab.position.set(tcx, qy, 6);
-    str.setPoints([[ax, ay], [qx, qy]]); knot.position.set(ax, ay, 2.1);
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (!dead) { layout(); ctx.requestRender(); } });
 
@@ -206,11 +207,14 @@ export default function create(ctx) {
         d.position.copy(ctx.along(pathB, seg(u, a, a + 0.14, ease.inOutSine))); d.position.z = 3;
         d.setOpacity(pulse(u, a, a + 0.14, 0.015));
       });
-      /* what the loop changes: the evidence, then the question; both return before the next lap */
-      const sw = seg(u, 0.29, 0.35) * (1 - seg(u, 0.88, 0.94));
-      plug.labs[0].setOpacity(1 - sw); plug.labs[1].setOpacity(sw);
-      const cq = seg(u, 0.62, 0.68) * (1 - seg(u, 0.88, 0.94));
-      card.labs[0].setOpacity(1 - cq); card.labs[1].setOpacity(cq);
+      /* what the loop changes: the evidence, then the question; both return before the next lap.
+         The word in a box fades out before the next fades in, so two words never overlap. */
+      const swap = (labs, a, b) => {
+        labs[0].setOpacity(clamp(1 - seg(u, a, a + 0.03) + seg(u, b + 0.03, b + 0.06)));
+        labs[1].setOpacity(seg(u, a + 0.03, a + 0.06) * (1 - seg(u, b, b + 0.03)));
+      };
+      swap(plug.labs, 0.29, 0.88);
+      swap(card.labs, 0.62, 0.88);
       anmTint.setOpacity(0.14 + 0.14 * pulse(u, 0.7, 0.84, 0.04));
       /* steady streams: predicted protein out of the capsule, measured protein to the answer key */
       outTok.forEach((d, i) => {

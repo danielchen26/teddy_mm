@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ANM Decision Loop</title>
-<meta name="description" content="How the Mode B ANM decision loop (veto → complement → verify) closes a gap TEDDY z_512 cannot close on must-separate pairs. Verified numbers only." />
+<meta name="description" content="How the Mode B ANM decision loop (veto → complement → verify) closes a gap that the readout on TEDDY’s embedding (our head + soft rule) leaves on must-separate pairs. First run, withdrawn pending redesign. Verified numbers only." />
 <meta name="color-scheme" content="light dark" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -398,7 +398,7 @@ details.tv .tvp { font-size: .86rem; color: var(--ink-muted); margin: .6rem 0 0;
       <details class="tv">
         <summary>Redesign prototype and disclosures</summary>
         <p class="tvp">This page is Experiment 6, Look-alike cells; it was not rerun. The corrected rerun is done for Experiments 1, 3, 4 and 5: with all markers entering at once and a train-median size factor, ANM makes the same call as the fixed rule on every cell. Known issues here: markers were entered one per step in panel order, a hidden weight; predictions were scaled by a per-cell factor computed from measured protein; the answer key has no NK or out-of-scope class.</p>
-        <p class="tvp">Redesign prototype: the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 361 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738. Whether TEDDY’s embedding or our head loses the difference is still open (Mode A probes will tell).</p>
+        <p class="tvp">Redesign prototype (official TEDDY-G preprocessing; this page’s first-run numbers used the earlier, non-official one): the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a third of the measured ones (CD335 0.88). On site4, 1,053 of the 1,506 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 453 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.148 / 0.100 / 0.364 / 0.205 vs measured 0.621 / 0.321 / 0.413 / 0.756. A first Mode A probe points at TEDDY, not our head: a linear probe separates NK from T at every TEDDY layer (held-out AUC 0.991–0.997), yet linear protein probes from every layer keep only about a fifth to two-fifths of these pairs’ measured differences, and our head is no worse (linear probes only; pairs chosen for closeness in the embedding).</p>
         <p class="tvp">Donor 15078 is in training at other sites and is 32.6% of site4 test cells, and the 9 panel proteins were chosen by test-set Pearson.</p>
       </details>
       <p class="srcnote">1,490 myeloid↔T must-separate pairs · before: TEDDY + fixed rule (soft) · after: measured protein as typed evidence, strict rule · <a href="reports/reverse_loop_small_stats.json">reverse_loop_small_stats.json</a></p>
@@ -598,7 +598,7 @@ details.tv .tvp { font-size: .86rem; color: var(--ink-muted); margin: .6rem 0 0;
       <h2>Claim boundary</h2>
       <p class="sub">“Reverse loop” is a <b>decision</b> loop: we change what the readout sees and asks, not TEDDY’s representation.</p>
       <p class="sub">Open loop: TEDDY does not read the field, so ANM’s <span class="term" data-term="timestep">dynamics</span> are not tested here; not yet, not impossible (<a href="index.html#timestep">why</a>).</p>
-      <figure class="anim a-wide withdrawn" data-anim="loop-boundary-sealed" style="--ar:21/6;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: TEDDY and our head stay sealed; the decision loop only changes the evidence and the question outside them, and measured protein enters the evidence only through one labelled test gate."></div><figcaption>The loop changes evidence and question, never TEDDY or head.</figcaption></figure>
+      <figure class="anim a-wide withdrawn" data-anim="loop-boundary-sealed" style="--ar:21/6;--ar-sm:3/2"><div class="anim-stage" role="img" aria-label="Animation: TEDDY and our head stay sealed; the decision loop only changes the evidence and the question outside them, and measured protein enters the evidence only through one labelled test gate."></div><figcaption>The loop changes evidence and question, never TEDDY or head.</figcaption></figure>
       <div class="bound">
         <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>Veto → complement → verify on must-separate pairs</li>
@@ -621,7 +621,7 @@ details.tv .tvp { font-size: .86rem; color: var(--ink-muted); margin: .6rem 0 0;
       </div>
       <details class="tv">
         <summary>Withdrawn pending redesign (29 Sep 2026) and the NK–T prototype</summary>
-        <p class="tvp">Withdrawn because markers entered one per step in panel order, predictions were scaled by a per-cell factor from measured protein, and the answer key has no NK or out-of-scope class. The redesign prototype finds the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 361 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738.</p>
+        <p class="tvp">Withdrawn because markers entered one per step in panel order, predictions were scaled by a per-cell factor from measured protein, and the answer key has no NK or out-of-scope class. The redesign prototype (official TEDDY-G preprocessing) finds the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a third of the measured ones (CD335 0.88). On site4, 1,053 of the 1,506 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 453 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.148 / 0.100 / 0.364 / 0.205 vs measured 0.621 / 0.321 / 0.413 / 0.756. Linear probes on every TEDDY layer are compressed as much as our head, so the gap sits in TEDDY’s gene-mean representation.</p>
         <p class="tvp">Open loop, in full: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. ANM’s step is any real processing order, not necessarily physical time. The nine marker predictions come out of one prediction with no order (entering them in panel order was the hidden weight); TEDDY’s transformer layers are a real order, so the natural test is Mode A, over layers.</p>
       </details>
     </div>
@@ -632,6 +632,7 @@ details.tv .tvp { font-size: .86rem; color: var(--ink-muted); margin: .6rem 0 0;
     <div class="wrap">
       <h2>Posters</h2>
       <p class="sub">Static first-run summaries, for slides.</p>
+      <div class="say warn" style="margin:0 0 1rem;font-size:.86rem"><b>Older wording.</b> These images predate the 29 Sep corrections and some of their text overlaps. Where they say “z_512 insufficient” or “can’t separate”, read: the readout on TEDDY’s embedding (our head + soft rule) falls short on these pairs; whether the embedding itself lacks the difference is untested.</div>
       <div class="controls postertabs"><div class="seg" id="posterSeg">
         <button aria-pressed="true" data-p="06_anm_loop_poster">The loop</button>
         <button aria-pressed="false" data-p="07_myeloid_t_before_after">Myeloid↔T before/after</button>

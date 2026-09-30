@@ -21,9 +21,9 @@
 
 /* Every pipeline number this scene prints. Refresh after the official-preprocessing rerun. */
 const NUMBERS = {
-  noCalls: [448, 2014, 3169],       // page table “No calls”: soft, strict, B/T-priority
-  accuracy: [0.953, 0.978, 0.964],  // page table “Accuracy of calls”: soft, strict, B/T-priority
-  oosCalled: [64, 91],              // “64–91% of out-of-scope cells still get a call” (%)
+  noCalls: [272, 1493, 2551],       // page table “No calls”: soft, strict, B/T-priority
+  accuracy: [0.943, 0.967, 0.955],  // page table “Accuracy of calls”: soft, strict, B/T-priority
+  oosCalled: [73, 95],              // “64–91% of out-of-scope cells still get a call” (%)
 };
 
 export default function create(ctx) {

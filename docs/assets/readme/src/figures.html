@@ -129,30 +129,30 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
 <!-- =============== WHY =============== -->
 <div class="fig" id="why">
   <div class="fh">
-    <div><p class="lead">Corrected rerun (29 Sep 2026). TEDDY frozen throughout; TEDDY + fixed rule and ANM read the same evidence, and with all markers entering at once they make the same calls.</p></div>
+    <div><p class="lead">Corrected rerun (29 Sep 2026), with the official TEDDY-G preprocessing (same phase-1 Pearson as the earlier one). TEDDY frozen throughout; TEDDY + fixed rule and ANM read the same evidence, and with all markers entering at once they make the same calls.</p></div>
     <div class="legend"><span><i style="background:var(--s-anm)"></i>With ANM</span><span><i style="background:var(--s-teddy)"></i>Without ANM (fixed rule or alternative)</span></div>
   </div>
   <div class="cards">
     <div class="card"><div class="k"><i>1</i>Change the question</div><div class="v"><span class="to">0</span> <small>labels</small></div>
-      <p class="c">to switch from the soft rule to the B/T-priority rule. ANM’s “no calls” follow the question: 448 → 2,014 → 3,169.</p>
+      <p class="c">to switch from the soft rule to the B/T-priority rule. ANM’s “no calls” follow the question: 272 → 1,493 → 2,551.</p>
       <div class="vs"><b>TEDDY + fixed rule</b> kept as the soft rule answers 2,726 cells the new question holds back; re-coded, it makes ANM’s calls.</div></div>
     <div class="card"><div class="k"><i>1</i>Same calls</div><div class="v"><span class="to">100%</span></div>
       <p class="c">of site4 cells get the same call from ANM and from the fixed rule written for the same question, by construction.</p>
       <div class="vs"><b>What ANM adds:</b> the question written down, workability and exactness checks, a per-marker reason.</div></div>
-    <div class="card"><div class="k"><i>3</i>Why this call?</div><div class="v"><span class="to">16,302</span></div>
-      <p class="c">calls get a per-marker reason: leave-one-out plus flip distance. CD5 decides 19.5% (p ≈ 0.0099).</p>
+    <div class="card"><div class="k"><i>3</i>Why this call?</div><div class="v"><span class="to">16,478</span></div>
+      <p class="c">calls get a per-marker reason: leave-one-out plus flip distance. CD2 decides most often, 17.9% (p ≈ 0.0099); CD5 close behind, 17.3%.</p>
       <div class="vs"><b>Not ANM-specific:</b> the deciding marker is the largest normalised value in the called lineage.</div></div>
-    <div class="card"><div class="k"><i>4</i>Which calls to trust?</div><div class="v"><span class="f">0.945</span> → <span class="to">0.9987</span></div>
+    <div class="card"><div class="k"><i>4</i>Which calls to trust?</div><div class="v"><span class="f">0.938</span> → <span class="to">0.9993</span></div>
       <p class="c">accuracy of the fixed rule’s own calls keeping the 40% ANM is most confident about (soft rule).</p>
-      <div class="vs"><b>The rule’s own margin</b> does as well at the same coverage: 0.9988.</div></div>
-    <div class="card"><div class="k"><i>5</i>Cost of a new question</div><div class="v"><span class="to">0</span> <small>vs</small> <span class="f">50–2,000</span></div>
+      <div class="vs"><b>The rule’s own margin</b> does as well or better at every coverage: 0.9994.</div></div>
+    <div class="card"><div class="k"><i>5</i>Cost of a new question</div><div class="v"><span class="to">0</span> <small>vs</small> <span class="f">50–1,000</span></div>
       <p class="c">new labelled cells to reach ANM’s B/T-priority answers (ANM vs trained heads, disjoint split).</p>
       <div class="vs"><b>Any written rule</b> also needs 0; trained heads buy the numbers, not an editable rule.</div></div>
     <div class="card"><div class="k"><i>2·6</i>Withdrawn</div><div class="v"><span class="f">2</span> <small>experiments</small></div>
       <p class="c">RNA missing and look-alike cells stay withdrawn pending redesign.</p>
-      <div class="vs"><b>Prototypes:</b> a trust per level equals the fixed rule with a stricter bar; the TEDDY + head predictions separate NK from T in the right direction but compress the differences.</div></div>
+      <div class="vs"><b>Prototypes:</b> a trust per level equals the fixed rule with a stricter bar; the TEDDY + head predictions separate NK from T in the right direction but compress the differences, and linear probes on TEDDY’s layers compress them as much.</div></div>
   </div>
-  <div class="foot"><span><b>Accuracy is not the claim:</b> in Experiment 1 ANM and the re-coded fixed rule have identical accuracy of calls made (0.953 / 0.978 / 0.964).</span><span>Not clinical · no Pearson claim beyond ≈ 0.60</span></div>
+  <div class="foot"><span><b>Accuracy is not the claim:</b> in Experiment 1 ANM and the re-coded fixed rule have identical accuracy of calls made (0.943 / 0.967 / 0.955).</span><span>Not clinical · no Pearson claim beyond ≈ 0.60</span></div>
 </div>
 
 <!-- =============== HOW =============== -->

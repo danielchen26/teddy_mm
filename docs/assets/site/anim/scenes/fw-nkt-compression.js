@@ -15,8 +15,8 @@
  * the still frame shows beat 3 complete. The top-right corner stays empty for the play/pause button.
  */
 const NUMBERS = {
-  nearPairs: 361,                                                               // NK–T pairs the embedding nearly merges
-  kept: [['CD3', 0.26], ['CD56', 0.31], ['CD94', 0.46], ['CD335', 0.69]],       // predicted ÷ measured gap, those pairs
+  nearPairs: 453,                                                               // NK–T pairs the embedding nearly merges
+  kept: [['CD3', 0.27], ['CD56', 0.24], ['CD94', 0.31], ['CD335', 0.88]],       // predicted ÷ measured gap, those pairs
   random: [0.8, 1.5],                                                           // the same ratio, random NK–T pairs
 };
 

@@ -62,7 +62,7 @@ export default function create(ctx) {
 
   // Mode A (not done): the same stack in greys only; probe rings for the gaps between layers.
   const SA = stack(gA, XS_A, 'faint', 'faint', 0.08, 'TEDDY', 'muted', 'opened up');
-  const HA = header(gA, 'Mode A', 'muted', 'not done', 'muted');
+  const HA = header(gA, 'Mode A', 'muted', 'first probes', 'muted');
   const rings = Array.from({ length: NL - 1 }, () => add(gA, ctx.dot([0, 0, 3], { r: 0.1, color: 'muted', hollow: true, ring: 0.34 })));
   const askL = add(gA, ctx.label('NK–T differ?', { size: 12, weight: 600, color: 'muted', anchor: 'left' }));
 

@@ -22,15 +22,15 @@ const NUMBERS = {
   leadAt: 80,          // “apart from +0.0026 at 80% (soft) and ≤ 0.0004 elsewhere”
   lead: '+0.0026',
   keep: 40,            // “soft rule, keeping 40%”
-  accAll: '0.945',     // “(all cells 0.945)”
-  accAnm: '0.9987',    // KPI: ANM confidence, keeping 40%
-  accMargin: '0.9988', // KPI: the rule’s margin, keeping 40%
-  hard: 4476,          // “calls that flip under leave-one-out (4,476)”
+  accAll: '0.938',     // “(all cells 0.945)”
+  accAnm: '0.9993',    // KPI: ANM confidence, keeping 40%
+  accMargin: '0.9994', // KPI: the rule’s margin, keeping 40%
+  hard: 4942,          // “calls that flip under leave-one-out (4,476)”
   draws: 40,           // “vs 40 random draws”
-  accHard: '0.818',    // “0.818 vs 0.945: accuracy on the 4,476 hard cells vs random cells”
-  accRandom: '0.945',
-  nkIlc: '3.4×',       // “NK/ILC and erythroid over-represented: 73% of hard cells, out of scope”
-  erythroid: '3.7×',
+  accHard: '0.791',    // “0.818 vs 0.945: accuracy on the 4,476 hard cells vs random cells”
+  accRandom: '0.939',
+  nkIlc: '3.1×',       // “NK/ILC and erythroid over-represented: 73% of hard cells, out of scope”
+  erythroid: '3.4×',
   outOfScope: 73,
 };
 
@@ -56,7 +56,7 @@ export default function create(ctx) {
     },
     narrow: {
       // the slider sits under the lanes here, so the play button's top-right corner stays clear
-      W: 16, H: 9, x0: -7.3, x1: 7.3, yU: 1.47, yD: 1.27, hmax: 1.3, ty: -0.4, above: false, dotPx: 3.4, handlePx: 5,
+      W: 16, H: 9, x0: -7.3, x1: 7.3, yU: 1.47, yD: 1.27, hmax: 1.3, ty: -0.5, above: false, dotPx: 3.4, handlePx: 5,
       lane: { yU: 2.12, yD: 0.5, yD2: 0.12 }, title: [7.3, -3.84, 'right'], small: true,
       ro: { x: -7.3, colA: -0.6, colB: 2.7, yHead: -1.55, yCols: -1.55, yA: -2.22, yM: -2.9, yChip: -3.82, midApprox: false },
       field: { x0: -7.0, x1: 7.0, rows: [2.15, 1.4, 0.65, -0.1], jit: 0.13, hy: [3.85, 3.32] },

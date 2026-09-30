@@ -17,8 +17,8 @@
  */
 const NUMBERS = {
   depths: [1, 0.5, 0.2, 0.1, 0.05],     // f: share of each cell's RNA counts kept (page: f ∈ {1, 0.5, 0.2, 0.1, 0.05})
-  pearson: { full: 0.937, low: 0.805 }, // panel-protein Pearson, all counts → 5% of counts
-  lineage: { full: 0.985, low: 0.917 }, // lineage accuracy, all counts → 5% of counts
+  pearson: { full: 0.936, low: 0.855 }, // panel-protein Pearson, all counts → 5% of counts
+  lineage: { full: 0.983, low: 0.959 }, // lineage accuracy, all counts → 5% of counts
   cells: 1500,                          // validation cells (prototype)
 };
 

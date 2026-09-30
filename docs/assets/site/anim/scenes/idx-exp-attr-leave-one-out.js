@@ -29,19 +29,19 @@ const NUMBERS = {
   // v2 export (outputs/anm_cite_bridge_v2/cite_cells_meta.jsonl, adt_pred_panel / norm_p95_train, clipped 0–1).
   // Drawn as bar heights only; never printed.
   evidence: {
-    CD19: 0.1374, CD72: 0.2177, CD22: 0.2203,
-    CD3: 0.1612, CD2: 0.1567, CD5: 0.1710,
-    CD16: 0.1233, CD11c: 0.1013, CD36: 0.1316,
+    CD19: 0.089, CD72: 0.168, CD22: 0.18,
+    CD3: 0.156, CD2: 0.195, CD5: 0.164,
+    CD16: 0.08, CD11c: 0.162, CD36: 0.15,
   },
   softBar: 0.12,                     // soft question's bar (page glossary); used to decide, not drawn
-  nCalled: 16302,                    // page: “16,302 called cells”
+  nCalled: 16478,                    // page: “16,302 called cells”
   // page chart data (DATA.b3.top1): [protein, lineage, cells it decides]; drawn to scale, only CD5's share printed
-  top1: [['CD5', 'T', 3178], ['CD36', 'M', 2336], ['CD16', 'M', 2195], ['CD3', 'T', 2194], ['CD19', 'B', 1763],
-    ['CD2', 'T', 1562], ['CD72', 'B', 1232], ['CD11c', 'M', 952], ['CD22', 'B', 890]],
-  permMean: 0.1441,                  // page: “vs 14.4% shuffled” (top marker's share, within-lineage shuffles)
+  top1: [['CD2', 'T', 2945], ['CD5', 'T', 2849], ['CD19', 'B', 2749], ['CD36', 'M', 2500], ['CD16', 'M', 2221],
+    ['CD11c', 'M', 1049], ['CD3', 'T', 1011], ['CD72', 'B', 869], ['CD22', 'B', 285]],
+  permMean: 0.1573,                  // page: “vs 14.4% shuffled” (top marker's share, within-lineage shuffles)
   nPerm: 100,                        // page: “permutation 100×”
   p: 0.0099,                         // page: “p ≈ 0.0099”
-  flipRate: 0.2746,                  // page: “27.5% of calls flip without their deciding marker”
+  flipRate: 0.2999,                  // page: “27.5% of calls flip without their deciding marker”
 };
 
 export default function create(ctx) {

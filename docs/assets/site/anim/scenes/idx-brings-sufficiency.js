@@ -3,10 +3,10 @@
  * One idea: two cells that are neighbours in TEDDY's embedding get close predicted proteins
  * (TEDDY's frozen embedding + our head), although their measured proteins are far apart.
  * 1 A slowly turning 3D cloud stands for TEDDY's embedding (NK and T dots; the layout is illustrative,
- *   not data). One NK cell and one T cell drift until they almost touch: cosine 0.985 (page value).
- * 2 The same two cells on two CD3 rails: predicted (TEDDY + head) 0.56 / 0.68, measured 0.17 / 0.98.
- * 3 Share of the measured gap the predictions keep (page values): CD3 0.26, CD56 0.31, CD94 0.46,
- *   CD335 0.69; dashed 1 = the whole measured gap; band 0.8–1.5 = NK–T pairs that are not neighbours
+ *   not data). One NK cell and one T cell drift until they almost touch: cosine 0.976 (page value).
+ * 2 The same two cells on two CD3 rails: predicted (TEDDY + head) 0.07 / 0.06, measured 0.23 / 0.20.
+ * 3 Share of the measured gap the predictions keep (page values): CD3 0.27, CD56 0.24, CD94 0.31,
+ *   CD335 0.88; dashed 1 = the whole measured gap; band 0.8–1.5 = NK–T pairs that are not neighbours
  *   (faint pairs that keep their gap).
  * 4 An open fork between the embedding and our head: two unlit lamps and a Mode A probe (not run yet).
  * Wide layout 21 × 8 when the stage is at least 2:1 (desktop 21:8), else narrow 16 × 10 (phone 16:10).
@@ -16,10 +16,10 @@
 /* Every pipeline number this scene prints (all stated on index.html #brings). Refresh after the
  * official-preprocessing rerun. */
 const NUMBERS = {
-  cosine: 0.985,                  // the NK–T neighbour pair in TEDDY's embedding
-  cd3Predicted: [0.56, 0.68],     // CD3 of the pair, predicted by our head from TEDDY's embedding: NK, T
-  cd3Measured: [0.17, 0.98],      // CD3 of the pair, measured: NK, T
-  gapKept: [['CD3', 0.26], ['CD56', 0.31], ['CD94', 0.46], ['CD335', 0.69]],   // predicted ÷ measured gap, near pairs
+  cosine: 0.970,                  // the NK–T neighbour pair in TEDDY's embedding
+  cd3Predicted: [0.10, 0.28],     // CD3 of the pair, predicted by our head from TEDDY's embedding: NK, T
+  cd3Measured: [0.30, 1.00],      // CD3 of the pair, measured: NK, T
+  gapKept: [['CD3', 0.27], ['CD56', 0.24], ['CD94', 0.31], ['CD335', 0.88]],   // predicted ÷ measured gap, near pairs
   notNeighbours: [0.8, 1.5],      // the same ratio for NK–T pairs that are not neighbours
 };
 
@@ -91,12 +91,12 @@ export default function create(ctx) {
   const outLab = lab('proteins', { anchor: 'left', color: 'muted' });
   const head = add(ctx.box(2.5, 1, { color: 'soft', stroke: 'muted', radius: 0.2 }));
   const headLab = lab('our head', { weight: 600, size: 13 });
-  const lamps = ['embedding lost it?', 'head didn’t use it?'].map((t) => ({
+  const lamps = ['embedding: compressed too', 'head: no worse'].map((t) => ({
     br: ln({ color: 'faint', width: 1.3, dashed: [3, 4] }),
     ring: dot('muted', { hollow: true, ring: 0.3 }), bulb: dot('faint'), l: lab(t, { anchor: 'bottom' }),
   }));
   const probe = { line: ln({ color: 'accent', width: 1.6, dashed: [4, 4] }), ring: dot('accent', { hollow: true, ring: 0.32 }),
-    core: dot('accent'), l: lab('Mode A probe', { anchor: 'top', color: 'accent', weight: 600 }) };
+    core: dot('accent'), l: lab('Mode A · linear probes', { anchor: 'top', color: 'accent', weight: 600 }) };
 
   /* ── projection of the turning cloud (yaw oscillates, fixed pitch) ── */
   const CP = Math.cos(0.32), SP = Math.sin(0.32);

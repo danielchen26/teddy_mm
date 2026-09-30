@@ -79,7 +79,7 @@ export default function create(ctx) {
   text('layer 1', slabX[0] - 0.12, lo, { weight: 600, color: 'teddy', anchor: 'top-left' });
   text(`layer ${NUMBERS.layers}`, slabX[L - 1] + 0.12, lo, { weight: 600, color: 'teddy', anchor: 'top-right' });
   text('embedding z\nmean of tokens', XZ, lo, { color: 'ink', anchor: 'top', align: 'center' });
-  text('NK vs T probe · planned', -7.1, -4.0, { weight: 600, color: 'accent', anchor: 'left' });
+  text('NK vs T probe · first result', -7.1, -4.0, { weight: 600, color: 'accent', anchor: 'left' });
   scene.add(ctx.line([[-7.42, -3.74, 1], [-7.42, -4.26, 1]], { color: 'accent', width: 1.5, dashed: [3, 3] }));
 
   // Dashed probe bars: one after each layer, one on the embedding z. Equal length, no values.
