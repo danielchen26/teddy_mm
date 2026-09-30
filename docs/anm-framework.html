@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The ANM framework — TEDDY × ANM</title>
+<meta name="description" content="How ANM measures a pipeline: push one source, follow it through the retained state, read the output and compare it with a boundary written in advance. The maths, two physics checks, the AI workflow (question, typed event graph, retained state, response) and how it runs on TEDDY’s workflow." />
+<meta name="color-scheme" content="light dark" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2713%27 fill=%27%23008c7e%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%275%27 fill=%27%23fff%27/%3E%3C/svg%3E" />
+<style>
+/* tokens: copied from index.html. Lineage colours (--s-b/t/m/nk) repeat anim.css's --anim-b/t/m/nk values so the legend and marker chips match the animations; keep them in sync. */
+:root {
+  --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #f0efe9; --bg-sunk: #efece4;
+  --ink: #16181a; --ink-muted: #565b62; --ink-faint: #868b92; --line: #dcd9d0; --line-strong: #c4c0b5;
+  --accent: #0d6e6e; --accent-soft: #dcefee;
+  --warn: #8a4b12; --warn-bg: #f6e8d6; --good: #1f6b3a; --good-bg: #dcefe3; --bad: #a13a3a; --bad-bg: #f7e2de;
+  --s-teddy: #c8641f; --s-anm: #008c7e; --s-train: #6554c9; --s-neutral: #b9b5aa;
+  --s-measured: #16181a; --s-b: #4a3aa7; --s-t: #2a78d6; --s-m: #a88600; --s-nk: #c2458f;
+  --grid: #ece9e1; --dot: rgba(22,24,26,.075);
+  --shadow: 0 1px 2px rgba(22,24,26,.04), 0 10px 30px rgba(22,24,26,.06);
+  --r: 16px; --max: 1140px;
+  --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --stick: 102px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111315; --bg-elev: #1b1e22; --bg-soft: #22262b; --bg-sunk: #15181b;
+    --ink: #ecebe6; --ink-muted: #a4a9b1; --ink-faint: #767c85; --line: #2d3238; --line-strong: #414850;
+    --accent: #5ec4c4; --accent-soft: #173332;
+    --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22; --bad: #e08a8a; --bad-bg: #3a2020;
+    --s-teddy: #c9722f; --s-anm: #10a092; --s-train: #8f7ee8; --s-neutral: #4a4f57;
+    --s-measured: #ecebe6; --s-b: #9a7cea; --s-t: #2b6ad6; --s-m: #a38b00; --s-nk: #d0508f;
+    --grid: #262a30; --dot: rgba(236,235,230,.06);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111315; --bg-elev: #1b1e22; --bg-soft: #22262b; --bg-sunk: #15181b;
+  --ink: #ecebe6; --ink-muted: #a4a9b1; --ink-faint: #767c85; --line: #2d3238; --line-strong: #414850;
+  --accent: #5ec4c4; --accent-soft: #173332;
+  --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22; --bad: #e08a8a; --bad-bg: #3a2020;
+  --s-teddy: #c9722f; --s-anm: #10a092; --s-train: #8f7ee8; --s-neutral: #4a4f57;
+  --s-measured: #ecebe6; --s-b: #9a7cea; --s-t: #2b6ad6; --s-m: #a38b00; --s-nk: #d0508f;
+  --grid: #262a30; --dot: rgba(236,235,230,.06);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+code, .mono { font-family: var(--mono); font-size: .86em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 720px) { .wrap { padding: 0 28px; } }
+.card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
+main { container-type: inline-size; container-name: main; }
+
+/* ---------- top bar (as index.html) ---------- */
+.topbar { position: sticky; top: 0; z-index: 40; height: 56px; border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); }
+.topbar-inner { max-width: var(--max); margin: 0 auto; padding: 0 16px; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+@media (min-width: 720px) { .topbar-inner { padding: 0 28px; } }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--s-teddy), var(--s-anm)); }
+.brand .x { color: var(--ink-faint); font-weight: 500; }
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav a { color: var(--ink-muted); text-decoration: none; font-size: .86rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; }
+.nav a:hover { color: var(--ink); background: var(--bg-soft); }
+.nav a.ext { color: var(--accent); font-weight: 600; }
+.nav a.cur { color: var(--ink); font-weight: 600; background: var(--bg-soft); box-shadow: inset 0 -2px 0 var(--s-anm); }
+.theme-btn { margin-left: 6px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); border-radius: 999px; padding: 5px 11px; font: inherit; font-size: .78rem; cursor: pointer; }
+.gh-link { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--bg-elev); color: var(--ink); font-size: .78rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.nav a.gh-link { color: var(--ink); font-size: .78rem; padding: 5px 10px; border-radius: 999px; }
+.gh-link:hover, .nav a.gh-link:hover { border-color: var(--accent); color: var(--accent); background: var(--bg-elev); }
+@media (max-width: 1100px) { .gh-link .ghl { display: none; } .nav a.gh-link { padding: 5px 8px; } }
+@media (max-width: 1000px) { .nav a.hide-1000 { display: none; } }
+@media (max-width: 760px) { .nav a.hide-760 { display: none; } }
+@media (max-width: 480px) { .nav a.hide-480 { display: none; } }
+.mnav { display: none; position: relative; }
+@media (max-width: 760px) { .mnav { display: block; } }
+.mnav summary { list-style: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--ink);
+  padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev); }
+.mnav summary::-webkit-details-marker { display: none; }
+@media (max-width: 480px) { .mnav .mlabel { display: none; } .mnav summary { padding: 6px 9px; } }
+.mnav-panel { position: fixed; top: 64px; right: 12px; width: min(300px, calc(100vw - 24px)); max-height: calc(100vh - 80px); overflow-y: auto;
+  padding: 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-elev); box-shadow: var(--shadow); display: grid; gap: 2px; z-index: 50; }
+.mnav-panel a { display: block; padding: 8px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .88rem; }
+.mnav-panel a:hover { background: var(--bg-soft); }
+.mnav-panel a.cur { font-weight: 600; background: var(--accent-soft); }
+.mnav-panel a.sub { padding-left: 22px; color: var(--ink-muted); font-size: .84rem; }
+.mnav-panel a.ext { color: var(--accent); font-weight: 600; border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; margin-top: 4px; padding-top: 10px; }
+.mnav-panel a.ext + a.ext { border-top: 0; margin-top: 0; }
+
+/* ---------- sticky in-page section nav ---------- */
+.secnav { position: sticky; top: 56px; z-index: 30; border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.sn { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 8px 0; scrollbar-width: none; overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.sn::-webkit-scrollbar { display: none; }
+.sn::after { content: ""; flex: none; width: 20px; }
+.sn-g { flex: none; font-family: var(--mono); font-size: .6rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); padding: 0 0 0 10px; }
+.sn-g:first-child { padding-left: 0; }
+.sn a { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev);
+  color: var(--ink-muted); text-decoration: none; font-size: .76rem; font-weight: 600; white-space: nowrap; transition: border-color .15s ease, color .15s ease, background .15s ease; }
+.sn a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--s-anm); opacity: .7; }
+.sn a[data-ch="teddy"]::before, .sn a[data-ch="next"]::before { background: var(--s-teddy); }
+.sn a[data-ch="physics"]::before { background: var(--ink-faint); }
+.sn a:hover { color: var(--ink); border-color: var(--ink-faint); }
+.sn a.on { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+.sn a.on::before { background: var(--bg); opacity: 1; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding: 52px 0 48px; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px); background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 92%); mask-image: linear-gradient(to bottom, #000 25%, transparent 92%); }
+.hero .wrap { position: relative; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .72rem; letter-spacing: .03em; color: var(--ink-muted);
+  background: var(--bg-elev); border: 1px solid var(--line); padding: 5px 11px; border-radius: 999px; max-width: 100%; }
+.eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--s-anm); flex: none; }
+h1 { font-size: clamp(2rem, 4.8vw, 3.1rem); line-height: 1.06; letter-spacing: -.038em; margin: 18px 0 14px; font-weight: 700; }
+h1 .a { color: var(--s-anm); }
+.lede { font-size: 1.07rem; color: var(--ink-muted); max-width: 40rem; margin: 0; }
+.lede .t { color: var(--s-teddy); font-weight: 600; } .lede .a { color: var(--s-anm); font-weight: 600; }
+.zh-hero { font-size: .82rem; color: var(--ink-faint); margin: 10px 0 0; }
+.chaps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 30px; }
+@container main (max-width: 900px) { .chaps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container main (max-width: 540px) { .chaps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 24px; } .chc { padding: 10px 12px 11px; } .chc h3 { margin: 0; font-size: .96rem; } .chc .cl { display: none; } }
+.chc { padding: 14px 16px 14px; border-top: 3px solid var(--s-anm); min-width: 0; }
+.chc.td { border-top-color: var(--s-teddy); }
+.chc .cn { font-family: var(--mono); font-size: .66rem; font-weight: 600; letter-spacing: .06em; color: var(--ink-faint); }
+.chc h3 { font-size: 1.04rem; margin: 2px 0 8px; letter-spacing: -.012em; line-height: 1.3; }
+.chc h3 a { color: var(--ink); text-decoration: none; }
+.chc h3 a:hover { color: var(--accent); }
+.chc .cl { display: flex; flex-wrap: wrap; gap: 4px; }
+.chc .cl a { font-size: .74rem; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-muted); text-decoration: none; }
+.chc .cl a:hover { color: var(--ink); border-color: var(--accent); }
+.chc.ai .cl a + a::before { content: "→ "; color: var(--ink-faint); }
+.chc.ai .cl a:last-child::before { content: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 20px 0 0; padding: 0; list-style: none; font-size: .78rem; color: var(--ink-muted); }
+.legend li { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.legend .lk { font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
+
+/* ---------- chapter bands ---------- */
+.chap { padding: 72px 0 4px; border-top: 1px solid var(--line); scroll-margin-top: var(--stick); }
+.chap-row { display: flex; align-items: center; gap: 12px; }
+.chap-n { flex: none; font-family: var(--mono); font-size: .78rem; font-weight: 600; color: var(--bg); background: var(--ink); border-radius: 10px; padding: 4px 9px; }
+.chap[data-ch="teddy"] .chap-n, .chap[data-ch="next"] .chap-n { background: var(--s-teddy); }
+.chap[data-ch="idea"] .chap-n, .chap[data-ch="maths"] .chap-n, .chap[data-ch="ai"] .chap-n { background: var(--s-anm); }
+.chap-t { font-size: clamp(1.5rem, 3.2vw, 2.2rem); letter-spacing: -.032em; line-height: 1.1; margin: 0; }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 0; margin: 14px 0 0; padding: 0; list-style: none; }
+.flow li { display: inline-flex; align-items: center; }
+.flow li:not(:last-child)::after { content: "→"; margin: 0 8px; color: var(--ink-faint); font-size: .9rem; }
+.flow a { font-size: .8rem; font-weight: 600; padding: 4px 11px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-soft); color: var(--ink); text-decoration: none; }
+.chap[data-ch="teddy"] .flow a { border-color: color-mix(in srgb, var(--s-teddy) 40%, var(--line)); background: color-mix(in srgb, var(--s-teddy) 10%, var(--bg-elev)); }
+.flow a:hover { border-color: var(--accent); }
+
+/* ---------- a section: heading, animation, text ---------- */
+.fs { padding: 44px 0 52px; scroll-margin-top: var(--stick); }
+.fs + .fs { border-top: 1px dashed var(--line); }
+.fs-grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); grid-template-rows: auto 1fr; grid-template-areas: "head fig" "body fig"; column-gap: 40px; }
+.fs.flip .fs-grid { grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); grid-template-areas: "fig head" "fig body"; }
+.fs-head { grid-area: head; min-width: 0; }
+.fs-fig { grid-area: fig; align-self: start; min-width: 0; position: sticky; top: calc(var(--stick) + 16px); }
+.fs-body { grid-area: body; min-width: 0; }
+@container main (max-width: 860px) {
+  .fs-grid, .fs.flip .fs-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "head" "fig" "body"; row-gap: 16px; }
+  .fs-fig { position: static; }
+}
+.kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+.fs[data-ch="teddy"] .kicker, .fs[data-ch="next"] .kicker { color: var(--s-teddy); }
+.fs h2 { font-size: clamp(1.4rem, 2.7vw, 1.9rem); letter-spacing: -.028em; line-height: 1.18; margin: 0 0 14px; }
+.fs-p { margin: 0; font-size: 1.02rem; line-height: 1.62; }
+.fs-p + .fs-p, .notc + .fs-p { margin-top: 12px; }
+.fs-p b { font-weight: 600; }
+.fs-p sub, .four dd sub { font-size: .72em; line-height: 0; vertical-align: -.25em; }
+.tag { display: inline-flex; align-items: center; font-family: var(--mono); font-size: .6rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; line-height: 1.5;
+  padding: 1px 8px; border-radius: 999px; background: var(--bg-soft); color: var(--ink-muted); border: 1px solid var(--line); text-decoration: none; }
+.tag.warn { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 30%, var(--line)); }
+.tag.plan { background: transparent; color: var(--ink-muted); border-style: dashed; }
+.tag.rerun { background: transparent; color: var(--ink-muted); }
+
+/* the animation frame: anim.css draws the card (border, stage, caption); this adds the page's shadow */
+.fs-fig { border-radius: var(--r); box-shadow: var(--shadow); }
+.fs-fig > .anim { margin: 0; }
+
+/* maths */
+.math { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 26px; margin: 18px 0 0; padding: 8px 14px; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--line); max-width: 100%; }
+.math .eq { max-width: 100%; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.math .eq-l { display: block; margin: 8px 0 -4px; font-family: var(--mono); font-size: .62rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
+.math mjx-container[display="true"] { margin: 8px 0 !important; text-align: left !important; }
+.math mjx-container svg { max-width: none; }
+.math-note { flex-basis: 100%; margin: 0 0 8px; font-size: .8rem; color: var(--ink-muted); line-height: 1.45; }
+@container main (max-width: 520px) { .math { font-size: 14.5px; padding: 6px 12px; gap: 0 20px; } }
+
+.four { margin: 0; display: grid; gap: 8px; }
+.four > div { display: grid; grid-template-columns: 8.2rem minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--line); }
+.four dt { font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); }
+.four dd { margin: 0; font-size: .96rem; line-height: 1.5; }
+@container main (max-width: 480px) { .four > div { grid-template-columns: 1fr; gap: 2px; } }
+.notc { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.notc li { position: relative; padding: 8px 12px 8px 36px; border-radius: 10px; border: 1px dashed color-mix(in srgb, var(--bad) 40%, var(--line)); background: color-mix(in srgb, var(--bad-bg) 45%, var(--bg)); font-size: .96rem; line-height: 1.45; }
+.notc li::before { content: "✕"; position: absolute; left: 13px; top: 8px; color: var(--bad); font-weight: 700; }
+.panel9 { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 14px 0 0; }
+.panel9 .pl { display: inline-flex; align-items: center; gap: 5px; font-size: .74rem; font-weight: 600; margin-left: 6px; }
+.panel9 .pl:first-child { margin-left: 0; }
+.panel9 .pl i { width: 9px; height: 9px; border-radius: 3px; }
+.panel9 .b i { background: var(--s-b); } .panel9 .t i { background: var(--s-t); } .panel9 .m i { background: var(--s-m); }
+.panel9 em { font-style: normal; font-family: var(--mono); font-size: .7rem; padding: 1px 6px; border-radius: 6px; background: var(--bg-elev); border: 1px solid var(--line); color: var(--ink-muted); }
+
+.zh { font-size: .84rem; color: var(--ink-faint); margin: 14px 0 0; line-height: 1.6; }
+.zh::before { content: "中文"; font-size: .64rem; font-weight: 700; letter-spacing: .05em; padding: 1px 6px; border-radius: 5px; border: 1px solid var(--line); margin-right: 8px; color: var(--ink-muted); }
+details.src { margin: 12px 0 0; }
+details.src summary { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); padding: 2px 0; }
+details.src summary::-webkit-details-marker { display: none; }
+details.src summary::before { content: "+"; display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); font-size: .7rem; }
+details.src[open] summary::before { content: "–"; }
+details.src summary:hover { color: var(--accent); }
+details.src ul { margin: 6px 0 0; padding-left: 1.1rem; font-size: .78rem; color: var(--ink-muted); line-height: 1.5; }
+details.src li + li { margin-top: 3px; }
+details.src code { font-size: .72rem; overflow-wrap: anywhere; color: var(--ink); }
+
+footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--ink-muted); font-size: .84rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+/* ---------- hover-defined terms (same look as guide.css) ---------- */
+.term { text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent); cursor: help; border-radius: 3px; }
+.term:hover, .term:focus-visible, .term.on { text-decoration-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); outline: none; }
+.tag.term { text-decoration: none; }
+.tag.term:hover, .tag.term.on { border-color: var(--accent); color: var(--accent); }
+#termtip { position: fixed; left: 0; top: 0; z-index: 90; width: max-content; max-width: min(320px, calc(100vw - 16px)); padding: 10px 12px 11px; border-radius: 12px;
+  background: var(--bg-elev); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 14px 36px rgba(0,0,0,.18);
+  font-family: var(--font); font-size: .8rem; line-height: 1.5; opacity: 0; pointer-events: none; transform: translateY(3px); transition: opacity .12s ease, transform .12s ease; visibility: hidden; }
+#termtip.on { opacity: 1; transform: none; visibility: visible; }
+#termtip b { display: block; font-size: .84rem; margin-bottom: 3px; color: var(--ink); }
+#termtip span { color: var(--ink-muted); }
+</style>
+<script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script>
+<link rel="stylesheet" href="assets/site/anim/anim.css" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  options: { ignoreHtmlClass: 'tex2jax_ignore', processHtmlClass: 'tex2jax_process' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script"></script>
+<script type="module" src="assets/site/anim/loader.js"></script>
+</head>
+<body class="tex2jax_ignore">
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="TEDDY × ANM home"><span class="brand-mark" aria-hidden="true"></span>TEDDY <span class="x">×</span> ANM</a>
+    <nav class="nav" aria-label="Site">
+      <a href="index.html" class="hide-760">Overview</a>
+      <a href="anm-framework.html" class="cur hide-480" aria-current="page">ANM framework</a>
+      <a href="anm-loop.html" class="ext hide-1000">Loop report ↗</a>
+      <details class="mnav">
+        <summary aria-label="Open menu"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mlabel">Menu</span></summary>
+        <div class="mnav-panel">
+          <a href="index.html">Overview</a>
+          <a href="anm-framework.html" class="cur" aria-current="page">ANM framework</a>
+          <a href="#ch-idea" class="sub">01 · The idea</a><a href="#ch-maths" class="sub">02 · The maths</a><a href="#ch-physics" class="sub">03 · Physics</a><a href="#ch-ai" class="sub">04 · AI workflows</a><a href="#ch-teddy" class="sub">05 · TEDDY</a><a href="#ch-next" class="sub">06 · Next</a>
+          <a href="anm-loop.html" class="ext">Decision-loop report ↗</a>
+          <a href="https://github.com/danielchen26/teddy_mm" class="ext" target="_blank" rel="noopener">GitHub repository ↗</a>
+        </div>
+      </details>
+      <a class="gh-link hide-760" href="https://github.com/danielchen26/teddy_mm" target="_blank" rel="noopener" aria-label="GitHub repository" title="GitHub repository"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="ghl">GitHub</span></a>
+      <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle light or dark theme">Theme</button>
+    </nav>
+  </div>
+</header>
+<nav class="secnav" aria-label="Sections on this page">
+  <div class="wrap"><div class="sn"><span class="sn-g">Idea</span><a href="#problem" data-ch="idea">Problem</a><a href="#idea" data-ch="idea">Protocol</a><a href="#forward-inverse" data-ch="idea">Forward · inverse</a><span class="sn-g">Maths</span><a href="#math-response" data-ch="maths">Response</a><a href="#math-checks" data-ch="maths">Two checks</a><a href="#math-steps" data-ch="maths">Steps</a><span class="sn-g">Physics</span><a href="#physics-ring" data-ch="physics">Delayed ring</a><a href="#physics-flock" data-ch="physics">Flock</a><span class="sn-g">AI</span><a href="#ai-question" data-ch="ai">1 · Question</a><a href="#ai-graph" data-ch="ai">2 · Event graph</a><a href="#ai-state" data-ch="ai">3 · State</a><a href="#ai-response" data-ch="ai">4 · Response</a><a href="#ai-inventory" data-ch="ai">Case</a><span class="sn-g">TEDDY</span><a href="#teddy-pipeline" data-ch="teddy">Pipeline</a><a href="#teddy-steps" data-ch="teddy">Four steps</a><a href="#teddy-same-calls" data-ch="teddy">Same calls</a><a href="#teddy-nkt" data-ch="teddy">NK–T</a><a href="#teddy-depth" data-ch="teddy">Depth</a><a href="#teddy-scope" data-ch="teddy">Not claimed</a><span class="sn-g">Next</span><a href="#mode-a" data-ch="next">Mode A</a></div></div>
+</nav>
+
+<main id="top">
+  <section class="hero" id="overview">
+    <div class="wrap">
+      <span class="eyebrow"><i></i><span>Framework · physics · AI · TEDDY</span></span>
+      <h1>The <span class="a">ANM</span> framework</h1>
+      <p class="lede">One measuring protocol, shown on physics, on <span class="a">AI workflows</span> and on <span class="t">TEDDY</span>’s workflow.</p>
+      <p class="zh-hero" lang="zh">一套测量协议：用在物理、AI 工作流和 TEDDY 的工作流上。</p>
+      <div class="chaps"><div class="chc card"><span class="cn">01</span><h3><a href="#ch-idea">The idea</a></h3><div class="cl"><a href="#problem">Problem</a><a href="#idea">Protocol</a><a href="#forward-inverse">Forward · inverse</a></div></div><div class="chc card"><span class="cn">02</span><h3><a href="#ch-maths">The maths</a></h3><div class="cl"><a href="#math-response">Response</a><a href="#math-checks">Two checks</a><a href="#math-steps">Steps</a></div></div><div class="chc card"><span class="cn">03</span><h3><a href="#ch-physics">Physics</a></h3><div class="cl"><a href="#physics-ring">Delayed ring</a><a href="#physics-flock">Flock</a></div></div><div class="chc card ai"><span class="cn">04</span><h3><a href="#ch-ai">AI workflows</a></h3><div class="cl"><a href="#ai-question">Question</a><a href="#ai-graph">Event graph</a><a href="#ai-state">State</a><a href="#ai-response">Response</a><a href="#ai-inventory">Case</a></div></div><div class="chc card td"><span class="cn">05</span><h3><a href="#ch-teddy">TEDDY</a></h3><div class="cl"><a href="#teddy-pipeline">Pipeline</a><a href="#teddy-steps">Four steps</a><a href="#teddy-same-calls">Same calls</a><a href="#teddy-nkt">NK–T</a><a href="#teddy-depth">Depth</a><a href="#teddy-scope">Not claimed</a></div></div><div class="chc card td"><span class="cn">06</span><h3><a href="#ch-next">Next</a></h3><div class="cl"><a href="#mode-a">Mode A</a></div></div></div>
+      <ul class="legend" aria-label="Colours in the animations">
+        <li class="lk">Colours</li>
+        <li><i style="background:var(--s-anm)"></i>ANM · retained state</li>
+        <li><i style="background:var(--s-teddy)"></i>TEDDY</li>
+        <li><i style="background:var(--s-measured)"></i>measured protein</li>
+        <li><i style="background:var(--s-b)"></i>B</li>
+        <li><i style="background:var(--s-t)"></i>T</li>
+        <li><i style="background:var(--s-m)"></i>myeloid</li>
+        <li><i style="background:var(--s-nk)"></i>NK</li>
+        <li><i style="background:var(--good)"></i>pass</li>
+        <li><i style="background:var(--bad)"></i>failure</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="chap" id="ch-idea" data-ch="idea">
+    <div class="wrap">
+      <div class="chap-row"><span class="chap-n">01</span><h2 class="chap-t">The idea</h2></div>
+      
+    </div>
+  </div>
+  <section class="fs" id="problem" aria-labelledby="problem-h" data-ch="idea">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">1.1 · The idea</p>
+          <h2 id="problem-h">A score says it failed, not where</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-problem-same-score"><div class="anim-stage" role="img" aria-label="Two pipelines fail in different places, one inside the carried state and one at the output, yet both end in the same red cross."></div><figcaption>Two different failures, one identical score.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Pipelines are usually judged by one final score. A wrong answer tells you <b>something failed, not where</b>: which input caused it, whether the information was lost in the carried state or ignored at the output, and whether the system is degraded or broken.</p><p class="zh" lang="zh">只看最终分数，只知道错了，不知道错在哪：是哪个输入，信息丢在中间状态还是读出没用上，是变差了还是已经坏了。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/introduction.tex</code> 3–10, 20–25</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="idea" aria-labelledby="idea-h" data-ch="idea">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">1.2 · The idea</p>
+          <h2 id="idea-h">Push, follow, read, compare</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-push-follow-read"><div class="anim-stage" role="img" aria-label="A knob moves one tick, a ripple crosses a lattice of springs, and a gauge needle moves and is compared with two bands drawn before the push."></div><figcaption>A known push, traced through the state, read against pre-drawn bands.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">ANM is a measuring protocol. <b>Push</b> one source by a known amount, <b>follow</b> the change through the retained state, <b>read</b> the output, and <b>compare</b> it with a boundary declared in advance: ‘still works’ and the stricter ‘exactly right’.</p><p class="zh" lang="zh">ANM 是一套测量协议：给源一个已知大小的推动，跟着它走过保留状态，看读出，再和事先声明的边界（还能用 / 完全正确）比较。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/introduction.tex</code> 20–25</li><li>Paper · <code>sections/protocol.tex</code> 69–79</li><li>Paper · <code>appendix/theory.tex</code> 1036–1062 (nested readouts)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="forward-inverse" aria-labelledby="forward-inverse-h" data-ch="idea">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">1.3 · The idea</p>
+          <h2 id="forward-inverse-h">Forward: where lost. Inverse: is it enough?</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-forward-inverse"><div class="anim-stage" role="img" aria-label="Left: the state lattice deforms but the gauge does not move. Right: two input paths land on one state point that leads to two different outputs."></div><figcaption>State moves, output flat; same state, two outputs.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p"><b>Forward:</b> if the state moves but the output stays flat, the information arrived and the readout does not use it, or cancels it. <b>Inverse:</b> if two inputs reach the same state but give different outputs, the state is missing something the output depends on.</p><p class="zh" lang="zh">正向：状态动了、输出不动，说明信息到了，但读出没用上（或被抵消）。逆向：两个输入到了同一个状态却给出不同输出，说明状态漏了输出所依赖的东西。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/introduction.tex</code> 24–31</li><li>Paper · <code>sections/protocol.tex</code> 156–181</li><li>Paper · <code>appendix/theory.tex</code> 695–708 (a state change with no endpoint change can mean cancellation or robustness; an association is not mediation)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="chap" id="ch-maths" data-ch="maths">
+    <div class="wrap">
+      <div class="chap-row"><span class="chap-n">02</span><h2 class="chap-t">The maths</h2></div>
+      
+    </div>
+  </div>
+  <section class="fs flip" id="math-response" aria-labelledby="math-response-h" data-ch="maths">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">2.1 · The maths</p>
+          <h2 id="math-response-h">The response along the real run</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-response-sum"><div class="anim-stage" role="img" aria-label="Pushes enter a chain of state slabs at different steps, are rotated and rescaled at each step, and stack into one output change at the end."></div><figcaption>Each push is carried forward by A, then summed at readout.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Along the actual run, a small push at step <i>t</i> enters through <i>B</i><sub><i>t</i></sub>, is carried forward by each later step’s <i>A</i>, and is read at the end. The output change is the sum of every push, each carried to the end. No equilibrium needed.</p><div class="math tex2jax_process"><div class="eq">\[\delta s_t = A_t\,\delta s_{t-1} + B_t\,\delta u_t\]</div><div class="eq">\[A_t=\mathrm D_sF_t,\ B_t=\mathrm D_uF_t\]</div><div class="eq">\[\delta O_T = \mathrm D_sO_T(s_T)\sum_{t=1}^{T}\Phi(T,t)\,B_t\,\delta u_t\]</div><div class="eq">\[\Phi(T,t)=A_T\cdots A_{t+1},\ \Phi(T,T)=I\]</div></div><p class="zh" lang="zh">沿着系统真实的运行轨迹，第 t 步的小推动经 B_t 注入，被之后每一步的 A 传下去，最后被读出。输出变化是所有推动各自传到终点后的和，不需要平衡态。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/protocol.tex</code> 69–93 (finite-graph linear response; finite-window endpoint response)</li><li>Paper · <code>sections/protocol.tex</code> 123–154 (a stationary susceptibility is only the special case that needs closure and stability)</li><li>Paper · <code>appendix/theory.tex</code> 614–622 (full tangent recursion, with the initial-history term)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="math-checks" aria-labelledby="math-checks-h" data-ch="maths">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">2.2 · The maths</p>
+          <h2 id="math-checks-h">Two checks: linearity and nested readouts</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-linearity-nested"><div class="anim-stage" role="img" aria-label="Two secant lines agree on a straight curve and disagree on a bent one; a ball leaves the inner &#x27;exactly right&#x27; disc before the outer &#x27;still works&#x27; disc."></div><figcaption>Halve the push: same slope means linear. Exact sits inside works.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Linearity is checked, not assumed: the slope measured with a push ε must match the slope with ε/2. The readouts are nested: ‘exactly right’ can only happen inside ‘still works’, so losing the first while keeping the second separates degraded from broken.</p><div class="math tex2jax_process"><div class="eq">\[\frac{O(u_0+\varepsilon)-O(u_0-\varepsilon)}{2\varepsilon}\approx\frac{O(u_0+\varepsilon/2)-O(u_0-\varepsilon/2)}{\varepsilon}\]</div><div class="eq">\[0\le Q_f\le P_f\le 1\]</div><div class="eq">\[w=P_f,\ r=Q_f/P_f\]</div></div><p class="zh" lang="zh">线性是检验出来的，不是假设的：用 ε 和 ε/2 测得的斜率必须一致。读出是嵌套的：“完全正确”只能发生在“还能用”之内，所以前者丢了而后者还在，就能区分“变差”和“坏了”。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/protocol.tex</code> 101–103 (step refinement)</li><li>Paper · <code>appendix/empirical.tex</code> 296–299, 346–351 (ε = 0.1 on baseline 0.5, ε/2 = 0.05; slopes must agree within 25%)</li><li>Paper · <code>appendix/theory.tex</code> 1036–1062 (nested observables)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="math-steps" aria-labelledby="math-steps-h" data-ch="maths">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">2.3 · The maths</p>
+          <h2 id="math-steps-h">A step is any real processing order</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-step-orders"><div class="anim-stage" role="img" aria-label="Three tracks advance a state, with its remembered past, by clock ticks, iterations and layers. A fourth shows markers entered one by one ending unequal, then entered together ending equal."></div><figcaption>Clocks, iterations, layers: real orders. A made-up order biases.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Step <i>t</i> can be clock time, an iteration, an evidence arrival or a network layer, if it is the real processing order. Memory, feedback and delay live in the state and in <i>A</i><sub><i>t</i></sub>. A made-up order biases results; our <span class="term" data-term="panelorder">old panel order</span> did.</p><div class="math tex2jax_process"><div class="eq">\[s_t=F_t(s_{t-1},u_t)\]</div><div class="eq">\[\text{delay }\tau:\ s_t\ni\xi^t(\theta)=c(t+\theta),\ -\tau\le\theta\le 0\]</div></div><p class="zh" lang="zh">步 t 可以是物理时间、迭代、证据到达或网络层，只要是真实的处理顺序；记忆、反馈、延迟都放进状态和 A_t。编造的顺序会带来偏差，旧桥接的面板顺序就是这样。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/protocol.tex</code> 50–60 (with delay, keep the history segment), 70–79</li><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 882 (every value is multiplied by the retention factor each tick)</li><li>teddy_mm · <code>bridge_anm/export_cite_events.py</code> 36–47, branch <code>fix/anm-bridge-corrections</code> (all panel events at t = 0)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="chap" id="ch-physics" data-ch="physics">
+    <div class="wrap">
+      <div class="chap-row"><span class="chap-n">03</span><h2 class="chap-t">Physics</h2></div>
+      
+    </div>
+  </div>
+  <section class="fs" id="physics-ring" aria-labelledby="physics-ring-h" data-ch="physics">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">3.1 · Physics<span class="tag ">calibration</span></p>
+          <h2 id="physics-ring-h">Physics I: a delayed ring, measured vs theory</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-delay-ring"><div class="anim-stage" role="img" aria-label="A ring of 64 bobbing spheres exchanges delayed beads along links; the ring&#x27;s mean follows the drive with a lag, and measured points lie on the analytic curve."></div><figcaption>Delay forces the state to carry history; measurement matches theory.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">64 sites on a ring, each coupled to four neighbours with delay τ, are driven by a sine. The retained state must include the history. Over 13 delays, measured amplitude and phase stayed within 2.51×10⁻³ (relative) and 0.74° of theory: <b>a calibration of the measurement</b>.</p><div class="math tex2jax_process"><div class="eq">\[\dot c_i(t)=-a\,c_i(t)+\frac{K}{4}\sum_{j\in N_i}c_j(t-\tau)+F\cos(\Omega t)+\sigma\xi_i(t)\]</div><div class="eq">\[\hat Z=\frac{2}{T_{\rm win}}\int_{\rm window} m(t)\,e^{-i\Omega t}\,dt\]</div><div class="eq">\[m(t)=\tfrac{1}{64}\textstyle\sum_i c_i(t)\]</div></div><p class="zh" lang="zh">64 个位点的环，每个与 4 个邻居以延迟 τ 耦合，受正弦驱动，保留状态必须包含历史。13 个延迟上，测得的幅度和相位与解析解相差不超过 2.51×10⁻³（相对）和 0.74°。这是对测量本身的校准。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/physics.tex</code> 17–37, table rows 53–54</li><li>Paper · <code>appendix/empirical.tex</code> 896–925 (a = 1, K = 0.40, F = 0.25, Ω = 0.35, σ = 0.015, τ ∈ [0.43, 0.46])</li><li>Paper · <code>appendix/empirical.tex</code> 1075–1087 (maxima of 100-seed means over 13 delays, including estimator leakage and discretization)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="physics-flock" aria-labelledby="physics-flock-h" data-ch="physics">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">3.2 · Physics</p>
+          <h2 id="physics-flock-h">Physics II: two flock readouts fail apart</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-flock-readouts"><div class="anim-stage" role="img" aria-label="As noise rises, arrows in a box spread their headings. The share inside a 30° wedge drops below half well before the mean-heading arrow does."></div><figcaption>Headings broaden: the 30° count fails before the mean direction.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">256 particles align with neighbours and a field while angular noise η rises. Alignment within 30° of the field is first below one half at η = 0.35, polarization only at 0.60. Alignment fell first at all three tested tolerances; <b>the readouts are not nested</b>.</p><div class="math tex2jax_process"><div class="eq">\[\theta_i(t+1)=\operatorname{Arg}\Big(\sum_{j\in N_i}e^{i\theta_j(t)}+h\,e^{i\theta_{\hat e}}\Big)+\eta\,\xi_i(t)\]</div><div class="eq">\[P_f=\Big\langle\Big|\tfrac{1}{256}\sum_i e^{i\theta_i}\Big|\Big\rangle\]</div><div class="eq">\[Q_f=\big\langle\text{share with }|\theta_i-\theta_{\hat e}|\le 30^\circ\big\rangle\]</div></div><p class="zh" lang="zh">256 个粒子与邻居和外场对齐，角噪声 η 逐渐升高。30° 以内的对齐比例在 η=0.35 首次低于一半，极化到 0.60 才低于一半。三种测试容差下都是对齐先跌；两个读出不是嵌套的。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/physics.tex</code> 79–92, table rows 62–63</li><li>Paper · <code>appendix/empirical.tex</code> 1280–1300 (N = 256, box L = 8, field h = 0.6 at 0°)</li><li>Paper · <code>appendix/empirical.tex</code> 1361–1384 (tolerances 20°/30°/45° give 0.25/0.35/0.50 against 0.60 for polarization; the order can reverse near 45.5°)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="chap" id="ch-ai" data-ch="ai">
+    <div class="wrap">
+      <div class="chap-row"><span class="chap-n">04</span><h2 class="chap-t">AI workflows</h2></div>
+      <ol class="flow"><li><a href="#ai-question">Question</a></li><li><a href="#ai-graph">Event graph</a></li><li><a href="#ai-state">Retained state</a></li><li><a href="#ai-response">Response</a></li></ol>
+    </div>
+  </div>
+  <section class="fs" id="ai-question" aria-labelledby="ai-question-h" data-ch="ai">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">4.1 · AI workflows</p>
+          <h2 id="ai-question-h">AI step 1: write the question down</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-ai-question"><div class="anim-stage" role="img" aria-label="A written question becomes a gauge with a threshold and two bands. A locked answer key is opened only after the needle stops, to stamp the result."></div><figcaption>Question and boundary first; the key only grades afterwards.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">First declare the <span class="term" data-term="observer">observer</span>: what is read, which answers are allowed, and the boundary. ‘Still works’ = an allowed answer cleared the bar; ‘exactly right’ = it matches the key. <b>The key grades only after the readout and never enters the evidence.</b></p><div class="math tex2jax_process"><div class="eq">\[\text{call}=\begin{cases}\arg\max_a S_a &amp; \max_a S_a\ge\theta\\ \text{no call} &amp; \text{otherwise}\end{cases}\]</div><div class="eq">\[P_f=\mathbb 1[\text{call made}]\]</div><div class="eq">\[Q_f=\mathbb 1[\text{call}=a^{\ast}]\]</div><div class="eq">\[r_f=Q_f/P_f\]</div></div><p class="zh" lang="zh">先写下观察者：读什么、允许哪些答案、边界在哪里。“还能用”是有答案过了门槛，“完全正确”是答案与答案标准一致。答案标准只在读出之后打分，从不进入证据。</p><details class="src"><summary>Sources</summary><ul><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 925–975 (the best action is the call if it clears the threshold, otherwise no call), 978–998 (verify: P_f, Q_f, r_f)</li><li>teddy_mm · <code>bridge_anm/schemas/cite_lineage_finite_field_v0.json</code> 51–74 (no-leakage rule), 93–102 (observables, verifier)</li><li>Paper · <code>sections/worked_example.tex</code> 13–22</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="ai-graph" aria-labelledby="ai-graph-h" data-ch="ai">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">4.2 · AI workflows</p>
+          <h2 id="ai-graph-h">AI step 2: build the typed event graph</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-event-graph"><div class="anim-stage" role="img" aria-label="Log records pass through a schema gate, become coloured event spheres linked to answer rings, and pulses spread step by step until one answer rises above a threshold plane."></div><figcaption>Records pass a schema, become typed pulses, spread to answers.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Each record becomes a <b>typed event</b> (time, target answer, type, sign, value, provenance), admitted, repaired or rejected by a schema. Event nodes link to answer nodes; each step retains and spreads values, open-loop. States are specified from outside; no live multi-agent claim.</p><div class="math tex2jax_process"><div class="eq">\[s&#x27;=\rho\,s_t+\beta\,b_t\]</div><div class="eq">\[s_{t+1}=(I+\kappa W^{\top})\,s&#x27;\]</div><div class="eq">\[b_t[e]=\begin{cases}+v_e&amp;\text{support}\\-v_e&amp;\text{contradiction}\\+0.25\,v_e&amp;\text{uncertainty reduction}\end{cases}\]</div><div class="eq">\[W_{e\to a}=1,\ W_{a\to e}=0.15\]</div></div><p class="zh" lang="zh">每条记录变成一个类型化事件（时间、目标答案、类型、符号、数值、来源），由模式接收、修复或拒绝。事件节点连到答案节点；每一步保留一部分值并沿边扩散，开环。状态由外部指定，不声称是在线多智能体形成的状态。</p><details class="src"><summary>Sources</summary><ul><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 220–227 (signed amplitude), 234–353 (schema: admitted / repaired / rejected), 818–848 (graph weights), 851–900 (linear update)</li><li>Paper · <code>sections/ai_evidence.tex</code> 4–12; <code>sections/introduction.tex</code> 39–46</li><li>Paper · <code>appendix/empirical.tex</code> 287–294 (the graph-readout study used other settings)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="ai-state" aria-labelledby="ai-state-h" data-ch="ai">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">4.3 · AI workflows</p>
+          <h2 id="ai-state-h">AI step 3: find and test the state</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-sufficiency-delay"><div class="anim-stage" role="img" aria-label="Two value curves differ in the past, meet at the present, then diverge; keeping the last τ of history as the state tells them apart."></div><figcaption>Same present, different past: the present value is not enough.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">A candidate state is enough only if <b>equal states always give equal readouts</b>. With delay, two histories with the same present value but different pasts evolve differently, so the present value is not enough. A same-state violation shows what the state must separate.</p><div class="math tex2jax_process"><div class="eq">\[\mathsf z_T(u_1)=\mathsf z_T(u_2)\ \Longrightarrow\ \mathsf o_T(u_1)=\mathsf o_T(u_2)\]</div><div class="eq">\[\ker\mathcal K_{z,T}\subseteq\ker\mathcal K_{O,T}\iff\mathcal K_{O,T}=\mathcal H\,\mathcal K_{z,T}\]</div><div class="eq">\[\dot x(t)=-a\,x(t)-k\,x(t-\tau)+u(t)\]</div></div><p class="zh" lang="zh">候选状态只有在“同一状态必给同一读出”时才够用。有延迟时，当前值相同但过去不同的两段历史会走向不同结果，所以只看当前值不够。一旦出现“同状态、不同读出”，就知道状态必须区分什么。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/protocol.tex</code> 3–11, 156–181</li><li>Paper · <code>appendix/theory.tex</code> 596–693 (retained-state criterion; delayed-history counterexample 655–670), 729–745 (inverse use)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="ai-response" aria-labelledby="ai-response-h" data-ch="ai">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">4.4 · AI workflows</p>
+          <h2 id="ai-response-h">AI step 4: measure the response</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-measure-contrast"><div class="anim-stage" role="img" aria-label="An event value is pushed by a full step and a half step. Separate meters show the state and readout changes, and the slope rods agree in only a few directions."></div><figcaption>State and readout measured apart; halving the push tests linearity.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Push one event’s value up and down by ε, then by ε/2, and measure how far the state moved and how far the readout moved, <b>separately</b>. In the graph study, fresh model readouts changed in 9 of 12 directions; only 2 passed the step-halving check.</p><div class="math tex2jax_process"><div class="eq">\[\Delta z_d(T)=z_{d,+}(T)-z_{d,-}(T)\]</div><div class="eq">\[\hat g_d(\varepsilon)=\frac{s_{d,+}-s_{d,-}}{2\varepsilon}\]</div><div class="eq">\[\frac{|\hat g_d(\varepsilon)-\hat g_d(\varepsilon/2)|}{\max\{|\hat g_d(\varepsilon)|,|\hat g_d(\varepsilon/2)|\}}\le 0.25\]</div></div><p class="zh" lang="zh">把一个事件的值上下各推 ε，再推 ε/2，分别测状态移动了多少、读出移动了多少。在图研究中，新鲜模型读出在 12 个方向里有 9 个发生变化，只有 2 个通过步长减半检验。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/ai_evidence.tex</code> 62–113 (state change 12/12 by construction, readout change 9/12, slope agreement 2/12)</li><li>Paper · <code>appendix/empirical.tex</code> 295–360 (ε = 0.1 on baseline 0.5, ε/2 = 0.05; 25% tolerance)</li><li>Paper · <code>appendix/theory.tex</code> 695–708</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="ai-inventory" aria-labelledby="ai-inventory-h" data-ch="ai">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">4.5 · AI workflows<span class="tag warn">exploratory</span></p>
+          <h2 id="ai-inventory-h">AI case: a missing response, restored</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-inventory-join"><div class="anim-stage" role="img" aria-label="Swapping two warehouses should change the answer from 14 to 9, but the model stays at 9 until each request card is joined to its return token. Three controls stay at 9."></div><figcaption>Joining each request to its return restored the missing 14→9.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Swapping two requests’ warehouses should move the answer 14→9; the model stayed 9→9. A request–return join, fixed in advance, restored 14→9; three controls stayed 9→9. Exploratory, one known case; calibration missed (21/24 vs 22/24); ordinary diagnosis picks the same join.</p><div class="math tex2jax_process"><div class="eq">\[z_P=(\text{ALB-C},\ 10\text{ units},\ \text{rev }7):\ \text{unchanged by the swap}\]</div><div class="eq">\[z_H=(z_P,\ \text{requests A–C}):\ \text{changes}\]</div><div class="eq">\[\text{required }\Delta=9-14=-5\]</div></div><p class="zh" lang="zh">交换两个请求的仓库，答案应从 14 变成 9，模型却一直是 9→9。按事先固定的规则把每个请求与它的返回结果连接起来后，恢复为 14→9；三个对照仍是 9→9。这是探索性结果：一个已知案例，校准未达标（21/24 对 22/24），普通诊断也会选同一个连接。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>sections/worked_example.tex</code> 13–77</li><li>Paper · <code>appendix/history_decision.tex</code> 60–77 (calibration 21/24, below the fixed 22/24), 151–192 (paired follow-up)</li><li>Paper · <code>sections/ai_evidence.tex</code> 14–33; <code>sections/discussion.tex</code> 64–69, 79–87</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="chap" id="ch-teddy" data-ch="teddy">
+    <div class="wrap">
+      <div class="chap-row"><span class="chap-n">05</span><h2 class="chap-t">TEDDY</h2></div>
+      <ol class="flow"><li><a href="#teddy-pipeline">TEDDY embeds</a></li><li><a href="#teddy-pipeline">our head predicts</a></li><li><a href="#teddy-steps">ANM decides</a></li><li><a href="#teddy-steps">measured grades</a></li></ol>
+    </div>
+  </div>
+  <section class="fs flip" id="teddy-pipeline" aria-labelledby="teddy-pipeline-h" data-ch="teddy">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">5.1 · TEDDY<span class="tag rerun term" data-term="rerun">official rerun</span></p>
+          <h2 id="teddy-pipeline-h">TEDDY embeds, our head predicts, ANM decides</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-teddy-pipeline"><div class="anim-stage" role="img" aria-label="A cell&#x27;s RNA passes through frozen TEDDY into a 512-bead embedding. Our small head then predicts 134 proteins, 9 of which feed ANM&#x27;s call, and measured protein only grades at the end."></div><figcaption>TEDDY embeds; our head predicts proteins; ANM decides; measured grades.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Each <span class="term" data-term="citeseq">CITE-seq</span> cell’s RNA goes through frozen <span class="term" data-term="teddy">TEDDY-G 70M</span>, an RNA model, giving a 512-number embedding. <span class="term" data-term="head">Our own small head</span>, trained on training sites’ measured proteins, predicts 134 surface proteins (held-out <span class="term" data-term="site4">site4</span> mean Pearson 0.603). ANM reads 9 of them. Measured protein only grades. Numbers come from the official TEDDY-G preprocessing (counts / total × 10⁴, divided by TEDDY’s gene medians, top 2,048 rank tokens, mean over gene tokens); the earlier non-official preprocessing gave the same phase-1 Pearson.</p><div class="panel9" role="group" aria-label="The 9 panel proteins ANM reads"><span class="pl b"><i></i>B</span><em>CD19</em><em>CD72</em><em>CD22</em><span class="pl t"><i></i>T</span><em>CD3</em><em>CD2</em><em>CD5</em><span class="pl m"><i></i>Myeloid</span><em>CD16</em><em>CD11c</em><em>CD36</em></div><div class="math tex2jax_process"><div class="eq">\[z=\operatorname{mean}_{\text{real tokens}}\,h_{12}(x_{\rm RNA})\in\mathbb R^{512}\]</div><div class="eq">\[(\mu,\theta)=\mathrm{Dec}_{\rm NB}\big(\mathrm{MLP}(z),\ \mathrm{sf}\big)\]</div><div class="eq">\[\hat y=\mu\in\mathbb R^{134}\]</div><div class="eq">\[\mathrm{sf}=0.92663\]</div></div><p class="zh" lang="zh">每个 CITE-seq 细胞的 RNA 经过冻结的 TEDDY-G 70M（一个 RNA 模型）得到 512 维嵌入。我们自己训练的小 head 用训练 site 的实测蛋白学习，预测 134 个表面蛋白（留出 site4 平均 Pearson 0.603）。ANM 只读其中 9 个，实测蛋白只用来打分。TEDDY 本身不预测蛋白。数字来自 TEDDY-G 官方预处理（计数/总数×10⁴、除以 TEDDY 基因中位数、取前 2,048 个基因排序 token、基因 token 平均）；此前的非官方预处理给出相同的 phase-1 Pearson。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>scripts/03_embed_rna.py</code> 42–53 (total-count scaling to 1e4, rank encoding, frozen TEDDY forward)</li><li>teddy_mm · <code>teddy_mm/teddy_encoder.py</code> 32–37 (mean over real tokens), 68–90 (rank encoding)</li><li>teddy_mm · <code>scripts/04_train.py</code> 91–135 (MLP + negative-binomial decoder; flow-matching variant)</li><li>teddy_mm · <code>bridge_anm/lib/lineage_panels.py</code> 63–72 (the 9 panel proteins)</li><li>Overview page · size factor 0.92663; test Pearson 0.603 (MLP)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="teddy-steps" aria-labelledby="teddy-steps-h" data-ch="teddy">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">5.2 · TEDDY</p>
+          <h2 id="teddy-steps-h">The same four steps on TEDDY’s workflow</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-teddy-steps"><div class="anim-stage" role="img" aria-label="Four pedestals turn the generic protocol icons into TEDDY&#x27;s pieces: a written lineage question, nine predicted markers entering together, TEDDY&#x27;s embedding, and a call graded by measured protein."></div><figcaption>Question, sources, state, readout: the same steps on TEDDY.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <dl class="four"><div><dt>Question</dt><dd>a written lineage question (<span class="term" data-term="soft">soft</span>, <span class="term" data-term="strict">strict</span> or <span class="term" data-term="btprio">B/T-priority</span>).</dd></div><div><dt>Sources</dt><dd>the 9 head-predicted proteins, all entering at once.</dd></div><div><dt>Retained state</dt><dd>TEDDY’s embedding; <span class="term" data-term="modeb">Mode B</span> works on the head’s outputs, <span class="term" data-term="modea">Mode A</span> will step through TEDDY’s layers.</dd></div><div><dt>Readout</dt><dd>call or no call, graded by measured protein.</dd></div></dl><p class="zh" lang="zh">问题：写下的谱系问题（宽松、严格、B/T 优先）。源：head 预测的 9 个蛋白，同时进入。保留状态：TEDDY 的嵌入；Mode B 作用在 head 的输出上，Mode A 将以 TEDDY 的层为步。读出：判或不判，由实测蛋白打分。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>bridge_anm/lib/lineage_panels.py</code> 1–72, branch <code>fix/anm-bridge-corrections</code> (one scoring function for the three questions)</li><li>teddy_mm · <code>bridge_anm/export_cite_events.py</code> 36–47 (all panel events at t = 0)</li><li>teddy_mm · <code>bridge_anm/schemas/cite_lineage_finite_field_v0.json</code> 84–92 (finite_graph_scalar, 4 steps, retention 0.82, diffusion 0.16, bar 0.12)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="teddy-same-calls" aria-labelledby="teddy-same-calls-h" data-ch="teddy">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">5.3 · TEDDY</p>
+          <h2 id="teddy-same-calls-h">Finding: ANM’s calls equal the fixed rule</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-teddy-same-calls"><div class="anim-stage" role="img" aria-label="ANM&#x27;s lineage bars are the fixed rule&#x27;s bars scaled by one constant, and the threshold is scaled the same way, so all 16,750 cells land in the same bins under every question."></div><figcaption>One constant apart: same ranking, same bar, same call.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">All nine markers enter at once into a linear graph with uncoupled lineages, so each ANM score is a fixed multiple of the <span class="term" data-term="fixedrule">rule</span>’s. On all 16,750 held-out cells and three questions, <b>calls are identical</b>: an auditable record, not better accuracy.</p><div class="math tex2jax_process"><div class="eq">\[S^{\rm ANM}_l=G\,c\,S^{\rm rule}_l\]</div><div class="eq">\[S^{\rm rule}_l=\frac{1}{c}\sum_{p\in l}\tilde w_p\,v_p\]</div><div class="eq">\[\theta^{\rm ANM}=G\,c\,\theta^{\rm rule}\ \Rightarrow\ \text{same call}\]</div></div><p class="zh" lang="zh">九个标记同时进入一个线性、谱系之间互不耦合的图，所以 ANM 的分数正好是规则分数的固定倍数。在 16,750 个留出细胞、三个问题上，判定完全相同：带来的是可审计的记录，不是更高的准确率。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>bridge_anm/lib/lineage_panels.py</code> 12–47 (shared scoring), 453–487 (field gain G; ANM bar = G·c·rule bar), branch <code>fix/anm-bridge-corrections</code></li><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 851–900 (linear update)</li><li>Overview page · 16,750 cells, all three questions, identical calls</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="teddy-nkt" aria-labelledby="teddy-nkt-h" data-ch="teddy">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">5.4 · TEDDY<span class="tag rerun term" data-term="rerun">official rerun</span></p>
+          <h2 id="teddy-nkt-h">Finding: NK and T nearly merge</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-nkt-compression"><div class="anim-stage" role="img" aria-label="An NK and a T cell almost touch in the embedding. Our head&#x27;s predicted CD3 gap is a compressed spring next to the measured gap, while random distant pairs are not compressed. A fork asks whether the embedding or the head is responsible."></div><figcaption>Nearly merged cells: right direction, squeezed gap; an MLP probe on the same embedding keeps more of it.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Sufficiency test: for 453 NK–T pairs that TEDDY’s embedding nearly merges, our head’s predicted gaps are <b>a quarter to a third of the measured ones</b> (CD335 0.88), right in direction. Random NK–T pairs: 0.8–1.5. Lost in the embedding, or unused by our head? <span class="term" data-term="modea">Mode A</span> probes on the frozen embedding: a linear probe keeps about as much as our head, but an MLP probe keeps about twice as much for CD56, CD94 and CD3, and gene-token states keep more than the gene-mean. So part of the loss is in our head’s readout and in mean pooling; part may not be in the detected RNA.</p><div class="math tex2jax_process"><div class="eq">\[\|\widehat{\Delta O}\|\le L_h\,\varepsilon_z+\varepsilon_O\]</div><p class="math-note">near-matched states: a violation rejects the readout class, here our head, not the state alone</p></div><p class="zh" lang="zh">充分性检验：在 TEDDY 嵌入里几乎重合的 453 对 NK–T 细胞中，我们的 head 预测的差距方向正确，但只有实测差距的四分之一到三分之一（CD335 为 0.88）；随机 NK–T 对为 0.8–1.5。是嵌入丢了差别，还是 head 没用上？冻结嵌入上的 Mode A 探针：线性探针保留的与 head 相当，但 MLP 探针对 CD56、CD94、CD3 约保留两倍，基因 token 状态又比基因平均保留更多。所以一部分损失在 head 的读出和平均池化，一部分可能不在检出的 RNA 里。</p><details class="src"><summary>Sources</summary><ul><li>Paper · <code>appendix/theory.tex</code> 710–727 (approximate match and sensitivity bound); <code>sections/discussion.tex</code> 44–46</li><li>Overview page · Look-alike cells (453 pairs; ratios CD3 0.27, CD56 0.24, CD94 0.31, CD335 0.88; random non-neighbour pairs 0.8–1.5)</li><li>teddy_mm · <code>outputs/mode_a_official/mode_a_results.json</code> (linear layer probes on the same pairs; head reference), <code>mode_a_nonlinear_results.json</code> (MLP / kNN), <code>token/mode_a_token_results.json</code> (token level)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs flip" id="teddy-depth" aria-labelledby="teddy-depth-h" data-ch="teddy">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">5.5 · TEDDY<span class="tag warn">prototype</span><span class="tag rerun term" data-term="rerun">official rerun</span></p>
+          <h2 id="teddy-depth-h">Finding: a response to sequencing depth</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-depth-thinning"><div class="anim-stage" role="img" aria-label="A cell&#x27;s RNA dots are thinned down to 5 percent. The embedding and predicted markers wobble, and Pearson and lineage accuracy fall modestly from full depth to 5 percent."></div><figcaption>Fewer reads in, same pipeline, a graceful decline out.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p">Push the source down: keep a fraction of each cell’s RNA counts, re-embed, and follow it to the call. At 5% of counts, panel-protein Pearson falls 0.936 → 0.855 and lineage accuracy 0.983 → 0.959 on 1,500 validation cells (prototype): <b>a graceful decline</b>, gentler than with the earlier preprocessing (0.805 and 0.917 at 5%).</p><div class="math tex2jax_process"><div class="eq">\[x^{(f)}_g\sim\mathrm{Binomial}(x_g,\,f)\]</div><div class="eq">\[f\in\{1,\ 0.5,\ 0.2,\ 0.1,\ 0.05\}\]</div></div><p class="zh" lang="zh">把源往下推：只保留每个细胞一部分 RNA 计数，重新嵌入，一直跟到判定。保留 5% 计数时，面板蛋白 Pearson 从 0.936 降到 0.855，谱系准确率从 0.983 降到 0.959（1,500 个验证细胞，原型）：下降平缓，比此前的预处理（5% 时为 0.805 和 0.917）更稳。</p><details class="src"><summary>Sources</summary><ul><li>Overview page · Experiment 2 redesign prototype (5% of counts, median 305 UMIs; 1,500 validation cells, donor 18303; held-out site not used). Experiment 2 itself stays withdrawn.</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fs" id="teddy-scope" aria-labelledby="teddy-scope-h" data-ch="teddy">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">5.6 · TEDDY</p>
+          <h2 id="teddy-scope-h">What we do not claim</h2>
+        </header>
+        <div class="fs-fig">
+        </div>
+        <div class="fs-body">
+          <p class="fs-p"><b>Not claimed:</b></p><ul class="notc"><li>that ANM makes calls more accurate</li><li>that TEDDY predicts proteins</li><li>that a better readout recovers the whole NK–T gap (even the best probe keeps about half to three-quarters)</li></ul><p class="fs-p">Numbers now use the official TEDDY-G preprocessing (gene-median normalisation, top 2,048 rank tokens, mean over gene tokens); our earlier non-official preprocessing (no gene-median normalisation, 512 tokens) gave the same phase-1 Pearson.</p><p class="zh" lang="zh">不声称：ANM 让判定更准；TEDDY 预测蛋白；更好的读出能找回全部 NK–T 差距（最好的探针也只保留约一半到四分之三）。数字现已改用 TEDDY-G 官方预处理（基因中位数归一化、前 2,048 个排序 token、基因 token 平均）；我们此前的非官方预处理（没有基因中位数归一化，512 个 token）给出相同的 phase-1 Pearson。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>scripts/03_embed_rna.py</code> 42–53 (earlier preprocessing: total-count scaling to 1e4, then rank; no per-gene median division)</li><li>teddy_mm · <code>teddy_mm/teddy_encoder.py</code> 36–37 (mean over real tokens)</li><li>Official TEDDY · <code>preprocess.py</code> 284–300 (the gene-median step, skipped earlier and now applied)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="chap" id="ch-next" data-ch="next">
+    <div class="wrap">
+      <div class="chap-row"><span class="chap-n">06</span><h2 class="chap-t">Next</h2></div>
+      
+    </div>
+  </div>
+  <section class="fs flip" id="mode-a" aria-labelledby="mode-a-h" data-ch="next">
+    <div class="wrap">
+      <div class="fs-grid">
+        <header class="fs-head">
+          <p class="kicker">6.1 · Next<span class="tag plan">probes</span></p>
+          <h2 id="mode-a-h">Next: TEDDY’s layers as the steps</h2>
+        </header>
+        <div class="fs-fig">
+          <figure class="anim" data-anim="fw-mode-a-layers"><div class="anim-stage" role="img" aria-label="Gene-token sheets for an NK and a T cell pass through twelve layer slabs with residual updates and attention arcs; dashed probe bars after each slab mark where the NK–T difference will be measured."></div><figcaption>Layers become steps; probe NK versus T after each one.</figcaption></figure>
+        </div>
+        <div class="fs-body">
+          <p class="fs-p"><span class="term" data-term="modea">Mode A</span> treats TEDDY’s transformer layers as the steps. The per-gene residual stream is the retained state; attention couples genes. Probes so far, on the frozen embedding: a linear NK-vs-T probe separates NK from T at every layer (held-out AUC 0.991–0.997). On the 453 look-alike pairs our head keeps 0.24 / 0.31 / 0.88 / 0.27 of the measured CD56 / CD94 / CD335 / CD3 gap and a linear probe on z about the same (0.28 / 0.40 / 0.40 / 0.28), but an MLP probe on the same z keeps about twice as much (0.47 / 0.59 / 0.74 / 0.61; MLP − head interval above 0 for CD56, CD94 and CD3 at every depth). At token level (probes fit on 990 other site4 NK/T cells, scored on the 483 pair cells), the states of 13 NK/T gene tokens keep more than the gene-mean of the same forward pass (layer 12, MLP, tokens + gene-mean 0.58 / 0.62 / 0.72 / 0.56 vs gene-mean 0.41 / 0.43 / 0.49 / 0.45), and about as much already at the input layer: the information is mostly which genes are detected and at what rank; mean pooling dilutes it and TEDDY’s layers neither add nor remove much of it. Even the best probe keeps only about half to three-quarters, and key genes are often not detected (CD3E among the tokens in 45% of the NK and 60% of the T pair cells). So <b>part of the loss is in our head’s readout and in mean pooling; part may not be in the detected RNA</b>, and a nonlinear, token-aware readout could recover part of the NK–T difference from frozen TEDDY. Caveats: one site; probes are not the head’s objective; within-site protocol for the token probes; some intervals overlap; the pairs were chosen for closeness in z. Jacobians and gene perturbations are still planned.</p><div class="math tex2jax_process"><div class="eq">\[h_{l+1}=h_l+f_l(h_l)\ \Rightarrow\ \delta h_{l+1}=\big(I+\partial f_l/\partial h\big)\,\delta h_l\]</div><div class="eq"><span class="eq-l">TEDDY-G blocks are post-norm</span>\[A_l=\frac{\partial h_{l+1}}{\partial h_l}=J_{\rm LN_2}\,(I+\partial\,\mathrm{FF})\,J_{\rm LN_1}\,(I+\partial\,\mathrm{Attn})\]</div><div class="eq">\[z=\operatorname{mean}_{\text{real tokens}}h_{12}\]</div></div><p class="zh" lang="zh">Mode A 把 TEDDY 的 transformer 层当作步：按基因的残差流是保留状态，注意力让基因之间相互耦合。目前冻结嵌入上的探针：线性 NK/T 探针在每一层都能区分 NK 与 T（留出 AUC 0.991–0.997）。在 453 对相似细胞上，我们的 head 保留实测 CD56 / CD94 / CD335 / CD3 差距的 0.24 / 0.31 / 0.88 / 0.27，z 上的线性探针大致相同（0.28 / 0.40 / 0.40 / 0.28），而同一 z 上的 MLP 探针约为两倍（0.47 / 0.59 / 0.74 / 0.61；CD56、CD94、CD3 的 MLP − head 区间在每一层都大于 0）。在 token 层面（探针在另外 990 个 site4 NK/T 细胞上拟合，在 483 个配对细胞上打分），13 个 NK/T 基因 token 的状态比同一次前向的基因平均保留更多（第 12 层 MLP，token + 基因平均 0.58 / 0.62 / 0.72 / 0.56，基因平均 0.41 / 0.43 / 0.49 / 0.45），在输入层就已相当：信息主要是检出了哪些基因、排在第几；平均池化稀释了它，TEDDY 的各层既不明显增加也不明显减少。最好的探针也只保留约一半到四分之三，关键基因常常没有检出（CD3E 只出现在 45% 的 NK 和 60% 的 T 配对细胞的 token 中）。所以一部分损失在 head 的读出和平均池化，一部分可能不在检出的 RNA 里；非线性、利用 token 的读出有望从冻结的 TEDDY 找回部分 NK–T 差异。注意：单一 site；探针不是 head 的训练目标；token 探针在 site4 内部拟合；部分区间重叠；这些对按 z 中的接近程度选出。Jacobian 与基因扰动仍在计划中。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>teddy_mm/teddy_encoder.py</code> 13–37 (<code>norm_first = cfg.get('pre_norm', False)</code>: post-norm blocks; mean over real tokens)</li><li>TEDDY-G 70M · <code>config.json</code> (12 layers, d_model 512, 8 heads, no pre_norm key); official TEDDY <code>model.py</code> 72, 119</li><li>Paper · <code>sections/protocol.tex</code> 77–79 (transition on a declared grid)</li><li>teddy_mm · <code>outputs/mode_a_official/mode_a_results.json</code> (layer probes, head reference), <code>mode_a_nonlinear_results.json</code> (MLP / kNN), <code>token/mode_a_token_results.json</code> (token level, gene presence)</li></ul></details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--ink)">TEDDY × ANM</b> · the ANM framework · English primary</span>
+    <span>Numbers are those on the overview page and in the ANM paper. Not clinical.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- theme (same key and labels as index.html) ---------- */
+  var root = document.documentElement, btn = $('#themeBtn'), stored = null;
+  try { stored = localStorage.getItem('teddy-anm-theme'); } catch (e) {}
+  function label() { var t = root.getAttribute('data-theme'); btn.textContent = !t ? 'Theme' : (t === 'dark' ? 'Light' : 'Dark'); }
+  if (stored === 'dark' || stored === 'light') root.setAttribute('data-theme', stored);
+  label();
+  btn.addEventListener('click', function () {
+    var c = root.getAttribute('data-theme');
+    var next = !c ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark') : (c === 'dark' ? 'light' : 'dark');
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('teddy-anm-theme', next); } catch (e) {}
+    label();
+  });
+
+  /* ---------- mobile menu ---------- */
+  var mnav = $('.mnav');
+  if (mnav) {
+    $$('.mnav-panel a', mnav).forEach(function (a) { a.addEventListener('click', function () { mnav.open = false; }); });
+    document.addEventListener('click', function (e) { if (mnav.open && !mnav.contains(e.target)) mnav.open = false; });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mnav.open) { mnav.open = false; $('summary', mnav).focus(); } });
+  }
+
+  /* ---------- sticky section nav: highlight the section in view ---------- */
+  var sn = $('.sn'), links = {}, active = null;
+  $$('.sn a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  function setActive(id) {
+    if (id === active) return;
+    active = id;
+    Object.keys(links).forEach(function (k) {
+      var on = k === id;
+      links[k].classList.toggle('on', on);
+      if (on) links[k].setAttribute('aria-current', 'true'); else links[k].removeAttribute('aria-current');
+    });
+    var a = links[id];
+    if (a && sn.scrollWidth > sn.clientWidth) {
+      var left = a.offsetLeft - sn.offsetLeft - (sn.clientWidth - a.offsetWidth) / 2;
+      try { sn.scrollTo({ left: Math.max(0, left), behavior: reduce ? 'auto' : 'smooth' }); } catch (e) { sn.scrollLeft = left; }
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) setActive(en.target.id); });
+    }, { rootMargin: '-38% 0px -58% 0px' });
+    $$('main section.fs').forEach(function (s) { io.observe(s); });
+    var hero = $('#overview');
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) setActive(null); });
+    }, { rootMargin: '-38% 0px -58% 0px' }).observe(hero);
+  }
+
+  /* ---------- maths: shrink an equation that is wider than its box (down to 72%), else it scrolls ---------- */
+  function fitMath() {
+    $$('.math .eq').forEach(function (eq) {
+      var c = eq.querySelector('mjx-container'), svg = c && c.querySelector('svg');
+      if (!svg) return;
+      c.style.fontSize = '';
+      var box = eq.parentElement, cs = getComputedStyle(box);
+      var need = svg.getBoundingClientRect().width, have = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 1;
+      if (need > have) c.style.fontSize = (Math.max(0.72, have / need) * 100).toFixed(1) + '%';
+    });
+  }
+  var fitT = null;
+  function whenMath() {
+    if (window.MathJax && MathJax.startup && MathJax.startup.promise) MathJax.startup.promise.then(fitMath);
+    else setTimeout(whenMath, 200);
+  }
+  window.addEventListener('load', whenMath);
+  window.addEventListener('resize', function () { clearTimeout(fitT); fitT = setTimeout(fitMath, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (window.MathJax && MathJax.startup && MathJax.startup.document) fitMath(); });
+
+  /* ---------- hover-defined terms ---------- */
+  var TERMS = {"teddy": ["TEDDY-G 70M", "An RNA foundation model: 12 transformer layers, 512 wide. Kept frozen here. It turns a cell’s RNA into a 512-number embedding and predicts no proteins."], "head": ["Our head", "Trained in teddy_mm on the training sites’ measured proteins: an MLP with a negative-binomial protein decoder (plus a flow-matching variant). It reads TEDDY’s embedding and a size factor (train median 0.92663) and predicts 134 surface proteins."], "citeseq": ["CITE-seq", "Measures RNA and surface proteins in the same cell."], "site4": ["site4 · held out", "A CITE-seq site never used in training: 16,750 cells. Here its measured proteins only grade answers."], "observer": ["Observer · the question", "The question, written down before the run: what is read, which answers are allowed, and the bar a call must clear."], "panelorder": ["Old panel order", "The first bridge run entered the 9 markers one step apart, in list order. Each step multiplies every value by the retention factor, so earlier markers ended weaker. Now all 9 enter at step 0."], "fixedrule": ["The fixed rule", "The same written question read straight off the 9 predicted markers: score each lineage, call the best if it clears the bar, otherwise no call. No graph."], "soft": ["Soft question", "All 9 markers weigh equally; call the best lineage if its score reaches 0.12."], "strict": ["Strict question", "A weighted mean with the key markers CD19, CD3 and CD16 at weight 2; the score must reach 0.28."], "btprio": ["B/T-priority question", "Only CD19, CD3 and CD16 count, with B ×1.5, T ×1.3 and myeloid ×0.5; bar 0.20 as declared (0.1333 on the shared score scale)."], "modeb": ["Mode B · done", "ANM works on our head’s outputs: 9 predicted proteins as typed evidence. TEDDY and the head are not changed."], "modea": ["Mode A · probes", "TEDDY’s transformer layers become the steps, with probes on the embedding and at every layer. So far: on the NK–T look-alike pairs a linear probe keeps about as much of the gap as our head, an MLP probe on the same embedding about twice as much, and gene-token states more than the gene-mean; part of the loss is in our head’s readout and in mean pooling, part may not be in the detected RNA."], "rerun": ["Official rerun", "These numbers use the official TEDDY-G preprocessing: counts / total × 10⁴, divided by TEDDY’s gene medians, top 2,048 rank tokens, no CLS token, mean over gene tokens. teddy_mm’s earlier non-official preprocessing gave the same phase-1 Pearson."]};
+  var tip = document.createElement('div');
+  tip.id = 'termtip'; tip.setAttribute('role', 'tooltip');
+  document.body.appendChild(tip);
+  var cur = null;
+  $$('.term[data-term]').forEach(function (el) {
+    var t = TERMS[el.getAttribute('data-term')];
+    if (!t) return;
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', el.textContent + ': ' + t[0] + '. ' + t[1]);
+  });
+  function place(el) {
+    var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, vw = document.documentElement.clientWidth;
+    var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), vw - w - 8);
+    var y = r.bottom + 8;
+    if (y + h > window.innerHeight - 8) y = Math.max(8, r.top - h - 8);
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function show(el) {
+    var t = TERMS[el.getAttribute('data-term')];
+    if (!t) return;
+    if (cur && cur !== el) cur.classList.remove('on');
+    tip.innerHTML = '';
+    var b = document.createElement('b'); b.textContent = t[0];
+    var s = document.createElement('span'); s.textContent = t[1];
+    tip.appendChild(b); tip.appendChild(s);
+    cur = el; el.classList.add('on');
+    tip.classList.add('on');
+    place(el);
+  }
+  function hide() { tip.classList.remove('on'); if (cur) cur.classList.remove('on'); cur = null; }
+  function termOf(e) { return e.target && e.target.closest ? e.target.closest('.term[data-term]') : null; }
+  document.addEventListener('pointerover', function (e) { var t = termOf(e); if (t && e.pointerType !== 'touch') show(t); });
+  document.addEventListener('pointerout', function (e) { var t = termOf(e); if (t && e.pointerType !== 'touch' && !(e.relatedTarget && t.contains(e.relatedTarget))) hide(); });
+  document.addEventListener('focusin', function (e) { var t = termOf(e); if (t) show(t); });
+  document.addEventListener('focusout', function (e) { if (termOf(e)) hide(); });
+  document.addEventListener('click', function (e) { var t = termOf(e); if (t) { if (cur === t) hide(); else show(t); } else if (cur) hide(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cur) hide(); });
+  window.addEventListener('scroll', function () { if (cur) place(cur); }, { passive: true });
+  window.addEventListener('resize', function () { if (cur) place(cur); });
+})();
+</script>
+</body>
+</html>

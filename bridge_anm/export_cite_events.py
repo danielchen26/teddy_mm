@@ -33,6 +33,84 @@ from lib.lineage_panels import (
 )
 
 
+EVENT_TIMINGS = ("simultaneous", "panel-order")
+SIZE_FACTORS = ("train-median", "one", "measured")
+
+
+def event_time(timing: str, t_i: int) -> int:
+    """Event time for the t_i-th panel protein.
+
+    simultaneous (default): every panel event of a cell is observed at t=0 —
+    the panel is one simultaneous readout, not a sequence.
+    panel-order (legacy): t = position in the panel list.
+    """
+    if timing == "simultaneous":
+        return 0
+    if timing == "panel-order":
+        return int(t_i)
+    raise ValueError(f"unknown event timing {timing!r}")
+
+
+def resolve_size_factor(mode: str, sf_all, split, pick) -> tuple[np.ndarray, dict]:
+    """ADT size factor fed to the decoder for the exported (RNA-only) cells.
+
+    train-median (default): one constant = median adt_size_factor over
+        split=='train'; never reads the exported cells' measured ADT depth.
+    one: constant 1.0.
+    measured (legacy): the exported cells' own measured adt_size_factor
+        (leaks ADT library size into an "RNA-only" prediction).
+    """
+    pick = np.asarray(pick, dtype=np.int64)
+    n = int(pick.size)
+    if mode == "train-median":
+        train_idx = np.where(np.asarray(split) == "train")[0]
+        # Exclude exported cells (only possible for a train-split OOD fallback)
+        # so their own measured depth never enters the constant.
+        n_excl = int(np.intersect1d(train_idx, pick).size)
+        if n_excl:
+            train_idx = np.setdiff1d(train_idx, pick)
+        if train_idx.size == 0:
+            raise SystemExit("--size-factor train-median: no split=='train' cells")
+        val = float(np.median(np.asarray(sf_all[train_idx], dtype=np.float64)))
+        return np.full(n, val, dtype=np.float32), {
+            "mode": mode, "value": val, "n_train_cells": int(train_idx.size),
+            "n_exported_excluded": n_excl,
+        }
+    if mode == "one":
+        return np.ones(n, dtype=np.float32), {"mode": mode, "value": 1.0}
+    if mode == "measured":
+        return np.asarray(sf_all[pick], dtype=np.float32), {
+            "mode": mode, "value": None,
+            "note": "per-cell measured adt_size_factor of exported cells (legacy)",
+        }
+    raise ValueError(f"unknown size factor mode {mode!r}")
+
+
+def git_commit(root: Path = ROOT) -> str | None:
+    import subprocess
+
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        dirty = subprocess.run(
+            ["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        return out + ("+dirty" if dirty else "")
+    except Exception:
+        return None
+
+
+def _phase1_mean(path: Path) -> float | None:
+    try:
+        return float(json.loads(path.read_text())["test"]["test_mlp_pearson"])
+    except (OSError, KeyError, ValueError):
+        print(f"WARN could not read phase-1 metrics at {path}")
+        return None
+
+
 def _load_pearson(path: Path) -> dict[str, float]:
     rows = json.loads(path.read_text())
     return {r["protein"]: float(r["pearson_mlp"]) for r in rows}
@@ -93,6 +171,8 @@ def _write_slice(
     id_prefix,
     compact,
     store_z_rows,
+    event_timing="simultaneous",
+    size_factor_mode="train-median",
 ):
     n_events = 0
     for local_i, global_i in enumerate(pick):
@@ -129,7 +209,8 @@ def _write_slice(
             ev = {
                 "event_id": f"{cell_id}:{prot}",
                 "cell_id": cell_id,
-                "time": t_i,
+                "time": event_time(event_timing, t_i),
+                "panel_order": t_i,
                 "protein": prot,
                 "action": lin,
                 "modality": MODALITY_FOR_LINEAGE[lin],
@@ -138,6 +219,7 @@ def _write_slice(
                 "adt_pred_raw": raw,
                 "norm_p95_train": p95[prot],
                 "provenance": f"teddy_phase1_mlp:{ckpt_name}:rna_only",
+                "size_factor_mode": size_factor_mode,
                 "modality_mask": "rna_only",
                 "split": str(split_arr[global_i]),
                 "site": str(sites[global_i]),
@@ -161,7 +243,27 @@ def main() -> None:
         type=Path,
         default=ROOT / "outputs/cite_phase1/test_per_protein.json",
     )
+    p.add_argument(
+        "--metrics",
+        type=Path,
+        default=None,
+        help="phase-1 metrics.json (default: next to --per-protein)",
+    )
     p.add_argument("--out-dir", type=Path, default=ROOT / "outputs/anm_cite_bridge")
+    p.add_argument(
+        "--event-timing",
+        choices=EVENT_TIMINGS,
+        default="simultaneous",
+        help="simultaneous: all panel events at t=0 (default); "
+        "panel-order: t = panel index (legacy)",
+    )
+    p.add_argument(
+        "--size-factor",
+        choices=SIZE_FACTORS,
+        default="train-median",
+        help="decoder ADT size factor: train-median (default, constant median over "
+        "split=='train'), one, or measured (legacy per-cell measured ADT depth)",
+    )
     p.add_argument(
         "--n-cells",
         type=int,
@@ -262,14 +364,14 @@ def main() -> None:
     mlp.eval()
     dec.eval()
 
-    adt_pred = _infer(
-        mlp, dec, z[pick], npz["adt_size_factor"][pick], device, args.batch_size
-    )
+    sf_all = npz["adt_size_factor"]
+    sf_pick, sf_info = resolve_size_factor(args.size_factor, sf_all, split, pick)
+    print(f"size_factor={sf_info}")
+    adt_pred = _infer(mlp, dec, z[pick], sf_pick, device, args.batch_size)
     adt_true = npz["adt"][pick].astype(np.float32)
     if ood_pick.size:
-        ood_pred = _infer(
-            mlp, dec, z[ood_pick], npz["adt_size_factor"][ood_pick], device, args.batch_size
-        )
+        sf_ood, sf_ood_info = resolve_size_factor(args.size_factor, sf_all, split, ood_pick)
+        ood_pred = _infer(mlp, dec, z[ood_pick], sf_ood, device, args.batch_size)
         ood_true = npz["adt"][ood_pick].astype(np.float32)
     else:
         ood_pred = ood_true = None
@@ -309,6 +411,8 @@ def main() -> None:
             id_prefix="cite_site4",
             compact=compact,
             store_z_rows=store_z_rows,
+            event_timing=args.event_timing,
+            size_factor_mode=args.size_factor,
         )
         if ood_pick.size:
             n_events += _write_slice(
@@ -333,6 +437,8 @@ def main() -> None:
                 id_prefix="cite_ood",
                 compact=compact,
                 store_z_rows=store_z_rows,
+                event_timing=args.event_timing,
+                size_factor_mode=args.size_factor,
             )
 
     z_path = None
@@ -363,11 +469,15 @@ def main() -> None:
         "lineage_panels": LINEAGE_PANELS,
         "key_markers": KEY_MARKERS,
         "phase1_mlp_pearson_quoted": used_r,
-        "phase1_test_mlp_pearson_mean": float(
-            json.loads((ROOT / "outputs/cite_phase1/metrics.json").read_text())["test"][
-                "test_mlp_pearson"
-            ]
+        "phase1_test_mlp_pearson_mean": _phase1_mean(
+            args.metrics or args.per_protein.parent / "metrics.json"
         ),
+        "event_timing": args.event_timing,
+        "size_factor": sf_info,
+        "size_factor_ood": sf_ood_info if ood_pick.size else None,
+        "flags": {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
+        "git_commit": git_commit(),
+        "processed": str(args.processed),
         "ckpt": str(args.ckpt),
         "seed": args.seed,
         "z_keep": args.z_keep,
@@ -389,7 +499,8 @@ def main() -> None:
     }
     (args.out_dir / "export_manifest.json").write_text(json.dumps(manifest, indent=2))
     print(json.dumps({k: manifest[k] for k in (
-        "n_cells_site4_test", "n_cells_ood", "n_events", "capped", "device", "compact"
+        "n_cells_site4_test", "n_cells_ood", "n_events", "capped", "device", "compact",
+        "event_timing", "size_factor", "git_commit",
     )}, indent=2))
 
 

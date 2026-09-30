@@ -1,0 +1,13 @@
+three.js 0.186.1 (r186), MIT licence (see LICENSE).
+
+Source: npm tarball https://registry.npmjs.org/three/-/three-0.186.1.tgz
+        (sha1 6d50f70c2c437f844179bbb56d6f5b774e1ca38a, as listed by the registry).
+The 0.186.1 package ships build/three.module.js, which imports ./three.core.js, and no .min builds.
+three.module.min.js here is those two files bundled into one self-contained ES module:
+  esbuild 0.25.12: esbuild package/build/three.module.js --bundle --format=esm --minify
+                   --legal-comments=inline --target=es2020
+sha256(three.module.min.js) = ed11a90814a27be663f430328985511ad86e03fd56a610d2347eea6f3139e705
+Exports are the same as build/three.module.js (REVISION === "186").
+
+Pages load it through an import map:
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script>

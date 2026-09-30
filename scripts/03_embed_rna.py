@@ -21,7 +21,9 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--processed", type=Path, default=ROOT / "data/processed/cite")
     p.add_argument("--ckpt", type=Path, default=ROOT.parent / "teddy_mwe/ckpt/teddy_g_70M")
-    p.add_argument("--seq-len", type=int, default=1024)
+    # 512 is the context the stored z_rna / z_rna_512 embeddings were made with (re-embedding a sample
+    # at 512 reproduces them: cosine 1.000000; at 1024 the median cosine is only 0.970).
+    p.add_argument("--seq-len", type=int, default=512)
     p.add_argument("--batch-size", type=int, default=16)
     p.add_argument("--normalize-total", type=float, default=10000.0)
     p.add_argument("--device", default="auto")

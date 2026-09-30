@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lib.lineage_panels import (  # noqa: E402
+    anm_readout_threshold,
     ACTIONS,
     CRITERIA,
     event_value_under_criterion,
@@ -137,7 +138,7 @@ def main() -> None:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     bundle = build_instances(args.events, args.cells, args.criterion, args.max_cells)
     base = json.loads(args.schema.read_text())
-    schema = schema_with_threshold(base, CRITERIA[args.criterion]["readout_threshold"])
+    schema = schema_with_threshold(base, anm_readout_threshold(CRITERIA[args.criterion], base))
 
     inst_path = args.out_dir / f"anm_instances_{args.criterion}.json"
     schema_path = args.out_dir / f"schema_{args.criterion}.json"

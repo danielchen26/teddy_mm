@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import sys
 import time
 from collections import Counter, defaultdict
@@ -20,11 +21,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
-ANM_ROOT = ROOT.parent / "ANM"
+ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM")))
 sys.path.insert(0, str(ANM_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lib.lineage_panels import (  # noqa: E402
+    anm_readout_threshold,
     ACTIONS,
     CRITERIA,
     KEY_MARKERS,
@@ -304,7 +306,8 @@ def anm_run_one(schema, instance):
 
 def schema_for(crit_id, base_schema):
     schema = copy.deepcopy(base_schema)
-    thr = float(CRITERIA[crit_id]["readout_threshold"])
+    # v2: rule threshold mapped onto the ANM field scale; legacy: declared value.
+    thr = float(anm_readout_threshold(CRITERIA[crit_id], base_schema))
     schema["field_representation"]["readout_threshold"] = thr
     schema["criterion_overlay"] = {"readout_threshold": thr}
     return schema

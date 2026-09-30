@@ -1,0 +1,155 @@
+/*
+ * teddy_mm animation figures. Markup:
+ *   <figure class="anim" data-anim="NAME">
+ *     <div class="anim-stage" role="img" aria-label="ALT TEXT"></div>
+ *     <figcaption>ONE SHORT CAPTION</figcaption>
+ *   </figure>
+ * data-aspect="4:3" | "1:1" | "21:9" | "3:2" | "2:1" | "4:5" on the figure or stage overrides 16:9.
+ *
+ * Colour tokens read by core.js (ctx.colors). They map onto the page's own variables, so they
+ * follow the site's light and dark themes; override any --anim-* on a page or a single figure.
+ * Lineage colours (nk, t, b, m) are new to the site: checked with the dataviz palette validator,
+ * all four pairs, against #ffffff (light) and #1b1e22 (dark): CVD ΔE ≥ 8, normal-vision ΔE ≥ 15,
+ * contrast ≥ 3:1. Myeloid sits close to TEDDY orange and NK close to ANM teal for deuteranopes,
+ * so every lineage mark in a scene carries a direct text label.
+ */
+.anim {
+  --anim-ink: var(--ink, #16181a);
+  --anim-muted: var(--ink-muted, #565b62);
+  --anim-faint: var(--ink-faint, #868b92);
+  --anim-line: var(--line, #dcd9d0);
+  --anim-card: var(--bg-elev, #ffffff);
+  --anim-paper: var(--bg, #f7f6f2);
+  --anim-soft: var(--bg-soft, #f0efe9);
+  --anim-grid: var(--grid, var(--line, #ece9e1));
+  --anim-accent: var(--s-anm, var(--bar-win, #008c7e));
+  --anim-teddy: var(--s-teddy, var(--bar-base, #c8641f));
+  --anim-train: var(--s-train, #6554c9);
+  --anim-measured: var(--ink, #16181a);
+  --anim-good: var(--good, #1f6b3a);
+  --anim-bad: var(--bad, #a13a3a);
+  --anim-warn: var(--warn, #8a4b12);
+  --anim-nk: #c2458f;
+  --anim-t: #2a78d6;
+  --anim-b: #4a3aa7;
+  --anim-m: #a88600;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .anim {
+    --anim-nk: #d0508f; --anim-t: #2b6ad6; --anim-b: #9a7cea; --anim-m: #a38b00;
+  }
+}
+:root[data-theme="dark"] .anim {
+  --anim-nk: #d0508f; --anim-t: #2b6ad6; --anim-b: #9a7cea; --anim-m: #a38b00;
+}
+
+/* card */
+.anim {
+  position: relative;
+  margin: 18px 0;
+  min-width: 0;
+  max-width: 100%;
+  background: var(--anim-card);
+  border: 1px solid var(--anim-line);
+  border-radius: var(--r, var(--radius, 14px));
+  overflow: hidden;
+}
+.anim-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--anim-card);
+  cursor: pointer;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.anim[data-aspect="4:3"] .anim-stage, .anim-stage[data-aspect="4:3"] { aspect-ratio: 4 / 3; }
+.anim[data-aspect="3:2"] .anim-stage, .anim-stage[data-aspect="3:2"] { aspect-ratio: 3 / 2; }
+.anim[data-aspect="1:1"] .anim-stage, .anim-stage[data-aspect="1:1"] { aspect-ratio: 1 / 1; }
+.anim[data-aspect="2:1"] .anim-stage, .anim-stage[data-aspect="2:1"] { aspect-ratio: 2 / 1; }
+.anim[data-aspect="21:9"] .anim-stage, .anim-stage[data-aspect="21:9"] { aspect-ratio: 21 / 9; }
+.anim[data-aspect="4:5"] .anim-stage, .anim-stage[data-aspect="4:5"] { aspect-ratio: 4 / 5; }
+.anim-stage > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.anim > figcaption {
+  margin: 0;
+  padding: 9px 14px 11px;
+  border-top: 1px solid var(--anim-line);
+  color: var(--anim-muted);
+  font-size: .8rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 480px) {
+  .anim > figcaption { padding: 8px 12px 10px; font-size: .78rem; }
+}
+
+/* compact: a small thumbnail inside a card (class="anim anim--compact"); tighter frame and caption */
+.anim.anim--compact { border-radius: 10px; }
+.anim.anim--compact > figcaption { padding: 6px 10px 7px; font-size: .74rem; line-height: 1.4; }
+.anim.anim--compact .anim-btn { top: 6px; right: 6px; }
+/* a small stage has no room for the "Paused"/"Play" word over its corner: the icon and the paused outline say it */
+.anim.anim--compact .anim-btn-t { display: none; }
+
+/* play / pause control (injected by loader.js, sits over the stage's top-right corner) */
+.anim-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  min-width: 28px;
+  padding: 0 7px;
+  border: 1px solid var(--anim-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--anim-card) 88%, transparent);
+  color: var(--anim-muted);
+  font: 600 .7rem/1 var(--mono, ui-monospace, Menlo, monospace);
+  letter-spacing: .03em;
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .15s ease, border-color .15s ease;
+}
+.anim-btn:hover, .anim-btn:focus-visible, .anim:hover .anim-btn { opacity: 1; }
+.anim-btn:focus-visible { outline: 2px solid var(--anim-accent); outline-offset: 2px; }
+.anim-btn .anim-i { width: 12px; height: 12px; fill: currentColor; flex: none; }
+.anim-btn .anim-i-play { display: none; }
+.anim-btn .anim-btn-t:empty { display: none; }
+.anim[data-state="paused"] .anim-btn, .anim[data-state="static"] .anim-btn {
+  opacity: 1;
+  color: var(--anim-ink);
+  border-color: color-mix(in srgb, var(--anim-accent) 45%, var(--anim-line));
+}
+.anim[data-state="paused"] .anim-i-pause, .anim[data-state="static"] .anim-i-pause { display: none; }
+.anim[data-state="paused"] .anim-i-play, .anim[data-state="static"] .anim-i-play { display: block; color: var(--anim-accent); }
+.anim[data-state="paused"] .anim-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--anim-accent) 35%, transparent);
+  border-radius: inherit;
+}
+
+/* no WebGL, or the scene failed: the caption stands alone */
+.anim.anim--fallback .anim-stage, .anim.anim--fallback .anim-btn { display: none; }
+.anim.anim--fallback > figcaption { border-top: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-btn { transition: none; }
+}
+@media print {
+  .anim-btn { display: none; }
+}

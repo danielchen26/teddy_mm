@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import sys
 import time
 from collections import Counter
@@ -21,7 +22,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 ANM_CANDIDATES = [
-    ROOT.parent / "ANM",
+    Path(os.environ.get("ANM_ROOT", str(ROOT.parent / "ANM"))),
     Path("/Users/tianchichen/Documents/GitHub/ANM"),
     Path("/workspace/ANM-pr11"),
 ]

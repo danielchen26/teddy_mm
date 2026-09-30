@@ -54,7 +54,7 @@ aside.guide [hidden] { display: none !important; }
 .gp-corner { min-height: 0; }
 .gp-cell { position: relative; border-radius: 9px; padding: 6px 7px 7px; border: 1px solid var(--line); background: var(--g-card); min-height: 58px; transition: box-shadow .2s ease, border-color .2s ease; }
 .gp-cell .gp-st { display: inline-block; font-family: var(--mono); font-size: .56rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 1px 6px; border-radius: 999px; }
-.gp-cell .gp-tx { display: block; margin-top: 4px; font-size: .64rem; line-height: 1.3; color: var(--ink-muted); }
+.gp-cell .gp-tx { display: block; margin-top: 4px; font-size: .64rem; line-height: 1.3; color: var(--ink-muted); overflow-wrap: anywhere; hyphens: auto; }
 .gp-cell.done { background: color-mix(in srgb, var(--g-anm) 12%, var(--g-card)); border-color: color-mix(in srgb, var(--g-anm) 40%, var(--line)); }
 .gp-cell.done .gp-st { background: var(--g-anm); color: var(--bg); }
 .gp-cell.part { background: color-mix(in srgb, var(--g-teddy) 9%, var(--g-card)); border-color: color-mix(in srgb, var(--g-teddy) 35%, var(--line)); border-style: dashed; }
