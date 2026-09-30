@@ -22,7 +22,11 @@ model:
   n_layers: 3
   dropout: 0.1
   fm_steps: 20
-  use_clr: true
+  # ADT enters the encoder transformed exactly once (scripts/06 --adt-input-transform):
+  # auto = none for an already-normalized pack, log1p for integer counts. Legacy: clr.
+  adt_input_transform: auto
+  # Val/test decoder size factor (scripts/06 --eval-size-factor). Legacy: measured.
+  eval_size_factor: train-median
 
 train:
   epochs: 8                 # short scaffold run; bump later

@@ -68,6 +68,46 @@ def size_factors(counts) -> np.ndarray:
     return sf.astype(np.float32)
 
 
+SIZE_FACTOR_MODES = ("train-median", "one", "measured")
+
+
+def eval_size_factor(mode: str, sf_all, train_idx, eval_idx) -> tuple[np.ndarray, dict]:
+    """ADT size factor handed to the decoder for evaluation cells.
+
+    train-median (default): one constant = median of ``sf_all`` over the training
+        cells ``train_idx`` (the cells the model was fit on). Never reads the
+        evaluation cells' own measured ADT depth (the answer key).
+    one: constant 1.0.
+    measured (legacy): each evaluation cell's own measured size factor, which is
+        computed from that cell's measured ADT.
+
+    Note: ``sf_all`` is the pack's ``adt_size_factor`` (``size_factors`` above), whose
+    denominator is the median ADT total over every cell in the pack, evaluation cells
+    included. The train-median constant is therefore median_train(total) / median_all(total):
+    one scalar that also divides every training cell's size factor. It carries no
+    per-cell evaluation depth and a constant scale does not change per-protein Pearson.
+    """
+    eval_idx = np.asarray(eval_idx, dtype=np.int64)
+    n = int(eval_idx.size)
+    if mode == "train-median":
+        train_idx = np.asarray(train_idx, dtype=np.int64)
+        if train_idx.size == 0:
+            raise ValueError("train-median size factor: no training cells")
+        overlap = int(np.intersect1d(train_idx, eval_idx).size)
+        if overlap:
+            raise ValueError(f"train-median size factor: {overlap} evaluation cells are also training cells")
+        val = float(np.median(np.asarray(sf_all, dtype=np.float64)[train_idx]))
+        return np.full(n, val, dtype=np.float32), {"mode": mode, "value": val, "n_train_cells": int(train_idx.size)}
+    if mode == "one":
+        return np.ones(n, dtype=np.float32), {"mode": mode, "value": 1.0}
+    if mode == "measured":
+        return np.asarray(sf_all, dtype=np.float32)[eval_idx], {
+            "mode": mode, "value": None,
+            "note": "legacy: per-cell size factor computed from each evaluation cell's measured ADT",
+        }
+    raise ValueError(f"unknown size factor mode {mode!r}; choose from {SIZE_FACTOR_MODES}")
+
+
 def to_csr_float32(x):
     if sparse.issparse(x):
         return x.tocsr().astype(np.float32)
@@ -155,7 +195,8 @@ def _as_fixed_unicode(arr: np.ndarray, dtype: str = "U64") -> np.ndarray:
     return np.asarray([str(x) for x in np.asarray(arr).ravel()], dtype=dtype).reshape(np.shape(arr))
 
 
-def load_prepared(processed_dir: Path) -> dict:
+def load_prepared(processed_dir: Path, load_rna: bool = True) -> dict:
+    """Load a processed pack. load_rna=False skips the RNA matrix (rna=None)."""
     npz_path = processed_dir / "cite_arrays.npz"
     try:
         z = np.load(npz_path, allow_pickle=False)
@@ -163,10 +204,12 @@ def load_prepared(processed_dir: Path) -> dict:
         _ = z["adt_names"]
     except ValueError:
         z = np.load(npz_path, allow_pickle=True)
-    rna = sparse.csr_matrix(
-        (z["rna_data"], z["rna_indices"], z["rna_indptr"]),
-        shape=tuple(z["rna_shape"]),
-    )
+    rna = None
+    if load_rna:
+        rna = sparse.csr_matrix(
+            (z["rna_data"], z["rna_indices"], z["rna_indptr"]),
+            shape=tuple(z["rna_shape"]),
+        )
     return {
         "rna": rna,
         "adt": z["adt"],

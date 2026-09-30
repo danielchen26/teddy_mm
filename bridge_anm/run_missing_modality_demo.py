@@ -475,7 +475,9 @@ def write_report(out: dict, path: Path):
     lines.append("")
     lines.append("## Reading note (TEDDY's role)")
     lines.append('')
-    lines.append("- **`adt_only` = RNA missing, so TEDDY does not run.** Its evidence comes from the phase-2 BidirectionalCite model run with its RNA input off: it reads the cell's 134 measured proteins and reconstructs the 9 panel proteins (panel Pearson 0.446). The same measured proteins also set the answer key.")
+    adt_only_r = (man.get("panel_pearson_by_mask") or {}).get("adt_only")
+    adt_only_r = f"{adt_only_r:.3f}" if isinstance(adt_only_r, (int, float)) else "n/a"
+    lines.append(f"- **`adt_only` = RNA missing, so TEDDY does not run.** Its evidence comes from the phase-2 BidirectionalCite model run with its RNA input off: it reads the cell's 134 measured proteins and reconstructs the 9 panel proteins (panel Pearson {adt_only_r}). The same measured proteins also set the answer key.")
     lines.append('- **Arm names in the tables below.** "TEDDY alone" is the fixed rule with no ANM layer, reading each mask\'s predicted panel unscaled (O0: average each lineage\'s 3 markers, call the highest if it reaches 0.12; O2: key marker only × lineage weight B 1.5 / T 1.3 / myeloid 0.5, bar 0.20). "TEDDY+ANM" is ANM on the same evidence (×0.35 for `adt_only`). Under `adt_only` neither arm involves TEDDY, so those rows are labelled "Fixed rule (stand-in)" and "ANM (stand-in)".')
     lines.append('- **The `adt_only` abstentions follow the declared trust factor 0.35** (`modality_reliability`), which was chosen, not estimated. Under O2 (key-marker rule) no score can reach the 0.20 bar with that factor: the best case is 0.126 (`scripts/missing_modality_bounds.py`), so all `adt_only` cells are declined by construction.')
     lines.append('')
