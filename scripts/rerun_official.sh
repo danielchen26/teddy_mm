@@ -136,9 +136,10 @@ step_pilot() {
 
 step_embed() {
   # shards live in $WORK (scratch); only the assembled z_rna*.npy + manifest go to $P.
-  # Add --save-layer-means for Mode A (about 1.1 GB float16 for 12 layers x 90,261 cells).
+  # These are the settings of the official run: fp16 (matches fp32, cosine >= 0.999999), batch 32, and
+  # --save-layer-means for Mode A (about 1.1 GB float16 for 12 layers x 90,261 cells).
   embed "$P" --preprocessing official --processed "$L" --medians "$MEDIANS" --seq-len 2048 --pooling gene-mean \
-      --save-poolings first --length-buckets --batch-size 16 --shard-size "$SHARD" --shard-dir "$WORK/shards_official" \
+      --save-poolings first --length-buckets --batch-size 32 --autocast fp16 --save-layer-means --shard-size "$SHARD" --shard-dir "$WORK/shards_official" \
       ${EMBED_EXTRA:-}
 }
 
