@@ -132,6 +132,9 @@ def main():
     p.add_argument("--fm-steps", type=int, default=20)
     p.add_argument("--device", default="auto")
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--select-on", choices=("joint_fm", "joint_direct"), default="joint_fm",
+                   help="val metric for checkpoint selection: joint_fm (default, legacy) = one flow-matching sample; "
+                   "joint_direct = direct decode (less noisy)")
     p.add_argument(
         "--adt-input-transform",
         choices=("auto",) + ADT_INPUT_TRANSFORMS,
@@ -268,7 +271,8 @@ def main():
         }
         metrics.update(eval_split("val", val, model, device, args.fm_steps))
         history.append(metrics)
-        score = metrics.get("val_joint_pearson", float("nan"))
+        sel_key = "val_joint_pearson" if args.select_on == "joint_fm" else "val_joint_direct_pearson"
+        score = metrics.get(sel_key, float("nan"))
         if score == score and score > best:  # not NaN
             best = score
             torch.save(
@@ -279,7 +283,7 @@ def main():
                 },
                 args.out / "best.pt",
             )
-            print(f"epoch {epoch} saved best val_joint_pearson={score:.4f}")
+            print(f"epoch {epoch} saved best {sel_key}={score:.4f}")
 
     ckpt_path = args.out / "best.pt"
     if ckpt_path.exists():
