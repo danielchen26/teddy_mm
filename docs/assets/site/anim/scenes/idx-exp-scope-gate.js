@@ -4,8 +4,8 @@
  * 1 The held-out cells stand as pillars in two mirrored lanes: ranked by ANM’s confidence (teal, up) and
  *   ranked by the fixed rule’s own margin, top score minus runner-up (orange, down). Pillar heights are
  *   illustrative, not data. A coverage slider (100% to 10%) slides a curtain over the least confident
- *   pillars of both lanes: it stops at 80%, where the chip shows ANM’s largest lead (+0.0026), then at 40%.
- *   The accuracy of the kept calls (soft rule) climbs from 0.945 (all cells) to 0.9987 (ANM) and 0.9988
+ *   pillars of both lanes: it stops at 80%, where the chip shows the rule's margin ahead by 0.0058 (ANM never leads), then at 40%.
+ *   The accuracy of the kept calls (soft rule) climbs from 0.938 (all cells) to 0.9993 (ANM) and 0.9994
  *   (margin): nearly equal. Arrows show the climb; no in-between values are printed.
  * 2 The hard cells (the call flips under leave-one-out, 4,476) glow red and gather: 73% of them are out of
  *   scope, NK/ILC 3.4× and erythroid 3.7× over-represented; their accuracy 0.818 vs 0.945 for random cells
@@ -19,8 +19,9 @@
 const NUMBERS = {
   cells: 16750,        // “16,750 held-out cells”
   covMin: 10,          // “coverage (100% to 10%)”
-  leadAt: 80,          // “apart from +0.0026 at 80% (soft) and ≤ 0.0004 elsewhere”
-  lead: '+0.0026',
+  leadAt: 80,          // official: at 80% coverage (soft) the rule's own margin is ahead by 0.0058; ANM never leads
+  gapAt80: '0.0058',          // “apart from +0.0026 at 80% (soft) and ≤ 0.0004 elsewhere”
+  // (first run: +0.0026 at 80%; gone under the official preprocessing)
   keep: 40,            // “soft rule, keeping 40%”
   accAll: '0.938',     // “(all cells 0.945)”
   accAnm: '0.9993',    // KPI: ANM confidence, keeping 40%
@@ -31,7 +32,7 @@ const NUMBERS = {
   accRandom: '0.939',
   nkIlc: '3.1×',       // “NK/ILC and erythroid over-represented: 73% of hard cells, out of scope”
   erythroid: '3.4×',
-  outOfScope: 73,
+  outOfScope: 65,
 };
 
 export default function create(ctx) {
@@ -111,7 +112,7 @@ export default function create(ctx) {
     endText: end,
   }));
   const approx = lab('≈', { color: 'muted', weight: 600, size: 20 });
-  const chip = lab(`${NUMBERS.lead} at ${NUMBERS.leadAt}%: ANM’s largest lead`, {
+  const chip = lab(`margin ahead by ${NUMBERS.gapAt80} at ${NUMBERS.leadAt}%`, {
     anchor: 'left', color: 'accent', weight: 600, size: 11, bg: 'soft', bgOpacity: 1, pad: 4,
   });
 

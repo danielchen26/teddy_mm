@@ -15,7 +15,7 @@
 const NUMBERS = {
   // index.html #problem, GAP 5: "Trained readout — 50–2,000 new labelled cells, again at every change."
   labelsLow: 50,
-  labelsHigh: 2000,
+  labelsHigh: 1000,
 };
 
 export default function create(ctx) {

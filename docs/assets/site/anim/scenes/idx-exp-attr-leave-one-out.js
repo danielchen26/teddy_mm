@@ -14,7 +14,7 @@
  *   switches where B crosses T (the notch); the gap from this cell's value to the notch is the flip distance,
  *   the smallest change that switches the call (drawn, not printed).
  * 4 The camera pulls back to all 16,302 called cells (page values): how often each protein is the deciding
- *   marker (the page's chart data, drawn to scale), CD5 on top at 19.5%; a dashed ghost settles at 14.4%, the
+ *   marker (the page's chart data, drawn to scale), CD5 on top at 19.5%; a dashed ghost settles at 15.7%, the
  *   top marker's share when values are shuffled within each lineage (mean of 100 shuffles), p ≈ 0.0099;
  *   a chip: 27.5% of calls flip without their deciding marker; a note: with all markers at once the deciding
  *   marker is the largest normalised value in the called lineage.
@@ -38,7 +38,7 @@ const NUMBERS = {
   // page chart data (DATA.b3.top1): [protein, lineage, cells it decides]; drawn to scale, only CD5's share printed
   top1: [['CD2', 'T', 2945], ['CD5', 'T', 2849], ['CD19', 'B', 2749], ['CD36', 'M', 2500], ['CD16', 'M', 2221],
     ['CD11c', 'M', 1049], ['CD3', 'T', 1011], ['CD72', 'B', 869], ['CD22', 'B', 285]],
-  permMean: 0.1573,                  // page: “vs 14.4% shuffled” (top marker's share, within-lineage shuffles)
+  permMean: 0.1573,                  // page: “vs 15.7% shuffled” (top marker's share, within-lineage shuffles)
   nPerm: 100,                        // page: “permutation 100×”
   p: 0.0099,                         // page: “p ≈ 0.0099”
   flipRate: 0.2999,                  // page: “27.5% of calls flip without their deciding marker”

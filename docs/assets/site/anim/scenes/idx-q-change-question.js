@@ -5,15 +5,15 @@
  * The card is swapped from "soft" to "B/T-priority". The link to the gear breaks, the gear tries to turn
  * and does not, and its stamp keeps landing on every cell on the belt the same way. Cells the new question
  * would hold back (dashed ring, "hold back") are stamped anyway; each sends a dot to the tally, which shows only
- * 2,726, the page's count of cells the kept soft rule answers that B/T-priority holds back (no made-up partial
+ * 2,279, the page's count of cells the kept soft rule answers that B/T-priority holds back (no made-up partial
  * counts on the way). A note gives
  * the page's way out under the belt: until re-coded, or re-tuned on labels.
- * Which belt cells are flagged is illustrative (their share is not to scale); the only number is 2,726.
- * 12 s seamless loop; the still frame (reduced motion) shows the counter at 2,726.
+ * Which belt cells are flagged is illustrative (their share is not to scale); the only number is 2,279.
+ * 12 s seamless loop; the still frame (reduced motion) shows the counter at 2,279.
  */
 const NUMBERS = {
-  // index.html #problem, GAP 1: "until then it answers 2,726 cells B/T-priority holds back"
-  heldBackAnswered: 2726,
+  // index.html #problem, GAP 1: "until then it answers 2,279 cells B/T-priority holds back"
+  heldBackAnswered: 2279,
 };
 
 export default function create(ctx) {

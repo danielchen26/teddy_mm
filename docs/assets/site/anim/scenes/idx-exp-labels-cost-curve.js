@@ -32,7 +32,7 @@ const NUMBERS = {
   matchGrid: 50,           // labels for the re-tuned threshold grid to match ANM's decline rate and exactness
   matchLogistic: 500,      // logistic head
   matchMlp: 1000,          // MLP head
-  logisticAccAtMax: 0.972, // logistic head accuracy of calls made at 10,619 labels
+  logisticAccAtMax: 0.963, // logistic head accuracy of calls made at 10,619 labels
   ruleWeights: { B: 1.5, T: 1.3, myeloid: 0.5 },
 };
 

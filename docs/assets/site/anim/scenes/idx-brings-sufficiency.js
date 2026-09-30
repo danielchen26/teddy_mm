@@ -91,12 +91,12 @@ export default function create(ctx) {
   const outLab = lab('proteins', { anchor: 'left', color: 'muted' });
   const head = add(ctx.box(2.5, 1, { color: 'soft', stroke: 'muted', radius: 0.2 }));
   const headLab = lab('our head', { weight: 600, size: 13 });
-  const lamps = ['embedding: compressed too', 'head: no worse'].map((t) => ({
+  const lamps = ['part: our head’s readout', 'part: mean pooling · RNA'].map((t) => ({
     br: ln({ color: 'faint', width: 1.3, dashed: [3, 4] }),
     ring: dot('muted', { hollow: true, ring: 0.3 }), bulb: dot('faint'), l: lab(t, { anchor: 'bottom' }),
   }));
   const probe = { line: ln({ color: 'accent', width: 1.6, dashed: [4, 4] }), ring: dot('accent', { hollow: true, ring: 0.32 }),
-    core: dot('accent'), l: lab('Mode A · linear probes', { anchor: 'top', color: 'accent', weight: 600 }) };
+    core: dot('accent'), l: lab('Mode A · MLP + token probes', { anchor: 'top', color: 'accent', weight: 600 }) };
 
   /* ── projection of the turning cloud (yaw oscillates, fixed pitch) ── */
   const CP = Math.cos(0.32), SP = Math.sin(0.32);
