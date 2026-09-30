@@ -432,9 +432,15 @@ python scripts/04_train.py --processed data/processed/cite_smoke --out outputs/s
 
 #### Phase-2 bidirectional CITE (scaffold)
 
-Independent of full phase-1 90k embed. ADT encoder (CLR/log → shallow MLP) +
-modality dropout (~18% drop RNA) + latent FM with `cond = z_obs`. No ATAC /
-perturb-seq / 160M.
+Independent of full phase-1 90k embed. ADT encoder (shallow MLP on the stored
+ADT, transformed exactly once: `--adt-input-transform auto` = none for an
+already-normalized pack such as `data/processed/cite`, log1p for integer counts)
++ modality dropout (~18% drop RNA) + latent FM with `cond = z_obs`. Val/test
+decoding uses the train-median ADT size factor (`--eval-size-factor`), never the
+evaluated cells' own measured ADT depth. `--legacy` restores the pre-fix
+behaviour (clr on top of the stored ADT, measured size factor). In `adt_only` /
+`joint` the scored cell's measured ADT is the encoder input, so those scores are
+reconstructions. No ATAC / perturb-seq / 160M.
 
 **Do not** write into `data/processed/cite/` or `outputs/cite_phase1/` while
 phase-1 is running. Use a separate pack:

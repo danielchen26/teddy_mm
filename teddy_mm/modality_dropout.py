@@ -13,7 +13,11 @@ import torch.nn.functional as F
 
 
 def clr_log_adt(adt: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
-    """CLR on log1p counts: log(x) - mean(log(x)) with x = adt + eps."""
+    """Centered log-ratio per cell: log(x) - mean(log(x)) with x = max(adt, 0) + eps.
+
+    Note this is log(x + eps), not log1p: a zero entry becomes log(1e-6) ≈ -13.8
+    before centering. Legacy phase-2 encoder input (see teddy_mm.bidirectional).
+    """
     x = adt.clamp(min=0) + eps
     log_x = torch.log(x)
     return log_x - log_x.mean(dim=-1, keepdim=True)

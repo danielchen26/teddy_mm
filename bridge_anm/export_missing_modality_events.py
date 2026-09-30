@@ -8,6 +8,17 @@ Preference order:
      identity/prior stand-in (documented in manifest). Phase-2 Pearson is
      expected weak (~0.25–0.28 historically); do NOT claim win over phase-1 0.61.
 
+Size factor: every mask decodes with the train-median constant by default
+(--size-factor for rna_only, --size-factor-observed for adt_only/joint);
+``--size-factor-observed measured`` restores the legacy per-cell measured depth
+for the ADT-observed masks. The phase-2 ADT input transform comes from the
+checkpoint (legacy checkpoints: clr). The phase-2 vs hybrid choice is gated on
+the checkpoint's recorded validation Pearson by default (--phase2-gate val);
+--phase2-gate test is the legacy gate on the exported test cells.
+
+adt_only / joint read the exported cell's measured ADT as input; the same
+values are the holdout answer key (manifest: answer_key_is_encoder_input).
+
 Writes under outputs/anm_cite_bridge/missing_modality/.
 """
 from __future__ import annotations
@@ -24,7 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from teddy_mm.bidirectional import BidirectionalCite
+from teddy_mm.bidirectional import load_bidirectional
 from teddy_mm.device import resolve_device
 from teddy_mm.models import AdtDecoder, MLP
 
@@ -66,7 +77,7 @@ def _infer_phase1(mlp, dec, z, sf, device, batch_size):
     return np.concatenate(chunks, axis=0)
 
 
-def _infer_phase2(model, z, adt, sf, mode, device, batch_size, fm_steps):
+def _infer_phase2(model, z, adt, sf, mode, device, batch_size, fm_steps, use_fm=True):
     zt = torch.from_numpy(z).to(device)
     yt = torch.from_numpy(adt).to(device)
     sft = torch.from_numpy(sf.astype(np.float32)).to(device)
@@ -80,7 +91,7 @@ def _infer_phase2(model, z, adt, sf, mode, device, batch_size, fm_steps):
                 sft[s:e],
                 mode=mode,
                 fm_steps=fm_steps,
-                use_fm=True,
+                use_fm=use_fm,
             )
             chunks.append(pred.cpu().numpy())
     return np.concatenate(chunks, axis=0)
@@ -135,8 +146,30 @@ def main() -> None:
         choices=SIZE_FACTORS,
         default="train-median",
         help="ADT size factor for the RNA-only path (phase-1 and phase-2 rna_only): "
-        "train-median (default), one, or measured (legacy). adt_only/joint masks "
-        "observe ADT, so they keep the measured size factor.",
+        "train-median (default), one, or measured (legacy).",
+    )
+    p.add_argument(
+        "--size-factor-observed",
+        choices=SIZE_FACTORS,
+        default="train-median",
+        help="ADT size factor for the phase-2 adt_only/joint masks: train-median "
+        "(default), one, or measured (legacy: the exported cells' own measured ADT "
+        "depth, i.e. the answer key's library size)",
+    )
+    p.add_argument(
+        "--phase2-decode",
+        choices=("fm", "direct"),
+        default="fm",
+        help="how phase-2 predictions are decoded: fm (default, legacy) = one flow-matching sample per "
+        "cell (unseeded, so it varies run to run); direct = decode the encoder latent without sampling",
+    )
+    p.add_argument(
+        "--phase2-gate",
+        choices=("val", "test"),
+        default="val",
+        help="Pearson compared with --phase2-min-pearson: val (default) = the "
+        "checkpoint's recorded val_rna_only_pearson; test (legacy) = rna_only "
+        "Pearson on the exported test cells",
     )
     args = p.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -179,10 +212,12 @@ def main() -> None:
     z_dim = int(z.shape[1])
     n_adt = len(adt_names)
     adt_pick = npz["adt"][pick].astype(np.float32)
-    # Measured ADT depth: legitimate only when ADT is observed (adt_only/joint).
-    sf_measured = npz["adt_size_factor"][pick].astype(np.float32)
+    # Measured ADT depth of the exported cells = the answer key's library size.
+    # Only read under the legacy --size-factor(-observed) measured.
     sf_rna, sf_info = resolve_size_factor(args.size_factor, npz["adt_size_factor"], split, pick)
+    sf_obs, sf_obs_info = resolve_size_factor(args.size_factor_observed, npz["adt_size_factor"], split, pick)
     print(f"rna_only size_factor={sf_info}")
+    print(f"adt_only/joint size_factor={sf_obs_info}")
     z_pick = z[pick]
 
     # Always compute phase-1 baseline (strong unidirectional ~0.61)
@@ -199,28 +234,49 @@ def main() -> None:
 
     source = "simulate_phase1_plus_adt"
     phase2_metrics = {}
+    phase2_info: dict = {}
     preds_by_mask: dict[str, np.ndarray] = {}
 
     use_phase2 = (not args.force_simulate) and args.phase2_ckpt.exists()
     if use_phase2:
         try:
             blob2 = torch.load(args.phase2_ckpt, map_location=device, weights_only=False)
-            model = BidirectionalCite(
-                int(blob2.get("z_dim", z_dim)),
-                int(blob2.get("n_adt", n_adt)),
-            ).to(device)
-            model.load_state_dict(blob2["model"])
-            model.eval()
+            blob2.setdefault("z_dim", z_dim)
+            blob2.setdefault("n_adt", n_adt)
+            model, phase2_info = load_bidirectional(blob2, device)
+            print(f"phase-2 model: {phase2_info}")
+            ck_sf = phase2_info.get("train_median_size_factor")
+
+            def _phase2_sf(mode_name: str, sf_arr: np.ndarray) -> np.ndarray:
+                # train-median: prefer the constant over the cells the phase-2 model was trained on
+                if mode_name == "train-median" and ck_sf is not None:
+                    return np.full(n, float(ck_sf), dtype=np.float32)
+                return sf_arr
+
+            sf_p2 = {"rna_only": _phase2_sf(args.size_factor, sf_rna)}
+            sf_p2["adt_only"] = sf_p2["joint"] = _phase2_sf(args.size_factor_observed, sf_obs)
+            phase2_info["size_factor_by_mask"] = {
+                "rna_only": args.size_factor, "adt_only": args.size_factor_observed, "joint": args.size_factor_observed,
+            }
+            phase2_info["phase2_decode"] = args.phase2_decode
+            phase2_info["train_median_source"] = "checkpoint" if ck_sf is not None else "split=='train' median"
             for m in MASKS:
                 preds_by_mask[m] = _infer_phase2(
-                    model, z_pick, adt_pick, sf_rna if m == "rna_only" else sf_measured,
+                    model, z_pick, adt_pick, sf_p2[m],
                     m, device, args.batch_size, args.fm_steps,
+                    use_fm=(args.phase2_decode == "fm"),
                 )
                 phase2_metrics[f"{m}_pearson"] = _pearson_mean(adt_pick, preds_by_mask[m])
                 print(f"phase-2 {m} pearson={phase2_metrics[f'{m}_pearson']:.4f}")
             # If phase-2 rna_only is weak, prefer simulate for rna/joint honesty
-            # but KEEP phase-2 adt_only (real ADT-channel path without GT identity)
-            rna_r = phase2_metrics.get("rna_only_pearson", float("nan"))
+            # but KEEP phase-2 adt_only (real ADT-channel path without GT identity).
+            # Gate on validation (recorded in the checkpoint) unless --phase2-gate test.
+            if args.phase2_gate == "val":
+                rna_r = float((blob2.get("metrics") or {}).get("val_rna_only_pearson", float("nan")))
+            else:
+                rna_r = phase2_metrics.get("rna_only_pearson", float("nan"))
+            phase2_info["gate"] = {"split": args.phase2_gate, "rna_only_pearson": rna_r,
+                                   "min_pearson": args.phase2_min_pearson}
             if not (rna_r == rna_r) or rna_r < args.phase2_min_pearson:
                 print(
                     f"phase-2 rna_only pearson={rna_r} < {args.phase2_min_pearson}; "
@@ -365,7 +421,13 @@ def main() -> None:
         "same_cells_across_masks": True,
         "event_timing": args.event_timing,
         "size_factor_rna_only": sf_info,
-        "size_factor_adt_observed_masks": "measured",
+        "size_factor_adt_observed_masks": sf_obs_info,
+        "phase2_model": phase2_info or None,
+        # adt_only/joint values are built from the exported cells' measured ADT in every
+        # source (phase-2 input, hybrid via phase-2 adt_only, simulate by copy); the same
+        # values are adt_true_panel_holdout.
+        "answer_key_is_encoder_input": {"rna_only": False, "adt_only": True, "joint": True},
+        "adt_only_is_answer_key_copy": source == "simulate_phase1_plus_adt",
         "flags": {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
         "git_commit": git_commit(),
         "anm_semantics": (
