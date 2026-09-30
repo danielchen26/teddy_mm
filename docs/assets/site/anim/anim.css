@@ -93,6 +93,11 @@
   .anim > figcaption { padding: 8px 12px 10px; font-size: .78rem; }
 }
 
+/* compact: a small thumbnail inside a card (class="anim anim--compact"); tighter frame and caption */
+.anim.anim--compact { border-radius: 10px; }
+.anim.anim--compact > figcaption { padding: 6px 10px 7px; font-size: .74rem; line-height: 1.4; }
+.anim.anim--compact .anim-btn { top: 6px; right: 6px; }
+
 /* play / pause control (injected by loader.js, sits over the stage's top-right corner) */
 .anim-btn {
   position: absolute;

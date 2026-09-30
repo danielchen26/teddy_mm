@@ -592,6 +592,8 @@ main .anim.a-strip, main .anim.a-wide { margin: 0 0 24px; }
 main .anim.a-hero { margin: 0 0 18px; }
 .lead .anim.a-inset { margin: 16px 0 0; }
 .bring .anim.a-inset { margin: 2px 0 10px; }
+/* the last bring card spans both columns here: a wider stage so its 4:3 figure doesn't tower */
+@container main (min-width: 681px) and (max-width: 1040px) { .brings3 > .bring:last-child .anim > .anim-stage { aspect-ratio: 21 / 9; } }
 .tstep .anim.a-inset { margin: 14px 0 0; }
 main .anim.a-thumb { margin: 0 0 12px; }
 main .anim.a-card { margin: 14px 14px 12px; }
@@ -788,6 +790,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="brk">2 · Audit</span>
           <h3>Every call carries an audit record</h3>
           <p>Question, evidence, deciding marker, distance to flip, or “no call”. Cell <code>cite_site4_75462</code>, annotated CD8+ T naive:</p>
+          <figure class="anim a-inset" data-anim="idx-brings-audit-receipt" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: an audit receipt for one CD8+ T cell prints the call under three questions; dragging CD22 down by 0.09 flips the soft call to T, the strict question gives no call, and CD3 moving 0.003 flips the B/T-priority call."></div><figcaption>Each call prints its question, deciding marker and flip distance.</figcaption></figure>
           <table class="mini">
             <thead><tr><th scope="col">Question</th><th scope="col">Call</th><th scope="col">Flips if</th></tr></thead>
             <tbody>
@@ -803,6 +806,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="brk">3 · Response</span>
           <h3>Push the input, follow the state, read the output</h3>
           <p>Thin each cell’s RNA, re-embed with TEDDY, let our head predict again. At 5% of counts (median 305 UMIs):</p>
+          <figure class="anim a-inset" data-anim="idx-brings-depth-thinning" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: a depth dial thins the RNA reaching TEDDY down to 5% of counts; the embedding and predicted proteins wobble and two gauges fall, Pearson from 0.937 to 0.805 and lineage accuracy from 0.985 to 0.917, on 1,500 validation cells."></div><figcaption>Thin the RNA to 5%; follow the drop to calls.</figcaption></figure>
           <div class="drop">
             <div><span class="dv">0.937 → <b>0.805</b></span><span class="dl">panel-protein Pearson</span></div>
             <div><span class="dv">0.985 → <b>0.917</b></span><span class="dl">lineage accuracy</span></div>
@@ -815,6 +819,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <span class="brk">4 · Coverage vs accuracy</span>
           <h3>Nested readouts make the trade explicit</h3>
           <p>Soft → strict → B/T-priority, on the same evidence:</p>
+          <figure class="anim a-inset" data-anim="idx-brings-nested-gates" style="--ar:4/3"><div class="anim-stage" role="img" aria-label="Animation: cells fall through three nested gates; stricter questions hold back 448, 2,014 and 3,169 cells, while grey out-of-scope cells still pass and get a call 64 to 91 percent of the time."></div><figcaption>Stricter questions call fewer cells; out-of-scope cells still slip through.</figcaption></figure>
           <table class="mini">
             <thead><tr><th scope="col"></th><th scope="col">Soft</th><th scope="col">Strict</th><th scope="col">B/T-priority</th></tr></thead>
             <tbody>
@@ -984,17 +989,17 @@ details.fr-method .bpart { max-width: 52rem; }
       <p class="intro">Read by one fixed rule, the pipeline has six gaps, one experiment each.</p>
       <figure class="anim a-strip" data-anim="idx-problem-fixed-stamp" style="--ar:21/6;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: a single stamp marks every cell the same way while six doors, one per missing capability, light up in turn and stay shut."></div><figcaption>One fixed rule answers one question, the same way, always.</figcaption></figure>
       <div class="gaps">
-        <article class="gap card" data-go="edit"><span class="gn">GAP 1</span><h3>Change the question</h3><p class="gq">Switch to a stricter question, or key markers only?</p>
+        <article class="gap card" data-go="edit"><figure class="anim a-thumb anim--compact" data-anim="idx-q-change-question" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: the question card changes but the fixed rule’s gear stays still, so it keeps answering 2,726 cells the new question would hold back."></div><figcaption>New question, old stamp: the hard-wired rule keeps answering.</figcaption></figure><span class="gn">GAP 1</span><h3>Change the question</h3><p class="gq">Switch to a stricter question, or key markers only?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>Re-code or re-tune on labels; until then it answers 2,726 cells B/T-priority holds back.</p><a class="go" href="#edit">Experiment 1 →</a></article>
-        <article class="gap card" data-go="missing"><span class="gn">GAP 2</span><h3>Missing input</h3><p class="gq">RNA missing, only a weaker protein-only model?</p>
+        <article class="gap card" data-go="missing"><figure class="anim a-thumb anim--compact" data-anim="idx-q-missing-input" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: without RNA, TEDDY and our head go dark; a weaker protein-only stand-in plugs in and the fixed rule keeps answering every cell with the same confidence."></div><figcaption>No RNA, no TEDDY: a weaker stand-in, answered as if strong.</figcaption></figure><span class="gn">GAP 2</span><h3>Missing input</h3><p class="gq">RNA missing, only a weaker protein-only model?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>No RNA, no embedding, no prediction. Withdrawn.</p><a class="go" href="#missing">Experiment 2 (withdrawn) →</a></article>
-        <article class="gap card" data-go="attr"><span class="gn">GAP 3</span><h3>Explain a call</h3><p class="gq">Which marker drove this call; how close was a flip?</p>
+        <article class="gap card" data-go="attr"><figure class="anim a-thumb anim--compact" data-anim="idx-q-explain-call" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: a lineage call pops out of a closed box; nine grey marker bars stand behind it and a question mark moves across them without any bar being marked as the reason."></div><figcaption>A call arrives with no reason and no margin.</figcaption></figure><span class="gn">GAP 3</span><h3>Explain a call</h3><p class="gq">Which marker drove this call; how close was a flip?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>Neither, until written down; then the same leave-one-out runs on it.</p><a class="go" href="#attr">Experiment 3 →</a></article>
-        <article class="gap card" data-go="scope"><span class="gn">GAP 4</span><h3>Know where to trust it</h3><p class="gq">Which calls are safe to act on?</p>
+        <article class="gap card" data-go="scope"><figure class="anim a-thumb anim--compact" data-anim="idx-q-where-to-trust" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: a queue of calls all carry the same badge, and a small follow-up basket hovers over them without being able to tell which calls are fragile."></div><figcaption>Every call looks equally sure; where should follow-up go?</figcaption></figure><span class="gn">GAP 4</span><h3>Know where to trust it</h3><p class="gq">Which calls are safe to act on?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>Its score margin is a graded confidence it doesn’t report.</p><a class="go" href="#scope">Experiment 4 →</a></article>
-        <article class="gap card" data-go="labels"><span class="gn">GAP 5</span><h3>Price of a new question</h3><p class="gq">What does B/T-priority cost a trained readout?</p>
+        <article class="gap card" data-go="labels"><figure class="anim a-thumb anim--compact" data-anim="idx-q-price-of-question" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: each new question must be paid for with stacks of labelled cells, 50 to 2,000, at a trained readout, and the charge starts again with the next question."></div><figcaption>A trained readout charges labels again for every new question.</figcaption></figure><span class="gn">GAP 5</span><h3>Price of a new question</h3><p class="gq">What does B/T-priority cost a trained readout?</p>
           <p class="ga"><span class="who">Trained readout</span>50–2,000 new labelled cells, again at every change.</p><a class="go" href="#labels">Experiment 5 →</a></article>
-        <article class="gap card" data-go="anm-loop"><span class="gn">GAP 6</span><h3>Is the embedding enough?</h3><p class="gq">Can it flag cells TEDDY’s embedding nearly merges?</p>
+        <article class="gap card" data-go="anm-loop"><figure class="anim a-thumb anim--compact" data-anim="idx-q-embedding-enough" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation: two cells whose measured proteins differ drift to almost the same point in TEDDY’s embedding, get the same call from the readout, and nothing flags the problem."></div><figcaption>Different cells, nearly the same embedding, same call, no flag.</figcaption></figure><span class="gn">GAP 6</span><h3>Is the embedding enough?</h3><p class="gq">Can it flag cells TEDDY’s embedding nearly merges?</p>
           <p class="ga"><span class="who">TEDDY + fixed rule</span>Some myeloid and T cells sit at cosine 0.982. Withdrawn.</p><a class="go" href="#anm-loop">Experiment 6 (withdrawn) →</a></article>
       </div>
       <p class="notgoal"><b>Not a goal:</b> beating our head’s <span class="term" data-term="pearson">Pearson ≈ 0.60</span> or retraining TEDDY or the head; the head’s predictions enter every experiment unchanged.</p>
@@ -1098,6 +1103,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2 ↗</a>
         </header>
         <div class="plain"><span class="pl">In plain words</span><p>A collaborator changes the question: who can follow it without new training data?</p></div>
+        <figure class="anim a-wide" data-anim="idx-exp-edit-rewrite" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: the evidence stays fixed while the written question changes from soft to strict to B/T-priority; ANM’s no-calls follow, 448, 2,014 and 3,169, with no new labels; a re-coded fixed rule overlaps ANM exactly and the trained classifier stays at 40."></div><figcaption>Rewrite the question; no-calls follow; the re-coded rule matches exactly.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · TEDDY + fixed rule</h4><p>Hard-wired to the <span class="term" data-term="o0">soft rule</span>, it answers cells a <span class="term" data-term="o1">strict</span> or <span class="term" data-term="o2">B/T-priority</span> question holds back, until re-coded or re-tuned.</p></div>
@@ -1208,6 +1214,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2 ↗</a>
         </header>
         <div class="plain"><span class="pl">In plain words</span><p>Drop one protein at a time; decide again.</p></div>
+        <figure class="anim a-wide" data-anim="idx-exp-attr-leave-one-out" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: one cell’s nine markers are removed one at a time; removing the deciding marker flips the call, and scanning it shows the flip distance; across 16,302 calls CD5 decides 19.5 percent versus 14.4 percent under shuffling."></div><figcaption>Lift one marker at a time; see which call depends on it.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · TEDDY + fixed rule</h4><p>Its call is the top lineage score, no reason; written down, the rule gets the same leave-one-out; a trained head, only learned weights.</p></div>
@@ -1264,6 +1271,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="reports/SCOPE_REFINE_PROOF_V2.md">SCOPE_REFINE_V2 ↗</a>
         </header>
         <div class="plain"><span class="pl">In plain words</span><p>Keeping only calls ANM is confident about raises accuracy; the rule’s own margin does it just as well.</p></div>
+        <figure class="anim a-wide" data-anim="idx-exp-scope-gate" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: cells ranked by ANM’s confidence and by the fixed rule’s margin are cut down to 40 percent; accuracy rises to 0.9987 and 0.9988, nearly equal; the 4,476 hard cells glow and turn out to be mostly NK, ILC and erythroid cells."></div><figcaption>Keep confident calls: accuracy climbs, but the rule’s margin ties.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · TEDDY + fixed rule</h4><p>It reports a call, not how sure it is; its own score margin (top minus runner-up) could.</p></div>
@@ -1319,6 +1327,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="reports/HARD_PROOF_V2.md">HARD_PROOF_V2 ↗</a>
         </header>
         <div class="plain"><span class="pl">In plain words</span><p>Written down: 0 labels, as for any rule. Trained: how many?</p></div>
+        <figure class="anim a-wide" data-anim="idx-exp-labels-cost-curve" style="--ar:21/8;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: writing the B/T-priority question costs no labels; three trained heads fed labelled cells from a separate pool reach the same numbers at about 50, 500 and 2,000 labels, and still have no readable rule."></div><figcaption>Written rule: zero labels. Trained heads: 50 to 2,000 to match.</figcaption></figure>
         <div class="bgrid">
           <div>
             <div class="bpart"><h4>Problem · a trained readout</h4><p>Every new question means new labels, retraining and recalibration.</p></div>

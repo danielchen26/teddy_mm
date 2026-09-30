@@ -7,6 +7,11 @@
  * ('hidden weight'). Then all 9 enter at step 0, shrink equally ('equal weight'). 12 s seamless loop.
  * Marker area ∝ value; the factor is illustrative only and no value is shown.
  */
+/* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  panel: 9,   // markers of the old panel order
+};
+
 export default function create(ctx) {
   const { THREE, ease, seg, clamp } = ctx;
   const scene = new THREE.Scene();
@@ -77,7 +82,7 @@ export default function create(ctx) {
   const LIN = ['b', 'b', 'b', 't', 't', 't', 'm', 'm', 'm'];
   const markers = LIN.map((c, k) => add(ctx.dot([col(k), Y4 + RM, 0.6], { r: RM, color: c, opacity: 0 })));
   [['B', 'b', 1], ['T', 't', 4], ['myeloid', 'm', 7]].forEach(([s, c, k]) => text(s, col(k), Y4 - 0.3, { size: 11, color: c, weight: 600, anchor: 'top' }));
-  text('9 markers', TX, Y4 + 0.3, { size: 13, anchor: 'left' });
+  text(`${NUMBERS.panel} markers`, TX, Y4 + 0.3, { size: 13, anchor: 'left' });
   const sub = text('one per step', TX, Y4 - 0.22, { size: 11, color: 'muted', anchor: 'left' });
   const TAG = { size: 11, color: 'card', weight: 600, anchor: 'left', pad: 5, bgOpacity: 1, opacity: 0 };
   const badTag = text('hidden\nweight', col(STEPS) + 0.62, Y4 + 0.34, Object.assign({ bg: 'bad' }, TAG));

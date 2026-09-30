@@ -11,6 +11,11 @@
  * (the swing is a small pan and a focus shift); narrow stages pan from one half to the other.
  * 12 s seamless loop.
  */
+/* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  panel: 9,   // predicted proteins ANM reads
+};
+
 export default function create(ctx) {
   const { THREE, ease, seg, lerp, clamp } = ctx;
   const scene = new THREE.Scene();
@@ -51,7 +56,7 @@ export default function create(ctx) {
   const anm = add(gB, ctx.box(1.5, 0.6, { color: 'accent', opacity: 0.12, stroke: 'accent', strokeWidth: 1.5, radius: 0.14 }));
   const anmL = add(gB, ctx.label('ANM', { size: 12, weight: 600 }));
   const dots = Array.from({ length: 9 }, () => add(gB, ctx.dot([0, 0, 1], { r: 0.07, color: 'teddy' })));
-  const protL = add(gB, ctx.label('9 predicted proteins', { size: 11, color: 'muted', anchor: 'top' }));
+  const protL = add(gB, ctx.label(`${NUMBERS.panel} predicted proteins`, { size: 11, color: 'muted', anchor: 'top' }));
   const callL = add(gB, ctx.label('call / no call', { size: 11, weight: 600, anchor: 'top' }));
   const arrows = [0, 1, 2, 3].map(() => add(gB, ctx.arrow([0, 0, 1], [1, 0, 1], { color: 'muted', width: 1.5, head: 7 })));
 

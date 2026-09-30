@@ -9,11 +9,20 @@
  * Numbers are the page's first-run values (0.982, 0.85 -> 0.40); positions are illustrative. 12 s loop.
  * Two layouts: the page's 21:7 strip, and 16:9 on narrow screens (the page's --ar-sm).
  */
+
+/* Every pipeline number this scene prints (anm-loop.html, first run). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  cosine: 0.982,        // the myeloid–T look-alike pair in TEDDY's embedding
+  falselyAgree: 0.85,   // false agreement: pairs with both cells called that share a call, our head + soft rule
+  afterVerify: 0.40,    // the same, measured protein as typed evidence with the strict rule (page: 0.85 → 0.40)
+};
+const pctOf = (v) => `${Math.round(100 * v)}%`;
+
 export default function create(ctx) {
   const { THREE, ease, seg, clamp, lerp } = ctx;
   const scene = new THREE.Scene();
   const camera = ctx.orthoCamera({ width: 18, height: 6 });
-  const PERIOD = 12, BEFORE = 0.85, AFTER = 0.4;
+  const PERIOD = 12, BEFORE = NUMBERS.falselyAgree, AFTER = NUMBERS.afterVerify;
   const BEATS = ['Expect', 'Veto', 'Complement', 'Verify'], BEAT_T = [0.4, 0.48, 0.56, 0.64];
   /* reg / tag = [cx, cy, w, h]; g = gauge [x0, x1, y]; bt = step chips [y, h, w, spacing]; r = cell radius */
   const LAY = {
@@ -40,7 +49,7 @@ export default function create(ctx) {
   const regM = put(ctx.box(1, 1, { color: null, stroke: 'measured', strokeWidth: 1.5, radius: 0.22 }), 0.1);
   const titleT = lab('TEDDY embedding', { size: 12, color: 'teddy', anchor: 'top-left' });
   const titleM = lab('measured protein', { size: 12, color: 'measured', anchor: 'top-left' });
-  const cosine = lab('cosine 0.982', { size: 11.5, mono: true, weight: 500, color: 'muted', anchor: 'top' });
+  const cosine = lab(`cosine ${NUMBERS.cosine}`, { size: 11.5, mono: true, weight: 500, color: 'muted', anchor: 'top' });
   const cells = [['m', 'myeloid', 'right', -1], ['t', 'T cell', 'left', 1]].map(([tok, name, anchor, side]) => ({
     side, name, start: [0, 0], near: [0, 0], apart: [0, 0], off: 0,
     dot: put(ctx.dot([0, 0], { px: 10, color: tok, opacity: 0.9, order: 2 }), side > 0 ? 1.1 : 1),
@@ -62,8 +71,8 @@ export default function create(ctx) {
   const fillA = put(ctx.line([[0, 0], [1, 0]], { color: 'accent', width: 8 }), 1.2);
   const ghost = put(ctx.line([[0, 0], [0, 1]], { color: 'teddy', width: 2 }), 1.3);
   const gTitle = lab('falsely agree', { size: 12, color: 'muted', anchor: 'bottom-left' });
-  const v85 = lab('85%', { size: 12.5, mono: true, color: 'teddy', anchor: 'top' });
-  const v40 = lab('40%', { size: 12.5, mono: true, color: 'accent', anchor: 'top' });
+  const v85 = lab(pctOf(BEFORE), { size: 12.5, mono: true, color: 'teddy', anchor: 'top' });
+  const v40 = lab(pctOf(AFTER), { size: 12.5, mono: true, color: 'accent', anchor: 'top' });
 
   /* the four steps of the strip below */
   const chips = BEATS.map((name) => ({

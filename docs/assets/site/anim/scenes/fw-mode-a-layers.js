@@ -10,6 +10,11 @@
  * lanes keep a fixed gap: Mode A has no results yet. Updates and arc pairs are illustrative, not data.
  * The top-right corner stays empty for the play/pause button. 12 s seamless loop.
  */
+/* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  layers: 12,   // TEDDY-G transformer layers (config.json)
+};
+
 export default function create(ctx) {
   const { THREE, ease, seg, lerp, clamp, smooth } = ctx;
   const scene = new THREE.Scene();
@@ -17,7 +22,7 @@ export default function create(ctx) {
   const PERIOD = 12;
   const rnd = ctx.rand(12);
 
-  const L = 12, SX0 = -4.4, SX1 = 2.8, DX = (SX1 - SX0) / (L - 1);
+  const L = NUMBERS.layers, SX0 = -4.4, SX1 = 2.8, DX = (SX1 - SX0) / (L - 1);
   const slabX = Array.from({ length: L }, (_, i) => SX0 + i * DX);
   const barX = slabX.map((x) => x + DX / 2);          // one probe after each layer
   const XS = -5.2, XZ = 5.6;                           // sheets start here; the embedding z sits here
@@ -72,7 +77,7 @@ export default function create(ctx) {
   text('NK cell', -7.6, YC, { size: 14, weight: 600, color: 'nk', anchor: 'left' });
   text('T cell', -7.6, -YC, { size: 14, weight: 600, color: 't', anchor: 'left' });
   text('layer 1', slabX[0] - 0.12, lo, { weight: 600, color: 'teddy', anchor: 'top-left' });
-  text('layer 12', slabX[L - 1] + 0.12, lo, { weight: 600, color: 'teddy', anchor: 'top-right' });
+  text(`layer ${NUMBERS.layers}`, slabX[L - 1] + 0.12, lo, { weight: 600, color: 'teddy', anchor: 'top-right' });
   text('embedding z\nmean of tokens', XZ, lo, { color: 'ink', anchor: 'top', align: 'center' });
   text('NK vs T probe · planned', -7.1, -4.0, { weight: 600, color: 'accent', anchor: 'left' });
   scene.add(ctx.line([[-7.42, -3.74, 1], [-7.42, -4.26, 1]], { color: 'accent', width: 1.5, dashed: [3, 3] }));

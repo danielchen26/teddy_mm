@@ -12,6 +12,17 @@
  * Wide layout 21 × 8 when the stage is at least 2:1 (desktop 21:8), else narrow 16 × 10 (phone 16:10).
  * 12 s seamless loop; the still frame shows beats 1–3 complete.
  */
+
+/* Every pipeline number this scene prints (all stated on index.html #brings). Refresh after the
+ * official-preprocessing rerun. */
+const NUMBERS = {
+  cosine: 0.985,                  // the NK–T neighbour pair in TEDDY's embedding
+  cd3Predicted: [0.56, 0.68],     // CD3 of the pair, predicted by our head from TEDDY's embedding: NK, T
+  cd3Measured: [0.17, 0.98],      // CD3 of the pair, measured: NK, T
+  gapKept: [['CD3', 0.26], ['CD56', 0.31], ['CD94', 0.46], ['CD335', 0.69]],   // predicted ÷ measured gap, near pairs
+  notNeighbours: [0.8, 1.5],      // the same ratio for NK–T pairs that are not neighbours
+};
+
 export default function create(ctx) {
   const { THREE, ease, seg, pulse, lerp, clamp } = ctx;
   const scene = new THREE.Scene();
@@ -47,10 +58,10 @@ export default function create(ctx) {
   const cTitle = lab('TEDDY’s embedding', { color: 'teddy', weight: 600, size: 13 });
   const arc = ln({ color: 'ink', width: 1.3 });
   const arcPts = Array.from({ length: 13 }, () => new THREE.Vector3());
-  const cosLab = lab('cosine 0.985', { weight: 600, bg: 'card', bgOpacity: 0.85, order: 12 });
+  const cosLab = lab(`cosine ${NUMBERS.cosine}`, { weight: 600, bg: 'card', bgOpacity: 0.85, order: 12 });
 
   /* ── beat 2: CD3 of the same two cells, predicted vs measured ── */
-  const V = [[0.56, 0.68], [0.17, 0.98]];
+  const V = [NUMBERS.cd3Predicted, NUMBERS.cd3Measured];
   const rTitle = lab('CD3', { anchor: 'left', weight: 600, size: 13 });
   const rails = ['teddy', 'measured'].map((col, i) => ({
     line: ln({ color: col, width: 2 }), gap: ln({ color: col, width: 6 }),
@@ -62,7 +73,7 @@ export default function create(ctx) {
 
   /* ── beat 3: share of the measured gap kept, 4 proteins, vs pairs that are not neighbours ── */
   const bTitle = lab('gap kept', { anchor: 'left', weight: 600, size: 13 });
-  const bars = [['CD3', 0.26], ['CD56', 0.31], ['CD94', 0.46], ['CD335', 0.69]].map(([n, v]) => ({
+  const bars = NUMBERS.gapKept.map(([n, v]) => ({
     v, bar: ln({ color: 'teddy' }), name: lab(n, { anchor: 'right' }),
     val: lab(v.toFixed(2), { anchor: 'left', color: 'teddy', weight: 600 }),
   }));
@@ -70,8 +81,9 @@ export default function create(ctx) {
   const one = ln({ color: 'muted', width: 1.4, dashed: [4, 4] });
   const oneLab = lab('1 = whole gap', { anchor: 'bottom', color: 'muted' });
   const band = add(ctx.box(1, 1, { color: 'faint', radius: 0.08 }));
-  const bandLab = lab('not neighbours: 0.8–1.5', { anchor: 'top-right', color: 'muted' });
-  const ghosts = [0.98, 1.3, 1.12].map((c) => ({ c, y: 0, l: ln({ color: 'faint', width: 1 }), a: dot('nk'), b: dot('t') }));
+  const [NB0, NB1] = NUMBERS.notNeighbours;
+  const bandLab = lab(`not neighbours: ${NB0}–${NB1}`, { anchor: 'top-right', color: 'muted' });
+  const ghosts = [0.26, 0.71, 0.46].map((f) => NB0 + f * (NB1 - NB0)).map((c) => ({ c, y: 0, l: ln({ color: 'faint', width: 1 }), a: dot('nk'), b: dot('t') }));
 
   /* ── beat 4: the open fork, embedding or head, and the Mode A probe ── */
   const fArrow = add(ctx.arrow([0, 0], [1, 0], { color: 'muted', width: 1.6, head: 8 }));
@@ -130,9 +142,9 @@ export default function create(ctx) {
     base.setPoints([[XB(0), yT], [XB(0), yB]]);
     one.setPoints([[XB(1), yT, 0.5], [XB(1), yB, 0.5]]);
     oneLab.position.set(XB(1), yT + 0.1, 0);
-    band.setSize(XB(1.5) - XB(0.8), yT - yB, 0.08);
-    band.position.set((XB(0.8) + XB(1.5)) / 2, (yT + yB) / 2, -0.5);
-    bandLab.position.set(XB(1.5), yB - 0.12, 0);
+    band.setSize(XB(NB1) - XB(NB0), yT - yB, 0.08);
+    band.position.set((XB(NB0) + XB(NB1)) / 2, (yT + yB) / 2, -0.5);
+    bandLab.position.set(XB(NB1), yB - 0.12, 0);
     ghosts.forEach((gh, i) => { gh.y = rows[i] - dy / 2; gh.a.setPx(px(0.06, 2.2, 3.5)); gh.b.setPx(px(0.06, 2.2, 3.5)); });
     const FY = L.C[1] - 1.0, fx = L.C[0] + 1.6 * L.S, hl = L.f.hx - 1.25, r7 = 7 / ppu;
     fArrow.set([fx, FY, 1], [hl - 0.08, FY, 1]);

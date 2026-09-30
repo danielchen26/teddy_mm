@@ -10,6 +10,13 @@
  * layout() sizes chips and the ANM box to their text and keeps the loader's play/pause pill corner
  * clear; ANM's lineage names show only where they fit (the page's panel legend names them anyway).
  */
+/* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  embedding: 512,   // TEDDY's embedding size
+  predicted: 134,   // surface proteins our head predicts
+  panel: 9,         // of them, the proteins ANM reads
+};
+
 export default function create(ctx) {
   const { THREE, ease, seg, pulse, lerp, clamp } = ctx;
   const scene = new THREE.Scene();
@@ -74,7 +81,7 @@ export default function create(ctx) {
     const a = Math.PI / 2 - (i / 32) * Math.PI * 2;
     return speck(X.ring + RR * Math.cos(a), TOP + RR * Math.sin(a), 0.045, ctx.color('faint'), 1.1);
   });
-  text('512', X.ring, TOP, { size: 11, weight: 600, color: 'ink' });
+  text(String(NUMBERS.embedding), X.ring, TOP, { size: 11, weight: 600, color: 'ink' });
   sub('embedding', X.ring, TOP + RR + 0.16, 'bottom');
 
   /* ── our head, with the size factor dropping in ── */
@@ -87,17 +94,18 @@ export default function create(ctx) {
   const gx0 = X.grid - 4.5 * GS, gy0 = TOP + 6.5 * GS, jit = ctx.rand(11);
   const LIN = ['b', 't', 'm'];
   const PICK = { 12: 0, 57: 0, 96: 0, 25: 1, 70: 1, 113: 1, 38: 2, 83: 2, 127: 2 }; // index → lineage row
-  const grid = Array.from({ length: 134 }, (_, i) => {
+  const grid = Array.from({ length: NUMBERS.predicted }, (_, i) => {
     const c = i % 10, r = Math.floor(i / 10);
     const d = add(ctx.dot([gx0 + c * GS, gy0 - r * GS, 0.3], { r: 0.042, color: ctx.color('faint') }));
     return { d, c, j: jit(), row: i in PICK ? PICK[i] : -1 };
   });
-  sub('134 proteins', X.grid, gy0 - 13 * GS - 0.2, 'top');
+  sub(`${NUMBERS.predicted} proteins`, X.grid, gy0 - 13 * GS - 0.2, 'top');
 
   /* ── ANM: three lineage rows of three slots (placed by layout), then a call ── */
   const anm = block(X.anm, TOP, AW, 2.1, 'accent', 0.1, 'accent');
   const anmTitle = text('ANM', X.anm, TOP + 0.72, NAME);
-  const reads = sub('reads 9', X.anm, TOP + 1.2, 'bottom');
+  const READS = `reads ${NUMBERS.panel}`;
+  const reads = sub(READS, X.anm, TOP + 1.2, 'bottom');
   const slotXY = [[], [], []];
   const slots = [], linLabels = [], movers = [];
   ['B', 'T', 'myeloid'].forEach((name, row) => {
@@ -182,7 +190,7 @@ export default function create(ctx) {
       linLabels[row].position.set(x0 + 2 * pitch + r + gap, y, 5); linLabels[row].visible = show;
     }
     reads.position.y = top + 0.1;
-    reads.visible = top + 0.1 + px(textH(11.5)) <= zoneY || X.anm + px(textW('reads 9', 11.5)) / 2 <= zoneX;
+    reads.visible = top + 0.1 + px(textH(11.5)) <= zoneY || X.anm + px(textW(READS, 11.5)) / 2 <= zoneX;
     // call chip under ANM (slides left when its text is wide), then the grade
     const cy = Math.min(CALLY, top - AH - 0.45 - ch / 2);
     callChip.setSize(cw, ch, ch / 2); callChip.position.set(cx, cy, 0); callLabel.position.set(cx, cy, 5);

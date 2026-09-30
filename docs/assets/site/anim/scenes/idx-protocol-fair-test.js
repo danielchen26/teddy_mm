@@ -6,6 +6,13 @@
  * opens only at the end to score all three. help = ANM − fixed rule then reads "no better calls",
  * while ANM's checks and reasons stay lit. Layout is illustrative; no values are drawn. 12 s loop.
  */
+/* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  panel: 9,              // predicted proteins every lane reads
+  cells: 16750,          // held-out cells
+  embeddingNumbers: 32,  // the classifier's extra input: the first 32 numbers of TEDDY's embedding
+};
+
 export default function create(ctx) {
   const { THREE, ease } = ctx;
   const scene = new THREE.Scene();
@@ -30,7 +37,7 @@ export default function create(ctx) {
   const tray = add(ctx.box(1.6, 1.6, { color: 'soft', stroke: 'line', radius: 0.16 }));
   const trayCells = grid(0.36, 0.46, 0.2);
   const trayTop = L('same evidence', { weight: 600, anchor: 'bottom' });
-  const trayBot = L('9 predicted\nproteins\n16,750 cells', { size: 11, color: 'muted', anchor: 'top' });
+  const trayBot = L(`${NUMBERS.panel} predicted\nproteins\n${NUMBERS.cells.toLocaleString('en-US')} cells`, { size: 11, color: 'muted', anchor: 'top' });
 
   // three deciders, each ending in its calls
   const lanes = [
@@ -66,7 +73,7 @@ export default function create(ctx) {
 
   // the classifier's extra input: 32 numbers of TEDDY's embedding
   const cable = add(ctx.line([[0, 0], [1, 0]], { color: 'teddy', width: 1.2 }));
-  const cableLab = L('+32 embedding numbers', { size: 11, color: 'muted', anchor: 'top-left' });
+  const cableLab = L(`+${NUMBERS.embeddingNumbers} embedding numbers`, { size: 11, color: 'muted', anchor: 'top-left' });
   const favour = L('can only favour it', { size: 11, color: 'muted', anchor: 'left' });
   const spark = add(ctx.dot([0, 0, 0], { px: 3.5, color: 'teddy' }));
 

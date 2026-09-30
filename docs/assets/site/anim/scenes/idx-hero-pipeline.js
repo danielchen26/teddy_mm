@@ -8,6 +8,13 @@
  * 10 s seamless loop. Bar heights, scores and which lineage wins are illustrative, not data; the only
  * numbers shown (512, 134, 9) are the page's.
  */
+/* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */
+const NUMBERS = {
+  embedding: 512,   // TEDDY's embedding size
+  predicted: 134,   // surface proteins our head predicts
+  panel: 9,         // of them, the proteins ANM reads
+};
+
 export default function create(ctx) {
   const { THREE, ease, seg, pulse, lerp, clamp } = ctx;
   const scene = new THREE.Scene();
@@ -76,14 +83,14 @@ export default function create(ctx) {
     const a = Math.PI / 2 - (i / 28) * Math.PI * 2;
     return add(ctx.dot([X.ring + RR * Math.cos(a), Y0 + RR * Math.sin(a), 0.3], { px: 1.5, color: ctx.color('faint') }));
   });
-  text('512', X.ring, Y0, { size: 11.5, weight: 600, color: 'ink' });
+  text(String(NUMBERS.embedding), X.ring, Y0, { size: 11.5, weight: 600, color: 'ink' });
   text('embedding', X.ring, Y0 - RR - 0.16, sub({ anchor: 'top' }));
   block(X.head, Y0, HW, HH, 'soft', 1, 'muted');
   text('our head', X.head, Y0, Object.assign({}, NAME, { size: 12.5 }));
   const flow = [0, 1, 2].map(() => add(ctx.dot([0, 0, 1], { px: 3.2, color: 'teddy', opacity: 0 })));
 
   /* ── 134 predicted proteins: one strip of thin bars; 9 of them are ANM's evidence ── */
-  const N = 134, sp = (X.s1 - X.s0) / N, rs = ctx.rand(3);
+  const N = NUMBERS.predicted, sp = (X.s1 - X.s0) / N, rs = ctx.rand(3);
   const hs = Array.from({ length: N }, () => 0.22 + 1.03 * Math.pow(rs(), 1.3));
   const strip = add(ctx.group());
   strip.position.set(X.s0, SB, 0.2);
@@ -104,7 +111,7 @@ export default function create(ctx) {
   };
   add(ctx.line([[X.s0 - 0.05, SB, 0.1], [X.s1 + 0.05, SB, 0.1]], { color: 'line', width: 1 }));
   // below the strip, on a plate: the top-right corner stays clear for the play/pause button
-  text('134 predicted\nproteins', 5.3, SB - 0.14, sub({ color: 'ink', anchor: 'top', bg: 'card', bgOpacity: 1, pad: 2 }));
+  text(`${NUMBERS.predicted} predicted\nproteins`, 5.3, SB - 0.14, sub({ color: 'ink', anchor: 'top', bg: 'card', bgOpacity: 1, pad: 2 }));
   const PICKS = [[14, 0], [61, 0], [104, 0], [29, 1], [75, 1], [118, 1], [42, 2], [90, 2], [128, 2]];
   const cards = PICKS.map(([i, c], j) => {
     const slot = PICKS.slice(0, j).filter((p) => p[1] === c).length, x = (i + 0.5) * sp;
@@ -119,7 +126,7 @@ export default function create(ctx) {
   /* ── ANM: three lineage scores against the question's bar ── */
   block(P.x, P.y, P.w, P.h, 'accent', 0.06, 'accent', { radius: 0.25 });
   text('ANM', P.x - P.w / 2 + 0.3, P.y + P.h / 2 - 0.45, Object.assign({}, NAME, { anchor: 'left' }));
-  const once = text('all 9 at once', P.x + P.w / 2 - 0.3, P.y + P.h / 2 - 0.45, sub({ size: 11, anchor: 'right', opacity: 0 }));
+  const once = text(`all ${NUMBERS.panel} at once`, P.x + P.w / 2 - 0.3, P.y + P.h / 2 - 0.45, sub({ size: 11, anchor: 'right', opacity: 0 }));
   add(ctx.line([[COLS[0].x - 0.8, BASE, 0.2], [COLS[2].x + 0.8, BASE, 0.2]], { color: 'line', width: 1 }));
   const zone = add(ctx.box(5.9, 0.75, { color: 'accent', opacity: 0.07, radius: 0.05 }));
   zone.position.set(4.15, BAR + 0.375, 0.1);
