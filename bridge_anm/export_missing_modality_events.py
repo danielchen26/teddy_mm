@@ -77,7 +77,7 @@ def _infer_phase1(mlp, dec, z, sf, device, batch_size):
     return np.concatenate(chunks, axis=0)
 
 
-def _infer_phase2(model, z, adt, sf, mode, device, batch_size, fm_steps):
+def _infer_phase2(model, z, adt, sf, mode, device, batch_size, fm_steps, use_fm=True):
     zt = torch.from_numpy(z).to(device)
     yt = torch.from_numpy(adt).to(device)
     sft = torch.from_numpy(sf.astype(np.float32)).to(device)
@@ -91,7 +91,7 @@ def _infer_phase2(model, z, adt, sf, mode, device, batch_size, fm_steps):
                 sft[s:e],
                 mode=mode,
                 fm_steps=fm_steps,
-                use_fm=True,
+                use_fm=use_fm,
             )
             chunks.append(pred.cpu().numpy())
     return np.concatenate(chunks, axis=0)
@@ -155,6 +155,13 @@ def main() -> None:
         help="ADT size factor for the phase-2 adt_only/joint masks: train-median "
         "(default), one, or measured (legacy: the exported cells' own measured ADT "
         "depth, i.e. the answer key's library size)",
+    )
+    p.add_argument(
+        "--phase2-decode",
+        choices=("fm", "direct"),
+        default="fm",
+        help="how phase-2 predictions are decoded: fm (default, legacy) = one flow-matching sample per "
+        "cell (unseeded, so it varies run to run); direct = decode the encoder latent without sampling",
     )
     p.add_argument(
         "--phase2-gate",
@@ -251,11 +258,13 @@ def main() -> None:
             phase2_info["size_factor_by_mask"] = {
                 "rna_only": args.size_factor, "adt_only": args.size_factor_observed, "joint": args.size_factor_observed,
             }
+            phase2_info["phase2_decode"] = args.phase2_decode
             phase2_info["train_median_source"] = "checkpoint" if ck_sf is not None else "split=='train' median"
             for m in MASKS:
                 preds_by_mask[m] = _infer_phase2(
                     model, z_pick, adt_pick, sf_p2[m],
                     m, device, args.batch_size, args.fm_steps,
+                    use_fm=(args.phase2_decode == "fm"),
                 )
                 phase2_metrics[f"{m}_pearson"] = _pearson_mean(adt_pick, preds_by_mask[m])
                 print(f"phase-2 {m} pearson={phase2_metrics[f'{m}_pearson']:.4f}")
