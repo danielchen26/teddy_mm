@@ -8,12 +8,12 @@
   'use strict';
 
   var TERMS = {
-    teddy: ['TEDDY', 'Merck’s single-cell foundation model (TEDDY-G, 70M parameters). Here it reads a cell’s RNA and, with a small head trained in this repo, predicts the cell’s 134 surface proteins; 9 of them go to ANM. TEDDY itself is never retrained.'],
+    teddy: ['TEDDY', 'Merck’s single-cell RNA foundation model (TEDDY-G, 70M parameters); it does not predict proteins. Here it turns a cell’s RNA into a 512-number embedding; a small head we train on the training sites’ measured proteins predicts 134 surface proteins from that embedding, and 9 of them go to ANM. TEDDY is never retrained; the head is trained once and then fixed.'],
     anm: ['ANM · Active Neural Matter', 'A decision layer. It reads evidence, applies a written-down question (the observer) and returns a call or an honest “no call”, with checks attached.'],
     citeseq: ['CITE-seq', 'A technology that measures RNA and surface proteins in the same cell. The measured proteins are the answer key we hold out.'],
     adt: ['ADT · measured surface protein', 'CITE-seq’s protein readout (antibody-derived tags). Held out and used only to check answers, except where a test says otherwise.'],
-    evidence: ['Typed evidence (δu)', 'A value for each of the 9 panel proteins, scaled 0–1 and handed to ANM as labelled inputs such as “CD19 is high”. Normally these are TEDDY’s predictions, scaled by one train-median size factor (0.92663) and divided by each protein’s training 95th percentile; in the withdrawn Experiment 2’s RNA-missing condition they are the protein-only stand-in’s reconstruction (no TEDDY), and in the withdrawn Experiment 6’s complement test the measured proteins. The first run scaled every prediction by a per-cell factor computed from measured protein.'],
-    observer: ['Observer · the question', 'The question, written down: which markers count, how strong a signal must be, and when to decline. Changing it needs no labels and no retraining; that holds for any written rule, including TEDDY’s fixed rule.'],
+    evidence: ['Typed evidence (δu)', 'A value for each of the 9 panel proteins, scaled 0–1 and handed to ANM as labelled inputs such as “CD19 is high”. Normally these are our head’s predictions from TEDDY’s embedding, scaled by one train-median size factor (0.92663) and divided by each protein’s training 95th percentile; in the withdrawn Experiment 2’s RNA-missing condition they are the protein-only stand-in’s reconstruction (no TEDDY), and in the withdrawn Experiment 6’s complement test the measured proteins. The first run scaled every prediction by a per-cell factor computed from measured protein.'],
+    observer: ['Observer · the question', 'The question, written down: which markers count, how strong a signal must be, and when to decline. Changing it needs no labels and no retraining; that holds for any written rule, including the fixed rule.'],
     o0: ['Soft rule (O0)', 'The default lineage call. All 9 markers weigh equally; call the best lineage if its score reaches 0.12.'],
     o1: ['Strict rule (O1)', 'The same question asked more strictly: a weighted mean with the key markers CD19, CD3 and CD16 at weight 2 (redefined in the rerun), and the score must reach 0.28. Almost the same answers where both decide (16 of 14,433 differ); declines more often.'],
     o2: ['B/T-priority rule (O2)', 'A different question: only CD19 (B), CD3 (T) and CD16 (myeloid) count, with B and T weighted up (B ×1.5, T ×1.3, myeloid ×0.5), bar 0.20 as declared (0.1333 on the shared score scale). It changes 12.48% of the expected answers.'],
@@ -21,17 +21,17 @@
     pf: ['Workability (P_f)', '1 if the observer can make a call from the evidence, 0 if it declines. Averaged over cells, it is the share of cells called.'],
     qf: ['Exactness (Q_f)', '1 if a call matches the held-out protein truth. Averaged over labelled cells, a decline counts as a miss.'],
     qdec: ['Accuracy of calls made (Q)', 'Correct calls divided by calls made, checked against the held-out proteins. Used to compare methods like for like.'],
-    softp: ['Confidence score (soft_P)', 'How strong ANM’s best option is for a cell. It reaches 1.11, so it is a score, not a probability. Keeping only high-score cells trades coverage for accuracy; TEDDY’s own score margin does as well at the same coverage, so this is not a gate only ANM has.'],
+    softp: ['Confidence score (soft_P)', 'How strong ANM’s best option is for a cell. It reaches 1.11, so it is a score, not a probability. Keeping only high-score cells trades coverage for accuracy; the fixed rule’s own score margin does as well at the same coverage, so this is not a gate only ANM has.'],
     coverage: ['Coverage', 'The share of cells that still get a call once a confidence cut is applied.'],
     loo: ['Leave-one-out (LOO)', 'Remove one protein’s evidence and decide again. The marker whose removal moves the score most is the reason for the call.'],
     flip: ['Flip distance', 'How much one marker’s value must change before the call switches lineage. Small means a fragile call.'],
     holdout: ['Held-out cells (site4)', '16,750 cells from a site never used in training. Not donor-independent: donor 15078 is in training at other sites and is 32.6% of these test cells. Their measured proteins score the answers; labelled tests, both withdrawn, also used them as input (Experiment 2’s RNA-missing stand-in; Experiment 6’s complement test).'],
     ood: ['Out-of-site check', 'Despite the name, not another site: 2,000 cells of held-out donor 18303 at a training site (val_non_site4), which was also the validation set during training. A second check, but a weak one.'],
-    train: ['TEDDY + trained classifier', 'The “just train harder” method: a small classifier fitted on labelled cells. It is a stand-in modelled on Jev’s interface (one probability per option); TypeSafe AI’s Jev itself was never called. Its inputs depend on the experiment: logistic and MLP heads on TEDDY’s 9 predictions plus the first 32 embedding numbers (Experiments 1 and 5), heads on the 9 values only (Experiment 4, and the withdrawn Experiment 2), and in Experiment 5 also a re-tuned threshold grid on the fixed rule.'],
-    fixedrule: ['TEDDY + fixed rule', 'The baseline method: TEDDY’s predictions read by one hard-wired rule. Average each lineage’s 3 markers and call the best lineage if it reaches 0.12 (the soft rule). Written for the same question as ANM, it makes the same call on every cell. Its own score margin ranks and gates its calls as well as ANM’s confidence does.'],
+    train: ['TEDDY + trained classifier', 'The “just train harder” method: a small classifier fitted on labelled cells. It is a stand-in modelled on Jev’s interface (one probability per option); TypeSafe AI’s Jev itself was never called. Its inputs depend on the experiment: logistic and MLP heads on the 9 predicted proteins plus the first 32 embedding numbers (Experiments 1 and 5), heads on the 9 values only (Experiment 4, and the withdrawn Experiment 2), and in Experiment 5 also a re-tuned threshold grid on the fixed rule.'],
+    fixedrule: ['TEDDY + fixed rule', 'The baseline method: the predicted proteins (our head on TEDDY’s embedding) read by one hard-wired rule. Average each lineage’s 3 markers and call the best lineage if it reaches 0.12 (the soft rule). Written for the same question as ANM, it makes the same call on every cell. Its own score margin ranks and gates its calls as well as ANM’s confidence does.'],
     jev: ['Jev (TypeSafe AI)', 'TypeSafe AI’s “System One” decision model (jev-1.13), closed and reached only through its API. It answers typed questions (a Choice over named options, a Score, or yes/no) with calibrated probabilities and no rationale text. TypeSafe post-trains it (RLCD); it is used zero-shot and cannot be trained or fine-tuned on your labels. This repo never calls it.'],
-    z512: ['TEDDY embedding (z_512)', 'TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens over real tokens at context length 512, with no gene-median normalisation. This deviates from the official TEDDY-G pipeline (token 0 by default; the tutorial mean-pools 2,048 positions after gene-median normalisation); with the medians applied the cosine to the stored embedding is 0.649.'],
-    mustpair: ['Must-separate pair', 'Two cells TEDDY sees as near-identical (cosine ≥ 0.98 in its embedding) whose measured proteins disagree under the 3-lineage answer key, for example one keyed myeloid and one keyed T. Many of the “myeloid” cells in these pairs are NK cells, which the key has no class for (it has no NK or out-of-scope class).'],
+    z512: ['TEDDY embedding (z_512)', 'TEDDY’s 512-number summary of a cell: the mean of its last-layer tokens over real (unpadded) tokens at context length 512, with no gene-median normalisation, L2-normalized (z_rna_512.npy, 16,750 held-out cells). Not the pretraining context 2048, not token 0, not a disease token (recomputing stored embeddings gives cosine 1.000000 at 512 vs median 0.970 at 1024); the compact 32-number export (z_rna_export.npy, z_keep=32) is not the probe space. This deviates from the official TEDDY-G pipeline, which returns token 0 by default (no CLS token is added, so it is the top-ranked gene); its tutorial mean-pools all 2,048 positions after gene-median normalisation. With the medians applied (512 tokens, same mean) the cosine to the stored embedding is 0.649 (median over 48 site4 cells). A rerun with the official preprocessing is in progress.'],
+    mustpair: ['Must-separate pair', 'Two cells whose TEDDY embeddings are near-identical (cosine ≥ 0.98) but whose measured proteins disagree under the 3-lineage answer key, for example one keyed myeloid and one keyed T. Many of the “myeloid” cells in these pairs are NK cells, which the key has no class for (it has no NK or out-of-scope class).'],
     falseagree: ['False agreement', 'Among must-separate pairs where both cells get a call, the share given the same call even though they differ.'],
     softsep: ['Soft separation', 'The share of must-separate pairs the readout tells apart: different calls, or one cell declined.'],
     corrsep: ['Correct separation', 'The share of must-separate pairs split into the right, different calls.'],
@@ -39,16 +39,16 @@
     phase1: ['Phase 1 · TEDDY + small head (done)', 'Frozen TEDDY embeds each cell’s RNA once (512 numbers, context 512). A small head trained in this repo maps that embedding to all 134 surface proteins, fitted with a negative-binomial loss. An MLP head beat a latent flow-matching head: test Pearson 0.603 vs 0.588 with the train-median size factor (0.610 vs 0.596 with the old per-cell factor). Every experiment uses its predictions (labelled exceptions, both withdrawn: the RNA-missing stand-in in Experiment 2, measured protein in Experiment 6’s complement test).'],
     phase2: ['Phase 2 · fusion scaffold (unfinished)', 'A multimodal model: TEDDY’s RNA embedding plus a protein encoder, trained with one modality randomly dropped (RNA in about 15% of cells, protein in 15%, never both) and a latent flow-matching decoder. Only a 6-epoch scaffold run exists. Its recorded test Pearson (0.25–0.27) scores one random flow-matching sample per cell; decoded directly it reaches 0.56 from RNA alone, still below phase 1’s 0.61 before its re-evaluation (scripts/phase2_decode_check.py). It contains no ANM; the withdrawn Experiment 2 used it as the RNA-missing stand-in (and half of “both”).'],
     modeb: ['Mode B', 'What this project does: treat TEDDY as an evidence source and study the decision layer on top of it. It runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM’s step can be any real processing order, and TEDDY’s layers are one (a Mode A test).'],
-    modea: ['Mode A (not done)', 'Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Not claimed here.'],
-    sufficiency: ['Sufficiency test', 'A check that a retained state holds what the readout needs: the same state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something. Here: NK and T cells that are neighbours in TEDDY’s embedding, whose predicted protein differences TEDDY compresses to a quarter to two-thirds of the measured ones.'],
+    modea: ['Mode A (not done)', 'Studying TEDDY’s internals, such as its residual stream, layer Jacobians or in-silico gene perturbations. Probes on the embedding and on each layer would also tell whether the NK–T difference is lost inside TEDDY or by our head. Not claimed here.'],
+    sufficiency: ['Sufficiency test', 'A check that a retained state holds what the readout needs: the same state must give the same readout. If two inputs reach (almost) the same state but need different readouts, the state is missing something. Here: NK and T cells that are neighbours in TEDDY’s embedding, whose protein differences, as predicted by our head from that embedding, are compressed to a quarter to two-thirds of the measured ones. Random non-neighbour NK–T pairs are not compressed (0.8–1.5), so it is tied to cells the embedding nearly merges; whether the embedding loses the difference or our head fails to use it is still open (Mode A probes will tell).'],
     timestep: ['ANM’s step (t)', 'Any declared processing order, not necessarily physical time; memory, feedback and delay are defined over these steps. The order must be real: the system actually processes in that order. TEDDY’s transformer layers are one (h_{l+1} = h_l + f_l(h_l)). The nine marker predictions for one cell are not: they come out of one prediction, so feeding them in panel order made memory decay act as a hidden weight.'],
-    rnaonly: ['RNA (TEDDY)', 'Evidence from TEDDY’s predictions, made from the cell’s RNA.'],
-    adtonly: ['RNA missing (protein-only stand-in)', 'Without RNA, TEDDY cannot run on the cell. A second model from this repo stands in: the phase-2 bidirectional model, trained on TEDDY’s RNA embedding plus measured protein, here run with its RNA input switched off. It reads the cell’s 134 measured proteins and reconstructs the 9 panel proteins, poorly (panel Pearson 0.446). No TEDDY prediction is used for these cells.'],
-    joint: ['Both (averaged)', 'The average of TEDDY’s prediction and the stand-in’s protein-only reconstruction.'],
+    rnaonly: ['RNA (TEDDY + head)', 'Evidence from our head’s predictions on TEDDY’s embedding of the cell’s RNA.'],
+    adtonly: ['RNA missing (protein-only stand-in)', 'Without RNA, TEDDY cannot run on the cell. A second model from this repo stands in: the phase-2 bidirectional model, trained on TEDDY’s RNA embedding plus measured protein, here run with its RNA input switched off. It reads the cell’s 134 measured proteins and reconstructs the 9 panel proteins, poorly (panel Pearson 0.446). No TEDDY embedding or head prediction is used for these cells.'],
+    joint: ['Both (averaged)', 'The average of the TEDDY + head prediction and the stand-in’s protein-only reconstruction.'],
     lineage: ['Lineage call', 'The decision per cell: B cell, T cell or myeloid, each judged from 3 markers (B: CD19 CD72 CD22 · T: CD3 CD2 CD5 · myeloid: CD16 CD11c CD36).'],
-    pearson: ['Pearson ≈ 0.60', 'How well TEDDY’s phase-1 head predicts all 134 measured proteins (mean correlation on held-out cells): 0.603 with the train-median size factor, 0.610 with the old per-cell factor. A reference point; we do not try to beat it.'],
+    pearson: ['Pearson ≈ 0.60', 'How well our phase-1 head, reading TEDDY’s embedding, predicts all 134 measured proteins (mean correlation on held-out cells): 0.603 with the train-median size factor, 0.610 with the old per-cell factor. A reference point; we do not try to beat it.'],
     veto: ['Veto', 'The loop’s first check, a step outside ANM’s engine: it flags pairs that TEDDY’s embedding puts together (cosine ≥ 0.98) although their measured proteins disagree, so a readout built on the embedding should not be trusted there.'],
-    complement: ['Complement', 'Give the decision the evidence it lacks (here, measured protein as typed evidence, in place of TEDDY’s predictions) instead of retraining TEDDY.'],
+    complement: ['Complement', 'Give the decision the evidence it lacks (here, measured protein as typed evidence, in place of the TEDDY + head predictions) instead of retraining TEDDY or the head.'],
     verify: ['Verify', 'Score the same pairs again after the change: false agreement, soft separation and accuracy.'],
     finitefield: ['Finite field · ANM’s engine', 'ANM’s decision engine: it combines the typed evidence under the observer into a score per lineage, then calls or declines. Markers are linked to their lineage node, and each lineage node has a back-edge of weight 0.15 to each of its markers. All markers enter at once, so each lineage score is a fixed multiple of the fixed rule’s weighted sum (the first run entered them one per step in panel order, a hidden weight).'],
     permutation: ['Permutation test', 'Shuffle the data many times to see how often a pattern this strong appears by chance. Here the evidence values are shuffled within each lineage: CD5’s 19.5% vs 14.4% on average, p ≈ 0.0099 over 100 shuffles (the smallest p they can give).'],
@@ -172,7 +172,7 @@
     title: 'Inside ANM’s engine',
     sub: 'one real cell, step by step (first run)',
     steps: [
-      ['Evidence in', 'Each of TEDDY’s 9 predicted proteins is divided by its 95th-percentile value in training cells: 0 = absent, 1 = as high as it gets. The question then weights them (the soft rule leaves them as they are; the strict rule doubles CD19, CD3 and CD16).'],
+      ['Evidence in', 'Each of the 9 predicted proteins (our head on TEDDY’s embedding) is divided by its 95th-percentile value in training cells: 0 = absent, 1 = as high as it gets. The question then weights them (the soft rule leaves them as they are; the strict rule doubles CD19, CD3 and CD16).'],
       ['Wire it up', 'Every marker becomes a node linked to its lineage: B ← CD19 CD72 CD22 · T ← CD3 CD2 CD5 · myeloid ← CD16 CD11c CD36. Each lineage node also has a back-edge of weight 0.15 to each of its markers, so some of its level flows back to them.'],
       ['Let it flow', 'In this first-run example, markers enter one per step in panel order, each as a pulse of its value. Every step, each node keeps 82% of its level and each lineage node takes in 16% of its markers’ levels. The field runs 4 more steps after the last marker. That entry order was a hidden weight (markers that enter early have decayed more by read-out). The corrected rerun enters all markers at once, so each lineage score is a fixed multiple of the rule’s and ANM makes the rule’s call on every cell.'],
       ['Read out', 'A lineage’s final level is its score. The top score becomes the call if it reaches the question’s bar (soft 0.12 · strict 0.28 · B/T-priority 0.20 as declared); otherwise “no call”.'],
@@ -309,10 +309,10 @@
   // Origin (bottom-left) = phase 1 × Mode B, where this repo's results are.
   var PLANE = {
     x: [['phase1', 'Phase 1', 'TEDDY + small head'], ['phase2', 'Phase 2', 'fusion model']],
-    y: [['modeb', 'Mode B', 'on TEDDY’s outputs'], ['modea', 'Mode A', 'inside TEDDY']],
+    y: [['modeb', 'Mode B', 'on TEDDY + head outputs'], ['modea', 'Mode A', 'inside TEDDY']],
     cells: {
-      B1: ['done', 'Done', 'Experiments 1–6 (corrections in progress)'],
-      B2: ['part', 'Partial', 'the unfinished phase 2 is only the RNA-missing stand-in (Experiments 2, 4)'],
+      B1: ['done', 'Done', 'Experiments 1, 3, 4, 5 rerun; 2 and 6 withdrawn'],
+      B2: ['part', 'Partial', 'the unfinished phase 2 is only the RNA-missing stand-in (withdrawn Experiment 2)'],
       A1: ['no', 'Not done', 'residual stream, Jacobians, gene perturbations'],
       A2: ['no', 'Not done', 'inside the fusion model']
     }
@@ -336,14 +336,34 @@
     var m = /^(?:Experiment|Block) (\d)/.exec(sec.label) || /^(\d\d)\b/.exec(sec.label);
     return m ? m[1] : (sec.label === 'Overview' ? '↑' : sec.label.charAt(0));
   }
+  // links to other pages (cfg.railLinks, e.g. the ANM framework page) sit at the foot of the rail, below the track
+  var FW_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.2 8.8l2.7 6.9M15.8 8.8l-2.7 6.9M8.6 7h6.8"/></svg>';
+  function injectCss() {
+    if (document.getElementById('t-ext-css')) return;
+    var st = document.createElement('style');
+    st.id = 't-ext-css';
+    st.textContent = '@media (min-width: 1200px) {' +
+      '.t-exts { position: absolute; left: 0; right: 0; bottom: 12px; display: grid; justify-items: center; gap: 6px; }' +
+      '.t-ext { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: var(--accent); background: var(--bg); border: 1.5px solid color-mix(in srgb, var(--accent) 60%, var(--line)); text-decoration: none; transition: background .2s ease, color .2s ease, transform .15s ease; }' +
+      '.t-ext:hover, .t-ext:focus-visible { background: var(--accent); color: var(--bg); transform: scale(1.06); outline: none; } }' +
+      '.g-fw { display: block; margin-top: 16px; padding: 10px 12px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: var(--accent-soft); color: var(--ink-muted); text-decoration: none; font-size: .78rem; line-height: 1.45; }' +
+      '.g-fw b { display: block; color: var(--accent); font-size: .84rem; margin-bottom: 2px; }' +
+      '.g-fw:hover { border-color: var(--accent); }' +
+      '@media (prefers-reduced-motion: reduce) { .t-ext { transition: none !important; } }';
+    document.head.appendChild(st);
+  }
   function buildRail(cfg, ids) {
     var order = ids.slice().sort(function (a, b) { return document.getElementById(a).offsetTop - document.getElementById(b).offsetTop; });
+    var ext = cfg.railLinks || [], exH = ext.length ? 46 + 38 * (ext.length - 1) : 0;
+    if (ext.length) injectCss();
     var rail = document.createElement('nav');
     rail.className = 't-rail'; rail.setAttribute('aria-label', 'Page timeline');
-    rail.innerHTML = '<div class="t-track"><div class="t-fill"></div></div>' + order.map(function (id) {
+    rail.innerHTML = '<div class="t-track"' + (exH ? ' style="bottom:' + (18 + exH) + 'px"' : '') + '><div class="t-fill"></div></div>' + order.map(function (id) {
       var sec = cfg.sections[id];
       return '<a class="t-dot" href="#' + id + '" data-id="' + id + '" aria-label="' + esc(sec.label) + '"><span>' + shortOf(sec) + '</span></a>';
-    }).join('') + '<div class="t-card" aria-hidden="true"><b></b><span></span></div>';
+    }).join('') + (ext.length ? '<div class="t-exts">' + ext.map(function (l, i) {
+      return '<a class="t-ext" href="' + esc(l.href) + '" data-ext="' + i + '" aria-label="' + esc(l.label + (l.plain ? ': ' + l.plain : '')) + '">' + FW_ICON + '</a>';
+    }).join('') + '</div>' : '') + '<div class="t-card" aria-hidden="true"><b></b><span></span></div>';
     var bar = document.createElement('div');
     bar.className = 't-bar'; bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<i></i>';
     document.body.appendChild(rail); document.body.appendChild(bar);
@@ -351,7 +371,7 @@
     var dots = [].slice.call(rail.querySelectorAll('.t-dot')), tops = {}, active = null, hideT = null, hovering = null;
     function maxScroll() { return Math.max(1, document.documentElement.scrollHeight - window.innerHeight); }
     function layout() {
-      var h = rail.clientHeight - 36, prev = -1e9, pos = [];
+      var h = rail.clientHeight - 36 - exH, prev = -1e9, pos = [];
       order.forEach(function (id) {
         var el = document.getElementById(id);
         var f = Math.max(0, Math.min(1, (el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3) / maxScroll()));
@@ -366,14 +386,25 @@
       var f = Math.max(0, Math.min(1, window.scrollY / maxScroll()));
       fill.style.height = (f * 100) + '%'; barFill.style.width = (f * 100) + '%';
     }
-    function showCard(id, sticky) {
-      var sec = cfg.sections[id]; if (!sec) return;
-      card.querySelector('b').textContent = sec.label; card.querySelector('span').textContent = sec.plain;
-      var y = Math.max(8, Math.min(rail.clientHeight - 90, (tops[id] || 0) - 14));
+    function showText(title, text, at, sticky) {
+      card.querySelector('b').textContent = title; card.querySelector('span').textContent = text || '';
+      var y = Math.max(8, Math.min(rail.clientHeight - 90, at - 14));
       card.style.top = y + 'px'; card.classList.add('on');
       clearTimeout(hideT);
       if (!sticky) hideT = setTimeout(function () { if (!hovering) card.classList.remove('on'); }, 1600);
     }
+    function showCard(id, sticky) {
+      var sec = cfg.sections[id]; if (!sec) return;
+      showText(sec.label, sec.plain, tops[id] || 0, sticky);
+    }
+    [].slice.call(rail.querySelectorAll('.t-ext')).forEach(function (a) {
+      var l = ext[+a.getAttribute('data-ext')];
+      function on() { hovering = 'ext'; showText(l.label, l.plain, a.getBoundingClientRect().top - rail.getBoundingClientRect().top - 64, true); }
+      a.addEventListener('pointerenter', on);
+      a.addEventListener('focus', on);
+      a.addEventListener('pointerleave', function () { hovering = null; if (active) showCard(active, false); else card.classList.remove('on'); });
+      a.addEventListener('blur', function () { hovering = null; card.classList.remove('on'); });
+    });
     dots.forEach(function (d) {
       var id = d.getAttribute('data-id');
       d.addEventListener('pointerenter', function () { hovering = id; showCard(id, true); });
@@ -406,6 +437,7 @@
   function buildGuide(cfg) {
     var aside = document.getElementById('guide');
     if (!aside || !cfg) return;
+    if (cfg.railLinks && cfg.railLinks.length) injectCss();
     var E = cfg.engine === false ? null : (cfg.engine || ENGINE);
     var arms = cfg.arms ? '<p class="g-kick">Colours on this page</p><div class="g-arms">' + cfg.arms.map(function (a) { return '<span><i style="background:' + a[0] + '"></i>' + a[1] + '</span>'; }).join('') + '</div>' : '';
     aside.innerHTML = '<div class="g-inner">' +
@@ -418,7 +450,8 @@
       '<p class="g-kick" id="g-how-k">How ANM decides here</p><div class="g-how" id="g-how"></div>' +
       (E ? engineHtml(E) : '') +
       '<div id="g-terms"><p class="g-kick">Terms in this section</p><div class="g-concepts" id="g-concepts"></div></div>' +
-      (cfg.allTerms ? '<a class="g-all" href="' + cfg.allTerms + '">' + (cfg.allTermsLabel || 'All terms') + ' →</a>' : '') + arms +
+      (cfg.allTerms ? '<a class="g-all" href="' + cfg.allTerms + '">' + (cfg.allTermsLabel || 'All terms') + ' →</a>' : '') +
+      (cfg.railLinks || []).map(function (l) { return '<a class="g-fw" href="' + esc(l.href) + '"><b>' + l.label + ' →</b>' + (l.plain || '') + '</a>'; }).join('') + arms +
       '</div>';
     decorateAll(aside);
     if (E) wireTrace(aside, E);
@@ -501,7 +534,7 @@
     scrim.addEventListener('click', close);
     aside.querySelector('.g-close').addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-    aside.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a.g-node, a.g-all'); if (a && window.innerWidth < 1200) close(); });
+    aside.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a.g-node, a.g-all, a.g-fw'); if (a && window.innerWidth < 1200) close(); });
 
     var nodes = {};
     [].slice.call(aside.querySelectorAll('.g-node')).forEach(function (a) { nodes[a.getAttribute('data-step')] = a; });

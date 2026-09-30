@@ -11,6 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2713%27 fill=%27%23008c7e%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%275%27 fill=%27%23fff%27/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="assets/site/guide.css" />
+<script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script>
+<link rel="stylesheet" href="assets/site/anim/anim.css" />
+<script type="module" src="assets/site/anim/loader.js"></script>
 <style>
 :root {
   --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #efeee8;
@@ -300,6 +303,34 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   padding: .45rem .6rem; border-radius: 8px; max-width: 280px; opacity: 0; transition: opacity .12s; line-height: 1.4; }
 #tip.on { opacity: 1; }
 #tip b { font-family: var(--mono); }
+
+/* mobile section menu (narrow screens) */
+.nav a.fw { color: var(--accent); font-weight: 600; }
+.mnav { display: none; position: relative; }
+@media (max-width: 760px) { .mnav { display: block; } }
+.mnav summary { list-style: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--ink);
+  padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev); }
+.mnav summary::-webkit-details-marker { display: none; }
+@media (max-width: 480px) { .mnav .mlabel { display: none; } .mnav summary { padding: 6px 9px; } .nav a.home-link { display: none; } }
+.mnav-panel { position: fixed; top: 64px; right: 12px; width: min(300px, calc(100vw - 24px)); max-height: calc(100vh - 80px); overflow-y: auto; z-index: 45;
+  padding: 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-elev); box-shadow: var(--card-shadow); display: grid; gap: 2px; white-space: normal; }
+.mnav-panel a { display: block; padding: 8px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .88rem; }
+.mnav-panel a:hover { background: var(--bg-soft); }
+.mnav-panel a.sub { padding-left: 22px; color: var(--ink-muted); font-size: .84rem; }
+.mnav-panel a.ext { color: var(--accent); font-weight: 600; border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; margin-top: 4px; padding-top: 10px; }
+
+/* animations: three.js scenes mounted by assets/site/anim/loader.js; anim.css draws the frame, the page places and sizes it */
+main figure.anim { min-width: 0; }
+main .anim > .anim-stage { aspect-ratio: var(--ar, 16 / 9); }
+@container main (max-width: 640px) { main .anim > .anim-stage { aspect-ratio: var(--ar-sm, var(--ar, 16 / 9)); } }
+main .anim.a-strip, main .anim.a-wide { margin: 1.1rem 0 1.25rem; }
+main .anim.a-panel { margin: 0 0 1.1rem; }
+.anim.withdrawn > .anim-stage::before { content: "withdrawn · first run"; position: absolute; top: 8px; left: 8px; z-index: 3; pointer-events: none;
+  font-family: var(--mono); font-size: .6rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--bad);
+  background: color-mix(in srgb, var(--bg-elev) 82%, transparent); border: 1px solid color-mix(in srgb, var(--bad) 45%, var(--line)); border-radius: 999px; padding: 2px 8px; }
+.pipe.legend-row { margin-top: .2rem; }
+details.tv > .say, details.tv > p { margin-top: .6rem; }
+details.tv .tvp { font-size: .86rem; color: var(--ink-muted); margin: .6rem 0 0; }
 </style>
 </head>
 <body>
@@ -312,7 +343,27 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
       <a href="#unique" class="sec-link">Why ANM</a>
       <a href="#boundary" class="sec-link">Boundary</a>
       <a href="#posters" class="opt">Posters</a>
-      <a href="./">← Home</a>
+      <a href="anm-framework.html" class="fw sec-link">ANM framework ↗</a>
+      <a href="./" class="home-link">← Home</a>
+      <details class="mnav">
+        <summary aria-label="Open section menu"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mlabel">Menu</span></summary>
+        <div class="mnav-panel">
+          <a href="#overview">Overview</a>
+          <a href="#loop">The loop, step by step</a>
+          <a href="#loop-1" class="sub">1 · Expect</a>
+          <a href="#loop-2" class="sub">2 · Veto</a>
+          <a href="#loop-3" class="sub">3 · Complement</a>
+          <a href="#loop-4" class="sub">4 · Verify</a>
+          <a href="#verify-all">Scoreboard</a>
+          <a href="#unique">Why ANM, not a feature swap</a>
+          <a href="#boundary">Claim boundary</a>
+          <a href="#posters">Posters</a>
+          <a href="#rerun">Reproduce</a>
+          <a href="anm-framework.html" class="ext">ANM framework: physics, AI, TEDDY ↗</a>
+          <a href="./" class="ext">← Home</a>
+          <a href="https://github.com/danielchen26/teddy_mm" class="ext" target="_blank" rel="noopener">GitHub repository ↗</a>
+        </div>
+      </details>
       <button class="g-open" type="button" aria-controls="guide" aria-expanded="false"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span class="glabel">Guide</span></button>
       <a class="gh-link" href="https://github.com/danielchen26/teddy_mm" target="_blank" rel="noopener" aria-label="GitHub repository" title="GitHub repository"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="ghl">GitHub</span></a>
       <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle theme">Theme</button>
@@ -324,28 +375,33 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="hero" id="overview">
     <div class="wrap">
       <span class="eyebrow"><span>Mode B · must-separate pairs · held-out site4</span></span>
-      <h1>TEDDY sees two cells as the same. They aren’t. Here’s how ANM catches it.</h1>
+      <h1>TEDDY’s embedding puts two cells almost together. They differ. Here’s how ANM’s loop catches it.</h1>
       <p class="lede">
-        TEDDY’s <span class="term" data-term="z512">embedding</span> puts some myeloid and T cells at cosine <strong>0.982</strong>, so a readout built on it
-        <strong>falsely agrees 85%</strong> of the time. ANM’s decision loop <strong><span class="term" data-term="veto">vetoes</span></strong> the embedding for these pairs,
-        <strong><span class="term" data-term="complement">swaps in</span></strong> the missing evidence (measured protein as <span class="term" data-term="evidence">typed evidence</span>) with the <span class="term" data-term="o1">strict rule</span>,
-        and <strong><span class="term" data-term="verify">checks</span></strong> the same pairs again. TEDDY is not retrained.
+        TEDDY’s <span class="term" data-term="z512">embedding</span> puts some myeloid and T cells at cosine <strong>0.982</strong>, and the readout built on it (our head + the soft rule) <strong>falsely agrees 85%</strong> of the time.
+        ANM’s loop <strong><span class="term" data-term="veto">vetoes</span></strong> the embedding for these pairs, <strong><span class="term" data-term="complement">swaps in</span></strong> measured protein as <span class="term" data-term="evidence">typed evidence</span> with the <span class="term" data-term="o1">strict rule</span>, and <strong><span class="term" data-term="verify">checks</span></strong> the same pairs again, with no retrain.
       </p>
+      <figure class="anim a-strip withdrawn" data-anim="loop-hero-lookalike" style="--ar:21/7;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation, first run of a withdrawn experiment: a myeloid cell and a T cell nearly overlap in TEDDY’s embedding and get the same call; the four loop steps light up and false agreement falls from 85 to 40 percent."></div><figcaption>Look-alikes get the same call; four steps catch it.</figcaption></figure>
 
       <div class="strip" role="list">
         <a class="beat b1" href="#loop" data-go="0" role="listitem"><div class="n">01</div><div class="t">Expect</div><div class="d">Look-alike cells get the same call</div></a>
-        <a class="beat b2" href="#loop" data-go="1" role="listitem"><div class="n">02</div><div class="t">Veto</div><div class="d">TEDDY’s embedding can’t separate them</div></a>
+        <a class="beat b2" href="#loop" data-go="1" role="listitem"><div class="n">02</div><div class="t">Veto</div><div class="d">The readout on the embedding can’t separate them</div></a>
         <a class="beat b3" href="#loop" data-go="2" role="listitem"><div class="n">03</div><div class="t">Complement</div><div class="d">Swap in measured protein as evidence</div></a>
         <a class="beat b4" href="#loop" data-go="3" role="listitem"><div class="n">04</div><div class="t">Verify</div><div class="d">Score the same pairs again</div></a>
       </div>
 
       <div class="tiles">
-        <div class="tile"><div class="k"><span class="term" data-term="falseagree">False agreement</span> ↓</div><div class="v"><span class="from">0.85</span><span class="arrow">→</span><span class="to">0.40</span></div><div class="h">Both cells called, same call, yet their measured proteins differ</div></div>
-        <div class="tile"><div class="k"><span class="term" data-term="softsep">Soft separation</span> ↑</div><div class="v"><span class="from">0.17</span><span class="arrow">→</span><span class="to">0.63</span></div><div class="h">Pair told apart: different calls, or one declined</div></div>
-        <div class="tile"><div class="k"><span class="term" data-term="qdec">Accuracy of calls made</span> ↑</div><div class="v"><span class="from">0.74</span><span class="arrow">→</span><span class="to">0.99</span></div><div class="h">Correct calls among the calls made</div></div>
+        <div class="tile"><div class="k"><span class="term" data-term="falseagree">False agreement</span> ↓</div><div class="v"><span class="from">0.85</span><span class="arrow">→</span><span class="to">0.40</span></div><div class="h">Same call, though measured proteins differ</div></div>
+        <div class="tile"><div class="k"><span class="term" data-term="softsep">Soft separation</span> ↑</div><div class="v"><span class="from">0.17</span><span class="arrow">→</span><span class="to">0.63</span></div><div class="h">Different calls, or one declined</div></div>
+        <div class="tile"><div class="k"><span class="term" data-term="qdec">Accuracy of calls made</span> ↑</div><div class="v"><span class="from">0.74</span><span class="arrow">→</span><span class="to">0.99</span></div><div class="h">Correct among calls made</div></div>
       </div>
-      <div class="say warn" style="margin-top:1rem;font-size:.86rem"><b>Corrections (29 Sep 2026).</b> This page is Experiment 6, Look-alike cells. It stays <b>withdrawn pending redesign</b> and was not rerun; the numbers below are the first run’s, kept as a record. The corrected rerun is done for Experiments 1, 3, 4 and 5 (<a href="index.html#corrections">see the homepage</a>): with all markers entering at once and a train-median size factor, ANM makes the same call as the fixed rule on every cell. Known issues here: markers were entered one per step in panel order, a hidden weight; predictions were scaled by a per-cell factor computed from measured protein; the answer key has no NK or out-of-scope class. Redesign prototype: TEDDY does separate NK from T in the right direction but compresses the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which TEDDY and measured protein both call NK-like (an annotation problem, not a TEDDY failure); on the other 361 pairs the median within-pair gap in TEDDY-predicted CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738. Donor 15078 is in training at other sites and is 32.6% of site4 test cells, and the 9 panel proteins were chosen by test-set Pearson.</div>
-      <p class="srcnote">Myeloid↔T must-separate pairs, 1,490 · before = TEDDY + fixed rule (soft) → after = measured protein as typed evidence, strict rule · source: <a href="reports/reverse_loop_small_stats.json">reverse_loop_small_stats.json</a></p>
+      <div class="say warn" style="margin-top:1rem;font-size:.86rem"><b>Corrections (29 Sep 2026).</b> Withdrawn pending redesign; first-run numbers kept as a record (<a href="index.html#corrections">all corrections</a>). Known issues: panel-order markers, per-cell size factor from measured protein, no NK class.</div>
+      <details class="tv">
+        <summary>Redesign prototype and disclosures</summary>
+        <p class="tvp">This page is Experiment 6, Look-alike cells; it was not rerun. The corrected rerun is done for Experiments 1, 3, 4 and 5: with all markers entering at once and a train-median size factor, ANM makes the same call as the fixed rule on every cell. Known issues here: markers were entered one per step in panel order, a hidden weight; predictions were scaled by a per-cell factor computed from measured protein; the answer key has no NK or out-of-scope class.</p>
+        <p class="tvp">Redesign prototype: the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 361 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738. Whether TEDDY’s embedding or our head loses the difference is still open (Mode A probes will tell).</p>
+        <p class="tvp">Donor 15078 is in training at other sites and is 32.6% of site4 test cells, and the 9 panel proteins were chosen by test-set Pearson.</p>
+      </details>
+      <p class="srcnote">1,490 myeloid↔T must-separate pairs · before: TEDDY + fixed rule (soft) · after: measured protein as typed evidence, strict rule · <a href="reports/reverse_loop_small_stats.json">reverse_loop_small_stats.json</a></p>
     </div>
   </section>
 
@@ -353,10 +409,10 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="section" id="loop">
     <div class="wrap">
       <h2>The loop, one step at a time</h2>
-      <p class="sub">Click a step or use ← / → keys. Every number below is copied from the run’s stats files. Dotted words explain themselves on hover or tap.</p>
+      <p class="sub">Click a step or use ← / →.</p>
 
       <div class="stepper-nav" role="tablist" aria-label="Loop steps">
-        <button class="stepbtn" role="tab" aria-selected="true" aria-controls="p0" id="t0"><span class="dot">1</span><span class="st"><b>Expect</b><em>what TEDDY assumes</em></span></button>
+        <button class="stepbtn" role="tab" aria-selected="true" aria-controls="p0" id="t0"><span class="dot">1</span><span class="st"><b>Expect</b><em>what the readout assumes</em></span></button>
         <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p1" id="t1"><span class="dot">2</span><span class="st"><b>Veto</b><em>find the gap</em></span></button>
         <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p2" id="t2"><span class="dot">3</span><span class="st"><b>Complement</b><em>add evidence</em></span></button>
         <button class="stepbtn" role="tab" aria-selected="false" aria-controls="p3" id="t3"><span class="dot">4</span><span class="st"><b>Verify</b><em>check again</em></span></button>
@@ -367,35 +423,33 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
         <!-- STEP 1 -->
         <div class="panel on" role="tabpanel" id="p0" aria-labelledby="t0">
           <h3>1 · What TEDDY + a fixed rule assumes</h3>
-          <p class="q">A frozen RNA → protein map. A readout on top treats cells with nearby embeddings as the same biology.</p>
-          <div class="pipe" aria-label="Pipeline">
+          <p class="q">The readout treats cells with nearby embeddings as the same biology.</p>
+          <div class="pipe legend-row" aria-label="Pipeline">
             <span class="s">RNA</span><span class="a">→</span>
             <span class="s">frozen TEDDY-G</span><span class="a">→</span>
             <span class="s hl">embedding (z_512)</span><span class="a">→</span>
-            <span class="s">predicted proteins</span><span class="a">→</span>
+            <span class="s">our head: predicted proteins</span><span class="a">→</span>
             <span class="s">soft rule</span><span class="a">→</span>
             <span class="s">call</span>
           </div>
           <div class="two" style="margin-top:1.2rem">
             <div class="box">
               <h4>What the embedding is</h4>
-              <div style="font-size:.88rem">TEDDY’s 512-number summary of a cell: the mean of its <b>last-layer</b> tokens at context <b>512</b>, L2-normalized
-                (<code>z_rna_512.npy</code>, 16,750 held-out cells). Not the pretraining context 2048, not a disease token, not the compact 32-number export.</div>
+              <div style="font-size:.88rem">TEDDY’s <span class="term" data-term="z512">512-number summary</span> of a cell (<code>z_rna_512.npy</code>, 16,750 held-out cells).</div>
             </div>
             <div class="box">
               <h4>The implicit promise</h4>
-              <div style="font-size:.88rem">If two cells’ embeddings have cosine ≥ 0.98, the readout gives both the same call.
-                TEDDY’s phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.60</span> is a reference; this page does not try to beat it.</div>
+              <div style="font-size:.88rem">Cosine ≥ 0.98 → the same call; our head’s <span class="term" data-term="pearson">Pearson ≈ 0.60</span> is a reference only.</div>
             </div>
           </div>
-          <div class="say">The question: <b>is TEDDY’s embedding enough for the readout?</b> The cheapest test of it, the must-separate check, was the strongest of four cheap probes (score 0.581, rank 1 in <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES_RANKING</a>).</div>
+          <div class="say"><b>Is the readout on TEDDY’s embedding enough?</b> The must-separate check ranked first of four cheap probes (score 0.581, <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES_RANKING</a>).</div>
           <div class="panel-foot"><button class="btn" data-prev disabled>← Back</button><span class="kbd">Step 1 of 4</span><button class="btn primary" data-next>Next: find the gap →</button></div>
         </div>
 
         <!-- STEP 2 -->
         <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
-          <h3>2 · Veto: cells TEDDY sees as the same, that aren’t</h3>
-          <p class="q">Take each cell’s nearest neighbours with cosine ≥ 0.98 and compare their measured proteins. Many pairs disagree on lineage: these are <span class="term" data-term="mustpair">must-separate pairs</span>.</p>
+          <h3>2 · Veto: near-merged cells that differ</h3>
+          <p class="q">Nearest neighbours at cosine ≥ 0.98 whose measured proteins disagree on lineage are <span class="term" data-term="mustpair">must-separate pairs</span>.</p>
           <div class="two">
             <div>
               <div class="pair" aria-label="Example must-separate pair">
@@ -406,7 +460,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
               <div class="box" style="margin-top:1rem">
                 <h4>Myeloid↔T pair cosine (1,490 pairs)</h4>
                 <div class="cosline" id="cosline" aria-label="Cosine distribution: min 0.9800, lower quartile 0.9810, median 0.9822, upper quartile 0.9838, max 0.9905"></div>
-                <div style="font-size:.78rem;color:var(--ink-muted)">Box = middle half of pairs, whiskers = min–max, dashed = the 0.98 cut. Every pair sits in a sliver near 1.</div>
+                <div style="font-size:.78rem;color:var(--ink-muted)">Box = middle half, whiskers = min–max, dashed = the 0.98 cut.</div>
               </div>
               <div class="box" style="margin-top:.8rem">
                 <h4>How big is the gap (cosine ≥ 0.98)</h4>
@@ -431,17 +485,17 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
               </div>
             </div>
           </div>
-          <div class="say bad"><b>Veto.</b> TEDDY’s embedding is <b>not enough</b> to separate these pairs: near-identical embeddings carry disagreeing measured lineages. A readout must <b>decline</b>, <b>ask a better question</b>, or <b>add a missing evidence channel</b>.</div>
+          <div class="say bad"><b>Veto.</b> For these pairs the readout on TEDDY’s embedding (our head + soft rule) is <b>not enough</b>; whether the embedding itself lacks the difference is untested.</div>
           <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 2 of 4</span><button class="btn primary" data-next>Next: try fixes →</button></div>
         </div>
 
         <!-- STEP 3 -->
         <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2">
           <h3>3 · Complement: three cheap fixes, no TEDDY retrain</h3>
-          <p class="q">Pick a fix to see what changes. Each is a different answer to “what should fill the gap?”</p>
+          <p class="q">Pick a fix: a better question, new evidence, or glued-on features.</p>
           <div class="armgrid" id="armgrid">
             <button class="arm" aria-pressed="false" data-arm="a"><span class="tag obs">(a) question only</span><div class="an">Rewrite the question</div><div class="ad">Strict or B/T-priority rule. Same evidence.</div></button>
-            <button class="arm" aria-pressed="true" data-arm="b"><span class="tag typ">(b) typed evidence</span><div class="an">Swap in measured protein as evidence</div><div class="ad">It replaces TEDDY’s predictions; read by the soft or strict rule.</div></button>
+            <button class="arm" aria-pressed="true" data-arm="b"><span class="tag typ">(b) typed evidence</span><div class="an">Swap in measured protein as evidence</div><div class="ad">Replaces the TEDDY + head predictions; soft or strict rule.</div></button>
             <button class="arm" aria-pressed="false" data-arm="c"><span class="tag geo">(c) feature swap</span><div class="an">Glue proteins onto the embedding</div><div class="ad">z⁺: protein features concatenated onto TEDDY’s embedding.</div></button>
           </div>
           <div class="armdetail box" id="armdetail" aria-live="polite"></div>
@@ -450,8 +504,8 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
 
         <!-- STEP 4 -->
         <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3">
-          <h3>4 · Verify: the same 1,490 pairs, before vs after</h3>
-          <p class="q">Of every 100 pairs where both cells get a call, how many does the readout wrongly give the same call?</p>
+          <h3>4 · Verify: the same 1,490 pairs</h3>
+          <p class="q">Of 100 pairs with both cells called, how many wrongly share a call?</p>
           <div class="controls">
             <div class="seg" id="waffleSeg">
               <button aria-pressed="false" data-w="before">Before · TEDDY + fixed rule</button>
@@ -466,7 +520,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
               <div class="legend"><span><i style="background:var(--bad)"></i>same call, but measured proteins disagree</span><span><i style="background:var(--bar-win)"></i>different calls (told apart)</span></div>
             </div>
           </div>
-          <div class="say good"><b>Verified.</b> Winner: measured protein as typed evidence with the strict rule (score = 2 × soft separation + accuracy + (1 − false agreement) = <b>2.841</b>). Same direction on all 5,000 pairs: false agreement 0.893 → 0.586, accuracy 0.808 → 0.990, soft separation 0.167 → 0.469. <a href="#verify-all">Full scoreboard ↓</a></div>
+          <div class="say good"><b>Verified.</b> Winner: measured protein, strict rule (score <b>2.841</b>). All 5,000 pairs, same direction: false agreement 0.893 → 0.586, accuracy 0.808 → 0.990, soft separation 0.167 → 0.469. <a href="#verify-all">Full scoreboard ↓</a></div>
           <div class="panel-foot"><button class="btn" data-prev>← Back</button><span class="kbd">Step 4 of 4</span><a class="btn primary" href="#verify-all" style="text-decoration:none">Scoreboard ↓</a></div>
         </div>
       </div>
@@ -477,7 +531,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="section" id="verify-all">
     <div class="wrap">
       <h2>Scoreboard: every fix, every metric</h2>
-      <p class="sub">Switch metric and pair set. TEDDY + fixed rule in orange, the winning fix in teal. Hatched = the feature swap z⁺, measured on distances only (not a decision).</p>
+      <p class="sub"><b>First run.</b> Hatched: the feature swap z⁺, distances only; key below.</p>
       <div class="card" style="padding:1.2rem 1.25rem">
         <div class="controls">
           <span class="cl">Metric</span>
@@ -509,30 +563,29 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <!-- ============ UNIQUE ============ -->
   <section class="section" id="unique">
     <div class="wrap">
-      <h2>What ANM adds, compared with just swapping features</h2>
-      <p class="sub">If measured protein is the fix, why not glue it onto the embedding? Because distances that separate one fixed list are not a readout that owns its decisions.</p>
+      <h2>What ANM adds over a feature swap</h2>
+      <p class="sub">Glued-on protein separates one list; distances make no decisions.</p>
       <div class="vs">
         <div class="card col geo">
           <h3>Feature swap: z⁺ = embedding ⊕ protein features</h3>
-          <p class="sm">On the <b>fixed</b> myeloid↔T list, share of pairs still at cosine ≥ 0.98:</p>
+          <p class="sm"><b>Fixed</b> myeloid↔T list, share still at cosine ≥ 0.98:</p>
           <div class="hbars" id="zplusbars"></div>
-          <p class="sm" style="margin-top:.9rem">With measured proteins, z⁺ separates this fixed list; with predicted proteins it does not. But across all cells (the earlier global test, myeloid held out), the change in the must-separate rate compared with TEDDY’s embedding is:</p>
+          <p class="sm" style="margin-top:.9rem">Across all cells (earlier global test, myeloid held out), z⁺ changes the must-separate rate by:</p>
           <div style="display:flex;gap:1.2rem;flex-wrap:wrap;align-items:baseline">
             <div><div class="bignum">−0.273</div><div style="font-size:.76rem;color:var(--ink-muted)">z⁺ · measured protein</div></div>
             <div><div class="bignum" style="font-size:1.4rem">−0.274</div><div style="font-size:.76rem;color:var(--ink-muted)">z⁺ · predicted protein</div></div>
             <div><div class="bignum" style="font-size:1.4rem">−0.251</div><div style="font-size:.76rem;color:var(--ink-muted)">predicted, all 9 proteins (leak check)</div></div>
           </div>
-          <div class="say warn" style="font-size:.86rem">Negative means z⁺ alone makes the must-separate rate <b>worse</b> among its own new neighbours. It moves the problem instead of solving it.</div>
+          <div class="say warn" style="font-size:.86rem">Negative = <b>worse</b> among z⁺’s new neighbours: the problem moves.</div>
         </div>
         <div class="card col anm">
           <h3>ANM decision loop</h3>
-          <p class="sm">Four things a glued-on vector can’t give you:</p>
           <div class="cap4">
             <div class="row"><div class="hd">ANM</div><div class="hd">Feature-swap substitute</div></div>
-            <div class="row"><div class="a"><b>Typed evidence</b><br />each input has a declared source and goes to <span class="term" data-term="finitefield">ANM’s decision engine</span></div><div class="g">numbers concatenated into z⁺, with no decision meaning</div></div>
-            <div class="row"><div class="a"><b>An editable question</b><br />soft → strict rule is a written change (threshold 0.12 → 0.28, key markers ×2)</div><div class="g">retrain or re-tune readout weights</div></div>
-            <div class="row"><div class="a"><b>An honest “no call”</b><br />it declines when the evidence is insufficient</div><div class="g">a softmax always answers</div></div>
-            <div class="row"><div class="a"><b>Verify</b><br />the same must-separate pairs → false agreement, accuracy, soft separation</div><div class="g">a cosine drop is not a decision</div></div>
+            <div class="row"><div class="a"><b>Typed evidence</b><br />each input declares its source to <span class="term" data-term="finitefield">ANM’s engine</span></div><div class="g">concatenated numbers, no decision meaning</div></div>
+            <div class="row"><div class="a"><b>An editable question</b><br />soft → strict is a written change (0.12 → 0.28, key markers ×2)</div><div class="g">retrain or re-tune weights</div></div>
+            <div class="row"><div class="a"><b>An honest “no call”</b><br />declines on insufficient evidence</div><div class="g">a softmax always answers</div></div>
+            <div class="row"><div class="a"><b>Verify</b><br />same pairs → false agreement, accuracy, soft separation</div><div class="g">a cosine drop is not a decision</div></div>
           </div>
         </div>
       </div>
@@ -543,29 +596,34 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="section" id="boundary">
     <div class="wrap">
       <h2>Claim boundary</h2>
-      <p class="sub">“Reverse loop” here is a <b>decision</b> loop: we change what the readout sees and asks, not TEDDY’s representation.</p>
-      <p class="sub">teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested is not impossible: ANM’s <span class="term" data-term="timestep">step</span> is any real processing order, not necessarily physical time. The nine marker predictions come out of one prediction with no order (entering them in panel order was the hidden weight); TEDDY’s transformer layers are a real order, so the natural test is Mode A, over layers (<a href="index.html#timestep">details</a>).</p>
+      <p class="sub">“Reverse loop” is a <b>decision</b> loop: we change what the readout sees and asks, not TEDDY’s representation.</p>
+      <p class="sub">Open loop: TEDDY does not read the field, so ANM’s <span class="term" data-term="timestep">dynamics</span> are not tested here; not yet, not impossible (<a href="index.html#timestep">why</a>).</p>
+      <figure class="anim a-wide withdrawn" data-anim="loop-boundary-sealed" style="--ar:21/6;--ar-sm:16/9"><div class="anim-stage" role="img" aria-label="Animation: TEDDY and our head stay sealed; the decision loop only changes the evidence and the question outside them, and measured protein enters the evidence only through one labelled test gate."></div><figcaption>The loop changes evidence and question, never TEDDY or head.</figcaption></figure>
       <div class="bound">
         <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>Veto → complement → verify on must-separate pairs</li>
-          <li>TEDDY’s embedding alone is not enough for the readout on these pairs</li>
-          <li>Measured protein as typed <b>complement</b> evidence, in this explicit test only</li>
-          <li>A rewritten question (the strict rule) without retraining TEDDY</li>
-          <li>In normal use measured protein stays the <b>answer key</b></li>
+          <li>The readout on TEDDY’s embedding falls short here</li>
+          <li>Measured protein as <b>complement</b> evidence, this test only</li>
+          <li>A rewritten question (strict rule), no retraining</li>
+          <li>Normally measured protein stays the <b>answer key</b></li>
         </ul></div>
         <div class="card col out"><h3>Not claimed</h3><ul>
-          <li>Studying TEDDY’s internals: residual stream, layer Jacobians, in-silico gene perturbations (Mode A)</li>
-          <li>The loop as TEDDY’s representation responding to perturbations</li>
+          <li>TEDDY’s internals or representation response (Mode A)</li>
           <li>Pearson above phase-1 ≈ 0.60</li>
           <li>Fusion audit · clinical superiority</li>
-          <li>ANM’s dynamics: state feedback, operator memory, delays (open-loop only; not yet tested, not impossible)</li>
-          <li>A final headline for this experiment: withdrawn pending redesign</li>
-          <li>Retraining TEDDY (<code>best.pt</code>)</li>
+          <li>ANM’s dynamics (feedback, memory, delays): open loop</li>
+          <li>A final headline: withdrawn pending redesign</li>
+          <li>Retraining TEDDY or our head (<code>best.pt</code>, the head’s checkpoint)</li>
         </ul></div>
       </div>
       <div class="proof">
-        On 5,000 must-separate pairs (1,490 myeloid↔T, median cosine 0.982), TEDDY’s embedding alone is not enough for the readout: false agreement 0.85, soft separation 0.17, accuracy 0.74. ANM’s decision loop vetoes the embedding for these pairs, swaps in measured protein as typed evidence with the strict rule, and verifies false agreement → 0.40, soft separation → 0.63, accuracy → 0.99, without retraining TEDDY. Gluing features onto the embedding is not enough (global change −0.27). Not a study of TEDDY’s internals, not a Pearson claim, not clinical. Withdrawn pending redesign (29 Sep 2026): markers entered one per step in panel order, predictions scaled by a per-cell factor from measured protein, no NK or out-of-scope class in the answer key. The redesign prototype finds TEDDY does separate NK from T in the right direction but compresses the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which TEDDY and measured protein both call NK-like (an annotation problem, not a TEDDY failure); on the other 361 pairs the median within-pair gap in TEDDY-predicted CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738.
+        On 5,000 must-separate pairs (1,490 myeloid↔T, median cosine 0.982), the readout on TEDDY’s embedding (our head + soft rule) falls short: false agreement 0.85, soft separation 0.17, accuracy 0.74. Measured protein as typed evidence with the strict rule gives 0.40, 0.63 and 0.99, without retraining; glued features are not enough (−0.27). Not TEDDY’s internals, not a Pearson claim, not clinical.
       </div>
+      <details class="tv">
+        <summary>Withdrawn pending redesign (29 Sep 2026) and the NK–T prototype</summary>
+        <p class="tvp">Withdrawn because markers entered one per step in panel order, predictions were scaled by a per-cell factor from measured protein, and the answer key has no NK or out-of-scope class. The redesign prototype finds the TEDDY + head predictions do separate NK from T in the right direction but compress the differences to about a quarter to a half of the measured ones (CD335 about two-thirds). On site4, 918 of the 1,279 NK–T look-alike pairs involve “gdT CD158b+” cells, which look NK-like in both predicted and measured protein (an annotation problem, not a pipeline failure); on the other 361 pairs the median within-pair gap in predicted (TEDDY + head) CD56 / CD94 / CD335 / CD3 is 0.176 / 0.137 / 0.248 / 0.195 vs measured 0.563 / 0.301 / 0.360 / 0.738.</p>
+        <p class="tvp">Open loop, in full: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. ANM’s step is any real processing order, not necessarily physical time. The nine marker predictions come out of one prediction with no order (entering them in panel order was the hidden weight); TEDDY’s transformer layers are a real order, so the natural test is Mode A, over layers.</p>
+      </details>
     </div>
   </section>
 
@@ -573,7 +631,7 @@ footer { padding: 2rem 0 3rem; color: var(--ink-muted); font-size: .84rem; borde
   <section class="section" id="posters">
     <div class="wrap">
       <h2>Posters</h2>
-      <p class="sub">Static NotebookLM-style summaries of the same numbers, for slides.</p>
+      <p class="sub">Static first-run summaries, for slides.</p>
       <div class="controls postertabs"><div class="seg" id="posterSeg">
         <button aria-pressed="true" data-p="06_anm_loop_poster">The loop</button>
         <button aria-pressed="false" data-p="07_myeloid_t_before_after">Myeloid↔T before/after</button>
@@ -630,16 +688,17 @@ window.GUIDE_CONFIG = (function () {
       return 'loop-' + (on ? +on.id.slice(1) + 1 : 1);
     },
     allTerms: 'index.html#gloss', allTermsLabel: 'All terms (homepage)',
+    railLinks: [{ href: 'anm-framework.html', label: 'ANM framework', plain: 'How ANM works in physics and in AI, and how we use it on TEDDY’s workflow.' }],
     // the whole loop is Mode B on phase-1 evidence; the claim boundary also points at Mode A
     planeDefault: ['B1'], planeBySection: { boundary: ['B1', 'A1', 'A2'] },
     sections: {
       overview: {
-        label: 'Overview', plain: 'Experiment 6, Look-alike cells (headline withdrawn pending redesign). TEDDY sees some myeloid and T cells as the same; the loop flags them, swaps in the missing evidence and checks again.', steps: ['expect', 'veto', 'complement', 'verify', 'scoreboard'],
+        label: 'Overview', plain: 'Experiment 6, Look-alike cells (headline withdrawn pending redesign). TEDDY’s embedding nearly merges some myeloid and T cells; the loop flags them, swaps in the missing evidence and checks again.', steps: ['expect', 'veto', 'complement', 'verify', 'scoreboard'],
         how: {
-          t: 'How the loop catches what TEDDY merges',
+          t: 'How the loop catches what the embedding nearly merges',
           steps: [
             ['Expect', 'A readout on TEDDY assumes near-identical embeddings mean the same kind of cell.'],
-            [T('veto', 'Veto'), 'The loop tests that on held-out cells: 1,490 myeloid↔T pairs sit at cosine 0.982, yet their measured proteins disagree. TEDDY’s embedding is flagged as not enough there.'],
+            [T('veto', 'Veto'), 'The loop tests that on held-out cells: 1,490 myeloid↔T pairs sit at cosine 0.982, yet their measured proteins disagree. The readout on TEDDY’s embedding is flagged as not enough there.'],
             [T('complement', 'Complement'), 'Instead of retraining TEDDY, change what the decision reads: measured protein as typed evidence, with the strict rule.'],
             [T('verify', 'Verify'), 'Score the same pairs again: false agreement 0.85 → 0.40, accuracy of calls made 0.74 → 0.99.']
           ],
@@ -667,8 +726,8 @@ window.GUIDE_CONFIG = (function () {
           t: 'What a readout on TEDDY assumes',
           steps: [
             ['RNA → embedding', 'Frozen TEDDY sums up each cell as 512 numbers, the ' + T('z512', 'embedding') + ': the mean of its last-layer tokens at context 512.'],
-            ['Embedding → proteins → call', 'A head predicts 9 proteins from it; the ' + T('o0', 'soft rule') + ' calls the lineage whose markers average highest, if it reaches 0.12.'],
-            ['The hidden promise', 'Two cells at cosine ≥ 0.98 get the same call. Nothing in TEDDY or its fixed rule checks whether that promise holds.'],
+            ['Embedding → proteins → call', 'Our head predicts 134 proteins from it and the panel uses 9; the ' + T('o0', 'soft rule') + ' calls the lineage whose markers average highest, if it reaches 0.12.'],
+            ['The hidden promise', 'Two cells at cosine ≥ 0.98 get the same call. Nothing in TEDDY, our head or the fixed rule checks whether that promise holds.'],
             ['The test', 'Look for pairs where it breaks. It was the strongest of four cheap probes (score 0.581, rank 1).']
           ]
         },
@@ -683,7 +742,7 @@ window.GUIDE_CONFIG = (function () {
             ['Must-separate', 'Keep pairs whose measured proteins place them in different lineages or cell types: 9,723 ' + T('mustpair', 'must-separate pairs') + '; 5,000 are tested.'],
             ['The worst case', '1,490 of them are myeloid↔T, at median cosine 0.982.'],
             ['TEDDY + fixed rule on them', 'Read by the soft rule, both cells get the same call in 85% of the pairs where both are called (' + T('falseagree', 'false agreement') + ' 0.854).'],
-            [T('veto', 'Veto'), 'The embedding is not enough for these pairs. The readout must decline, ask a better question, or get evidence it lacks.']
+            [T('veto', 'Veto'), 'The readout on the embedding is not enough for these pairs. The readout must decline, ask a better question, or get evidence it lacks.']
           ]
         },
         concepts: ['mustpair', 'veto', 'falseagree', 'adt']
@@ -694,7 +753,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'Three cheap fixes, same engine',
           steps: [
             ['(a) Question only', 'Rewrite the question (' + T('o1', 'strict') + ' or ' + T('o2', 'B/T-priority') + ' rule) on the same predictions. False agreement stays at 0.83–0.84: a better question can’t see evidence that isn’t there.'],
-            ['(b) Typed evidence', 'Feed the measured proteins in as the 9 evidence items, in place of TEDDY’s predictions and scaled the same way (in this first run, a per-cell factor computed from measured protein; the rerun of the other experiments uses a train-median factor). False agreement: 0.46 with the soft rule, 0.40 with the strict rule.'],
+            ['(b) Typed evidence', 'Feed the measured proteins in as the 9 evidence items, in place of the TEDDY + head predictions and scaled the same way (in this first run, a per-cell factor computed from measured protein; the rerun of the other experiments uses a train-median factor). False agreement: 0.46 with the soft rule, 0.40 with the strict rule.'],
             ['(c) Feature swap', 'Glue proteins onto TEDDY’s embedding (' + T('zplus', 'z⁺') + ') and hope distances separate the pairs. No question, no “no call”.'],
             ['Why (b) works', 'It changes what the decision reads, while the engine and the question stay written down and checkable.']
           ]
@@ -748,7 +807,7 @@ window.GUIDE_CONFIG = (function () {
           t: 'A decision loop, not a change to TEDDY',
           steps: [
             ['Changes', 'What the readout sees (its evidence) and asks (its question).'],
-            ['Never changes', 'TEDDY’s weights or its embedding. Nothing opens TEDDY up (' + T('modea', 'Mode A') + ').'],
+            ['Never changes', 'TEDDY’s weights, its embedding or our head. Nothing opens TEDDY up (' + T('modea', 'Mode A') + ').'],
             ['Open-loop only', 'TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here. Not yet tested, not impossible: ANM’s ' + T('timestep', 'step') + ' is any real processing order, and TEDDY’s layers are one (a ' + T('modea', 'Mode A') + ' test).'],
             ['Measured protein', 'Used as evidence in this one explicit test. In normal use it stays the answer key.'],
             ['Not claimed', 'Pearson above ≈ 0.60, or a clinical result.']
@@ -806,11 +865,11 @@ window.GUIDE_CONFIG = (function () {
     }
   };
   var DEFS = {
-    fa: '<span class="term" data-term="falseagree"><b>False agreement</b></span>: among must-separate pairs where both cells get a call, the share given the same call although their measured proteins differ. Lower is better.',
+    fa: '<span class="term" data-term="falseagree"><b>False agreement</b></span>: among must-separate pairs with both cells called, the share given the same call. Lower is better.',
     ss: '<span class="term" data-term="softsep"><b>Soft separation</b></span>: the share of must-separate pairs the readout tells apart (different calls, or one cell declined). Higher is better.',
     q:  '<span class="term" data-term="qdec"><b>Accuracy of calls made</b></span>: correct calls among the calls actually made. Higher is better.',
     cs: '<span class="term" data-term="corrsep"><b>Correct separation</b></span>: the share of pairs split into the right, different calls. Higher is better.',
-    ab: '<b>Pairs with a “no call”</b>: the share of pairs where at least one cell was declined. Context, not a score: sometimes declining is the honest answer.'
+    ab: '<b>Pairs with a “no call”</b>: the share of pairs with at least one cell declined. Context, not a score.'
   };
 
 
@@ -886,15 +945,15 @@ window.GUIDE_CONFIG = (function () {
 
   /* ---------- step 3 arms ---------- */
   var ARMTXT = {
-    a: '<b>Change the question only; same TEDDY evidence.</b> The strict rule raises the threshold 0.12 → 0.28 and counts key markers double; the B/T-priority rule trusts only CD19, CD3 and CD16. ' +
+    a: '<b>Change the question only; same TEDDY + head evidence.</b> Strict raises the threshold 0.12 → 0.28 and counts key markers double; B/T-priority trusts only CD19, CD3 and CD16. ' +
        '<div class="hbars" style="margin-top:.8rem" id="armbars"></div>' +
-       '<div class="say" style="font-size:.86rem">Helps a little (accuracy 0.74 → 0.78 / 0.88), but false agreement stays ≈ 0.83–0.84. <b>A better question can’t see missing evidence</b>: it can only decline more often.</div>',
-    b: '<b>Give ANM the measured proteins as typed evidence</b>, in place of TEDDY’s predictions, read by the soft or the strict rule. This is an explicit test; in normal use the measured proteins stay the answer key. ' +
+       '<div class="say" style="font-size:.86rem">Accuracy rises a little (0.74 → 0.78 / 0.88), but false agreement stays ≈ 0.83–0.84: <b>a better question can’t see missing evidence</b>, only decline more.</div>',
+    b: '<b>Measured proteins replace the TEDDY + head predictions</b> as typed evidence: an explicit test; normally they stay the answer key. ' +
        '<div class="hbars" style="margin-top:.8rem" id="armbars"></div>' +
-       '<div class="say good" style="font-size:.86rem">The new evidence is what moves false agreement (0.85 → 0.46 → 0.40). The strict rule on top gives the highest accuracy (0.987) by declining where evidence is thin. <b>Evidence plus the right question wins.</b></div>',
-    c: '<b>Glue protein features onto the embedding</b> (z⁺ = embedding ⊕ proteins) and hope distances separate the pairs. No question, no “no call”, no typed source. ' +
+       '<div class="say good" style="font-size:.86rem">The new evidence moves false agreement (0.85 → 0.46 → 0.40); the strict rule adds the top accuracy (0.987) by declining where evidence is thin.</div>',
+    c: '<b>Glue protein features onto the embedding</b> (z⁺ = embedding ⊕ proteins): no question, no “no call”, no typed source. ' +
        '<div class="hbars" style="margin-top:.8rem" id="armbars"></div>' +
-       '<div class="say warn" style="font-size:.86rem">With measured proteins, z⁺ pushes 72% of these pairs below cosine 0.95, but that is geometry, not a decision. Across all cells z⁺ makes the must-separate rate worse (−0.27). <a href="#unique">Why ↓</a></div>'
+       '<div class="say warn" style="font-size:.86rem">With measured proteins z⁺ pushes 72% of these pairs below cosine 0.95: geometry, not a decision. Across all cells it makes the must-separate rate worse (−0.27). <a href="#unique">Why ↓</a></div>'
   };
   function drawArm(k) {
     document.getElementById('armdetail').innerHTML = ARMTXT[k];
@@ -921,8 +980,8 @@ window.GUIDE_CONFIG = (function () {
 
   /* ---------- step 4 waffle ---------- */
   var W = {
-    before: { fa: 85, txt: 'TEDDY + fixed rule (soft): in 1,442 pairs both cells get a call, and <b>1,231</b> get the same call (false agreement 0.854). The readout mostly treats myeloid and T as one.' },
-    after:  { fa: 40, txt: 'Measured protein as typed evidence, strict rule: in 1,407 pairs both cells get a call, and only <b>558</b> get the same call (false agreement 0.397). 849 pairs now get different calls.' }
+    before: { fa: 85, txt: 'TEDDY + fixed rule (soft): <b>1,231</b> of 1,442 pairs with both cells called share a call (false agreement 0.854); the readout mostly treats myeloid and T as one.' },
+    after:  { fa: 40, txt: 'Measured protein, strict rule: <b>558</b> of 1,407 pairs with both cells called share a call (false agreement 0.397); 849 now get different calls.' }
   };
   var waffle = document.getElementById('waffle');
   waffle.innerHTML = new Array(101).join('<i></i>');
@@ -947,7 +1006,7 @@ window.GUIDE_CONFIG = (function () {
     bars(document.getElementById('scorebars'), rows, 1, 3);
     document.getElementById('metricDef').innerHTML = DEFS[cur.m];
     var h = '';
-    if (cur.m === 'fa' || cur.m === 'ss') h = cur.s === 'mt' ? '*The feature swap z⁺ is measured on distances only: its “soft separation” is the share of pairs pushed below cosine 0.95, its “false agreement” the share still at cosine ≥ 0.98. Geometry, not calls.' : 'The feature swap z⁺ was measured on the myeloid↔T pairs only.';
+    if (cur.m === 'fa' || cur.m === 'ss') h = cur.s === 'mt' ? '*z⁺ is scored on distances only: “soft separation” = share below cosine 0.95, “false agreement” = share still ≥ 0.98. Geometry, not calls.' : 'The feature swap z⁺ was measured on the myeloid↔T pairs only.';
     if (cur.s === 'all' && cur.m === 'ss') h += ' Honest note: on all 5,000 pairs the B/T-priority question alone reaches higher soft separation (0.595) than the winner (0.469), mostly by declining (pairs with a “no call” 0.484).';
     if (cur.s === 'all' && cur.m === 'fa') h += ' Honest note: the strict question alone slightly <i>raises</i> false agreement on all pairs (0.893 → 0.903).';
     if (cur.m === 'cs') h = 'Honest note: measured protein with the soft rule separates correctly more often (' + fmt(set.complement_b_true_ADT_O0.cs) + ') than with the strict rule (' + fmt(set.complement_b_true_ADT_O1.cs) + '); the strict rule trades some correct splits for “no calls” and higher accuracy.';
@@ -1036,6 +1095,11 @@ window.GUIDE_CONFIG = (function () {
     try { localStorage.setItem('teddy-anm-theme', next); } catch (e) {}
     applyPictureMedia(next); label();
   });
+  var mnav = document.querySelector('.mnav');
+  if (mnav) {
+    [].slice.call(mnav.querySelectorAll('.mnav-panel a')).forEach(function (a) { a.addEventListener('click', function () { mnav.open = false; }); });
+    document.addEventListener('click', function (e) { if (mnav.open && !mnav.contains(e.target)) mnav.open = false; });
+  }
   segment('posterSeg', function (b) {
     var p = 'assets/infographics/' + b.dataset.p;
     document.getElementById('posterImg').src = p + '_light.png';

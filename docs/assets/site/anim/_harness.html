@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Animation harness</title>
+<meta name="color-scheme" content="light dark" />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2713%27 fill=%27%23008c7e%27/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="importmap">{"imports":{"three":"../../vendor/three/three.module.min.js"}}</script>
+<link rel="stylesheet" href="anim.css" />
+<style>
+/* site tokens, copied from docs/index.html */
+:root {
+  --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #f0efe9; --bg-sunk: #efece4;
+  --ink: #16181a; --ink-muted: #565b62; --ink-faint: #868b92; --line: #dcd9d0; --line-strong: #c4c0b5;
+  --accent: #0d6e6e; --accent-soft: #dcefee;
+  --warn: #8a4b12; --warn-bg: #f6e8d6; --good: #1f6b3a; --good-bg: #dcefe3; --bad: #a13a3a; --bad-bg: #f7e2de;
+  --s-teddy: #c8641f; --s-anm: #008c7e; --s-train: #6554c9; --s-neutral: #b9b5aa;
+  --grid: #ece9e1; --dot: rgba(22,24,26,.075);
+  --r: 16px; --max: 1140px;
+  --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111315; --bg-elev: #1b1e22; --bg-soft: #22262b; --bg-sunk: #15181b;
+    --ink: #ecebe6; --ink-muted: #a4a9b1; --ink-faint: #767c85; --line: #2d3238; --line-strong: #414850;
+    --accent: #5ec4c4; --accent-soft: #173332;
+    --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22; --bad: #e08a8a; --bad-bg: #3a2020;
+    --s-teddy: #c9722f; --s-anm: #10a092; --s-train: #8f7ee8; --s-neutral: #4a4f57;
+    --grid: #262a30; --dot: rgba(236,235,230,.06);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111315; --bg-elev: #1b1e22; --bg-soft: #22262b; --bg-sunk: #15181b;
+  --ink: #ecebe6; --ink-muted: #a4a9b1; --ink-faint: #767c85; --line: #2d3238; --line-strong: #414850;
+  --accent: #5ec4c4; --accent-soft: #173332;
+  --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22; --bad: #e08a8a; --bad-bg: #3a2020;
+  --s-teddy: #c9722f; --s-anm: #10a092; --s-train: #8f7ee8; --s-neutral: #4a4f57;
+  --grid: #262a30; --dot: rgba(236,235,230,.06);
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.55; font-size: 15px; -webkit-font-smoothing: antialiased; }
+code, .mono { font-family: var(--mono); font-size: .86em; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 0; }
+.bar h1 { font-size: .95rem; margin: 0 6px 0 0; letter-spacing: -.01em; }
+.ctl { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--ink-muted); }
+select, input[type="text"] { font: inherit; font-size: .8rem; color: var(--ink); background: var(--bg-elev); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; max-width: 200px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--bg-elev); }
+.seg button { font: inherit; font-size: .74rem; border: 0; background: transparent; color: var(--ink-muted); padding: 4px 10px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+#stats { font-family: var(--mono); font-size: .72rem; color: var(--ink-faint); padding: 0 0 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+main { padding: 20px 0 80px; }
+.frame { margin: 0 auto; max-width: 100%; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; }
+.grid .anim { margin: 0; }
+.spacer { height: 70vh; display: grid; place-items: center; color: var(--ink-faint); font-family: var(--mono); font-size: .75rem; border-left: 1px dashed var(--line); margin-left: 10px; }
+.note { font-size: .82rem; color: var(--ink-muted); max-width: 46rem; }
+.list { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; }
+.list a { font-family: var(--mono); font-size: .74rem; color: var(--accent); text-decoration: none; border: 1px solid var(--line); background: var(--bg-elev); border-radius: 999px; padding: 3px 9px; }
+.list a[aria-current="true"] { border-color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <h1>Animation harness</h1>
+      <label class="ctl">Scene <select id="sel"></select></label>
+      <label class="ctl">Name <input id="nameIn" type="text" spellcheck="false" placeholder="scene-name" /></label>
+      <span class="ctl">Theme <span class="seg" id="theme"><button data-v="auto">auto</button><button data-v="light">light</button><button data-v="dark">dark</button></span></span>
+      <span class="ctl">Motion <span class="seg" id="motion"><button data-v="system">system</button><button data-v="reduce">reduce</button><button data-v="full">full</button></span></span>
+      <label class="ctl">Aspect <select id="aspect"><option>16:9</option><option>4:3</option><option>3:2</option><option>1:1</option><option>2:1</option><option>21:9</option><option>4:5</option></select></label>
+      <label class="ctl">Width <select id="width"><option value="">full</option><option>1100</option><option>720</option><option>480</option><option>360</option><option>320</option></select></label>
+      <label class="ctl">View <select id="view"><option value="one">one</option><option value="all">all scenes</option><option value="stress">stress (12)</option></select></label>
+    </div>
+    <div id="stats">loading…</div>
+  </div>
+</header>
+<main class="wrap">
+  <ul class="list" id="list"></ul>
+  <div id="out"></div>
+  <p class="note">Mounts <code>scenes/NAME.js</code> with <code>?name=NAME</code>. <code>?view=all</code> shows every scene; <code>?view=stress&amp;n=12&amp;gap=70</code> puts N stages on a long page (gap = spacer height in vh) to check lazy mount and disposal (at most 6 live WebGL contexts). <code>?theme=dark</code>, <code>?motion=reduce</code>, <code>?aspect=4:3</code>, <code>?w=320</code> set the toggles. The scene list comes from the static server's directory listing; where there is none, type a name.</p>
+</main>
+<script type="module">
+const q = new URLSearchParams(location.search);
+const root = document.documentElement;
+const $ = (s) => document.querySelector(s);
+const state = {
+  name: q.get('name') || '_demo-flow',
+  theme: q.get('theme') || 'auto',
+  motion: q.get('motion') || 'system',
+  aspect: q.get('aspect') || '16:9',
+  w: q.get('w') || '',
+  view: q.get('view') || 'one',
+  n: Math.max(1, Math.min(60, parseInt(q.get('n') || '12', 10) || 12)),
+  gap: Math.max(0, Math.min(200, parseFloat(q.get('gap') || '70') || 0)),
+};
+let scenes = [];
+
+function saveUrl() {
+  const p = new URLSearchParams();
+  p.set('name', state.name);
+  if (state.theme !== 'auto') p.set('theme', state.theme);
+  if (state.motion !== 'system') p.set('motion', state.motion);
+  if (state.aspect !== '16:9') p.set('aspect', state.aspect);
+  if (state.w) p.set('w', state.w);
+  if (state.view !== 'one') p.set('view', state.view);
+  if (state.view === 'stress' && state.n !== 12) p.set('n', String(state.n));
+  if (state.view === 'stress' && state.gap !== 70) p.set('gap', String(state.gap));
+  history.replaceState(null, '', '?' + p.toString());
+}
+
+function applyTheme() {
+  if (state.theme === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', state.theme);
+  if (state.motion === 'system') root.removeAttribute('data-motion'); else root.setAttribute('data-motion', state.motion);
+  document.querySelectorAll('#theme button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === state.theme)));
+  document.querySelectorAll('#motion button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === state.motion)));
+}
+
+function fig(name, i) {
+  const f = document.createElement('figure');
+  f.className = 'anim';
+  f.dataset.anim = name;
+  if (state.aspect !== '16:9') f.dataset.aspect = state.aspect;
+  const st = document.createElement('div');
+  st.className = 'anim-stage';
+  st.setAttribute('role', 'img');
+  st.setAttribute('aria-label', `Scene ${name}`);
+  const cap = document.createElement('figcaption');
+  cap.textContent = i == null ? name : `${i + 1}. ${name}`;
+  f.append(st, cap);
+  return f;
+}
+
+function render() {
+  const out = $('#out');
+  out.textContent = '';
+  const frame = document.createElement('div');
+  frame.className = 'frame';
+  if (state.w) frame.style.width = state.w + 'px';
+  if (state.view === 'all') {
+    frame.classList.add('grid');
+    (scenes.length ? scenes : [state.name]).forEach((n) => frame.append(fig(n)));
+  } else if (state.view === 'stress') {
+    const pool = scenes.length ? scenes : [state.name];
+    for (let i = 0; i < state.n; i++) {
+      frame.append(fig(pool[i % pool.length], i));
+      const sp = document.createElement('div');
+      sp.className = 'spacer';
+      sp.style.height = state.gap + 'vh';
+      sp.textContent = `spacer ${i + 1}`;
+      frame.append(sp);
+    }
+  } else {
+    frame.append(fig(state.name));
+  }
+  out.append(frame);
+  document.querySelectorAll('#list a').forEach((a) => a.setAttribute('aria-current', String(a.dataset.n === state.name)));
+  saveUrl();
+}
+
+async function listScenes() {
+  try {
+    const res = await fetch('scenes/', { cache: 'no-store' });
+    if (!res.ok) return [];
+    const html = await res.text();
+    const names = new Set();
+    for (const m of html.matchAll(/href="([^"?#]+)\.js"/g)) {
+      const n = decodeURIComponent(m[1]).split('/').pop();
+      if (/^[a-z0-9_][a-z0-9_-]*$/.test(n)) names.add(n);
+    }
+    return Array.from(names).sort((a, b) => (a[0] === '_') - (b[0] === '_') || a.localeCompare(b));
+  } catch (e) {
+    return [];
+  }
+}
+
+function fillControls() {
+  const sel = $('#sel');
+  sel.textContent = '';
+  const names = scenes.includes(state.name) ? scenes : [state.name, ...scenes];
+  names.forEach((n) => { const o = document.createElement('option'); o.value = o.textContent = n; sel.append(o); });
+  sel.value = state.name;
+  $('#nameIn').value = state.name;
+  $('#aspect').value = state.aspect;
+  $('#width').value = state.w;
+  $('#view').value = state.view;
+  const list = $('#list');
+  list.textContent = '';
+  scenes.forEach((n) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '?name=' + encodeURIComponent(n);
+    a.dataset.n = n;
+    a.textContent = n;
+    a.addEventListener('click', (e) => { e.preventDefault(); state.name = n; state.view = 'one'; fillControls(); render(); });
+    li.append(a);
+    list.append(li);
+  });
+}
+
+$('#sel').addEventListener('change', (e) => { state.name = e.target.value; $('#nameIn').value = state.name; render(); });
+$('#nameIn').addEventListener('change', (e) => { const v = e.target.value.trim(); if (v) { state.name = v; fillControls(); render(); } });
+$('#aspect').addEventListener('change', (e) => { state.aspect = e.target.value; render(); });
+$('#width').addEventListener('change', (e) => { state.w = e.target.value; render(); });
+$('#view').addEventListener('change', (e) => { state.view = e.target.value; render(); });
+$('#theme').addEventListener('click', (e) => { const v = e.target.dataset && e.target.dataset.v; if (v) { state.theme = v; applyTheme(); saveUrl(); } });
+$('#motion').addEventListener('click', (e) => { const v = e.target.dataset && e.target.dataset.v; if (v) { state.motion = v; applyTheme(); saveUrl(); } });
+
+let frames = 0, lastT = performance.now(), fps = 0;
+(function count(now) { frames++; if (now - lastT > 1000) { fps = Math.round((frames * 1000) / (now - lastT)); frames = 0; lastT = now; } requestAnimationFrame(count); })(lastT);
+setInterval(() => {
+  const A = window.teddyAnim;
+  if (!A) { $('#stats').textContent = 'loader not ready'; return; }
+  const recs = A.records();
+  const st = recs.map((r, i) => `${i + 1}:${r.state}${r.live ? '*' : ''}`).join(' ');
+  $('#stats').textContent = `live WebGL ${A.liveCount()}/${A.maxLive} · mounts ${A.stats.mounts} · disposes ${A.stats.disposes} · fallbacks ${A.stats.fallbacks} · page ${fps} fps\n${st}  (* = live)`;
+}, 500);
+
+applyTheme();
+scenes = await listScenes();
+fillControls();
+render();
+</script>
+<script type="module" src="loader.js"></script>
+</body>
+</html>

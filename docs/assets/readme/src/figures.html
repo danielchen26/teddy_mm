@@ -107,8 +107,8 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
 <div class="fig" id="hero">
   <div>
     <div class="brand"><i></i>TEDDY <span>×</span> ANM</div>
-    <div class="h1">Keep <span class="t">TEDDY</span> frozen.<br />Make its answers editable, honest and auditable with <span class="a">ANM</span>.</div>
-    <p class="lede">A <b>declared decision layer</b> on top of TEDDY’s CITE-seq protein predictions: change the question without labels, check every call, explain it. After the corrected rerun it makes the same calls as TEDDY’s fixed rule written for the same question. Tested head-to-head; <b>TEDDY is never retrained</b>.</p>
+    <div class="h1">Keep <span class="t">TEDDY</span> frozen.<br />Make the calls built on it editable, honest and auditable with <span class="a">ANM</span>.</div>
+    <p class="lede">A <b>declared decision layer</b> on top of the CITE-seq protein predictions our head makes from TEDDY’s embedding: change the question without labels, check every call, explain it. After the corrected rerun it makes the same calls as the fixed rule written for the same question. Tested head-to-head; <b>TEDDY is never retrained</b>.</p>
     <div class="meta"><i></i>CITE-seq · NeurIPS 2021 BMMC · site4 holdout · 16,750 cells</div>
   </div>
   <div class="pipe">
@@ -143,21 +143,21 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
       <p class="c">calls get a per-marker reason: leave-one-out plus flip distance. CD5 decides 19.5% (p ≈ 0.0099).</p>
       <div class="vs"><b>Not ANM-specific:</b> the deciding marker is the largest normalised value in the called lineage.</div></div>
     <div class="card"><div class="k"><i>4</i>Which calls to trust?</div><div class="v"><span class="f">0.945</span> → <span class="to">0.9987</span></div>
-      <p class="c">accuracy of TEDDY’s own calls keeping the 40% ANM is most confident about (soft rule).</p>
-      <div class="vs"><b>TEDDY’s own margin</b> does as well at the same coverage: 0.9988.</div></div>
+      <p class="c">accuracy of the fixed rule’s own calls keeping the 40% ANM is most confident about (soft rule).</p>
+      <div class="vs"><b>The rule’s own margin</b> does as well at the same coverage: 0.9988.</div></div>
     <div class="card"><div class="k"><i>5</i>Cost of a new question</div><div class="v"><span class="to">0</span> <small>vs</small> <span class="f">50–2,000</span></div>
       <p class="c">new labelled cells to reach ANM’s B/T-priority answers (ANM vs trained heads, disjoint split).</p>
       <div class="vs"><b>Any written rule</b> also needs 0; trained heads buy the numbers, not an editable rule.</div></div>
     <div class="card"><div class="k"><i>2·6</i>Withdrawn</div><div class="v"><span class="f">2</span> <small>experiments</small></div>
       <p class="c">RNA missing and look-alike cells stay withdrawn pending redesign.</p>
-      <div class="vs"><b>Prototypes:</b> a trust per level equals the fixed rule with a stricter bar; TEDDY separates NK from T in the right direction but compresses the differences.</div></div>
+      <div class="vs"><b>Prototypes:</b> a trust per level equals the fixed rule with a stricter bar; the TEDDY + head predictions separate NK from T in the right direction but compress the differences.</div></div>
   </div>
   <div class="foot"><span><b>Accuracy is not the claim:</b> in Experiment 1 ANM and the re-coded fixed rule have identical accuracy of calls made (0.953 / 0.978 / 0.964).</span><span>Not clinical · no Pearson claim beyond ≈ 0.60</span></div>
 </div>
 
 <!-- =============== HOW =============== -->
 <div class="fig" id="how">
-  <div class="fh"><div><p class="lead">ANM never touches TEDDY. It adds a declared decision layer on top of TEDDY’s predictions.</p></div></div>
+  <div class="fh"><div><p class="lead">ANM never touches TEDDY. It adds a declared decision layer on top of the TEDDY + head predictions.</p></div></div>
   <div class="steps">
     <div class="step t"><span class="n">STEP 1</span><h3>TEDDY stays frozen</h3>
       <ul><li>RNA → TEDDY-G 70M → a cell embedding</li><li>A small head predicts 134 surface proteins; 9 go on</li><li>Each prediction is handed on as typed evidence</li></ul>
