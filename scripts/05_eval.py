@@ -38,6 +38,7 @@ def main():
     p.add_argument("--hidden", type=int, default=512)
     p.add_argument("--fm-steps", type=int, default=20)
     p.add_argument("--device", default="auto")
+    p.add_argument("--seed", type=int, default=0, help="seeds the flow-matching start noise")
     p.add_argument(
         "--size-factor",
         choices=("train-median", "one", "measured"),
@@ -76,9 +77,11 @@ def main():
     dec.load_state_dict(blob["dec"])
     mlp.eval(); v_net.eval(); dec.eval()
 
+    torch.manual_seed(args.seed)
     with torch.no_grad():
         pred_mlp = dec(mlp(zt), sf)[0].cpu().numpy()
-        pred_fm = dec(integrate_fm(v_net, torch.randn_like(zt), zt, args.fm_steps), sf)[0].cpu().numpy()
+        x0 = torch.randn(zt.shape, generator=torch.Generator().manual_seed(args.seed)).to(device)
+        pred_fm = dec(integrate_fm(v_net, x0, zt, args.fm_steps), sf)[0].cpu().numpy()
 
     names = pack["adt_names"]
     rows = []
@@ -100,8 +103,16 @@ def main():
     out = args.out / "test_per_protein.json"
     out.write_text(json.dumps(rows, indent=2))
     print(f"wrote {out}  n_proteins={len(rows)}")
-    for k in ("pearson_mlp", "pearson_fm", "r2_mlp", "r2_fm"):
-        print(f"  mean {k} = {np.mean([r[k] for r in rows]):.4f}")
+    means = {k: float(np.mean([r[k] for r in rows])) for k in ("pearson_mlp", "pearson_fm", "r2_mlp", "r2_fm")}
+    for k, v in means.items():
+        print(f"  mean {k} = {v:.4f}")
+    zman = args.processed / "z_rna_manifest.json"
+    (args.out / "test_eval_meta.json").write_text(json.dumps({
+        "processed": str(args.processed), "ckpt": str(args.ckpt), "seed": args.seed,
+        "size_factor": args.size_factor, "size_factor_value": None if args.size_factor == "measured" else float(sf_np[0]),
+        "n_test": n_test, "n_proteins": len(rows), "means": means, "device": str(device),
+        "z_rna_manifest": json.loads(zman.read_text()) if zman.exists() else None,
+    }, indent=2))
     print("top 8 FM proteins:")
     for r in rows[:8]:
         print(f"  {r['protein']:20s}  mlp={r['pearson_mlp']:.3f}  fm={r['pearson_fm']:.3f}")
