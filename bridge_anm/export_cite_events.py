@@ -111,6 +111,23 @@ def _phase1_mean(path: Path) -> float | None:
         return None
 
 
+def _z_manifest(processed: Path) -> dict | None:
+    """z_rna_manifest.json written by scripts/03_embed_rna.py next to z_rna.npy (None if absent)."""
+    path = Path(processed) / "z_rna_manifest.json"
+    return json.loads(path.read_text()) if path.exists() else None
+
+
+def _z_definition(processed: Path) -> str:
+    man = _z_manifest(processed)
+    src = Path(processed) / "z_rna.npy"
+    if man is None:
+        # no manifest: the embedding predates 03_embed_rna.py's manifest, i.e. legacy preprocessing
+        # (data/processed/cite/z_rna.npy was built at 512 tokens, not the old script default 1024)
+        return (f"L2-normalized; legacy teddy_mm preprocessing (no z_rna_manifest.json): mean over real tokens, "
+                f"last layer, no gene-median step; 512 tokens for data/processed/cite (from {src}); full d_model=512")
+    return f"L2-normalized; {man.get('z_rna_definition')} (from {src}); full d_model=512"
+
+
 def _load_pearson(path: Path) -> dict[str, float]:
     rows = json.loads(path.read_text())
     return {r["protein"]: float(r["pearson_mlp"]) for r in rows}
@@ -454,6 +471,7 @@ def main() -> None:
 
     n_site4 = int(pick.size)
     n_ood = int(ood_pick.size)
+    z_man = _z_manifest(args.processed)
     manifest = {
         "n_cells_site4_test": n_site4,
         "n_cells_ood": n_ood,
@@ -484,10 +502,9 @@ def main() -> None:
         "compact": compact,
         "z_rna_export": str(z_path) if z_path else None,
         "z_rna_512": str(z_512_path) if z_512_path else None,
-        "z_512_definition": (
-            "L2-normalized mean-pool last-layer TEDDY-G @ ctx 1024 "
-            "(from data/processed/cite/z_rna.npy); full d_model=512"
-        ),
+        "z_512_definition": _z_definition(args.processed),
+        "z_rna_manifest": z_man,
+        "preprocessing": (z_man or {}).get("preprocessing", "legacy (no z_rna_manifest.json)"),
         "z_512_shape": (
             [int(n_site4 + n_ood), int(z.shape[1])] if z_512_path else None
         ),

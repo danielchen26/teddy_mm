@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 from pathlib import Path
 
@@ -22,6 +23,20 @@ def _r2(y, yhat) -> float:
     ss_res = ((y - yhat) ** 2).sum()
     ss_tot = ((y - y.mean(axis=0)) ** 2).sum()
     return float(1.0 - ss_res / max(ss_tot, 1e-8))
+
+
+def seed_everything(seed: int, device: torch.device | None = None) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    # seed the MPS generator only for an MPS run: a --device cpu run must not touch the GPU
+    if device is not None and device.type == "mps":
+        torch.mps.manual_seed(seed)
+
+
+def z_manifest(processed: Path):
+    path = processed / "z_rna_manifest.json"
+    return json.loads(path.read_text()) if path.exists() else None
 
 
 def subset(pack, z, name):
@@ -72,10 +87,12 @@ def main():
     p.add_argument("--lambda-fm", type=float, default=1.0)
     p.add_argument("--fm-steps", type=int, default=20)
     p.add_argument("--device", default="auto")
+    p.add_argument("--seed", type=int, default=0, help="seeds python/numpy/torch and the DataLoader shuffle")
     args = p.parse_args()
 
     device = resolve_device(args.device)
-    print("device", device)
+    seed_everything(args.seed, device)
+    print("device", device, "seed", args.seed)
     pack = load_prepared(args.processed)
     z_path = args.processed / "z_rna.npy"
     if not z_path.exists():
@@ -106,6 +123,7 @@ def main():
         batch_size=batch_size,
         shuffle=True,
         drop_last=drop_last,
+        generator=torch.Generator().manual_seed(args.seed),
     )
     if len(loader) == 0:
         raise SystemExit(f"DataLoader empty: n_train={n_train} batch_size={batch_size} drop_last={drop_last}")
@@ -155,7 +173,10 @@ def main():
     v_net.load_state_dict(ckpt["v_net"])
     dec.load_state_dict(ckpt["dec"])
     test_metrics = eval_split("test", test, mlp, v_net, dec, device, args.fm_steps)
-    (args.out / "metrics.json").write_text(json.dumps({"history": history, "test": test_metrics}, indent=2))
+    (args.out / "metrics.json").write_text(json.dumps({
+        "history": history, "test": test_metrics, "seed": args.seed, "processed": str(args.processed),
+        "device": str(device), "z_rna_manifest": z_manifest(args.processed),
+    }, indent=2))
     print("wrote", args.out / "metrics.json")
 
 
