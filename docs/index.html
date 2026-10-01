@@ -3414,7 +3414,9 @@ window.GUIDE_CONFIG = (function () {
         if (!en.isIntersecting) return;
         Object.keys(chips).forEach(function (k) { chips[k].classList.toggle('on', k === en.target.id); });
         var c = chips[en.target.id];
-        if (c && c.parentNode.scrollTo) c.parentNode.scrollTo({ left: c.offsetLeft - 16, behavior: 'smooth' });
+        // offsetLeft is measured from the sticky nav, not from the chip row, so subtract the row's own offset
+        // (otherwise the active chip is scrolled past the left edge by the page gutter)
+        if (c && c.parentNode.scrollTo) c.parentNode.scrollTo({ left: Math.max(0, c.offsetLeft - c.parentNode.offsetLeft - 16), behavior: 'smooth' });
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
     $$('.block').forEach(function (b) { io.observe(b); });

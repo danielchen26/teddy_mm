@@ -450,6 +450,8 @@
           d.classList.toggle('on', on); d.classList.toggle('past', passed && !on);
           if (on) { d.setAttribute('aria-current', 'location'); passed = false; } else d.removeAttribute('aria-current');
         });
+        // after a jump the scroll event can fire before the new section is known: keep the card current
+        if (!hovering && card.classList.contains('on')) showCard(id, false);
       }
     };
   }
