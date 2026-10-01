@@ -1,4 +1,4 @@
-# sha256 of the v3 registration files (recorded at commit; registration_v3.json is the frozen registration, amendment_A1.json amends it before site4, amendment_A2.json follows A1 before any site4 evaluation of E2 and E3)
+# sha256 of the v3 registration files (recorded at commit; registration_v3.json is the frozen registration, amendment_A1.json amends it before site4, amendment_A2.json follows A1 before any site4 evaluation of E2 and E3, amendment_A3.json follows A2 before any site4 evaluation of E3)
 e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3  registration_v3.json
 e30451e7bb4385fa8e0b9a3e2ed44fb929be74dea2eba4b19c0b3ec92ff233f2  registration_v3_core.json
 70010c0495efc9145286e9f51e7c096d483d76c336a035d3d1617f81ff907705  registration_v3_devlog.json
@@ -18,5 +18,10 @@ f5ec5bfbbde0b1a8f563fee62745c59abee9f1a063727fd0e2684fb8929b816a  ../bridge_anm/
 20b64174b063d39997abf09877ae1ba152d935589b43630e15dd6ebe6d21fd36  amendment_A2.json
 561842f206e06e64ea5aa7ffd4335b44dc954585512c449cff3c270f25c135bf  amendment_A2_core.json
 985d05136c1ece26fc3f0194a1c88ff216c3aa9a1283920c398b55315cef122b  AMENDMENT_A2.md
-59089ef5f9ec8ecb0a4af1d82f37d4fc2b1bd316cc5aeba671877d7ef44abff1  ../bridge_anm/lib/v3_amend.py
 6801499dd07d6144da17fbf7e8b6bb83a5a92ee41f5d23564d329276bf20dd63  ../bridge_anm/v3_build_amendment_A2.py
+# A3: v3_amend.py extended by A3 (its A2-era sha256 59089ef5... is recorded in amendment_A2.json provenance)
+4bb2f8563172e76de0e825d2a01cafc4a5b6e863564f573de8b12d256a6b0045  amendment_A3.json
+39de4a238f260cfd214e07f81c90015c9b34c96ab0d74dd908f75035c6da5476  amendment_A3_core.json
+1b8498fe52a6151c3b71eac567591f2739388e5c983394f9da06445cee7a890f  AMENDMENT_A3.md
+2655ed06ffb6e182d57c52f73d2a782e833ee17540a11762a4aa194a8b1dda91  ../bridge_anm/lib/v3_amend.py
+59d7cf1478109ce1a5545f3b66a240412c7fa48bb114f0b4cedc1473665ef4ec  ../bridge_anm/v3_build_amendment_A3.py

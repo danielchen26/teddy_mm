@@ -255,7 +255,8 @@ def test_site4_run_refused_without_committed_addendum(tmp_path):
     rd = tmp_path / "registration"
     rd.mkdir()
     for f in ("registration_v3.json", "registration_v3.json.sha256", "amendment_A1.json", "amendment_A1.json.sha256",
-              "amendment_A2.json", "amendment_A2.json.sha256"):  # the loader applies A1 then A2 (amendment A2)
+              "amendment_A2.json", "amendment_A2.json.sha256",
+              "amendment_A3.json", "amendment_A3.json.sha256"):  # the loader applies A1, A2, then A3 (amendment A3)
         shutil.copy(REPO / "registration" / f, rd / f)
     a = SimpleNamespace(registration_dir=rd, cell_pool="e2_subset", stage="embed")
     with pytest.raises(SystemExit, match="site4 run refused"):

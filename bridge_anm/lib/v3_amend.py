@@ -27,11 +27,20 @@ and only makes verdicts stricter or cheaper to estimate without changing the est
   donor) is binding for falsification criteria (i) and (ii) (``a2_e2_criterion_i``,
   ``a2_e2_criterion_ii``, ``a2_e2_verdict``).
 
-Builders load both with ``load_registration_amended()``, which verifies the registration, A1
-and A2 hashes and returns the registration with A1's and then A2's experiment fields applied.
+Amendment A3 (registration/amendment_A3.json, before any site4 evaluation of E3) follows A2 and
+only makes one verdict stricter:
+
+* A3.1 E3 H3a_pooling: the pooling claim (D_R2 - D_R1 >= 0.05, "the loss is in mean pooling") wins
+  only if the registered rule wins and (b') GR_R2(flagged) - GR_R1(flagged) > 0 and (c') Dlog_R2 -
+  Dlog_R1 > 0, each with its two-stage 95% interval above 0 and positive in each primary donor;
+  otherwise "not supported (scale artefact)" (``a2_positive_condition``, ``a3_pooling_verdict``).
+
+Builders load all three with ``load_registration_amended()``, which verifies the registration, A1,
+A2 and A3 hashes and returns the registration with A1's, A2's and then A3's experiment fields applied.
 Nothing here chooses a threshold: the few numbers A1 adds were computed on train/val only by
 ``bridge_anm/v3_build_amendment.py`` (covered by ``bridge_anm/v3_leakage_check.py``); A2's by
-``bridge_anm/v3_build_amendment_A2.py`` (train rows only; its own site4-poisoned rebuild).
+``bridge_anm/v3_build_amendment_A2.py`` and A3's by ``bridge_anm/v3_build_amendment_A3.py`` (train
+rows only; each with its own site4-poisoned rebuild).
 """
 from __future__ import annotations
 
@@ -48,7 +57,9 @@ from . import v3_key as vk
 REPO = Path(__file__).resolve().parents[2]
 DEFAULT_AMENDMENT = REPO / "registration" / "amendment_A1.json"
 DEFAULT_AMENDMENT_A2 = REPO / "registration" / "amendment_A2.json"
+DEFAULT_AMENDMENT_A3 = REPO / "registration" / "amendment_A3.json"
 A2_ID = "teddy_mm_v3_A2"
+A3_ID = "teddy_mm_v3_A3"
 
 
 # --------------------------------------------------------------------------- loading
@@ -86,7 +97,8 @@ def _set_path(d: dict, path: str, value: Any) -> None:
 
 
 def _amendment_key(amend: dict[str, Any]) -> str:
-    """'amendment_A1' for teddy_mm_v3_A1, 'amendment_A2' for teddy_mm_v3_A2 (the key builders read)."""
+    """'amendment_A1' for teddy_mm_v3_A1, 'amendment_A2' for teddy_mm_v3_A2, 'amendment_A3' for teddy_mm_v3_A3
+    (the key builders read)."""
     return "amendment_" + str(amend.get("amendment_id", "teddy_mm_v3_A1")).rsplit("_", 1)[-1]
 
 
@@ -129,18 +141,55 @@ def load_amendment_A2(path: Path | str | None = None, *, verify_hash: bool = Tru
     return amend
 
 
+def load_amendment_A3(path: Path | str | None = None, *, verify_hash: bool = True,
+                      registration_path: Path | str | None = None,
+                      amendment_A1_path: Path | str | None = None,
+                      amendment_A2_path: Path | str | None = None) -> dict[str, Any]:
+    """Load amendment A3; check its own sha256 and that it amends the registration, A1 and A2 on disk."""
+    path = Path(path) if path is not None else DEFAULT_AMENDMENT_A3
+    if not path.exists():
+        raise FileNotFoundError(f"amendment A3 missing: {path} (v3 builders apply A1, A2, then A3)")
+    if verify_hash:
+        hf = path.with_name(path.name + ".sha256")
+        if not hf.exists():
+            raise FileNotFoundError(f"amendment hash file missing: {hf}")
+        recorded = hf.read_text().split()[0].strip()
+        actual = vk.sha256_file(path)
+        if recorded != actual:
+            raise ValueError(f"amendment {path} sha256 {actual} != recorded {recorded}")
+    amend = json.loads(path.read_text())
+    if amend.get("amendment_id") != A3_ID:
+        raise ValueError(f"{path} is not amendment A3 (amendment_id {amend.get('amendment_id')!r})")
+    if verify_hash:
+        rp = Path(registration_path) if registration_path is not None else vk.DEFAULT_REGISTRATION
+        a1p = Path(amendment_A1_path) if amendment_A1_path is not None else DEFAULT_AMENDMENT
+        a2p = Path(amendment_A2_path) if amendment_A2_path is not None else a1p.with_name("amendment_A2.json")
+        on_disk = {"registration_sha256": vk.sha256_file(rp), "amendment_A1_sha256": vk.sha256_file(a1p),
+                   "amendment_A2_sha256": vk.sha256_file(a2p)}
+        for k, sha in on_disk.items():
+            if amend["amends"].get(k) != sha:
+                raise ValueError(f"A3 names {k} {amend['amends'].get(k)}, but the file on disk has sha256 {sha} "
+                                 f"(A3 follows the registration, A1 and A2)")
+    return amend
+
+
 def load_registration_amended(registration_path: Path | str | None = None,
                               amendment_path: Path | str | None = None,
-                              amendment_A2_path: Path | str | None = None) -> dict[str, Any]:
+                              amendment_A2_path: Path | str | None = None,
+                              amendment_A3_path: Path | str | None = None) -> dict[str, Any]:
     """The registration every v3 builder uses: hash-checked registration, then hash-checked A1, then
-    hash-checked A2 (default: amendment_A2.json next to the A1 file). A missing or altered A2 raises."""
+    hash-checked A2, then hash-checked A3 (defaults: amendment_A2.json and amendment_A3.json next to the A1
+    file). A missing or altered A2 or A3 raises."""
     reg = vk.load_registration(registration_path)
     amend = load_amendment(amendment_path, registration_path=registration_path)
     out = apply_overrides(reg, amend)
     a1p = Path(amendment_path) if amendment_path is not None else DEFAULT_AMENDMENT
     a2p = Path(amendment_A2_path) if amendment_A2_path is not None else a1p.with_name("amendment_A2.json")
     a2 = load_amendment_A2(a2p, registration_path=registration_path, amendment_A1_path=a1p)
-    return apply_overrides(out, a2)
+    out = apply_overrides(out, a2)
+    a3p = Path(amendment_A3_path) if amendment_A3_path is not None else a1p.with_name("amendment_A3.json")
+    a3 = load_amendment_A3(a3p, registration_path=registration_path, amendment_A1_path=a1p, amendment_A2_path=a2p)
+    return apply_overrides(out, a3)
 
 
 def amendment_A2_status(registration_dir: Path | str, git_committed: Callable[[Path], bool | None]) -> dict[str, Any]:
@@ -166,6 +215,33 @@ def amendment_A2_status(registration_dir: Path | str, git_committed: Callable[[P
             info["amendment_A2_amends_files_on_disk"] = False
     info["ok"] = bool(info["amendment_A2_exists"] and info["amendment_A2_hash_file_matches"]
                       and info["amendment_A2_committed"] and info["amendment_A2_amends_files_on_disk"])
+    return info
+
+
+def amendment_A3_status(registration_dir: Path | str, git_committed: Callable[[Path], bool | None]) -> dict[str, Any]:
+    """Hash and commit state of amendment A3 for the E3 site4 evaluate guard (refused unless ``ok``): A3 and its
+    .sha256 file present and committed, the hash file matching, and A3 naming the registration, A1 and A2 files
+    on disk."""
+    rd = Path(registration_dir)
+    f, hf = rd / "amendment_A3.json", rd / "amendment_A3.json.sha256"
+    info: dict[str, Any] = {"amendment_A3_file": str(f), "amendment_A3_exists": f.exists(),
+                            "amendment_A3_sha256": None, "amendment_A3_hash_file_matches": False,
+                            "amendment_A3_committed": False, "amendment_A3_amends_files_on_disk": False}
+    if f.exists():
+        sha = vk.sha256_file(f)
+        info["amendment_A3_sha256"] = sha
+        info["amendment_A3_hash_file_matches"] = hf.exists() and hf.read_text().split()[0].strip() == sha
+        info["amendment_A3_committed"] = (git_committed(f) is True) and hf.exists() and (git_committed(hf) is True)
+        try:
+            am = json.loads(f.read_text())["amends"]
+            info["amendment_A3_amends_files_on_disk"] = (
+                am.get("registration_sha256") == vk.sha256_file(rd / "registration_v3.json")
+                and am.get("amendment_A1_sha256") == vk.sha256_file(rd / "amendment_A1.json")
+                and am.get("amendment_A2_sha256") == vk.sha256_file(rd / "amendment_A2.json"))
+        except (KeyError, ValueError, FileNotFoundError):
+            info["amendment_A3_amends_files_on_disk"] = False
+    info["ok"] = bool(info["amendment_A3_exists"] and info["amendment_A3_hash_file_matches"]
+                      and info["amendment_A3_committed"] and info["amendment_A3_amends_files_on_disk"])
     return info
 
 
@@ -333,6 +409,20 @@ def a2_e3_falsification(verdict_R1: str, verdict_R2: str) -> dict[str, Any]:
                      "rejected: neither R1 nor R2 has an A2 win for E3.H3a (D_R >= 0.05 over the null with the win "
                      "rules, plus recovery on flagged pairs and a positive scale-free Dlog_R), so 'the NK-T loss is in "
                      "the readout or pooling and is repairable on frozen TEDDY' is rejected for this dataset")}
+
+
+# --------------------------------------------------------------------------- A3.1 E3 H3a_pooling
+A3_SCALE_ARTEFACT = A2_SCALE_ARTEFACT
+
+
+def a3_pooling_verdict(registered: str, cond_b: bool, cond_c: bool) -> str:
+    """A3.1: the E3.H3a_pooling verdict ('the loss is in mean pooling'). The registered verdict on D_R2 - D_R1 stands
+    unless it is a win; a win stays a win only when (b') GR_R2(flagged) - GR_R1(flagged) > 0 and (c') Dlog_R2 - Dlog_R1
+    > 0 hold (each by ``a2_positive_condition``: point > 0, two-stage 95% lower bound > 0, > 0 in each primary
+    donor), otherwise it is 'not supported (scale artefact)'."""
+    if registered != "win":
+        return registered
+    return "win" if (cond_b and cond_c) else A3_SCALE_ARTEFACT
 
 
 # --------------------------------------------------------------------------- A2.3 E2 falsification

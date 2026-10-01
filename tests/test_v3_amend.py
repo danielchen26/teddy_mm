@@ -1,8 +1,8 @@
-"""Tests for bridge_anm/lib/v3_amend.py (amendments A1 and A2 to the v3 registration).
+"""Tests for bridge_anm/lib/v3_amend.py (amendments A1, A2 and A3 to the v3 registration).
 
 Synthetic tests always run; tests that need the ANM engine skip without ANM_ROOT, tests that need
-the built amendments skip when registration/amendment_A1.json or amendment_A2.json is absent, and
-tests that need the data pack skip without data/processed/cite.
+the built amendments skip when registration/amendment_A1.json, amendment_A2.json or amendment_A3.json
+is absent, and tests that need the data pack skip without data/processed/cite.
 """
 from __future__ import annotations
 
@@ -28,9 +28,10 @@ from lib import v3_key as vk  # noqa: E402
 REG_PATH = REPO / "registration" / "registration_v3.json"
 AMEND_PATH = REPO / "registration" / "amendment_A1.json"
 A2_PATH = REPO / "registration" / "amendment_A2.json"
+A3_PATH = REPO / "registration" / "amendment_A3.json"
 CITE = REPO / "data" / "processed" / "cite" / "cite_arrays.npz"
 REG_FILES = ("registration_v3.json", "registration_v3.json.sha256", "amendment_A1.json", "amendment_A1.json.sha256",
-             "amendment_A2.json", "amendment_A2.json.sha256")
+             "amendment_A2.json", "amendment_A2.json.sha256", "amendment_A3.json", "amendment_A3.json.sha256")
 ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(REPO.parent / "ANM")))
 
 
@@ -43,7 +44,7 @@ def reg():
 
 @pytest.fixture(scope="module")
 def amended():
-    if not AMEND_PATH.exists() or not A2_PATH.exists():
+    if not AMEND_PATH.exists() or not A2_PATH.exists() or not A3_PATH.exists():
         pytest.skip("amendment not built")
     return va.load_registration_amended()
 
@@ -53,6 +54,13 @@ def a2():
     if not A2_PATH.exists():
         pytest.skip("amendment A2 not built")
     return va.load_amendment_A2()
+
+
+@pytest.fixture(scope="module")
+def a3():
+    if not A3_PATH.exists():
+        pytest.skip("amendment A3 not built")
+    return va.load_amendment_A3()
 
 
 def _load(name: str, rel: str):
@@ -217,7 +225,7 @@ def test_amendment_hashes_and_overrides(amended, tmp_path):
 # ============================================================================= amendment A2
 # ----------------------------------------------------------------------------- loading
 def test_loader_applies_A1_then_A2(amended, a2):
-    assert [x["amendment_id"] for x in amended["amendments"]] == ["teddy_mm_v3_A1", "teddy_mm_v3_A2"]
+    assert [x["amendment_id"] for x in amended["amendments"]][:2] == ["teddy_mm_v3_A1", "teddy_mm_v3_A2"]
     assert amended["amendment_A2"] == a2
     assert a2["amends"]["registration_sha256"] == vk.sha256_file(REG_PATH)
     assert a2["amends"]["amendment_A1_sha256"] == vk.sha256_file(AMEND_PATH)
@@ -312,6 +320,124 @@ def test_A2_leaves_addendum_parts_of_scripts_unchanged():
     assert json.loads(e3f.read_text())["declared"] == s3.DECLARED
     add2 = json.loads(e2f.read_text())
     assert add2["spec"] == s2.SPEC and add2["spec_sha256"] == s2.spec_sha()
+
+
+# ============================================================================= amendment A3
+def test_loader_applies_A3_after_A2(amended, a2, a3):
+    assert [x["amendment_id"] for x in amended["amendments"]] == ["teddy_mm_v3_A1", "teddy_mm_v3_A2", "teddy_mm_v3_A3"]
+    assert amended["amendment_A3"] == a3 and amended["amendment_A2"] == a2
+    am = a3["amends"]
+    assert am["registration_sha256"] == vk.sha256_file(REG_PATH)
+    assert am["amendment_A1_sha256"] == vk.sha256_file(AMEND_PATH)
+    assert am["amendment_A2_sha256"] == vk.sha256_file(A2_PATH)
+    e = amended["experiments"]
+    pool = e["E3"]["endpoints"]["E3.H3a_pooling"]
+    assert pool.startswith("D_R2 - D_R1 >= 0.05: the loss is in mean pooling") and "A3.1" in pool
+    assert "scale artefact" in pool and "each primary donor" in pool
+    assert e["E3"]["endpoints"]["E3.H3a"] == a2["experiments_overrides"]["E3/endpoints/E3.H3a"]   # A2.1 stays applied
+    assert e["E3"]["falsification"] == a2["experiments_overrides"]["E3/falsification"]
+    assert "within each donor" in e["E3"]["cells"]                                               # A1 underneath
+    assert list(a3["experiments_overrides"]) == ["E3/endpoints/E3.H3a_pooling"]                  # E3 only
+    reg = vk.load_registration(REG_PATH)
+    for path in a3["experiments_overrides"]:
+        cur = reg["experiments"]
+        for k in path.split("/"):
+            assert k in cur, path
+            cur = cur[k]
+    lk = a3["leakage_check"]
+    assert lk["passed"] is True and lk["poison_test"]["identical_to_real"] is True
+    assert lk["poison_train"]["identical_to_real"] is False
+    assert lk["real_core_sha256"] == a3["provenance"]["core_sha256"]
+    assert "E1 site4" in a3["disclosure"]["E1_site4_results_seen"]
+    assert a3["computed"]["rows_read"]["site4_rows_values_read"] == 0
+    assert a3["supersedes_in_amendments"][0]["sha256"] == vk.sha256_file(A2_PATH)
+
+
+def test_A3_tamper_chain_and_missing_file(tmp_path, a3):
+    _copy_registration(tmp_path)
+    reg_p, a1_p = tmp_path / "registration_v3.json", tmp_path / "amendment_A1.json"
+    a2_p, a3_p = tmp_path / "amendment_A2.json", tmp_path / "amendment_A3.json"
+    assert va.load_registration_amended(reg_p, a1_p)["amendment_A3"]["amendment_id"] == va.A3_ID
+    txt = a3_p.read_text()
+    a3_p.write_text(txt.replace('"A3.1"', '"A3.1x"', 1))           # altered A3, old hash file
+    with pytest.raises(ValueError):
+        va.load_registration_amended(reg_p, a1_p)
+    d = json.loads(txt)
+    d["amends"]["amendment_A2_sha256"] = "0" * 64                  # self-consistent A3 naming another A2
+    a3_p.write_text(json.dumps(d))
+    (tmp_path / "amendment_A3.json.sha256").write_text(f"{vk.sha256_file(a3_p)}  amendment_A3.json\n")
+    with pytest.raises(ValueError, match="A2"):
+        va.load_registration_amended(reg_p, a1_p)
+    _copy_registration(tmp_path)                                   # A2 changed (self-consistent): A3's chain breaks
+    a2_p.write_text(a2_p.read_text() + " ")
+    (tmp_path / "amendment_A2.json.sha256").write_text(f"{vk.sha256_file(a2_p)}  amendment_A2.json\n")
+    with pytest.raises(ValueError, match="amendment_A2_sha256"):
+        va.load_registration_amended(reg_p, a1_p)
+    _copy_registration(tmp_path)
+    d = json.loads(a3_p.read_text())
+    d["amendment_id"] = va.A2_ID                                   # a file that is not A3
+    a3_p.write_text(json.dumps(d))
+    (tmp_path / "amendment_A3.json.sha256").write_text(f"{vk.sha256_file(a3_p)}  amendment_A3.json\n")
+    with pytest.raises(ValueError, match="not amendment A3"):
+        va.load_registration_amended(reg_p, a1_p)
+    a3_p.unlink()
+    with pytest.raises(FileNotFoundError):
+        va.load_registration_amended(reg_p, a1_p)
+
+
+def test_amendment_A3_status_needs_commit_and_match(tmp_path, a3):
+    _copy_registration(tmp_path)
+    assert va.amendment_A3_status(tmp_path, lambda p: True)["ok"]
+    assert not va.amendment_A3_status(tmp_path, lambda p: p.name != "amendment_A3.json")["ok"]
+    assert not va.amendment_A3_status(tmp_path, lambda p: p.name != "amendment_A3.json.sha256")["ok"]
+    assert not va.amendment_A3_status(tmp_path, lambda p: None)["ok"]
+    (tmp_path / "amendment_A2.json").write_text((tmp_path / "amendment_A2.json").read_text() + " ")
+    assert not va.amendment_A3_status(tmp_path, lambda p: True)["ok"]          # A3 names another A2
+    _copy_registration(tmp_path)
+    (tmp_path / "amendment_A3.json.sha256").write_text("0" * 64 + "  amendment_A3.json\n")
+    assert not va.amendment_A3_status(tmp_path, lambda p: True)["ok"]
+    (tmp_path / "amendment_A3.json").unlink()
+    st = va.amendment_A3_status(tmp_path, lambda p: True)
+    assert not st["ok"] and not st["amendment_A3_exists"]
+
+
+def test_e3_site4_evaluate_guard_requires_A3(monkeypatch, a3):
+    s = _load("v3_e3_nkt_repair_a3test", "scripts/v3_e3_nkt_repair.py")
+    a = SimpleNamespace(registration_dir=REPO / "registration")
+    monkeypatch.setattr(s, "_git_committed", lambda p: True)
+    monkeypatch.setattr(s, "_git_head_text", lambda p: Path(p).read_text())
+    info = s.check_registration(a, site4=True, need_a3=True)        # everything committed and matching: allowed
+    assert info["amendment_A3"]["ok"] and info["amendment_A3_sha256"] == vk.sha256_file(A3_PATH)
+    monkeypatch.setattr(s, "_git_committed", lambda p: Path(p).name != "amendment_A3.json")
+    with pytest.raises(SystemExit, match="amendment_A3"):
+        s.check_registration(a, site4=True, need_a3=True)
+    assert s.check_registration(a, site4=True)["amendment_A3"]["ok"] is False    # r2_predict / null: A2 is enough
+    assert s.check_registration(a, site4=False, need_a3=False)["amendment_A3"]["ok"] is False   # train/val stages
+
+    class Stop(Exception):
+        pass
+
+    seen = {}
+
+    def fake(a_, **kw):
+        seen.update(kw)
+        raise Stop
+
+    monkeypatch.setattr(s, "check_registration", fake)
+    for smoke, want in ((None, {"site4": True, "need_a3": True}), ("note", {"site4": False, "need_a3": False})):
+        seen.clear()
+        with pytest.raises(Stop):
+            s.stage_evaluate(SimpleNamespace(smoke=smoke), {}, {})
+        assert seen == want
+
+
+def test_A3_leaves_addendum_part_of_E3_unchanged():
+    """A3 must not change DECLARED (E3), which every earlier E3 stage was gated on."""
+    e3f = REPO / "registration/addenda/E3.json"
+    if not e3f.exists():
+        pytest.skip("addendum not written")
+    s3 = _load("v3_e3_nkt_repair_a3decl", "scripts/v3_e3_nkt_repair.py")
+    assert json.loads(e3f.read_text())["declared"] == s3.DECLARED
 
 
 # ----------------------------------------------------------------------------- A2.2 R2 normaliser sample
@@ -429,9 +555,9 @@ def test_e3_run_h3a_flags_uniform_shrinkage_as_scale_artefact():
     assert v["falsification"].startswith("rejected") and v["falsification_registered_D_only_reading"].startswith("not rejected")
 
 
-def test_e3_pooling_secondary_flags_scale_artefact_and_never_decides():
-    """D_R2 - D_R1 rewards R2 shrinking every difference more than R1 (registered pooling 'win'); the secondary A2.1-style
-    check beside it says so, and no registered or A2 verdict changes."""
+def test_e3_pooling_A3_decides_uniform_shrinkage_is_scale_artefact():
+    """D_R2 - D_R1 rewards R2 shrinking every difference more than R1 (registered pooling 'win'); under A3.1 the pooling
+    verdict is 'not supported (scale artefact)', and a real flagged-pair repair beyond R1 stays a win."""
     s = _load("v3_e3_nkt_repair_pool", "scripts/v3_e3_nkt_repair.py")
     head = (0.3, 0.8)
     gidx = [s.DECLARED["targets"].index(p) for p in ("CD56", "CD94", "CD335", "CD3")]
@@ -439,20 +565,51 @@ def test_e3_pooling_secondary_flags_scale_artefact_and_never_decides():
     # R1 keeps 0.7 of the head's differences, R2 0.5 of them, uniformly: no readout repairs anything
     pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.21, 0.56), "R2": (0.15, 0.4)}, seed=3)
     out = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)
-    pool = out["pooling_scale_check_secondary"]
+    pool = out["A3_pooling"]
     assert out["stats"]["D_R2_minus_D_R1"]["verdict"] == "win" == pool["registered_pooling_verdict"]
-    assert pool["b_flagged_R2_over_R1"]["holds"] is False and pool["decides"] is False
-    assert "possible scale artefact" in pool["reading"]
+    assert pool["b_flagged_R2_over_R1"]["holds"] is False and pool["decides"] is True
+    assert pool["verdict"] == va.A3_SCALE_ARTEFACT == "not supported (scale artefact)"
+    assert "pooling_scale_check_secondary" not in out                       # the b4ecad4 secondary now decides as A3
     v = s.verdicts({"H3a": {"sp": {"all": out}}, "H3b": {"sp": {"all": h3b}}}, "sp")
-    assert v["E3.H3a_pooling_R2_minus_R1"] == "win"          # the registered pooling verdict is reported unchanged
-    assert "possible scale artefact" in v["E3.H3a_pooling_scale_check_secondary"]
-    assert v["E3.H3a_R1"] == v["E3.H3a_R2"] == va.A2_SCALE_ARTEFACT
-    # R2 recovers the gap on flagged pairs beyond R1: the secondary conditions hold
+    assert v["E3.H3a_pooling_R2_minus_R1"] == va.A3_SCALE_ARTEFACT
+    assert v["E3.H3a_pooling_registered_D_only"] == "win"                  # reported beside, never decides
+    assert v["E3.H3a_pooling_A3_conditions"] == {"b_flagged_R2_over_R1": False, "c_scale_free_Dlog_R2_minus_R1": False}
+    assert v["E3.H3a_R1"] == v["E3.H3a_R2"] == va.A2_SCALE_ARTEFACT           # A2.1 untouched by A3
+    assert v["falsification"].startswith("rejected")                         # falsification unchanged (A2.1)
+    # R2 recovers the gap on flagged pairs beyond R1: the conditions hold and the pooling win stands
     pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.35, 0.8), "R2": (0.9, 0.8)}, seed=4)
-    pool = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)["pooling_scale_check_secondary"]
+    out = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)
+    pool = out["A3_pooling"]
     assert pool["registered_pooling_verdict"] == "win"
     assert pool["b_flagged_R2_over_R1"]["holds"] and pool["c_scale_free_Dlog_R2_minus_R1"]["holds"]
-    assert pool["reading"] == "registered pooling win, A2.1-style conditions hold"
+    assert pool["verdict"] == "win"
+    v = s.verdicts({"H3a": {"sp": {"all": out}}, "H3b": {"sp": {"all": h3b}}}, "sp")
+    assert v["E3.H3a_pooling_R2_minus_R1"] == "win" == v["E3.H3a_pooling_registered_D_only"]
+
+
+def test_e3_pooling_A3_needs_each_primary_donor():
+    """A pooling repair present in one donor only: (b') must be positive in each primary donor."""
+    s = _load("v3_e3_nkt_repair_a3donor", "scripts/v3_e3_nkt_repair.py")
+    head = (0.3, 0.8)
+    pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.3, 0.8), "R2": (0.9, 0.8)}, seed=5)
+    m = pv["donor"] == "19593"                       # in donor 19593 R2 keeps less than R1 on flagged pairs
+    for i_nk, i_t, f in zip(pv["nk"][m], pv["t"][m], pv["flag"][m]):
+        k = 0.2 if f else 0.8
+        ev["R2"][i_nk] = meas[i_t] + k * (meas[i_nk] - meas[i_t])
+    gidx = [s.DECLARED["targets"].index(p) for p in ("CD56", "CD94", "CD335", "CD3")]
+    pool = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)["A3_pooling"]
+    assert pool["b_flagged_R2_over_R1"]["per_donor"]["19593"] < 0
+    assert pool["b_flagged_R2_over_R1"]["holds"] is False
+    assert pool["verdict"] != "win"
+
+
+def test_a3_pooling_verdict():
+    assert va.a3_pooling_verdict("win", True, True) == "win"
+    assert va.a3_pooling_verdict("win", False, True) == va.A3_SCALE_ARTEFACT
+    assert va.a3_pooling_verdict("win", True, False) == va.A3_SCALE_ARTEFACT
+    for v in ("loss", "equivalent", "inconclusive"):
+        assert va.a3_pooling_verdict(v, True, True) == v
+        assert va.a3_pooling_verdict(v, False, False) == v
 
 
 def test_e3_a2_needs_each_primary_donor():

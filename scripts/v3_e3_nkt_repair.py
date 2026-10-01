@@ -5,11 +5,12 @@ sufficiency-flagged pairs than on unflagged ones, and improves NK-vs-T calls at 
 
 Registered design: registration/registration_v3.json -> experiments.E3, as amended by A1
 (registration/amendment_A1.json: A1.1 tie-break and per-replicate selection, A1.8 within-donor pairs)
-and then A2 (registration/amendment_A2.json: A2.1 H3a win conditions, A2.2 R2 normaliser sample),
-loaded with bridge_anm/lib/v3_amend.load_registration_amended(). The details the registration leaves
-open are fixed in registration/addenda/E3.json (written by --stage register from train/val only and
-committed before any site4 evaluation); where A2 differs from the addendum, A2 wins (the addendum file
-and this script's DECLARED stay unchanged). Library code: bridge_anm/lib/v3_e3.py, v3_e3_readouts.py.
+and then A2 (registration/amendment_A2.json: A2.1 H3a win conditions, A2.2 R2 normaliser sample) and A3
+(registration/amendment_A3.json: A3.1 H3a_pooling win conditions), loaded with
+bridge_anm/lib/v3_amend.load_registration_amended(). The details the registration leaves open are fixed in
+registration/addenda/E3.json (written by --stage register from train/val only and committed before any
+site4 evaluation); where A2 or A3 differs from the addendum, the amendment wins (the addendum file and this
+script's DECLARED stay unchanged). Library code: bridge_anm/lib/v3_e3.py, v3_e3_readouts.py.
 
   pairs     k = 10 cosine neighbours of the raw official z within each test_primary donor; NK-T pair = one
             primary-key NK and one primary-key T cell; flagged if cosine >= 0.949402 (registration e3, val)
@@ -20,6 +21,8 @@ and this script's DECLARED stay unchanged). Library code: bridge_anm/lib/v3_e3.p
   H3a       D_R = [GR_R - GR_head](flagged) - [GR_R - GR_head](unflagged) - D_null >= 0.05 (win rules); A2.1:
             a win also needs (b) GR_R(flagged) - GR_head(flagged) > 0 and (c) Dlog_R > 0, each with its interval
             above 0 and positive in each primary donor, else 'not supported (scale artefact)'
+  pooling   D_R2 - D_R1 >= 0.05 (win rules); A3.1: a win also needs (b') GR_R2(flagged) - GR_R1(flagged) > 0
+            and (c') Dlog_R2 - Dlog_R1 > 0, same rule, else 'not supported (scale artefact)'
   H3b       NK-vs-T selective accuracy at matched coverage 0.9 / 0.8: Q1 rule on head vs R1 / R2 evidence
             (top score), margin 0.01; trust comparators: head margin, entropy, kNN label disagreement
 
@@ -34,7 +37,8 @@ Stages (each resumable; every stage appends to <out-dir>/progress.log):
   evaluate    pairs, gap ratios, H3a, H3b, bootstrap; E3_results.json + REPORT.md (CPU, minutes)
   all         null, r1, r2_states, r2_fit, r2_predict, evaluate
 A stage that touches site4 cells (r2_predict on site4, evaluate) is refused unless registration_v3.json,
-amendment A1, amendment A2 and addenda/E3.json are committed with matching hashes. Smoke runs (--smoke
+amendment A1, amendment A2 and addenda/E3.json are committed with matching hashes; evaluate on site4 also
+needs amendment A3 committed with a matching hash. Smoke runs (--smoke
 NOTE) use val donor 18303 as the evaluated split and never read a site4 row.
 
 Full run (from the dev clone root, after the addendum commit; resumable, rerun the same command to continue):
@@ -318,8 +322,9 @@ def _git_head_text(path: Path) -> str:
         return ""
 
 
-def check_registration(a, *, site4: bool) -> dict:
-    """Hashes and commit state of the registration, A1, A2 and the E3 addendum; refuse a site4 stage unless all hold."""
+def check_registration(a, *, site4: bool, need_a3: bool = False) -> dict:
+    """Hashes and commit state of the registration, A1, A2, A3 and the E3 addendum; refuse a site4 stage unless all
+    hold (A3 only when need_a3: the site4 evaluate stage, whose pooling verdict A3.1 decides)."""
     rd = a.registration_dir
     info: dict = {}
     reg_f, amd_f = rd / "registration_v3.json", rd / "amendment_A1.json"
@@ -347,6 +352,9 @@ def check_registration(a, *, site4: bool) -> dict:
     a2 = va.amendment_A2_status(rd, _git_committed)
     info["amendment_A2"] = a2
     info["amendment_A2_sha256"] = a2["amendment_A2_sha256"]
+    a3 = va.amendment_A3_status(rd, _git_committed)
+    info["amendment_A3"] = a3
+    info["amendment_A3_sha256"] = a3["amendment_A3_sha256"]
     if site4:
         need = {
             "registration_v3.json hash file matches and committed": info["registration_hash_file_matches"] and info["registration_committed"] is True,
@@ -359,6 +367,9 @@ def check_registration(a, *, site4: bool) -> dict:
             "amendment_A2.json and its hash file present, matching, committed, naming the registration and A1 on disk":
                 a2["ok"],
         }
+        if need_a3:
+            need["amendment_A3.json and its hash file present, matching, committed, naming the registration, A1 and A2 "
+                 "on disk"] = a3["ok"]
         bad = [k for k, ok in need.items() if not ok]
         if bad:
             raise SystemExit("site4 stage refused (register and commit the E3 addendum first): " + "; ".join(bad))
@@ -1073,8 +1084,9 @@ def h3a_stats(dE: dict, dM: np.ndarray, flag: np.ndarray, ix: np.ndarray, readou
         for R in ("R1", "R2", "null"):
             out[f"term_flagged_{R}"] = gr[R]["flagged"] - gr["head"]["flagged"]
             out[f"term_unflagged_{R}"] = gr[R]["unflagged"] - gr["head"]["unflagged"]
-        # secondary for E3.H3a_pooling (reported, never decides; A2 leaves the pooling verdict on the registered rule):
-        # D_R2 - D_R1 has the same scale artefact as D_R, so the A2.1-style terms of R2 over R1 are shown beside it
+        # A3.1 conditions of E3.H3a_pooling: D_R2 - D_R1 has the same scale artefact as D_R, so a pooling win also needs
+        # (b') recovery on flagged pairs beyond R1 and (c') the scale-free Dlog_R2 - Dlog_R1 (added by b4ecad4 as a
+        # secondary; they decide since amendment A3)
         out["term_flagged_R2_minus_R1"] = gr["R2"]["flagged"] - gr["R1"]["flagged"]
         out["Dlog_R2_minus_Dlog_R1"] = out["Dlog_R2"] - out["Dlog_R1"]
     return out
@@ -1109,7 +1121,7 @@ def run_h3a(pairs_v: dict, ev: dict, meas: np.ndarray, gidx: list[int], donor_or
             per_protein[r][nm] = {p_: fnum(x) for p_, x in zip(e3.GAP_PROTEINS, pp)}
     margins = {"D_R1": 0.05, "D_R2": 0.05, "D_R2_minus_D_R1": 0.05}
     return {"stats": summarise(point, boot, per_donor, margins), "A2": a2_h3a(point, boot, per_donor, margins),
-            "pooling_scale_check_secondary": pooling_scale_check(point, boot, per_donor, margins),
+            "A3_pooling": a3_pooling(point, boot, per_donor, margins),
             "per_protein_ratio": per_protein,
             "median_abs_measured_diff": {nm: {p_: fnum(x) for p_, x in zip(e3.GAP_PROTEINS, np.median(dM[allix[fm]], axis=0) if fm.any() else [None] * 4)}
                                          for nm, fm in (("flagged", flag), ("unflagged", ~flag))}}
@@ -1138,13 +1150,12 @@ def a2_h3a(point: dict, boot: dict, per_donor: dict, margins: dict) -> dict:
     return out
 
 
-def pooling_scale_check(point: dict, boot: dict, per_donor: dict, margins: dict) -> dict:
-    """Secondary for E3.H3a_pooling (reported, never decides; the verdict stays the registered rule on D_R2 - D_R1, which
-    A2 leaves unchanged). D_R2 - D_R1 has the scale artefact A2.1 found in D_R (a readout that shrinks every NK-T
-    difference more than the other wins it), so the A2.1-style conditions of R2 over R1 are computed beside it on the
-    same values and replicates: (b') GR_R2(flagged) - GR_R1(flagged) > 0 and (c') Dlog_R2 - Dlog_R1 > 0, each with its
-    95% lower bound > 0 and positive in each primary donor. A pooling win without them is flagged as a possible scale
-    artefact; whether that should decide needs an amendment before site4."""
+def a3_pooling(point: dict, boot: dict, per_donor: dict, margins: dict) -> dict:
+    """A3.1 on unrounded values and the same bootstrap replicates as D_R2 - D_R1: the registered pooling verdict, (b')
+    recovery on flagged pairs beyond R1 (term_flagged_R2_minus_R1 = GR_R2(flagged) - GR_R1(flagged) > 0) and (c') the
+    scale-free Dlog_R2 - Dlog_R1 > 0, each with its 95% lower bound > 0 and positive in each primary donor (per_donor =
+    the split's registered donors); a registered pooling win without (b') and (c') is 'not supported (scale
+    artefact)'. Same algebra as A2.1, with R1 in the head's place (the head and the null cancel in D_R2 - D_R1)."""
     k = "D_R2_minus_D_R1"
     if "Dlog_R2_minus_Dlog_R1" not in point or k not in point:
         return {}
@@ -1156,12 +1167,10 @@ def pooling_scale_check(point: dict, boot: dict, per_donor: dict, margins: dict)
         cond[name] = va.a2_positive_condition(point[key], lo_k, {d: pd_[key] for d, pd_ in per_donor.items()})
         cond[name]["statistic"] = key
         cond[name]["n_boot_defined"] = nb
-    both = cond["b_flagged_R2_over_R1"]["holds"] and cond["c_scale_free_Dlog_R2_minus_R1"]["holds"]
     return {"registered_pooling_verdict": registered, **cond,
-            "reading": ("registered pooling win, A2.1-style conditions hold" if registered == "win" and both else
-                        "registered pooling win WITHOUT the A2.1-style conditions: possible scale artefact" if registered == "win"
-                        else "registered pooling verdict is not a win"),
-            "decides": False}
+            "verdict": va.a3_pooling_verdict(registered, cond["b_flagged_R2_over_R1"]["holds"],
+                                             cond["c_scale_free_Dlog_R2_minus_R1"]["holds"]),
+            "rule": "amendment A3.1", "decides": True}
 
 
 def h3b_methods(ev: dict, cells: np.ndarray, pan: dict, knn_dis: np.ndarray) -> dict:
@@ -1211,7 +1220,7 @@ def run_h3b(cells: np.ndarray, truth: np.ndarray, donors: np.ndarray, M: dict, r
 
 
 def stage_evaluate(a, reg, add) -> None:
-    reg_info = check_registration(a, site4=not a.smoke)
+    reg_info = check_registration(a, site4=not a.smoke, need_a3=not a.smoke)
     D = Data(a)
     amend = reg["amendment_A1"]
     seed = int(reg["seeds"]["bootstrap"])
@@ -1243,7 +1252,7 @@ def stage_evaluate(a, reg, add) -> None:
     R: dict = {"experiment": "E3", "script_version": SCRIPT_VERSION, "created": time.strftime("%Y-%m-%d %H:%M:%S"),
                "smoke": bool(a.smoke), "smoke_note": a.smoke, "registration_sha256": reg_info["registration_sha256"],
                "amendment_A1_sha256": reg_info["amendment_A1_sha256"], "amendment_A2_sha256": reg_info["amendment_A2_sha256"],
-               "addendum_sha256": reg_info["addendum_sha256"],
+               "amendment_A3_sha256": reg_info["amendment_A3_sha256"], "addendum_sha256": reg_info["addendum_sha256"],
                "registration_check": reg_info, "n_boot": a.n_boot, "bootstrap_seed": seed, "flag_cosine": flag_cos,
                "readouts": ex["info"], "pairs": {}, "H3a": {}, "H3a_sensitivity": {}, "H3b": {}}
     avail = {r: np.isfinite(ev[r][:, 0]) for r in ev}
@@ -1272,10 +1281,13 @@ def stage_evaluate(a, reg, add) -> None:
             R["H3a_sensitivity"][sname][vname] = {
                 "unclipped": sens_unclipped["stats"], "R2_subset_q95": sens_subset["stats"],
                 "A2_verdicts": {"unclipped": {R_: x["verdict"] for R_, x in sens_unclipped["A2"].items()},
-                                "R2_subset_q95": {R_: x["verdict"] for R_, x in sens_subset["A2"].items()}}}
+                                "R2_subset_q95": {R_: x["verdict"] for R_, x in sens_subset["A2"].items()}},
+                "A3_pooling_verdicts": {"unclipped": sens_unclipped["A3_pooling"].get("verdict"),
+                                        "R2_subset_q95": sens_subset["A3_pooling"].get("verdict")}}
             say(f"evaluate: {sname}/{vname} H3a: {pv['nk'].size} pairs ({int(pv['flag'].sum())} flagged); "
                 f"D_R1 {R['H3a'][sname][vname]['stats']['D_R1']['point']} D_R2 {R['H3a'][sname][vname]['stats']['D_R2']['point']}; "
-                f"A2 verdicts {({R_: x['verdict'] for R_, x in R['H3a'][sname][vname]['A2'].items()})} ({time.time() - t0:.0f}s)")
+                f"A2 verdicts {({R_: x['verdict'] for R_, x in R['H3a'][sname][vname]['A2'].items()})}; A3 pooling "
+                f"{R['H3a'][sname][vname]['A3_pooling'].get('verdict')} ({time.time() - t0:.0f}s)")
             cells = cells_s[np.isin(key[cells_s], ["NK", "T"])]
             okc = avail["R2"][cells] & avail["R1"][cells]
             if not a.smoke and not okc.all():
@@ -1313,19 +1325,21 @@ def stage_evaluate(a, reg, add) -> None:
 
 
 def verdicts(R: dict, sname: str) -> dict:
-    """Primary verdicts (split sname, variant all). E3.H3a_R1 / _R2 are the A2.1 verdicts; the registered D-only
-    verdicts and the point-only reading are reported beside them and never decide."""
+    """Primary verdicts (split sname, variant all). E3.H3a_R1 / _R2 are the A2.1 verdicts and E3.H3a_pooling_R2_minus_R1
+    is the A3.1 verdict; the registered D-only verdicts and the point-only reading are reported beside them and never
+    decide."""
     h = R["H3a"][sname]["all"]["stats"]
     a2 = R["H3a"][sname]["all"]["A2"]
+    a3 = R["H3a"][sname]["all"]["A3_pooling"]
     b = R["H3b"][sname]["all"]["stats"]
     v = {"split": sname, "variant": "all",
          "E3.H3a_R1": a2["R1"]["verdict"], "E3.H3a_R2": a2["R2"]["verdict"],
          "E3.H3a_registered_D_only": {R_: h[f"D_{R_}"]["verdict"] for R_ in ("R1", "R2")},
          "E3.H3a_A2_conditions": {R_: {c_: a2[R_][c_]["holds"] for c_ in ("b_flagged_recovery", "c_scale_free_Dlog")}
                                   for R_ in ("R1", "R2")},
-         "E3.H3a_pooling_R2_minus_R1": h["D_R2_minus_D_R1"]["verdict"],
-         "E3.H3a_pooling_scale_check_secondary": (R["H3a"][sname]["all"].get("pooling_scale_check_secondary") or {}).get(
-             "reading", "not computed"),
+         "E3.H3a_pooling_R2_minus_R1": a3["verdict"],
+         "E3.H3a_pooling_registered_D_only": h["D_R2_minus_D_R1"]["verdict"],
+         "E3.H3a_pooling_A3_conditions": {c_: a3[c_]["holds"] for c_ in ("b_flagged_R2_over_R1", "c_scale_free_Dlog_R2_minus_R1")},
          "E3.H3b": {f"{R_}-head@{c}": b[f"{R_}-head@{c}"]["verdict"] for c in COVERAGES for R_ in ("R1", "R2")},
          "point_only_D_ge_0.05": {R_: (h[f"D_{R_}"]["point"] is not None and h[f"D_{R_}"]["point"] >= 0.05) for R_ in ("R1", "R2")}}
     fz = va.a2_e3_falsification(v["E3.H3a_R1"], v["E3.H3a_R2"])
@@ -1347,7 +1361,8 @@ def write_report(path: Path, R: dict, sname: str) -> None:
     if R["smoke"]:
         L += [f"**SMOKE RUN ({R['smoke_note']}): val donor only, small subsets; no number here is a result.**", ""]
     L += [f"Registration `{R['registration_sha256'][:16]}`, amendment A1 `{R['amendment_A1_sha256'][:16]}`, amendment A2 "
-          f"`{(R.get('amendment_A2_sha256') or 'none')[:16]}`, addendum E3 "
+          f"`{(R.get('amendment_A2_sha256') or 'none')[:16]}`, amendment A3 `{(R.get('amendment_A3_sha256') or 'none')[:16]}`, "
+          "addendum E3 "
           f"`{(R['addendum_sha256'] or 'none')[:16]}`. Bootstrap B = {R['n_boot']}, seed {R['bootstrap_seed']}. "
           f"Flag cosine {R['flag_cosine']}.", "",
           "E3 has no ANM arm: the decision rule is the registered Q1 rule (a declared rule; under the registered setup "
@@ -1356,7 +1371,7 @@ def write_report(path: Path, R: dict, sname: str) -> None:
           "| endpoint | verdict |", "|---|---|",
           f"| E3.H3a R1 (A2.1: D >= 0.05 win, plus (b) and (c)) | {v['E3.H3a_R1']} |",
           f"| E3.H3a R2 (A2.1: D >= 0.05 win, plus (b) and (c)) | {v['E3.H3a_R2']} |",
-          f"| E3.H3a pooling (D_R2 - D_R1 >= 0.05) | {v['E3.H3a_pooling_R2_minus_R1']} |"]
+          f"| E3.H3a pooling (A3.1: D_R2 - D_R1 >= 0.05 win, plus (b') and (c')) | {v['E3.H3a_pooling_R2_minus_R1']} |"]
     for k_, x in v["E3.H3b"].items():
         L.append(f"| E3.H3b {k_} (margin 0.01) | {x} |")
     L += ["", f"Falsification ({v['falsification_rule']}): {v['falsification']}.", "",
@@ -1365,10 +1380,11 @@ def write_report(path: Path, R: dict, sname: str) -> None:
           + v["falsification_registered_D_only_reading"] + ". A2.1 (b) recovery on flagged pairs and (c) scale-free Dlog: "
           + "; ".join(f"{R_} (b) {c['b_flagged_recovery']}, (c) {c['c_scale_free_Dlog']}" for R_, c in v["E3.H3a_A2_conditions"].items())
           + ".", "",
-          "H3a pooling, secondary (reported, never decides; the pooling verdict above is the registered rule, which A2 "
-          "leaves unchanged): D_R2 - D_R1 has the same scale artefact as D_R, so (b') GR_R2(flagged) - GR_R1(flagged) > 0 "
-          "and (c') Dlog_R2 - Dlog_R1 > 0 (each with 95% lower bound > 0 and positive in each primary donor) are computed "
-          f"beside it: {v.get('E3.H3a_pooling_scale_check_secondary', 'not computed')}.", ""]
+          "Registered pooling verdict (D_R2 - D_R1 only; superseded by A3.1, reported): "
+          + v["E3.H3a_pooling_registered_D_only"] + ". A3.1 (b') GR_R2(flagged) - GR_R1(flagged) > 0: "
+          + str(v["E3.H3a_pooling_A3_conditions"]["b_flagged_R2_over_R1"]) + "; (c') Dlog_R2 - Dlog_R1 > 0: "
+          + str(v["E3.H3a_pooling_A3_conditions"]["c_scale_free_Dlog_R2_minus_R1"])
+          + " (each with 95% lower bound > 0 and positive in each primary donor).", ""]
     for s, blk in R["H3a"].items():
         for vn, h in blk.items():
             pr = R["pairs"][s]["variants"][vn]
@@ -1389,7 +1405,17 @@ def write_report(path: Path, R: dict, sname: str) -> None:
             for R_, x in h.get("A2", {}).items():
                 L.append(f"| {R_} | {x['registered_D_verdict']} | {x['b_flagged_recovery']['holds']} | "
                          f"{x['c_scale_free_Dlog']['holds']} | {x['verdict']} |")
-            L += ["", "Terms of A2.1 (the addendum's secondary_H3a statistics; (b) is term_flagged, (c) is Dlog):", "",
+            x3 = h.get("A3_pooling") or {}
+            if x3:
+                L += ["", "A3.1 (amendment A3): a pooling win (D_R2 - D_R1) needs (b') term_flagged_R2_minus_R1 > 0 and (c') "
+                      "Dlog_R2_minus_Dlog_R1 > 0, each with its 95% lower bound > 0 and positive in each primary donor "
+                      "(unrounded values, same replicates).", "",
+                      "| contrast | registered pooling verdict | (b') flagged R2 over R1 | (c') scale-free Dlog R2 - R1 | A3 verdict |",
+                      "|---|---|---|---|---|",
+                      f"| D_R2 - D_R1 | {x3['registered_pooling_verdict']} | {x3['b_flagged_R2_over_R1']['holds']} | "
+                      f"{x3['c_scale_free_Dlog_R2_minus_R1']['holds']} | {x3['verdict']} |"]
+            L += ["", "Terms of A2.1 and A3.1 (the addendum's secondary_H3a statistics; (b) is term_flagged, (c) is Dlog; "
+                  "(b') is term_flagged_R2_minus_R1, (c') is Dlog_R2_minus_Dlog_R1):", "",
                   "| statistic | point [95% CI] | per donor |", "|---|---|---|"]
             for k_ in ("Dlog_R1", "Dlog_R2", "term_flagged_R1", "term_unflagged_R1", "term_flagged_R2", "term_unflagged_R2",
                        "term_flagged_null", "term_unflagged_null", "term_flagged_R2_minus_R1", "Dlog_R2_minus_Dlog_R1"):
