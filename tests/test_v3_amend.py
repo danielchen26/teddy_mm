@@ -429,6 +429,32 @@ def test_e3_run_h3a_flags_uniform_shrinkage_as_scale_artefact():
     assert v["falsification"].startswith("rejected") and v["falsification_registered_D_only_reading"].startswith("not rejected")
 
 
+def test_e3_pooling_secondary_flags_scale_artefact_and_never_decides():
+    """D_R2 - D_R1 rewards R2 shrinking every difference more than R1 (registered pooling 'win'); the secondary A2.1-style
+    check beside it says so, and no registered or A2 verdict changes."""
+    s = _load("v3_e3_nkt_repair_pool", "scripts/v3_e3_nkt_repair.py")
+    head = (0.3, 0.8)
+    gidx = [s.DECLARED["targets"].index(p) for p in ("CD56", "CD94", "CD335", "CD3")]
+    h3b = {"stats": {f"{R}-head@{c}": {"verdict": "inconclusive"} for c in s.COVERAGES for R in ("R1", "R2")}}
+    # R1 keeps 0.7 of the head's differences, R2 0.5 of them, uniformly: no readout repairs anything
+    pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.21, 0.56), "R2": (0.15, 0.4)}, seed=3)
+    out = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)
+    pool = out["pooling_scale_check_secondary"]
+    assert out["stats"]["D_R2_minus_D_R1"]["verdict"] == "win" == pool["registered_pooling_verdict"]
+    assert pool["b_flagged_R2_over_R1"]["holds"] is False and pool["decides"] is False
+    assert "possible scale artefact" in pool["reading"]
+    v = s.verdicts({"H3a": {"sp": {"all": out}}, "H3b": {"sp": {"all": h3b}}}, "sp")
+    assert v["E3.H3a_pooling_R2_minus_R1"] == "win"          # the registered pooling verdict is reported unchanged
+    assert "possible scale artefact" in v["E3.H3a_pooling_scale_check_secondary"]
+    assert v["E3.H3a_R1"] == v["E3.H3a_R2"] == va.A2_SCALE_ARTEFACT
+    # R2 recovers the gap on flagged pairs beyond R1: the secondary conditions hold
+    pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.35, 0.8), "R2": (0.9, 0.8)}, seed=4)
+    pool = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)["pooling_scale_check_secondary"]
+    assert pool["registered_pooling_verdict"] == "win"
+    assert pool["b_flagged_R2_over_R1"]["holds"] and pool["c_scale_free_Dlog_R2_minus_R1"]["holds"]
+    assert pool["reading"] == "registered pooling win, A2.1-style conditions hold"
+
+
 def test_e3_a2_needs_each_primary_donor():
     """A repair present in one donor only: D can still win on the pooled pairs if the other donor's D clears
     margin/2, but (b) must be positive in each donor."""

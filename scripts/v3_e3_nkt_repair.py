@@ -1073,6 +1073,10 @@ def h3a_stats(dE: dict, dM: np.ndarray, flag: np.ndarray, ix: np.ndarray, readou
         for R in ("R1", "R2", "null"):
             out[f"term_flagged_{R}"] = gr[R]["flagged"] - gr["head"]["flagged"]
             out[f"term_unflagged_{R}"] = gr[R]["unflagged"] - gr["head"]["unflagged"]
+        # secondary for E3.H3a_pooling (reported, never decides; A2 leaves the pooling verdict on the registered rule):
+        # D_R2 - D_R1 has the same scale artefact as D_R, so the A2.1-style terms of R2 over R1 are shown beside it
+        out["term_flagged_R2_minus_R1"] = gr["R2"]["flagged"] - gr["R1"]["flagged"]
+        out["Dlog_R2_minus_Dlog_R1"] = out["Dlog_R2"] - out["Dlog_R1"]
     return out
 
 
@@ -1105,6 +1109,7 @@ def run_h3a(pairs_v: dict, ev: dict, meas: np.ndarray, gidx: list[int], donor_or
             per_protein[r][nm] = {p_: fnum(x) for p_, x in zip(e3.GAP_PROTEINS, pp)}
     margins = {"D_R1": 0.05, "D_R2": 0.05, "D_R2_minus_D_R1": 0.05}
     return {"stats": summarise(point, boot, per_donor, margins), "A2": a2_h3a(point, boot, per_donor, margins),
+            "pooling_scale_check_secondary": pooling_scale_check(point, boot, per_donor, margins),
             "per_protein_ratio": per_protein,
             "median_abs_measured_diff": {nm: {p_: fnum(x) for p_, x in zip(e3.GAP_PROTEINS, np.median(dM[allix[fm]], axis=0) if fm.any() else [None] * 4)}
                                          for nm, fm in (("flagged", flag), ("unflagged", ~flag))}}
@@ -1131,6 +1136,32 @@ def a2_h3a(point: dict, boot: dict, per_donor: dict, margins: dict) -> dict:
         out[R] = {"registered_D_verdict": registered, **cond,
                   "verdict": va.a2_h3a_verdict(registered, cond["b_flagged_recovery"]["holds"], cond["c_scale_free_Dlog"]["holds"])}
     return out
+
+
+def pooling_scale_check(point: dict, boot: dict, per_donor: dict, margins: dict) -> dict:
+    """Secondary for E3.H3a_pooling (reported, never decides; the verdict stays the registered rule on D_R2 - D_R1, which
+    A2 leaves unchanged). D_R2 - D_R1 has the scale artefact A2.1 found in D_R (a readout that shrinks every NK-T
+    difference more than the other wins it), so the A2.1-style conditions of R2 over R1 are computed beside it on the
+    same values and replicates: (b') GR_R2(flagged) - GR_R1(flagged) > 0 and (c') Dlog_R2 - Dlog_R1 > 0, each with its
+    95% lower bound > 0 and positive in each primary donor. A pooling win without them is flagged as a possible scale
+    artefact; whether that should decide needs an amendment before site4."""
+    k = "D_R2_minus_D_R1"
+    if "Dlog_R2_minus_Dlog_R1" not in point or k not in point:
+        return {}
+    lo, hi, _ = e3.percentile_ci(boot.get(k, np.array([])))
+    registered = e3.verdict(point[k], lo, hi, {d: pd_[k] for d, pd_ in per_donor.items()}, margins[k])
+    cond = {}
+    for name, key in (("b_flagged_R2_over_R1", "term_flagged_R2_minus_R1"), ("c_scale_free_Dlog_R2_minus_R1", "Dlog_R2_minus_Dlog_R1")):
+        lo_k, _, nb = e3.percentile_ci(boot.get(key, np.array([])))
+        cond[name] = va.a2_positive_condition(point[key], lo_k, {d: pd_[key] for d, pd_ in per_donor.items()})
+        cond[name]["statistic"] = key
+        cond[name]["n_boot_defined"] = nb
+    both = cond["b_flagged_R2_over_R1"]["holds"] and cond["c_scale_free_Dlog_R2_minus_R1"]["holds"]
+    return {"registered_pooling_verdict": registered, **cond,
+            "reading": ("registered pooling win, A2.1-style conditions hold" if registered == "win" and both else
+                        "registered pooling win WITHOUT the A2.1-style conditions: possible scale artefact" if registered == "win"
+                        else "registered pooling verdict is not a win"),
+            "decides": False}
 
 
 def h3b_methods(ev: dict, cells: np.ndarray, pan: dict, knn_dis: np.ndarray) -> dict:
@@ -1293,6 +1324,8 @@ def verdicts(R: dict, sname: str) -> dict:
          "E3.H3a_A2_conditions": {R_: {c_: a2[R_][c_]["holds"] for c_ in ("b_flagged_recovery", "c_scale_free_Dlog")}
                                   for R_ in ("R1", "R2")},
          "E3.H3a_pooling_R2_minus_R1": h["D_R2_minus_D_R1"]["verdict"],
+         "E3.H3a_pooling_scale_check_secondary": (R["H3a"][sname]["all"].get("pooling_scale_check_secondary") or {}).get(
+             "reading", "not computed"),
          "E3.H3b": {f"{R_}-head@{c}": b[f"{R_}-head@{c}"]["verdict"] for c in COVERAGES for R_ in ("R1", "R2")},
          "point_only_D_ge_0.05": {R_: (h[f"D_{R_}"]["point"] is not None and h[f"D_{R_}"]["point"] >= 0.05) for R_ in ("R1", "R2")}}
     fz = va.a2_e3_falsification(v["E3.H3a_R1"], v["E3.H3a_R2"])
@@ -1331,7 +1364,11 @@ def write_report(path: Path, R: dict, sname: str) -> None:
           + v["E3.H3a_registered_D_only"]["R2"] + "; falsification on that reading: "
           + v["falsification_registered_D_only_reading"] + ". A2.1 (b) recovery on flagged pairs and (c) scale-free Dlog: "
           + "; ".join(f"{R_} (b) {c['b_flagged_recovery']}, (c) {c['c_scale_free_Dlog']}" for R_, c in v["E3.H3a_A2_conditions"].items())
-          + ".", ""]
+          + ".", "",
+          "H3a pooling, secondary (reported, never decides; the pooling verdict above is the registered rule, which A2 "
+          "leaves unchanged): D_R2 - D_R1 has the same scale artefact as D_R, so (b') GR_R2(flagged) - GR_R1(flagged) > 0 "
+          "and (c') Dlog_R2 - Dlog_R1 > 0 (each with 95% lower bound > 0 and positive in each primary donor) are computed "
+          f"beside it: {v.get('E3.H3a_pooling_scale_check_secondary', 'not computed')}.", ""]
     for s, blk in R["H3a"].items():
         for vn, h in blk.items():
             pr = R["pairs"][s]["variants"][vn]
@@ -1355,7 +1392,7 @@ def write_report(path: Path, R: dict, sname: str) -> None:
             L += ["", "Terms of A2.1 (the addendum's secondary_H3a statistics; (b) is term_flagged, (c) is Dlog):", "",
                   "| statistic | point [95% CI] | per donor |", "|---|---|---|"]
             for k_ in ("Dlog_R1", "Dlog_R2", "term_flagged_R1", "term_unflagged_R1", "term_flagged_R2", "term_unflagged_R2",
-                       "term_flagged_null", "term_unflagged_null"):
+                       "term_flagged_null", "term_unflagged_null", "term_flagged_R2_minus_R1", "Dlog_R2_minus_Dlog_R1"):
                 if k_ in st:
                     L.append(f"| {k_} | {_ci(st[k_])} | " + ", ".join(f"{d} {x}" for d, x in st[k_]["per_donor"].items()) + " |")
             L.append("")
