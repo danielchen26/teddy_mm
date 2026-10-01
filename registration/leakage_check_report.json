@@ -1,6 +1,6 @@
 {
  "script": "bridge_anm/v3_leakage_check.py",
- "started_utc": "2026-10-01T03:51:33Z",
+ "started_utc": "2026-10-01T04:21:30Z",
  "static": {
   "file": "bridge_anm/v3_build_registration.py",
   "issues": [],
@@ -38,6 +38,33 @@
   "core_sha256": "291ce3d29e4ead97f94cf25bf8ae9659db35c7e2d7481e4f2e242ce782f3b0fb",
   "differs_from_real": true
  },
+ "amendment_A1": {
+  "static": {
+   "file": "bridge_anm/v3_build_amendment.py",
+   "issues": [],
+   "nontest_selector_present": true,
+   "passed": true
+  },
+  "registration_core_sha256": "b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8",
+  "real_core_sha256": "b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8",
+  "real_matches_amendment": true,
+  "poison_test": {
+   "core_sha256": "b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8",
+   "identical_to_real": true,
+   "builder_outcome": "completed"
+  },
+  "poison_val_control": {
+   "core_sha256": "223c6e288df7cc104b4659db5e3f14106615dfedea0d21d9966254d9ba0929b7",
+   "identical_to_real": false,
+   "builder_outcome": "completed"
+  },
+  "poison_val_mild_control": {
+   "core_sha256": "4276e9ccf38766d4530587ad231d162dbf9b2d65acfb40221f15872bc67463c0",
+   "identical_to_real": false,
+   "builder_outcome": "completed"
+  },
+  "passed": true
+ },
  "passed": true,
- "finished_utc": "2026-10-01T03:52:11Z"
+ "finished_utc": "2026-10-01T04:23:59Z"
 }

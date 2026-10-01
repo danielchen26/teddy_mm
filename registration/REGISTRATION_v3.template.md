@@ -2,9 +2,11 @@
 
 **Status:** frozen before any site4 (test) evaluation of v3. Registration file `registration/registration_v3.json`, sha256 `{{SHA256}}` (also in `registration_v3.json.sha256`). This document is rendered from that file by `bridge_anm/v3_render_registration.py`, so every number below is the registered value.
 
+**Amended before site4 (A1).** An adversarial review found ten problems in the experiment specifications (tie-breaking at matched coverage, a panel-dependent normaliser in E4 channel 2, the E1.3 leave-one-out closed form and tied top markers, E1.4 naming, the C2 verdict point, classifier information in E1.1c/E1.5, the E2 falsification guard, E3 pair construction, the E4 comparator and the scope of addenda). They are fixed in `registration/amendment_A1.json` (rendered as `registration/AMENDMENT_A1.md`), which has its own sha256 and amends this file without changing it. Where the two differ, A1 wins; sections 9 and 10 below show the text as first registered.
+
 **What this registers.** The answer key, the evidence, the panels, the questions and their bars, the compared methods, the metrics and the decision rules for six experiments (E1–E6). Every threshold, panel, question, key rule and analysis choice was fixed on the training cells (sites 1–3) and the validation donor (18303, site1) only. `bridge_anm/v3_leakage_check.py` proves that no site4 label, measured site4 protein or site4 embedding value entered any of them (section 12).
 
-**Who uses it.** The builders of E1–E6 read every registered number through `bridge_anm/lib/v3_key.py` (`load_registration` refuses a file whose sha256 differs). A builder that needs a number not given here may fix it only by a procedure written here, only from train/val, and must commit it as an addendum before opening site4 (section 9).
+**Who uses it.** The builders of E1–E6 read every registered number through `bridge_anm/lib/v3_key.py` and load the registration with `bridge_anm/lib/v3_amend.py`'s `load_registration_amended()`, which checks the sha256 of this file and of amendment A1 and applies A1's experiment fields. A builder that needs a number not given here may fix it only by a procedure written here, only from train/val, and must commit it as an addendum before opening site4 (section 9).
 
 ---
 
@@ -336,6 +338,12 @@ So that a reader can see which choices moved after val numbers were seen:
 
 ---
 
+## 13b. Amendment A1
+
+Written after this registration was frozen and before any site4 evaluation; see `registration/AMENDMENT_A1.md` for each finding, its fix, the train/val numbers A1 adds and the review notes. `bridge_anm/v3_build_amendment.py` builds it from train and val rows only, and `bridge_anm/v3_leakage_check.py` checks its computed core the same way as this registration's (site4-poisoned rebuild byte-identical; val-poisoned rebuilds change it).
+
+---
+
 ## 14. Reproduce
 
 ```bash
@@ -344,7 +352,9 @@ PY=/private/tmp/claude-501/-Users-tianchichen-Documents-GitHub-teddy-mm/0828c10d
 ANM_ROOT=<ANM v2 fix checkout> $PY bridge_anm/v3_build_registration.py      # writes registration_v3.json + .sha256 (train/val only)
 $PY bridge_anm/v3_render_registration.py                                     # this document
 ANM_ROOT=<...> $PY -m pytest -q tests/test_v3_key.py
-$PY bridge_anm/v3_leakage_check.py                                           # proof of no site4 use
+ANM_ROOT=<...> $PY bridge_anm/v3_build_amendment.py                          # amendment A1 (train/val only)
+ANM_ROOT=<...> $PY -m pytest -q tests/test_v3_amend.py
+$PY bridge_anm/v3_leakage_check.py                                           # proof of no site4 use (registration and A1)
 ```
 
 Builder `{{provenance.builder}}`, sha256 `{{provenance.builder_sha256}}`; `v3_key.py` sha256 `{{provenance.v3_key_sha256}}`; inputs: `cite_arrays.npz` sha256 `{{provenance.inputs.cite_arrays_sha256}}`, `z_rna.npy` sha256 `{{provenance.inputs.z_sha256}}`, head `best.pt` sha256 `{{provenance.inputs.ckpt_sha256}}`; git HEAD at build `{{provenance.git_head_at_build}}`.
