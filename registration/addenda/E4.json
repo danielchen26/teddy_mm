@@ -1,0 +1,942 @@
+{
+ "addendum_to": "registration/registration_v3.json experiments.E4 as amended by A1 (A1.1, A1.2, A1.9); the registered key rule, channels, noise levels, trust rule, methods, controls, endpoint, margin and outcomes are not changed here",
+ "addendum_version": 1,
+ "amendment_A1_sha256": "1f44be66bfc22a5bc428cf31a0bcd14047466005f4308386da195f55b767cdee",
+ "computed": {
+  "F0_L0_bar_vs_registered_Q1_bar": {
+   "F0_L0_bar": 0.298614,
+   "applies": true,
+   "registered_Q1_bar": 0.298614
+  },
+  "F3": {
+   "L0": {
+    "C": 100.0,
+    "cv_log_loss": [
+     {
+      "C": 0.01,
+      "cv_log_loss": 0.423181
+     },
+     {
+      "C": 0.1,
+      "cv_log_loss": 0.171618
+     },
+     {
+      "C": 1.0,
+      "cv_log_loss": 0.123494
+     },
+     {
+      "C": 10.0,
+      "cv_log_loss": 0.116088
+     },
+     {
+      "C": 100.0,
+      "cv_log_loss": 0.11602
+     }
+    ]
+   },
+   "L1": {
+    "C": 10.0,
+    "cv_log_loss": [
+     {
+      "C": 0.01,
+      "cv_log_loss": 0.487792
+     },
+     {
+      "C": 0.1,
+      "cv_log_loss": 0.188612
+     },
+     {
+      "C": 1.0,
+      "cv_log_loss": 0.12346
+     },
+     {
+      "C": 10.0,
+      "cv_log_loss": 0.114553
+     },
+     {
+      "C": 100.0,
+      "cv_log_loss": 0.114647
+     }
+    ]
+   },
+   "L2": {
+    "C": 10.0,
+    "cv_log_loss": [
+     {
+      "C": 0.01,
+      "cv_log_loss": 0.522218
+     },
+     {
+      "C": 0.1,
+      "cv_log_loss": 0.218066
+     },
+     {
+      "C": 1.0,
+      "cv_log_loss": 0.154762
+     },
+     {
+      "C": 10.0,
+      "cv_log_loss": 0.148537
+     },
+     {
+      "C": 100.0,
+      "cv_log_loss": 0.149594
+     }
+    ]
+   },
+   "L3": {
+    "C": 100.0,
+    "cv_log_loss": [
+     {
+      "C": 0.01,
+      "cv_log_loss": 0.650456
+     },
+     {
+      "C": 0.1,
+      "cv_log_loss": 0.294361
+     },
+     {
+      "C": 1.0,
+      "cv_log_loss": 0.197981
+     },
+     {
+      "C": 10.0,
+      "cv_log_loss": 0.169718
+     },
+     {
+      "C": 100.0,
+      "cv_log_loss": 0.164704
+     }
+    ]
+   }
+  },
+  "F4": {
+   "C": 100.0,
+   "max_abs_proba_check": 0.0,
+   "n_train": 67405,
+   "train_channel_trust_L0_in_sample": {
+    "protein_regressor": 0.755655,
+    "teddy_rna_head": 0.768524
+   },
+   "val_log_loss": [
+    {
+     "C": 0.01,
+     "val_log_loss": 0.167265
+    },
+    {
+     "C": 0.1,
+     "val_log_loss": 0.147395
+    },
+    {
+     "C": 1.0,
+     "val_log_loss": 0.144257
+    },
+    {
+     "C": 10.0,
+     "val_log_loss": 0.143932
+    },
+    {
+     "C": 100.0,
+     "val_log_loss": 0.143569
+    }
+   ]
+  },
+  "anm_engine_check_val": {
+   "L0": {
+    "C1": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C2": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C3": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "F5": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    }
+   },
+   "L1": {
+    "C1": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C2": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C3": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "F5": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    }
+   },
+   "L2": {
+    "C1": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C2": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C3": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "F5": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    }
+   },
+   "L3": {
+    "C1": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C2": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "C3": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    },
+    "F5": {
+     "max_abs_engine_minus_closed_lt_1e-9": true,
+     "n_cells_argmax_differs": 0,
+     "n_rejected_events": 0
+    }
+   }
+  },
+  "bars": {
+   "C1": {
+    "L0": 0.0,
+    "L1": 0.0,
+    "L2": 0.0,
+    "L3": 0.0
+   },
+   "C2": {
+    "L0": 0.883193,
+    "L1": 1.01411,
+    "L2": 0.673938,
+    "L3": 0.802556
+   },
+   "C3": {
+    "L0": 0.882648,
+    "L1": 1.012784,
+    "L2": 0.684877,
+    "L3": 0.823318
+   },
+   "F0": {
+    "L0": 0.298614,
+    "L1": 0.422031,
+    "L2": 0.298614,
+    "L3": 0.422031
+   },
+   "F0b": {
+    "L0": 0.489229,
+    "L1": 0.489229,
+    "L2": 0.46838,
+    "L3": 0.46838
+   },
+   "F1": {
+    "L0": 0.393126,
+    "L1": 0.454251,
+    "L2": 0.405195,
+    "L3": 0.450073
+   },
+   "F2": {
+    "L0": 0.392338,
+    "L1": 0.454772,
+    "L2": 0.376738,
+    "L3": 0.443065
+   },
+   "F3": {
+    "L0": 0.012918,
+    "L1": 0.016082,
+    "L2": 0.023744,
+    "L3": 0.042612
+   },
+   "F4": {
+    "L0": 0.051003,
+    "L1": 0.060674,
+    "L2": 0.04886,
+    "L3": 0.046843
+   },
+   "F5": {
+    "L0": 0.881553,
+    "L1": 1.011743,
+    "L2": 0.672255,
+    "L3": 0.79837
+   }
+  },
+  "best_comparator": "F3",
+  "channel2": {
+   "a1_2_val_panel_invariance": {
+    "L0": {
+     "factor_changed_max_abs_evidence_change": 3.42e-08,
+     "factor_changed_n_cells_top_class_changes": 0,
+     "panel_overwritten_bit_identical": true
+    },
+    "L2": {
+     "factor_changed_max_abs_evidence_change": 3.01e-08,
+     "factor_changed_n_cells_top_class_changes": 0,
+     "panel_overwritten_bit_identical": true
+    },
+    "factor_range": [
+     0.5,
+     2.0
+    ],
+    "n_cells": 6106,
+    "passed": true,
+    "stored_nonpanel_max_abs_change": 0.692,
+    "stored_nonpanel_median_abs_change": 0.121
+   },
+   "alpha": 0.1,
+   "alpha_grid_val_mean_r2": [
+    {
+     "alpha": 0.1,
+     "val_mean_r2": 0.639477
+    },
+    {
+     "alpha": 1.0,
+     "val_mean_r2": 0.639476
+    },
+    {
+     "alpha": 10.0,
+     "val_mean_r2": 0.639472
+    },
+    {
+     "alpha": 100.0,
+     "val_mean_r2": 0.639434
+    },
+    {
+     "alpha": 1000.0,
+     "val_mean_r2": 0.63904
+    }
+   ],
+   "n_inputs": 122,
+   "q95_train_pred": {
+    "CD11c": 0.796569,
+    "CD122": 0.727185,
+    "CD172a": 0.791915,
+    "CD2": 0.809512,
+    "CD20": 0.797993,
+    "CD22": 0.650817,
+    "CD268": 0.626768,
+    "CD3": 0.796982,
+    "CD5": 0.849305,
+    "CD56": 0.742861,
+    "CD62P": 0.677547,
+    "CD94": 0.72298
+   },
+   "val_dropout_mean_inputs_zeroed": 54.718965
+  },
+  "comparator_ranking_val": [
+   {
+    "method": "F3",
+    "val_mean_sa_0.8": 0.907165
+   },
+   {
+    "method": "F2",
+    "val_mean_sa_0.8": 0.877892
+   },
+   {
+    "method": "F4",
+    "val_mean_sa_0.8": 0.871853
+   },
+   {
+    "method": "F1",
+    "val_mean_sa_0.8": 0.868936
+   }
+  ],
+  "key": {
+   "batch_kappa": [
+    {
+     "batch": "site1|10886",
+     "kappa_vs_annotation": 0.839926,
+     "n": 4978,
+     "split": "train"
+    },
+    {
+     "batch": "site1|15078",
+     "kappa_vs_annotation": 0.929916,
+     "n": 5227,
+     "split": "train"
+    },
+    {
+     "batch": "site2|12710",
+     "kappa_vs_annotation": 0.694888,
+     "n": 5584,
+     "split": "train"
+    },
+    {
+     "batch": "site2|15078",
+     "kappa_vs_annotation": 0.692482,
+     "n": 10465,
+     "split": "train"
+    },
+    {
+     "batch": "site2|16710",
+     "kappa_vs_annotation": 0.845174,
+     "n": 9122,
+     "split": "train"
+    },
+    {
+     "batch": "site3|11466",
+     "kappa_vs_annotation": 0.581999,
+     "n": 11473,
+     "split": "train"
+    },
+    {
+     "batch": "site3|15078",
+     "kappa_vs_annotation": 0.365483,
+     "n": 9521,
+     "split": "train"
+    },
+    {
+     "batch": "site3|28045",
+     "kappa_vs_annotation": 0.290732,
+     "n": 11035,
+     "split": "train"
+    },
+    {
+     "batch": "site1|18303",
+     "kappa_vs_annotation": 0.913689,
+     "n": 6106,
+     "split": "val"
+    }
+   ],
+   "measured_q95_train": {
+    "CD11c": 1.983337,
+    "CD122": 1.03198,
+    "CD172a": 1.878319,
+    "CD2": 2.983603,
+    "CD20": 1.293987,
+    "CD22": 1.01339,
+    "CD268": 0.560558,
+    "CD3": 2.530829,
+    "CD5": 3.1126,
+    "CD56": 1.79313,
+    "CD62P": 1.37462,
+    "CD94": 1.862226
+   },
+   "tau_K": 0.55,
+   "tau_grid_val_kappa": [
+    {
+     "tau": 0.05,
+     "val_kappa": 0.604566
+    },
+    {
+     "tau": 0.1,
+     "val_kappa": 0.604566
+    },
+    {
+     "tau": 0.15,
+     "val_kappa": 0.606404
+    },
+    {
+     "tau": 0.2,
+     "val_kappa": 0.610793
+    },
+    {
+     "tau": 0.25,
+     "val_kappa": 0.6317
+    },
+    {
+     "tau": 0.3,
+     "val_kappa": 0.669932
+    },
+    {
+     "tau": 0.35,
+     "val_kappa": 0.723026
+    },
+    {
+     "tau": 0.4,
+     "val_kappa": 0.801888
+    },
+    {
+     "tau": 0.45,
+     "val_kappa": 0.858622
+    },
+    {
+     "tau": 0.5,
+     "val_kappa": 0.901585
+    },
+    {
+     "tau": 0.55,
+     "val_kappa": 0.913689
+    },
+    {
+     "tau": 0.6,
+     "val_kappa": 0.912909
+    }
+   ],
+   "train_counts": {
+    "B": 5264,
+    "NK": 8769,
+    "OUT": 27337,
+    "T": 10795,
+    "myeloid": 15240
+   },
+   "train_kappa_vs_annotation": 0.627171,
+   "val_counts": {
+    "B": 785,
+    "NK": 368,
+    "OUT": 1546,
+    "T": 3039,
+    "myeloid": 368
+   }
+  },
+  "n_train": 67405,
+  "n_val": 6106,
+  "source_scale": {
+   "L0": {
+    "protein_regressor": 0.9817646193080787,
+    "teddy_rna_head": 1.0
+   },
+   "L1": {
+    "protein_regressor": 1.0,
+    "teddy_rna_head": 0.9617680524733909
+   },
+   "L2": {
+    "protein_regressor": 0.6013899712644372,
+    "teddy_rna_head": 1.0
+   },
+   "L3": {
+    "protein_regressor": 0.6369105720140844,
+    "teddy_rna_head": 1.0
+   }
+  },
+  "trust": {
+   "L0": {
+    "protein_regressor": 0.813822,
+    "teddy_rna_head": 0.828938
+   },
+   "L1": {
+    "protein_regressor": 0.813822,
+    "teddy_rna_head": 0.782708
+   },
+   "L2": {
+    "protein_regressor": 0.498515,
+    "teddy_rna_head": 0.828938
+   },
+   "L3": {
+    "protein_regressor": 0.498515,
+    "teddy_rna_head": 0.782708
+   }
+  },
+  "trust_gap": {
+   "L0": 0.015116,
+   "L1": 0.031114,
+   "L2": 0.330423,
+   "L3": 0.284193
+  },
+  "trust_per_protein": {
+   "L0": {
+    "protein_regressor": {
+     "CD11c": 0.895121,
+     "CD122": 0.646118,
+     "CD172a": 0.789572,
+     "CD2": 0.964443,
+     "CD20": 0.802195,
+     "CD22": 0.894782,
+     "CD268": 0.666737,
+     "CD3": 0.963508,
+     "CD5": 0.941292,
+     "CD56": 0.629261,
+     "CD62P": 0.806724,
+     "CD94": 0.766107
+    },
+    "teddy_rna_head": {
+     "CD11c": 0.915368,
+     "CD122": 0.6344,
+     "CD172a": 0.826341,
+     "CD2": 0.96714,
+     "CD20": 0.79691,
+     "CD22": 0.924243,
+     "CD268": 0.708693,
+     "CD3": 0.968463,
+     "CD5": 0.945037,
+     "CD56": 0.675713,
+     "CD62P": 0.810221,
+     "CD94": 0.774725
+    }
+   },
+   "L1": {
+    "protein_regressor": {
+     "CD11c": 0.895121,
+     "CD122": 0.646118,
+     "CD172a": 0.789572,
+     "CD2": 0.964443,
+     "CD20": 0.802195,
+     "CD22": 0.894782,
+     "CD268": 0.666737,
+     "CD3": 0.963508,
+     "CD5": 0.941292,
+     "CD56": 0.629261,
+     "CD62P": 0.806724,
+     "CD94": 0.766107
+    },
+    "teddy_rna_head": {
+     "CD11c": 0.891741,
+     "CD122": 0.529849,
+     "CD172a": 0.813841,
+     "CD2": 0.952242,
+     "CD20": 0.735597,
+     "CD22": 0.816802,
+     "CD268": 0.665551,
+     "CD3": 0.920061,
+     "CD5": 0.922036,
+     "CD56": 0.662276,
+     "CD62P": 0.766135,
+     "CD94": 0.71637
+    }
+   },
+   "L2": {
+    "protein_regressor": {
+     "CD11c": 0.586604,
+     "CD122": 0.274323,
+     "CD172a": 0.468055,
+     "CD2": 0.657754,
+     "CD20": 0.511336,
+     "CD22": 0.593368,
+     "CD268": 0.421087,
+     "CD3": 0.691249,
+     "CD5": 0.666911,
+     "CD56": 0.317764,
+     "CD62P": 0.394304,
+     "CD94": 0.399422
+    },
+    "teddy_rna_head": {
+     "CD11c": 0.915368,
+     "CD122": 0.6344,
+     "CD172a": 0.826341,
+     "CD2": 0.96714,
+     "CD20": 0.79691,
+     "CD22": 0.924243,
+     "CD268": 0.708693,
+     "CD3": 0.968463,
+     "CD5": 0.945037,
+     "CD56": 0.675713,
+     "CD62P": 0.810221,
+     "CD94": 0.774725
+    }
+   },
+   "L3": {
+    "protein_regressor": {
+     "CD11c": 0.586604,
+     "CD122": 0.274323,
+     "CD172a": 0.468055,
+     "CD2": 0.657754,
+     "CD20": 0.511336,
+     "CD22": 0.593368,
+     "CD268": 0.421087,
+     "CD3": 0.691249,
+     "CD5": 0.666911,
+     "CD56": 0.317764,
+     "CD62P": 0.394304,
+     "CD94": 0.399422
+    },
+    "teddy_rna_head": {
+     "CD11c": 0.891741,
+     "CD122": 0.529849,
+     "CD172a": 0.813841,
+     "CD2": 0.952242,
+     "CD20": 0.735597,
+     "CD22": 0.816802,
+     "CD268": 0.665551,
+     "CD3": 0.920061,
+     "CD5": 0.922036,
+     "CD56": 0.662276,
+     "CD62P": 0.766135,
+     "CD94": 0.71637
+    }
+   }
+  },
+  "trust_untestable": false,
+  "val_channel_disagreement_share": {
+   "L0": 0.065346,
+   "L1": 0.101048,
+   "L2": 0.331477,
+   "L3": 0.337701
+  },
+  "val_endpoint": {
+   "C1": {
+    "0.8": {
+     "mean_L0_L3": 0.128762,
+     "per_level": {
+      "L0": 0.128762,
+      "L1": 0.128762,
+      "L2": 0.128762,
+      "L3": 0.128762
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.128457,
+     "per_level": {
+      "L0": 0.128457,
+      "L1": 0.128457,
+      "L2": 0.128457,
+      "L3": 0.128457
+     }
+    }
+   },
+   "C2": {
+    "0.8": {
+     "mean_L0_L3": 0.877073,
+     "per_level": {
+      "L0": 0.90174,
+      "L1": 0.88086,
+      "L2": 0.897236,
+      "L3": 0.828454
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.785526,
+     "per_level": {
+      "L0": 0.802948,
+      "L1": 0.785116,
+      "L2": 0.801128,
+      "L3": 0.752911
+     }
+    }
+   },
+   "C3": {
+    "0.8": {
+     "mean_L0_L3": 0.877892,
+     "per_level": {
+      "L0": 0.901945,
+      "L1": 0.882907,
+      "L2": 0.894371,
+      "L3": 0.832344
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.785071,
+     "per_level": {
+      "L0": 0.803493,
+      "L1": 0.78639,
+      "L2": 0.797671,
+      "L3": 0.752729
+     }
+    }
+   },
+   "F0": {
+    "0.8": {
+     "mean_L0_L3": 0.870215,
+     "per_level": {
+      "L0": 0.903173,
+      "L1": 0.837257,
+      "L2": 0.903173,
+      "L3": 0.837257
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.77984,
+     "per_level": {
+      "L0": 0.804039,
+      "L1": 0.75564,
+      "L2": 0.804039,
+      "L3": 0.75564
+     }
+    }
+   },
+   "F0b": {
+    "0.8": {
+     "mean_L0_L3": 0.737564,
+     "per_level": {
+      "L0": 0.882293,
+      "L1": 0.882293,
+      "L2": 0.592835,
+      "L3": 0.592835
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.667213,
+     "per_level": {
+      "L0": 0.786026,
+      "L1": 0.786026,
+      "L2": 0.548399,
+      "L3": 0.548399
+     }
+    }
+   },
+   "F1": {
+    "0.8": {
+     "mean_L0_L3": 0.868936,
+     "per_level": {
+      "L0": 0.902149,
+      "L1": 0.882497,
+      "L2": 0.883726,
+      "L3": 0.807369
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.779067,
+     "per_level": {
+      "L0": 0.803493,
+      "L1": 0.786026,
+      "L2": 0.790575,
+      "L3": 0.736172
+     }
+    }
+   },
+   "F2": {
+    "0.8": {
+     "mean_L0_L3": 0.877892,
+     "per_level": {
+      "L0": 0.901945,
+      "L1": 0.882907,
+      "L2": 0.894371,
+      "L3": 0.832344
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.785071,
+     "per_level": {
+      "L0": 0.803493,
+      "L1": 0.78639,
+      "L2": 0.797671,
+      "L3": 0.752729
+     }
+    }
+   },
+   "F3": {
+    "0.8": {
+     "mean_L0_L3": 0.907165,
+     "per_level": {
+      "L0": 0.911566,
+      "L1": 0.911157,
+      "L2": 0.90522,
+      "L3": 0.900716
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.80786,
+     "per_level": {
+      "L0": 0.811135,
+      "L1": 0.811135,
+      "L2": 0.806769,
+      "L3": 0.802402
+     }
+    }
+   },
+   "F4": {
+    "0.8": {
+     "mean_L0_L3": 0.871853,
+     "per_level": {
+      "L0": 0.902559,
+      "L1": 0.904197,
+      "L2": 0.850154,
+      "L3": 0.830502
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.781614,
+     "per_level": {
+      "L0": 0.803493,
+      "L1": 0.805131,
+      "L2": 0.764738,
+      "L3": 0.753093
+     }
+    }
+   },
+   "F5": {
+    "0.8": {
+     "mean_L0_L3": 0.877021,
+     "per_level": {
+      "L0": 0.901945,
+      "L1": 0.881064,
+      "L2": 0.897236,
+      "L3": 0.82784
+     }
+    },
+    "0.9": {
+     "mean_L0_L3": 0.785389,
+     "per_level": {
+      "L0": 0.80313,
+      "L1": 0.785298,
+      "L2": 0.801128,
+      "L3": 0.752001
+     }
+    }
+   }
+  }
+ },
+ "core_sha256": "7d6fa651083340fd5c70d48d2de1067bcece14d02cdf24f469a97baea8197c56",
+ "experiment": "E4",
+ "fixed_before_site4": "computed by bridge_anm/v3_e4_fusion.py --stage prepare from training (split == train) and val (donor 18303) rows only; checked by --stage leakage (site4-poisoned rebuild identical, val-poisoned rebuild different) and committed with --stage commit-addendum before any site4 row (RNA, protein, labels, embedding) is read by this script",
+ "lib_sha256": "f9914b7d8db3725ec9230275110e25301ffded9a6a118334a20321502aec41a1",
+ "models_file": "E4_models.json",
+ "models_sha256": "8bebf0c9f203e68d62f03bf9a5c6db1f7e2dd54822eef2731fcce40e0fedcaaa",
+ "open_choices_fixed": {
+  "F1_F2": "class scores = equal-weight panel means per channel; F1 = their mean; F2 = (t1 S1 + t2 S2) / (t1 + t2) with the level's val trust",
+  "F3": "sklearn LogisticRegression(lbfgs, max_iter 3000, multinomial) on the 8 class scores [S1, S2] of the val cells at the level, labels = E4 key on val (5 classes); C from [0.01, 0.1, 1, 10, 100] by the pooled log-loss of 5-fold cross-fitted probabilities (StratifiedKFold, shuffle, random_state seeds.e4_noise), ties to the smaller C; the val endpoint (A1.9) uses those cross-fitted predictions; the test model is the refit on all val cells at the level",
+  "F3_F4_decision": "registered classifier decision: the lineage with the highest probability; confidence = that probability",
+  "F4": "the same model on the 24 evidence values [e1, e2] of the training cells at L0, labels = E4 key on training cells; C from the same grid by val log-loss at L0 (the registered classifier procedure); applied unchanged at every level. Disclosed: on training cells the channel-1 features are the phase-1 head's in-sample predictions and the channel-2 features the ridge's in-sample predictions (both were fit on these cells); computed.F4.train_channel_trust_L0_in_sample reports their trust beside the val trust",
+  "F5": "events as documented in bridge_anm/lib/v3_e4.py: support events s_c * e_c[p] for every channel, class and panel protein; for each channel, its top class (first in B, T, NK, myeloid on ties) contradicts every other class with value s_c * 0.5 * top score; channel 1 at t = 0, channel 2 at t = 0; ANM default field (registered: steps 4, retention 0.82, diffusion 0.16, schema source_scale 1.0); action readout; readout_threshold = the F5 bar of the level. ANM's finite_graph_scalar has one schema source_scale, so the per-channel source scale multiplies the event value (identical, since the injection is source_scale * amplitude and amplitude = +/- value; float-identical because the schema source_scale is 1.0; the values stay in ANM's range [0, 1] because s_c is in [0, 1] and the evidence is clipped, so no event is clipped or rejected)",
+  "F5_closed_form": "with every event at t = 0 and three proteins per class, F5's action score for class k is R(n_k) * [3 s1 S1_k + 3 s2 S2_k - 0.5 * sum over channels c whose top class is not k of s_c * S_c,top], n_k = 6 + that number of channels, R the field's star response (R(6) 0.3784, R(7) 0.3812, R(8) 0.3840): a declared trust-weighted rule with a contradiction penalty and an event-count-dependent gain, evaluated exactly by ANM's field",
+  "L1_thinning": "integer counts = stored RNA row / its smallest non-zero value, rounded (the largest relative deviation from an integer is reported); Binomial(count, 0.2) per gene with numpy default_rng([seeds.e4_noise, 1, cell_id]); re-embedded with the settings of z_rna_manifest.json (official preprocessing, gene medians, torch.topk 2048, fp16 autocast, length-bucketed batches of 32, gene-mean); then the frozen head and the registered evidence normaliser; a cell with no counts left keeps the zero embedding (counted)",
+  "L2_dropout": "per cell, 61 of the 122 channel-2 inputs (after the A1.2 transform) set to 0: numpy default_rng([seeds.e4_noise, 2, cell_id]).permutation(122)[:61]; the ridge and its normaliser are the clean ones",
+  "bars": "each method's operating bar = val quantile at no-call 0.15 of its confidence at the level, 6 decimals; reported with realised site4 coverage only (the endpoint is matched coverage)",
+  "bootstrap": "two-stage (donors with replacement, then cells with replacement within each drawn donor), B 2000, seed 1, one numpy generator, donors in sorted order; selection recomputed in every replicate (A1.1); percentile 95% interval; per-donor points (and a within-donor cell bootstrap, descriptive)",
+  "channel1": "the registered evidence (official z_rna.npy -> phase-1 head, size factor 1, registered q95_train_pred, clipped) of the 12 primary-panel proteins",
+  "channel2": "A1.2 inputs (v3_amend.channel2_inputs, 122 values); sklearn Ridge(alpha, fit_intercept=True), no input scaling, one alpha for the 12 targets; target = the measured panel evidence of the key; alpha = the grid value with the highest mean val R2 over the 12 targets (6 decimals), ties to the smaller alpha; refit on all training cells (coefficients in E4_models.json); evidence = prediction / training q95 of its own predictions (6 decimals), clipped to [0, 1] like channel 1 (ANM event values must lie in [0, 1])",
+  "channel2_a1_2_check": "computed.channel2.a1_2_val_panel_invariance, on the val cells (v3_e4.channel2_panel_invariance, the same path as prepare and evaluate, asserted bit-identical): (a) the stored panel columns overwritten with arbitrary values must leave the channel-2 evidence bit-identical; (b) each cell's per-cell CLR factor rescaled by a seeded ratio in [0.5, 2] (what any change of the panel counts does to the stored non-panel values), panel values replaced, rows re-stored in float32: the evidence may move only by float32 storage residue (< 1e-5) and no channel-2 top class may change; at L0 and with the L2 dropout. prepare writes no addendum if it fails",
+  "comparator": "A1.9: the F1-F4 method with the highest val mean selective accuracy at 0.8 (F3 cross-fitted); ties to the earlier of F1, F2, F3, F4",
+  "confidence": "F0, F0b, F1, F2: top class score; F3, F4: highest lineage probability; F5, C1-C3: top ANM action score; rounded to 12 decimals before ranking; ties by the A1.1 permutation; at coverage c a method calls its ceil(c N) most confident cells with its argmax lineage",
+  "controls": "C1 = F5 with ANM disable_propagation (every action stays 0, so every call is B and its selection is the A1.1 permutation); C2 = F5 with channel 2 at t = 2; C3 = F5 without contradiction events (a constant multiple of F2 cell by cell: same ranking and calls up to float rounding, counted at evaluate); closed form = v3_e4.anm_fusion_closed, checked against the engine on every cell",
+  "decision": "registered: win = point >= 0.01, lower bound > 0, and >= 0.005 in each primary donor; loss = mirror; equivalent = interval inside (-0.01, 0.01); else inconclusive",
+  "endpoint": "selective accuracy on the E4 key at matched coverage 0.8, mean over L0-L3, test_primary; coverage 0.9 is reported with the same rule and never changes the verdict; the differences F5 - comparator and F5 - F2 are computed inside each bootstrap replicate on the same resampled cells for every method and level",
+  "interpretation": "naming only (the registered outcome labels are unchanged): F1 and F2 are declared rules, never called ANM; F5 is the only fusion method where ANM's field runs (C1-C3 are its controls). Because F5 equals its closed form (F5_closed_form), a win or loss of F5 is reported as the effect of the contradiction events and the field's event-count-dependent gain on top of the trust-weighted rule, which ANM's field computes exactly, not as evidence of field dynamics beyond that closed form (as A1.4 for E1.4)",
+  "key": "E4 key as registered: measured evidence = stored ADT (per-cell CLR, as in cite_arrays.npz) / training q95 of the stored value (6 decimals), clipped to [0, 1]; class score = equal-weight mean over the primary panel; argmax ties go to the first class in B, T, NK, myeloid order; Cohen kappa over B, T, NK, myeloid, OUT against the registration annotation map; tau_K = the grid value with the highest val kappa (6 decimals), ties to the smaller tau; the E4 key has no unscored cells",
+  "key_validity_reporting": "reporting rule only (mirrors registration section 4.3 for the v3 key; no E4 key-validity rule is registered): the E4 key's kappa against the annotation is reported per site4 split before any method result; if it is below 0.85 on test_primary, the v3 primary-key results are reported with equal prominence beside the E4-key verdict. The key is not switched and the verdict is not changed. Why: with one training q95 normaliser and one tau_K, the E4 key agrees well with the annotation at site1 (val 0.91) but poorly at site3 (training batches 0.29-0.58; computed.key.batch_kappa)",
+  "outcomes": "primary (F5 vs comparator): win -> 'field adds value', loss -> 'field hurts', equivalent -> 'F5 equivalent to the best non-ANM fusion', inconclusive; field effect (F5 vs F2): equivalent -> 'field adds nothing' (acceptable), win -> 'contradiction events and field gain add over the trust-weighted rule', loss -> 'they hurt', inconclusive",
+  "prepare_refusal": "prepare writes no addendum (so no site4 work can start) if, on val, ANM's engine differs from the closed form on any cell and variant (|difference| >= 1e-9, a different argmax, or a rejected event) or channel 2 fails the A1.2 check",
+  "secondary": "the same endpoints on the v3 primary key (unscored cells count for coverage, not accuracy; partly circular for channel 2, disclosed) and on test_secondary (donor 15078); never change the verdict",
+  "trust": "Pearson over val cells at the level between the channel evidence (clipped) and the measured panel evidence; a constant column gives r = 0; mean of max(0, r) over the 12 proteins, 6 decimals; ANM source scale = trust / max of the two channels' trust at the level, the exact float ratio of the 6-decimal trusts (not rounded, so C3 is a constant multiple of F2 up to float rounding)",
+  "untestable": "the trust mechanism is reported untestable if |trust_1 - trust_2| < 0.01 (6 decimals) at every level; the endpoints are still computed and reported"
+ },
+ "registration_sha256": "e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3",
+ "script": "bridge_anm/v3_e4_fusion.py",
+ "script_sha256": "e62d71f18f7f64cd81b8ae7870d4334843ae6674158991889de4bea576305c03",
+ "script_version": "v3_e4_fusion 1.0",
+ "smoke": null,
+ "val_L1_embedding": {
+  "config_hash": "d5ebcfc3b6a7ff71",
+  "median_kept_fraction": 0.20006992397105083,
+  "n_cells": 6106,
+  "n_cells_recovery_dev_gt_1e-3": 0,
+  "n_cells_zero_tokens": 0,
+  "unthinned_check": {
+   "cos_median": 1.0,
+   "cos_min": 0.9999998807907104,
+   "n": 64
+  },
+  "z_L1_sha256": "7b477a83ed67a226989a979669c8818f3204749a92e11eb16592afc35c265620"
+ }
+}

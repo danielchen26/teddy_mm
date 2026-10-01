@@ -1,0 +1,15 @@
+{
+ "addendum_core_sha256": "7d6fa651083340fd5c70d48d2de1067bcece14d02cdf24f469a97baea8197c56",
+ "checks": {
+  "real equals the written addendum core": true,
+  "site4-poisoned equals real (no site4 dependence)": true,
+  "val-poisoned differs (positive control)": true
+ },
+ "passed": true,
+ "poisoned": "site4 rows: protein (all 134), cell type and official embedding replaced by random values; site4 RNA is never read by prepare (its only RNA-derived input is the val L1 embedding). Val positive control: val protein rows and cell types permuted within val (two independent seeded permutations; random protein values would leave a val E4 key class with one cell, so the F3 cross-fit could not be fitted), val official and L1 embeddings random",
+ "real_inputs_core_sha256": "7d6fa651083340fd5c70d48d2de1067bcece14d02cdf24f469a97baea8197c56",
+ "script_sha256": "e62d71f18f7f64cd81b8ae7870d4334843ae6674158991889de4bea576305c03",
+ "site4_poisoned_core_sha256": "7d6fa651083340fd5c70d48d2de1067bcece14d02cdf24f469a97baea8197c56",
+ "smoke": null,
+ "val_poisoned_core_sha256": "0ac4afef3b4127e95483fc3a73f2d0af768ef4fe84366785374eb38fffbebe5d"
+}
