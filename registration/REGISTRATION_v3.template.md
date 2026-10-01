@@ -161,7 +161,7 @@ Rule score for class *k*: the equal-weight mean of the evidence over the class p
 
 - **Q1 soft.** {{questions.Q1.text}} The declared no-call rate (0.15) is below val's OUT share, so it is soft by design: it calls many OUT cells (val OUT decline {{questions.Q1.val_outcome_rule.out_decline_rate}}).
 - **Q2 strict.** {{questions.Q2.text}} This is the nested readout pair used in C2.
-- **Q3 CD14-anchored.** {{questions.Q3.text}} Why: it replaces the synthetic B/T-priority question (whose "myeloid" key was mostly NK cells) with the standard four-population counting question (CD19, CD3, CD56, CD14), fixed by biology rather than selected. It changes the correct answer for non-classical monocytes and DCs, so a classifier trained for Q1 cannot answer it without new labels. That makes Experiment 5's label-cost measurement informative.
+- **Q3 CD14-anchored.** {{questions.Q3.text}} Why: it replaces the synthetic B/T-priority question (whose CD16-anchored "myeloid" class captured many NK cells; audit finding KEY-1) with the standard four-population counting question (CD19, CD3, CD56, CD14), fixed by biology rather than selected. It changes the correct answer for non-classical monocytes and DCs, so a classifier trained for Q1 cannot answer it without new labels. That makes Experiment 5's label-cost measurement informative.
   - Q3 key: {{questions.Q3.key.rule}}.
   - Val validation of the CD14 gate within primary-key myeloid cells (targets written before this check was first computed; train+val gate profiles per type had been seen: precision ≥ {{questions.Q3.val_target.cd14_gate_precision_for_classical_min|g}}, recall ≥ {{questions.Q3.val_target.cd14_gate_recall_for_classical_min|g}}): precision {{questions.Q3.val_key_check.cd14_gate_precision_for_classical}}, recall {{questions.Q3.val_key_check.cd14_gate_recall_for_classical}}, specificity for other myeloid {{questions.Q3.val_key_check.cd14_gate_specificity_for_other_myeloid}}. Val Q3 key: {{questions.Q3.val_key_check.n_q3_myeloid_val}} classical-monocyte, {{questions.Q3.val_key_check.n_q3_out_from_myeloid_val}} other-myeloid → OUT, {{questions.Q3.val_key_check.n_q3_unscored_from_myeloid_val}} unscored.
   - Predicted CD14 separates classical from other myeloid cells on val with AUROC {{questions.Q3.anchor_auroc_val.CD14.auroc_classical_vs_other_myeloid_val}}.
@@ -313,11 +313,12 @@ Result: `registration/leakage_check_report.json` and `outputs/v3/registration/LE
 
 ## 13. Disclosures
 
-- **Site4 is not virgin.** v1/v2 experiments, the 2026-09-28 audit and an exploratory answer-key prototype (scratchpad, evaluated on site4) all read site4. v3 reuses none of their thresholds or panels. Its design is still informed by what they showed (for example, that gdT CD158b+ cells look NK-like and that the v2 "myeloid" key-marker class was mostly NK). E6 exists for this reason.
+- **Site4 is not virgin.** v1/v2 experiments, the 2026-09-28 audit and an exploratory answer-key prototype (scratchpad, evaluated on site4) all read site4. v3 reuses none of their thresholds or panels. Its design is still informed by what they showed (for example, that gdT CD158b+ cells look NK-like and that the v2 CD16-anchored "myeloid" class captured many NK cells). E6 exists for this reason.
 - **The frozen head carries two inherited facts:**
   - its checkpoint was selected on val (`val_fm_pearson`);
   - its training size factors were divided by the median ADT total over all 90,261 cells, site4 included. That is one global scalar; v3's evidence cancels any constant scale, and its effect on the trained weights is a near-constant rescaling that is not testable without retraining.
 - **Val is one donor at site1**, where the gate agrees best with the annotation. Every val-selected choice may favour site1-like data; the training-batch diagnostics (4.3) show how the gate degrades at site3.
+- **Site4 cell-type counts were looked at.** As the task asked, the cell types per split were inspected, site4 included (counts only). They informed only descriptive notes such as "none in site4" for rare types, never a threshold, panel, bar or key rule (the leakage check covers every registered number).
 - **The primary key is an agreement subset.** It keeps the cells both sources call cleanly, which are easier than average. Unscored cells and the annotation-only key are always reported.
 - **Only 2 primary donors.** Intervals describe them, not a population.
 - **Pretraining contamination** of TEDDY with GSE194122 (this dataset) is not verified (open item from the audit).
