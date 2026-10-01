@@ -312,11 +312,16 @@ export default function create(ctx) {
     axis[1].setPoints([[xb + U(3), axY, 1], [XE, axY, 1]]);
     brk[0].setPoints([[xb - U(3) - bw2, axY - bh, 1], [xb - U(3) + bw2, axY + bh, 1]]);
     brk[1].setPoints([[xb + U(3) - bw2, axY - bh, 1], [xb + U(3) + bw2, axY + bh, 1]]);
+    // on a log axis 500 and 1,000 sit close: on mid-size stages their labels overprinted ("5001,000"), so a
+    // tick label that would touch the previous shown one is dropped (the bars already say ≈ 500 and ≈ 1,000)
+    let lastR = -Infinity;
     ticks.forEach((k, i) => {
-      const x = X(qOf(k.v));
+      const x = X(qOf(k.v)), half = U(tw(k.l === ticks[0].l ? '0' : int(k.v), fs.tick)) / 2;
       k.t.setPoints([[x, axY - U(4), 1], [x, axY, 1]]);
       k.l.position.set(x, axY - tickOff, 1);
-      k.l.visible = wide || i === 0 || i === TICKS.length - 1;
+      const last = i === TICKS.length - 1;
+      k.l.visible = (wide || i === 0 || last) && (last || x - half > lastR + U(4));
+      if (k.l.visible) lastR = x + half;
     });
     axT.setText(wide ? 'labelled cells (log scale)' : 'labelled cells (log)');
     if (wide) axT.position.set((X(QB) + XE) / 2, axY - tickOff - lineH(fs.tick), 1);

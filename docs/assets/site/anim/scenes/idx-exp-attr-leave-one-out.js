@@ -146,7 +146,7 @@ export default function create(ctx) {
     },
   };
   let L = LAYOUTS.wide;
-  const P = { ppu: 50, XB: 22.5, Z: 1, xs: [], gx: [], cw: 3, P0: 0, xDec: 0, VEND: 1, xEnd: 0, yEnd: 0 };
+  const P = { ppu: 50, XB: 22.5, Z: 1, xs: [], gx: [], cw: 3, P0: 0, PW: 13.2, xDec: 0, VEND: 1, xEnd: 0, yEnd: 0 };
 
   /* text width in world units (for placing a label right after another) */
   const mctx = (() => { try { return document.createElement('canvas').getContext('2d'); } catch (e) { return null; } })();
@@ -220,7 +220,7 @@ export default function create(ctx) {
   const tracer = dot('accent');
 
   const rectPts = (x0, y0, x1, y1, z = 0) => [[x0, y0, z], [x1, y0, z], [x1, y1, z], [x0, y1, z]];
-  const xOf = (v) => P.P0 + v * L.PW;
+  const xOf = (v) => P.P0 + v * P.PW;
   const yOf = (s) => L.yC0 + s * L.Hc;
   const rowY = (i) => L.B.row0 - i * L.B.pitch;
 
@@ -244,7 +244,12 @@ export default function create(ctx) {
     P.xs = MK.map((_, i) => P.gx[LOF[i]] + (POS[i] - 1) * L.pitch);
     P.cw = 2 * L.pitch + L.bw + 0.1;
     P.xDec = P.xs[DEC];
-    P.P0 = P.xDec - V0 * L.PW;
+    // the scan runs 0 → 1 with this cell's value under its bar; shorten it if its far end, the "1" and the
+    // flat lineages' names after it would leave the frame (with this cell's low value it ran past the right
+    // edge at every width)
+    const endW = Math.max(textW('1', 11) + 0.15, ...LIN.map((l, li) => (li === DL ? 0 : textW(l.name, 12, 600) + 0.16)));
+    P.PW = Math.min(L.PW, (hw - 0.1 - endW - P.xDec) / Math.max(0.05, 1 - V0));
+    P.P0 = P.xDec - V0 * P.PW;
     const left = P.gx[0] - P.cw / 2;
     sideScore.position.set(left - 0.3, L.yC0 + 0.6, 0);
     sideEv.position.set(left - 0.3, L.yE0 + 0.55, 0);
@@ -257,7 +262,9 @@ export default function create(ctx) {
     const hd = EV0[DEC] * L.E, pad = 4 / ppu;
     decRing.setPoints(rectPts(P.xDec - L.bw / 2 - pad, L.yE0 - pad, P.xDec + L.bw / 2 + pad, L.yE0 + hd + pad, 2));
     decName.position.set(P.xDec, L.nameY, 0);
-    flipsLeg.setText(L.flips).position.set(P.xDec + 0.32, L.flipY, 0);
+    // after the rightmost flip dot, so no other marker's dot lands inside the words
+    const xFlip = Math.max(P.xDec, ...MK.map((_, i) => (LOO[i].flips ? P.xs[i] : -Infinity)));
+    flipsLeg.setText(L.flips).position.set(xFlip + 0.32, L.flipY, 0);
     decLeg.setText(L.dec).position.set(P.xDec - L.bw / 2, L.decY, 0);
     LIN.forEach((_, li) => {
       const c = cols[li], x = P.gx[li], hc = S0[li] * L.Hc;
@@ -265,7 +272,7 @@ export default function create(ctx) {
       c.now.setPx(clamp(0.085 * ppu, 3.2, 5));
     });
     // scan plot
-    const P1 = P.P0 + L.PW;
+    const P1 = P.P0 + P.PW;
     axisBase.setPoints([[P.P0, L.yC0, 1.4], [P1, L.yC0, 1.4]]);
     axisSegs.forEach((q) => {
       q.line.setPoints([[xOf(q.s.a), L.yC0, 1.5], [xOf(q.s.b), L.yC0, 1.5]]);
@@ -308,8 +315,16 @@ export default function create(ctx) {
     if (B.wide) {
       pB.setText(pText).position.set(XB + B.rx, 1.65, 0);
       pSub.position.set(XB + B.rx, 1.25, 0);
-      chip.setText(`${pct(NUMBERS.flipRate)} of calls flip\nwithout their deciding marker`).setAnchor('left').position.set(XB + B.rx, 0.2, 0);
-      note.setText('With all markers at once, the deciding\nmarker is the largest normalised value\nin the called lineage.').setAnchor('left').position.set(XB + B.rx, -1.3, 0);
+      // the right-hand column has hw − rx world units; on mid-size stages (≈ 600–800 px) the long lines ran off
+      const room = hw - B.rx - 0.2;
+      const pick = (vs, size, wt, extra = 0) => vs.find((v) => Math.max(...v.split('\n').map((t) => textW(t, size, wt))) + extra <= room) || vs[vs.length - 1];
+      const chipT = pick([`${pct(NUMBERS.flipRate)} of calls flip\nwithout their deciding marker`, `${pct(NUMBERS.flipRate)} of calls flip\nwithout their\ndeciding marker`], 12.5, 600, 20 / ppu);
+      // stack the chip under the subtitle and the note under the chip, whatever their line counts
+      const subH = (11 * ctx.textScale * 1.22 + 2) / ppu, chipTop = 1.25 - subH / 2 - 0.22;
+      chip.setText(chipT).setAnchor('top-left').position.set(XB + B.rx, chipTop, 0);
+      const chipH = (12.5 * ctx.textScale * 1.22 * chipT.split('\n').length + 12) / ppu;
+      note.setText(pick(['With all markers at once, the deciding\nmarker is the largest normalised value\nin the called lineage.', 'With all markers at once,\nthe deciding marker is the\nlargest normalised value\nin the called lineage.'], 11.5, 500))
+        .setAnchor('top-left').position.set(XB + B.rx, chipTop - chipH - 0.2, 0);
     } else {
       pB.setText(`${pText} · ${NUMBERS.nPerm} shuffles`).position.set(XB + L.tX + textW(B.title, 13, 600) + 0.35, L.tY, 0);
       chip.setText(`${pct(NUMBERS.flipRate)} of calls flip without their deciding marker`).setAnchor('center').position.set(XB, -2.45, 0);
@@ -399,6 +414,14 @@ export default function create(ctx) {
       const mid = q.s.a + 0.3 * (q.s.b - q.s.a);
       q.l.setOpacity(aA * scanOn * clamp((v - mid) / 0.05));
     });
+    // the two flat lineages can score almost the same: spread their end names so they do not overprint
+    const flat = LIN.map((_, li) => li).filter((li) => li !== DL).sort((p, q) => S0[q] - S0[p]);
+    const labY = {}, nameH = (12 * ctx.textScale * 1.22 + 2) / P.ppu;
+    flat.forEach((li) => { labY[li] = yOf(S0[li]); });
+    for (let k = 1; k < flat.length; k++) {
+      const hi = flat[k - 1], lo = flat[k], d = nameH - (labY[hi] - labY[lo]);
+      if (d > 0) { labY[hi] += d / 2; labY[lo] -= d / 2; }
+    }
     LIN.forEach((_, li) => {
       const pl = plotLines[li], pl2 = plotLabs[li];
       if (li === DL) {
@@ -408,7 +431,7 @@ export default function create(ctx) {
         pl2.position.set(tipX - 0.14, tipY + 0.1, 0);
       } else {
         pl.setProgress(v).setOpacity(scanOn);
-        pl2.position.set(xOf(v) + 0.16, yOf(S0[li]), 0);
+        pl2.position.set(xOf(v) + 0.16, labY[li], 0);
       }
       pl2.setOpacity(aA * scanOn * clamp(v / 0.02));
     });

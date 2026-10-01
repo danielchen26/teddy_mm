@@ -127,6 +127,11 @@ export default function create(ctx) {
   function layout() {
     const w = ctx.width || 400, h = ctx.height || 300;
     const ppu = (P.ppu = Math.min(w / W, h / H));
+    // show the whole 12 x 9 frame (ppu above assumes it): in the wide 21:9 stage the page gives this card
+    // between 681 and 1040 px, the default camera fit filled the width and cut the lane names and answer key
+    const a = w / h, hh = a > W / H ? H / 2 : W / 2 / a;
+    camera.left = -hh * a; camera.right = hh * a; camera.top = hh; camera.bottom = -hh;
+    camera.updateProjectionMatrix();
     const px = clamp(0.11 * ppu, 2.6, 5);
     P.rw = px / ppu; P.lw = 1.75 / ppu;
     lanes.forEach((L) => {
