@@ -1,0 +1,285 @@
+{
+ "addendum_sha256": "c35e91c5482c5336cccfbe59c8e719d841f857fcb0fd01f9a1389ef34b754efc",
+ "cell_pool": "registered",
+ "created_utc": "2026-10-01T22:40:18Z",
+ "experiment": "E7",
+ "final": true,
+ "follow_up_required": true,
+ "followup": {
+  "G_witness_median_W": 0.0057701158911595985,
+  "cells_sha256": "5f8b0f8d63ae2d5951bb4a10f8f79fb5d979bc71dc9c375614216cf18e19eecd",
+  "detectability_witness_median_R": 0.19842609891822072,
+  "digest_sha256": "978aaed73610d9c61b5a213426c49dbb241fc587ee72c50e4c34394cc3002502",
+  "dims": {
+   "all_token_states_median": 814080,
+   "gene_mean": 512,
+   "gene_mean_plus_G_median": 2048
+  },
+  "float64_max_gap": 7.995369419866449e-07,
+  "float64_ok": true,
+  "implementation_max": {
+   "intended_mean_shift_abs": 1.2968666851520538e-07,
+   "layer12_mean_preserving_gap_units": 2.3678588176387123e-07,
+   "mean_preservation_abs": 1.7881393432617188e-07,
+   "module_vs_explicit_abs": 1.0967254638671875e-05,
+   "official_layer11_gene_mean_abs": 0.0003351569175720215,
+   "padded_vs_unpadded_abs": 1.0967254638671875e-05,
+   "padding_patch_gap_units": 0.0,
+   "patch_rows_changed_mismatch": 0,
+   "permutation_gap_units": 2.3678588176387123e-07
+  },
+  "implementation_ok": true,
+  "magnitudes": [
+   0.03125,
+   0.125,
+   0.5
+  ],
+  "n_cells": 200,
+  "observable": "score",
+  "per_magnitude": {
+   "128": {
+    "fraction": 0.125,
+    "literal_max": {
+     "gene_mean": 0.3949270441130874,
+     "gene_mean_plus_G": 0.3911640120688298
+    },
+    "median": {
+     "D_gene_mean": 0.019585317395937336,
+     "D_gene_mean_plus_G": 0.017201628553052035,
+     "W": 0.0020124173276665817,
+     "W_context": 0.001512683109825653,
+     "W_pure": 0.000893409915790028
+    },
+    "q95": {
+     "all_token_states": NaN,
+     "gene_mean": 0.09892081429717092,
+     "gene_mean_plus_G": 0.09860446528189871
+    }
+   },
+   "32": {
+    "fraction": 0.03125,
+    "literal_max": {
+     "gene_mean": 0.16158850163606212,
+     "gene_mean_plus_G": 0.15319495367910488
+    },
+    "median": {
+     "D_gene_mean": 0.007528588408515805,
+     "D_gene_mean_plus_G": 0.005996346875029673,
+     "W": 0.0016440069813307657,
+     "W_context": 0.001189490211331365,
+     "W_pure": 0.000893409915790028
+    },
+    "q95": {
+     "all_token_states": NaN,
+     "gene_mean": 0.05606563310612405,
+     "gene_mean_plus_G": 0.051956779093682695
+    }
+   },
+   "512": {
+    "fraction": 0.5,
+    "literal_max": {
+     "gene_mean": 0.4805161853934247,
+     "gene_mean_plus_G": 0.4753733374999351
+    },
+    "median": {
+     "D_gene_mean": 0.055180472015105564,
+     "D_gene_mean_plus_G": 0.049327204050378624,
+     "W": 0.005109862707093562,
+     "W_context": 0.0042982692674802874,
+     "W_pure": 0.000893409915790028
+    },
+    "q95": {
+     "all_token_states": NaN,
+     "gene_mean": 0.23571882194692798,
+     "gene_mean_plus_G": 0.23571882194692798
+    }
+   }
+  },
+  "phase": "followup",
+  "positive_control_median_P": 0.2193700862882068,
+  "rule": {
+   "candidates": {
+    "all_token_states": {
+     "cells_with_matched_pairs": 0,
+     "literal_all_differences_le_tol": false,
+     "max": NaN,
+     "median": NaN,
+     "q95_of_cell_max": NaN,
+     "reason": "no matched pair (uninformative)",
+     "retained": false
+    },
+    "gene_mean": {
+     "cells_with_matched_pairs": 200,
+     "literal_all_differences_le_tol": false,
+     "max": 0.4805161853934247,
+     "median": 0.055401199287932544,
+     "q95_of_cell_max": 0.23571882194692798,
+     "reason": "q95 > tol",
+     "retained": false
+    },
+    "gene_mean_plus_G": {
+     "cells_with_matched_pairs": 200,
+     "literal_all_differences_le_tol": false,
+     "max": 0.4753733374999351,
+     "median": 0.04974636180043692,
+     "q95_of_cell_max": 0.23571882194692798,
+     "reason": "q95 > tol",
+     "retained": false
+    }
+   },
+   "literal_rule_selected": null,
+   "order": [
+    "gene_mean",
+    "gene_mean_plus_G",
+    "all_token_states"
+   ],
+   "selected": null,
+   "tol": 0.05
+  },
+  "selected": null,
+  "stopped": null
+ },
+ "git_head": "0c37383307cdeb6cb758fd36d1fa4d3b24c364e9",
+ "label": "follow-up after a null primary selection; readout restricted to the NK-T score",
+ "observable": "panel",
+ "primary": {
+  "G_witness_median_W": 0.010495427421722657,
+  "cells_sha256": "421c0fb62045b559be87ee58af20f1f04301db3b54792d8d9f1648552b1a2d04",
+  "detectability_witness_median_R": 0.2757673337327796,
+  "digest_sha256": "ea33c33c162b8456cf34c1dca54d7dbcaf8b32c460cd6ebfc1dc7c805c2fa174",
+  "dims": {
+   "all_token_states_median": 824832,
+   "gene_mean": 512,
+   "gene_mean_plus_G_median": 2048
+  },
+  "float64_max_gap": 1.6918230439366688e-06,
+  "float64_ok": true,
+  "implementation_max": {
+   "intended_mean_shift_abs": 1.6833655536174774e-07,
+   "layer12_mean_preserving_gap_units": 2.3678588176387123e-07,
+   "mean_preservation_abs": 1.7881393432617188e-07,
+   "module_vs_explicit_abs": 1.0967254638671875e-05,
+   "official_layer11_gene_mean_abs": 0.00034558773040771484,
+   "padded_vs_unpadded_abs": 1.049041748046875e-05,
+   "padding_patch_gap_units": 0.0,
+   "patch_rows_changed_mismatch": 0,
+   "permutation_gap_units": 3.15714509018495e-07
+  },
+  "implementation_ok": true,
+  "magnitudes": [
+   0.03125,
+   0.125,
+   0.5
+  ],
+  "n_cells": 200,
+  "observable": "panel",
+  "per_magnitude": {
+   "128": {
+    "fraction": 0.125,
+    "literal_max": {
+     "gene_mean": 0.2405168821107183,
+     "gene_mean_plus_G": 0.2320667983348859
+    },
+    "median": {
+     "D_gene_mean": 0.04116482086802581,
+     "D_gene_mean_plus_G": 0.038629642366040204,
+     "W": 0.0036935152201056556,
+     "W_context": 0.0029520400445008366,
+     "W_pure": 0.0018414458516483967
+    },
+    "q95": {
+     "all_token_states": NaN,
+     "gene_mean": 0.12772792828812388,
+     "gene_mean_plus_G": 0.1177906474228994
+    }
+   },
+   "32": {
+    "fraction": 0.03125,
+    "literal_max": {
+     "gene_mean": 0.221372143954764,
+     "gene_mean_plus_G": 0.21263087234527098
+    },
+    "median": {
+     "D_gene_mean": 0.018087363150296833,
+     "D_gene_mean_plus_G": 0.014903633125632976,
+     "W": 0.0032939335625678853,
+     "W_context": 0.002538287041131119,
+     "W_pure": 0.0018414458516483967
+    },
+    "q95": {
+     "all_token_states": NaN,
+     "gene_mean": 0.08256836904623042,
+     "gene_mean_plus_G": 0.07434175611473265
+    }
+   },
+   "512": {
+    "fraction": 0.5,
+    "literal_max": {
+     "gene_mean": 0.44666421463740386,
+     "gene_mean_plus_G": 0.44666421463740386
+    },
+    "median": {
+     "D_gene_mean": 0.10345778327367236,
+     "D_gene_mean_plus_G": 0.08881463413353388,
+     "W": 0.008542524256395182,
+     "W_context": 0.008101818529935741,
+     "W_pure": 0.0018414458516483967
+    },
+    "q95": {
+     "all_token_states": NaN,
+     "gene_mean": 0.27641340030673445,
+     "gene_mean_plus_G": 0.2559024365013051
+    }
+   }
+  },
+  "phase": "dev",
+  "positive_control_median_P": 0.2745648838185971,
+  "rule": {
+   "candidates": {
+    "all_token_states": {
+     "cells_with_matched_pairs": 0,
+     "literal_all_differences_le_tol": false,
+     "max": NaN,
+     "median": NaN,
+     "q95_of_cell_max": NaN,
+     "reason": "no matched pair (uninformative)",
+     "retained": false
+    },
+    "gene_mean": {
+     "cells_with_matched_pairs": 200,
+     "literal_all_differences_le_tol": false,
+     "max": 0.44666421463740386,
+     "median": 0.10345778327367236,
+     "q95_of_cell_max": 0.27641340030673445,
+     "reason": "q95 > tol",
+     "retained": false
+    },
+    "gene_mean_plus_G": {
+     "cells_with_matched_pairs": 200,
+     "literal_all_differences_le_tol": false,
+     "max": 0.44666421463740386,
+     "median": 0.0900811535223017,
+     "q95_of_cell_max": 0.2559024365013051,
+     "reason": "q95 > tol",
+     "retained": false
+    }
+   },
+   "literal_rule_selected": null,
+   "order": [
+    "gene_mean",
+    "gene_mean_plus_G",
+    "all_token_states"
+   ],
+   "selected": null,
+   "tol": 0.05
+  },
+  "selected": null,
+  "stopped": null
+ },
+ "primary_record_version_1_sha256": "10c2011beba507380a76878440b26fd0a8087b83b628b2c0f12d1a77ef4de458",
+ "record_version": 2,
+ "script_version": "mode_a_inverse_e7 1.1",
+ "selected": null,
+ "selected_in": null,
+ "smoke": false
+}
