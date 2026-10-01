@@ -7,7 +7,8 @@
  * LayerNorm closes each block). After every layer a dashed probe bar appears between the lanes: that
  * is where NK versus T will be compared. At the end the tokens are averaged into the embedding z
  * (mean of tokens) and probed once more. All bars are dashed, equal and carry no values, and the
- * lanes keep a fixed gap: Mode A has no results yet. Updates and arc pairs are illustrative, not data.
+ * lanes keep a fixed gap: no layer-wise result exists (v3 E5 stopped at its derivative gate; E5-M
+ * tested only the layer-12 gene-mean). Updates and arc pairs are illustrative, not data.
  * The top-right corner stays empty for the play/pause button. 12 s seamless loop.
  */
 /* Every pipeline number this scene prints (stated on the page). Refresh after the official-preprocessing rerun. */

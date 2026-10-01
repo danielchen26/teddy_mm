@@ -644,7 +644,7 @@ Seven pre-registered experiments on frozen TEDDY found no decision gain from ANM
 
 ## Numbers
 
-`docs/reports/v3_numbers.json` is a flat map `{key: {value, source_file, source_key}}` of every number used above (1,585 entries).
+`docs/reports/v3_numbers.json` is a flat map `{key: {value, source_file, source_key}}` of every number used above and on the site pages (1,586 entries).
 
 - For a `.json` source, `source_key` is an RFC 6901 JSON Pointer, and the value was read from the file by a script, not typed.
 - For `README.md` and `REPORT.md` it is a line number.

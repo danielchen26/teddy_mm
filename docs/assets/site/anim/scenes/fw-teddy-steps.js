@@ -13,7 +13,7 @@
  *   panel events at t = 0). Our head predicts them from TEDDY's embedding; TEDDY predicts no proteins.
  * 3 Retained state. The lattice's nodes slide onto a solid ring of beads: TEDDY's embedding (the bead
  *   ring of #teddy-pipeline; the bead count is illustrative). Mode B works on the head's outputs.
- *   Behind it stand TEDDY-G's 12 layers as dotted grey slabs: Mode A (v3 E5 stopped at its gate; E5-M running).
+ *   Behind it stand TEDDY-G's 12 layers as dotted grey slabs: Mode A (v3 E5 stopped at its gate; E5-M inconclusive).
  * 4 Readout. The gauge folds into a call chip ("call / no call"); only after the chip settles does a
  *   measured-protein stamp arrive (from below, never upstream) to grade it. No result is shown.
  * A thin arrow under the pedestals fills left to right; nothing runs back. The reset is a plain

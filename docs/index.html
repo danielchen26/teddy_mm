@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TEDDY × ANM — registered decision-layer tests on frozen CITE evidence</title>
-<meta name="description" content="TEDDY stays frozen; ANM runs as a decision layer on the CITE-seq protein predictions our head makes from TEDDY’s embedding. In the registered v3 tests ANM’s engine made exactly a declared rule’s call on every test cell, and none of its readouts added decision value over TEDDY’s margin, a trained classifier or a validation-trained fuser. E5-M and E6 are still running." />
+<meta name="description" content="TEDDY stays frozen; ANM runs as a decision layer on the CITE-seq protein predictions our head makes from TEDDY’s embedding. In the registered v3 tests ANM’s engine made exactly a declared rule’s call on every test cell, and none of its readouts added decision value over TEDDY’s margin, a trained classifier or a validation-trained fuser. All seven registered experiments are final; on external PBMC data (E6) ANM again equals the declared rule, and the sufficiency test of TEDDY’s gene-mean state (E5-M) is inconclusive." />
 <meta name="color-scheme" content="light dark" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -672,10 +672,6 @@ details.fr-method .bpart { max-width: 52rem; }
 .vd.inc { color: var(--ink-muted); background: var(--bg-soft); }
 .vd.meas { color: var(--ink-muted); background: transparent; border-style: dashed; }
 .bk .v .vs { color: var(--ink-faint); font-weight: 500; font-size: .86em; }
-.v3run .bk-kick .run { color: var(--warn); }
-.plain.run { background: color-mix(in srgb, var(--warn-bg) 60%, var(--bg-elev)); border-color: color-mix(in srgb, var(--warn) 30%, var(--line)); }
-.plain.run .pl { color: var(--warn); }
-.pend-big { margin: 2px 0 0; font-family: var(--mono); font-size: 1.5rem; font-weight: 700; letter-spacing: -.01em; color: var(--warn); }
 .ledger { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 @container main (max-width: 1000px) { .ledger { grid-template-columns: 1fr; } }
 .lg { padding: 16px 18px; min-width: 0; }
@@ -732,8 +728,8 @@ details.fr-method .bpart { max-width: 52rem; }
           <a href="#v3-e3" class="sub">E3 · NK–T repair</a>
           <a href="#v3-e4" class="sub">E4 · Fusion</a>
           <a href="#v3-e5" class="sub">E5 · Layers</a>
-          <a href="#v3-e5m" class="sub">E5-M · Sufficiency (running)</a>
-          <a href="#v3-e6" class="sub">E6 · External (running)</a>
+          <a href="#v3-e5m" class="sub">E5-M · Sufficiency</a>
+          <a href="#v3-e6" class="sub">E6 · External</a>
           <a href="#v3-ledger" class="sub">Claims ledger</a>
           <a href="#problem">01 · The problem</a>
           <a href="#protocol">02 · How we compare</a>
@@ -770,7 +766,7 @@ details.fr-method .bpart { max-width: 52rem; }
             <span class="term" data-term="teddy">TEDDY</span>, an RNA foundation model, embeds each cell’s RNA; our head predicts 134 surface proteins from that embedding (phase-1 <span class="term" data-term="pearson">Pearson ≈ 0.60</span>). All numbers use TEDDY-G’s official preprocessing; the earlier non-official preprocessing gave the same phase-1 Pearson.
             In the registered v3 tests, <span class="term" data-term="anm">ANM</span>’s engine made <b>exactly a declared rule’s call on every test cell</b>, and <b>none of its readouts added decision value</b> over TEDDY’s own margin, a trained classifier or a validation-trained fuser. Its role here is a checker of declared readouts and a response-theory tool, not a better decision-maker.
           </p>
-          <a class="hero-find" href="#v3"><span class="hf-k">★ Registered v3 results · 1 Oct 2026 · E5-M and E6 still running</span><span>E1: ANM = declared rule on every test cell; a classifier trained on the old question’s labels beat the zero-label rule on a new one (−0.078, loss). E2 falsified. E3 rejected “repairable on frozen TEDDY”. E4: ANM’s fusion lost to a validation-trained stacker. E5 stopped at its derivative check. <u>See the results ↓</u></span></a>
+          <a class="hero-find" href="#v3"><span class="hf-k">★ Registered v3 results · 1 Oct 2026 · all seven final</span><span>E1: ANM = declared rule on every test cell; a classifier trained on the old question’s labels beat the zero-label rule on a new one (−0.078, loss). E2 falsified. E3 rejected “repairable on frozen TEDDY”. E4: ANM’s fusion lost to a validation-trained stacker. E5 stopped at its derivative check. E5-M inconclusive. E6 (external data, RNA possibly seen by TEDDY in pretraining, key not validated): ANM = declared rule again, and TEDDY’s margin ranked the calls better than ANM’s top score in 8 of 8 donors. <u>See the results ↓</u></span></a>
           <p class="scope-line"><span class="term" data-term="modeb">Open loop</span>, every event at t = 0: ANM’s dynamics (retention over real steps, histories, feedback) aren’t tested here; not yet, not impossible (<a href="#timestep">why ↓</a>).</p>
           <div class="cta-row">
             <a class="btn pri" href="#v3">Registered results (v3) ↓</a>
@@ -824,9 +820,9 @@ details.fr-method .bpart { max-width: 52rem; }
       </div>
 
       <div class="weak card corr-line" role="note">
-        <p><b>Registered v3 (1 Oct 2026):</b> E1–E5 final, E5-M and E6 running; v3 supersedes the v2 headlines below where they conflict. <a href="#v3">Results ↓</a> · <b>Corrections (29 Sep 2026):</b> the old “ANM is more accurate” came only from declining more; Experiments 2, 6 withdrawn. <a href="#corrections">All corrections ↓</a></p>
+        <p><b>Registered v3 (1 Oct 2026):</b> E1–E6 and E5-M final; v3 supersedes the v2 headlines below where they conflict. <a href="#v3">Results ↓</a> · <b>Corrections (29 Sep 2026):</b> the old “ANM is more accurate” came only from declining more; Experiments 2, 6 withdrawn. <a href="#corrections">All corrections ↓</a></p>
       </div>
-      <p class="zh-hero">中文：TEDDY 与我们的 head 不动；ANM 作为决策层读取 head 的预测。v3 预注册检验中，ANM 引擎与声明规则逐细胞判定相同，其读出未带来决策价值（不胜 TEDDY 的分数差、训练分类器或验证集堆叠器）；E5-M、E6 仍在运行。开环，所有事件在 t = 0，动力学尚未检验。</p>
+      <p class="zh-hero">中文：TEDDY 与我们的 head 不动；ANM 作为决策层读取 head 的预测。v3 预注册检验中，ANM 引擎与声明规则逐细胞判定相同，其读出未带来决策价值（不胜 TEDDY 的分数差、训练分类器或验证集堆叠器）；七项实验均已完成：E5-M 判定为不确定，E6 在外部数据上再次得到 ANM 与声明规则相同。开环，所有事件在 t = 0，动力学尚未检验。</p>
     </div>
   </section>
 
@@ -835,13 +831,13 @@ details.fr-method .bpart { max-width: 52rem; }
     <div class="wrap">
       <p class="kicker">The short answer · after the registered v3 tests</p>
       <h2>What ANM brings TEDDY now</h2>
-      <p class="intro">Not better decisions, and not yet a validated finding about TEDDY. The registered tests (<a href="#v3">v3</a>) give this honest list; the four v2 findings below are kept as a record, each marked where v3 supersedes it.</p>
+      <p class="intro">Not better decisions. The response tools gave one validated measurement about TEDDY (E5-M), and it does not settle the registered question. All seven registered tests (<a href="#v3">v3</a>) are final and give this honest list; the four v2 findings below are kept as a record, each marked where v3 supersedes it.</p>
       <div class="v3now card">
         <ol>
-          <li><b>A check that the declared readouts are what the engine computes.</b> ANM’s engine equals the declared rule (E1.1a: 0 mismatches); its leave-one-out equals the exact closed form (E1.3a: agreement 1.0000, after A1.3 found that the registered form re-coded zeroing an event, while ANM deletes the event’s site); its fusion equals its closed form (E4). Bookkeeping, not news about TEDDY.</li>
-          <li><b>No better decisions, by construction here.</b> All events enter at t = 0, so ANM’s decision-layer calls equal a re-coded declared rule. Its readouts (top action score, closure readout, contradiction fusion) did not beat TEDDY’s margin, the mean rule, a trained classifier or a validation-trained stacker (E1, E4). ANM’s fusion did beat channel 1 alone on the E4 key (+0.0177), but so does the declared trust-weighted average (+0.0143), and the difference between the two is inconclusive.</li>
-          <li><b>No validated response finding about TEDDY yet.</b> E2’s decomposition added nothing beyond the accuracy curve; E5’s registered derivative gate failed in float32. E5-M, the one test of TEDDY’s embedding with ANM’s own sufficiency machinery, is still running.</li>
-          <li><b>What TEDDY users can take away now</b> (not ANM-specific): measured operating points under a five-class key with an explicit validity check, which flagged donor 13272; a trained classifier on the same evidence beats the declared rule even for a changed question; a layer-mean MLP or attention pooling over frozen TEDDY did not improve NK-vs-T accuracy over our head.</li>
+          <li><b>A check that the declared readouts are what the engine computes.</b> ANM’s engine equals the declared rule (E1.1a: 0 mismatches on site4; E6: 0 in every external donor); its leave-one-out equals the exact closed form (E1.3a: agreement 1.0000, after A1.3 found that the registered form re-coded zeroing an event, while ANM deletes the event’s site); its fusion equals its closed form (E4). Bookkeeping, not news about TEDDY.</li>
+          <li><b>No better decisions, by construction here.</b> All events enter at t = 0, so ANM’s decision-layer calls equal a re-coded declared rule. Its readouts (top action score, closure readout, contradiction fusion) did not beat TEDDY’s margin, the mean rule, a trained classifier or a validation-trained stacker at any registered primary endpoint (E1, E4). On the external data TEDDY’s margin ranked the rule’s calls better than the top score in all 8 donors (E6: −0.0087 [−0.0182, −0.0017]; still inconclusive under E1’s own decision rule). ANM’s fusion did beat channel 1 alone on the E4 key (+0.0177), but so does the declared trust-weighted average (+0.0143), and the difference between the two is inconclusive.</li>
+          <li><b>One validated measurement about TEDDY, and it does not settle the registered question.</b> E2’s decomposition added nothing beyond the accuracy curve; E5’s registered derivative gate failed in float32. E5-M ran ANM’s sufficiency machinery on TEDDY end to end (derivative gate passed, positive control passed): for E3’s attention-pooling readout, at first order, 0.085 of its response on NK–T look-alike cells flows through what gene-mean pooling discards, against 0.127 on random cells. The registered verdict is inconclusive, so neither “pooling loses the look-alike difference” nor “the gene-mean state is sufficient” is established, and it holds for this one observer only. <a href="#v3-e5m">E5-M →</a></li>
+          <li><b>What TEDDY users can take away now</b> (not ANM-specific): measured operating points under a five-class key with an explicit validity check, which flagged donor 13272 on site4 and the key on the external data (kappa 0.6562); a trained classifier on the same evidence beats the declared rule even for a changed question, though its call-ordering advantage did not carry over to the external data; ranking the rule’s calls by TEDDY’s own margin, ahead in 8 of 8 external donors; a layer-mean MLP or attention pooling over frozen TEDDY did not improve NK-vs-T accuracy over our head.</li>
         </ol>
       </div>
       <p class="subh v2rec">Earlier findings on the v2 key (29–30 Sep) · kept as a record, superseded where marked</p>
@@ -849,7 +845,7 @@ details.fr-method .bpart { max-width: 52rem; }
       <article class="lead card" aria-labelledby="lead-h">
         <span class="lead-tag">v2 prototype · the sufficiency test · superseded by v3 E3</span>
         <h3 id="lead-h">NK and T cells nearly merge in TEDDY’s embedding, and the protein differences predicted from it are squeezed</h3>
-        <p class="sup"><b>Superseded by v3</b>E3 rejected “the NK–T loss is in the readout or pooling and is repairable on frozen TEDDY”: a layer-mean MLP (R1) and attention pooling over gene tokens (R2) both told NK from T less accurately than our head (−0.0409 and −0.1925 at coverage 0.9, registered losses). On the registered within-donor pairs the head’s gap ratio is 0.1169 on flagged vs 0.3985 on unflagged pairs, with overlapping intervals and mostly from gdT CD158b+ pairs in the weak-key donor; without those pairs 0.4729 vs 0.5137. The ANM test of the gene-mean state (E5-M) is running. <a href="#v3-e3">E3 →</a></p>
+        <p class="sup"><b>Superseded by v3</b>E3 rejected “the NK–T loss is in the readout or pooling and is repairable on frozen TEDDY”: a layer-mean MLP (R1) and attention pooling over gene tokens (R2) both told NK from T less accurately than our head (−0.0409 and −0.1925 at coverage 0.9, registered losses). On the registered within-donor pairs the head’s gap ratio is 0.1169 on flagged vs 0.3985 on unflagged pairs, with overlapping intervals and mostly from gdT CD158b+ pairs in the weak-key donor; without those pairs 0.4729 vs 0.5137. The ANM test of the gene-mean state (E5-M) is inconclusive: for the attention-pooling readout, a smaller share of its response flows through what pooling discards on look-alike cells (0.085) than on random cells (0.127), for this one observer. <a href="#v3-e3">E3 →</a> · <a href="#v3-e5m">E5-M →</a></p>
         <p class="lead-rule"><b>The principle:</b> a <span class="term" data-term="candidate">declared candidate</span> retained state is sufficient for a declared readout only if the same state always gives the same readout. Here the candidate is TEDDY’s <span class="term" data-term="z512">embedding</span> and the readout the proteins our head predicts from it, so this probes <b>TEDDY’s embedding + our head</b> together. Declaring the state does not establish that it is sufficient.</p>
         <figure class="anim a-inset" data-anim="idx-brings-sufficiency" style="--ar:21/8;--ar-sm:16/10"><div class="anim-stage" role="img" aria-label="Animation: an NK cell and a T cell nearly merge in TEDDY’s embedding (cosine 0.970); their predicted CD3 values stay close (0.10 and 0.28) while measured CD3 is far apart (0.30 and 1.00); bars show the predictions keep 0.24 to 0.88 of the measured differences, versus 0.8 to 1.5 for non-neighbour pairs; an MLP probe on the same embedding keeps about twice as much for CD56, CD94 and CD3."></div><figcaption>Neighbours in the embedding; predicted gap shrinks; measured gap doesn’t.</figcaption></figure>
         <div class="lead-grid">
@@ -942,8 +938,8 @@ details.fr-method .bpart { max-width: 52rem; }
         </article>
       </div>
 
-      <p class="notbrought"><span class="nb-k">✕ Not brought</span><span><b>Higher accuracy, a better trust gate, label savings, a better out-of-scope decline or better fusion</b> (v3 E1 and E4, registered). ANM’s calls equal the declared rule’s on every test cell (<a href="#v3-e1">E1</a>; v2: all 16,750 site4 cells, <a href="#edit">Experiment 1</a>).</span></p>
-      <p class="zh">v3 之后的简短回答：ANM 不带来更好的决策，也尚无关于 TEDDY 的经验证发现。① 核对：引擎与声明规则逐细胞一致（0 不一致），留一法与闭式解一致（1.0000）；② 所有事件在 t = 0，判定等于重写的声明规则，其读出不胜 TEDDY 的分数差、训练分类器或验证集堆叠器；③ E2 已证伪，E5 的导数检验在 float32 下未通过，E5-M 仍在运行；④ 对 TEDDY 用户：五类答案键与有效性检验（供体 13272 偏弱）、训练分类器优于声明规则、两种冻结 TEDDY 读出未提高 NK/T 准确率。下方四条为 v2 记录，已标注被 v3 取代之处。</p>
+      <p class="notbrought"><span class="nb-k">✕ Not brought</span><span><b>Higher accuracy, a better trust gate, label savings, a better out-of-scope decline or better fusion</b> (v3 E1 and E4, registered; E6 on external data). ANM’s calls equal the declared rule’s on every test cell (<a href="#v3-e1">E1</a>; <a href="#v3-e6">E6</a>: every external donor; v2: all 16,750 site4 cells, <a href="#edit">Experiment 1</a>).</span></p>
+      <p class="zh">七项 v3 实验全部完成后的简短回答：ANM 不带来更好的决策；响应理论工具给出了一项关于 TEDDY 的经验证测量，但未解决注册的问题。① 核对：引擎与声明规则逐细胞一致（site4 与外部数据皆 0 不一致），留一法与闭式解一致（1.0000）；② 所有事件在 t = 0，判定等于重写的声明规则，其读出不胜 TEDDY 的分数差、训练分类器或验证集堆叠器；外部数据上 TEDDY 的分数差在 8/8 供体中排序优于顶分（按 E1 判定规则仍为不确定）；③ E2 已证伪，E5 的导数检验在 float32 下未通过；E5-M 判定为不确定（R2 响应流经池化丢弃部分的份额：相似细胞 0.085，随机细胞 0.127，仅针对这一个观察者）；④ 对 TEDDY 用户：五类答案键与有效性检验（供体 13272 与外部数据的答案键偏弱）、训练分类器优于声明规则（其排序优势在外部数据上未复现）、两种冻结 TEDDY 读出未提高 NK/T 准确率。下方四条为 v2 记录，已标注被 v3 取代之处。</p>
     </div>
     <div class="wrap">
       <p class="kicker" style="margin-top:28px">The v2 experiments at a glance · a v3 note under each</p>
@@ -1025,8 +1021,8 @@ details.fr-method .bpart { max-width: 52rem; }
           <tbody>
             <tr><th scope="row"><span class="term" data-term="phase1">Phase 1</span></th><td data-arm="What">Frozen TEDDY embeds RNA once; our head maps it to 134 proteins (test Pearson 0.603).</td><td class="win" data-arm="Status">Done. Every experiment uses the head’s predictions.</td></tr>
             <tr><th scope="row"><span class="term" data-term="phase2">Phase 2</span></th><td data-arm="What">A fusion model: TEDDY’s embedding plus a protein encoder, one modality dropped. No ANM.</td><td data-arm="Status">Unfinished scaffold, retrained on the official embedding: RNA-only test Pearson 0.613 decoded directly, slightly above phase 1’s 0.603. Only the RNA-missing stand-in in Experiment 2 (withdrawn).</td></tr>
-            <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="What">ANM decides on the phase-1 predictions (our head on TEDDY’s embedding); labelled exceptions.</td><td class="win" data-arm="Status">v2: Experiments 1, 3, 4, 5 rerun; 2 and 6 withdrawn. v3 (registered, final): E1, E2, E4; E6 running.</td></tr>
-            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="What">Looking inside TEDDY: its layers as ANM’s steps, the gene-mean or the per-gene residual stream as a <span class="term" data-term="candidate">declared candidate</span> retained state, layer Jacobians, gene perturbations.</td><td data-arm="Status">v2: linear, MLP / kNN and gene-token probes. v3: E5 (layer Jacobians) final; E5-M (sufficiency of the gene-mean) running; E3 compared readouts of TEDDY’s layer means and token states.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modeb">Mode B</span></th><td data-arm="What">ANM decides on the phase-1 predictions (our head on TEDDY’s embedding); labelled exceptions.</td><td class="win" data-arm="Status">v2: Experiments 1, 3, 4, 5 rerun; 2 and 6 withdrawn. v3 (registered, final): E1, E2, E4, and E6 on external data.</td></tr>
+            <tr><th scope="row"><span class="term" data-term="modea">Mode A</span></th><td data-arm="What">Looking inside TEDDY: its layers as ANM’s steps, the gene-mean or the per-gene residual stream as a <span class="term" data-term="candidate">declared candidate</span> retained state, layer Jacobians, gene perturbations.</td><td data-arm="Status">v2: linear, MLP / kNN and gene-token probes. v3: E5 (layer Jacobians) final, stopped at its gate; E5-M (sufficiency of the gene-mean) final, inconclusive; E3 compared readouts of TEDDY’s layer means and token states.</td></tr>
           </tbody>
         </table>
       </div>
@@ -1083,13 +1079,13 @@ details.fr-method .bpart { max-width: 52rem; }
           <p class="mq">Answers: how should we decide from the TEDDY + head outputs?</p>
         </div>
         <div class="mode card">
-          <span class="mtag off">v3: E5 final · E5-M running</span>
+          <span class="mtag off">v3: E5 · E5-M final</span>
           <h3><span class="term" data-term="modea">Mode A</span> · look inside TEDDY</h3>
           <p>Open TEDDY up: its layers as steps, the per-gene residual stream as a declared candidate state, layer Jacobians, in-silico gene perturbations.</p>
-          <p class="mq">Would answer: what TEDDY’s layers keep and lose. v2 probes suggested part of the NK–T loss sat in our head’s readout and in mean pooling. v3 did not confirm a repair: two trained readouts of frozen TEDDY told NK from T less accurately than our head (E3), and E5’s layer-by-layer test stopped at its derivative check; E5-M is running.</p>
+          <p class="mq">Would answer: what TEDDY’s layers keep and lose. v2 probes suggested part of the NK–T loss sat in our head’s readout and in mean pooling. v3 did not confirm a repair: two trained readouts of frozen TEDDY told NK from T less accurately than our head (E3), and E5’s layer-by-layer test stopped at its derivative check. E5-M, the sufficiency test of the gene-mean, was inconclusive for the one attention-pooling observer tested.</p>
         </div>
       </div>
-      <p class="zh">三种角色、单向流动：TEDDY 只读 RNA、给出 512 维嵌入，我们训练的 head 从中预测蛋白（证据）；ANM 通常只读 head 的输出并判定或拒答；实测蛋白只负责打分（撤回的实验 2、6 有标明的例外）。我们做 Mode B；Mode A：v2 探针曾提示部分 NK–T 损失在 head 的读出与均值池化中；v3 E3 中两种冻结 TEDDY 读出的 NK/T 准确率均不如 head，E5 停在导数检验，E5-M 仍在运行。</p>
+      <p class="zh">三种角色、单向流动：TEDDY 只读 RNA、给出 512 维嵌入，我们训练的 head 从中预测蛋白（证据）；ANM 通常只读 head 的输出并判定或拒答；实测蛋白只负责打分（撤回的实验 2、6 有标明的例外）。我们做 Mode B；Mode A：v2 探针曾提示部分 NK–T 损失在 head 的读出与均值池化中；v3 E3 中两种冻结 TEDDY 读出的 NK/T 准确率均不如 head，E5 停在导数检验，E5-M（基因均值的充分性检验）对所测的一个观察者判定为不确定。</p>
     </div>
   </section>
 
@@ -1099,23 +1095,26 @@ details.fr-method .bpart { max-width: 52rem; }
     <div class="wrap">
       <p class="kicker">v3 — Registered experiments · 1 Oct 2026</p>
       <h2>Registered experiments (v3): what held up</h2>
-      <p class="intro">The v1/v2 tests further down had problems that made their headlines untestable or invalid: an answer key with no NK and no out-of-scope class, a panel chosen on the test set, a test donor also in training, event order acting as a hidden weight. v3 fixed each one, <a href="#v3-fair">registered</a> every endpoint, margin and decision rule on training and validation data only, and then ran each test once on the two site4 donors that appear in no other split (11,294 cells). <b>E1–E5 are final. E5-M and E6 are still running</b>; nothing on this page reports their outcomes.</p>
+      <p class="intro">The v1/v2 tests further down had problems that made their headlines untestable or invalid: an answer key with no NK and no out-of-scope class, a panel chosen on the test set, a test donor also in training, event order acting as a hidden weight. v3 fixed each one, <a href="#v3-fair">registered</a> every endpoint, margin and decision rule on training and validation data only, and then ran each test once on the two site4 donors that appear in no other split (11,294 cells). E6 repeated E1’s main endpoints on 8 external donors (40,000 cells). <b>All seven registered experiments are final</b>, and every verdict is reported as registered.</p>
 
       <div class="v3-top">
         <div class="v3-bl card">
           <p class="subh">Bottom line</p>
           <ul>
-            <li><b>ANM equals a <span class="term" data-term="declrule">declared rule</span> in this setup, and the registered tests found no decision value from ANM’s readouts.</b> Its engine made the declared rule’s call on every test cell for all three questions (0 mismatches), and E1’s registered falsification clause holds. <a href="#v3-e1">E1 →</a></li>
+            <li><b>ANM equals a <span class="term" data-term="declrule">declared rule</span> in this setup, and the registered tests found no decision value from ANM’s readouts.</b> Its engine made the declared rule’s call on every test cell for all three questions (0 mismatches), on site4 and in every external donor, and E1’s registered falsification clause holds. <a href="#v3-e1">E1 →</a></li>
             <li><b>Writing a new question with zero labels did not beat training.</b> On the changed question, a classifier trained only on the old question’s labels was more accurate than the zero-label rule: rule minus classifier −0.078 [−0.134, −0.028], <span class="vd loss">loss</span>. <a href="#v3-e1">E1 →</a></li>
             <li><b>The response and repair claims did not hold.</b> E2’s stage-by-stage decomposition added nothing beyond the accuracy curve (falsified). E3 rejected “the NK–T loss is in the readout or pooling and is repairable on frozen TEDDY”. E4: ANM’s fusion lost to a stacker trained on the validation donor. E5 stopped at its registered derivative check (float32; float64 passes). <a href="#v3-e2">E2–E5 →</a></li>
-            <li><b>The answer key is weak for one of the two test donors</b> (donor 13272: <span class="term" data-term="kappa">kappa</span> 0.4177), so every result is also shown on the <span class="term" data-term="primkey">annotation-only key</span>, with equal prominence. <a href="#v3-fair">Key validity →</a></li>
+            <li><b>E5-M, does TEDDY’s gene-mean state lose what a token readout uses? Inconclusive.</b> For E3’s attention-pooling readout, at first order, the median share of its response that flows through what gene-mean pooling discards is 0.085 on NK–T look-alike cells and 0.127 on matched random cells: smaller on look-alikes, the opposite of the hypothesis (−0.043 [−0.062, −0.011]), but neither a registered loss nor equivalent. Neither “pooling loses the look-alike difference” nor “the gene-mean state is sufficient” is established, and the measurement holds for this one observer only. <a href="#v3-e5m">E5-M →</a></li>
+            <li><b>E6, external PBMC data</b> (labelled “RNA possibly seen by TEDDY in pretraining” and “key not validated”): ANM equals the declared rule in every donor (E1.1a replicates). TEDDY’s margin ranks the rule’s calls better than the rule’s (= ANM’s) top score in 8 of 8 donors (−0.0087 [−0.0182, −0.0017], replicates); under E1’s own decision rule this is still inconclusive, as it was on site4. The site4 finding that a classifier orders calls better does not replicate. <a href="#v3-e6">E6 →</a></li>
+            <li><b>The answer key is weak for one of the two test donors</b> (donor 13272: <span class="term" data-term="kappa">kappa</span> 0.4177), so every result is also shown on the <span class="term" data-term="primkey">annotation-only key</span>, with equal prominence. On the external data the key is not validated either (kappa 0.6562 &lt; 0.70), so the annotation-only key decides E6. <a href="#v3-fair">Key validity →</a></li>
           </ul>
         </div>
         <div class="v3-role card">
           <p class="subh">What ANM is for, in the paper</p>
           <figure class="anim a-inset" data-anim="fw-push-follow-read" style="--ar:16/9"><div class="anim-stage" role="img" aria-label="Animation, illustrative with no values: a knob moves one tick, a ripple crosses a lattice standing for the declared candidate retained state, and a gauge needle moves and is compared with two bands drawn before the push."></div><figcaption>Push a source, follow a declared candidate state, read a declared readout against bands drawn in advance.</figcaption></figure>
           <p>In ANM v2 the retained state is a <span class="term" data-term="candidate">declared candidate</span>, tested against a declared readout (“Its choice does not establish sufficiency”). The paper’s AI workflows are open-loop with memory (retention, multi-step propagation, histories) and no feedback; there ANM is a <b>response-theory verifier</b>, not a better decision-maker.</p>
-          <p>Here every event enters at t = 0, so the field acts only as a constant gain per class (G(3)·3·S) and ANM’s decision-layer calls equal a re-coded rule. The response tools were used in E2 (push the RNA), E5 (follow a push through TEDDY’s layers) and E5-M (test the gene-mean as a declared candidate state); E2 and E5 have not produced a validated finding about TEDDY, and E5-M is still running.</p>
+          <p>Here every event enters at t = 0, so the field acts only as a constant gain per class (G(3)·3·S) and ANM’s decision-layer calls equal a re-coded rule. The response tools were used in E2 (push the RNA), E5 (follow a push through TEDDY’s layers) and E5-M (test the gene-mean as a declared candidate state). E2 and E5 produced no validated finding about TEDDY. E5-M produced one validated measurement for one observer, and its registered verdict is inconclusive.</p>
+          <p><b>Overall:</b> in this project ANM worked as a verifier of declared readouts and as a precise way to pose the sufficiency question, not as a better decision-maker.</p>
         </div>
       </div>
 
@@ -1124,7 +1123,7 @@ details.fr-method .bpart { max-width: 52rem; }
         <p class="v3-p">The registration (<code>registration_v3.json</code>, sha256 <code>e4c8a33e…</code>), amendments <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/AMENDMENT_A1.md" target="_blank" rel="noopener">A1</a>, <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/AMENDMENT_A2.md" target="_blank" rel="noopener">A2</a>, <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/AMENDMENT_A3.md" target="_blank" rel="noopener">A3</a> and the per-experiment <a href="https://github.com/danielchen26/teddy_mm/tree/exp/registered-v3/registration/addenda" target="_blank" rel="noopener">addenda</a> are on GitHub, branch <a href="https://github.com/danielchen26/teddy_mm/commits/exp/registered-v3" target="_blank" rel="noopener"><code>exp/registered-v3</code></a>. The GitHub push events are the independent timestamps; local commit times come from the committing machine. A site4 evaluation is the first stage that reads site4 protein or cell types (forward passes of site4 RNA alone are label-free). All times are 1 Oct 2026, UTC.</p>
         <div class="capwrap card v3-tl">
           <table class="capm">
-            <thead><tr><th scope="col">File it depends on</th><th scope="col">Committed</th><th scope="col">Pushed to GitHub</th><th scope="col">site4 evaluation that uses it</th><th scope="col">Pushed before it?</th></tr></thead>
+            <thead><tr><th scope="col">File it depends on</th><th scope="col">Committed</th><th scope="col">Pushed to GitHub</th><th scope="col">Evaluation that uses it (site4; external for E6)</th><th scope="col">Pushed before it?</th></tr></thead>
             <tbody>
               <tr><th scope="row">Registration</th><td data-arm="Committed">03:54:53</td><td data-arm="Pushed">04:24:22 (branch created)</td><td data-arm="Used by">first v3 site4 read: E5 cell selection 05:10:36</td><td data-arm="Before?" class="ok">yes</td></tr>
               <tr><th scope="row">A1 (final)</th><td data-arm="Committed">04:37:04</td><td data-arm="Pushed">07:57:00</td><td data-arm="Used by">E5 05:10:36 · E1 05:36:47 · E3 08:42:23 · E4 09:04:11 · E2 10:41:58</td><td data-arm="Before?" class="no">no for E5 and E1 (committed before, pushed after); yes for E2, E3, E4</td></tr>
@@ -1135,18 +1134,18 @@ details.fr-method .bpart { max-width: 52rem; }
               <tr><th scope="row">A2</th><td data-arm="Committed">06:11:37</td><td data-arm="Pushed">07:57:00</td><td data-arm="Used by">E3 08:42:23 · E2 10:41:58</td><td data-arm="Before?" class="ok">yes</td></tr>
               <tr><th scope="row">E4 addendum</th><td data-arm="Committed">06:44:49</td><td data-arm="Pushed">07:57:00</td><td data-arm="Used by">E4 evaluate 09:04:11</td><td data-arm="Before?" class="ok">yes</td></tr>
               <tr><th scope="row">A3</th><td data-arm="Committed">07:03:09</td><td data-arm="Pushed">07:57:00</td><td data-arm="Used by">E3 08:42:23</td><td data-arm="Before?" class="ok">yes</td></tr>
-              <tr><th scope="row">E5-M addendum</th><td data-arm="Committed">07:39:16</td><td data-arm="Pushed">07:57:00</td><td data-arm="Used by">E5-M run started 10:43:09</td><td data-arm="Before?" class="ok">yes</td></tr>
-              <tr><th scope="row">E6 addendum v1 / v2</th><td data-arm="Committed">10:07:39 / 10:43:00</td><td data-arm="Pushed">10:43:44</td><td data-arm="Used by">external run: none at the time of writing</td><td data-arm="Before?" class="ok">yes</td></tr>
+              <tr><th scope="row">E5-M addendum</th><td data-arm="Committed">07:39:16</td><td data-arm="Pushed">07:57:00</td><td data-arm="Used by">E5-M run started 10:43:09 (report 11:06:15)</td><td data-arm="Before?" class="ok">yes</td></tr>
+              <tr><th scope="row">E6 addendum v1 / v2</th><td data-arm="Committed">10:07:39 / 10:43:00</td><td data-arm="Pushed">10:43:44</td><td data-arm="Used by">E6 external run started 11:54:31; its key-validity stage, the first to read external protein and cell types, 11:54:34</td><td data-arm="Before?" class="ok">yes (before any external outcome; see the prep note below)</td></tr>
             </tbody>
           </table>
         </div>
         <ul class="v3-facts">
-          <li><b>Pushed before the evaluation they govern:</b> the registration, A2, A3 and the E2, E3, E4 and E5-M addenda. The E6 addenda reached GitHub before any external outcome (the addendum records <code>outputs/v3/E6</code> absent at 10:40:07).</li>
+          <li><b>Pushed before the evaluation they govern:</b> the registration, A2, A3 and the E2, E3, E4 and E5-M addenda. The E6 addenda (v1 committed 10:07:39, v2 10:43:00) reached GitHub together at 10:43:44, before any external outcome: the addendum records <code>outputs/v3/E6</code> absent at 10:40:07, and the E6 run started at 11:54:31. It ran at local commit <code>cac4f8a</code> (11:32:45), which differs from the pushed <code>2a55f81</code> only in <code>docs/reports</code>. Earlier, before either addendum, the data-preparation step had read some external protein summaries while the annotation map was being revised, so E6’s registered order for the map was not met in time (disclosed in the addendum; an independent re-derivation from the label names alone reproduced the committed map, 31 of 31 labels).</li>
           <li><b>Committed, not yet pushed:</b> for E1 and E5 the governing files (A1, the E1 addendum, the E5 addendum v3) were committed locally before the evaluation, and each result file records their sha256 and <code>committed: true</code>, but they reached GitHub only at 07:57:00. For these two, the ordering rests on local commit times and recorded hashes, not on an independent timestamp. (The E5 addendum’s first version, <code>820cce0</code> at 04:19:49, was in the 04:24:22 push; A1.10 then made the registered endpoint and cells primary, which the v3 version records.)</li>
-          <li><b>E1 came before A2 and A3.</b> E1 finished at 05:44:44; A2 was built at 06:09:15 and A3 at 07:00:56, and both concern only E2 and E3. A3 states that the E1 site4 results had been seen and that nothing in it depends on them; A2 does not say.</li>
+          <li><b>E1 came before A2 and A3.</b> E1 finished at 05:44:44; A2 was built at 06:09:15 and A3 at 07:00:56, and both concern only E2 and E3. A3 states that the E1 site4 results had been seen and that nothing in it depends on them; A2 does not say. The E5-M and E6 addenda record the same disclosure (E1, and for E6 also E3 and E4, had been seen); E6’s version-2 panel revision was decided by a session that had seen those site4 results but no external value.</li>
           <li><b>E3’s site4 pairs were built early, by E5.</b> E5’s cell selection at 05:10:36 rebuilt E3’s within-donor NK–T pairs from the primary key, so it read site4 protein and cell types, before the E3 addendum, A2 and A3. Its log records only the pair count (253) and cells per donor and class; no E3 statistic was computed then.</li>
           <li id="v3-key"><b>Key validity.</b> On the test cells the annotation-vs-gate <span class="term" data-term="kappa">kappa</span> is 0.5781 (agreement 0.6847), below the registered 0.85, so the flag is raised: donor 13272 kappa 0.4177 (agreement 0.5617), donor 19593 0.8798. In donor 13272 the gate puts 4,148 of 7,365 cells in <span class="term" data-term="outscope">out of scope</span>, against 1,707 annotated. 3,561 of the 11,294 test cells are unscored on the <span class="term" data-term="primkey">primary key</span>. The key is not switched (that would use site4 labels to choose); <b>annotation-only rows are shown beside every primary-key row.</b></li>
-          <li><b>Other disclosures:</b> site4 is not virgin (v1/v2 read it, and v3’s design is informed by what they showed); the head’s checkpoint was selected on validation; its training size factors used one global ADT-median scalar over all cells, site4 included; pretraining contamination of TEDDY with this dataset is not verified.</li>
+          <li><b>Other disclosures:</b> site4 is not virgin (v1/v2 read it, and v3’s design is informed by what they showed); the head’s checkpoint was selected on validation; its training size factors used one global ADT-median scalar over all cells, site4 included; pretraining contamination of TEDDY with this dataset is not verified. For E6’s external data the addendum’s answer is “likely yes” (the dataset was public in CELLxGENE before TEDDY’s training data were downloaded), hence its label.</li>
         </ul>
       </div>
 
@@ -1191,6 +1190,7 @@ details.fr-method .bpart { max-width: 52rem; }
           </table>
         </div>
       </details>
+      <p class="zh">七项预注册实验全部完成：ANM 在 site4 与外部数据上都与声明规则逐细胞判定相同，预注册检验未发现其读出带来决策价值；零标签改问题不胜训练分类器；E2 被证伪，E3 被拒绝，E4 不敌验证集堆叠器，E5 停在导数检验；E5-M 判定为不确定（R2 响应流经池化丢弃部分的份额：相似细胞 0.085，随机细胞 0.127，仅针对这一个观察者）；E6（RNA 可能已被 TEDDY 预训练见过、答案键未验证）复现了 ANM = 声明规则，以及 TEDDY 的分数差在 8/8 供体中排序优于顶分（按 E1 判定规则仍为不确定）。公平性：E1、E5 的依据文件只在评估前本地提交，推送晚于评估；E2、E3、E4、E5-M 的附录在评估前已推送，E6 附录在任何外部结果之前推送（数据准备阶段此前读过部分外部蛋白汇总，已披露）。</p>
     </div>
 
     <nav class="blocknav v3nav" aria-label="Registered experiments">
@@ -1200,8 +1200,8 @@ details.fr-method .bpart { max-width: 52rem; }
         <a href="#v3-e3" data-b="v3-e3"><i>E3</i>NK–T repair</a>
         <a href="#v3-e4" data-b="v3-e4"><i>E4</i>Fusion</a>
         <a href="#v3-e5" data-b="v3-e5"><i>E5</i>Layers</a>
-        <a href="#v3-e5m" data-b="v3-e5m"><i>5M</i>Sufficiency · running</a>
-        <a href="#v3-e6" data-b="v3-e6"><i>E6</i>External · running</a>
+        <a href="#v3-e5m" data-b="v3-e5m"><i>5M</i>Sufficiency</a>
+        <a href="#v3-e6" data-b="v3-e6"><i>E6</i>External</a>
         <a href="#v3-ledger" data-b="v3-ledger"><i>✓</i>Claims ledger</a>
       </div></div>
     </nav>
@@ -1523,73 +1523,148 @@ details.fr-method .bpart { max-width: 52rem; }
       </article>
 
       <!-- ---------- E5-M ---------- -->
-      <article class="block v3b v3run" id="v3-e5m">
+      <article class="block v3b" id="v3-e5m">
         <header class="bhead">
           <span class="bnum sm">E5-M</span>
-          <div><span class="bk-kick">E5-M · sufficiency of TEDDY’s gene-mean state · <span class="run">running</span></span><h3>Is TEDDY’s gene-mean state enough for an independent observer?</h3><p class="bq">At first order, does the layer-12 gene-mean (what our head reads) carry what an independent observer of the layer-12 token states uses, on NK–T look-alike cells?</p></div>
-          <a class="bsrc" href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E5M.json" target="_blank" rel="noopener">E5M.json ↗</a>
+          <div><span class="bk-kick">E5-M · sufficiency of TEDDY’s gene-mean state · final</span><h3>Is TEDDY’s gene-mean state enough for an independent observer?</h3><p class="bq">At first order, does the layer-12 gene-mean (what our head reads) carry what an independent observer of the layer-12 token states uses, on NK–T look-alike cells?</p></div>
+          <a class="bsrc" href="reports/V3_REGISTERED_RESULTS.md">V3 report ↗</a>
         </header>
-        <div class="plain run"><span class="pl">Running</span><p><b>No outcome is reported in this version.</b> This is the one test that uses ANM’s own sufficiency machinery on TEDDY: the gene-mean is a <span class="term" data-term="candidate">declared candidate</span> retained state, tested against declared observers. The design below was fixed in addendum <code>E5M.json</code> (sha256 <code>65ab9efe…</code>), committed 07:39:16 and pushed 07:57:00, before the site4 run started at 10:43:09.</p></div>
+        <div class="plain"><span class="pl">In plain words</span><p>Inconclusive. For E3’s attention-pooling readout (R2), a <i>smaller</i> share of its first-order response flows through what gene-mean pooling discards on NK–T look-alike cells (0.085) than on matched random cells (0.127), the opposite of the hypothesis, but short of the registered loss margin. The gene-mean is not shown sufficient either: 0.085 is above the 0.05 margin. This holds for this one observer only, and its attention is nearly uniform.</p></div>
         <div class="bgrid">
           <div>
-            <div class="bpart"><h4>Problem</h4><p>Whether TEDDY’s embedding holds what is needed to tell NK from T has no ANM-based answer yet. The addendum motivates the cells as those “where the head loses the NK–T difference”; that is a motivation, not a v3 result (E3’s contrast is descriptive only).</p></div>
+            <div class="bpart"><h4>Problem</h4><p>Is the NK–T difference lost when TEDDY’s token states are averaged into the gene-mean our head reads? This is the one v3 test that uses ANM’s own sufficiency machinery on TEDDY. The addendum motivates the cells as those “where the head loses the NK–T difference”; that is a motivation, not a v3 result (E3’s contrast is descriptive only).</p></div>
             <div class="bpart"><h4>Compared (declared observers)</h4><div class="chips">
               <span class="chip"><i class="bg-train"></i>O_tok · E3’s frozen R2</span><span class="chip"><i class="bg-neutral"></i>O_rand · random token observer (negative control)</span><span class="chip"><i class="bg-teddy"></i>O_head · head on the gene-mean (positive control, residual 0)</span>
-              <span class="chip m">CD56 · CD94 · CD335 · CD3</span><span class="chip m">60 pair + 40 random cells per donor</span></div></div>
-            <div class="bpart"><h4>What it does, step by step</h4><ol class="wf">
-              <li><b>Declare the candidate:</b> the gene-mean of the layer-12 token states; the readout-visible quotient is reported only as a diagnostic, never used as the state.</li>
+              <span class="chip m">CD56 · CD94 · CD335 · CD3</span><span class="chip m">195 test cells</span></div></div>
+            <div class="bpart"><h4>What we do, step by step</h4><ol class="wf">
+              <li><b>Declare the candidate:</b> the gene-mean of the layer-12 token states. The readout-visible quotient is reported only as a diagnostic, never used as the state.</li>
+              <li><b>Push:</b> for each of 7 declared NK/T genes present in a cell, three unit pushes of its input token (own embedding, E5’s training NK-minus-T direction, one fixed random direction); a median of 9 columns per cell (3–18).</li>
               <li><b>Clamp estimator:</b> H = Λ·pinv(Γ), ANM’s own <span class="term" data-term="clamp">clamp estimator</span>, computed from clamps of the candidate alone and never fitted on the tested responses.</li>
               <li><b>Residual per cell:</b> r_O = ‖K_O − H·K_z‖ / ‖K_O‖, the share of an observer’s response that flows through what gene-mean pooling discards.</li>
-              <li><b>H5M:</b> on NK–T pair cells the median residual of O_tok exceeds that on matched random cells, Δ_tok ≥ 0.05 under the common win rule, and beyond the random-observer null.</li>
-              <li><b>Falsified</b> if Δ_tok is equivalent (inside ±0.05) or a loss. Labels: PASS_SUFFICIENT · REJECT_SUFFICIENCY · H5M_FALSIFIED · INCONCLUSIVE · NOT_VALIDATED (finite-difference gate or positive control fails).</li>
-            </ol><p class="wf-src"><code>scripts/mode_a_observer_sufficiency.py</code> · <code>bridge_anm/lib/v3_e5m.py</code></p></div>
+              <li><b>H5M:</b> Δ_tok = median r_tok on pair cells − on random cells ≥ 0.05 under the common win rule, and beyond the random-observer null. Falsified if equivalent or a loss; PASS_SUFFICIENT needs Δ_tok equivalent <i>and</i> the pair-cell level’s upper bound below 0.05.</li>
+            </ol><p class="wf-src"><code>scripts/mode_a_observer_sufficiency.py</code> · <code>bridge_anm/lib/v3_e5m.py</code> · addendum <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E5M.json" target="_blank" rel="noopener">E5M.json</a></p></div>
           </div>
-          <div class="v3res card pend">
-            <p class="subh">Result</p>
-            <p class="pend-big">pending</p>
-            <p class="tnote">Still running when this page was updated. Its verdict will be added here, whatever it says, without changing the design above.</p>
+          <div class="v3res card">
+            <p class="subh">Median clamp residual · 195 test cells · point [95% CI]</p>
+            <div class="tblwrap"><p class="shint">scroll →</p>
+              <table class="dt v3dt">
+                <thead><tr><th>Observer</th><th>Pair cells</th><th>Random cells</th></tr></thead>
+                <tbody>
+                  <tr><td>O_tok · trained token readout (R2)</td><td>0.085<span class="ci">[0.071, 0.096]</span></td><td>0.127<span class="ci">[0.098, 0.142]</span></td></tr>
+                  <tr><td>O_rand · random token readout</td><td>0.067<span class="ci">[0.056, 0.073]</span></td><td>0.068</td></tr>
+                  <tr><td>O_head · head readout</td><td>0.000</td><td>0.000 (by construction)</td></tr>
+                </tbody>
+              </table>
+              <h5>Registered contrasts</h5>
+              <table class="dt v3dt">
+                <thead><tr><th>Statistic</th><th>Point</th><th>Per donor (13272, 19593)</th><th>Verdict</th></tr></thead>
+                <tbody>
+                  <tr><td>Δ_tok · pair − random, R2 (decides; margin 0.05)</td><td>−0.043<span class="ci">[−0.062, −0.011]</span></td><td>−0.048, −0.029</td><td><span class="vd inc">inconclusive</span></td></tr>
+                  <tr><td>DD_rand · Δ_tok − Δ_rand (H5M needs a lower bound &gt; 0)</td><td>−0.041<span class="ci">[−0.061, −0.004]</span></td><td>−0.047, −0.021</td><td><span class="vd fail">not met</span></td></tr>
+                  <tr><td>level · median r_tok on pair cells (PASS_SUFFICIENT needs an upper bound &lt; 0.05)</td><td>0.085<span class="ci">[0.071, 0.096]</span></td><td>0.081, 0.087</td><td><span class="vd fail">not met</span></td></tr>
+                  <tr><td>Δ_rand · pair − random, random readout</td><td>−0.001<span class="ci">[−0.021, 0.012]</span></td><td>−0.001, −0.008</td><td><span class="vd meas">reported</span></td></tr>
+                </tbody>
+              </table>
+              <h5>Gates and ANM’s own factorization check</h5>
+              <table class="dt v3dt">
+                <thead><tr><th>Check</th><th>Result</th><th>Role</th></tr></thead>
+                <tbody>
+                  <tr><td>finite differences (Richardson, ε 0.01 and 0.02) vs JVP, each of 4 targets</td><td>1.000 of 357</td><td><span class="vd pass">validated</span></td></tr>
+                  <tr><td>positive control: largest head-readout residual (tolerance 0.001)</td><td>6.02e-07</td><td><span class="vd pass">passed</span></td></tr>
+                  <tr><td><code>analyze_factorization</code>, R2, rtol 1e-4</td><td class="w">REJECTED in 195 of 195</td><td><span class="vd meas">secondary</span></td></tr>
+                  <tr><td>its source-kernel test</td><td class="w">NOT_INFORMATIVE in 195 of 195</td><td><span class="vd meas">secondary</span></td></tr>
+                  <tr><td>readout-visible quotient of R2 (diagnostic)</td><td class="w">rank 4 in 128 cells, 3 in 62; participation ratio 1.221 (pair), 1.388 (random)</td><td><span class="vd meas">diagnostic</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tnote">Cells: a GPU-budget subset of E5’s cells fixed in the addendum before site4 (60 pair and 40 random cells per primary donor, 200 cells); 5 contain none of the 7 genes, so 195 are analysed. The positive control holds by construction, so it checks the derivative code; the pooling decomposition is checked separately (R2’s residual response equals its direct JVP along the pooling-discarded part to within 1.04e-07). The source-kernel result is what the addendum and the ANM paper predict: K_z has full column rank in every cell, so first-order kernel inclusion is automatic and says nothing.</p>
           </div>
+        </div>
+        <div class="bkpis">
+          <div class="bk"><div class="v">inconclusive</div><div class="d">registered verdict: Δ_tok is neither a win, a loss nor equivalent.</div></div>
+          <div class="bk"><div class="v">0.085 <span class="vs">vs</span> 0.127</div><div class="d">median share of R2’s response that flows through what pooling discards: look-alike pair cells vs random cells.</div></div>
+          <div class="bk"><div class="v">−0.043</div><div class="d">Δ_tok [−0.062, −0.011]: the opposite sign to H5M; not a loss (the point does not reach −0.05), not equivalent (the interval passes −0.05).</div></div>
+          <div class="bk"><div class="v">195 / 195</div><div class="d">cells where ANM’s factorization check rejects the gene-mean as an <i>exact</i> first-order state for R2 (rtol 1e-4); it says nothing about size.</div></div>
         </div>
         <div class="bproof">
-          <div class="proves"><b>Will test</b>Whether, at first order, gene-mean pooling discards what an independent token-level observer uses on NK–T look-alikes, with ANM’s clamp estimator and a declared candidate state.</div>
-          <div class="limits"><b>Will not test</b>Higher-order effects, other observers or other cells. It does not let ANM “find” TEDDY’s minimal degrees of freedom: the state is declared, then tested.</div>
+          <div class="proves"><b>Shows</b>With validated derivatives (pass share 1.000 for every target) and a passing positive control, how much of one observer’s first-order response passes through what gene-mean pooling discards: 0.085 on look-alike pair cells, 0.127 on random cells. ANM’s own factorization check rejects the gene-mean as an exact first-order retained state for R2, and its source-kernel test is not informative here, as the paper predicts; the informative quantity is the clamp residual.</div>
+          <div class="limits"><b>Does not prove</b>That pooling loses the look-alike difference (H5M is not supported, and the measured difference has the opposite sign). Nor that the gene-mean is sufficient, the registered PASS_SUFFICIENT reading “z_12 suffices for this observer at first order, so the NK-T loss is in our head, not in pooling” (not reached: 0.085 is above 0.05 and Δ_tok is not equivalent). One observer whose attention is nearly uniform (median 1,141.957 effective of 1,368 tokens, E3), first order only, 7 genes, 195 cells from 2 donors; pair cells are defined on the primary key, weak in donor 13272.</div>
         </div>
-        <p class="zh">E5-M（运行中，本版不报告结果）：把 TEDDY 的基因均值状态作为声明的候选保留状态，用 ANM 自身的钳制估计量检验它对独立 token 观察者是否充分。</p>
+        <p class="zh">E5-M（预注册，判定为“不确定”）：对 E3 的 R2 观察者，在一阶下，其响应流经基因均值池化所丢弃部分的中位份额在 NK–T 相似配对细胞上为 0.085，在匹配随机细胞上为 0.127，方向与假设相反（Δ_tok −0.043 [−0.062, −0.011]），未达到 −0.05 的损失边界，也不在等价区间内；配对细胞上的 0.085 高于 0.05，故也不能说基因均值状态充分。ANM 的分解检验在 rtol 1e-4 下拒绝精确分解，源核检验不提供信息（与论文预期一致）。结论只针对这一个注意力近乎均匀的观察者。</p>
       </article>
 
       <!-- ---------- E6 ---------- -->
-      <article class="block v3b v3run" id="v3-e6">
+      <article class="block v3b" id="v3-e6">
         <header class="bhead">
           <span class="bnum">E6</span>
-          <div><span class="bk-kick">E6 · external confirmation · <span class="run">running</span></span><h3>Does E1 replicate on another dataset?</h3><p class="bq">Hao et al. 2021 PBMC CITE-seq (GSE164378): rerun E1’s main endpoints with TEDDY, the head, the evidence normaliser, panels, bars, classifier and gate logic all frozen.</p></div>
-          <a class="bsrc" href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E6.json" target="_blank" rel="noopener">E6.json ↗</a>
+          <div><span class="bk-kick">E6 · external confirmation · final</span><h3>Does E1 replicate on another dataset?</h3><p class="bq">Hao et al. 2021 PBMC CITE-seq (GSE164378): rerun E1’s main endpoints with TEDDY, the head, the evidence normaliser, panels, bars, classifier and gate logic all frozen.</p></div>
+          <a class="bsrc" href="reports/V3_REGISTERED_RESULTS.md">V3 report ↗</a>
         </header>
-        <div class="plain run"><span class="pl">Running</span><p><b>No external outcome is reported in this version</b> (<code>outputs/v3/E6</code> did not exist at the time of writing). The design was fixed in addendum <code>E6.json</code> v2 (sha256 <code>b82687a7…</code>), pushed 10:43:44, before any external run.</p></div>
+        <div class="plain"><span class="pl">In plain words</span><p>Partly, and every E6 result carries two labels: <b>“RNA possibly seen by TEDDY in pretraining”</b> and <b>“key not validated”</b>. ANM equals the declared rule in every external donor. TEDDY’s margin ranked the rule’s calls better than the rule’s (= ANM’s) top score in all 8 donors (replicates; still inconclusive under E1’s own decision rule). The site4 advantage of a trained classifier does not replicate: on these data every method’s AURC lies between 0.983 and 0.993.</p></div>
         <div class="bgrid">
           <div>
-            <div class="bpart"><h4>Problem</h4><p>Every v3 verdict rests on two donors at one site. Do E1’s conclusions hold on an independent dataset, with nothing re-tuned?</p></div>
+            <div class="bpart"><h4>Problem</h4><p>Every other v3 verdict rests on two donors at one site. Do E1’s conclusions hold on an independent dataset, with nothing re-tuned?</p></div>
             <div class="bpart"><h4>Compared</h4><div class="chips">
-              <span class="chip"><i class="bg-teddy"></i>declared rule</span><span class="chip"><i class="bg-anm"></i>TEDDY + ANM</span><span class="chip"><i class="bg-train"></i>trained classifier</span>
+              <span class="chip"><i class="bg-teddy"></i>declared rule</span><span class="chip"><i class="bg-anm"></i>TEDDY + ANM</span><span class="chip"><i class="bg-train"></i>trained classifier</span><span class="chip"><i class="bg-neutral"></i>TEDDY’s margin</span>
               <span class="chip m">40,000 cells · 8 donors × 5,000</span></div></div>
-            <div class="bpart"><h4>What it does, step by step</h4><ol class="wf">
+            <div class="bpart"><h4>What we do, step by step</h4><ol class="wf">
               <li><b>Data:</b> 3′ data, 5,000 cells per donor from 8 donors, chosen by donor id only.</li>
-              <li><b>Gate:</b> thresholds re-estimated within each external donor, label-free. CD33 and CD94 are absent from the external protein panel, so their gate conditions are removed; CD5 and CD94 evidence is the head’s prediction from RNA, so it exists (a reduced-panel reading is a sensitivity).</li>
-              <li><b>Endpoints:</b> E1.1a, E1.4a, E1.C2 and Q1 selective accuracy at matched coverage, per donor and pooled.</li>
-              <li><b>Replication rule:</b> a v3 conclusion replicates if its sign holds in at least 5 of 8 donors and the pooled two-stage interval excludes 0 on the same side; a v3 point of exactly 0 gives “no v3 direction” (C2 at c* is 0.000).</li>
-              <li><b>Key not validated</b> if annotation-vs-gate kappa is below 0.70; results then use the annotation-only key.</li>
-            </ol><p class="wf-src"><code>scripts/v3_e6_external.py</code> · <code>scripts/prepare_external_cite.py</code> · <code>bridge_anm/lib/v3_e6.py</code></p></div>
+              <li><b>Panels (addendum version 2):</b> every arm reads the full frozen registered panels, as in E1, so ANM still equals the mean rule. CD5 and CD94 are not in the external protein panel, but their evidence is the head’s prediction from RNA, so it exists; the literal reduced-panel reading is a sensitivity that never decides.</li>
+              <li><b>Gate:</b> thresholds re-estimated within each external donor, label-free; CD33 and CD94 are not measured externally, so their gate conditions are removed.</li>
+              <li><b>Endpoints:</b> E1.1a; E1.4a (primary: top score − margin, AURC); E1.C2 (primary: closure − rule, out-of-scope decline at c*); Q1 selective accuracy at matched coverage; per donor and pooled.</li>
+              <li><b><span class="term" data-term="replic">Replication rule</span>:</b> a v3 conclusion replicates if its sign holds in at least 5 of 8 donors and the pooled interval excludes 0 on the same side; a site4 point of exactly 0 gives “no v3 direction”. E1’s own decision rule, with each external donor as a primary donor, is reported beside it and never replaces it.</li>
+              <li><b>Key validity first:</b> below kappa 0.70 the key is “not validated” and the annotation-only key decides.</li>
+            </ol><p class="wf-src"><code>scripts/v3_e6_external.py</code> · <code>scripts/prepare_external_cite.py</code> · <code>bridge_anm/lib/v3_e6.py</code> · addendum <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E6.json" target="_blank" rel="noopener">E6.json</a></p></div>
           </div>
-          <div class="v3res card pend">
-            <p class="subh">Result</p>
-            <p class="pend-big">pending</p>
-            <p class="tnote">Contamination label: “RNA possibly seen by TEDDY in pretraining”. Annotation map: 31 labels, 31 of 31 agreeing on independent rederivation. Disclosed deviation: the map’s first version was revised after the prep step had read external values.</p>
+          <div class="v3res card">
+            <p class="subh">Registered endpoints · annotation-only key (decides) · pooled [95% CI] · donors with the v3 sign</p>
+            <div class="tblwrap"><p class="shint">scroll →</p>
+              <table class="dt v3dt">
+                <thead><tr><th>Endpoint</th><th>External</th><th>Donors, v3 sign</th><th>Replication · E1 rule</th></tr></thead>
+                <tbody>
+                  <tr><td>E1.1a · ANM vs rule, call mismatches (Q1 / Q2 / Q3, closure)<span class="ci">site4 (E1): 0</span></td><td>0 in every donor</td><td>8 of 8</td><td><span class="vd pass">replicates</span></td></tr>
+                  <tr><td>E1.4a · AURC, top score (rule = ANM) − margin (primary)<span class="ci">site4 (E1): −0.0015</span></td><td>−0.0087<span class="ci">[−0.0182, −0.0017]</span></td><td>8 of 8</td><td><span class="vd pass">replicates</span><span class="ci">E1 rule: inconclusive</span></td></tr>
+                  <tr><td>C2 · closure − rule, out-of-scope decline at c* (primary)<span class="ci">site4 (E1): 0.0000</span></td><td>0.0000<span class="ci">[0.0000, 0.0000]</span></td><td>—</td><td><span class="vd meas">no v3 direction</span><span class="ci">E1 rule: equivalent; in-scope guard failed (−0.0086)</span></td></tr>
+                </tbody>
+              </table>
+              <h5>Secondary rows (never decide)</h5>
+              <table class="dt v3dt">
+                <thead><tr><th>Endpoint</th><th>External</th><th>Donors, v3 sign</th><th>Replication · E1 rule</th></tr></thead>
+                <tbody>
+                  <tr><td>E1.4a · top score − classifier, AURC<span class="ci">site4 (E1): −0.0990</span></td><td>0.0010<span class="ci">[−0.0102, 0.0091]</span></td><td>2 of 8</td><td>does not replicate<span class="ci">inconclusive</span></td></tr>
+                  <tr><td>E1.4a · top score − entropy, AURC<span class="ci">site4 (E1): −0.0040</span></td><td>−0.0095<span class="ci">[−0.0213, −0.0013]</span></td><td>8 of 8</td><td>replicates<span class="ci">inconclusive</span></td></tr>
+                  <tr><td>Q1 accuracy, top score − margin at coverage 0.90<span class="ci">site4 (E1): 0.0210</span></td><td>−0.0023<span class="ci">[−0.0046, 0.0008]</span></td><td>3 of 8</td><td>does not replicate<span class="ci">equivalent</span></td></tr>
+                  <tr><td>Q1 accuracy, top score − margin at 0.70<span class="ci">site4 (E1): −0.0021</span></td><td>−0.0115<span class="ci">[−0.0234, −0.0025]</span></td><td>8 of 8</td><td>replicates<span class="ci">inconclusive</span></td></tr>
+                  <tr><td>Q1 accuracy, top score − classifier at 0.90<span class="ci">site4 (E1): −0.0871</span></td><td>−0.0005<span class="ci">[−0.0104, 0.0070]</span></td><td>2 of 8</td><td>does not replicate<span class="ci">inconclusive</span></td></tr>
+                  <tr><td>Q1 accuracy, top score − classifier at 0.70<span class="ci">site4 (E1): −0.1149</span></td><td>0.0003<span class="ci">[−0.0110, 0.0087]</span></td><td>2 of 8</td><td>does not replicate<span class="ci">inconclusive</span></td></tr>
+                  <tr><td>C2 · closure − rule at coverage 0.80<span class="ci">site4 (E1): 0.0512</span></td><td>0.0095<span class="ci">[−0.0314, 0.0407]</span></td><td>4 of 8</td><td>does not replicate<span class="ci">equivalent</span></td></tr>
+                  <tr><td>C2 · closure − rule at 0.70<span class="ci">site4 (E1): 0.0069</span></td><td>0.0285<span class="ci">[0.0000, 0.0484]</span></td><td>6 of 8</td><td>does not replicate<span class="ci">equivalent</span></td></tr>
+                </tbody>
+              </table>
+              <h5>Deployed operating points · coverage / selective accuracy / out-of-scope decline (annotation-only key, descriptive)</h5>
+              <table class="dt v3dt">
+                <thead><tr><th>Method</th><th>Coverage</th><th>Selective acc.</th><th>OUT decline</th></tr></thead>
+                <tbody>
+                  <tr><td>Q1 declared rule (= TEDDY + ANM)</td><td>0.993</td><td>0.966</td><td>0.292</td></tr>
+                  <tr><td>Q1 ANM closure readout</td><td>0.992</td><td>0.959</td><td>0.351</td></tr>
+                  <tr><td>Q1 trained classifier</td><td>0.998</td><td>0.967</td><td>0.103</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tnote">Key validity, computed before any method result: pooled five-class kappa 0.6562, below the registered 0.70 (per donor 0.4314 to 0.7887); the gate puts 10,686 cells out of scope against 949 annotated. AURC on the deciding key: top score (rule = ANM) 0.984, margin 0.993, entropy 0.993, classifier 0.983; the rule’s Q1 coverage c* is 0.993. On the primary key (10,097 cells unscored) the two primary rows have the same status. Reduced panels (sensitivity): ANM no longer equals the mean rule (123 Q1 calls differ), and its top score − margin is −0.0116 [−0.0178, −0.0056]. The rule calls 442 of 486 platelets myeloid, because CD62P is in the myeloid panel.</p>
           </div>
+        </div>
+        <div class="bkpis">
+          <div class="bk"><div class="v a">0 · 0 · 0</div><div class="d">calls where ANM’s engine differs from the declared rule, Q1 / Q2 / Q3, in every external donor: E1.1a replicates.</div></div>
+          <div class="bk"><div class="v">−0.0087</div><div class="d">AURC, top score (rule = ANM) − TEDDY’s margin [−0.0182, −0.0017]: the margin is ahead in 8 of 8 donors (replicates; E1 rule: inconclusive).</div></div>
+          <div class="bk"><div class="v">0.0000</div><div class="d">closure − rule at c*: the site4 point is exactly 0, so “no v3 direction”; externally equivalent, in-scope guard failed.</div></div>
+          <div class="bk"><div class="v t">0.6562 <span class="vs">&lt;</span> 0.70</div><div class="d">pooled key kappa: “key not validated”, so the annotation-only key decides.</div></div>
         </div>
         <div class="bproof">
-          <div class="proves"><b>Will test</b>Whether E1’s directions (ANM = declared rule, no trust-ordering gain, no closure gain) replicate per donor and pooled on independent CITE-seq data.</div>
-          <div class="limits"><b>Will not test</b>Contamination-free generalisation: TEDDY may have seen this RNA in pretraining. Nothing is re-tuned, so a failure to replicate cannot be repaired after the fact.</div>
+          <div class="proves"><b>Shows</b>E1’s bookkeeping result holds on another dataset: ANM equals the declared rule, with 0 mismatches and 0 rejected events in every donor. The direction “TEDDY’s margin ranks the rule’s calls at least as well as the rule’s (= ANM’s) top score” replicates (8 of 8 donors, pooled interval below 0), which supports keeping the trust-gate claim withdrawn. It does not make ANM worse than the rule: top score (ANM) − rule is 0.0000 by construction.</div>
+          <div class="limits"><b>Does not prove</b>Replication on data TEDDY has certainly not seen (the addendum’s contamination answer is “likely yes”), or on a validated key (kappa 0.6562; 0.4314 in donor P7). The data are easy for this pipeline (c* 0.993; every AURC 0.983–0.993), which limits what any comparison can show. E1.1b–d, E1.3, E1.5 and the Q2 and Q3 endpoints were not run externally. The annotation map’s first version was revised after the prep step had read external values (disclosed; an independent re-derivation reproduced the map, 31 of 31 labels). 8 donors; the intervals describe these donors.</div>
         </div>
-        <p class="zh">E6（运行中，尚无外部结果）：在外部 PBMC 数据上冻结所有规则复现 E1 主要终点；该数据的 RNA 可能已被 TEDDY 预训练见过。</p>
+        <p class="zh">E6（预注册）：所有结果带两个标签——“RNA 可能已被 TEDDY 预训练见过”和“答案键未验证”（kappa 0.6562 &lt; 0.70，故以仅注释键判定）。E1.1a 在每个外部供体上复现（0 不一致）。主要终点 E1.4a（顶分 − margin 的 AURC）为 −0.0087 [−0.0182, −0.0017]，8 个供体全为负，按复现规则“复现”：TEDDY 的 margin 对调用的排序至少与规则（即 ANM）的顶分一样好；按 E1 自身判定规则仍为不确定。C2 在 c* 处为 0.0000，“无 v3 方向”（等价）。分类器排序优势未复现（外部数据过易，各方法 AURC 在 0.983–0.993 之间）。</p>
       </article>
 
       <!-- ---------- LEDGER ---------- -->
@@ -1603,33 +1678,39 @@ details.fr-method .bpart { max-width: 52rem; }
           <div class="lg card can">
             <h4>Can claim</h4>
             <ol>
-              <li><b>In this setup ANM’s engine computes exactly the declared rule.</b> A check, not a gain. <span class="st reg">registered</span><span class="ev">E1.1a: 0 mismatches (Q1, Q2, Q3, closure), both test splits; E2: 0 over all cases; E4: engine = closed form.</span></li>
+              <li><b>In this setup ANM’s engine computes exactly the declared rule, on site4 and on the external data.</b> A check, not a gain. <span class="st reg">registered</span><span class="ev">E1.1a: 0 mismatches (Q1, Q2, Q3, closure), both test splits; E6: 0 in every external donor, 0 rejected events; E2: 0 over all cases; E4: engine = closed form.</span></li>
               <li><b>ANM’s leave-one-out attribution equals the exact closed form.</b> <span class="st reg">registered</span><span class="ev">E1.3a: agreement 1.0000 on 10,715 calls.</span></li>
               <li><b>Pooled, one panel protein decides more calls than the 1/3 null in each class</b>; a property of the evidence that any rule reproduces; not by donor for B. <span class="st sec">secondary</span><span class="ev">CD11c 0.832, CD2 0.618, CD94 0.572, CD20 0.484; p = 0.0010.</span></li>
-              <li><b>A logistic classifier on the same 12 evidence values orders calls better than the rule’s (= ANM’s) top score.</b> <span class="st sec">secondary</span><span class="ev">AURC 0.942 vs 0.843; −0.099 [−0.163, −0.034].</span></li>
-              <li><b>A classifier trained only on the old question’s labels answers the new question better than the zero-label rule.</b> <span class="st reg">registered</span><span class="ev">E1.1c −0.078 [−0.134, −0.028], loss; annotation-only −0.054; E1.5 n* = 0.</span></li>
-              <li><b>Operating point of TEDDY + head + Q1 rule on unseen donors:</b> coverage 0.949, selective accuracy 0.697 (annotation-only 0.730), out-of-scope decline 0.261. <span class="st des">descriptive</span></li>
+              <li><b>On site4, a logistic classifier on the same 12 evidence values orders calls better than the rule’s (= ANM’s) top score.</b> This does not replicate on the external data. <span class="st sec">secondary</span><span class="ev">Site4 AURC 0.942 vs 0.843; −0.099 [−0.163, −0.034]. E6: 0.0010 [−0.0102, 0.0091], v3 sign in 2 of 8 donors; every arm’s AURC 0.983–0.993.</span></li>
+              <li><b>A classifier trained only on the old question’s labels answers the new question better than the zero-label rule.</b> <span class="st reg">registered</span><span class="ev">E1.1c −0.078 [−0.134, −0.028], loss; annotation-only −0.054; E1.5 n* = 0. Not run externally.</span></li>
+              <li><b>Operating points of TEDDY + head + Q1 rule.</b> Unseen-donor site4 cells: coverage 0.949, selective accuracy 0.697 (annotation-only 0.730), out-of-scope decline 0.261. External PBMC data (annotation-only key; RNA possibly seen by TEDDY in pretraining): 0.993, 0.966, 0.292. <span class="st des">descriptive</span></li>
               <li><b>TEDDY + head + rule loses decision accuracy as RNA is thinned:</b> 0.022 at 80% kept, 0.162 at 20% (0.140 at 5%). <span class="st des">descriptive</span></li>
               <li><b>The response to these perturbations is not linear in their size.</b> <span class="st des">descriptive</span><span class="ev">E2 C5: at most 0.098 of cells linear at any stage.</span></li>
               <li><b>Two trained readouts of frozen TEDDY separate NK from T worse than the registered head.</b> <span class="st reg">registered</span><span class="ev">E3.H3b at 0.9: R1 −0.0409, R2 −0.1925; losses at 0.8 too.</span></li>
               <li><b>A validation-trained stacker fuses the two channels best, and ANM’s fusion loses to it.</b> <span class="st reg">registered</span><span class="ev">E4: F3 0.9353 vs F5 0.8538. F2 − F0 +0.0143 (E4 key only; secondary).</span></li>
               <li><b>E5’s registered derivative check failed in float32 at ε = 1e-3</b>; the float64 version passes. <span class="st reg">registered</span><span class="ev">0.854 &lt; 0.95; S5 1.000.</span></li>
+              <li><b>On the external data, TEDDY’s margin ranks the declared rule’s calls at least as well as the rule’s (= ANM’s) top score</b>: ahead in all 8 donors, pooled interval below 0. On site4 the same comparison was inconclusive. <span class="st reg">registered</span><span class="ev">E6 primary E1.4a: −0.0087 [−0.0182, −0.0017], replicates; E1 decision rule over the 8 donors: inconclusive. Site4: −0.002 [−0.024, 0.020]. Key not validated; RNA possibly seen by TEDDY in pretraining.</span></li>
+              <li><b>For E3’s attention-pooling readout R2, at first order on 195 site4 cells, the median share of its response that flows through what gene-mean pooling discards is 0.085 on NK–T look-alike pair cells and 0.127 on matched random cells</b>: smaller, not larger, on look-alikes. <span class="st reg">registered</span><span class="ev">A registered measurement; the verdict on H5M is inconclusive (E5-M). Δ_tok −0.043 [−0.062, −0.011]; DD_rand −0.041 [−0.061, −0.004]; random token readout 0.067 / 0.068. Derivative gate validated (1.000); positive control passed. For this observer only; its attention is nearly uniform.</span></li>
+              <li><b>ANM’s own factorization check rejects the gene-mean as an <i>exact</i> first-order retained state for R2, and its source-kernel test is uninformative here, as the ANM paper predicts.</b> <span class="st sec">secondary</span><span class="ev">E5-M S4, rtol 1e-4: REJECTED in 195 of 195 cells; source kernel NOT_INFORMATIVE in 195 of 195 (K_z full column rank in every cell).</span></li>
             </ol>
           </div>
           <div class="lg card cannot">
             <h4>Cannot claim · rejected by</h4>
             <ol>
-              <li><b>“ANM adds decision value as a decision layer on TEDDY.”</b><span class="ev">E1 falsification: neither E1.4 nor C2 is a win; every ANM arm equals a re-coded rule.</span></li>
-              <li><b>“ANM’s confidence is a better trust gate than TEDDY’s margin.”</b><span class="ev">E1.4a −0.002 [−0.024, 0.020], inconclusive; the gate claim stays withdrawn.</span></li>
-              <li><b>“ANM’s nested (closure) readout declines out-of-scope cells better.”</b><span class="ev">C2 at c*: 0.000, equivalent; in-scope guard failed (−0.056).</span></li>
-              <li><b>“Editing the question with zero labels beats training” / “ANM saves labels.”</b><span class="ev">E1.1c/d loss (−0.078); E1.5 n* = 0.</span></li>
+              <li><b>“ANM adds decision value as a decision layer on TEDDY.”</b><span class="ev">E1 falsification: neither E1.4 nor C2 is a win; every ANM arm equals a re-coded rule. E6: the engine equals the rule in every external donor, and the margin ranks calls better than the top score in 8 of 8 donors.</span></li>
+              <li><b>“ANM’s confidence is a better trust gate than TEDDY’s margin.”</b><span class="ev">E1.4a −0.002 [−0.024, 0.020], inconclusive; the gate claim stays withdrawn. E6: the direction against it replicates (−0.0087 [−0.0182, −0.0017]). The site4 0.90-coverage gain is secondary, belongs to the rule’s top score, and does not replicate (−0.0023 [−0.0046, 0.0008]).</span></li>
+              <li><b>“ANM’s nested (closure) readout declines out-of-scope cells better.”</b><span class="ev">C2 at c*: 0.000, equivalent; in-scope guard failed (−0.056). E6: 0.0000, no v3 direction; guard failed (−0.0086).</span></li>
+              <li><b>“Editing the question with zero labels beats training” / “ANM saves labels.”</b><span class="ev">E1.1c/d loss (−0.078); E1.5 n* = 0. Not run externally.</span></li>
               <li><b>“Attribution flags wrong calls better than TEDDY’s margin.”</b><span class="ev">E1.3c 0.004 [−0.008, 0.022], inconclusive.</span></li>
               <li><b>“The representation / head / decision split tells more than the accuracy curve.”</b><span class="ev">E2 falsified; criterion (ii) loss (−0.092).</span></li>
               <li><b>“The NK–T loss is in the readout or pooling and is repairable on frozen TEDDY.”</b><span class="ev">E3 falsification (A2.1): rejected.</span></li>
-              <li><b>“The NK–T loss is in mean pooling.”</b><span class="ev">E3 pooling: −0.0375 [−0.4408, 0.22], inconclusive.</span></li>
+              <li><b>“The NK–T loss is in mean pooling” / “pooling discards NK–T information that a token readout uses on look-alike cells.”</b><span class="ev">E3 pooling: −0.0375 [−0.4408, 0.22], inconclusive. E5-M: H5M not supported; for R2 the look-alike excess has the opposite sign (Δ_tok −0.043 [−0.062, −0.011]).</span></li>
+              <li><b>“TEDDY’s gene-mean state is sufficient for an independent observer on look-alikes” / “pooling is not the problem; the NK–T loss is in our head.”</b><span class="ev">E5-M: PASS_SUFFICIENT not reached; the pair-cell level is 0.085 [0.071, 0.096], above 0.05, and Δ_tok is not equivalent. Measured for one near-uniform observer only.</span></li>
               <li><b>“ANM’s field fuses evidence channels better.”</b><span class="ev">E4: F5 − F3 −0.0815, loss; F5 − F2 inconclusive.</span></li>
               <li><b>“A specific TEDDY layer localises the NK–T loss.”</b><span class="ev">E5: JVP not validated; l* = 11 vs probe layer 9.</span></li>
-              <li><b>Any population-level statement.</b><span class="ev">Two primary donors; the intervals describe them.</span></li>
+              <li><b>“A trained classifier orders calls better than the rule in general.”</b><span class="ev">Site4 only; E6: 0.0010 [−0.0102, 0.0091], does not replicate.</span></li>
+              <li><b>“E6 confirms v3 on data TEDDY never saw, with a validated key.”</b><span class="ev">Contamination answer “likely yes”; key not validated (0.6562 &lt; 0.70).</span></li>
+              <li><b>Any population-level statement.</b><span class="ev">Two site4 donors and 8 external donors; the intervals describe these donors.</span></li>
               <li><b>Any v1/v2 headline as a v3 result</b> (the first run’s ANM accuracy edge, “0 vs 50–1,000 labels”, the confidence gate, the NK–T compression example).<span class="ev">Superseded by E1 and E3 under the v3 key.</span></li>
             </ol>
           </div>
@@ -1637,13 +1718,13 @@ details.fr-method .bpart { max-width: 52rem; }
             <h4>Not tested</h4>
             <ol>
               <li><b>ANM’s field dynamics:</b> retention over real processing steps, multi-step propagation, histories, feedback.<span class="ev">Every event at t = 0: the field is a constant gain per class (G(3)·3·S). E4’s t = 2 control is a declared order, not a history.</span></li>
-              <li><b>Whether TEDDY’s gene-mean state is sufficient for an independent token observer.</b><span class="ev">E5-M: running; not reported.</span></li>
-              <li><b>External replication.</b><span class="ev">E6: running; RNA possibly seen by TEDDY in pretraining.</span></li>
+              <li><b>Sufficiency of TEDDY’s gene-mean for other observers</b> (sharper attention, nonlinear readouts), for larger pushes, and on more cells.<span class="ev">Partly tested: one observer, first order, 195 cells (E5-M). R2’s attention is nearly uniform (median 1,141.957 effective of 1,368 tokens).</span></li>
+              <li><b>Replication on data TEDDY has certainly not seen</b>, and external replication of E1.1b–d, E1.3, E1.5 and of E2–E5-M.<span class="ev">Partly tested (E6): its data are labelled RNA possibly seen by TEDDY in pretraining; it ran E1.1a, E1.4a, E1.C2 and Q1 accuracy only.</span></li>
               <li><b>Pretraining contamination of TEDDY with this dataset (GSE194122).</b><span class="ev">Not verified.</span></li>
               <li><b>Effect of the head’s global ADT-median size factor</b> (over all cells, site4 included) on its weights.<span class="ev">Not testable without retraining.</span></li>
               <li><b>Retraining TEDDY or the head; other heads, panels or questions.</b><span class="ev">Out of scope.</span></li>
               <li><b>Comparison with TypeSafe AI’s Jev.</b><span class="ev">Never called; the classifier is a stand-in.</span></li>
-              <li><b>Validated layer-wise linear response in TEDDY.</b><span class="ev">E5 stopped at the gate; the float64 path was not registered before site4.</span></li>
+              <li><b>Validated layer-wise linear response in TEDDY (E5’s question).</b><span class="ev">E5 stopped at its gate; the float64 path was not registered before site4. E5-M’s own gate passed, but it validates E5-M’s derivatives and does not answer E5’s layer question.</span></li>
             </ol>
           </div>
         </div>
@@ -1657,7 +1738,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a href="https://github.com/danielchen26/teddy_mm/tree/exp/registered-v3/registration/addenda" target="_blank" rel="noopener">addenda/ ↗</a>
           <a href="https://github.com/danielchen26/teddy_mm/commits/exp/registered-v3" target="_blank" rel="noopener">branch history ↗</a>
         </div>
-        <p class="zh">账本：能说的是 ANM 精确复现声明规则、分类器优于零标签规则、两个替代读出的 NK-T 准确率不如原头部、验证集堆叠器融合最好等；不能说 ANM 提升决策、信任门控、嵌套读出、节省标签、融合或层定位；未检验的是 ANM 的场动力学、E5-M、E6 及污染问题。</p>
+        <p class="zh">账本（每条都有状态）：能说的是 ANM 在 site4 与外部数据上都精确复现声明规则、分类器优于零标签规则、两个替代读出的 NK-T 准确率不如原头部、验证集堆叠器融合最好、在外部数据上 TEDDY 的分数差对调用的排序至少与顶分一样好（8/8 供体；site4 上不确定）、R2 观察者在相似细胞上流经池化丢弃部分的份额反而更小（E5-M，判定不确定，仅限该观察者）等；不能说 ANM 提升决策、信任门控、嵌套读出、节省标签、融合、层定位，也不能说“池化丢失信息”或“基因均值状态充分”；未检验的是 ANM 的场动力学、其他观察者、真正未见过的数据及污染问题。</p>
       </div>
     </div>
   </section>
@@ -1758,9 +1839,9 @@ details.fr-method .bpart { max-width: 52rem; }
             <tr data-go="edit"><td><span class="mb"><i>1</i>Change the question</span></td><td data-l="Gap">Keeps answering the old question</td><td data-l="Compared">3 methods × 3 questions · 16,750 cells</td><td data-l="Result" class="res">ANM “no calls” 272 → 1,493 → 2,551, same calls as the re-coded rule; trained head flat at 43</td><td data-l="v2 credit · v3" class="pr">a declared question, edited with 0 labels (any written rule); not better calls<span class="v3c">v3 E1: a classifier on old labels beats the zero-label rule (loss)</span></td></tr>
             <tr data-go="missing"><td><span class="mb"><i>2</i>When RNA is missing</span></td><td data-l="Gap">No RNA, no TEDDY (withdrawn)</td><td data-l="Compared">Fixed rule vs ANM × 3 inputs · 12,563 cells each</td><td data-l="Result" class="res">Withdrawn (first run: “no calls” 0 → 1,664)</td><td data-l="v2 credit · v3" class="pr">withdrawn: trust per level = the fixed rule, stricter bar<span class="v3c">v3 E2 falsified; E4: ANM’s fusion loses to a stacker</span></td></tr>
             <tr data-go="attr"><td><span class="mb"><i>3</i>Why this call?</span></td><td data-l="Gap">No per-marker reason</td><td data-l="Compared">Leave-one-out on every call + statistical tests</td><td data-l="Result" class="res">16,478 cells · 30.0% flip · CD2 decides most often, 17.9% (p ≈ 0.0099)</td><td data-l="v2 credit · v3" class="pr">an auditable “why” per call; top marker = largest normalised value<span class="v3c">v3 E1.3: flags errors no better than the margin</span></td></tr>
-            <tr data-go="scope"><td><span class="mb"><i>4</i>Which calls to trust?</span></td><td data-l="Gap">Its own margin is not reported</td><td data-l="Compared">ANM confidence vs the rule’s margin · hard vs random cells</td><td data-l="Result" class="res">0.938 → 0.9993 at 40% coverage (rule margin 0.9994); hard cells 0.791 vs 0.939</td><td data-l="v2 credit · v3" class="pr">a confidence gate, never better than the rule’s own margin<span class="v3c">v3 E1.4a: inconclusive; gate claim withdrawn</span></td></tr>
+            <tr data-go="scope"><td><span class="mb"><i>4</i>Which calls to trust?</span></td><td data-l="Gap">Its own margin is not reported</td><td data-l="Compared">ANM confidence vs the rule’s margin · hard vs random cells</td><td data-l="Result" class="res">0.938 → 0.9993 at 40% coverage (rule margin 0.9994); hard cells 0.791 vs 0.939</td><td data-l="v2 credit · v3" class="pr">a confidence gate, never better than the rule’s own margin<span class="v3c">v3 E1.4a: inconclusive; E6: the margin ranks better in 8 of 8 donors; gate claim withdrawn</span></td></tr>
             <tr data-go="labels"><td><span class="mb"><i>5</i>Cost of a new question</span></td><td data-l="Gap">A new question costs labels</td><td data-l="Compared">ANM (0 labels) vs heads on 50 → 10,619 labels</td><td data-l="Result" class="res">≈ 50 / 500 / 1,000 labels (grid / logistic / MLP)</td><td data-l="v2 credit · v3" class="pr">new questions free on the same evidence, like any written rule<span class="v3c">v3 E1.5: n* = 0, the classifier already wins</span></td></tr>
-            <tr data-go="anm-loop"><td><span class="mb"><i>6</i>Look-alike cells</span></td><td data-l="Gap">Can’t flag where the embedding fails</td><td data-l="Compared">5,000 look-alike pairs · 1,490 myeloid↔T</td><td data-l="Result" class="res">withdrawn (first run: false agreement 0.85 → 0.40)</td><td data-l="v2 credit · v3" class="pr">withdrawn pending redesign<span class="v3c">v3 E3: repair rejected; E5 stopped; E5-M running</span></td></tr>
+            <tr data-go="anm-loop"><td><span class="mb"><i>6</i>Look-alike cells</span></td><td data-l="Gap">Can’t flag where the embedding fails</td><td data-l="Compared">5,000 look-alike pairs · 1,490 myeloid↔T</td><td data-l="Result" class="res">withdrawn (first run: false agreement 0.85 → 0.40)</td><td data-l="v2 credit · v3" class="pr">withdrawn pending redesign<span class="v3c">v3 E3: repair rejected; E5 stopped; E5-M inconclusive</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -2002,7 +2083,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <div class="proves"><b>Shows</b>A graded trust signal: calls kept where ANM is confident are more accurate, and hard cells show where the 3-class question fits worst.</div>
           <div class="limits"><b>Does not prove</b>A gate only ANM has, or a better one: the rule’s margin ties or beats it at every matched coverage, under both rules. Confidence reaches 1.11: not a probability. Label-budget gains are small: +0.058 at 50, +0.018 at 100.</div>
         </div>
-        <p class="sup"><b>Superseded by v3</b>E1.4a: ranking calls by ANM’s top score (= G(3)·3 × the rule’s top score) is no better than TEDDY’s margin (AURC −0.002 [−0.024, 0.020], inconclusive), and a logistic classifier on the same evidence orders calls better (0.942 vs 0.843). The gate claim stays withdrawn. <a href="#v3-e1">E1 →</a></p>
+        <p class="sup"><b>Superseded by v3</b>E1.4a: ranking calls by ANM’s top score (= G(3)·3 × the rule’s top score) is no better than TEDDY’s margin (AURC −0.002 [−0.024, 0.020], inconclusive), and a logistic classifier on the same evidence orders calls better (0.942 vs 0.843). On external PBMC data (E6) the margin ranked the calls better than the top score in 8 of 8 donors (−0.0087 [−0.0182, −0.0017]; still inconclusive under E1’s decision rule), and the classifier’s advantage did not replicate. The gate claim stays withdrawn. <a href="#v3-e1">E1 →</a> · <a href="#v3-e6">E6 →</a></p>
         <p class="zh">用 ANM 的置信分给固定规则的判定把关：保留 40% 时 0.9993 / 0.9988，任何覆盖率下都不优于固定规则自身分数差（0.9994 / 0.9988）；难例准确率 0.791（随机 0.939），多为范围外细胞。</p>
       </article>
 
@@ -2071,7 +2152,7 @@ details.fr-method .bpart { max-width: 52rem; }
           <a class="bsrc" href="anm-loop.html">Interactive report ↗</a>
         </header>
         <div class="plain"><span class="pl">Withdrawn</span><p><b>Withdrawn pending redesign; the numbers below are the first run’s.</b> Prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences. Mode A probes: an MLP on the same embedding keeps about twice as much for CD56, CD94 and CD3, and gene-token states more than their mean. v2 read this as: part of the loss is in our head’s readout and in mean pooling, part may not be in the detected RNA; v3 E3 did not support that reading (<a href="reports/MODE_A_LINEAR_OFFICIAL.md">linear</a> · <a href="reports/MODE_A_NONLINEAR_OFFICIAL.md">MLP / kNN</a> · <a href="reports/MODE_A_TOKEN_OFFICIAL.md">token</a>).</p></div>
-        <p class="sup after-plain"><b>Redesigned in v3</b>E3 rejected “the NK–T loss is in the readout or pooling and is repairable on frozen TEDDY”: both trained readouts lost NK-vs-T accuracy to our head, and the head’s compression on look-alike pairs is descriptive only. E5 (layers) stopped at its derivative check; E5-M is running. <a href="#v3-e3">E3</a> · <a href="#v3-e5">E5</a> · <a href="#v3-e5m">E5-M →</a></p>
+        <p class="sup after-plain"><b>Redesigned in v3</b>E3 rejected “the NK–T loss is in the readout or pooling and is repairable on frozen TEDDY”: both trained readouts lost NK-vs-T accuracy to our head, and the head’s compression on look-alike pairs is descriptive only. E5 (layers) stopped at its derivative check; E5-M (sufficiency of the gene-mean) was inconclusive for the one observer tested. <a href="#v3-e3">E3</a> · <a href="#v3-e5">E5</a> · <a href="#v3-e5m">E5-M →</a></p>
         <div class="figpanel card" data-block="b6">
             <div class="ftabs" role="tablist">
               <button class="ftab" role="tab" aria-selected="true" data-pane="chart">Chart</button>
@@ -2124,24 +2205,24 @@ details.fr-method .bpart { max-width: 52rem; }
     <div class="wrap">
       <p class="kicker">04 — Claim boundary</p>
       <h2>What we claim, and what we don’t</h2>
-      <p class="intro"><span class="term" data-term="modeb">Mode B</span>: TEDDY + our head are the evidence source, we study the decision on top, the loop is open (<a href="#timestep">below</a>); <span class="term" data-term="modea">Mode A</span>: v2 probes, then v3 E5 (final) and E5-M (running); v3 E3 compared readouts of TEDDY’s layer and token states. The registered list is the <a href="#v3-ledger">v3 claims ledger</a>; this boundary agrees with it.</p>
+      <p class="intro"><span class="term" data-term="modeb">Mode B</span>: TEDDY + our head are the evidence source, we study the decision on top, the loop is open (<a href="#timestep">below</a>); <span class="term" data-term="modea">Mode A</span>: v2 probes, then v3 E5 and E5-M (both final); v3 E3 compared readouts of TEDDY’s layer and token states. The registered list is the <a href="#v3-ledger">v3 claims ledger</a>; this boundary agrees with it.</p>
       <div class="bound">
         <div class="card col in"><h3>Claimed · the decision layer</h3><ul>
           <li>The TEDDY + head predictions as typed evidence → ANM decisions</li>
           <li>ANM’s engine computes exactly the declared rule (v3 E1.1a: 0 mismatches): a check, not a gain</li>
           <li>Questions rewritten without retraining TEDDY or the head, as for any written rule</li>
           <li>Per-marker reasons (leave-one-out) equal to the exact closed form (v3 E1.3a), as any written rule can give</li>
-          <li>Measured operating points, degradation curves and NK-vs-T comparisons of TEDDY + head (v3 E1–E3)</li>
+          <li>Measured operating points, degradation curves and NK-vs-T comparisons of TEDDY + head (v3 E1–E3; external operating points in E6)</li>
         </ul></div>
         <div class="card col out"><h3>Not claimed</h3><ul>
           <li>Better calls than TEDDY + fixed rule: identical by construction</li>
-          <li>A better or ANM-only confidence gate (v3 E1.4a inconclusive; a classifier orders calls better)</li>
+          <li>A better or ANM-only confidence gate (v3 E1.4a inconclusive; on the external data TEDDY’s margin ranked the calls better in 8 of 8 donors, E6; a classifier ordered calls better on site4, not externally)</li>
           <li>Label savings: on a changed question a classifier trained on old labels beat the zero-label rule (v3 E1.1c, E1.5)</li>
           <li>Better out-of-scope declines from ANM’s closure readout (v3 C2 equivalent) or better fusion from ANM’s field (v3 E4 loss)</li>
           <li>A repairable NK–T readout loss on frozen TEDDY (v3 E3 rejected), or a TEDDY layer that localises it (v3 E5 not validated)</li>
-          <li>Whether TEDDY’s embedding is sufficient for the NK–T distinction: E5-M is running</li>
+          <li>That gene-mean pooling loses the NK–T look-alike difference, or that TEDDY’s gene-mean state is sufficient for it: E5-M was inconclusive, for one observer at first order</li>
           <li>ANM’s dynamics (retention over real steps, histories, feedback): every event at t = 0, not yet tested</li>
-          <li>Any population-level statement: two primary donors</li>
+          <li>Any population-level statement: two site4 donors and 8 external donors</li>
           <li>Pearson above phase-1 ≈ 0.60 from RNA (phase 2’s higher protein-input scores are reconstructions)</li>
           <li>ATAC / chromatin · clinical superiority · anything about TypeSafe AI’s <span class="term" data-term="jev">Jev</span> itself: never called here</li>
         </ul></div>
@@ -2164,7 +2245,7 @@ details.fr-method .bpart { max-width: 52rem; }
             <p>The per-gene residual stream is a natural <span class="term" data-term="candidate">declared candidate</span> retained state, to be tested against a declared readout, not assumed sufficient; attention couples the gene tokens.</p>
           </div>
         </div>
-        <p><b>So field dynamics on TEDDY are not yet tested, not impossible.</b> v3 registered the first layer-wise test in <span class="term" data-term="modea">Mode A</span> (<a href="#v3-e5">E5</a>): its derivative check failed in float32 (float64 passes), so it stopped; <a href="#v3-e5m">E5-M</a>, running, tests the gene-mean as a declared candidate state. In the ANM–Jev multimodal tests the field gained only when arrival order carried information (+1.4 points), and a 2-step window beat it by 7 points.</p>
+        <p><b>So field dynamics on TEDDY are not yet tested, not impossible.</b> v3 registered the first layer-wise test in <span class="term" data-term="modea">Mode A</span> (<a href="#v3-e5">E5</a>): its derivative check failed in float32 (float64 passes), so it stopped; <a href="#v3-e5m">E5-M</a> tested the gene-mean as a declared candidate state at first order, inconclusive for the one observer tested. In the ANM–Jev multimodal tests the field gained only when arrival order carried information (+1.4 points), and a 2-step window beat it by 7 points.</p>
       </div>
       <div class="weak card">
         <h3>Honest weak spots</h3>
@@ -2207,8 +2288,8 @@ details.fr-method .bpart { max-width: 52rem; }
             <tr><td>v3 · E2</td><td><code>scripts/e2_response_decomposition.py</code></td></tr>
             <tr><td>v3 · E3</td><td><code>scripts/v3_e3_nkt_repair.py</code></td></tr>
             <tr><td>v3 · E4</td><td><code>bridge_anm/v3_e4_fusion.py</code></td></tr>
-            <tr><td>v3 · E5 · E5-M</td><td><code>scripts/mode_a_layer_dynamics.py</code> · <code>scripts/mode_a_observer_sufficiency.py</code> (running)</td></tr>
-            <tr><td>v3 · E6</td><td><code>scripts/prepare_external_cite.py</code> → <code>scripts/v3_e6_external.py</code> (running)</td></tr>
+            <tr><td>v3 · E5 · E5-M</td><td><code>scripts/mode_a_layer_dynamics.py</code> · <code>scripts/mode_a_observer_sufficiency.py</code></td></tr>
+            <tr><td>v3 · E6</td><td><code>scripts/prepare_external_cite.py</code> → <code>scripts/v3_e6_external.py</code></td></tr>
             <tr><td>Earlier</td><td><code>run_bakeoff.py</code> · <code>run_stat_proof.py</code> · <code>run_cheap_probes.py</code></td><td><a href="reports/BAKEOFF_REPORT.md">BAKEOFF</a> · <a href="reports/STAT_PROOF.md">STAT_PROOF</a> · <a href="reports/CHEAP_PROBES_RANKING.md">CHEAP_PROBES</a></td></tr>
           </tbody>
         </table>
@@ -2304,14 +2385,14 @@ window.GUIDE_CONFIG = (function () {
         concepts: ['teddy', 'anm', 'evidence', 'observer', 'lineage', 'abstain', 'finitefield', 'holdout']
       },
       brings: {
-        label: 'What ANM brings TEDDY now', short: '★', plain: 'After the registered v3 tests: a check of declared readouts, no better decisions, and no validated response finding about TEDDY yet.', steps: ['teddy', 'decide', 'check'],
+        label: 'What ANM brings TEDDY now', short: '★', plain: 'After all seven registered v3 tests: a check of declared readouts, no better decisions, and one validated measurement about TEDDY that does not settle the registered question.', steps: ['teddy', 'decide', 'check'],
         how: {
           k: 'How ANM measures here',
           t: 'After v3: what ANM brings, honestly',
           steps: [
             ['A check', 'ANM’s engine equals the declared rule (0 mismatches), its leave-one-out equals the exact closed form (1.0000) and its fusion equals its closed form: the declared readouts are what the engine computes. Bookkeeping, not news about TEDDY.'],
             ['No better decisions', 'All events enter at t = 0, so the field is a constant gain per class (G(3)·3·S) and the call is the declared rule’s. Its readouts did not beat TEDDY’s margin, a trained classifier or a validation-trained stacker (E1, E4).'],
-            ['The response tools', 'E2’s decomposition added nothing beyond the accuracy curve; E5’s derivative gate failed in float32. E5-M, the sufficiency test of the gene-mean as a ' + T('candidate', 'declared candidate') + ' state, is running.'],
+            ['The response tools', 'E2’s decomposition added nothing beyond the accuracy curve; E5’s derivative gate failed in float32. E5-M tested the gene-mean as a ' + T('candidate', 'declared candidate') + ' state: for E3’s attention-pooling readout, 0.085 of its first-order response on look-alike cells flows through what pooling discards, against 0.127 on random cells. Registered verdict: inconclusive, for this one observer.'],
             ['The v2 sufficiency example', 'v2 found NK–T neighbours whose predicted differences were compressed to a quarter to a third of the measured ones. v3 E3: on registered pairs this contrast is descriptive only (gap ratio 0.1169 flagged vs 0.3985 unflagged, overlapping intervals; 0.4729 vs 0.5137 without gdT CD158b+ pairs), and two trained readouts of frozen TEDDY lost NK-vs-T accuracy to our head.']
           ],
           note: 'The four cards below are the v2 record; each carries a v3 note where it is superseded.'
@@ -2327,20 +2408,20 @@ window.GUIDE_CONFIG = (function () {
             ['ANM: decision', 'Normally reads only the head’s outputs (9 predicted proteins), never RNA and never TEDDY’s internals; the labelled exceptions are listed next. A written-down question turns them into a call or “no call”. ANM has no learned weights. ' + 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here (not yet tested, not impossible).'],
             ['Measured proteins: grading', 'Kept aside and used to grade the calls. v3 grades on a five-class key (B, T, NK, myeloid, out of scope) where annotation and a protein gate agree, and on the annotation-only key. On the v2 key, with the same scoring function as the rule and ANM (3 lineages, no NK or out-of-scope class): soft averages each lineage’s 3 markers; strict weights the key marker 2 to 1; B/T-priority uses the weighted key marker. A cell counts only when its top lineage clearly leads (by that rule’s margin); most NK cells, which carry CD16, count as “myeloid” (1,342 of 1,690 under the soft rule). Labelled exceptions, both withdrawn, also used them as input: Experiment 2’s stand-in and its “both” average, and Experiment 6 (pair selection and the complement test).'],
             ['Is it multimodal?', 'The data are, TEDDY is not: it reads only RNA and nothing fuses protein into it. The one combination was Experiment 2’s “both” (withdrawn), an average of the TEDDY + head predictions and the protein-only stand-in.'],
-            ['Phases vs modes', 'Phase 1 (TEDDY plus a small head, done) and phase 2 (a fusion model, unfinished) build the evidence. Mode B (ANM on the TEDDY + head outputs) and Mode A (looking inside TEDDY: v2 probes, then v3 E5 final and E5-M running) are two ways for ANM to use TEDDY. The axes are independent. Even unfinished, phase 2 fed Mode B as the RNA-missing stand-in (Experiment 2, now withdrawn). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against the TEDDY + head predictions; that would still be Mode B, not Mode A. (v3 E4 tested a second channel: ANM’s fusion did not beat the declared trust-weighted average and lost to a validation-trained stacker.)'],
+            ['Phases vs modes', 'Phase 1 (TEDDY plus a small head, done) and phase 2 (a fusion model, unfinished) build the evidence. Mode B (ANM on the TEDDY + head outputs) and Mode A (looking inside TEDDY: v2 probes, then v3 E5 and E5-M, both final) are two ways for ANM to use TEDDY. The axes are independent. Even unfinished, phase 2 fed Mode B as the RNA-missing stand-in (Experiment 2, now withdrawn). A finished fusion model could be used in Mode B as a stronger second evidence channel that ANM weighs against the TEDDY + head predictions; that would still be Mode B, not Mode A. (v3 E4 tested a second channel: ANM’s fusion did not beat the declared trust-weighted average and lost to a validation-trained stacker.)'],
             ['What we compare', 'Three methods on the same cells: TEDDY + fixed rule, TEDDY + ANM, and TEDDY + trained classifier, across six questions, one per experiment. The table here gives each method’s result. With all markers entering at once, ANM and the fixed rule written for the same question make identical calls.'],
-            [T('modeb', 'Mode B') + ' and ' + T('modea', 'Mode A'), 'We study the decision on top of the TEDDY + head outputs. Opening TEDDY up (its layers, gene perturbations) is Mode A: v2 probes for Experiment 6, then v3 E3 (readouts of frozen TEDDY), E5 (layer Jacobians, stopped at its derivative check) and E5-M (running).']
+            [T('modeb', 'Mode B') + ' and ' + T('modea', 'Mode A'), 'We study the decision on top of the TEDDY + head outputs. Opening TEDDY up (its layers, gene perturbations) is Mode A: v2 probes for Experiment 6, then v3 E3 (readouts of frozen TEDDY), E5 (layer Jacobians, stopped at its derivative check) and E5-M (sufficiency of the gene-mean, inconclusive).']
           ]
         },
         concepts: ['teddy', 'anm', 'phase1', 'phase2', 'evidence', 'citeseq', 'adt', 'modeb', 'modea']
       },
       v3: {
-        label: 'v3 · Registered experiments', short: 'v3', plain: 'E1–E5 final, E5-M and E6 running: every endpoint, margin and decision rule fixed on train and validation data before the test donors were read.', steps: ['evidence', 'observer', 'decide', 'check'],
+        label: 'v3 · Registered experiments', short: 'v3', plain: 'All seven final: every endpoint, margin and decision rule fixed on train and validation data before the test donors (and, for E6, the external data) were read.', steps: ['evidence', 'observer', 'decide', 'check'],
         how: {
           k: 'How ANM decides here',
           t: 'Where ANM’s field runs, and where a declared rule stands in',
           steps: [
-            ['Decision layer (E1, E2)', 'Each of the 12 panel evidence values becomes one support event at t = 0 in ANM’s engine (finite_graph_scalar: 4 steps, retention 0.82, diffusion 0.16). With equal panels every class score is G(3)·3·S, G(3) = 0.370041, S the declared rule’s score: same ranking, same bar, the rule’s call (0 mismatches on every test cell).'],
+            ['Decision layer (E1, E2, E6)', 'Each of the 12 panel evidence values becomes one support event at t = 0 in ANM’s engine (finite_graph_scalar: 4 steps, retention 0.82, diffusion 0.16). With equal panels every class score is G(3)·3·S, G(3) = 0.370041, S the declared rule’s score: same ranking, same bar, the rule’s call (0 mismatches on every test cell, and in every external donor in E6).'],
             ['Fusion (E4)', 'The field runs with two channels, per-channel source scales and contradiction events, all at t = 0; its scores equal a closed form. Without the contradiction events it is the ' + T('trustavg', 'trust-weighted average') + '.'],
             ['No ANM arm (E3)', 'E3 compares readouts of frozen TEDDY; its decisions use the declared Q1 rule.'],
             ['Inside TEDDY (E5, E5-M)', 'ANM’s engine does not decide. E5 follows a push through TEDDY’s layers with ' + T('jvp', 'Jacobian-vector products') + '; E5-M uses ANM’s ' + T('clamp', 'clamp estimator') + ' to test the gene-mean as a ' + T('candidate', 'declared candidate') + ' state against declared observers.'],
@@ -2424,34 +2505,37 @@ window.GUIDE_CONFIG = (function () {
         concepts: ['jvp', 'candidate', 'timestep', 'verdict']
       },
       'v3-e5m': {
-        label: 'E5-M · Sufficiency (running)', short: '5M', plain: 'Is TEDDY’s gene-mean state enough for an independent observer of its token states? Running; no result reported.', steps: ['teddy', 'check'], depth: 2,
+        label: 'E5-M · Sufficiency (v3)', short: '5M', plain: 'Is TEDDY’s gene-mean state enough for an independent observer of its token states? Registered: inconclusive, for one observer.', steps: ['teddy', 'check'], depth: 2,
         how: {
           k: 'How ANM tests here',
           t: 'ANM’s own sufficiency machinery on a declared candidate state',
           steps: [
             ['Declare', 'The candidate retained state is the gene-mean of TEDDY’s layer-12 token states, what our head reads. Declaring it does not establish sufficiency; the readout-visible quotient is a diagnostic only.'],
-            ['Observers', 'O_tok: E3’s frozen R2 on the token states. O_rand: a random token observer (negative control). O_head: the head on the gene-mean (positive control, residual 0).'],
-            ['Estimate', T('clamp', 'Clamp estimator') + ' H = Λ·pinv(Γ), from clamps of the candidate alone, never fitted on the tested responses.'],
-            ['Residual', 'r_O = ‖K_O − H·K_z‖ / ‖K_O‖: the share of an observer’s response that flows through what gene-mean pooling discards.'],
-            ['Decide', 'H5M: the median residual of O_tok is larger on NK–T pair cells than on random cells by ≥ 0.05 (common win rule) and beyond the random-observer null. Falsified if equivalent or a loss.']
+            ['Observers', 'O_tok: E3’s frozen R2 on the token states. O_rand: a random token observer (negative control). O_head: the head on the gene-mean (positive control, residual 0 by construction).'],
+            ['Estimate', T('clamp', 'Clamp estimator') + ' H = Λ·pinv(Γ), from clamps of the candidate alone, never fitted on the tested responses. Derivative gate: pass share 1.000 for every target; positive control passed.'],
+            ['Residual', 'r_O = ‖K_O − H·K_z‖ / ‖K_O‖, the share of an observer’s response that flows through what gene-mean pooling discards. For R2: median 0.085 on NK–T pair cells, 0.127 on random cells (random readout 0.067 / 0.068).'],
+            ['Decide', 'H5M needed Δ_tok ≥ 0.05. Measured −0.043 [−0.062, −0.011]: the opposite sign, not a loss (the point does not reach −0.05) and not equivalent, so ' + T('verdict', 'inconclusive') + '. PASS_SUFFICIENT is not reached either: the pair-cell level 0.085 is above 0.05.'],
+            ['ANM’s own check', 'analyze_factorization at rtol 1e-4 rejects an exact first-order factorization in 195 of 195 cells (any relative residual above 1e-4 rejects); its source-kernel test is not informative in all 195, as the paper predicts.']
           ],
-          note: 'Pending: the run started at 10:43:09 UTC after the addendum was pushed (07:57:00). Nothing here reports its outcome.'
+          note: 'One observer whose attention is nearly uniform (E3), first order, 7 genes, 195 cells from 2 donors. Neither “pooling loses the look-alike difference” nor “the gene-mean state is sufficient” is established.'
         },
         concepts: ['candidate', 'clamp', 'sufficiency', 'verdict', 'gapratio']
       },
       'v3-e6': {
-        label: 'E6 · External (running)', short: 'E6', plain: 'Does E1 replicate on Hao et al. 2021 PBMC CITE-seq, with everything frozen? Running; no result reported.', steps: ['evidence', 'decide', 'check'], depth: 2,
+        label: 'E6 · External (v3)', short: 'E6', plain: 'Does E1 replicate on Hao et al. 2021 PBMC CITE-seq, with everything frozen? Partly; RNA possibly seen by TEDDY in pretraining, key not validated.', steps: ['evidence', 'decide', 'check'], depth: 2,
         how: {
           t: 'The same frozen decision layer on another dataset',
           steps: [
-            ['Frozen', 'TEDDY, the head, the evidence normaliser, panels, bars, classifier and gate logic; only the gate thresholds are re-estimated within each external donor, label-free.'],
-            ['ANM', 'As in E1: one event per panel protein at t = 0, so E1.1a (ANM = declared rule) is re-checked cell by cell.'],
-            ['Replicate', 'A v3 conclusion replicates if its sign holds in at least 5 of 8 donors and the pooled interval excludes 0 on the same side.'],
-            ['Caveat', 'Contamination label: “RNA possibly seen by TEDDY in pretraining”.']
+            ['Frozen', 'TEDDY, the head, the evidence normaliser, the full registered panels, bars, classifier and gate logic; only the gate thresholds are re-estimated within each external donor, label-free. 40,000 cells, 8 donors.'],
+            ['Key first', 'Pooled ' + T('kappa', 'kappa') + ' 0.6562, below 0.70: “key not validated”, so the ' + T('primkey', 'annotation-only key') + ' decides.'],
+            ['ANM', 'As in E1: one event per panel protein at t = 0. E1.1a: 0 mismatches with the declared rule in every donor, 0 rejected events. Replicates.'],
+            ['Trust ordering', T('aurc', 'AURC') + ', top score (rule = ANM) − TEDDY’s margin: −0.0087 [−0.0182, −0.0017], margin ahead in 8 of 8 donors: replicates (' + T('replic', 'replication rule') + '); under E1’s own decision rule still inconclusive.'],
+            ['Closure readout', 'At c*, closure − rule out-of-scope decline is 0.0000: the site4 point is exactly 0, so “no v3 direction”; equivalent, in-scope guard failed.'],
+            ['Classifier', 'The site4 advantage of a classifier does not replicate (0.0010 [−0.0102, 0.0091]); every arm’s AURC lies between 0.983 and 0.993 on these data.']
           ],
-          note: 'Pending: no external outcome is reported in this version.'
+          note: 'Labels on every E6 result: “RNA possibly seen by TEDDY in pretraining” (addendum: likely yes) and “key not validated”. Reduced panels are a sensitivity that never decides.'
         },
-        concepts: ['declrule', 'primkey', 'kappa', 'verdict']
+        concepts: ['replic', 'declrule', 'primkey', 'kappa', 'aurc', 'verdict']
       },
       'v3-ledger': {
         label: 'v3 · Claims ledger', short: '✓', plain: 'What we can claim, what we cannot, and what was not tested, each with its status.', steps: ['check'], depth: 2,
@@ -2572,7 +2656,7 @@ window.GUIDE_CONFIG = (function () {
             ['Hard cells', 'Cells whose call flips under leave-one-out (4,942): accuracy 0.791 vs 0.939 on random cells. Most are NK/ILC (3.1× over-represented) or erythroid (3.4×), outside the 3-class key.'],
             ['The price', 'Accuracy is bought with ' + T('coverage', 'coverage') + '.']
           ],
-          note: 'v3 E1.4a: AURC of ANM’s top score minus TEDDY’s margin −0.002 [−0.024, 0.020], inconclusive; the gate claim stays withdrawn.'
+          note: 'v3 E1.4a: AURC of ANM’s top score minus TEDDY’s margin −0.002 [−0.024, 0.020], inconclusive; on external data (E6) −0.0087 [−0.0182, −0.0017], the margin ahead in 8 of 8 donors. The gate claim stays withdrawn.'
         },
         concepts: ['softp', 'coverage', 'loo', 'flip', 'qdec']
       },
@@ -2602,7 +2686,7 @@ window.GUIDE_CONFIG = (function () {
             [T('verify', 'Verify'), 'The same pairs again: false agreement 0.85 → 0.40, pairs told apart 0.17 → 0.63, accuracy of calls made 0.74 → 0.99.'],
             ['What it showed', 'Headline withdrawn pending redesign (it also changes the question; the key has no NK class). Redesign prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 453 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.148 vs measured 0.621); Mode A: an MLP probe on the same embedding keeps about twice as much for CD56, CD94 and CD3, and gene-token states more than their mean; v2 read this as part of the loss being in our head’s readout and in mean pooling, part perhaps not in the detected RNA (v3 E3 did not support the repair reading). As run, only changing the evidence the decision reads fixes these pairs. The question alone leaves false agreement at 0.83–0.84, and z⁺ makes the global must-separate rate worse (−0.27).']
           ],
-          note: 'Withdrawn pending redesign; the veto, complement and verify numbers are first-run numbers. The NK–T numbers are from the redesign prototype. Redesigned and registered as v3 E3 (repair rejected), E5 (stopped at its gate) and E5-M (running).'
+          note: 'Withdrawn pending redesign; the veto, complement and verify numbers are first-run numbers. The NK–T numbers are from the redesign prototype. Redesigned and registered as v3 E3 (repair rejected), E5 (stopped at its gate) and E5-M (inconclusive).'
         },
         concepts: ['z512', 'mustpair', 'veto', 'complement', 'verify', 'falseagree', 'softsep', 'zplus']
       },
@@ -2613,12 +2697,12 @@ window.GUIDE_CONFIG = (function () {
           t: 'ANM works on the TEDDY + head outputs only',
           steps: [
             [T('modeb', 'Mode B'), 'ANM reads the TEDDY + head predictions and decides on top of them. Every claim here is about that decision layer.'],
-            [T('modea', 'Mode A') + ', registered', 'E3 compared readouts of frozen TEDDY’s layer means and token states (both lost NK-vs-T accuracy to our head), and E5 followed a push through the layers with Jacobian-vector products (stopped at its derivative check). E5-M is running. No in-silico gene-perturbation claim.'],
+            [T('modea', 'Mode A') + ', registered', 'E3 compared readouts of frozen TEDDY’s layer means and token states (both lost NK-vs-T accuracy to our head), and E5 followed a push through the layers with Jacobian-vector products (stopped at its derivative check). E5-M tested the gene-mean as a declared candidate state: inconclusive, for one observer. No in-silico gene-perturbation claim.'],
             ['Open loop', 'teddy_mm runs ANM’s open-loop decision layer: TEDDY is a prescribed evidence source and does not read the field, so ANM’s dynamics (state feedback, operator memory, delays) are not tested here.'],
             ['Not yet, not never', 'ANM’s ' + T('timestep', 'step') + ' is any real processing order, not only physical time. Panel order was not one: the nine predictions come from one prediction, so feeding them in that order made memory decay act as a hidden weight. TEDDY’s layers are one, so the natural test of the dynamics is ' + T('modea', 'Mode A') + ', over layers, pre-registered (v3 E5 was that test and stopped at its derivative check).'],
             ['Same calls', 'With all markers entering at once ANM makes the fixed rule’s call on every cell; what remains is a check that the declared readouts are what the engine computes, not better calls.'],
             ['The answer key', 'Measured proteins only score the answers, except in the labelled tests (Experiments 2 and 6, both withdrawn). Corrected: predictions now use one train-median size factor, not a per-cell factor computed from measured protein.'],
-            ['Not claimed', 'Better calls than the fixed rule, a better trust gate, label savings, better fusion, a repairable NK–T readout loss, a TEDDY layer that localises it, Pearson above ≈ 0.60, a clinical result, or anything about TypeSafe AI’s ' + T('jev', 'Jev') + ' itself, which was never called here. The full registered list is the v3 claims ledger.']
+            ['Not claimed', 'Better calls than the fixed rule, a better trust gate, label savings, better fusion, a repairable NK–T readout loss, a TEDDY layer that localises it, that gene-mean pooling loses the look-alike difference or that the gene-mean state is sufficient (E5-M inconclusive), Pearson above ≈ 0.60, a clinical result, or anything about TypeSafe AI’s ' + T('jev', 'Jev') + ' itself, which was never called here. The full registered list is the v3 claims ledger.']
           ]
         },
         concepts: ['modeb', 'modea', 'timestep', 'adt', 'pearson', 'train']
