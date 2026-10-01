@@ -7581,6 +7581,3869 @@
   "source_key": "/summary/sensitivity_reduced_panels/replication/E1.C2 closure_red - rule_red OUT decline @c*/status",
   "value": "no v3 direction"
  },
+ "E7.addendum.anm_template": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/anm_template",
+  "value": "ANM v2 discussion: 'Exactly equal retained states give a readout difference beyond measurement error -> reject sufficiency -> separate the violating histories in a revised representation; test it with consumer and interface unchanged.' Selection operates within a supplied candidate library; neither automatic discovery of a missing variable nor a unique state encoding follows."
+ },
+ "E7.addendum.built_utc": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/built_utc",
+  "value": "2026-10-01T22:21:50Z"
+ },
+ "E7.addendum.can_show": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/can_show",
+  "value": "for one fixed consumer, one observable panel and one declared class of mean-preserving state interventions at the layer-11 cut: whether the layer-11 gene-mean is rejected as a sufficient retained state on fresh cells and donors, and whether a declared marker-token augmentation selected on development data gets bounded support there (if so, the first complete reject -> select -> validate step on TEDDY)"
+ },
+ "E7.addendum.candidates.G_genes": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/candidates/G/genes",
+  "value": {
+   "CD3D": "CD3",
+   "CD3E": "CD3",
+   "CD3G": "CD3",
+   "KLRD1": "CD94",
+   "NCAM1": "CD56",
+   "NCR1": "CD335"
+  }
+ },
+ "E7.addendum.candidates.order": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/candidates/order",
+  "value": [
+   "gene_mean",
+   "gene_mean_plus_G",
+   "all_token_states"
+  ]
+ },
+ "E7.addendum.cannot_show": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/cannot_show",
+  "value": [
+   "that RNA lacks NK-T information",
+   "that the head improves (the consumer is unchanged; E3 rejected repair on frozen TEDDY)",
+   "that any representation is unique or minimal beyond the declared library",
+   "transfer to other consumers, layers, observables or intervention classes",
+   "behaviour under on-manifold (real-cell) perturbations: these are state interventions, not input histories (ANM v2: 'Propagation imposes the state displacements; the readout alone is measured afresh')",
+   "clinical value"
+  ]
+ },
+ "E7.addendum.clamp.norm_dmu_11": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/clamp/norm_dmu_11",
+  "value": 0.3320915266020671
+ },
+ "E7.addendum.constants.bootstrap_seed": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/bootstrap_seed",
+  "value": 1
+ },
+ "E7.addendum.constants.float64_tol": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/float64_tol",
+  "value": 0.005
+ },
+ "E7.addendum.constants.fresh": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/fresh",
+  "value": [
+   0.25
+  ]
+ },
+ "E7.addendum.constants.kappa": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/kappa",
+  "value": 1.0
+ },
+ "E7.addendum.constants.ladder": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/ladder",
+  "value": [
+   0.03125,
+   0.125,
+   0.5
+  ]
+ },
+ "E7.addendum.constants.min_G_present": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/min_G_present",
+  "value": 1
+ },
+ "E7.addendum.constants.min_nonG_tokens": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/min_nonG_tokens",
+  "value": 256
+ },
+ "E7.addendum.constants.n_boot": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_boot",
+  "value": 2000
+ },
+ "E7.addendum.constants.n_clamp": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_clamp",
+  "value": 2
+ },
+ "E7.addendum.constants.n_dev_per_class": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_dev_per_class",
+  "value": 100
+ },
+ "E7.addendum.constants.n_external_per_class_per_donor": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_external_per_class_per_donor",
+  "value": 25
+ },
+ "E7.addendum.constants.n_float64": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_float64",
+  "value": 10
+ },
+ "E7.addendum.constants.n_followup_per_class": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_followup_per_class",
+  "value": 100
+ },
+ "E7.addendum.constants.n_g_only": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_g_only",
+  "value": 8
+ },
+ "E7.addendum.constants.n_matched": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_matched",
+  "value": 8
+ },
+ "E7.addendum.constants.n_push_cells": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_push_cells",
+  "value": 50
+ },
+ "E7.addendum.constants.n_region": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_region",
+  "value": 2
+ },
+ "E7.addendum.constants.n_site4_per_class_per_donor": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_site4_per_class_per_donor",
+  "value": 100
+ },
+ "E7.addendum.constants.n_twin": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/n_twin",
+  "value": 8
+ },
+ "E7.addendum.constants.tol": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/tol",
+  "value": 0.05
+ },
+ "E7.addendum.constants.unit_min": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/unit_min",
+  "value": 0.05
+ },
+ "E7.addendum.consumer": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/consumer",
+  "value": "fixed, never trained: E5's validated explicit-attention layer_fn with encoder.layers[11]'s own weights (forward equal to the module's to ~5e-6), mean over the cell's real tokens, then E5's load_head: z / (||z|| + 1e-6) -> MLP -> NB decoder mean at the training-median size factor, / training p95 of measured ADT (the frozen phase-1 head outputs/cite_phase1_official/best.pt, sha256 in inputs)"
+ },
+ "E7.addendum.disclosure": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/disclosure",
+  "value": "The registering session had read the published v3 results (E1-E6, E5-M, including E5-M's per-layer clamp residuals on site4: the head's 0.709 / 0.72 at layer 11), the PR #16 review and the val / train cell counts. Before writing this addendum it ran the architecture check on 3 training cells (one average and one swap patch each, recorded in architecture_check) and counted val primary-key NK/T cells; it computed no patch output on any val or site4 cell before version 1. Version 2 (declared.review_revision_v2) was written after version 1's code smoke on 5 val smoke-pool cells (outside both rosters) and a review check on 4 training cells; no development, follow-up, site4 or external forward of this script had run. Site4 confirmation cells exclude every E3 / E5 / E5-M cell."
+ },
+ "E7.addendum.eligibility_val.NK.eligible": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/eligibility/NK/eligible",
+  "value": 249
+ },
+ "E7.addendum.eligibility_val.NK.pool": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/eligibility/NK/pool",
+  "value": 254
+ },
+ "E7.addendum.eligibility_val.T.eligible": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/eligibility/T/eligible",
+  "value": 2986
+ },
+ "E7.addendum.eligibility_val.T.pool": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/eligibility/T/pool",
+  "value": 2990
+ },
+ "E7.addendum.external_family.labels": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/external_family/labels",
+  "value": [
+   "RNA possibly seen by TEDDY in pretraining",
+   "key not validated"
+  ]
+ },
+ "E7.addendum.gates.intended_mean_shift_abs": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/intended_mean_shift_abs",
+  "value": 1e-05
+ },
+ "E7.addendum.gates.layer12_mean_preserving_gap_units": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/layer12_mean_preserving_gap_units",
+  "value": 1e-05
+ },
+ "E7.addendum.gates.mean_preservation_abs": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/mean_preservation_abs",
+  "value": 1e-05
+ },
+ "E7.addendum.gates.module_vs_explicit_abs": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/module_vs_explicit_abs",
+  "value": 0.0001
+ },
+ "E7.addendum.gates.official_layer11_gene_mean_abs": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/official_layer11_gene_mean_abs",
+  "value": 0.001
+ },
+ "E7.addendum.gates.padded_vs_unpadded_abs": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/padded_vs_unpadded_abs",
+  "value": 0.0001
+ },
+ "E7.addendum.gates.padding_patch_gap_units": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/padding_patch_gap_units",
+  "value": 1e-06
+ },
+ "E7.addendum.gates.patch_rows_changed_mismatch": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/patch_rows_changed_mismatch",
+  "value": 0
+ },
+ "E7.addendum.gates.permutation_gap_units": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/constants/gates/permutation_gap_units",
+  "value": 1e-05
+ },
+ "E7.addendum.leakage.passed": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/leakage_check/passed",
+  "value": true
+ },
+ "E7.addendum.leakage.real_core_sha256": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/leakage_check/real_core_sha256",
+  "value": "aaaf9ab16cc1722dd373917e23dc49eefb85f580c2369eac60880a52c58a294b"
+ },
+ "E7.addendum.leakage.site4_poisoned_identical": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/leakage_check/site4_poisoned_identical",
+  "value": true
+ },
+ "E7.addendum.leakage.val_poisoned_differs": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/leakage_check/val_poisoned_differs",
+  "value": true
+ },
+ "E7.addendum.pre_registration_code_test": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/pre_registration_code_test",
+  "value": "before this addendum, a first code run used 2 training cells without G tokens (code paths only), then the code ran on 2 annotated training cells (1 NK, 1 T; no val or site4 cell) with an earlier draft that used one-sided twins as the positive control and a magnitude calibrated on them. Median per-cell maxima (panel, gap units): gene-mean 0.014 / 0.065 / 0.166 and gene-mean + G 0.013 / 0.055 / 0.149 at f = 1/32 / 1/8 / 1/2; G witness 0.007 / 0.011 / 0.027; one-sided twins 0.002 / 0.007 / 0.026, so a twin-calibrated magnitude (target 2 tol) would never have been reached: the twin moves the gene-mean by a random-walk sum. The draft was revised to the clamp positive control and the fixed three-magnitude class, and rerun on 3 annotated training cells (2 NK, 1 T) with the clamp at kappa 0.2: median P 0.049 (at the tolerance), median W 0.019, q95 of the per-cell maximum 0.227 (gene-mean) and 0.202 (gene-mean + G). kappa was then set to 1 (the full training NK - T difference, the interpretable NK/T-sized change; 0.2 had no rationale beyond being small); the same 3 cells were rerun on MPS to check the device path (float32 vs float64 within 1e-6). Nothing else changed after these code tests"
+ },
+ "E7.addendum.question": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/question",
+  "value": "TEDDY analog of ANM v2's inverse loop with the consumer fixed: is TEDDY's layer-11 gene-mean a sufficient retained state for the fixed consumer (layer 12 + gene-mean pooling + L2 normalisation + the frozen phase-1 head) on the registered NK/T panel, under a declared class of exact mean-preserving interventions at the layer-11 cut? If it is rejected, does a declared augmentation chosen by a declared rule on development data get bounded support on fresh comparisons?"
+ },
+ "E7.addendum.review_revision_v2": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/declared/review_revision_v2",
+  "value": "addendum version 2, written after an adversarial review and before any development forward; supersedes version 1 (sha256 e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a, commit 6dc5999). Seen before this revision: version 1's code smoke on 5 val smoke-pool cells (outside both rosters; never development, follow-up or confirmation cells): panel q95 of the per-cell maximum over the development magnitudes 0.139 (gene-mean) and 0.091 (gene-mean + G), median G witness 0.014, median clamp 0.210; score follow-up 0.074 / 0.055; the smoke confirmation family (the same 5 cells) REJECTED_NO_REVISION. Changes, none of which touches the tolerance, units, G, the library, rosters, magnitudes, the selection rule, the rejection criterion or the bootstrap: (1) the patch-region detectability witness R is added and support counts only if it is detected as well as the clamp (the clamp moves every token, the G tokens included, so it could not rule out support of gene-mean + G reached because the consumer does not see the patched non-G tokens); (2) a control failure now makes only a support claim UNINFORMATIVE (version 1 also turned a rejection of the selected candidate into UNINFORMATIVE, although rejections need no control, as when nothing is selected); (3) implementation gates patch_applied and intended_mean_shift (a no-op patch passed every version-1 gate and would have given trivial support); (4) a stopped development record ends E7 (version 1 would have run confirmation and reported that no candidate was selected) and select writes its record once; (5) wording: a G twin differs from its matched patch at the G tokens and their non-G partners. Checked on 4 training cells (the code-test pool, 2 NK + 2 T, float64 CPU) before this revision: every pair patch moves the gene-mean by <= 2.2e-16, candidate-2 matched patches leave the G rows bitwise unchanged, twins differ from their matched patch only at the G tokens and their partners; a version-2 code smoke on the same 4 cells (every stage) passed every gate, with the patch-region witness 0.92-1.00 times the clamp on each cell (so it adds no hurdle the clamp did not already pose on these cells; it closes the logical gap). (1) and (3) can only remove a support claim; (2) lets a rejection of a selected candidate stand; none changes the expected path (null selection, follow-up, rejections)"
+ },
+ "E7.addendum.rosters.dev.sha256": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/dev/sha256",
+  "value": "421c0fb62045b559be87ee58af20f1f04301db3b54792d8d9f1648552b1a2d04"
+ },
+ "E7.addendum.rosters.followup.sha256": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/followup/sha256",
+  "value": "5f8b0f8d63ae2d5951bb4a10f8f79fb5d979bc71dc9c375614216cf18e19eecd"
+ },
+ "E7.addendum.site4_exclusions.e3_pair_cells_per_donor": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/site4_exclusions/e3_pair_cells_per_donor",
+  "value": {
+   "13272": 171,
+   "19593": 107
+  }
+ },
+ "E7.addendum.site4_exclusions.e5_n_cells": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/site4_exclusions/e5_n_cells",
+  "value": 478
+ },
+ "E7.addendum.smoke_pool.NK.n": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/smoke_pool/NK (length of the list)",
+  "value": 49
+ },
+ "E7.addendum.smoke_pool.T.n": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/rosters/smoke_pool/T (length of the list)",
+  "value": 2786
+ },
+ "E7.addendum.supersedes.addendum_version": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/supersedes/addendum_version",
+  "value": 1
+ },
+ "E7.addendum.supersedes.commit": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/supersedes/commit",
+  "value": "6dc5999"
+ },
+ "E7.addendum.supersedes.sha256": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/supersedes/sha256",
+  "value": "e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a"
+ },
+ "E7.addendum.title": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/title",
+  "value": "E7: TEDDY analog of ANM v2's inverse loop at the layer-11 cut, consumer fixed (Mode A)"
+ },
+ "E7.addendum.units.n_val_NK": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/units/n_val_NK",
+  "value": 254
+ },
+ "E7.addendum.units.n_val_T": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/units/n_val_T",
+  "value": 2990
+ },
+ "E7.addendum.units.panel": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/units/panel",
+  "value": [
+   1.5631126553415522,
+   1.6140132815739272,
+   1.510342871746801,
+   1.0891812026030432
+  ]
+ },
+ "E7.addendum.units.predicted_panel_secondary": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/units/predicted_panel_secondary",
+  "value": [
+   0.9980812072753906,
+   1.1821354404091835,
+   1.009444311261177,
+   0.7875474281609058
+  ]
+ },
+ "E7.addendum.units.proteins": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/units/proteins",
+  "value": [
+   "CD56",
+   "CD94",
+   "CD335",
+   "CD3"
+  ]
+ },
+ "E7.addendum.units.score": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/computed_train_val/units/score",
+  "value": 2.5786445114134757
+ },
+ "E7.addendum.version": {
+  "source_file": "registration/addenda/E7.json",
+  "source_key": "/addendum_version",
+  "value": 2
+ },
+ "E7.external.G_witness_detected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/G_witness_detected",
+  "value": false
+ },
+ "E7.external.by_donor_class": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/by_donor_class",
+  "value": {
+   "hao2021_P1/NK": 25,
+   "hao2021_P1/T": 25,
+   "hao2021_P2/NK": 25,
+   "hao2021_P2/T": 25,
+   "hao2021_P3/NK": 25,
+   "hao2021_P3/T": 25,
+   "hao2021_P4/NK": 25,
+   "hao2021_P4/T": 25,
+   "hao2021_P5/NK": 25,
+   "hao2021_P5/T": 25,
+   "hao2021_P6/NK": 25,
+   "hao2021_P6/T": 25,
+   "hao2021_P7/NK": 25,
+   "hao2021_P7/T": 25,
+   "hao2021_P8/NK": 25,
+   "hao2021_P8/T": 25
+  }
+ },
+ "E7.external.complete": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/complete",
+  "value": true
+ },
+ "E7.external.float64_max_gap": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/float64_max_gap",
+  "value": 3.296470636904303e-06
+ },
+ "E7.external.float64_ok": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/float64_ok",
+  "value": true
+ },
+ "E7.external.implementation_max.intended_mean_shift_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/intended_mean_shift_abs",
+  "value": 1.6833655536174774e-07
+ },
+ "E7.external.implementation_max.layer12_mean_preserving_gap_units": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/layer12_mean_preserving_gap_units",
+  "value": 2.2879212667765096e-07
+ },
+ "E7.external.implementation_max.mean_preservation_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/mean_preservation_abs",
+  "value": 1.7881393432617188e-07
+ },
+ "E7.external.implementation_max.module_vs_explicit_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/module_vs_explicit_abs",
+  "value": 1.0013580322265625e-05
+ },
+ "E7.external.implementation_max.official_layer11_gene_mean_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/official_layer11_gene_mean_abs",
+  "value": 0.00039105862379074097
+ },
+ "E7.external.implementation_max.padded_vs_unpadded_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/padded_vs_unpadded_abs",
+  "value": 1.0013580322265625e-05
+ },
+ "E7.external.implementation_max.padding_patch_gap_units": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/padding_patch_gap_units",
+  "value": 0.0
+ },
+ "E7.external.implementation_max.patch_rows_changed_mismatch": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/patch_rows_changed_mismatch",
+  "value": 0
+ },
+ "E7.external.implementation_max.permutation_gap_units": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_max/permutation_gap_units",
+  "value": 2.2879212667765096e-07
+ },
+ "E7.external.implementation_ok": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/implementation_ok",
+  "value": true
+ },
+ "E7.external.labels": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/labels",
+  "value": [
+   "RNA possibly seen by TEDDY in pretraining",
+   "key not validated"
+  ]
+ },
+ "E7.external.magnitudes": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/magnitudes",
+  "value": [
+   0.03125,
+   0.125,
+   0.5,
+   0.25
+  ]
+ },
+ "E7.external.median_D_gene_mean.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/ci/1",
+  "value": 0.13565352310009426
+ },
+ "E7.external.median_D_gene_mean.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/ci/0",
+  "value": 0.09738010650142855
+ },
+ "E7.external.median_D_gene_mean.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P1/ci/1",
+  "value": 0.12147307172653939
+ },
+ "E7.external.median_D_gene_mean.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P1/ci/0",
+  "value": 0.09195687204986194
+ },
+ "E7.external.median_D_gene_mean.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P1/value",
+  "value": 0.10753203875185484
+ },
+ "E7.external.median_D_gene_mean.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P2/ci/1",
+  "value": 0.09840623924538351
+ },
+ "E7.external.median_D_gene_mean.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P2/ci/0",
+  "value": 0.0647191399231353
+ },
+ "E7.external.median_D_gene_mean.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P2/value",
+  "value": 0.07765212289481915
+ },
+ "E7.external.median_D_gene_mean.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P3/ci/1",
+  "value": 0.10644482712501745
+ },
+ "E7.external.median_D_gene_mean.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P3/ci/0",
+  "value": 0.08587080533450059
+ },
+ "E7.external.median_D_gene_mean.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P3/value",
+  "value": 0.09751616111583311
+ },
+ "E7.external.median_D_gene_mean.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P4/ci/1",
+  "value": 0.11759324019163461
+ },
+ "E7.external.median_D_gene_mean.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P4/ci/0",
+  "value": 0.07469693029955056
+ },
+ "E7.external.median_D_gene_mean.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P4/value",
+  "value": 0.09643061506391354
+ },
+ "E7.external.median_D_gene_mean.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P5/ci/1",
+  "value": 0.15687473875500757
+ },
+ "E7.external.median_D_gene_mean.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P5/ci/0",
+  "value": 0.09978373899760931
+ },
+ "E7.external.median_D_gene_mean.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P5/value",
+  "value": 0.1389297481386389
+ },
+ "E7.external.median_D_gene_mean.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P6/ci/1",
+  "value": 0.1624976324926028
+ },
+ "E7.external.median_D_gene_mean.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P6/ci/0",
+  "value": 0.10085303570466567
+ },
+ "E7.external.median_D_gene_mean.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P6/value",
+  "value": 0.11615874222208902
+ },
+ "E7.external.median_D_gene_mean.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P7/ci/1",
+  "value": 0.15311744063805557
+ },
+ "E7.external.median_D_gene_mean.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P7/ci/0",
+  "value": 0.11151574502604844
+ },
+ "E7.external.median_D_gene_mean.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P7/value",
+  "value": 0.12789231236378917
+ },
+ "E7.external.median_D_gene_mean.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P8/ci/1",
+  "value": 0.18834207389716354
+ },
+ "E7.external.median_D_gene_mean.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P8/ci/0",
+  "value": 0.1277445586496219
+ },
+ "E7.external.median_D_gene_mean.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/per_donor/hao2021_P8/value",
+  "value": 0.15824891956917703
+ },
+ "E7.external.median_D_gene_mean.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.median_D_gene_mean.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean/value",
+  "value": 0.11152481716241452
+ },
+ "E7.external.median_D_gene_mean_plus_G.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/ci/1",
+  "value": 0.1283670516195184
+ },
+ "E7.external.median_D_gene_mean_plus_G.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/ci/0",
+  "value": 0.09051688453103368
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P1/ci/1",
+  "value": 0.11129345663549124
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P1/ci/0",
+  "value": 0.08297262060953045
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P1/value",
+  "value": 0.10253323742914397
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P2/ci/1",
+  "value": 0.09400275339145528
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P2/ci/0",
+  "value": 0.05900138464494539
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P2/value",
+  "value": 0.07740589104788137
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P3/ci/1",
+  "value": 0.10209935105312065
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P3/ci/0",
+  "value": 0.0841731048682554
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P3/value",
+  "value": 0.09281896347795648
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P4/ci/1",
+  "value": 0.11759324019163461
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P4/ci/0",
+  "value": 0.07469693029955056
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P4/value",
+  "value": 0.09197974784970493
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P5/ci/1",
+  "value": 0.15157055989426055
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P5/ci/0",
+  "value": 0.09911879320210479
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P5/value",
+  "value": 0.13115238405318147
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P6/ci/1",
+  "value": 0.15159068428805605
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P6/ci/0",
+  "value": 0.09746430559376193
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P6/value",
+  "value": 0.11432742858555756
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P7/ci/1",
+  "value": 0.1503763881298046
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P7/ci/0",
+  "value": 0.10964317653992198
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P7/value",
+  "value": 0.12654426209119396
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P8/ci/1",
+  "value": 0.1798832718897906
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P8/ci/0",
+  "value": 0.12597777470651814
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.median_D_gene_mean_plus_G.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/per_donor/hao2021_P8/value",
+  "value": 0.15321691369912727
+ },
+ "E7.external.median_D_gene_mean_plus_G.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.median_D_gene_mean_plus_G.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_D_gene_mean_plus_G/value",
+  "value": 0.10674078055097175
+ },
+ "E7.external.median_P.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/ci/1",
+  "value": 0.40002964305913064
+ },
+ "E7.external.median_P.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/ci/0",
+  "value": 0.28194666201319496
+ },
+ "E7.external.median_P.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P1/ci/1",
+  "value": 0.3293869054806689
+ },
+ "E7.external.median_P.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P1/ci/0",
+  "value": 0.2296475846078258
+ },
+ "E7.external.median_P.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P1/value",
+  "value": 0.26815819230875093
+ },
+ "E7.external.median_P.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P2/ci/1",
+  "value": 0.49281928949424075
+ },
+ "E7.external.median_P.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P2/ci/0",
+  "value": 0.31319328296196636
+ },
+ "E7.external.median_P.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P2/value",
+  "value": 0.3585203701901295
+ },
+ "E7.external.median_P.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P3/ci/1",
+  "value": 0.31162594199719523
+ },
+ "E7.external.median_P.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P3/ci/0",
+  "value": 0.20873508395846524
+ },
+ "E7.external.median_P.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P3/value",
+  "value": 0.26849658953724104
+ },
+ "E7.external.median_P.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P4/ci/1",
+  "value": 0.37219638992347764
+ },
+ "E7.external.median_P.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P4/ci/0",
+  "value": 0.21482077757383744
+ },
+ "E7.external.median_P.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P4/value",
+  "value": 0.3196265859019011
+ },
+ "E7.external.median_P.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P5/ci/1",
+  "value": 0.49910259423935455
+ },
+ "E7.external.median_P.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P5/ci/0",
+  "value": 0.3412060877629208
+ },
+ "E7.external.median_P.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P5/value",
+  "value": 0.44663525645378654
+ },
+ "E7.external.median_P.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P6/ci/1",
+  "value": 0.35840261350047936
+ },
+ "E7.external.median_P.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P6/ci/0",
+  "value": 0.17772053250144476
+ },
+ "E7.external.median_P.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P6/value",
+  "value": 0.2575953010621073
+ },
+ "E7.external.median_P.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P7/ci/1",
+  "value": 0.40134551009105285
+ },
+ "E7.external.median_P.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P7/ci/0",
+  "value": 0.32092167591237486
+ },
+ "E7.external.median_P.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P7/value",
+  "value": 0.37064149833013926
+ },
+ "E7.external.median_P.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P8/ci/1",
+  "value": 0.5267022335603855
+ },
+ "E7.external.median_P.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P8/ci/0",
+  "value": 0.4020836195714712
+ },
+ "E7.external.median_P.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.median_P.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/per_donor/hao2021_P8/value",
+  "value": 0.49599146625696383
+ },
+ "E7.external.median_P.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.median_P.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_P/value",
+  "value": 0.3423067683347669
+ },
+ "E7.external.median_R.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/ci/1",
+  "value": 0.39319468092619686
+ },
+ "E7.external.median_R.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/ci/0",
+  "value": 0.2834029233706299
+ },
+ "E7.external.median_R.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P1/ci/1",
+  "value": 0.31927485953012547
+ },
+ "E7.external.median_R.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P1/ci/0",
+  "value": 0.2417668997290134
+ },
+ "E7.external.median_R.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P1/value",
+  "value": 0.27702606656872386
+ },
+ "E7.external.median_R.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P2/ci/1",
+  "value": 0.4860844981897646
+ },
+ "E7.external.median_R.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P2/ci/0",
+  "value": 0.2989590140521149
+ },
+ "E7.external.median_R.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P2/value",
+  "value": 0.3612847924264462
+ },
+ "E7.external.median_R.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P3/ci/1",
+  "value": 0.3030964400421359
+ },
+ "E7.external.median_R.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P3/ci/0",
+  "value": 0.208047598903361
+ },
+ "E7.external.median_R.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P3/value",
+  "value": 0.25213515001138564
+ },
+ "E7.external.median_R.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P4/ci/1",
+  "value": 0.3899496961703137
+ },
+ "E7.external.median_R.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P4/ci/0",
+  "value": 0.20534118729434592
+ },
+ "E7.external.median_R.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P4/value",
+  "value": 0.31392756977888403
+ },
+ "E7.external.median_R.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P5/ci/1",
+  "value": 0.48253466621699614
+ },
+ "E7.external.median_R.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P5/ci/0",
+  "value": 0.35000081923741394
+ },
+ "E7.external.median_R.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P5/value",
+  "value": 0.4113828561257621
+ },
+ "E7.external.median_R.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P6/ci/1",
+  "value": 0.3620183951900052
+ },
+ "E7.external.median_R.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P6/ci/0",
+  "value": 0.1646472914005422
+ },
+ "E7.external.median_R.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P6/value",
+  "value": 0.2744855217023816
+ },
+ "E7.external.median_R.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P7/ci/1",
+  "value": 0.4025852728952881
+ },
+ "E7.external.median_R.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P7/ci/0",
+  "value": 0.30862716336301205
+ },
+ "E7.external.median_R.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P7/value",
+  "value": 0.3696614293931728
+ },
+ "E7.external.median_R.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P8/ci/1",
+  "value": 0.5311761942016962
+ },
+ "E7.external.median_R.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P8/ci/0",
+  "value": 0.39004164316050843
+ },
+ "E7.external.median_R.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.median_R.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/per_donor/hao2021_P8/value",
+  "value": 0.5083358147360377
+ },
+ "E7.external.median_R.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.median_R.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_R/value",
+  "value": 0.3373680055718401
+ },
+ "E7.external.median_W.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/ci/1",
+  "value": 0.01049319279942007
+ },
+ "E7.external.median_W.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/ci/0",
+  "value": 0.006917752304400267
+ },
+ "E7.external.median_W.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P1/ci/1",
+  "value": 0.012149980045366555
+ },
+ "E7.external.median_W.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P1/ci/0",
+  "value": 0.00507021715758252
+ },
+ "E7.external.median_W.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P1/value",
+  "value": 0.007915902327148151
+ },
+ "E7.external.median_W.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P2/ci/1",
+  "value": 0.00941819149852064
+ },
+ "E7.external.median_W.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P2/ci/0",
+  "value": 0.004587860438119028
+ },
+ "E7.external.median_W.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P2/value",
+  "value": 0.0062434903238822
+ },
+ "E7.external.median_W.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P3/ci/1",
+  "value": 0.011234195828078367
+ },
+ "E7.external.median_W.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P3/ci/0",
+  "value": 0.004643147868525298
+ },
+ "E7.external.median_W.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P3/value",
+  "value": 0.008328536732375224
+ },
+ "E7.external.median_W.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P4/ci/1",
+  "value": 0.011031646426669909
+ },
+ "E7.external.median_W.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P4/ci/0",
+  "value": 0.005081802828972425
+ },
+ "E7.external.median_W.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P4/value",
+  "value": 0.007303907225845707
+ },
+ "E7.external.median_W.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P5/ci/1",
+  "value": 0.016077445657257838
+ },
+ "E7.external.median_W.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P5/ci/0",
+  "value": 0.007712510812185559
+ },
+ "E7.external.median_W.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P5/value",
+  "value": 0.010688031347064022
+ },
+ "E7.external.median_W.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P6/ci/1",
+  "value": 0.011949728063624631
+ },
+ "E7.external.median_W.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P6/ci/0",
+  "value": 0.004600942889497646
+ },
+ "E7.external.median_W.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P6/value",
+  "value": 0.009122689131030294
+ },
+ "E7.external.median_W.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P7/ci/1",
+  "value": 0.01360921420589356
+ },
+ "E7.external.median_W.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P7/ci/0",
+  "value": 0.005289911430911605
+ },
+ "E7.external.median_W.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P7/value",
+  "value": 0.008260535101511184
+ },
+ "E7.external.median_W.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P8/ci/1",
+  "value": 0.021082704554609803
+ },
+ "E7.external.median_W.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P8/ci/0",
+  "value": 0.00930839504576052
+ },
+ "E7.external.median_W.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.median_W.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/per_donor/hao2021_P8/value",
+  "value": 0.013721998366254914
+ },
+ "E7.external.median_W.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.median_W.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/median_W/value",
+  "value": 0.008799283857520846
+ },
+ "E7.external.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/n_cells",
+  "value": 400
+ },
+ "E7.external.n_selected_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/n_selected_cells",
+  "value": 400
+ },
+ "E7.external.note": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/note",
+  "value": "secondary family; never changes the registered verdict"
+ },
+ "E7.external.observable": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/observable",
+  "value": "panel"
+ },
+ "E7.external.patch_region_witness_detected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/patch_region_witness_detected",
+  "value": true
+ },
+ "E7.external.positive_control_detected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/positive_control_detected",
+  "value": true
+ },
+ "E7.external.q95_D_gene_mean.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/ci/1",
+  "value": 0.3450012442532308
+ },
+ "E7.external.q95_D_gene_mean.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/ci/0",
+  "value": 0.26279155582165264
+ },
+ "E7.external.q95_D_gene_mean.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P1/ci/1",
+  "value": 0.35988628983957444
+ },
+ "E7.external.q95_D_gene_mean.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P1/ci/0",
+  "value": 0.1840991999444851
+ },
+ "E7.external.q95_D_gene_mean.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P1/value",
+  "value": 0.28186006906664474
+ },
+ "E7.external.q95_D_gene_mean.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P2/ci/1",
+  "value": 0.4979713450195703
+ },
+ "E7.external.q95_D_gene_mean.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P2/ci/0",
+  "value": 0.19595745311928675
+ },
+ "E7.external.q95_D_gene_mean.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P2/value",
+  "value": 0.2848836977801679
+ },
+ "E7.external.q95_D_gene_mean.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P3/ci/1",
+  "value": 0.28391985632687494
+ },
+ "E7.external.q95_D_gene_mean.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P3/ci/0",
+  "value": 0.16653848145897154
+ },
+ "E7.external.q95_D_gene_mean.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P3/value",
+  "value": 0.19151954412256314
+ },
+ "E7.external.q95_D_gene_mean.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P4/ci/1",
+  "value": 0.277739742346043
+ },
+ "E7.external.q95_D_gene_mean.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P4/ci/0",
+  "value": 0.1901550083119922
+ },
+ "E7.external.q95_D_gene_mean.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P4/value",
+  "value": 0.23262193587643404
+ },
+ "E7.external.q95_D_gene_mean.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P5/ci/1",
+  "value": 0.3200860577022945
+ },
+ "E7.external.q95_D_gene_mean.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P5/ci/0",
+  "value": 0.23479200875121306
+ },
+ "E7.external.q95_D_gene_mean.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P5/value",
+  "value": 0.2767262848656774
+ },
+ "E7.external.q95_D_gene_mean.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P6/ci/1",
+  "value": 0.4072336926686744
+ },
+ "E7.external.q95_D_gene_mean.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P6/ci/0",
+  "value": 0.22024232029169316
+ },
+ "E7.external.q95_D_gene_mean.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P6/value",
+  "value": 0.2752098458329027
+ },
+ "E7.external.q95_D_gene_mean.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P7/ci/1",
+  "value": 0.34761727679559246
+ },
+ "E7.external.q95_D_gene_mean.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P7/ci/0",
+  "value": 0.24622993158838566
+ },
+ "E7.external.q95_D_gene_mean.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P7/value",
+  "value": 0.3046469747618315
+ },
+ "E7.external.q95_D_gene_mean.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P8/ci/1",
+  "value": 0.5093072649051615
+ },
+ "E7.external.q95_D_gene_mean.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P8/ci/0",
+  "value": 0.2999089471345789
+ },
+ "E7.external.q95_D_gene_mean.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/per_donor/hao2021_P8/value",
+  "value": 0.35138136934222064
+ },
+ "E7.external.q95_D_gene_mean.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.q95_D_gene_mean.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean/value",
+  "value": 0.2956658111183916
+ },
+ "E7.external.q95_D_gene_mean_plus_G.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/ci/1",
+  "value": 0.34415134895324073
+ },
+ "E7.external.q95_D_gene_mean_plus_G.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/ci/0",
+  "value": 0.2420654142032063
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P1.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P1/ci/1",
+  "value": 0.34750188200330095
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P1.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P1/ci/0",
+  "value": 0.16789281419211258
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P1.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P1/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P1.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P1/value",
+  "value": 0.2712665150367007
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P2.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P2/ci/1",
+  "value": 0.4881036485758837
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P2.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P2/ci/0",
+  "value": 0.19369076542450786
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P2.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P2/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P2.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P2/value",
+  "value": 0.2848836977801679
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P3.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P3/ci/1",
+  "value": 0.27654343228849565
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P3.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P3/ci/0",
+  "value": 0.16594029731750945
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P3.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P3/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P3.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P3/value",
+  "value": 0.18821580869255053
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P4.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P4/ci/1",
+  "value": 0.26992321587684753
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P4.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P4/ci/0",
+  "value": 0.1871842112907109
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P4/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P4.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P4/value",
+  "value": 0.22950261972695915
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P5.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P5/ci/1",
+  "value": 0.3200860577022945
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P5.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P5/ci/0",
+  "value": 0.22500346442854388
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P5.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P5/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P5.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P5/value",
+  "value": 0.2767262848656774
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P6.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P6/ci/1",
+  "value": 0.40153562985273217
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P6.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P6/ci/0",
+  "value": 0.2157349600081574
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P6.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P6/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P6.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P6/value",
+  "value": 0.26073181285111807
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P7.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P7/ci/1",
+  "value": 0.34118617401252427
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P7.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P7/ci/0",
+  "value": 0.2412793127912404
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P7.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P7/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P7.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P7/value",
+  "value": 0.28566362622386926
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P8.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P8/ci/1",
+  "value": 0.5053312313607785
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P8.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P8/ci/0",
+  "value": 0.28793710319724514
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P8.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P8/n_cells",
+  "value": 50
+ },
+ "E7.external.q95_D_gene_mean_plus_G.donor_P8.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/per_donor/hao2021_P8/value",
+  "value": 0.3511985588183659
+ },
+ "E7.external.q95_D_gene_mean_plus_G.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.external.q95_D_gene_mean_plus_G.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/bounds/q95_D_gene_mean_plus_G/value",
+  "value": 0.2847565348705098
+ },
+ "E7.external.roster.hao2021_P1.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P1~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P1.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P1~1NK/eligible",
+  "value": 440
+ },
+ "E7.external.roster.hao2021_P1.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P1~1NK/pool",
+  "value": 444
+ },
+ "E7.external.roster.hao2021_P1.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P1~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P1.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P1~1T/eligible",
+  "value": 2785
+ },
+ "E7.external.roster.hao2021_P1.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P1~1T/pool",
+  "value": 2787
+ },
+ "E7.external.roster.hao2021_P2.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P2~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P2.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P2~1NK/eligible",
+  "value": 470
+ },
+ "E7.external.roster.hao2021_P2.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P2~1NK/pool",
+  "value": 476
+ },
+ "E7.external.roster.hao2021_P2.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P2~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P2.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P2~1T/eligible",
+  "value": 2915
+ },
+ "E7.external.roster.hao2021_P2.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P2~1T/pool",
+  "value": 2917
+ },
+ "E7.external.roster.hao2021_P3.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P3~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P3.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P3~1NK/eligible",
+  "value": 855
+ },
+ "E7.external.roster.hao2021_P3.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P3~1NK/pool",
+  "value": 857
+ },
+ "E7.external.roster.hao2021_P3.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P3~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P3.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P3~1T/eligible",
+  "value": 2333
+ },
+ "E7.external.roster.hao2021_P3.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P3~1T/pool",
+  "value": 2339
+ },
+ "E7.external.roster.hao2021_P4.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P4~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P4.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P4~1NK/eligible",
+  "value": 179
+ },
+ "E7.external.roster.hao2021_P4.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P4~1NK/pool",
+  "value": 180
+ },
+ "E7.external.roster.hao2021_P4.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P4~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P4.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P4~1T/eligible",
+  "value": 2771
+ },
+ "E7.external.roster.hao2021_P4.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P4~1T/pool",
+  "value": 2779
+ },
+ "E7.external.roster.hao2021_P5.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P5~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P5.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P5~1NK/eligible",
+  "value": 626
+ },
+ "E7.external.roster.hao2021_P5.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P5~1NK/pool",
+  "value": 629
+ },
+ "E7.external.roster.hao2021_P5.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P5~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P5.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P5~1T/eligible",
+  "value": 1721
+ },
+ "E7.external.roster.hao2021_P5.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P5~1T/pool",
+  "value": 1722
+ },
+ "E7.external.roster.hao2021_P6.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P6~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P6.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P6~1NK/eligible",
+  "value": 781
+ },
+ "E7.external.roster.hao2021_P6.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P6~1NK/pool",
+  "value": 782
+ },
+ "E7.external.roster.hao2021_P6.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P6~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P6.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P6~1T/eligible",
+  "value": 1591
+ },
+ "E7.external.roster.hao2021_P6.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P6~1T/pool",
+  "value": 1594
+ },
+ "E7.external.roster.hao2021_P7.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P7~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P7.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P7~1NK/eligible",
+  "value": 404
+ },
+ "E7.external.roster.hao2021_P7.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P7~1NK/pool",
+  "value": 404
+ },
+ "E7.external.roster.hao2021_P7.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P7~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P7.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P7~1T/eligible",
+  "value": 1806
+ },
+ "E7.external.roster.hao2021_P7.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P7~1T/pool",
+  "value": 1809
+ },
+ "E7.external.roster.hao2021_P8.NK.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P8~1NK/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P8.NK.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P8~1NK/eligible",
+  "value": 769
+ },
+ "E7.external.roster.hao2021_P8.NK.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P8~1NK/pool",
+  "value": 771
+ },
+ "E7.external.roster.hao2021_P8.T.drawn": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P8~1T/drawn",
+  "value": 25
+ },
+ "E7.external.roster.hao2021_P8.T.eligible": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P8~1T/eligible",
+  "value": 2488
+ },
+ "E7.external.roster.hao2021_P8.T.pool": {
+  "source_file": "outputs/v3/E7/external/e7_roster.json",
+  "source_key": "/counts/hao2021_P8~1T/pool",
+  "value": 2490
+ },
+ "E7.external.secondary.input_push_on_G.median_of_cell_median": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/input_push_on_G/median_of_cell_median",
+  "value": 0.004865407601307634
+ },
+ "E7.external.secondary.input_push_on_G.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/input_push_on_G/n_cells",
+  "value": 50
+ },
+ "E7.external.secondary.other_observable": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_observable",
+  "value": "score"
+ },
+ "E7.external.secondary.per_class.NK.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/D_gene_mean",
+  "value": 0.16210338767442228
+ },
+ "E7.external.secondary.per_class.NK.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/D_gene_mean_plus_G",
+  "value": 0.1546077006617641
+ },
+ "E7.external.secondary.per_class.NK.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/P",
+  "value": 0.44911857870977234
+ },
+ "E7.external.secondary.per_class.NK.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/R",
+  "value": 0.4186209315756386
+ },
+ "E7.external.secondary.per_class.NK.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/W",
+  "value": 0.016254789896365446
+ },
+ "E7.external.secondary.per_class.NK.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/W_context",
+  "value": 0.015171483141472451
+ },
+ "E7.external.secondary.per_class.NK.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/W_pure",
+  "value": 0.0033851698943235574
+ },
+ "E7.external.secondary.per_class.NK.n": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/NK/n",
+  "value": 200
+ },
+ "E7.external.secondary.per_class.T.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/D_gene_mean",
+  "value": 0.06990325759071694
+ },
+ "E7.external.secondary.per_class.T.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/D_gene_mean_plus_G",
+  "value": 0.0696708072045227
+ },
+ "E7.external.secondary.per_class.T.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/P",
+  "value": 0.26511678162817276
+ },
+ "E7.external.secondary.per_class.T.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/R",
+  "value": 0.2744855217023816
+ },
+ "E7.external.secondary.per_class.T.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/W",
+  "value": 0.0040691871707078916
+ },
+ "E7.external.secondary.per_class.T.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/W_context",
+  "value": 0.003728747495232841
+ },
+ "E7.external.secondary.per_class.T.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/W_pure",
+  "value": 0.0006508264022305587
+ },
+ "E7.external.secondary.per_class.T.n": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_class/T/n",
+  "value": 200
+ },
+ "E7.external.secondary.per_magnitude.128.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/D_gene_mean",
+  "value": 0.04616551917775354
+ },
+ "E7.external.secondary.per_magnitude.128.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/D_gene_mean_plus_G",
+  "value": 0.042917069920254694
+ },
+ "E7.external.secondary.per_magnitude.128.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/P",
+  "value": 0.3423067683347669
+ },
+ "E7.external.secondary.per_magnitude.128.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/R",
+  "value": 0.3373680055718401
+ },
+ "E7.external.secondary.per_magnitude.128.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/W",
+  "value": 0.003025777507881035
+ },
+ "E7.external.secondary.per_magnitude.128.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/W_context",
+  "value": 0.0024937575617361048
+ },
+ "E7.external.secondary.per_magnitude.128.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/W_pure",
+  "value": 0.0015592859497103916
+ },
+ "E7.external.secondary.per_magnitude.128.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/q95_D_gene_mean",
+  "value": 0.17749570663156528
+ },
+ "E7.external.secondary.per_magnitude.128.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/128/q95_D_gene_mean_plus_G",
+  "value": 0.15874278587435717
+ },
+ "E7.external.secondary.per_magnitude.256.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/D_gene_mean",
+  "value": 0.07250732343983768
+ },
+ "E7.external.secondary.per_magnitude.256.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/D_gene_mean_plus_G",
+  "value": 0.06832084739780747
+ },
+ "E7.external.secondary.per_magnitude.256.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/P",
+  "value": 0.3423067683347669
+ },
+ "E7.external.secondary.per_magnitude.256.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/R",
+  "value": 0.3373680055718401
+ },
+ "E7.external.secondary.per_magnitude.256.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/W",
+  "value": 0.0043118678985818865
+ },
+ "E7.external.secondary.per_magnitude.256.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/W_context",
+  "value": 0.0037050780516804625
+ },
+ "E7.external.secondary.per_magnitude.256.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/W_pure",
+  "value": 0.0015592859497103916
+ },
+ "E7.external.secondary.per_magnitude.256.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/q95_D_gene_mean",
+  "value": 0.21049422646170543
+ },
+ "E7.external.secondary.per_magnitude.256.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/256/q95_D_gene_mean_plus_G",
+  "value": 0.20521896267061795
+ },
+ "E7.external.secondary.per_magnitude.32.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/D_gene_mean",
+  "value": 0.019649079886285205
+ },
+ "E7.external.secondary.per_magnitude.32.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/D_gene_mean_plus_G",
+  "value": 0.01703808597957386
+ },
+ "E7.external.secondary.per_magnitude.32.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/P",
+  "value": 0.3423067683347669
+ },
+ "E7.external.secondary.per_magnitude.32.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/R",
+  "value": 0.3373680055718401
+ },
+ "E7.external.secondary.per_magnitude.32.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/W",
+  "value": 0.002811927924650795
+ },
+ "E7.external.secondary.per_magnitude.32.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/W_context",
+  "value": 0.001981934580211046
+ },
+ "E7.external.secondary.per_magnitude.32.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/W_pure",
+  "value": 0.0015592859497103916
+ },
+ "E7.external.secondary.per_magnitude.32.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/q95_D_gene_mean",
+  "value": 0.07623786702415083
+ },
+ "E7.external.secondary.per_magnitude.32.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/32/q95_D_gene_mean_plus_G",
+  "value": 0.06876444755841037
+ },
+ "E7.external.secondary.per_magnitude.512.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/D_gene_mean",
+  "value": 0.11113905211140301
+ },
+ "E7.external.secondary.per_magnitude.512.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/D_gene_mean_plus_G",
+  "value": 0.10631207382863017
+ },
+ "E7.external.secondary.per_magnitude.512.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/P",
+  "value": 0.3423067683347669
+ },
+ "E7.external.secondary.per_magnitude.512.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/R",
+  "value": 0.3373680055718401
+ },
+ "E7.external.secondary.per_magnitude.512.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/W",
+  "value": 0.004982803702898024
+ },
+ "E7.external.secondary.per_magnitude.512.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/W_context",
+  "value": 0.004423441834725528
+ },
+ "E7.external.secondary.per_magnitude.512.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/W_pure",
+  "value": 0.0015592859497103916
+ },
+ "E7.external.secondary.per_magnitude.512.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/q95_D_gene_mean",
+  "value": 0.29449756564135887
+ },
+ "E7.external.secondary.per_magnitude.512.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/per_magnitude/512/q95_D_gene_mean_plus_G",
+  "value": 0.27884454203934
+ },
+ "E7.external.secondary.predicted_unit_reexpression_factor_per_protein": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/predicted_unit_reexpression_factor_per_protein",
+  "value": [
+   1.5661177106105537,
+   1.3653370218012022,
+   1.4962121782229003,
+   1.3830039482784138
+  ]
+ },
+ "E7.external.secondary.score.median_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_medians/D_gene_mean",
+  "value": 0.05440209129740911
+ },
+ "E7.external.secondary.score.median_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_medians/D_gene_mean_plus_G",
+  "value": 0.05263818874717842
+ },
+ "E7.external.secondary.score.median_P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_medians/P",
+  "value": 0.2549508553653337
+ },
+ "E7.external.secondary.score.median_R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_medians/R",
+  "value": 0.2522714485982921
+ },
+ "E7.external.secondary.score.median_W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_medians/W",
+  "value": 0.004498767789778958
+ },
+ "E7.external.secondary.score.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_q95/D_gene_mean",
+  "value": 0.19896824243440822
+ },
+ "E7.external.secondary.score.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/secondary/other_q95/D_gene_mean_plus_G",
+  "value": 0.19684862688670757
+ },
+ "E7.external.status.all_token_states": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/status/all_token_states",
+  "value": "uninformative"
+ },
+ "E7.external.status.gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/status/gene_mean",
+  "value": "rejected"
+ },
+ "E7.external.status.gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/status/gene_mean_plus_G",
+  "value": "rejected"
+ },
+ "E7.external.verdict.code": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/external/verdict/code",
+  "value": "REJECTED_NO_REVISION"
+ },
+ "E7.res.addendum_sha256": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/addendum_sha256",
+  "value": "c35e91c5482c5336cccfbe59c8e719d841f857fcb0fd01f9a1389ef34b754efc"
+ },
+ "E7.res.final": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/final",
+  "value": true
+ },
+ "E7.res.registered_verdict.code": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registered_verdict/code",
+  "value": "REJECTED_NO_REVISION"
+ },
+ "E7.res.registered_verdict.verdict": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registered_verdict/verdict",
+  "value": "no candidate was selected in development; on fresh comparisons both the gene-mean and gene-mean + G are rejected"
+ },
+ "E7.res.registration_check.addendum_committed": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/addendum_committed",
+  "value": true
+ },
+ "E7.res.registration_check.amendments_match": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/amendments_match",
+  "value": true
+ },
+ "E7.res.registration_check.code_matches_addendum": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/code_matches_addendum",
+  "value": true
+ },
+ "E7.res.registration_check.declared_equals_script": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/declared_equals_script",
+  "value": true
+ },
+ "E7.res.registration_check.git_head": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/git_head",
+  "value": "871b709e2d59b1745337c56ca0cd7f4447862db1"
+ },
+ "E7.res.registration_check.head_matches_addendum": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/head_matches_addendum",
+  "value": true
+ },
+ "E7.res.registration_check.leakage_check_passed": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/leakage_check_passed",
+  "value": true
+ },
+ "E7.res.registration_check.registration_ok": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/registration_ok",
+  "value": true
+ },
+ "E7.res.registration_check.selection_addendum_matches": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/selection_addendum_matches",
+  "value": true
+ },
+ "E7.res.registration_check.selection_committed": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/selection_committed",
+  "value": true
+ },
+ "E7.res.registration_check.selection_final": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/selection_final",
+  "value": true
+ },
+ "E7.res.registration_check.selection_sha256": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/selection_sha256",
+  "value": "5721e5483dc5634c43a7afee0123a4a0f7fb26d9243d766848c768ed842fb950"
+ },
+ "E7.res.registration_check.selection_smoke": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/registration_check/selection_smoke",
+  "value": false
+ },
+ "E7.res.script_version": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/script_version",
+  "value": "mode_a_inverse_e7 1.1"
+ },
+ "E7.res.selection.final": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/selection/final",
+  "value": true
+ },
+ "E7.res.selection.label": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/selection/label",
+  "value": "follow-up after a null primary selection; readout restricted to the NK-T score"
+ },
+ "E7.res.selection.observable": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/selection/observable",
+  "value": "panel"
+ },
+ "E7.res.selection.selected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/selection/selected",
+  "value": null
+ },
+ "E7.res.selection.selected_in": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/selection/selected_in",
+  "value": null
+ },
+ "E7.res.smoke_test": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/smoke_test",
+  "value": false
+ },
+ "E7.selection.addendum_sha256": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/addendum_sha256",
+  "value": "c35e91c5482c5336cccfbe59c8e719d841f857fcb0fd01f9a1389ef34b754efc"
+ },
+ "E7.selection.created_utc": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/created_utc",
+  "value": "2026-10-01T22:40:18Z"
+ },
+ "E7.selection.final": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/final",
+  "value": true
+ },
+ "E7.selection.follow_up_required": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/follow_up_required",
+  "value": true
+ },
+ "E7.selection.followup.G_witness_median_W": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/G_witness_median_W",
+  "value": 0.0057701158911595985
+ },
+ "E7.selection.followup.cells_sha256": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/cells_sha256",
+  "value": "5f8b0f8d63ae2d5951bb4a10f8f79fb5d979bc71dc9c375614216cf18e19eecd"
+ },
+ "E7.selection.followup.detectability_witness_median_R": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/detectability_witness_median_R",
+  "value": 0.19842609891822072
+ },
+ "E7.selection.followup.digest_sha256": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/digest_sha256",
+  "value": "978aaed73610d9c61b5a213426c49dbb241fc587ee72c50e4c34394cc3002502"
+ },
+ "E7.selection.followup.float64_max_gap": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/float64_max_gap",
+  "value": 7.995369419866449e-07
+ },
+ "E7.selection.followup.float64_ok": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/float64_ok",
+  "value": true
+ },
+ "E7.selection.followup.implementation_ok": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/implementation_ok",
+  "value": true
+ },
+ "E7.selection.followup.magnitudes": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/magnitudes",
+  "value": [
+   0.03125,
+   0.125,
+   0.5
+  ]
+ },
+ "E7.selection.followup.n_cells": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/n_cells",
+  "value": 200
+ },
+ "E7.selection.followup.observable": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/observable",
+  "value": "score"
+ },
+ "E7.selection.followup.per_magnitude.128.median_D_gene_mean": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/per_magnitude/128/median/D_gene_mean",
+  "value": 0.019585317395937336
+ },
+ "E7.selection.followup.per_magnitude.128.median_D_gene_mean_plus_G": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/per_magnitude/128/median/D_gene_mean_plus_G",
+  "value": 0.017201628553052035
+ },
+ "E7.selection.followup.per_magnitude.32.median_D_gene_mean": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/per_magnitude/32/median/D_gene_mean",
+  "value": 0.007528588408515805
+ },
+ "E7.selection.followup.per_magnitude.32.median_D_gene_mean_plus_G": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/per_magnitude/32/median/D_gene_mean_plus_G",
+  "value": 0.005996346875029673
+ },
+ "E7.selection.followup.per_magnitude.512.median_D_gene_mean": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/per_magnitude/512/median/D_gene_mean",
+  "value": 0.055180472015105564
+ },
+ "E7.selection.followup.per_magnitude.512.median_D_gene_mean_plus_G": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/per_magnitude/512/median/D_gene_mean_plus_G",
+  "value": 0.049327204050378624
+ },
+ "E7.selection.followup.phase": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/phase",
+  "value": "followup"
+ },
+ "E7.selection.followup.positive_control_median_P": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/positive_control_median_P",
+  "value": 0.2193700862882068
+ },
+ "E7.selection.followup.rule.all_token_states.cells_with_matched_pairs": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/all_token_states/cells_with_matched_pairs",
+  "value": 0
+ },
+ "E7.selection.followup.rule.all_token_states.reason": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/all_token_states/reason",
+  "value": "no matched pair (uninformative)"
+ },
+ "E7.selection.followup.rule.all_token_states.retained": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/all_token_states/retained",
+  "value": false
+ },
+ "E7.selection.followup.rule.gene_mean.cells_with_matched_pairs": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/cells_with_matched_pairs",
+  "value": 200
+ },
+ "E7.selection.followup.rule.gene_mean.literal_all_differences_le_tol": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/literal_all_differences_le_tol",
+  "value": false
+ },
+ "E7.selection.followup.rule.gene_mean.max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/max",
+  "value": 0.4805161853934247
+ },
+ "E7.selection.followup.rule.gene_mean.median": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/median",
+  "value": 0.055401199287932544
+ },
+ "E7.selection.followup.rule.gene_mean.q95_of_cell_max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/q95_of_cell_max",
+  "value": 0.23571882194692798
+ },
+ "E7.selection.followup.rule.gene_mean.reason": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/reason",
+  "value": "q95 > tol"
+ },
+ "E7.selection.followup.rule.gene_mean.retained": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean/retained",
+  "value": false
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.cells_with_matched_pairs": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/cells_with_matched_pairs",
+  "value": 200
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.literal_all_differences_le_tol": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/literal_all_differences_le_tol",
+  "value": false
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/max",
+  "value": 0.4753733374999351
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.median": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/median",
+  "value": 0.04974636180043692
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.q95_of_cell_max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/q95_of_cell_max",
+  "value": 0.23571882194692798
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.reason": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/reason",
+  "value": "q95 > tol"
+ },
+ "E7.selection.followup.rule.gene_mean_plus_G.retained": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/candidates/gene_mean_plus_G/retained",
+  "value": false
+ },
+ "E7.selection.followup.rule.tol": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/rule/tol",
+  "value": 0.05
+ },
+ "E7.selection.followup.selected": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/selected",
+  "value": null
+ },
+ "E7.selection.followup.stopped": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/followup/stopped",
+  "value": null
+ },
+ "E7.selection.git_head": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/git_head",
+  "value": "0c37383307cdeb6cb758fd36d1fa4d3b24c364e9"
+ },
+ "E7.selection.label": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/label",
+  "value": "follow-up after a null primary selection; readout restricted to the NK-T score"
+ },
+ "E7.selection.primary.G_witness_median_W": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/G_witness_median_W",
+  "value": 0.010495427421722657
+ },
+ "E7.selection.primary.cells_sha256": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/cells_sha256",
+  "value": "421c0fb62045b559be87ee58af20f1f04301db3b54792d8d9f1648552b1a2d04"
+ },
+ "E7.selection.primary.detectability_witness_median_R": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/detectability_witness_median_R",
+  "value": 0.2757673337327796
+ },
+ "E7.selection.primary.digest_sha256": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/digest_sha256",
+  "value": "ea33c33c162b8456cf34c1dca54d7dbcaf8b32c460cd6ebfc1dc7c805c2fa174"
+ },
+ "E7.selection.primary.float64_max_gap": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/float64_max_gap",
+  "value": 1.6918230439366688e-06
+ },
+ "E7.selection.primary.float64_ok": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/float64_ok",
+  "value": true
+ },
+ "E7.selection.primary.implementation_ok": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/implementation_ok",
+  "value": true
+ },
+ "E7.selection.primary.magnitudes": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/magnitudes",
+  "value": [
+   0.03125,
+   0.125,
+   0.5
+  ]
+ },
+ "E7.selection.primary.n_cells": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/n_cells",
+  "value": 200
+ },
+ "E7.selection.primary.observable": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/observable",
+  "value": "panel"
+ },
+ "E7.selection.primary.per_magnitude.128.median_D_gene_mean": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/per_magnitude/128/median/D_gene_mean",
+  "value": 0.04116482086802581
+ },
+ "E7.selection.primary.per_magnitude.128.median_D_gene_mean_plus_G": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/per_magnitude/128/median/D_gene_mean_plus_G",
+  "value": 0.038629642366040204
+ },
+ "E7.selection.primary.per_magnitude.32.median_D_gene_mean": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/per_magnitude/32/median/D_gene_mean",
+  "value": 0.018087363150296833
+ },
+ "E7.selection.primary.per_magnitude.32.median_D_gene_mean_plus_G": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/per_magnitude/32/median/D_gene_mean_plus_G",
+  "value": 0.014903633125632976
+ },
+ "E7.selection.primary.per_magnitude.512.median_D_gene_mean": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/per_magnitude/512/median/D_gene_mean",
+  "value": 0.10345778327367236
+ },
+ "E7.selection.primary.per_magnitude.512.median_D_gene_mean_plus_G": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/per_magnitude/512/median/D_gene_mean_plus_G",
+  "value": 0.08881463413353388
+ },
+ "E7.selection.primary.phase": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/phase",
+  "value": "dev"
+ },
+ "E7.selection.primary.positive_control_median_P": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/positive_control_median_P",
+  "value": 0.2745648838185971
+ },
+ "E7.selection.primary.rule.all_token_states.cells_with_matched_pairs": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/all_token_states/cells_with_matched_pairs",
+  "value": 0
+ },
+ "E7.selection.primary.rule.all_token_states.reason": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/all_token_states/reason",
+  "value": "no matched pair (uninformative)"
+ },
+ "E7.selection.primary.rule.all_token_states.retained": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/all_token_states/retained",
+  "value": false
+ },
+ "E7.selection.primary.rule.gene_mean.cells_with_matched_pairs": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/cells_with_matched_pairs",
+  "value": 200
+ },
+ "E7.selection.primary.rule.gene_mean.literal_all_differences_le_tol": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/literal_all_differences_le_tol",
+  "value": false
+ },
+ "E7.selection.primary.rule.gene_mean.max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/max",
+  "value": 0.44666421463740386
+ },
+ "E7.selection.primary.rule.gene_mean.median": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/median",
+  "value": 0.10345778327367236
+ },
+ "E7.selection.primary.rule.gene_mean.q95_of_cell_max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/q95_of_cell_max",
+  "value": 0.27641340030673445
+ },
+ "E7.selection.primary.rule.gene_mean.reason": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/reason",
+  "value": "q95 > tol"
+ },
+ "E7.selection.primary.rule.gene_mean.retained": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean/retained",
+  "value": false
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.cells_with_matched_pairs": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/cells_with_matched_pairs",
+  "value": 200
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.literal_all_differences_le_tol": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/literal_all_differences_le_tol",
+  "value": false
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/max",
+  "value": 0.44666421463740386
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.median": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/median",
+  "value": 0.0900811535223017
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.q95_of_cell_max": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/q95_of_cell_max",
+  "value": 0.2559024365013051
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.reason": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/reason",
+  "value": "q95 > tol"
+ },
+ "E7.selection.primary.rule.gene_mean_plus_G.retained": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/candidates/gene_mean_plus_G/retained",
+  "value": false
+ },
+ "E7.selection.primary.rule.tol": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/rule/tol",
+  "value": 0.05
+ },
+ "E7.selection.primary.selected": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/selected",
+  "value": null
+ },
+ "E7.selection.primary.stopped": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary/stopped",
+  "value": null
+ },
+ "E7.selection.primary_record_version_1_sha256": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/primary_record_version_1_sha256",
+  "value": "10c2011beba507380a76878440b26fd0a8087b83b628b2c0f12d1a77ef4de458"
+ },
+ "E7.selection.record_version": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/record_version",
+  "value": 2
+ },
+ "E7.selection.selected": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/selected",
+  "value": null
+ },
+ "E7.selection.selected_in": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/selected_in",
+  "value": null
+ },
+ "E7.selection.smoke": {
+  "source_file": "registration/addenda/E7_selection.json",
+  "source_key": "/smoke",
+  "value": false
+ },
+ "E7.site4.G_witness_detected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/G_witness_detected",
+  "value": false
+ },
+ "E7.site4.by_donor_class": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/by_donor_class",
+  "value": {
+   "13272/NK": 100,
+   "13272/T": 100,
+   "19593/NK": 100,
+   "19593/T": 100
+  }
+ },
+ "E7.site4.complete": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/complete",
+  "value": true
+ },
+ "E7.site4.float64_max_gap": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/float64_max_gap",
+  "value": 9.103123168319183e-07
+ },
+ "E7.site4.float64_ok": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/float64_ok",
+  "value": true
+ },
+ "E7.site4.implementation_max.intended_mean_shift_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/intended_mean_shift_abs",
+  "value": 1.6833655536174774e-07
+ },
+ "E7.site4.implementation_max.layer12_mean_preserving_gap_units": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/layer12_mean_preserving_gap_units",
+  "value": 3.15714509018495e-07
+ },
+ "E7.site4.implementation_max.mean_preservation_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/mean_preservation_abs",
+  "value": 1.7881393432617188e-07
+ },
+ "E7.site4.implementation_max.module_vs_explicit_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/module_vs_explicit_abs",
+  "value": 1.0967254638671875e-05
+ },
+ "E7.site4.implementation_max.official_layer11_gene_mean_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/official_layer11_gene_mean_abs",
+  "value": 0.0004380345344543457
+ },
+ "E7.site4.implementation_max.padded_vs_unpadded_abs": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/padded_vs_unpadded_abs",
+  "value": 1.0967254638671875e-05
+ },
+ "E7.site4.implementation_max.padding_patch_gap_units": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/padding_patch_gap_units",
+  "value": 0.0
+ },
+ "E7.site4.implementation_max.patch_rows_changed_mismatch": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/patch_rows_changed_mismatch",
+  "value": 0
+ },
+ "E7.site4.implementation_max.permutation_gap_units": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_max/permutation_gap_units",
+  "value": 2.3678588176387123e-07
+ },
+ "E7.site4.implementation_ok": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/implementation_ok",
+  "value": true
+ },
+ "E7.site4.magnitudes": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/magnitudes",
+  "value": [
+   0.03125,
+   0.125,
+   0.5,
+   0.25
+  ]
+ },
+ "E7.site4.median_D_gene_mean.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/ci/1",
+  "value": 0.1610883418714116
+ },
+ "E7.site4.median_D_gene_mean.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/ci/0",
+  "value": 0.08984343129914407
+ },
+ "E7.site4.median_D_gene_mean.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/13272/ci/1",
+  "value": 0.10574958941944479
+ },
+ "E7.site4.median_D_gene_mean.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/13272/ci/0",
+  "value": 0.0861478176790074
+ },
+ "E7.site4.median_D_gene_mean.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_D_gene_mean.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/13272/value",
+  "value": 0.09432753838819569
+ },
+ "E7.site4.median_D_gene_mean.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/19593/ci/1",
+  "value": 0.16663992562721314
+ },
+ "E7.site4.median_D_gene_mean.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/19593/ci/0",
+  "value": 0.13976167789545377
+ },
+ "E7.site4.median_D_gene_mean.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_D_gene_mean.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/per_donor/19593/value",
+  "value": 0.15288077107860631
+ },
+ "E7.site4.median_D_gene_mean.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.median_D_gene_mean.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean/value",
+  "value": 0.12504244736951659
+ },
+ "E7.site4.median_D_gene_mean_plus_G.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/ci/1",
+  "value": 0.1526362876252407
+ },
+ "E7.site4.median_D_gene_mean_plus_G.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/ci/0",
+  "value": 0.08612761726240342
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/13272/ci/1",
+  "value": 0.10336340193426025
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/13272/ci/0",
+  "value": 0.08375907850314049
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/13272/value",
+  "value": 0.09176906001520965
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/19593/ci/1",
+  "value": 0.15758599199623013
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/19593/ci/0",
+  "value": 0.13573854316283215
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_D_gene_mean_plus_G.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/per_donor/19593/value",
+  "value": 0.14778586200316596
+ },
+ "E7.site4.median_D_gene_mean_plus_G.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.median_D_gene_mean_plus_G.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_D_gene_mean_plus_G/value",
+  "value": 0.12171003898082777
+ },
+ "E7.site4.median_P.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/ci/1",
+  "value": 0.2817345407926305
+ },
+ "E7.site4.median_P.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/ci/0",
+  "value": 0.22233828599417443
+ },
+ "E7.site4.median_P.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/13272/ci/1",
+  "value": 0.2923563062455371
+ },
+ "E7.site4.median_P.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/13272/ci/0",
+  "value": 0.2120795800625615
+ },
+ "E7.site4.median_P.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_P.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/13272/value",
+  "value": 0.2650136572687921
+ },
+ "E7.site4.median_P.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/19593/ci/1",
+  "value": 0.2752276241800625
+ },
+ "E7.site4.median_P.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/19593/ci/0",
+  "value": 0.21474728818206845
+ },
+ "E7.site4.median_P.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_P.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/per_donor/19593/value",
+  "value": 0.24272968545060009
+ },
+ "E7.site4.median_P.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.median_P.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_P/value",
+  "value": 0.2613795754584288
+ },
+ "E7.site4.median_R.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/ci/1",
+  "value": 0.2756575787268932
+ },
+ "E7.site4.median_R.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/ci/0",
+  "value": 0.21687664857496955
+ },
+ "E7.site4.median_R.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/13272/ci/1",
+  "value": 0.2824636709025177
+ },
+ "E7.site4.median_R.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/13272/ci/0",
+  "value": 0.2137192060420745
+ },
+ "E7.site4.median_R.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_R.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/13272/value",
+  "value": 0.2606573217147758
+ },
+ "E7.site4.median_R.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/19593/ci/1",
+  "value": 0.28140663677335387
+ },
+ "E7.site4.median_R.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/19593/ci/0",
+  "value": 0.21110419577362177
+ },
+ "E7.site4.median_R.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_R.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/per_donor/19593/value",
+  "value": 0.243520557061125
+ },
+ "E7.site4.median_R.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.median_R.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_R/value",
+  "value": 0.2597950178109104
+ },
+ "E7.site4.median_W.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/ci/1",
+  "value": 0.01822300304218972
+ },
+ "E7.site4.median_W.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/ci/0",
+  "value": 0.008505347309241674
+ },
+ "E7.site4.median_W.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/13272/ci/1",
+  "value": 0.01240288695427886
+ },
+ "E7.site4.median_W.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/13272/ci/0",
+  "value": 0.007248108896609045
+ },
+ "E7.site4.median_W.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_W.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/13272/value",
+  "value": 0.00891600619939689
+ },
+ "E7.site4.median_W.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/19593/ci/1",
+  "value": 0.01952137793516294
+ },
+ "E7.site4.median_W.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/19593/ci/0",
+  "value": 0.012923694498044837
+ },
+ "E7.site4.median_W.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.median_W.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/per_donor/19593/value",
+  "value": 0.016708003282185552
+ },
+ "E7.site4.median_W.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.median_W.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/median_W/value",
+  "value": 0.012704187343723274
+ },
+ "E7.site4.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/n_cells",
+  "value": 400
+ },
+ "E7.site4.n_selected_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/n_selected_cells",
+  "value": 400
+ },
+ "E7.site4.observable": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/observable",
+  "value": "panel"
+ },
+ "E7.site4.patch_region_witness_detected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/patch_region_witness_detected",
+  "value": true
+ },
+ "E7.site4.positive_control_detected": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/positive_control_detected",
+  "value": true
+ },
+ "E7.site4.q95_D_gene_mean.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/ci/1",
+  "value": 0.3912449340613707
+ },
+ "E7.site4.q95_D_gene_mean.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/ci/0",
+  "value": 0.2557886061930648
+ },
+ "E7.site4.q95_D_gene_mean.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/13272/ci/1",
+  "value": 0.2875105753810631
+ },
+ "E7.site4.q95_D_gene_mean.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/13272/ci/0",
+  "value": 0.23008883763092983
+ },
+ "E7.site4.q95_D_gene_mean.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.q95_D_gene_mean.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/13272/value",
+  "value": 0.25900116355444613
+ },
+ "E7.site4.q95_D_gene_mean.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/19593/ci/1",
+  "value": 0.42206369066927246
+ },
+ "E7.site4.q95_D_gene_mean.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/19593/ci/0",
+  "value": 0.33001334102481306
+ },
+ "E7.site4.q95_D_gene_mean.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.q95_D_gene_mean.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/per_donor/19593/value",
+  "value": 0.37474003614010726
+ },
+ "E7.site4.q95_D_gene_mean.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.q95_D_gene_mean.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean/value",
+  "value": 0.3204524476259787
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/ci/1",
+  "value": 0.3879663757624561
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/ci/0",
+  "value": 0.25156185389681246
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_13272.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/13272/ci/1",
+  "value": 0.280360381950095
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_13272.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/13272/ci/0",
+  "value": 0.22358910379886068
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_13272.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/13272/n_cells",
+  "value": 200
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_13272.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/13272/value",
+  "value": 0.2588708099913093
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_19593.ci95_high": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/19593/ci/1",
+  "value": 0.41523572510625245
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_19593.ci95_low": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/19593/ci/0",
+  "value": 0.32429629729118015
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_19593.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/19593/n_cells",
+  "value": 200
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.donor_19593.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/per_donor/19593/value",
+  "value": 0.3742454056143809
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.n_defined_replicates": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/n_defined_replicates",
+  "value": 2000
+ },
+ "E7.site4.q95_D_gene_mean_plus_G.value": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/bounds/q95_D_gene_mean_plus_G/value",
+  "value": 0.3145048499327372
+ },
+ "E7.site4.roster.13272.NK.drawn": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/13272~1NK/drawn",
+  "value": 100
+ },
+ "E7.site4.roster.13272.NK.eligible": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/13272~1NK/eligible",
+  "value": 332
+ },
+ "E7.site4.roster.13272.NK.pool": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/13272~1NK/pool",
+  "value": 335
+ },
+ "E7.site4.roster.13272.T.drawn": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/13272~1T/drawn",
+  "value": 100
+ },
+ "E7.site4.roster.13272.T.eligible": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/13272~1T/eligible",
+  "value": 1217
+ },
+ "E7.site4.roster.13272.T.pool": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/13272~1T/pool",
+  "value": 1228
+ },
+ "E7.site4.roster.19593.NK.drawn": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/19593~1NK/drawn",
+  "value": 100
+ },
+ "E7.site4.roster.19593.NK.eligible": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/19593~1NK/eligible",
+  "value": 195
+ },
+ "E7.site4.roster.19593.NK.pool": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/19593~1NK/pool",
+  "value": 195
+ },
+ "E7.site4.roster.19593.T.drawn": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/19593~1T/drawn",
+  "value": 100
+ },
+ "E7.site4.roster.19593.T.eligible": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/19593~1T/eligible",
+  "value": 1615
+ },
+ "E7.site4.roster.19593.T.pool": {
+  "source_file": "outputs/v3/E7/site4/e7_roster.json",
+  "source_key": "/counts/19593~1T/pool",
+  "value": 1625
+ },
+ "E7.site4.secondary.input_push_on_G.median_of_cell_median": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/input_push_on_G/median_of_cell_median",
+  "value": 0.005189338191773432
+ },
+ "E7.site4.secondary.input_push_on_G.n_cells": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/input_push_on_G/n_cells",
+  "value": 50
+ },
+ "E7.site4.secondary.other_observable": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_observable",
+  "value": "score"
+ },
+ "E7.site4.secondary.per_class.NK.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/D_gene_mean",
+  "value": 0.14118000772749364
+ },
+ "E7.site4.secondary.per_class.NK.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/D_gene_mean_plus_G",
+  "value": 0.13395586450269842
+ },
+ "E7.site4.secondary.per_class.NK.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/P",
+  "value": 0.15363044276912402
+ },
+ "E7.site4.secondary.per_class.NK.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/R",
+  "value": 0.1477002576186099
+ },
+ "E7.site4.secondary.per_class.NK.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/W",
+  "value": 0.01639158159373124
+ },
+ "E7.site4.secondary.per_class.NK.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/W_context",
+  "value": 0.015125485626680618
+ },
+ "E7.site4.secondary.per_class.NK.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/W_pure",
+  "value": 0.003215552274353371
+ },
+ "E7.site4.secondary.per_class.NK.n": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/NK/n",
+  "value": 200
+ },
+ "E7.site4.secondary.per_class.T.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/D_gene_mean",
+  "value": 0.0913232127815382
+ },
+ "E7.site4.secondary.per_class.T.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/D_gene_mean_plus_G",
+  "value": 0.0913232127815382
+ },
+ "E7.site4.secondary.per_class.T.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/P",
+  "value": 0.3968523109762118
+ },
+ "E7.site4.secondary.per_class.T.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/R",
+  "value": 0.39872767917143326
+ },
+ "E7.site4.secondary.per_class.T.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/W",
+  "value": 0.008417618048618371
+ },
+ "E7.site4.secondary.per_class.T.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/W_context",
+  "value": 0.0070503984143885975
+ },
+ "E7.site4.secondary.per_class.T.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/W_pure",
+  "value": 0.0009742014310893499
+ },
+ "E7.site4.secondary.per_class.T.n": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_class/T/n",
+  "value": 200
+ },
+ "E7.site4.secondary.per_magnitude.128.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/D_gene_mean",
+  "value": 0.046369281415257604
+ },
+ "E7.site4.secondary.per_magnitude.128.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/D_gene_mean_plus_G",
+  "value": 0.045005293288917676
+ },
+ "E7.site4.secondary.per_magnitude.128.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/P",
+  "value": 0.2613795754584288
+ },
+ "E7.site4.secondary.per_magnitude.128.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/R",
+  "value": 0.2597950178109104
+ },
+ "E7.site4.secondary.per_magnitude.128.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/W",
+  "value": 0.004089834812374432
+ },
+ "E7.site4.secondary.per_magnitude.128.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/W_context",
+  "value": 0.0026789249989231916
+ },
+ "E7.site4.secondary.per_magnitude.128.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/W_pure",
+  "value": 0.0017606214238552644
+ },
+ "E7.site4.secondary.per_magnitude.128.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/q95_D_gene_mean",
+  "value": 0.1384115213836167
+ },
+ "E7.site4.secondary.per_magnitude.128.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/128/q95_D_gene_mean_plus_G",
+  "value": 0.13046594529592553
+ },
+ "E7.site4.secondary.per_magnitude.256.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/D_gene_mean",
+  "value": 0.07259448343812192
+ },
+ "E7.site4.secondary.per_magnitude.256.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/D_gene_mean_plus_G",
+  "value": 0.06894062695371567
+ },
+ "E7.site4.secondary.per_magnitude.256.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/P",
+  "value": 0.2613795754584288
+ },
+ "E7.site4.secondary.per_magnitude.256.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/R",
+  "value": 0.2597950178109104
+ },
+ "E7.site4.secondary.per_magnitude.256.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/W",
+  "value": 0.005055917565062023
+ },
+ "E7.site4.secondary.per_magnitude.256.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/W_context",
+  "value": 0.0035239905050530483
+ },
+ "E7.site4.secondary.per_magnitude.256.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/W_pure",
+  "value": 0.0017606214238552644
+ },
+ "E7.site4.secondary.per_magnitude.256.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/q95_D_gene_mean",
+  "value": 0.21877948951905887
+ },
+ "E7.site4.secondary.per_magnitude.256.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/256/q95_D_gene_mean_plus_G",
+  "value": 0.2161773748961117
+ },
+ "E7.site4.secondary.per_magnitude.32.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/D_gene_mean",
+  "value": 0.021820690710021202
+ },
+ "E7.site4.secondary.per_magnitude.32.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/D_gene_mean_plus_G",
+  "value": 0.019288056089472008
+ },
+ "E7.site4.secondary.per_magnitude.32.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/P",
+  "value": 0.2613795754584288
+ },
+ "E7.site4.secondary.per_magnitude.32.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/R",
+  "value": 0.2597950178109104
+ },
+ "E7.site4.secondary.per_magnitude.32.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/W",
+  "value": 0.00313429386826291
+ },
+ "E7.site4.secondary.per_magnitude.32.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/W_context",
+  "value": 0.0020655006901623887
+ },
+ "E7.site4.secondary.per_magnitude.32.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/W_pure",
+  "value": 0.0017606214238552644
+ },
+ "E7.site4.secondary.per_magnitude.32.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/q95_D_gene_mean",
+  "value": 0.08317963125610776
+ },
+ "E7.site4.secondary.per_magnitude.32.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/32/q95_D_gene_mean_plus_G",
+  "value": 0.08128505168478184
+ },
+ "E7.site4.secondary.per_magnitude.512.D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/D_gene_mean",
+  "value": 0.12504244736951659
+ },
+ "E7.site4.secondary.per_magnitude.512.D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/D_gene_mean_plus_G",
+  "value": 0.12060756719018248
+ },
+ "E7.site4.secondary.per_magnitude.512.P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/P",
+  "value": 0.2613795754584288
+ },
+ "E7.site4.secondary.per_magnitude.512.R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/R",
+  "value": 0.2597950178109104
+ },
+ "E7.site4.secondary.per_magnitude.512.W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/W",
+  "value": 0.0079687666657372
+ },
+ "E7.site4.secondary.per_magnitude.512.W_context": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/W_context",
+  "value": 0.006510366559746107
+ },
+ "E7.site4.secondary.per_magnitude.512.W_pure": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/W_pure",
+  "value": 0.0017606214238552644
+ },
+ "E7.site4.secondary.per_magnitude.512.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/q95_D_gene_mean",
+  "value": 0.3204524476259787
+ },
+ "E7.site4.secondary.per_magnitude.512.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/per_magnitude/512/q95_D_gene_mean_plus_G",
+  "value": 0.31347460264187643
+ },
+ "E7.site4.secondary.predicted_unit_reexpression_factor_per_protein": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/predicted_unit_reexpression_factor_per_protein",
+  "value": [
+   1.5661177106105537,
+   1.3653370218012022,
+   1.4962121782229003,
+   1.3830039482784138
+  ]
+ },
+ "E7.site4.secondary.score.median_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_medians/D_gene_mean",
+  "value": 0.059557893305774406
+ },
+ "E7.site4.secondary.score.median_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_medians/D_gene_mean_plus_G",
+  "value": 0.05723284169089456
+ },
+ "E7.site4.secondary.score.median_P": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_medians/P",
+  "value": 0.15357342663336412
+ },
+ "E7.site4.secondary.score.median_R": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_medians/R",
+  "value": 0.143320149481373
+ },
+ "E7.site4.secondary.score.median_W": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_medians/W",
+  "value": 0.006033568074566833
+ },
+ "E7.site4.secondary.score.q95_D_gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_q95/D_gene_mean",
+  "value": 0.25030258686644064
+ },
+ "E7.site4.secondary.score.q95_D_gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/secondary/other_q95/D_gene_mean_plus_G",
+  "value": 0.25030258686644064
+ },
+ "E7.site4.status.all_token_states": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/status/all_token_states",
+  "value": "uninformative"
+ },
+ "E7.site4.status.gene_mean": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/status/gene_mean",
+  "value": "rejected"
+ },
+ "E7.site4.status.gene_mean_plus_G": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/status/gene_mean_plus_G",
+  "value": "rejected"
+ },
+ "E7.site4.verdict.code": {
+  "source_file": "outputs/v3/E7/E7_results.json",
+  "source_key": "/families/site4/verdict/code",
+  "value": "REJECTED_NO_REVISION"
+ },
  "_format": {
   "source_file": "docs/reports/V3_REGISTERED_RESULTS.md",
   "source_key": "section 'Numbers'",
@@ -7661,6 +11524,31 @@
   "source_key": "commit cac4f8a committer date 2026-10-01T07:32:45-04:00 (docs only; no registration, script or library change since 2a55f81)",
   "value": "2026-10-01T11:32:45Z"
  },
+ "git.E7_addendum_v1": {
+  "source_file": "git: branch exp/registered-v3",
+  "source_key": "commit 6dc5999 committer date 2026-10-01T18:01:06-04:00",
+  "value": "2026-10-01T22:01:06Z"
+ },
+ "git.E7_addendum_v2": {
+  "source_file": "git: branch exp/registered-v3",
+  "source_key": "commit 0e40d3e committer date 2026-10-01T18:24:05-04:00",
+  "value": "2026-10-01T22:24:05Z"
+ },
+ "git.E7_registration_doc": {
+  "source_file": "git: branch exp/registered-v3",
+  "source_key": "commit 9ca446f committer date 2026-10-01T18:04:18-04:00",
+  "value": "2026-10-01T22:04:18Z"
+ },
+ "git.E7_selection_dev": {
+  "source_file": "git: branch exp/registered-v3",
+  "source_key": "commit 0c37383 committer date 2026-10-01T18:33:13-04:00",
+  "value": "2026-10-01T22:33:13Z"
+ },
+ "git.E7_selection_followup": {
+  "source_file": "git: branch exp/registered-v3",
+  "source_key": "commit 871b709 committer date 2026-10-01T18:40:18-04:00",
+  "value": "2026-10-01T22:40:18Z"
+ },
  "git.registration_v3": {
   "source_file": "git: branch exp/registered-v3",
   "source_key": "commit 4f81697 committer date 2026-09-30T23:54:53-04:00",
@@ -7680,6 +11568,16 @@
   "source_file": "GitHub API: repos/danielchen26/teddy_mm/activity?ref=refs/heads/exp/registered-v3",
   "source_key": "push 54b6c5b..2a55f81",
   "value": "2026-10-01T10:43:44Z"
+ },
+ "github.push_E7_addendum": {
+  "source_file": "GitHub API: repos/danielchen26/teddy_mm/activity?ref=refs/heads/exp/registered-v3",
+  "source_key": "push e5b5e14..0e40d3e (E7 addendum v1 6dc5999, registration page 9ca446f, addendum v2 0e40d3e)",
+  "value": "2026-10-01T22:25:53Z"
+ },
+ "github.push_E7_selection": {
+  "source_file": "GitHub API: repos/danielchen26/teddy_mm/activity?ref=refs/heads/exp/registered-v3",
+  "source_key": "push 0e40d3e..871b709 (selection records 0c37383 dev and 871b709 follow-up)",
+  "value": "2026-10-01T22:40:19Z"
  },
  "reg.E1.c2.margin": {
   "source_file": "registration/registration_v3.json",
@@ -7921,14 +11819,79 @@
   "source_key": "line 1 (2026-10-01T07:54:31-04:00 local)",
   "value": "2026-10-01T11:54:31Z"
  },
+ "run.E7.dev_done": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 204 (2026-10-01T18:33:11-04:00 local): 'dev done: 200 cells'",
+  "value": "2026-10-01T22:33:11Z"
+ },
+ "run.E7.dev_start": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 1 (2026-10-01T18:26:38-04:00 local): 'stage develop roster dev'; val donor 18303 only ('family site4' is the unused default argument)",
+  "value": "2026-10-01T22:26:38Z"
+ },
+ "run.E7.external_done": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 1222 (2026-10-01T19:11:44-04:00 local): 'external done: 400 cells'",
+  "value": "2026-10-01T23:11:44Z"
+ },
+ "run.E7.external_start": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 818 (2026-10-01T18:54:05-04:00 local): 'stage confirm roster dev family external'",
+  "value": "2026-10-01T22:54:05Z"
+ },
+ "run.E7.followup_done": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 410 (2026-10-01T18:40:17-04:00 local): 'followup done: 200 cells'",
+  "value": "2026-10-01T22:40:17Z"
+ },
+ "run.E7.followup_start": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 207 (2026-10-01T18:33:13-04:00 local): 'stage develop roster followup'; val donor 18303 only",
+  "value": "2026-10-01T22:33:13Z"
+ },
+ "run.E7.report": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 1224 (2026-10-01T19:11:49-04:00 local): 'report: verdict {'code': 'REJECTED_NO_REVISION''",
+  "value": "2026-10-01T23:11:49Z"
+ },
+ "run.E7.select_dev": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 206 (2026-10-01T18:33:13-04:00 local): 'select (dev): selected None, stopped None, follow-up required True'",
+  "value": "2026-10-01T22:33:13Z"
+ },
+ "run.E7.select_followup": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 412 (2026-10-01T18:40:18-04:00 local): 'select (followup): selected None, stopped None, follow-up required False'",
+  "value": "2026-10-01T22:40:18Z"
+ },
+ "run.E7.site4_confirm_start": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 413 (2026-10-01T18:40:20-04:00 local): 'stage confirm roster dev family site4'; first E7 stage that reads site4 (protein and cell types for the primary key, then RNA)",
+  "value": "2026-10-01T22:40:20Z"
+ },
+ "run.E7.site4_done": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 817 (2026-10-01T18:54:05-04:00 local): 'site4 done: 400 cells'",
+  "value": "2026-10-01T22:54:05Z"
+ },
+ "run.E7.site4_forward_start": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 416 (2026-10-01T18:40:23-04:00 local): 'site4: device mps, float32'; the first site4 forward pass follows this line",
+  "value": "2026-10-01T22:40:23Z"
+ },
+ "run.E7.site4_roster": {
+  "source_file": "outputs/v3/E7/progress.log",
+  "source_key": "line 414 (2026-10-01T18:40:22-04:00 local): 'site4 roster:'",
+  "value": "2026-10-01T22:40:22Z"
+ },
  "v1.anm_btprio_accuracy": {
   "source_file": "README.md",
-  "source_key": "line 135",
+  "source_key": "line 141",
   "value": 0.9603
  },
  "v1.anm_no_calls_soft_strict_btprio": {
   "source_file": "README.md",
-  "source_key": "line 135",
+  "source_key": "line 141",
   "value": [
    317,
    834,
@@ -7937,17 +11900,17 @@
  },
  "v1.rule_btprio_accuracy": {
   "source_file": "README.md",
-  "source_key": "line 135",
+  "source_key": "line 141",
   "value": 0.9428
  },
  "v1.rule_btprio_accuracy_at_anm_coverage": {
   "source_file": "README.md",
-  "source_key": "line 135",
+  "source_key": "line 141",
   "value": 0.9657
  },
  "v1.rule_no_calls_soft_strict_btprio": {
   "source_file": "README.md",
-  "source_key": "line 135",
+  "source_key": "line 141",
   "value": [
    101,
    881,
@@ -7956,17 +11919,17 @@
  },
  "v2.btprio_changes_expected_answers": {
   "source_file": "README.md",
-  "source_key": "line 276 ('12.48%')",
+  "source_key": "line 282 ('12.48%')",
   "value": 0.1248
  },
  "v2.donor15078_share_of_site4": {
   "source_file": "README.md",
-  "source_key": "line 146 ('32.6% of the site4 test cells')",
+  "source_key": "line 152 ('32.6% of the site4 test cells')",
   "value": 0.326
  },
  "v2.gate_keep40_margin_vs_softP_btprio": {
   "source_file": "README.md",
-  "source_key": "line 137",
+  "source_key": "line 143",
   "value": [
    0.9988,
    0.9988
@@ -7974,17 +11937,17 @@
  },
  "v2.key_nk_cells_soft_rule": {
   "source_file": "README.md",
-  "source_key": "line 170",
+  "source_key": "line 176",
   "value": 1690
  },
  "v2.key_nk_counted_myeloid": {
   "source_file": "README.md",
-  "source_key": "line 170 (1,342 of 1,690 NK cells keyed 'myeloid' under the soft rule)",
+  "source_key": "line 176 (1,342 of 1,690 NK cells keyed 'myeloid' under the soft rule)",
   "value": 1342
  },
  "v2.labels_to_copy_btprio_grid_logistic_mlp": {
   "source_file": "README.md",
-  "source_key": "line 138",
+  "source_key": "line 144",
   "value": [
    50,
    500,
@@ -7993,17 +11956,17 @@
  },
  "v2.out_of_scope_called_high": {
   "source_file": "README.md",
-  "source_key": "line 139",
+  "source_key": "line 145",
   "value": 0.95
  },
  "v2.out_of_scope_called_low": {
   "source_file": "README.md",
-  "source_key": "line 139 ('73-95% of the time')",
+  "source_key": "line 145 ('73-95% of the time')",
   "value": 0.73
  },
  "v2.train_median_size_factor": {
   "source_file": "README.md",
-  "source_key": "line 133",
+  "source_key": "line 139",
   "value": 0.92663
  }
 }
