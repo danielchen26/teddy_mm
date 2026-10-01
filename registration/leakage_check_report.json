@@ -1,0 +1,43 @@
+{
+ "script": "bridge_anm/v3_leakage_check.py",
+ "started_utc": "2026-10-01T03:51:33Z",
+ "static": {
+  "file": "bridge_anm/v3_build_registration.py",
+  "issues": [],
+  "nontest_selector_present": true,
+  "passed": true
+ },
+ "real_core_sha256": "e30451e7bb4385fa8e0b9a3e2ed44fb929be74dea2eba4b19c0b3ec92ff233f2",
+ "registration_core_sha256": "e30451e7bb4385fa8e0b9a3e2ed44fb929be74dea2eba4b19c0b3ec92ff233f2",
+ "real_matches_registration": true,
+ "poison_test": {
+  "rows_poisoned": "test",
+  "n_rows": 16750,
+  "fraction": 1.0,
+  "seed": 101,
+  "what": "adt rows -> U(0, 8); cell_types -> random registered type; z rows -> N(0, 1)",
+  "core_sha256": "e30451e7bb4385fa8e0b9a3e2ed44fb929be74dea2eba4b19c0b3ec92ff233f2",
+  "identical_to_real": true
+ },
+ "poison_val_control": {
+  "rows_poisoned": "val",
+  "n_rows": 6106,
+  "fraction": 1.0,
+  "seed": 202,
+  "what": "adt rows -> U(0, 8); cell_types -> random registered type; z rows -> N(0, 1)",
+  "core_sha256": null,
+  "differs_from_real": true,
+  "builder_outcome": "stopped: unequal panel sizes {'B': 3, 'T': 0, 'NK': 0, 'myeloid': 0}: the ANM threshold mapping above assumes equal sizes"
+ },
+ "poison_val_mild_control": {
+  "rows_poisoned": "val",
+  "n_rows": 305,
+  "fraction": 0.05,
+  "seed": 303,
+  "what": "adt rows -> U(0, 8)",
+  "core_sha256": "291ce3d29e4ead97f94cf25bf8ae9659db35c7e2d7481e4f2e242ce782f3b0fb",
+  "differs_from_real": true
+ },
+ "passed": true,
+ "finished_utc": "2026-10-01T03:52:11Z"
+}
