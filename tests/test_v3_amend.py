@@ -1,15 +1,19 @@
-"""Tests for bridge_anm/lib/v3_amend.py (amendment A1 to the v3 registration).
+"""Tests for bridge_anm/lib/v3_amend.py (amendments A1 and A2 to the v3 registration).
 
-Synthetic tests always run; tests that need the ANM engine skip without ANM_ROOT, and tests
-that need the built amendment skip when registration/amendment_A1.json is absent.
+Synthetic tests always run; tests that need the ANM engine skip without ANM_ROOT, tests that need
+the built amendments skip when registration/amendment_A1.json or amendment_A2.json is absent, and
+tests that need the data pack skip without data/processed/cite.
 """
 from __future__ import annotations
 
+import copy
+import importlib.util
 import json
 import os
 import shutil
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -23,6 +27,10 @@ from lib import v3_key as vk  # noqa: E402
 
 REG_PATH = REPO / "registration" / "registration_v3.json"
 AMEND_PATH = REPO / "registration" / "amendment_A1.json"
+A2_PATH = REPO / "registration" / "amendment_A2.json"
+CITE = REPO / "data" / "processed" / "cite" / "cite_arrays.npz"
+REG_FILES = ("registration_v3.json", "registration_v3.json.sha256", "amendment_A1.json", "amendment_A1.json.sha256",
+             "amendment_A2.json", "amendment_A2.json.sha256")
 ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(REPO.parent / "ANM")))
 
 
@@ -35,9 +43,28 @@ def reg():
 
 @pytest.fixture(scope="module")
 def amended():
-    if not AMEND_PATH.exists():
+    if not AMEND_PATH.exists() or not A2_PATH.exists():
         pytest.skip("amendment not built")
     return va.load_registration_amended()
+
+
+@pytest.fixture(scope="module")
+def a2():
+    if not A2_PATH.exists():
+        pytest.skip("amendment A2 not built")
+    return va.load_amendment_A2()
+
+
+def _load(name: str, rel: str):
+    spec = importlib.util.spec_from_file_location(name, REPO / rel)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _copy_registration(dst: Path) -> None:
+    for f in REG_FILES:
+        shutil.copy(REPO / "registration" / f, dst / f)
 
 
 def _clr_per_cell(x):
@@ -185,3 +212,301 @@ def test_amendment_hashes_and_overrides(amended, tmp_path):
         for k in path.split("/")[:-1]:
             assert k in cur, path
             cur = cur[k]
+
+
+# ============================================================================= amendment A2
+# ----------------------------------------------------------------------------- loading
+def test_loader_applies_A1_then_A2(amended, a2):
+    assert [x["amendment_id"] for x in amended["amendments"]] == ["teddy_mm_v3_A1", "teddy_mm_v3_A2"]
+    assert amended["amendment_A2"] == a2
+    assert a2["amends"]["registration_sha256"] == vk.sha256_file(REG_PATH)
+    assert a2["amends"]["amendment_A1_sha256"] == vk.sha256_file(AMEND_PATH)
+    e = amended["experiments"]
+    assert "A2.1" in e["E3"]["endpoints"]["E3.H3a"] and "scale artefact" in e["E3"]["endpoints"]["E3.H3a"]
+    assert "A2 win" in e["E3"]["falsification"]
+    assert "A2.2" in e["E3"]["gap_ratio"]
+    assert e["E2"]["falsification"].startswith(amended["amendment_A1"]["experiments_overrides"]["E2/falsification"])
+    assert "each primary donor" in e["E2"]["falsification"]
+    assert "within each donor" in e["E3"]["cells"]          # A1 stays applied underneath A2
+    assert e["E3"]["endpoints"]["E3.H3b"] == vk.load_registration(REG_PATH)["experiments"]["E3"]["endpoints"]["E3.H3b"]
+    # A2 only replaces existing fields (no typo can create a new branch)
+    reg = vk.load_registration(REG_PATH)
+    for path in a2["experiments_overrides"]:
+        cur = reg["experiments"]
+        for k in path.split("/"):
+            assert k in cur, path
+            cur = cur[k]
+    assert a2["leakage_check"]["passed"] is True
+    assert a2["leakage_check"]["poison_test"]["identical_to_real"] is True
+    assert a2["leakage_check"]["poison_train"]["identical_to_real"] is False
+
+
+def test_A2_tamper_chain_and_missing_file(tmp_path, a2):
+    _copy_registration(tmp_path)
+    reg_p, a1_p, a2_p = tmp_path / "registration_v3.json", tmp_path / "amendment_A1.json", tmp_path / "amendment_A2.json"
+    assert va.load_registration_amended(reg_p, a1_p)["amendment_A2"]["amendment_id"] == va.A2_ID
+    txt = a2_p.read_text()
+    a2_p.write_text(txt.replace('"A2.1"', '"A2.1x"', 1))           # altered A2, old hash file
+    with pytest.raises(ValueError):
+        va.load_registration_amended(reg_p, a1_p)
+    d = json.loads(txt)
+    d["amends"]["amendment_A1_sha256"] = "0" * 64                  # self-consistent A2 naming another A1
+    a2_p.write_text(json.dumps(d))
+    (tmp_path / "amendment_A2.json.sha256").write_text(f"{vk.sha256_file(a2_p)}  amendment_A2.json\n")
+    with pytest.raises(ValueError, match="A1"):
+        va.load_registration_amended(reg_p, a1_p)
+    a2_p.unlink()
+    with pytest.raises(FileNotFoundError):
+        va.load_registration_amended(reg_p, a1_p)
+
+
+def test_amendment_A2_status_needs_commit_and_match(tmp_path, a2):
+    _copy_registration(tmp_path)
+    assert va.amendment_A2_status(tmp_path, lambda p: True)["ok"]
+    assert not va.amendment_A2_status(tmp_path, lambda p: p.name != "amendment_A2.json")["ok"]
+    assert not va.amendment_A2_status(tmp_path, lambda p: p.name != "amendment_A2.json.sha256")["ok"]
+    assert not va.amendment_A2_status(tmp_path, lambda p: None)["ok"]
+    (tmp_path / "amendment_A1.json").write_text((tmp_path / "amendment_A1.json").read_text() + " ")
+    assert not va.amendment_A2_status(tmp_path, lambda p: True)["ok"]          # A2 names another A1
+    _copy_registration(tmp_path)
+    (tmp_path / "amendment_A2.json.sha256").write_text("0" * 64 + "  amendment_A2.json\n")
+    assert not va.amendment_A2_status(tmp_path, lambda p: True)["ok"]
+    (tmp_path / "amendment_A2.json").unlink()
+    st = va.amendment_A2_status(tmp_path, lambda p: True)
+    assert not st["ok"] and not st["amendment_A2_exists"]
+
+
+def test_e3_site4_guard_requires_A2(monkeypatch, a2):
+    s = _load("v3_e3_nkt_repair_a2test", "scripts/v3_e3_nkt_repair.py")
+    a = SimpleNamespace(registration_dir=REPO / "registration")
+    monkeypatch.setattr(s, "_git_committed", lambda p: True)
+    monkeypatch.setattr(s, "_git_head_text", lambda p: Path(p).read_text())
+    info = s.check_registration(a, site4=True)                     # everything committed and matching: allowed
+    assert info["amendment_A2"]["ok"] and info["amendment_A2_sha256"] == vk.sha256_file(A2_PATH)
+    monkeypatch.setattr(s, "_git_committed", lambda p: Path(p).name != "amendment_A2.json")
+    with pytest.raises(SystemExit, match="amendment_A2"):
+        s.check_registration(a, site4=True)
+    assert s.check_registration(a, site4=False)["amendment_A2"]["ok"] is False   # train/val stages still run
+
+
+def test_e2_site4_guard_requires_A2(monkeypatch, a2):
+    s = _load("e2_script_a2test", "scripts/e2_response_decomposition.py")
+    a = SimpleNamespace(registration_dir=REPO / "registration", cell_pool="e2_subset", stage="report")
+    monkeypatch.setattr(s, "_git_committed", lambda p: True)
+    rc = s.check_registration(a)
+    assert rc["info"]["amendment_A2"]["ok"] and "amendment_A2" in rc["reg"]
+    monkeypatch.setattr(s, "_git_committed", lambda p: Path(p).name != "amendment_A2.json")
+    for stage in ("embed", "report", "all"):
+        with pytest.raises(SystemExit, match="amendment_A2"):
+            s.check_registration(SimpleNamespace(registration_dir=a.registration_dir, cell_pool="e2_subset", stage=stage))
+    s.check_registration(SimpleNamespace(registration_dir=a.registration_dir, cell_pool="val", stage="report"))  # smoke
+
+
+def test_A2_leaves_addendum_parts_of_scripts_unchanged():
+    """Stages already run were gated on the addenda; A2 must not change DECLARED (E3) or SPEC (E2)."""
+    e3f, e2f = REPO / "registration/addenda/E3.json", REPO / "registration/addenda/E2.json"
+    if not (e3f.exists() and e2f.exists()):
+        pytest.skip("addenda not written")
+    s3 = _load("v3_e3_nkt_repair_a2decl", "scripts/v3_e3_nkt_repair.py")
+    s2 = _load("e2_script_a2spec", "scripts/e2_response_decomposition.py")
+    assert json.loads(e3f.read_text())["declared"] == s3.DECLARED
+    add2 = json.loads(e2f.read_text())
+    assert add2["spec"] == s2.SPEC and add2["spec_sha256"] == s2.spec_sha()
+
+
+# ----------------------------------------------------------------------------- A2.2 R2 normaliser sample
+def test_a2_draw_is_label_free_seeded_and_train_only():
+    split = np.array(["train", "val", "test"] * 400 + ["train"] * 300)
+    s1 = va.a2_draw_r2_q95_sample(split, 31, 200)
+    assert s1.size == 200 and np.all(split[s1] == "train") and np.all(np.diff(s1) > 0)
+    assert np.array_equal(s1, va.a2_draw_r2_q95_sample(split.copy(), 31, 200))
+    assert not np.array_equal(s1, va.a2_draw_r2_q95_sample(split, 32, 200))
+    # only the positions of split == train matter: renaming the other splits changes nothing
+    other = np.where(split == "train", "train", "x")
+    assert np.array_equal(s1, va.a2_draw_r2_q95_sample(other, 31, 200))
+
+
+def test_a2_registered_sample_reproduces(a2):
+    if not CITE.exists():
+        pytest.skip("data pack not available")
+    split = np.load(CITE, allow_pickle=False)["split"].astype(str)
+    s = va.a2_r2_q95_sample(split, a2)
+    spec = a2["e3"]["r2_normaliser"]
+    assert s.size == spec["n_cells"] == 10_000 and np.all(split[s] == "train")
+    assert vk.index_hash(np.where(split == "train")[0]) == spec["population_sha256"]
+    bad = copy.deepcopy(a2)
+    bad["computed"]["e3_r2_normaliser_sample"]["cells"][0] += 1
+    with pytest.raises(ValueError):
+        va.a2_r2_q95_sample(split, bad)
+    bad = copy.deepcopy(a2)
+    bad["e3"]["r2_normaliser"]["seed"] = 32
+    with pytest.raises(ValueError):
+        va.a2_r2_q95_sample(split, bad)
+
+
+def test_e3_predict_plan_uses_A2_sample(a2, amended):
+    if not CITE.exists():
+        pytest.skip("data pack not available")
+    s = _load("v3_e3_nkt_repair_a2plan", "scripts/v3_e3_nkt_repair.py")
+    split = np.load(CITE, allow_pickle=False)["split"].astype(str)
+    D = SimpleNamespace(split=split, rows=lambda name: np.where(split == name)[0])
+    plan = dict(s.predict_plan(SimpleNamespace(smoke=None), D, amended))
+    assert set(plan) == {"val", "trainA2", "test"}
+    assert np.array_equal(plan["trainA2"], va.a2_r2_q95_sample(split, a2))
+    assert plan["val"].size == int(np.sum(split == "val")) and plan["test"].size == int(np.sum(split == "test"))
+
+
+# ----------------------------------------------------------------------------- A2.1 E3 H3a
+def test_a2_positive_condition_and_h3a_verdict():
+    d2 = {"13272": 0.05, "19593": 0.2}
+    assert va.a2_positive_condition(0.1, 0.02, d2)["holds"]
+    assert not va.a2_positive_condition(0.1, -0.01, d2)["holds"]
+    assert not va.a2_positive_condition(0.1, 0.0, d2)["holds"]
+    assert not va.a2_positive_condition(-0.1, 0.02, d2)["holds"]
+    assert not va.a2_positive_condition(0.1, 0.02, {"13272": -0.01, "19593": 0.2})["holds"]
+    assert not va.a2_positive_condition(0.1, 0.02, {"13272": float("nan"), "19593": 0.2})["holds"]
+    assert not va.a2_positive_condition(0.1, 0.02, {"13272": None, "19593": 0.2})["holds"]
+    assert not va.a2_positive_condition(float("nan"), 0.02, d2)["holds"]
+    assert not va.a2_positive_condition(0.1, None, d2)["holds"]
+    assert not va.a2_positive_condition(0.1, 0.02, {})["holds"]
+    assert va.a2_h3a_verdict("win", True, True) == "win"
+    assert va.a2_h3a_verdict("win", False, True) == va.A2_SCALE_ARTEFACT == "not supported (scale artefact)"
+    assert va.a2_h3a_verdict("win", True, False) == va.A2_SCALE_ARTEFACT
+    for v in ("loss", "equivalent", "inconclusive"):
+        assert va.a2_h3a_verdict(v, True, True) == v
+    assert va.a2_e3_falsification("win", "inconclusive")["rejected"] is False
+    assert va.a2_e3_falsification(va.A2_SCALE_ARTEFACT, "win")["rejected"] is False
+    assert va.a2_e3_falsification(va.A2_SCALE_ARTEFACT, "inconclusive")["rejected"] is True
+
+
+def _synthetic_pairs(keep: dict[str, tuple[float, float]], n_per_donor: int = 120, seed: int = 0):
+    """Pairs of two donors, half flagged; measured NK-T difference ~1 on the 4 gap proteins; readout r keeps the
+    fraction keep[r] = (flagged, unflagged) of the measured difference (plus small noise)."""
+    rng = np.random.default_rng(seed)
+    n = 2 * n_per_donor
+    nk, t = np.arange(n), np.arange(n, 2 * n)
+    donor = np.repeat(["13272", "19593"], n_per_donor)
+    flag = np.tile(np.arange(n_per_donor) % 2 == 0, 2)
+    meas = np.zeros((2 * n, 13))
+    meas[nk] = 1.0 + 0.05 * rng.standard_normal((n, 13))
+    meas[t] = 0.05 * np.abs(rng.standard_normal((n, 13)))
+    ev = {}
+    for r, (kf, ku) in keep.items():
+        e = np.zeros((2 * n, 13))
+        k = np.where(flag, kf, ku)[:, None]
+        e[nk] = meas[t] + k * (meas[nk] - meas[t]) * (1.0 + 0.02 * rng.standard_normal((n, 13)))
+        e[t] = meas[t]
+        ev[r] = e
+    return {"nk": nk, "t": t, "flag": flag, "donor": donor}, ev, meas
+
+
+def test_e3_run_h3a_flags_uniform_shrinkage_as_scale_artefact():
+    """End to end through the E3 evaluate code: R1 shrinks every difference by 1/2 (registered D wins, A2 does not),
+    R2 recovers the gap on flagged pairs (an A2 win)."""
+    s = _load("v3_e3_nkt_repair_a2h3a", "scripts/v3_e3_nkt_repair.py")
+    head = (0.3, 0.8)
+    pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.15, 0.4), "R2": (0.9, 0.8)})
+    gidx = [s.DECLARED["targets"].index(p) for p in ("CD56", "CD94", "CD335", "CD3")]
+    out = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)
+    st, a2 = out["stats"], out["A2"]
+    assert st["D_R1"]["verdict"] == "win" and st["D_R2"]["verdict"] == "win"
+    assert a2["R1"]["registered_D_verdict"] == "win"
+    assert a2["R1"]["b_flagged_recovery"]["holds"] is False
+    assert a2["R1"]["verdict"] == va.A2_SCALE_ARTEFACT
+    assert a2["R2"]["b_flagged_recovery"]["holds"] and a2["R2"]["c_scale_free_Dlog"]["holds"]
+    assert a2["R2"]["verdict"] == "win"
+    h3b = {"stats": {f"{R}-head@{c}": {"verdict": "inconclusive"} for c in s.COVERAGES for R in ("R1", "R2")}}
+    v = s.verdicts({"H3a": {"sp": {"all": out}}, "H3b": {"sp": {"all": h3b}}}, "sp")
+    assert v["E3.H3a_R1"] == va.A2_SCALE_ARTEFACT and v["E3.H3a_R2"] == "win"
+    assert v["E3.H3a_registered_D_only"] == {"R1": "win", "R2": "win"}
+    assert v["falsification"].startswith("not rejected")
+    # with only the shrinking readouts, the registered reading would not reject, A2 does
+    pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.15, 0.4), "R2": (0.21, 0.56)}, seed=1)
+    out = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)
+    v = s.verdicts({"H3a": {"sp": {"all": out}}, "H3b": {"sp": {"all": h3b}}}, "sp")
+    assert v["E3.H3a_registered_D_only"] == {"R1": "win", "R2": "win"}
+    assert v["E3.H3a_R1"] == v["E3.H3a_R2"] == va.A2_SCALE_ARTEFACT
+    assert v["falsification"].startswith("rejected") and v["falsification_registered_D_only_reading"].startswith("not rejected")
+
+
+def test_e3_a2_needs_each_primary_donor():
+    """A repair present in one donor only: D can still win on the pooled pairs if the other donor's D clears
+    margin/2, but (b) must be positive in each donor."""
+    s = _load("v3_e3_nkt_repair_a2donor", "scripts/v3_e3_nkt_repair.py")
+    head = (0.3, 0.8)
+    pv, ev, meas = _synthetic_pairs({"head": head, "null": head, "R1": (0.15, 0.4), "R2": (0.9, 0.8)}, seed=2)
+    # in donor 19593, R2 is a uniform 1/2 shrink of the head (no recovery on flagged pairs there)
+    m = pv["donor"] == "19593"
+    for i_nk, i_t, f in zip(pv["nk"][m], pv["t"][m], pv["flag"][m]):
+        k = 0.15 if f else 0.4
+        ev["R2"][i_nk] = meas[i_t] + k * (meas[i_nk] - meas[i_t])
+    gidx = [s.DECLARED["targets"].index(p) for p in ("CD56", "CD94", "CD335", "CD3")]
+    out = s.run_h3a(pv, ev, meas, gidx, ["13272", "19593"], 300, 1)
+    a2 = out["A2"]["R2"]
+    assert a2["b_flagged_recovery"]["per_donor"]["19593"] < 0
+    assert a2["b_flagged_recovery"]["holds"] is False
+    assert a2["verdict"] != "win"
+
+
+# ----------------------------------------------------------------------------- A2.3 E2 decision rule
+def test_a2_e2_criterion_i_rows():
+    base = {"unit_a": "thin_keep0.2", "unit_b": "gene_eps1", "label": "head", "diff": 0.2, "ci95": [0.05, 0.35],
+            "passes": True, "per_donor_diff": {"13272": 0.18, "19593": 0.11}}
+    r = va.a2_e2_criterion_i([base])
+    assert r["holds"] and r["n_passing_A2"] == 1
+    for bad in ({"per_donor_diff": {"13272": 0.3, "19593": 0.05}},     # below margin / 2 in one donor
+                {"per_donor_diff": {"13272": 0.3, "19593": -0.1}},     # opposite sign in one donor
+                {"per_donor_diff": {"13272": 0.3, "19593": None}},     # undefined in one donor
+                {"per_donor_diff": {"13272": 0.3, "19593": float("nan")}},
+                {"per_donor_diff": {}},
+                {"ci95": [-0.35, -0.05]},                                # interval on the other side
+                {"ci95": [None, None]},
+                {"passes": False}):
+        assert not va.a2_e2_criterion_i([{**base, **bad}])["holds"], bad
+    neg = {**base, "diff": -0.2, "ci95": [-0.35, -0.05], "per_donor_diff": {"13272": -0.1, "19593": -0.3}}
+    assert va.a2_e2_criterion_i([neg])["holds"]
+    assert va.a2_e2_criterion_i([{**base, "passes": False}, neg])["n_passing_A2"] == 1
+
+
+def test_a2_e2_criterion_i_end_to_end_with_criterion_i():
+    """er.criterion_i passes on the pooled cells (A1 reading); the donor clause decides under A2."""
+    from lib import e2_response as er
+
+    rng = np.random.default_rng(0)
+
+    def unit(loss, n_lost, sh):
+        return {"decision_loss": loss, "n_lost_cells": n_lost,
+                **{f"share_{L}": v for L, v in zip(er.LABELS, sh)}}
+
+    units = {"A": unit(0.10, 50, (0.6, 0.3, 0.1)), "B": unit(0.11, 60, (0.3, 0.5, 0.2))}
+    boot = {u: {f"share_{L}": units[u][f"share_{L}"] + 0.02 * rng.standard_normal(500) for L in er.LABELS} for u in units}
+
+    def per_donor(a_19593):
+        return {"13272": {"A": unit(0.1, 25, (0.7, 0.2, 0.1)), "B": unit(0.1, 30, (0.3, 0.5, 0.2))},
+                "19593": {"A": unit(0.1, 25, a_19593), "B": unit(0.1, 30, (0.3, 0.5, 0.2))}}
+
+    # donor 19593: representation diff 0.05 and head diff -0.05, both below margin / 2 = 0.075
+    weak = er.criterion_i(units, boot, per_donor=per_donor((0.35, 0.45, 0.2)))
+    assert weak["holds"] is True and weak["holds_with_per_donor_clause"] is False
+    a2w = va.a2_e2_criterion_i(weak["rows"])
+    assert a2w["holds"] is False and a2w["n_passing_overall"] == 2 and a2w["n_passing_A2"] == 0
+    strong = er.criterion_i(units, boot, per_donor=per_donor((0.5, 0.4, 0.1)))   # 19593: 0.2 and -0.1
+    assert va.a2_e2_criterion_i(strong["rows"])["holds"] is True
+    assert strong["holds_with_per_donor_clause"] is True
+    assert va.a2_e2_verdict(False, False) == "adds nothing beyond the curve (falsified)"
+    assert va.a2_e2_verdict(True, False) == va.a2_e2_verdict(False, True) == "adds information beyond the curve"
+
+
+def test_a2_e2_criterion_ii():
+    row = {"point": 0.03, "ci95": [0.005, 0.05], "per_donor": {"13272": 0.02, "19593": 0.012}}
+    assert va.a2_e2_criterion_ii(row, 0.02)["holds"]
+    assert not va.a2_e2_criterion_ii({**row, "per_donor": {"13272": 0.02, "19593": 0.009}}, 0.02)["holds"]
+    assert not va.a2_e2_criterion_ii({**row, "per_donor": {"13272": 0.02, "19593": None}}, 0.02)["holds"]
+    assert not va.a2_e2_criterion_ii({**row, "ci95": [0.0, 0.05]}, 0.02)["holds"]
+    assert not va.a2_e2_criterion_ii({**row, "point": 0.019}, 0.02)["holds"]
+    assert not va.a2_e2_criterion_ii({**row, "ci95": [None, None]}, 0.02)["holds"]
+    # agrees with the registered win rule of e2_response
+    from lib import e2_response as er
+    for pt, lo, d1, d2 in [(0.03, 0.005, 0.02, 0.012), (0.03, 0.005, 0.02, 0.009), (0.05, -0.01, 0.03, 0.03)]:
+        r = {"point": pt, "ci95": [lo, 0.1], "per_donor": {"a": d1, "b": d2}}
+        assert va.a2_e2_criterion_ii(r, 0.02)["holds"] == (er.win_rule(pt, [lo, 0.1], r["per_donor"], 0.02) == "win")

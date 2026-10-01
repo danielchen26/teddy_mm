@@ -254,7 +254,8 @@ def test_site4_run_refused_without_committed_addendum(tmp_path):
     m = _script()
     rd = tmp_path / "registration"
     rd.mkdir()
-    for f in ("registration_v3.json", "registration_v3.json.sha256", "amendment_A1.json", "amendment_A1.json.sha256"):
+    for f in ("registration_v3.json", "registration_v3.json.sha256", "amendment_A1.json", "amendment_A1.json.sha256",
+              "amendment_A2.json", "amendment_A2.json.sha256"):  # the loader applies A1 then A2 (amendment A2)
         shutil.copy(REPO / "registration" / f, rd / f)
     a = SimpleNamespace(registration_dir=rd, cell_pool="e2_subset", stage="embed")
     with pytest.raises(SystemExit, match="site4 run refused"):
@@ -262,6 +263,7 @@ def test_site4_run_refused_without_committed_addendum(tmp_path):
     a.cell_pool = "val"
     info = m.check_registration(a)["info"]
     assert info["addendum_exists"] is False
+    assert info["amendment_A2"]["ok"] is False  # not committed in tmp_path: a site4 run would also be refused for A2
 
 
 def test_spec_hash_is_stable():

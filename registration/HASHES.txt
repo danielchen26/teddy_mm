@@ -1,4 +1,4 @@
-# sha256 of the v3 registration files (recorded at commit; registration_v3.json is the frozen registration, amendment_A1.json amends it before site4)
+# sha256 of the v3 registration files (recorded at commit; registration_v3.json is the frozen registration, amendment_A1.json amends it before site4, amendment_A2.json follows A1 before any site4 evaluation of E2 and E3)
 e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3  registration_v3.json
 e30451e7bb4385fa8e0b9a3e2ed44fb929be74dea2eba4b19c0b3ec92ff233f2  registration_v3_core.json
 70010c0495efc9145286e9f51e7c096d483d76c336a035d3d1617f81ff907705  registration_v3_devlog.json
@@ -10,8 +10,13 @@ b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8  amendment_A1_c
 ed2c758e2ffdfc36be9a91a67891fc9ba4919a77b1b94224871115094d819f37  AMENDMENT_A1.md
 7f3f8ad6e01465d5992fab2f06ccf70ec483d5b1ec079a62d690c3ef9ffd5b36  leakage_check_report.json
 45113585c4c2411a966814154ec41a58c0836c51e1f3f16e0fbe31b2e9424602  ../bridge_anm/lib/v3_key.py
-0ae5d516236c916283ea83104389b4ecdfc8504d2624f12f9eb9c3b5763d5736  ../bridge_anm/lib/v3_amend.py
 bc808b808ab5a9d765ea8ee42a1866526b8d36bdc00e32acb9a0b679e1a02a53  ../bridge_anm/v3_build_registration.py
 0753dd41ce916e55807ba9baa90635ae867b4e884e63d2fb87c97e7ce2f824f5  ../bridge_anm/v3_build_amendment.py
 c3b57df996725a17a18edff59a6254645062abe8c5262ffef512a7c710c6daee  ../bridge_anm/v3_leakage_check.py
 f5ec5bfbbde0b1a8f563fee62745c59abee9f1a063727fd0e2684fb8929b816a  ../bridge_anm/v3_render_registration.py
+# A2: v3_amend.py extended by A2 (its A1-era sha256 0ae5d516... is recorded in amendment_A1.json provenance)
+20b64174b063d39997abf09877ae1ba152d935589b43630e15dd6ebe6d21fd36  amendment_A2.json
+561842f206e06e64ea5aa7ffd4335b44dc954585512c449cff3c270f25c135bf  amendment_A2_core.json
+985d05136c1ece26fc3f0194a1c88ff216c3aa9a1283920c398b55315cef122b  AMENDMENT_A2.md
+59089ef5f9ec8ecb0a4af1d82f37d4fc2b1bd316cc5aeba671877d7ef44abff1  ../bridge_anm/lib/v3_amend.py
+6801499dd07d6144da17fbf7e8b6bb83a5a92ee41f5d23564d329276bf20dd63  ../bridge_anm/v3_build_amendment_A2.py

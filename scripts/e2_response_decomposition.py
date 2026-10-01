@@ -4,10 +4,12 @@ the official TEDDY-G preprocessing, and follow each perturbation through the fro
 (z -> phase-1 head -> registered evidence -> Q1 rule and ANM) to say where a lost call was lost.
 
 Registered design: registration/registration_v3.json experiments.E2, as amended by A1 (A1.7 falsification,
-A1.1 bootstrap), loaded with bridge_anm/lib/v3_amend.load_registration_amended(). This script's addendum
-registration/addenda/E2.json fixes only what the registration leaves open (the z-probe C, the gene ids, the
-count recovery and random-number scheme, unit and statistic definitions; see SPEC below) and is committed
-before any site4 forward pass.
+A1.1 bootstrap) and A2 (A2.3: the common decision rule, overall and in each primary donor, is binding for
+falsification criteria (i) and (ii)), loaded with bridge_anm/lib/v3_amend.load_registration_amended(). This
+script's addendum registration/addenda/E2.json fixes only what the registration leaves open (the z-probe C,
+the gene ids, the count recovery and random-number scheme, unit and statistic definitions; see SPEC below)
+and is committed before any site4 forward pass; where A2 differs from it (the per-donor clause is no longer
+secondary), A2 wins, and SPEC and the addendum file stay unchanged.
 
   cells        registration e2_subset: 1,000 test_primary cells (500 per donor 13272, 19593) + 250 of donor
                15078 (secondary); smoke runs use val donor 18303 cells only (--cell-pool val)
@@ -17,7 +19,8 @@ before any site4 forward pass.
   linearity    (eps, eps/2) slope ratio and cosine per stage (z, evidence, score), floor-guarded
   decompose    lost call -> representation (z-probe wrong on z') / head (rule argmax wrong) / decision
   comparator   the plain perturbation -> accuracy curve (Q1 selective and decision accuracy)
-  falsified    unless (i) or (ii) of A1's E2 text holds (two-stage donor bootstrap, B = 2000, seed 1)
+  falsified    unless (i) or (ii) of A1's E2 text holds under the common decision rule (A2.3: also in each
+               primary donor; two-stage donor bootstrap, B = 2000, seed 1)
 
 Stages
   register     train/val only: gene ids, z-probe C on val, count-recovery check, leakage self-check (site4
@@ -29,7 +32,8 @@ Stages
                bootstrap; writes E2_results.json, REPORT.md, e2_cases.npz
   all          embed then report
 A site4 run (embed / report / all on --cell-pool e2_subset) is refused unless registration_v3.json,
-amendment_A1.json and addenda/E2.json are committed, hash-checked and equal to this script's SPEC.
+amendment_A1.json, amendment_A2.json and addenda/E2.json are committed, hash-checked and (the addendum)
+equal to this script's SPEC.
 
 Full run (not run inside the workflow):
   R=/Users/tianchichen/Documents/GitHub/teddy_mm; PY=<venv>/bin/python
@@ -287,9 +291,11 @@ def check_registration(a) -> dict:
     """Hash checks; refuses a site4 stage unless every registration file is committed and matches."""
     regp = a.registration_dir / "registration_v3.json"
     amp = a.registration_dir / "amendment_A1.json"
-    reg = va.load_registration_amended(regp, amp)  # verifies both sha256 files
+    reg = va.load_registration_amended(regp, amp)  # verifies the registration, A1 and A2 sha256 files
+    a2 = va.amendment_A2_status(a.registration_dir, _git_committed)
     info = {"registration_sha256": vk.sha256_file(regp), "amendment_sha256": va.amendment_sha256(amp),
             "registration_committed": _git_committed(regp), "amendment_committed": _git_committed(amp),
+            "amendment_A2_sha256": a2["amendment_A2_sha256"], "amendment_A2": a2,
             "spec_sha256": spec_sha()}
     f = addendum_path(a)
     hf = a.registration_dir / "addenda" / "HASHES.txt"
@@ -312,7 +318,9 @@ def check_registration(a) -> dict:
                 "addenda/E2.json sha256 in addenda/HASHES.txt": info.get("addendum_hash_recorded") is True,
                 "addenda/E2.json committed": info.get("addendum_committed") is True,
                 "addenda/E2.json spec equals this script's SPEC": info.get("addendum_spec_matches_script") is True,
-                "addenda/E2.json names this registration and A1": info.get("addendum_registration_matches") is True}
+                "addenda/E2.json names this registration and A1": info.get("addendum_registration_matches") is True,
+                "amendment_A2.json and its hash file present, matching, committed, naming the registration and A1 on disk":
+                    a2["ok"]}
         bad = [k for k, ok in need.items() if not ok]
         if bad:
             raise SystemExit("site4 run refused (register and commit the E2 addendum first): " + "; ".join(bad))
@@ -998,8 +1006,12 @@ def analyse(H: dict, base: dict, case: dict, key: np.ndarray, donor: np.ndarray,
         return res
 
     crit2 = crit_ii()
-    verdict = ("adds information beyond the curve" if (crit1["holds"] or crit2["holds"])
-               else "adds nothing beyond the curve (falsified)")
+    # A2.3: the common decision rule (overall and in each primary donor) is binding for (i) and (ii)
+    a2_i = va.a2_e2_criterion_i(crit1["rows"], SHARE_MARGIN)
+    a2_ii = va.a2_e2_criterion_ii(crit2["differences"]["primary: extrapolated_margin - margin"], AUROC_MARGIN)
+    verdict = va.a2_e2_verdict(a2_i["holds"], a2_ii["holds"])
+    verdict_a1 = ("adds information beyond the curve" if (crit1["holds"] or crit2["holds"])
+                  else "adds nothing beyond the curve (falsified)")
 
     def strip(U):
         return {u: {k: v for k, v in b.items() if k != "_boot"} for u, b in U.items()}
@@ -1015,7 +1027,10 @@ def analyse(H: dict, base: dict, case: dict, key: np.ndarray, donor: np.ndarray,
         "falsification": {"criterion_i": crit1, "criterion_i_selective_accuracy_secondary": crit1_sel,
                           "criterion_i_with_gene_units_secondary": {k: v for k, v in crit1_fine.items() if k != "rows"}
                           | {"rows_passing": [r for r in crit1_fine["rows"] if r["passes"]]},
-                          "criterion_ii": crit2, "verdict": verdict,
+                          "criterion_ii": crit2,
+                          "A2": {"criterion_i": a2_i, "criterion_ii": a2_ii, "donors_in_per_donor_clause": donors},
+                          "verdict": verdict,
+                          "verdict_A1_reading_without_donor_clause": verdict_a1 + " (A1 only; superseded by A2.3, never decides)",
                           "verdict_rule": reg["experiments"]["E2"]["falsification"]},
     }
 
@@ -1085,6 +1100,8 @@ def stage_report(a, reg: dict, info: dict) -> None:
     results = {}
     for name, pm in pops.items():
         idx = np.where(pm)[0]
+        if name == "test_primary" and sorted(set(donor[idx].tolist())) != sorted(map(str, reg["splits"]["test_primary"]["donors"])):
+            raise SystemExit("test_primary e2_subset cells do not cover exactly the registered primary donors (A2.3 donor clause)")
         remap = np.full(cells.size, -1)
         remap[idx] = np.arange(idx.size)
         cm = pm[case["cell"]]
@@ -1096,7 +1113,7 @@ def stage_report(a, reg: dict, info: dict) -> None:
         say(f"{name}: analysed in {time.time() - t1:.0f}s; verdict: {results[name]['falsification']['verdict']}")
     out = {"experiment": "E2", "script": SCRIPT_VERSION, "smoke": a.smoke, "cell_pool": a.cell_pool,
            "registration_sha256": info["registration_sha256"],
-           "amendment_sha256": info["amendment_sha256"],
+           "amendment_sha256": info["amendment_sha256"], "amendment_A2_sha256": info.get("amendment_A2_sha256"),
            "addendum_sha256": info.get("addendum_sha256"), "spec_sha256": spec_sha(),
            "z_probe": {k: add["computed"]["z_probe"][k] for k in ("C", "C_grid", "coef_sha256")},
            "genes": {"kept": gene_syms, "dropped": [g["symbol"] for g in add["computed"]["genes"]["dropped"]]},
@@ -1139,7 +1156,8 @@ def write_report(out_dir: Path, R: dict) -> None:
     L.append("# E2: response decomposition (C3) and linearity (C5)\n")
     if R.get("smoke"):
         L.append(f"**SMOKE RUN** ({R['smoke']}): val donor cells only, reduced bootstrap. Not a result.\n")
-    L.append(f"Registration `{R['registration_sha256'][:16]}`, amendment A1 `{R['amendment_sha256'][:16]}`, "
+    L.append(f"Registration `{R['registration_sha256'][:16]}`, amendment A1 `{R['amendment_sha256'][:16]}`, amendment A2 "
+             f"`{(R.get('amendment_A2_sha256') or 'none')[:16]}`, "
              f"E2 addendum `{(R.get('addendum_sha256') or 'none')[:16]}`. z-probe C = {R['z_probe']['C']}. "
              f"Genes kept: {', '.join(R['genes']['kept'])}; dropped: {', '.join(R['genes']['dropped']) or 'none'}.\n")
     c = R["checks"]
@@ -1190,7 +1208,13 @@ def write_report(out_dir: Path, R: dict) -> None:
         F = res["falsification"]
         c1, c2 = F["criterion_i"], F["criterion_ii"]
         L.append("### Falsification\n")
-        L.append(f"**Verdict: {F['verdict']}.**\n")
+        A2 = F["A2"]
+        L.append(f"**Verdict (A2.3, common decision rule binding): {F['verdict']}.** (i) holds: {A2['criterion_i']['holds']} "
+                 f"({A2['criterion_i']['n_passing_A2']} of {A2['criterion_i']['n_tests']} (pair, label) tests pass overall and "
+                 f"in each of the donors {', '.join(A2['donors_in_per_donor_clause'])}; {A2['criterion_i']['n_passing_overall']} "
+                 f"pass overall); (ii) holds: {A2['criterion_ii']['holds']} (overall {A2['criterion_ii']['holds_overall']}, "
+                 f"each donor {A2['criterion_ii']['holds_in_each_primary_donor']}). A1-only reading, never decides: "
+                 f"{F['verdict_A1_reading_without_donor_clause']}.\n")
         L.append(f"- (i) {c1['n_pairs_compared']} unit pairs qualify (decision-accuracy losses within {LOSS_TOL}, >= "
                  f"{MIN_LOST} lost cells each), {c1['n_tests']} (pair, label) tests; holds: {c1['holds']} (with the "
                  f"per-donor clause: {c1['holds_with_per_donor_clause']}; Bonferroni: {c1['holds_bonferroni']}).")

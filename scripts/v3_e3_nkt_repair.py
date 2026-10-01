@@ -4,17 +4,22 @@ token-aware or nonlinear readout on frozen TEDDY recovers more of the NK-T prote
 sufficiency-flagged pairs than on unflagged ones, and improves NK-vs-T calls at matched coverage.
 
 Registered design: registration/registration_v3.json -> experiments.E3, as amended by A1
-(registration/amendment_A1.json: A1.1 tie-break and per-replicate selection, A1.8 within-donor pairs),
+(registration/amendment_A1.json: A1.1 tie-break and per-replicate selection, A1.8 within-donor pairs)
+and then A2 (registration/amendment_A2.json: A2.1 H3a win conditions, A2.2 R2 normaliser sample),
 loaded with bridge_anm/lib/v3_amend.load_registration_amended(). The details the registration leaves
 open are fixed in registration/addenda/E3.json (written by --stage register from train/val only and
-committed before any site4 evaluation). Library code: bridge_anm/lib/v3_e3.py, v3_e3_readouts.py.
+committed before any site4 evaluation); where A2 differs from the addendum, A2 wins (the addendum file
+and this script's DECLARED stay unchanged). Library code: bridge_anm/lib/v3_e3.py, v3_e3_readouts.py.
 
   pairs     k = 10 cosine neighbours of the raw official z within each test_primary donor; NK-T pair = one
             primary-key NK and one primary-key T cell; flagged if cosine >= 0.949402 (registration e3, val)
   readouts  head (registered phase-1 head), R1 (MLP on the 12 gene-mean layer outputs), R2 (one learned
             query over layer-12 gene-token states, 4,000 training cells), null (phase-1 head retrained with
             seed 1 by scripts/04_train.py); each normalised by the training q95 of its own predictions
-  H3a       D_R = [GR_R - GR_head](flagged) - [GR_R - GR_head](unflagged) - D_null >= 0.05 (win rules)
+            (R2: over the A2.2 sample of 10,000 split=train cells)
+  H3a       D_R = [GR_R - GR_head](flagged) - [GR_R - GR_head](unflagged) - D_null >= 0.05 (win rules); A2.1:
+            a win also needs (b) GR_R(flagged) - GR_head(flagged) > 0 and (c) Dlog_R > 0, each with its interval
+            above 0 and positive in each primary donor, else 'not supported (scale artefact)'
   H3b       NK-vs-T selective accuracy at matched coverage 0.9 / 0.8: Q1 rule on head vs R1 / R2 evidence
             (top score), margin 0.01; trust comparators: head margin, entropy, kNN label disagreement
 
@@ -24,12 +29,13 @@ Stages (each resumable; every stage appends to <out-dir>/progress.log):
   r1          R1 on CPU (training cells, early stopping on val); predictions on train + val
   r2_states   layer-12 token states of R2's 4,000 training + 1,000 val cells (MPS, ~10 min, ~6.5 GB fp16)
   r2_fit      R2 on CPU from the stored states
-  r2_predict  stream val, train and site4 cells through TEDDY + R2 (MPS, ~3 h; shards of 1,000 cells)
+  r2_predict  stream val cells, the A2.2 sample of 10,000 training cells and site4 cells through TEDDY + R2
+            (MPS, ~65 min; shards of 1,000 cells; training shards are named trainA2_NNNN)
   evaluate    pairs, gap ratios, H3a, H3b, bootstrap; E3_results.json + REPORT.md (CPU, minutes)
   all         null, r1, r2_states, r2_fit, r2_predict, evaluate
 A stage that touches site4 cells (r2_predict on site4, evaluate) is refused unless registration_v3.json,
-amendment A1 and addenda/E3.json are committed with matching hashes. Smoke runs (--smoke NOTE) use val
-donor 18303 as the evaluated split and never read a site4 row.
+amendment A1, amendment A2 and addenda/E3.json are committed with matching hashes. Smoke runs (--smoke
+NOTE) use val donor 18303 as the evaluated split and never read a site4 row.
 
 Full run (from the dev clone root, after the addendum commit; resumable, rerun the same command to continue):
   PY=<venv312>/bin/python; R=/Users/tianchichen/Documents/GitHub/teddy_mm
@@ -313,7 +319,7 @@ def _git_head_text(path: Path) -> str:
 
 
 def check_registration(a, *, site4: bool) -> dict:
-    """Hashes and commit state of the registration, A1 and the E3 addendum; refuse a site4 stage unless all hold."""
+    """Hashes and commit state of the registration, A1, A2 and the E3 addendum; refuse a site4 stage unless all hold."""
     rd = a.registration_dir
     info: dict = {}
     reg_f, amd_f = rd / "registration_v3.json", rd / "amendment_A1.json"
@@ -338,6 +344,9 @@ def check_registration(a, *, site4: bool) -> dict:
         info.update({"addendum_sha256": None, "addendum_hash_recorded": False, "addendum_hash_committed": False,
                      "addendum_committed": False,
                      "addendum_declared_equals_script": False, "addendum_amends": {}})
+    a2 = va.amendment_A2_status(rd, _git_committed)
+    info["amendment_A2"] = a2
+    info["amendment_A2_sha256"] = a2["amendment_A2_sha256"]
     if site4:
         need = {
             "registration_v3.json hash file matches and committed": info["registration_hash_file_matches"] and info["registration_committed"] is True,
@@ -347,6 +356,8 @@ def check_registration(a, *, site4: bool) -> dict:
                 and info["addendum_committed"] is True,
             "addendum declared part equals this script's DECLARED": info["addendum_declared_equals_script"],
             "addendum amends the registration and A1 on disk": all(info["addendum_amends"].values()) if info["addendum_amends"] else False,
+            "amendment_A2.json and its hash file present, matching, committed, naming the registration and A1 on disk":
+                a2["ok"],
         }
         bad = [k for k, ok in need.items() if not ok]
         if bad:
@@ -858,6 +869,14 @@ def stage_r2_fit(a, reg, add) -> None:
         f"{pear['CD56']} CD3 {pear['CD3']} ({time.time() - t0:.0f}s)")
 
 
+R2_TRAIN_SHARDS = "trainA2"  # A2.2: R2's training predictions = the registered 10,000-cell sample (shard prefix)
+
+
+def r2_q95_cells(D: Data, reg: dict) -> np.ndarray:
+    """A2.2: the registered uniform sample of split=train cells on which R2's training q95 is computed."""
+    return va.a2_r2_q95_sample(D.split, reg["amendment_A2"])
+
+
 def predict_plan(a, D: Data, reg: dict) -> list[tuple[str, np.ndarray]]:
     if a.smoke:
         keys = D.keys_for(D.rows("val"), reg)
@@ -867,9 +886,9 @@ def predict_plan(a, D: Data, reg: dict) -> list[tuple[str, np.ndarray]]:
         rng = np.random.default_rng(1)
         other = np.setdiff1d(vr[np.isin(keys["primary"][vr], ["NK", "T"])], pc)
         extra = rng.choice(other, min(a.smoke_predict_val_extra, other.size), replace=False)
-        trs = rng.choice(D.rows("train"), a.smoke_predict_train, replace=False)
-        return [("val", np.sort(np.concatenate([pc, extra]))), ("train", np.sort(trs))]
-    return [("val", D.rows("val")), ("train", D.rows("train")), ("test", D.rows("test"))]
+        trs = rng.choice(r2_q95_cells(D, reg), a.smoke_predict_train, replace=False)  # smoke: part of the A2.2 sample
+        return [("val", np.sort(np.concatenate([pc, extra]))), (R2_TRAIN_SHARDS, np.sort(trs))]
+    return [("val", D.rows("val")), (R2_TRAIN_SHARDS, r2_q95_cells(D, reg)), ("test", D.rows("test"))]
 
 
 def stage_r2_predict(a, reg, add) -> int:
@@ -892,6 +911,8 @@ def stage_r2_predict(a, reg, add) -> int:
                 with np.load(f) as old:
                     if str(old["r2_sha256"]) != r2_sha:
                         raise SystemExit(f"{f} was written by another R2 model; use a new --out-dir")
+                    if not np.array_equal(old["cells"], cells[s:s + PRED_SHARD]):
+                        raise SystemExit(f"{f} holds other cells than this plan's shard; use a new --out-dir")
                 continue
             jobs.append((f, cells[s:s + PRED_SHARD]))
     n_todo = sum(len(c) for _, c in jobs)
@@ -994,11 +1015,14 @@ def readout_evidence(a, D: Data, reg: dict, add: dict, eval_rows: np.ndarray) ->
     r1i = json.loads((a.out_dir / "r1" / "r1_done.json").read_text())
     info["R1"] = {"q95_own_train": dict(zip(DECLARED["targets"], map(float, q1))), "fit": {k: r1i["fit"][k] for k in ("best_epoch", "best_val_mse", "epochs_run")},
                   "val_pearson_vs_measured_evidence": r1i["val_pearson_vs_measured_evidence"], "n_train": r1i["n_train"]}
-    # R2
-    P2, x2 = load_r2_pred(a.out_dir / "r2", D.n, ("val", "train", "test") if not a.smoke else ("val", "train"))
-    trp = tr[np.isfinite(P2[tr, 0])]
-    if not a.smoke and trp.size != tr.size:
-        raise SystemExit(f"R2 predictions missing for {tr.size - trp.size} training cells (run r2_predict)")
+    # R2 (A2.2: training q95 over the registered 10,000-cell uniform sample of split=train cells)
+    P2, x2 = load_r2_pred(a.out_dir / "r2", D.n, ("val", R2_TRAIN_SHARDS, "test") if not a.smoke else ("val", R2_TRAIN_SHARDS))
+    q2_cells = r2_q95_cells(D, reg)
+    trp = q2_cells[np.isfinite(P2[q2_cells, 0])]
+    if not a.smoke and trp.size != q2_cells.size:
+        raise SystemExit(f"R2 predictions missing for {q2_cells.size - trp.size} of the A2.2 training cells (run r2_predict)")
+    if trp.size == 0:
+        raise SystemExit("no R2 prediction on the A2.2 training sample (run r2_predict)")
     q2 = e3.q95(P2[trp])
     ev["R2"], ev_raw["R2"] = e3.normalise(P2, q2), e3.normalise(P2, q2, clip=False)
     sub = np.load(a.out_dir / "r2" / "pred_subset.npz")
@@ -1006,6 +1030,9 @@ def readout_evidence(a, D: Data, reg: dict, add: dict, eval_rows: np.ndarray) ->
     ev["R2_subsetq95"] = e3.normalise(P2, q2s)
     r2i = json.loads((a.out_dir / "r2" / "r2_fit.json").read_text())
     info["R2"] = {"q95_own_train": dict(zip(DECLARED["targets"], map(float, q2))), "n_train_cells_in_q95": int(trp.size),
+                  "q95_normaliser": "A2.2: np.percentile 95 over the registered uniform sample of split=train cells "
+                                    f"(sha256 {reg['amendment_A2']['e3']['r2_normaliser']['sample_sha256'][:16]}...)"
+                                    + (" (smoke: the predicted part of it)" if a.smoke else ""),
                   "q95_subset_train": dict(zip(DECLARED["targets"], map(float, q2s))),
                   "fit": {k: r2i["fit"][k] for k in ("best_epoch", "best_val_mse", "epochs_run")}, "query_norm": r2i["query_norm"],
                   "val_pearson_vs_measured_evidence": r2i["val_pearson_vs_measured_evidence"],
@@ -1077,9 +1104,33 @@ def run_h3a(pairs_v: dict, ev: dict, meas: np.ndarray, gidx: list[int], donor_or
             _, pp = gr_from(dE[r], dM, allix[fm])
             per_protein[r][nm] = {p_: fnum(x) for p_, x in zip(e3.GAP_PROTEINS, pp)}
     margins = {"D_R1": 0.05, "D_R2": 0.05, "D_R2_minus_D_R1": 0.05}
-    return {"stats": summarise(point, boot, per_donor, margins), "per_protein_ratio": per_protein,
+    return {"stats": summarise(point, boot, per_donor, margins), "A2": a2_h3a(point, boot, per_donor, margins),
+            "per_protein_ratio": per_protein,
             "median_abs_measured_diff": {nm: {p_: fnum(x) for p_, x in zip(e3.GAP_PROTEINS, np.median(dM[allix[fm]], axis=0) if fm.any() else [None] * 4)}
                                          for nm, fm in (("flagged", flag), ("unflagged", ~flag))}}
+
+
+def a2_h3a(point: dict, boot: dict, per_donor: dict, margins: dict) -> dict:
+    """A2.1 on unrounded values and the same bootstrap replicates as D_R: the registered D_R verdict, (b) recovery on
+    flagged pairs (term_flagged_R > 0) and (c) the scale-free Dlog_R > 0, each with its 95% lower bound > 0 and
+    positive in each primary donor (per_donor = the split's registered donors); a D_R win without (b) and (c) is
+    'not supported (scale artefact)'."""
+    out = {}
+    for R in ("R1", "R2"):
+        if f"Dlog_{R}" not in point:
+            continue
+        k = f"D_{R}"
+        lo, hi, _ = e3.percentile_ci(boot.get(k, np.array([])))
+        registered = e3.verdict(point[k], lo, hi, {d: pd_[k] for d, pd_ in per_donor.items()}, margins[k])
+        cond = {}
+        for name, key in (("b_flagged_recovery", f"term_flagged_{R}"), ("c_scale_free_Dlog", f"Dlog_{R}")):
+            lo_k, _, nb = e3.percentile_ci(boot.get(key, np.array([])))
+            cond[name] = va.a2_positive_condition(point[key], lo_k, {d: pd_[key] for d, pd_ in per_donor.items()})
+            cond[name]["statistic"] = key
+            cond[name]["n_boot_defined"] = nb
+        out[R] = {"registered_D_verdict": registered, **cond,
+                  "verdict": va.a2_h3a_verdict(registered, cond["b_flagged_recovery"]["holds"], cond["c_scale_free_Dlog"]["holds"])}
+    return out
 
 
 def h3b_methods(ev: dict, cells: np.ndarray, pan: dict, knn_dis: np.ndarray) -> dict:
@@ -1160,7 +1211,8 @@ def stage_evaluate(a, reg, add) -> None:
     zref = np.asarray(D.z[ref], dtype=np.float32)
     R: dict = {"experiment": "E3", "script_version": SCRIPT_VERSION, "created": time.strftime("%Y-%m-%d %H:%M:%S"),
                "smoke": bool(a.smoke), "smoke_note": a.smoke, "registration_sha256": reg_info["registration_sha256"],
-               "amendment_A1_sha256": reg_info["amendment_A1_sha256"], "addendum_sha256": reg_info["addendum_sha256"],
+               "amendment_A1_sha256": reg_info["amendment_A1_sha256"], "amendment_A2_sha256": reg_info["amendment_A2_sha256"],
+               "addendum_sha256": reg_info["addendum_sha256"],
                "registration_check": reg_info, "n_boot": a.n_boot, "bootstrap_seed": seed, "flag_cosine": flag_cos,
                "readouts": ex["info"], "pairs": {}, "H3a": {}, "H3a_sensitivity": {}, "H3b": {}}
     avail = {r: np.isfinite(ev[r][:, 0]) for r in ev}
@@ -1184,12 +1236,15 @@ def stage_evaluate(a, reg, add) -> None:
                 "pairs_sha256_E5_form": e3.pairs_sha256(pv["nk"], pv["t"]),
                 "dropped_for_missing_predictions_smoke": int((~ok).sum())}
             R["H3a"][sname][vname] = run_h3a(pv, ev, meas, gidx, order, a.n_boot, seed)
+            sens_unclipped = run_h3a(pv, ev_raw, meas, gidx, order, a.n_boot, seed)
+            sens_subset = run_h3a(pv, {**ev, "R2": ev["R2_subsetq95"]}, meas, gidx, order, a.n_boot, seed)
             R["H3a_sensitivity"][sname][vname] = {
-                "unclipped": run_h3a(pv, ev_raw, meas, gidx, order, a.n_boot, seed)["stats"],
-                "R2_subset_q95": run_h3a(pv, {**ev, "R2": ev["R2_subsetq95"]}, meas, gidx, order, a.n_boot, seed)["stats"]}
+                "unclipped": sens_unclipped["stats"], "R2_subset_q95": sens_subset["stats"],
+                "A2_verdicts": {"unclipped": {R_: x["verdict"] for R_, x in sens_unclipped["A2"].items()},
+                                "R2_subset_q95": {R_: x["verdict"] for R_, x in sens_subset["A2"].items()}}}
             say(f"evaluate: {sname}/{vname} H3a: {pv['nk'].size} pairs ({int(pv['flag'].sum())} flagged); "
-                f"D_R1 {R['H3a'][sname][vname]['stats']['D_R1']['point']} D_R2 {R['H3a'][sname][vname]['stats']['D_R2']['point']} "
-                f"({time.time() - t0:.0f}s)")
+                f"D_R1 {R['H3a'][sname][vname]['stats']['D_R1']['point']} D_R2 {R['H3a'][sname][vname]['stats']['D_R2']['point']}; "
+                f"A2 verdicts {({R_: x['verdict'] for R_, x in R['H3a'][sname][vname]['A2'].items()})} ({time.time() - t0:.0f}s)")
             cells = cells_s[np.isin(key[cells_s], ["NK", "T"])]
             okc = avail["R2"][cells] & avail["R1"][cells]
             if not a.smoke and not okc.all():
@@ -1227,17 +1282,24 @@ def stage_evaluate(a, reg, add) -> None:
 
 
 def verdicts(R: dict, sname: str) -> dict:
+    """Primary verdicts (split sname, variant all). E3.H3a_R1 / _R2 are the A2.1 verdicts; the registered D-only
+    verdicts and the point-only reading are reported beside them and never decide."""
     h = R["H3a"][sname]["all"]["stats"]
+    a2 = R["H3a"][sname]["all"]["A2"]
     b = R["H3b"][sname]["all"]["stats"]
     v = {"split": sname, "variant": "all",
-         "E3.H3a_R1": h["D_R1"]["verdict"], "E3.H3a_R2": h["D_R2"]["verdict"],
+         "E3.H3a_R1": a2["R1"]["verdict"], "E3.H3a_R2": a2["R2"]["verdict"],
+         "E3.H3a_registered_D_only": {R_: h[f"D_{R_}"]["verdict"] for R_ in ("R1", "R2")},
+         "E3.H3a_A2_conditions": {R_: {c_: a2[R_][c_]["holds"] for c_ in ("b_flagged_recovery", "c_scale_free_Dlog")}
+                                  for R_ in ("R1", "R2")},
          "E3.H3a_pooling_R2_minus_R1": h["D_R2_minus_D_R1"]["verdict"],
          "E3.H3b": {f"{R_}-head@{c}": b[f"{R_}-head@{c}"]["verdict"] for c in COVERAGES for R_ in ("R1", "R2")},
          "point_only_D_ge_0.05": {R_: (h[f"D_{R_}"]["point"] is not None and h[f"D_{R_}"]["point"] >= 0.05) for R_ in ("R1", "R2")}}
-    win = v["E3.H3a_R1"] == "win" or v["E3.H3a_R2"] == "win"
-    v["falsification"] = ("not rejected: R1 or R2 has a win for E3.H3a" if win else
-                          "rejected: neither R1 nor R2 reaches D_R >= 0.05 over the null with the win rules, so 'the NK-T "
-                          "loss is in the readout or pooling and is repairable on frozen TEDDY' is rejected for this dataset")
+    fz = va.a2_e3_falsification(v["E3.H3a_R1"], v["E3.H3a_R2"])
+    v["falsification"] = fz["text"]
+    v["falsification_rule"] = "amendment A2.1: rejected when neither R1 nor R2 has an A2 win for E3.H3a"
+    reg_win = v["E3.H3a_registered_D_only"]["R1"] == "win" or v["E3.H3a_registered_D_only"]["R2"] == "win"
+    v["falsification_registered_D_only_reading"] = ("not rejected" if reg_win else "rejected") + " (registered D only; superseded by A2.1)"
     return v
 
 
@@ -1251,18 +1313,25 @@ def write_report(path: Path, R: dict, sname: str) -> None:
     L = [f"# E3: NK-T look-alike pairs and readout repair on frozen TEDDY ({R['script_version']})", ""]
     if R["smoke"]:
         L += [f"**SMOKE RUN ({R['smoke_note']}): val donor only, small subsets; no number here is a result.**", ""]
-    L += [f"Registration `{R['registration_sha256'][:16]}`, amendment A1 `{R['amendment_A1_sha256'][:16]}`, addendum E3 "
+    L += [f"Registration `{R['registration_sha256'][:16]}`, amendment A1 `{R['amendment_A1_sha256'][:16]}`, amendment A2 "
+          f"`{(R.get('amendment_A2_sha256') or 'none')[:16]}`, addendum E3 "
           f"`{(R['addendum_sha256'] or 'none')[:16]}`. Bootstrap B = {R['n_boot']}, seed {R['bootstrap_seed']}. "
           f"Flag cosine {R['flag_cosine']}.", "",
           "E3 has no ANM arm: the decision rule is the registered Q1 rule (a declared rule; under the registered setup "
           "ANM's action readout ranks cells identically). E3 tests TEDDY readouts, not ANM.", "",
           "## Verdicts (primary split, variant all)", "",
           "| endpoint | verdict |", "|---|---|",
-          f"| E3.H3a R1 (D >= 0.05) | {v['E3.H3a_R1']} |", f"| E3.H3a R2 (D >= 0.05) | {v['E3.H3a_R2']} |",
+          f"| E3.H3a R1 (A2.1: D >= 0.05 win, plus (b) and (c)) | {v['E3.H3a_R1']} |",
+          f"| E3.H3a R2 (A2.1: D >= 0.05 win, plus (b) and (c)) | {v['E3.H3a_R2']} |",
           f"| E3.H3a pooling (D_R2 - D_R1 >= 0.05) | {v['E3.H3a_pooling_R2_minus_R1']} |"]
     for k_, x in v["E3.H3b"].items():
         L.append(f"| E3.H3b {k_} (margin 0.01) | {x} |")
-    L += ["", f"Falsification: {v['falsification']}.", ""]
+    L += ["", f"Falsification ({v['falsification_rule']}): {v['falsification']}.", "",
+          "Registered D-only verdicts (superseded by A2.1, reported): R1 " + v["E3.H3a_registered_D_only"]["R1"] + ", R2 "
+          + v["E3.H3a_registered_D_only"]["R2"] + "; falsification on that reading: "
+          + v["falsification_registered_D_only_reading"] + ". A2.1 (b) recovery on flagged pairs and (c) scale-free Dlog: "
+          + "; ".join(f"{R_} (b) {c['b_flagged_recovery']}, (c) {c['c_scale_free_Dlog']}" for R_, c in v["E3.H3a_A2_conditions"].items())
+          + ".", ""]
     for s, blk in R["H3a"].items():
         for vn, h in blk.items():
             pr = R["pairs"][s]["variants"][vn]
@@ -1277,8 +1346,13 @@ def write_report(path: Path, R: dict, sname: str) -> None:
             for k_ in ("D_R1", "D_R2", "D_R2_minus_D_R1"):
                 L.append(f"| {k_} | {_ci(st[k_])} | " + ", ".join(f"{d} {x}" for d, x in st[k_]["per_donor"].items())
                          + f" | {st[k_].get('verdict', '')} |")
-            L += ["", "Secondary (addendum secondary_H3a; descriptive, no verdict): the registered D rewards a readout that "
-                  "shrinks every NK-T difference uniformly, so the scale-free Dlog and the two terms of D are shown.", "",
+            L += ["", "A2.1 (amendment A2): a D_R win needs (b) term_flagged_R > 0 and (c) Dlog_R > 0, each with its 95% "
+                  "lower bound > 0 and positive in each primary donor (unrounded values, same replicates).", "",
+                  "| readout | registered D verdict | (b) flagged recovery | (c) scale-free Dlog | A2 verdict |", "|---|---|---|---|---|"]
+            for R_, x in h.get("A2", {}).items():
+                L.append(f"| {R_} | {x['registered_D_verdict']} | {x['b_flagged_recovery']['holds']} | "
+                         f"{x['c_scale_free_Dlog']['holds']} | {x['verdict']} |")
+            L += ["", "Terms of A2.1 (the addendum's secondary_H3a statistics; (b) is term_flagged, (c) is Dlog):", "",
                   "| statistic | point [95% CI] | per donor |", "|---|---|---|"]
             for k_ in ("Dlog_R1", "Dlog_R2", "term_flagged_R1", "term_unflagged_R1", "term_flagged_R2", "term_unflagged_R2",
                        "term_flagged_null", "term_unflagged_null"):
