@@ -1,0 +1,531 @@
+{
+ "addendum_to": "registration/registration_v3.json experiments.E1, as amended by registration/amendment_A1.json",
+ "experiment": "E1",
+ "addendum_version": 1,
+ "registration_sha256": "e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3",
+ "amendment_A1_sha256": "1f44be66bfc22a5bc428cf31a0bcd14047466005f4308386da195f55b767cdee",
+ "fixed_before_site4": "computed from training and validation cells only and committed before any site4 evaluation of E1; smoke runs of the E1 builder use val donor 18303 cells only",
+ "scope": "numbers the registration leaves open, fixed by the procedures it writes (bars: section 7 val quantile at the declared no-call rate; classifier C: section 8 lowest val log-loss on the registered grid; classifier bars: section 8 bar_rule), plus the implementation choices of the E1 builder that the registration does not fix. No registered endpoint, key, cell set, margin or comparator is changed (A1.10).",
+ "computed": {
+  "experiment": "E1",
+  "builder": "v3_e1_addendum 1.0",
+  "reproduced_registered_numbers": {
+   "all_match": true,
+   "items": {
+    "rule_bar_Q1": {
+     "registered": 0.298614,
+     "recomputed": 0.298614,
+     "match": true
+    },
+    "rule_bar_Q2": {
+     "registered": 0.661255,
+     "recomputed": 0.661255,
+     "match": true
+    },
+    "rule_bar_Q3": {
+     "registered": 0.273973,
+     "recomputed": 0.273973,
+     "match": true
+    },
+    "closure_bar_Q1": {
+     "registered": 0.175321,
+     "recomputed": 0.175321,
+     "match": true
+    },
+    "closure_bar_Q2": {
+     "registered": 0.342623,
+     "recomputed": 0.342623,
+     "match": true
+    },
+    "classifier_primary_val_log_loss": {
+     "registered": 0.045278,
+     "recomputed": 0.045278,
+     "match": true
+    },
+    "classifier_primary_bar_Q1": {
+     "registered": 0.001137,
+     "recomputed": 0.001137,
+     "match": true
+    },
+    "classifier_primary_bar_Q2": {
+     "registered": 0.928654,
+     "recomputed": 0.928654,
+     "match": true
+    },
+    "classifier_q3_val_log_loss": {
+     "registered": 0.035183,
+     "recomputed": 0.035183,
+     "match": true
+    },
+    "A1_q1labels_q3features_val_log_loss": {
+     "registered": 0.033674,
+     "recomputed": 0.033674,
+     "match": true
+    },
+    "A1_q1labels_anchors_val_log_loss": {
+     "registered": 0.062309,
+     "recomputed": 0.062309,
+     "match": true
+    },
+    "A1_q3labels_anchors_val_log_loss": {
+     "registered": 0.050537,
+     "recomputed": 0.050537,
+     "match": true
+    }
+   }
+  },
+  "sensitivity_panels": {
+   "canonical9_plus_nk": {
+    "proteins": {
+     "B": [
+      "CD19",
+      "CD72",
+      "CD22"
+     ],
+     "T": [
+      "CD3",
+      "CD2",
+      "CD5"
+     ],
+     "NK": [
+      "CD122",
+      "CD94",
+      "CD56"
+     ],
+     "myeloid": [
+      "CD16",
+      "CD11c",
+      "CD36"
+     ]
+    },
+    "rule_bars": {
+     "Q1": 0.380545,
+     "Q2": 0.627585
+    },
+    "rule_val_no_call_realised": {
+     "Q1": 0.15018,
+     "Q2": 0.300033
+    },
+    "classifier": {
+     "features": [
+      "CD19",
+      "CD72",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD122",
+      "CD94",
+      "CD56",
+      "CD16",
+      "CD11c",
+      "CD36"
+     ],
+     "labels": "training-cell primary key (5 classes incl. OUT)",
+     "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+     ],
+     "val_log_loss": [
+      {
+       "C": 0.01,
+       "val_log_loss": 0.078059
+      },
+      {
+       "C": 0.1,
+       "val_log_loss": 0.058149
+      },
+      {
+       "C": 1.0,
+       "val_log_loss": 0.049832
+      },
+      {
+       "C": 10.0,
+       "val_log_loss": 0.042841
+      },
+      {
+       "C": 100.0,
+       "val_log_loss": 0.037617
+      }
+     ],
+     "C": 100.0,
+     "C_selection": "lowest val log-loss on val primary-key cells, ties -> smaller C",
+     "n_train_labelled": 58657,
+     "bars": {
+      "Q1": 0.000567,
+      "Q2": 0.92043
+     }
+    }
+   },
+   "canonical9_variant_plus_nk": {
+    "proteins": {
+     "B": [
+      "CD19",
+      "CD20",
+      "CD22"
+     ],
+     "T": [
+      "CD3",
+      "CD2",
+      "CD5"
+     ],
+     "NK": [
+      "CD122",
+      "CD94",
+      "CD56"
+     ],
+     "myeloid": [
+      "CD16",
+      "CD11c",
+      "CD14"
+     ]
+    },
+    "rule_bars": {
+     "Q1": 0.298396,
+     "Q2": 0.677069
+    },
+    "rule_val_no_call_realised": {
+     "Q1": 0.150016,
+     "Q2": 0.300033
+    },
+    "classifier": {
+     "features": [
+      "CD19",
+      "CD20",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD122",
+      "CD94",
+      "CD56",
+      "CD16",
+      "CD11c",
+      "CD14"
+     ],
+     "labels": "training-cell primary key (5 classes incl. OUT)",
+     "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+     ],
+     "val_log_loss": [
+      {
+       "C": 0.01,
+       "val_log_loss": 0.078976
+      },
+      {
+       "C": 0.1,
+       "val_log_loss": 0.051439
+      },
+      {
+       "C": 1.0,
+       "val_log_loss": 0.047463
+      },
+      {
+       "C": 10.0,
+       "val_log_loss": 0.043815
+      },
+      {
+       "C": 100.0,
+       "val_log_loss": 0.043727
+      }
+     ],
+     "C": 100.0,
+     "C_selection": "lowest val log-loss on val primary-key cells, ties -> smaller C",
+     "n_train_labelled": 58657,
+     "bars": {
+      "Q1": 0.00038,
+      "Q2": 0.931568
+     }
+    }
+   },
+   "val_k2": {
+    "proteins": {
+     "B": [
+      "CD20",
+      "CD22"
+     ],
+     "T": [
+      "CD3",
+      "CD2"
+     ],
+     "NK": [
+      "CD122",
+      "CD94"
+     ],
+     "myeloid": [
+      "CD172a",
+      "CD11c"
+     ]
+    },
+    "rule_bars": {
+     "Q1": 0.330789,
+     "Q2": 0.725093
+    },
+    "rule_val_no_call_realised": {
+     "Q1": 0.150016,
+     "Q2": 0.300033
+    },
+    "classifier": {
+     "features": [
+      "CD20",
+      "CD22",
+      "CD3",
+      "CD2",
+      "CD122",
+      "CD94",
+      "CD172a",
+      "CD11c"
+     ],
+     "labels": "training-cell primary key (5 classes incl. OUT)",
+     "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+     ],
+     "val_log_loss": [
+      {
+       "C": 0.01,
+       "val_log_loss": 0.100634
+      },
+      {
+       "C": 0.1,
+       "val_log_loss": 0.06441
+      },
+      {
+       "C": 1.0,
+       "val_log_loss": 0.057578
+      },
+      {
+       "C": 10.0,
+       "val_log_loss": 0.0545
+      },
+      {
+       "C": 100.0,
+       "val_log_loss": 0.053268
+      }
+     ],
+     "C": 100.0,
+     "C_selection": "lowest val log-loss on val primary-key cells, ties -> smaller C",
+     "n_train_labelled": 58657,
+     "bars": {
+      "Q1": 0.001482,
+      "Q2": 0.928981
+     }
+    }
+   },
+   "val_k5": {
+    "proteins": {
+     "B": [
+      "CD20",
+      "CD22",
+      "CD268",
+      "CD72",
+      "CD19"
+     ],
+     "T": [
+      "CD3",
+      "CD2",
+      "CD5",
+      "TCR",
+      "CD278"
+     ],
+     "NK": [
+      "CD122",
+      "CD94",
+      "CD56",
+      "CD335",
+      "CD16"
+     ],
+     "myeloid": [
+      "CD172a",
+      "CD11c",
+      "CD62P",
+      "CD93",
+      "CD41"
+     ]
+    },
+    "rule_bars": {
+     "Q1": 0.334297,
+     "Q2": 0.73747
+    },
+    "rule_val_no_call_realised": {
+     "Q1": 0.150016,
+     "Q2": 0.300033
+    },
+    "classifier": {
+     "features": [
+      "CD20",
+      "CD22",
+      "CD268",
+      "CD72",
+      "CD19",
+      "CD3",
+      "CD2",
+      "CD5",
+      "TCR",
+      "CD278",
+      "CD122",
+      "CD94",
+      "CD56",
+      "CD335",
+      "CD16",
+      "CD172a",
+      "CD11c",
+      "CD62P",
+      "CD93",
+      "CD41"
+     ],
+     "labels": "training-cell primary key (5 classes incl. OUT)",
+     "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+     ],
+     "val_log_loss": [
+      {
+       "C": 0.01,
+       "val_log_loss": 0.064668
+      },
+      {
+       "C": 0.1,
+       "val_log_loss": 0.041022
+      },
+      {
+       "C": 1.0,
+       "val_log_loss": 0.031601
+      },
+      {
+       "C": 10.0,
+       "val_log_loss": 0.027176
+      },
+      {
+       "C": 100.0,
+       "val_log_loss": 0.027055
+      }
+     ],
+     "C": 100.0,
+     "C_selection": "lowest val log-loss on val primary-key cells, ties -> smaller C",
+     "n_train_labelled": 58657,
+     "bars": {
+      "Q1": 0.000252,
+      "Q2": 0.961329
+     }
+    }
+   }
+  },
+  "q3_operating_point_bars": {
+   "no_call_target": 0.15,
+   "use": "deployed operating point only; every E1 comparison is at matched coverage",
+   "classifiers": {
+    "registered_q3_classifier": {
+     "C": 100.0,
+     "features": [
+      "CD20",
+      "CD22",
+      "CD268",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD122",
+      "CD94",
+      "CD56",
+      "CD172a",
+      "CD11c",
+      "CD62P",
+      "CD19",
+      "CD14"
+     ],
+     "labels": "q3 key",
+     "bar_Q3": 3.2e-05
+    },
+    "q1labels_q3features": {
+     "C": 100.0,
+     "features": [
+      "CD20",
+      "CD22",
+      "CD268",
+      "CD3",
+      "CD2",
+      "CD5",
+      "CD122",
+      "CD94",
+      "CD56",
+      "CD172a",
+      "CD11c",
+      "CD62P",
+      "CD19",
+      "CD14"
+     ],
+     "bar_Q3": 0.000424
+    },
+    "q1labels_anchors": {
+     "C": 10.0,
+     "features": [
+      "CD19",
+      "CD3",
+      "CD56",
+      "CD14"
+     ],
+     "bar_Q3": 0.000825
+    },
+    "q3labels_anchors": {
+     "C": 100.0,
+     "features": [
+      "CD19",
+      "CD3",
+      "CD56",
+      "CD14"
+     ],
+     "bar_Q3": 0.000815
+    }
+   }
+  }
+ },
+ "implementation_choices": [
+  "Classifier decision: the most probable of the four lineages, confidence = its probability (registration classifier.primary.decision); OUT is never called. A label-cost draw with one class predicts that class.",
+  "E1.4: the top score (rule = ANM), the margin and the entropy score rank the rule's argmax calls; a classifier ranks its own argmax calls. The classifier probability ranking the rule's calls is a labelled diagnostic.",
+  "Entropy confidence 1 - H(q)/log 4 with q = S / sum(S); when sum(S) = 0 it is 0.",
+  "Argmax ties between classes go to the first class in the order B, T, NK, myeloid (v3_key.rule_calls; ANM's readout takes the first maximum in the same action order); the share of calls with tied top classes is reported.",
+  "ANM runs through the engine path of finite_field_runner.run_instances (preparation apparatus, validate_source_events, build_graph, evolve_field, readout) with the registered field; event ids '<lineage>:<protein>'; Q1 and Q2 share one field per cell (different readout thresholds); Q3 has its own instance (one anchor event per class); the closure readout uses readout_coordinates over each action's event sites with the registered closure weights. E1.1a counts call mismatches engine vs re-coded rule for Q1, Q2, Q3 and, for C2, engine closure vs re-coded closure (Q1, Q2 bars).",
+  "E1.3 engine leave-one-out: each event of the called class is deleted in turn and the field re-evolved; the top-1 set is every event whose deletion lowers the called action's score by at least the maximum decrease minus 1e-12 * max(1, |maximum decrease|) (float tolerance); the engine flip is the call after deleting a top-1 event, read with the question's threshold. E1.3c uses the exact closed-form flip (A1.3); E1.3a checks that the engine agrees with it.",
+  "E1.3b: shares are reported among all calls of a donor and within the called class; the permutation null uses 1000 permutations seeded with seeds.global (no E1.3-specific seed is registered); two-sided permutation p-value around the null mean.",
+  "E1.3c: m = number of flip-sensitive Q1 calls (scored or not); the comparison set is the m Q1 calls with the lowest margin (ties by the A1.1 permutation); error rate = wrong among scored cells of each set (a call on a key-OUT cell is wrong).",
+  "E1.5 draws: for draw seed s, the labelled training pool (training cells the key scores) is sorted by cell id and permuted with numpy default_rng(s); a draw of size n is its first n cells (draws are nested across n). n = 0 and n = all are deterministic and repeated for every draw. The Q1 reference curve (primary classifier features and C, primary-key labels) has n >= 25 only (there is no label-free Q1 classifier).",
+  "Q3 annotation-only sensitivity key: annotated CD14+ Mono -> myeloid, the other annotated myeloid types (CD16+ Mono, cDC2, cDC1) -> OUT, every other cell its annotation class.",
+  "Key-validity flag (registration 4.3): decided by the test_primary 5-class kappa (annotation vs gate); the secondary split's flag by its own kappa. Annotation-only rows are reported next to every primary-key row.",
+  "Bootstrap: count vectors; per replicate, donors drawn with numpy integers over the sorted donor list, then cells with replacement within each drawn donor; replicates generated in sequence from default_rng(seeds.bootstrap) for the pooled primary split; per-donor rows: the point within the donor plus a one-stage (cells within the donor) bootstrap from default_rng(seeds.bootstrap); the secondary split (one donor) likewise. Percentile intervals by numpy.percentile; replicates where an endpoint is undefined are excluded and counted.",
+  "Secondary classifier (registration classifier.secondary, MLP, random_state = seeds.classifier 0-4): E1.4 rows only, mean over the five seeds; it has no registered bar and no operating point.",
+  "Sensitivity panels: rule and classifier rows for E1.4 and the deployed operating points (bars and C fixed in this addendum); ANM on the primary panel only (registration E1.panels). Sensitivity keys annotation_only, primary_per_batch, primary_no_gdT158 for E1.4, E1.3c and C2; q3_annotation_only for E1.1c/d and E1.5.",
+  "C2: the classifier arm (primary logistic classifier, its own argmax lineage) is reported with its differences from the mean rule as secondary rows; the verdict compares ANM closure with the mean rule only.",
+  "Signs: E1.1c/d difference = rule minus classifier (win = the rule is better); E1.3c = error of flip-sensitive calls minus error of as many lowest-margin calls; E1.4 = top score minus comparator; C2 = ANM closure minus mean rule. E1.1b counts a change to or from no call as a change.",
+  "The A1.1 tie-break applies to every matched-coverage selection (including E1.3c's lowest-margin set and the label-cost classifiers); an internal check confirms that the selection at the rule's own realised coverage reproduces its deployed calls.",
+  "Smoke runs (inside the workflow) evaluate val donor 18303 cells only, never site4."
+ ],
+ "provenance": {
+  "builder": "v3_e1_addendum 1.0",
+  "builder_sha256": "9fbaf1ade79ce3f51ae3c4ddc95791a037474e20fc90436a0a0171da8ba2c0a2",
+  "v3_key_sha256": "45113585c4c2411a966814154ec41a58c0836c51e1f3f16e0fbe31b2e9424602",
+  "v3_amend_sha256": "0ae5d516236c916283ea83104389b4ecdfc8504d2624f12f9eb9c3b5763d5736",
+  "v3_e1_sha256": "ca4f0faa7bbf5121c13d446300565f8ab251a6d33c0184d11814b70872c765a6",
+  "core_sha256": "7a115a7c7e42e60d5fa2d225028dcc8d1275a7cb196804dbf85331f333297990",
+  "inputs": {
+   "cite_arrays_sha256": "be408eff537eeeca24129210592605f809724c3282d7c55e008b87b3c193c2da",
+   "z_sha256": "fb9aa8c77d544d84f716cf66bca8964c265f62d6dc1618a0c627d55268d3cd0b",
+   "ckpt_sha256": "b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15"
+  },
+  "git_head_at_build": "59f86def265b48a208b3176c121635eb5dbef835",
+  "built_utc": "2026-10-01T05:30:33Z",
+  "test_rows_read": "split metadata only (protein, cell types and embedding read on non-test rows)"
+ }
+}
