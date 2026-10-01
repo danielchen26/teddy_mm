@@ -149,14 +149,86 @@ def test_annotation_map_hash_rederivation_and_addendum(add):
     assert {k: v["decision"] for k, v in add["annotation_map"]["independent_rederivation"]["flagged_by_prep_for_owner_confirmation"].items()} \
         == {"Platelet": "OUT", "ASDC": "OUT", "NK Proliferating": "NK", "Doublet": "unscored"}
     assert add["contamination"]["label"] == e6.CONTAMINATION_LABEL
-    assert add["panels"]["remaining_E6_primary"] == {"B": ["CD20", "CD22", "CD268"], "T": ["CD3", "CD2"],
-                                                     "NK": ["CD122", "CD56"], "myeloid": ["CD172a", "CD11c", "CD62P"]}
+    assert add["panels"]["sensitivity_reduced"] == {"B": ["CD20", "CD22", "CD268"], "T": ["CD3", "CD2"],
+                                                    "NK": ["CD122", "CD56"], "myeloid": ["CD172a", "CD11c", "CD62P"]}
     sha = vk.sha256_file(ADDENDUM)
     assert f"{sha}  E6.json" in (ADDENDUM.parent / "HASHES.txt").read_text().splitlines()
     out = e6.annotation_class(["B naive", "Doublet", "Platelet"], add["annotation_map"]["map"])
     assert out.tolist() == ["B", "unscored", "OUT"]
     with pytest.raises(KeyError):
         e6.annotation_class(["not a label"], add["annotation_map"]["map"])
+
+
+def test_addendum_v2_full_registered_panels_primary_reduced_sensitivity(reg, add):
+    """Addendum version 2: every primary arm reads the full frozen registered panels (as E1); the reduced-panel
+    reading is a labelled sensitivity; the gate's missing-protein reduction is unchanged; the revision is recorded."""
+    pan = vk.question_panel(reg, "Q1")
+    f12 = list(reg["classifier"]["primary"]["feature_proteins"])
+    assert add["addendum_version"] == 2
+    assert add["panels"]["primary"] == add["panels"]["registered_primary"] == pan
+    assert add["panels"]["evidence_proteins_read_by_every_primary_arm"] == f12 == [p for k in vk.LINEAGES for p in pan[k]]
+    assert add["panels"]["absent_externally"] == ["CD5", "CD94"]
+    red = add["sensitivity"]["reduced_panel_reading"]
+    assert red["panels"] == add["panels"]["sensitivity_reduced"] == e6.reduced_panel(pan, [p for p in f12 if p not in ("CD5", "CD94")])
+    assert "never decides" in red["status"]
+    assert add["computed"]["classifier10"]["features"] == [p for k in vk.LINEAGES for p in red["panels"][k]]
+    assert "classifier10" not in add["arms"] and "anm_unequal_panels" not in add["arms"]
+    # the key is unchanged: CD94 and CD33 conditions removed, no clause dropped
+    assert add["key"]["gate_proteins_absent_externally"] == ["CD33", "CD94"] and add["key"]["clauses_dropped"] == []
+    rv = add["revision"]
+    assert rv["addendum_version"] == 2 and rv["supersedes"]["sha256"].startswith("4854d02ac1b3")
+    assert rv["supersedes"]["commit"].startswith("3e921be")
+    assert rv["checked_at_build"]["exists"] is False and rv["checked_at_build"]["outputs_v3_E6"].endswith("outputs/v3/E6")
+    assert all(rv[k] for k in ("change", "reason", "timing", "unchanged", "decided_by"))
+    assert "before any external outcome" in rv["timing"] and "orchestrator" in rv["decided_by"]
+    assert add["provenance"]["supersedes"]["sha256"] == rv["supersedes"]["sha256"]
+
+
+def test_builder_refuses_once_e6_outputs_exist(tmp_path, monkeypatch):
+    sys.path.insert(0, str(REPO / "bridge_anm"))
+    import v3_e6_addendum as ad
+
+    out = tmp_path / "E6"
+    monkeypatch.setattr(ad, "E6_OUT", out)
+    assert not ad.outputs_exist()
+    out.mkdir()
+    assert ad.outputs_exist()
+    with pytest.raises(SystemExit, match="before any external outcome"):
+        ad.build(ad.parse_args(["--external", str(tmp_path / "never_opened")]))
+
+
+def test_evaluator_primary_arms_read_full_panels_and_sensitivity_reduced(reg):
+    """build_evaluator: primary arms rank on the full-panel scores S (ANM = G(3) * 3 * S has the rule's order), the
+    *_red arms on the reduced S_red, and c* comes from the full-panel rule (c1) or the reduced rule (c1r)."""
+    R = _runner()
+    rng = np.random.default_rng(7)
+    n = 500
+    names = list(reg["evidence"]["teddy_head"]["adt_names"])
+    v = rng.random((n, len(names)))
+    pan = vk.question_panel(reg, "Q1")
+    red = e6.reduced_panel(pan, [p for p in names if p not in ("CD5", "CD94")])
+    fld, rc = reg["anm"]["field_representation"], reg["anm"]["closure_readout"]
+    S, Sr = e6.class_scores_panel(v, names, pan), e6.class_scores_panel(v, names, red)
+    P5 = rng.dirichlet(np.ones(5), n)
+    P = {"ids": np.sort(rng.choice(90261, n, replace=False)), "S": S, "S_red": Sr, "P5_classifier": P5,
+         "P5_classifier10": rng.dirichlet(np.ones(5), n),
+         **{f"key_{k}": rng.choice(list(vk.CLASSES) + [vk.UNSCORED], n) for k in R.KEYS}}
+    A = {"q1_scores": e6.anm_recoded_scores(v, names, pan, fld), "cl_scores": e6.anm_recoded_scores(v, names, pan, fld, rc),
+         "q1r_scores": e6.anm_recoded_scores(v, names, red, fld), "clr_scores": e6.anm_recoded_scores(v, names, red, fld, rc)}
+    ev = R.build_evaluator(P, A, reg)
+    m = {x.name: x for x in ev.methods}
+    assert set(m) == {"anm", "rule", "margin", "entropy", "classifier", "closure",
+                      "anm_red", "rule_red", "margin_red", "entropy_red", "classifier10", "closure_red"}
+    amend = reg["amendment_A1"]
+    np.testing.assert_array_equal(m["rule"].order, e1.ranked_order(S.max(axis=1), P["ids"], amend))
+    np.testing.assert_array_equal(m["rule_red"].order, e1.ranked_order(Sr.max(axis=1), P["ids"], amend))
+    np.testing.assert_array_equal(m["anm"].call, m["rule"].call)
+    np.testing.assert_array_equal(m["margin"].order, e1.ranked_order(vk.margin(S), P["ids"], amend))
+    assert "c1" in m["anm"].acc_covs and "c1" in m["classifier"].acc_covs and "c1r" in m["classifier10"].acc_covs
+    assert "c1r" in m["anm_red"].acc_covs and "c1" not in m["anm_red"].acc_covs
+    bar = float(reg["questions"]["Q1"]["bar"])
+    st = ev.stats(np.ones(n))
+    assert st["cov|c1"] == np.mean(S.max(axis=1) >= bar) and st["cov|c1r"] == np.mean(Sr.max(axis=1) >= bar)
 
 
 # ----------------------------------------------------------------------------- panels, scores, ANM closed form
@@ -304,14 +376,33 @@ def test_val_smoke_through_e6_path(tmp_path):
     assert res["smoke"] and res["contamination_label"] == e6.CONTAMINATION_LABEL
     assert res["state"]["frozen_inputs_sha256"]["ckpt_sha256"] == json.loads(ADDENDUM.read_text())["provenance"]["inputs"]["ckpt_sha256"]
     assert kv["gate_spec"]["absent_gate_proteins"] == ["CD33", "CD94"]
-    assert res["E1.1a"]["bridge_passed"] and res["E1.1a"]["full_panel_passed"]
+    # primary E1.1a on the full registered panels, as E1: engine = mean rule, closure and bridge checks, all 0
+    a = res["E1.1a"]
+    assert a["passed"] and a["engine_events_rejected"] == 0
+    assert all(v["pooled"] == 0 for g in ("engine_vs_mean_rule", "closure_engine_vs_recoded", "bridge_engine_vs_recoded")
+               for v in a[g].values())
+    assert set(a["engine_vs_mean_rule"]) == {"Q1", "Q2", "Q3"} and res["summary"]["E1.1a_engine_vs_mean_rule_Q1"] == 0
+    assert res["consistency_checks"]["anm_Q1_calls_equal_rule_Q1_calls"]
+    # reduced-panel sensitivity: bridge exact, the engine departs from the mean rule (unequal panels), never decides
+    ar = a["sensitivity_reduced_panels"]
+    assert ar["bridge_passed"] and ar["engine_vs_mean_rule"]["Q1_red"]["pooled"] > 0 and "never decides" in ar["status"]
     assert res["consistency_checks"]["rule_Q1_at_c_star_equals_operating_point"]
+    assert res["consistency_checks"]["rule_red_Q1_at_c_star_reduced_equals_operating_point"]
     assert set(res["cells"]["per_donor"]) == {f"valP{i}" for i in range(1, 9)}
     assert sum(res["cells"]["per_donor"].values()) == 6106
+    Rp = res["keys"]["primary"]
+    assert set(Rp["AURC"]) == {"anm", "rule", "margin", "entropy", "classifier"}
+    assert "anm - classifier10 AURC" not in Rp["E1.4a"]
+    assert set(Rp["sensitivity_reduced_panels"]["AURC"]) == {"anm_red", "rule_red", "margin_red", "entropy_red", "classifier10"}
     rep = res["summary"]["replication"]
     assert "E1.4a anm - margin AURC" in rep and "E1.C2 closure - rule OUT decline @c*" in rep
+    srep = res["summary"]["sensitivity_reduced_panels"]["replication"]
+    assert "E1.4a anm_red - margin_red AURC" in srep and "E1.4a anm_red - classifier10 AURC" in srep
+    assert not any(r["primary_row"] for r in srep.values())
+    assert res["addendum_revision"]["addendum_version"] == 2
     txt = (out / "REPORT.md").read_text()
-    assert "SMOKE TEST" in txt and e6.CONTAMINATION_LABEL in txt and txt.index("Key validity") < txt.index("Replication")
+    assert "SMOKE TEST" in txt and e6.CONTAMINATION_LABEL in txt
+    assert txt.index("Key validity") < txt.index("Replication") < txt.index("Sensitivity: reduced panels")
     # resume: a second invocation reuses every cache
     rc = R.main(["--smoke", "--stage", "all", "--out-dir", str(out), "--n-boot", "12", "--chunk", "6",
                  "--anm-root", str(ANM_ROOT)])

@@ -8,22 +8,30 @@ Registration: registration/registration_v3.json (experiments.E6) with amendments
 (bridge_anm/lib/v3_amend.load_registration_amended()) and the E6 addendum registration/addenda/E6.json (hash in
 registration/addenda/HASHES.txt). Everything is frozen: TEDDY and the phase-1 head (L2-normalised official z), the
 evidence normaliser (registered training q95, clip [0, 1]), bars, the registered classifier (refit exactly as E1 on
-BMMC training cells), the ANM engine (finite_graph_scalar via ANM_ROOT, bridge_anm/lib/v3_e1.AnmBridge) and the
-gate logic; the addendum fixes the external map, the missing-protein reductions of gate and panels, the per-donor
-gate estimator, the endpoints, the statistics and the replication rule.
+BMMC training cells), the ANM engine (finite_graph_scalar via ANM_ROOT, bridge_anm/lib/v3_e1.AnmBridge), the
+panels and the gate logic; the addendum fixes the external map, the missing-protein reduction of the gate, the
+per-donor gate estimator, the endpoints, the statistics and the replication rule.
+
+Panels (addendum version 2): PRIMARY = the full frozen registered panels for every arm, identical to E1 (CD5 and
+CD94 are not measured externally, but their evidence is the head's prediction from RNA and exists for every cell),
+so every primary arm reads the same 12 evidence values and ANM = the mean rule. SENSITIVITY = the literal
+reduced-panel reading (T on CD3, CD2; NK on CD122, CD56; arms suffixed _red, plus classifier10), reported beside
+the primary and never deciding.
 
 Endpoints (per external donor and pooled; two-stage donor -> cell bootstrap over the 8 donors, B = 2000):
-  E1.1a  ANM engine vs its exact re-coded closed form (bridge check, registered 0) and vs the mean rule
+  E1.1a  as E1: ANM engine vs the mean rule (Q1, Q2, Q3) and engine closure vs re-coded closure, registered 0;
+         the bridge check (engine vs its exact re-coded closed form) kept beside it
   Q1 selective accuracy at matched coverage (grid and c* = the rule's realised Q1 coverage); E1.4b-style differences
   E1.4a  AURC: ANM top score vs margin (primary); vs classifier / entropy, rule vs margin (secondary)
   E1.C2  key-OUT decline at c*, 0.80, 0.70: ANM closure vs mean rule, in-scope guard
   replication of each v3 (E1 site4) conclusion: sign in a majority of donors and the pooled interval excluding 0
+  sensitivity: the same rows on the reduced panels (own c*), with classifier10; never decides
 Key validity is computed and written first; if annotation vs per-donor gate kappa < 0.70 the results are reported
 on the annotation-only key and labelled 'key not validated'.
 
 Stages (resumable; caches carry a fingerprint of the registration, amendments, addendum, code and inputs):
   prepare  keys and key validity (written first), evidence, scores, classifiers (BMMC training cells only)
-  anm      ANM engine per cell (reduced panels Q1/Q2 + closure; full panels; Q3 anchors)
+  anm      ANM engine per cell (registered panels Q1/Q2 + closure; reduced panels; Q3 anchors)
   boot     pooled two-stage bootstrap replicates in chunks
   report   E6_results.json + REPORT.md
   all      prepare, anm, boot, report
@@ -78,7 +86,7 @@ from lib import v3_e1 as e1  # noqa: E402
 from lib import v3_e6 as e6  # noqa: E402
 from lib import v3_key as vk  # noqa: E402
 
-VERSION = "v3_e6_external 1.0"
+VERSION = "v3_e6_external 2.0"
 KEYS = ("primary", "annotation_only")
 LIN = np.asarray(vk.LINEAGES)
 SCHEMA = ROOT / "bridge_anm" / "schemas" / "cite_lineage_finite_field_v0.json"
@@ -88,8 +96,9 @@ SMOKE_OUT = OUT_BASE / "E6_smoke"
 E1_RESULTS = OUT_BASE / "E1" / "E1_results.json"
 E1_SMOKE_RESULTS = OUT_BASE / "E1_smoke" / "E1_results.json"
 SMOKE = {"n_pseudo_donors": 8, "seed": 0, "n_boot": 60}
-C2_COVS = ("c1", "g0.80", "g0.70")
-C2_COVS_FULL = ("c1f", "g0.80", "g0.70")
+C2_COVS = ("c1", "g0.80", "g0.70")          # primary: c1 = the mean rule's realised Q1 coverage (registered panels)
+C2_COVS_RED = ("c1r", "g0.80", "g0.70")     # sensitivity: c1r = the reduced rule's realised Q1 coverage
+SENS = "sensitivity: reduced panels (literal missing-protein reading); never decides"
 
 _LOG: Path | None = None
 
@@ -389,19 +398,19 @@ def stage_prepare(a, reg, add, cfg, fp, D) -> None:
     if D["adt_names"] != names:
         raise SystemExit("ADT name order differs from the registered head output order")
     v = vk.evidence(vk.head_predict(D["z"], a.ckpt, device="cpu", size_factor=1.0), reg)
-    pan_reg = vk.question_panel(reg, "Q1")
-    pan = e6.reduced_panel(pan_reg, D["present"])
-    if not a.smoke and pan != add["panels"]["remaining_E6_primary"]:
-        raise SystemExit("reduced panel differs from the addendum's")
+    pan = vk.question_panel(reg, "Q1")                    # primary: the full frozen registered panels (as E1)
+    pan_red = e6.reduced_panel(pan, D["present"])         # sensitivity: absent panel proteins dropped
+    if not a.smoke and (pan != add["panels"]["primary"] or pan_red != add["panels"]["sensitivity_reduced"]):
+        raise SystemExit("primary or reduced panel differs from the addendum's")
     p3 = vk.question_panel(reg, "Q3")
     fld, rc = reg["anm"]["field_representation"], reg["anm"]["closure_readout"]
     arr = {"fingerprint": np.asarray(fp), "ids": D["ids"], "donor": D["donors"].astype(str), "ct": D["cell_types"].astype(str),
            "v": v,
-           "S": e6.class_scores_panel(v, names, pan), "S_full": e6.class_scores_panel(v, names, pan_reg),
+           "S": e6.class_scores_panel(v, names, pan), "S_red": e6.class_scores_panel(v, names, pan_red),
            "S3": e6.class_scores_panel(v, names, p3),
            "rec_q1": e6.anm_recoded_scores(v, names, pan, fld), "rec_cl": e6.anm_recoded_scores(v, names, pan, fld, rc),
-           "rec_q1_full": e6.anm_recoded_scores(v, names, pan_reg, fld),
-           "rec_cl_full": e6.anm_recoded_scores(v, names, pan_reg, fld, rc),
+           "rec_q1_red": e6.anm_recoded_scores(v, names, pan_red, fld),
+           "rec_cl_red": e6.anm_recoded_scores(v, names, pan_red, fld, rc),
            "rec_q3": e6.anm_recoded_scores(v, names, p3, fld)}
     for k in ("annotation", "gated_per_donor", "primary", "annotation_only"):
         arr[f"key_{k}"] = keys[k].astype(str)
@@ -427,13 +436,16 @@ def stage_prepare(a, reg, add, cfg, fp, D) -> None:
     mt, mv = y_tr != vk.UNSCORED, y_vl != vk.UNSCORED
     cp = reg["classifier"]["primary"]
     f12 = list(cp["feature_proteins"])
+    if f12 != [p for k in vk.LINEAGES for p in pan[k]]:
+        raise SystemExit("the registered classifier's features are not the primary panel's 12 proteins")
     c10 = add["computed"]["classifier10"]
     f10 = list(c10["features"])
-    if f10 != [p for k in vk.LINEAGES for p in pan[k]]:
+    if f10 != [p for k in vk.LINEAGES for p in pan_red[k]]:
         raise SystemExit("classifier10 features differ from the reduced panel")
     from sklearn.metrics import log_loss
 
-    meta: dict = {"fingerprint": fp, "seconds": None, "panel_E6": pan, "panel_full": pan_reg, "q3_anchors": p3}
+    meta: dict = {"fingerprint": fp, "seconds": None, "panel_primary": pan, "panel_reduced": pan_red, "q3_anchors": p3,
+                  "evidence_proteins_primary": f12}
     for nm, feats, C in (("classifier", f12, float(cp["C"])), ("classifier10", f10, float(c10["C"]))):
         mdl = e1.fit_logreg(v_tr[mt][:, [j[p] for p in feats]], y_tr[mt], C)
         P = e1.proba5(mdl, v_vl[mv][:, [j[p] for p in feats]])[:, [vk.CLASSES.index(str(c)) for c in mdl.classes_]]
@@ -463,7 +475,7 @@ def stage_anm(a, reg, fp, chunk_cells: int = 2000) -> None:
         return
     bridge = e1.AnmBridge(reg, SCHEMA, a.anm_root)
     meta = json.loads((cache / "prepare_meta.json").read_text())
-    pan, pan_f, p3 = meta["panel_E6"], meta["panel_full"], meta["q3_anchors"]
+    pan, pan_r, p3 = meta["panel_primary"], meta["panel_reduced"], meta["q3_anchors"]
     names = reg["evidence"]["teddy_head"]["adt_names"]
     j = {n: i for i, n in enumerate(names)}
     P = np.load(cache / "prepare.npz")
@@ -478,19 +490,21 @@ def stage_anm(a, reg, fp, chunk_cells: int = 2000) -> None:
         t0 = time.time()
         rows = range(c0, min(N, c0 + chunk_cells))
         n = len(rows)
-        R = {f"{p}_scores": np.zeros((n, 4)) for p in ("q1", "cl", "q1f", "clf", "q3")}
-        for p in ("q1", "q2", "cl_q1", "cl_q2", "q1f", "q2f", "clf_q1", "clf_q2", "q3"):
+        # tag "": primary (registered panels, 3 events per class); tag "r": reduced-panel sensitivity
+        R = {f"{p}_scores": np.zeros((n, 4)) for p in ("q1", "cl", "q1r", "clr", "q3")}
+        for p in ("q1", "q2", "cl_q1", "cl_q2", "q1r", "q2r", "clr_q1", "clr_q2", "q3"):
             R[f"{p}_call"] = np.full(n, -1, np.int8)
-        R["n_rejected"] = np.zeros(n, np.int16)
+        R["n_rejected"] = np.zeros(n, np.int16)        # primary runs + Q3 anchors
+        R["n_rejected_red"] = np.zeros(n, np.int16)    # reduced-panel runs
         for r, i in enumerate(rows):
-            for tag, pn in (("", pan), ("f", pan_f)):
+            for tag, pn in (("", pan), ("r", pan_r)):
                 vals = {k: [v[i, j[p]] for p in pn[k]] for k in vk.LINEAGES}
                 o = bridge.run(pn, vals, readouts=("Q1", "Q2"), closure_readouts=("closure_Q1", "closure_Q2"))
                 R[f"q1{tag}_scores"][r], R[f"q1{tag}_call"][r] = o["Q1"]
                 R[f"q2{tag}_call"][r] = o["Q2"][1]
                 R[f"cl{tag}_scores"][r], R[f"cl{tag}_q1_call"][r] = o["closure_Q1"]
                 R[f"cl{tag}_q2_call"][r] = o["closure_Q2"][1]
-                R["n_rejected"][r] += o["n_rejected"]
+                R["n_rejected" if tag == "" else "n_rejected_red"][r] += o["n_rejected"]
             o3 = bridge.run(p3, {k: [v[i, j[p]] for p in p3[k]] for k in vk.LINEAGES}, readouts=("Q3",))
             R["q3_scores"][r], R["q3_call"][r] = o3["Q3"]
             R["n_rejected"][r] += o3["n_rejected"]
@@ -511,7 +525,7 @@ def build_evaluator(P, A, reg) -> e6.Evaluator:
     grid = list(reg["experiments"]["common"]["matched_coverage"]["grid"])
     gn = [f"g{c:.2f}" for c in grid]
     ids = P["ids"]
-    S, Sf = P["S"], P["S_full"]
+    S, Sr = P["S"], P["S_red"]
     bar = float(reg["questions"]["Q1"]["bar"])
     keys = {k: P[f"key_{k}"].astype(str) for k in KEYS}
     M = e6.Method
@@ -519,19 +533,22 @@ def build_evaluator(P, A, reg) -> e6.Evaluator:
     c10, k10 = e1.lineage_conf_call(P["P5_classifier10"])
     idx = lambda calls: np.asarray([vk.LINEAGES.index(x) for x in calls])  # noqa: E731
     methods = [
+        # primary: the full frozen registered panels; every arm reads the same 12 evidence values (as E1)
         M("anm", A["q1_scores"].max(axis=1), A["q1_scores"].argmax(axis=1), ids, amend, gn + ["c1"], KEYS),
         M("rule", S.max(axis=1), S.argmax(axis=1), ids, amend, gn + ["c1"], KEYS, C2_COVS),
         M("margin", vk.margin(S), S.argmax(axis=1), ids, amend, gn, KEYS),
         M("entropy", e1.entropy_confidence(S), S.argmax(axis=1), ids, amend, gn, KEYS),
         M("classifier", c12, idx(k12), ids, amend, gn + ["c1"], KEYS, C2_COVS),
-        M("classifier10", c10, idx(k10), ids, amend, gn + ["c1"], KEYS),
         M("closure", A["cl_scores"].max(axis=1), A["cl_scores"].argmax(axis=1), ids, amend, ["c1"], KEYS, C2_COVS),
-        M("anm_full", A["q1f_scores"].max(axis=1), A["q1f_scores"].argmax(axis=1), ids, amend, gn + ["c1f"], KEYS),
-        M("rule_full", Sf.max(axis=1), Sf.argmax(axis=1), ids, amend, gn + ["c1f"], KEYS, C2_COVS_FULL),
-        M("margin_full", vk.margin(Sf), Sf.argmax(axis=1), ids, amend, gn, KEYS),
-        M("closure_full", A["clf_scores"].max(axis=1), A["clf_scores"].argmax(axis=1), ids, amend, ["c1f"], KEYS, C2_COVS_FULL),
+        # sensitivity: the literal reduced-panel reading (never decides)
+        M("anm_red", A["q1r_scores"].max(axis=1), A["q1r_scores"].argmax(axis=1), ids, amend, gn + ["c1r"], KEYS),
+        M("rule_red", Sr.max(axis=1), Sr.argmax(axis=1), ids, amend, gn + ["c1r"], KEYS, C2_COVS_RED),
+        M("margin_red", vk.margin(Sr), Sr.argmax(axis=1), ids, amend, gn, KEYS),
+        M("entropy_red", e1.entropy_confidence(Sr), Sr.argmax(axis=1), ids, amend, gn, KEYS),
+        M("classifier10", c10, idx(k10), ids, amend, gn + ["c1r"], KEYS),
+        M("closure_red", A["clr_scores"].max(axis=1), A["clr_scores"].argmax(axis=1), ids, amend, ["c1r"], KEYS, C2_COVS_RED),
     ]
-    realised = {"c1": (S.max(axis=1) >= bar).astype(np.float64), "c1f": (Sf.max(axis=1) >= bar).astype(np.float64)}
+    realised = {"c1": (S.max(axis=1) >= bar).astype(np.float64), "c1r": (Sr.max(axis=1) >= bar).astype(np.float64)}
     return e6.Evaluator(methods, keys, grid, realised, KEYS)
 
 
@@ -591,6 +608,21 @@ E1_PATHS = {
     "E1.C2 closure - rule OUT decline @0.70": ("C2", "keys", "primary", "0.70", "closure_minus_rule_out_decline", "point"),
 }
 PRIMARY_ROWS = ("E1.4a anm - margin AURC", "E1.C2 closure - rule OUT decline @c*")
+C2_LABELS = ("c*", "0.80", "0.70")
+
+
+def primary_rows(Rk: dict) -> dict:
+    """The replication rows of one key's primary reading (registered panels)."""
+    return {**{f"E1.4a {k}": v for k, v in Rk["E1.4a"].items() if "replication" in v}, **Rk["E1.4b"],
+            **{f"E1.C2 closure - rule OUT decline @{lab}": Rk["E1.C2"][lab]["closure - rule OUT decline"] for lab in C2_LABELS}}
+
+
+def sensitivity_rows(Rk: dict) -> dict:
+    """The same rows on the reduced-panel sensitivity reading (never decides)."""
+    S = Rk["sensitivity_reduced_panels"]
+    return {**{f"E1.4a {k}": v for k, v in S["E1.4a"].items() if "replication" in v}, **S["E1.4b"],
+            **{f"E1.C2 closure_red - rule_red OUT decline @{lab}": S["E1.C2"][lab]["closure_red - rule_red OUT decline"]
+               for lab in C2_LABELS}}
 
 
 def load_v3_directions(a) -> dict:
@@ -687,146 +719,203 @@ def stage_report(a, reg, add, cfg, fp, st, ext_info) -> dict:
     if cfg["smoke"]:
         res["SMOKE"] = "val donor 18303 cells with 8 label-free pseudo-donors and small B; not a result"
 
-    # ---------------- E1.1a
+    # ---------------- E1.1a: primary on the registered panels (as E1); reduced-panel sensitivity beside it
     thr = json.loads(str(A["thresholds"]))
     bars = {q: float(reg["questions"][q]["bar"]) for q in ("Q1", "Q2", "Q3")}
-    rule = {q: vk.rule_calls(P["S"], bars[q]) for q in ("Q1", "Q2")}
-    rule_f = {q: vk.rule_calls(P["S_full"], bars[q]) for q in ("Q1", "Q2")}
+    rule = {"Q1": vk.rule_calls(P["S"], bars["Q1"]), "Q2": vk.rule_calls(P["S"], bars["Q2"]),
+            "Q3": vk.rule_calls(P["S3"], bars["Q3"])}
+    rule_r = {q: vk.rule_calls(P["S_red"], bars[q]) for q in ("Q1", "Q2")}
     eng = {"Q1": e6.engine_calls(A["q1_call"]), "Q2": e6.engine_calls(A["q2_call"]), "Q3": e6.engine_calls(A["q3_call"]),
            "closure_Q1": e6.engine_calls(A["cl_q1_call"]), "closure_Q2": e6.engine_calls(A["cl_q2_call"]),
-           "Q1_full": e6.engine_calls(A["q1f_call"]), "Q2_full": e6.engine_calls(A["q2f_call"]),
-           "closure_Q1_full": e6.engine_calls(A["clf_q1_call"]), "closure_Q2_full": e6.engine_calls(A["clf_q2_call"])}
+           "Q1_red": e6.engine_calls(A["q1r_call"]), "Q2_red": e6.engine_calls(A["q2r_call"]),
+           "closure_Q1_red": e6.engine_calls(A["clr_q1_call"]), "closure_Q2_red": e6.engine_calls(A["clr_q2_call"])}
     rec = {"Q1": e6.calls_at(P["rec_q1"], thr["Q1"]), "Q2": e6.calls_at(P["rec_q1"], thr["Q2"]),
            "Q3": e6.calls_at(P["rec_q3"], thr["Q3"]),
            "closure_Q1": e6.calls_at(P["rec_cl"], thr["closure_Q1"]), "closure_Q2": e6.calls_at(P["rec_cl"], thr["closure_Q2"]),
-           "Q1_full": e6.calls_at(P["rec_q1_full"], thr["Q1"]), "Q2_full": e6.calls_at(P["rec_q1_full"], thr["Q2"]),
-           "closure_Q1_full": e6.calls_at(P["rec_cl_full"], thr["closure_Q1"]),
-           "closure_Q2_full": e6.calls_at(P["rec_cl_full"], thr["closure_Q2"])}
+           "Q1_red": e6.calls_at(P["rec_q1_red"], thr["Q1"]), "Q2_red": e6.calls_at(P["rec_q1_red"], thr["Q2"]),
+           "closure_Q1_red": e6.calls_at(P["rec_cl_red"], thr["closure_Q1"]),
+           "closure_Q2_red": e6.calls_at(P["rec_cl_red"], thr["closure_Q2"])}
+    # E1's closure check: engine closure calls vs the re-coded closure readout at the registered closure bars
+    cl_rule = {q: vk.rule_calls(P["rec_cl"], float(reg["anm"][f"closure_bar_{q}"])) for q in ("Q1", "Q2")}
 
     def counts(x, y):
-        return {"pooled": int(np.sum(x != y)), "per_donor": {d: int(np.sum((x != y)[donor == d])) for d in dnames}}
+        return {"pooled": int(np.sum(x != y)), "per_donor": {d: int(np.sum((x != y)[donor == d])) for d in dnames},
+                "share": float(np.mean(x != y))}
 
-    sc_diff = {nm: float(np.max(np.abs(A[f"{ak}_scores"] - P[pk]))) for nm, ak, pk in
-               (("Q1", "q1", "rec_q1"), ("closure", "cl", "rec_cl"), ("Q1_full", "q1f", "rec_q1_full"),
-                ("closure_full", "clf", "rec_cl_full"), ("Q3", "q3", "rec_q3"))}
-    bridge_mm = {q: counts(eng[q], rec[q]) for q in rec}
+    fld = reg["anm"]["field_representation"]
+    G1, G3 = vk.field_gain(1, fld), vk.field_gain(3, fld)
+    meth = {m.name: m for m in ev.methods}
     e11a = {"registered_value": 0,
-            "bridge_engine_vs_recoded": {q: bridge_mm[q] for q in ("Q1", "Q2", "Q3", "closure_Q1", "closure_Q2")},
-            "bridge_full_panel": {q: bridge_mm[q] for q in ("Q1_full", "Q2_full", "closure_Q1_full", "closure_Q2_full")},
-            "max_abs_score_diff_engine_vs_recoded": sc_diff,
+            "panels": "registered panels (3 events per class), as E1",
+            "engine_vs_mean_rule": {q: counts(eng[q], rule[q]) for q in ("Q1", "Q2", "Q3")},
+            "closure_engine_vs_recoded": {f"closure_{q}": counts(eng[f"closure_{q}"], cl_rule[q]) for q in ("Q1", "Q2")},
+            "bridge_engine_vs_recoded": {q: counts(eng[q], rec[q]) for q in ("Q1", "Q2", "Q3", "closure_Q1", "closure_Q2")},
+            "max_abs_score_diff_engine_vs_recoded": {nm: float(np.max(np.abs(A[f"{ak}_scores"] - P[pk]))) for nm, ak, pk in
+                                                     (("Q1", "q1", "rec_q1"), ("closure", "cl", "rec_cl"), ("Q3", "q3", "rec_q3"))},
+            "max_rel_diff_engine_vs_Gn_times_S": {
+                "Q1": float(np.max(np.abs(A["q1_scores"] - G3 * 3 * P["S"]) / np.maximum(1e-12, np.abs(A["q1_scores"])))),
+                "Q3": float(np.max(np.abs(A["q3_scores"] - G1 * P["S3"]) / np.maximum(1e-12, np.abs(A["q3_scores"]))))},
             "engine_events_rejected": int(A["n_rejected"].sum()),
-            "engine_vs_mean_rule": {q: {**counts(eng[q], rule[q]), "share": float(np.mean(eng[q] != rule[q]))} for q in ("Q1", "Q2")},
-            "engine_vs_mean_rule_full_panel": {q: counts(eng[f"{q}_full"], rule_f[q]) for q in ("Q1", "Q2")},
-            "ranking_identical_anm_vs_rule": bool(np.array_equal(ev.methods[0].order, ev.methods[1].order)),
-            "anm_unequal_panels_note": add["arms"]["anm_unequal_panels"],
+            "ranking_identical_anm_vs_rule": bool(np.array_equal(meth["anm"].order, meth["rule"].order)),
             "anm_commit": str(A["anm_commit"]), "thresholds": thr}
-    e11a["bridge_passed"] = bool(sum(v["pooled"] for v in e11a["bridge_engine_vs_recoded"].values()) == 0
-                                 and e11a["engine_events_rejected"] == 0)
-    e11a["full_panel_passed"] = bool(sum(v["pooled"] for v in e11a["bridge_full_panel"].values()) == 0
-                                     and sum(v["pooled"] for v in e11a["engine_vs_mean_rule_full_panel"].values()) == 0)
+    e11a["passed"] = bool(all(v["pooled"] == 0 for grp in ("engine_vs_mean_rule", "closure_engine_vs_recoded",
+                                                          "bridge_engine_vs_recoded") for v in e11a[grp].values())
+                          and e11a["engine_events_rejected"] == 0)
     e11a["replication"] = {"v3_E1.1a_passed": v3.get("E1.1a_passed"),
-                           "e6_zero_mismatches_every_donor": e11a["bridge_passed"],
-                           "replicates": (None if v3.get("E1.1a_passed") is None else bool(v3["E1.1a_passed"] and e11a["bridge_passed"]))}
+                           "e6_zero_mismatches_every_donor": e11a["passed"],
+                           "replicates": (None if v3.get("E1.1a_passed") is None else bool(v3["E1.1a_passed"] and e11a["passed"]))}
+    e11a_r = {"status": SENS, "panels": "reduced panels (B 3, T 2, NK 2, myeloid 3 events)",
+              "bridge_engine_vs_recoded": {q: counts(eng[q], rec[q]) for q in ("Q1_red", "Q2_red", "closure_Q1_red", "closure_Q2_red")},
+              "max_abs_score_diff_engine_vs_recoded": {nm: float(np.max(np.abs(A[f"{ak}_scores"] - P[pk]))) for nm, ak, pk in
+                                                       (("Q1_red", "q1r", "rec_q1_red"), ("closure_red", "clr", "rec_cl_red"))},
+              "engine_events_rejected": int(A["n_rejected_red"].sum()),
+              "engine_vs_mean_rule": {f"{q}_red": counts(eng[f"{q}_red"], rule_r[q]) for q in ("Q1", "Q2")},
+              "ranking_identical_anm_red_vs_rule_red": bool(np.array_equal(meth["anm_red"].order, meth["rule_red"].order)),
+              "anm_unequal_panels_note": add["sensitivity"]["reduced_panel_reading"]["arms"]["anm_unequal_panels"]}
+    e11a_r["bridge_passed"] = bool(all(v["pooled"] == 0 for v in e11a_r["bridge_engine_vs_recoded"].values())
+                                   and e11a_r["engine_events_rejected"] == 0)
+    e11a["sensitivity_reduced_panels"] = e11a_r
     res["E1.1a"] = e11a
 
-    # ---------------- per key: Q1 selective accuracy, E1.4a, C2, full-panel sensitivity
-    arms_grid = ("anm", "rule", "margin", "entropy", "classifier", "classifier10")
+    # ---------------- per key: Q1 selective accuracy, E1.4a/b, C2 (primary), reduced-panel sensitivity
+    arms_p = ("anm", "rule", "margin", "entropy", "classifier")
+    arms_r = ("anm_red", "rule_red", "margin_red", "entropy_red", "classifier10")
     per_key: dict = {}
     for kn in KEYS:
         R: dict = {"key": kn, "is_decision_key": kn == dk}
-        R["coverage_c_star"] = block(V, lambda g: g("cov|c1"))
-        R["Q1_selective_accuracy"] = {arm: {c: block(V, lambda g, arm=arm, c=c: g(f"{arm}|{c}|{kn}|acc"))
-                                            for c in (["c1"] if arm not in ("margin", "entropy") else []) + gn}
-                                      for arm in arms_grid}
-        aurc = {arm: block(V, lambda g, arm=arm: e6.aurc_from(g, arm, kn, gn, grid)) for arm in arms_grid}
-        R["AURC"] = aurc
 
-        def dA(x, y):
+        def dA(x, y, kn=kn):
             return lambda g: e6.aurc_from(g, x, kn, gn, grid) - e6.aurc_from(g, y, kn, gn, grid)
 
+        def dacc(x, y, c, kn=kn):
+            return lambda g: np.asarray(g(f"{x}|g{c}|{kn}|acc")) - np.asarray(g(f"{y}|g{c}|{kn}|acc"))
+
+        def selacc(arms, cstar, kn=kn):
+            return {arm: {c: block(V, lambda g, arm=arm, c=c: g(f"{arm}|{c}|{kn}|acc"))
+                          for c in ([cstar] if cstar in meth[arm].acc_covs else []) + gn} for arm in arms}
+
+        def aurcs(arms, kn=kn):
+            return {arm: block(V, lambda g, arm=arm: e6.aurc_from(g, arm, kn, gn, grid)) for arm in arms}
+
+        def c2_rows(closure, rule_, covs, with_classifier, kn=kn):
+            c2: dict = {}
+            for c, lab in zip(covs, ("c*", "0.80", "0.70")):
+                arms = (closure, rule_) + (("classifier",) if with_classifier else ())
+                cb: dict = {arm: {"out_decline": block(V, lambda g, arm=arm, c=c: g(f"{arm}|{c}|{kn}|outdecl")),
+                                  "inscope_acc": block(V, lambda g, arm=arm, c=c: g(f"{arm}|{c}|{kn}|inscope"))}
+                            for arm in arms}
+                d_out, d_in = f"{closure} - {rule_} OUT decline", f"{closure} - {rule_} in-scope acc"
+                cb[d_out] = block(V, lambda g, c=c: np.asarray(g(f"{closure}|{c}|{kn}|outdecl"))
+                                  - np.asarray(g(f"{rule_}|{c}|{kn}|outdecl")), m2,
+                                  v3p.get(f"E1.C2 closure - rule OUT decline @{lab}"), True)
+                cb[d_in] = block(V, lambda g, c=c: np.asarray(g(f"{closure}|{c}|{kn}|inscope"))
+                                 - np.asarray(g(f"{rule_}|{c}|{kn}|inscope")))
+                if with_classifier:
+                    cb["classifier - rule OUT decline (secondary)"] = block(
+                        V, lambda g, c=c: np.asarray(g(f"classifier|{c}|{kn}|outdecl")) - np.asarray(g(f"{rule_}|{c}|{kn}|outdecl")))
+                guard = cb[d_in]["point"] >= -0.005
+                cb["guard_inscope_ok"] = bool(guard)
+                vo = cb[d_out]["e1_decision_rule"]["verdict"]
+                cb["e1_decision_rule_with_guard"] = ("win" if guard else "not a win (in-scope guard failed)") if vo == "win" else vo
+                c2[lab] = cb
+            return c2
+
+        # primary: registered panels, the same 12 evidence values for every arm (as E1)
+        R["coverage_c_star"] = block(V, lambda g: g("cov|c1"))
+        R["Q1_selective_accuracy"] = selacc(arms_p, "c1")
+        R["AURC"] = aurcs(arms_p)
         R["E1.4a"] = {
             "anm - margin AURC": block(V, dA("anm", "margin"), m4, v3p.get("E1.4a anm - margin AURC"), True),
             "anm - classifier AURC": block(V, dA("anm", "classifier"), m4, v3p.get("E1.4a anm - classifier AURC"), True),
             "anm - entropy AURC": block(V, dA("anm", "entropy"), m4, v3p.get("E1.4a anm - entropy AURC"), True),
             "rule - margin AURC": block(V, dA("rule", "margin"), m4, v3p.get("E1.4a rule - margin AURC"), True),
             "anm - rule AURC": block(V, dA("anm", "rule"), m4),
-            "anm - classifier10 AURC": block(V, dA("anm", "classifier10"), m4),
         }
-        R["E1.4b"] = {f"Q1 acc {x} - {y} @{c}": block(V, lambda g, x=x, y=y, c=c: np.asarray(g(f"{x}|g{c}|{kn}|acc"))
-                                                      - np.asarray(g(f"{y}|g{c}|{kn}|acc")), m4,
-                                                      v3p.get(f"Q1 acc {x} - {y} @{c}"), True)
+        R["E1.4b"] = {f"Q1 acc {x} - {y} @{c}": block(V, dacc(x, y, c), m4, v3p.get(f"Q1 acc {x} - {y} @{c}"), True)
                       for x, y in (("anm", "margin"), ("anm", "classifier")) for c in ("0.90", "0.70")}
-        c2: dict = {}
-        for c, lab in zip(C2_COVS, ("c*", "0.80", "0.70")):
-            cb = {arm: {"out_decline": block(V, lambda g, arm=arm, c=c: g(f"{arm}|{c}|{kn}|outdecl")),
-                        "inscope_acc": block(V, lambda g, arm=arm, c=c: g(f"{arm}|{c}|{kn}|inscope"))}
-                  for arm in ("closure", "rule", "classifier")}
-            cb["closure - rule OUT decline"] = block(V, lambda g, c=c: np.asarray(g(f"closure|{c}|{kn}|outdecl"))
-                                                     - np.asarray(g(f"rule|{c}|{kn}|outdecl")), m2,
-                                                     v3p.get(f"E1.C2 closure - rule OUT decline @{lab}"), True)
-            cb["closure - rule in-scope acc"] = block(V, lambda g, c=c: np.asarray(g(f"closure|{c}|{kn}|inscope"))
-                                                      - np.asarray(g(f"rule|{c}|{kn}|inscope")))
-            cb["classifier - rule OUT decline (secondary)"] = block(V, lambda g, c=c: np.asarray(g(f"classifier|{c}|{kn}|outdecl"))
-                                                                    - np.asarray(g(f"rule|{c}|{kn}|outdecl")))
-            guard = cb["closure - rule in-scope acc"]["point"] >= -0.005
-            cb["guard_inscope_ok"] = bool(guard)
-            vo = cb["closure - rule OUT decline"]["e1_decision_rule"]["verdict"]
-            cb["e1_decision_rule_with_guard"] = ("win" if guard else "not a win (in-scope guard failed)") if vo == "win" else vo
-            c2[lab] = cb
-        R["E1.C2"] = c2
-        full: dict = {"AURC": {arm: block(V, lambda g, arm=arm: e6.aurc_from(g, arm, kn, gn, grid))
-                               for arm in ("anm_full", "rule_full", "margin_full")},
-                      "anm_full - margin_full AURC": block(V, dA("anm_full", "margin_full"), m4, v3p.get("E1.4a anm - margin AURC"), True),
-                      "coverage_c_star_full": block(V, lambda g: g("cov|c1f"))}
-        for c, lab in zip(C2_COVS_FULL, ("c*", "0.80", "0.70")):
-            full[f"C2 closure_full - rule_full OUT decline @{lab}"] = block(
-                V, lambda g, c=c: np.asarray(g(f"closure_full|{c}|{kn}|outdecl")) - np.asarray(g(f"rule_full|{c}|{kn}|outdecl")),
-                m2, v3p.get(f"E1.C2 closure - rule OUT decline @{lab}"), True)
-            full[f"C2 closure_full - rule_full in-scope acc @{lab}"] = block(
-                V, lambda g, c=c: np.asarray(g(f"closure_full|{c}|{kn}|inscope")) - np.asarray(g(f"rule_full|{c}|{kn}|inscope")))
-        R["sensitivity_full_panel"] = full
+        R["E1.C2"] = c2_rows("closure", "rule", C2_COVS, True)
+
+        # sensitivity: the literal reduced-panel reading (never decides); v3 directions of the primary counterparts
+        R["sensitivity_reduced_panels"] = {
+            "status": SENS,
+            "coverage_c_star_reduced": block(V, lambda g: g("cov|c1r")),
+            "Q1_selective_accuracy": selacc(arms_r, "c1r"),
+            "AURC": aurcs(arms_r),
+            "E1.4a": {
+                "anm_red - margin_red AURC": block(V, dA("anm_red", "margin_red"), m4, v3p.get("E1.4a anm - margin AURC"), True),
+                "anm_red - classifier AURC": block(V, dA("anm_red", "classifier"), m4, v3p.get("E1.4a anm - classifier AURC"), True),
+                "anm_red - entropy_red AURC": block(V, dA("anm_red", "entropy_red"), m4, v3p.get("E1.4a anm - entropy AURC"), True),
+                "rule_red - margin_red AURC": block(V, dA("rule_red", "margin_red"), m4, v3p.get("E1.4a rule - margin AURC"), True),
+                "anm_red - rule_red AURC": block(V, dA("anm_red", "rule_red"), m4),
+                "anm_red - classifier10 AURC": block(V, dA("anm_red", "classifier10"), m4,
+                                                     v3p.get("E1.4a anm - classifier AURC"), True),
+            },
+            "E1.4b": {f"Q1 acc {x} - {y} @{c}": block(V, dacc(x, y, c), m4, v3p.get(f"Q1 acc anm - {yv} @{c}"), True)
+                      for x, y, yv in (("anm_red", "margin_red", "margin"), ("anm_red", "classifier", "classifier"),
+                                       ("anm_red", "classifier10", "classifier")) for c in ("0.90", "0.70")},
+            "E1.C2": c2_rows("closure_red", "rule_red", C2_COVS_RED, False),
+        }
         per_key[kn] = R
     res["keys"] = per_key
 
     # ---------------- deployed operating points (descriptive)
     cbars = reg["classifier"]["primary"]["bars"]
+    cc, ck = e1.lineage_conf_call(P["P5_classifier"])
     ops = {}
     for q in ("Q1", "Q2"):
         ops[f"rule_{q}"] = operating_point(rule[q], keys, donor, ct)
         ops[f"anm_{q}"] = operating_point(eng[q], keys, donor, ct)
         ops[f"anm_closure_{q}"] = operating_point(eng[f"closure_{q}"], keys, donor, ct)
-        cc, ck = e1.lineage_conf_call(P["P5_classifier"])
         ops[f"classifier_{q}"] = operating_point(np.where(cc >= float(cbars[q]), ck, vk.NO_CALL), keys, donor, ct)
-        ops[f"rule_full_{q}"] = operating_point(rule_f[q], keys, donor, ct)
+    for q in ("Q1", "Q2"):   # sensitivity: reduced panels
+        ops[f"rule_red_{q}"] = operating_point(rule_r[q], keys, donor, ct)
+        ops[f"anm_red_{q}"] = operating_point(eng[f"{q}_red"], keys, donor, ct)
+        ops[f"anm_closure_red_{q}"] = operating_point(eng[f"closure_{q}_red"], keys, donor, ct)
     res["operating_points"] = ops
-    cons = {"rule_Q1_at_c_star_equals_operating_point": abs(point[f"rule|c1|{dk}|acc"] - ops["rule_Q1"][dk]["accuracy_of_calls"]) < 1e-12
-            if ops["rule_Q1"][dk]["accuracy_of_calls"] is not None else None}
-    res["consistency_checks"] = cons
+
+    def same_acc(nm, cov):
+        acc = ops[nm][dk]["accuracy_of_calls"]
+        return None if acc is None else bool(abs(point[f"{nm.rsplit('_', 1)[0]}|{cov}|{dk}|acc"] - acc) < 1e-12)
+
+    res["consistency_checks"] = {"rule_Q1_at_c_star_equals_operating_point": same_acc("rule_Q1", "c1"),
+                                 "rule_red_Q1_at_c_star_reduced_equals_operating_point": same_acc("rule_red_Q1", "c1r"),
+                                 "anm_Q1_calls_equal_rule_Q1_calls": bool(np.array_equal(eng["Q1"], rule["Q1"]))}
 
     # ---------------- summary (decision key)
     Rk = per_key[dk]
+    status_of = {True: "replicates", False: "does not replicate", None: "no v3 direction"}
     summ: dict = {"contamination": e6.CONTAMINATION_LABEL,
                   "key": ("validated" if kv["validated"] else e6.KEY_NOT_VALIDATED)
                          + f" (pooled kappa {kv['kappa5']:.4f}; decision key {dk})",
-                  "E1.1a_bridge": "pass" if e11a["bridge_passed"] else "FAIL: E6 not interpretable (registered: stop)",
+                  "panels": "primary: the full frozen registered panels for every arm (addendum v2, as E1); "
+                            "sensitivity: reduced panels (never decides)",
+                  "E1.1a": "pass" if e11a["passed"] else "FAIL: E6 not interpretable (registered: stop)",
                   "E1.1a_engine_vs_mean_rule_Q1": e11a["engine_vs_mean_rule"]["Q1"]["pooled"],
                   "replication": {}}
-    rows = {**{k: Rk["E1.4a"][k.replace("E1.4a ", "")] for k in ("E1.4a anm - margin AURC", "E1.4a anm - classifier AURC",
-                                                                "E1.4a anm - entropy AURC", "E1.4a rule - margin AURC")},
-            **{k: Rk["E1.4b"][k] for k in Rk["E1.4b"]},
-            **{f"E1.C2 closure - rule OUT decline @{lab}": Rk["E1.C2"][lab]["closure - rule OUT decline"] for lab in ("c*", "0.80", "0.70")}}
-    for k, b in rows.items():
-        r = b["replication"]
-        summ["replication"][k] = {"status": r["status"], "v3_point": r["v3_point"], "e6_point": r["e6_point"],
-                                  "e6_ci95": r["e6_ci95"], "donors_same_sign": r.get("n_donors_same_sign"),
-                                  "e1_decision_rule": b["e1_decision_rule"]["verdict"], "primary_row": k in PRIMARY_ROWS}
-    summ["replication"]["E1.1a"] = {"status": {True: "replicates", False: "does not replicate", None: "no v3 direction"}[e11a["replication"]["replicates"]]}
+
+    def rep_rows(rows: dict, primary: tuple) -> dict:
+        out = {}
+        for k, b in rows.items():
+            r = b["replication"]
+            out[k] = {"status": r["status"], "v3_point": r["v3_point"], "e6_point": r["e6_point"],
+                      "e6_ci95": r["e6_ci95"], "donors_same_sign": r.get("n_donors_same_sign"),
+                      "e1_decision_rule": b["e1_decision_rule"]["verdict"], "primary_row": k in primary}
+        return out
+
+    summ["replication"] = rep_rows(primary_rows(Rk), PRIMARY_ROWS)
+    summ["replication"]["E1.1a"] = {"status": status_of[e11a["replication"]["replicates"]]}
+    summ["sensitivity_reduced_panels"] = {
+        "status": SENS,
+        "E1.1a_bridge_reduced": "pass" if e11a_r["bridge_passed"] else "discrepancy (reduced reading only)",
+        "E1.1a_engine_vs_mean_rule_Q1_reduced": e11a_r["engine_vs_mean_rule"]["Q1_red"]["pooled"],
+        "replication": rep_rows(sensitivity_rows(Rk), ())}
     if not v3["available"]:
         summ["replication_note"] = "E1 site4 results missing: replication pending (rerun --stage report later)"
     if not kv["validated"]:
         summ["label"] = e6.KEY_NOT_VALIDATED
     res["summary"] = summ
     res["addendum_disclosures"] = add["disclosures"]
+    res["addendum_revision"] = {k: add.get("revision", {}).get(k) for k in ("addendum_version", "change", "reason", "timing")}
     return res
 
 
@@ -878,41 +967,43 @@ def write_report(path: Path, res: dict) -> None:
           "", "Per-type gate table and per-donor thresholds: `key_validity.json`.", ""]
 
     s = res["summary"]
-    L += ["## Replication of the v3 (E1 site4) conclusions", "",
-          f"Decision key {res['decision_key']}. A conclusion replicates if the E6 difference has the v3 sign in a majority of the "
-          "external donors and the pooled two-stage 95% interval excludes 0 on that side. "
-          f"v3 direction from `{res['v3_directions']['file']}`" + ("" if res["v3_directions"]["available"] else " (missing: pending)") + ".", "",
-          "| endpoint | v3 point | E6 pooled [95% CI] | donors +/- | replication | E1 decision rule (8 donors) |",
-          "|---|---:|---|---|---|---|"]
     Rk = res["keys"][res["decision_key"]]
-    allrows = {**{f"E1.4a {k}": v for k, v in Rk["E1.4a"].items() if "replication" in v},
-               **Rk["E1.4b"], **{f"E1.C2 closure - rule OUT decline @{lab_}": Rk["E1.C2"][lab_]["closure - rule OUT decline"]
-                                 for lab_ in ("c*", "0.80", "0.70")}}
-    for k, b in allrows.items():
-        r = b["replication"]
-        star = " **(primary)**" if k in PRIMARY_ROWS else ""
-        L.append(f"| {k}{star} | {_f(r['v3_point'], 4)} | {_f(b['point'], 4)} {_ci(b['ci95'], 4)} | {_sign_donors(b)} | "
-                 f"{r['status']} | {b.get('e1_decision_rule', {}).get('verdict', '')} |")
-    L.append(f"| E1.1a bridge (ANM = its re-coded rule) | E1 passed: {res['E1.1a']['replication']['v3_E1.1a_passed']} | "
-             f"mismatches {sum(v['pooled'] for v in res['E1.1a']['bridge_engine_vs_recoded'].values())} | | "
-             f"{s['replication']['E1.1a']['status']} | |")
-    L += [""]
+
+    def rep_table(rows: dict, primary: tuple) -> list:
+        T = ["| endpoint | v3 point | E6 pooled [95% CI] | donors +/- | replication | E1 decision rule (8 donors) |",
+             "|---|---:|---|---|---|---|"]
+        for k, b in rows.items():
+            r = b["replication"]
+            star = " **(primary)**" if k in primary else ""
+            T.append(f"| {k}{star} | {_f(r['v3_point'], 4)} | {_f(b['point'], 4)} {_ci(b['ci95'], 4)} | {_sign_donors(b)} | "
+                     f"{r['status']} | {b.get('e1_decision_rule', {}).get('verdict', '')} |")
+        return T
+
     a = res["E1.1a"]
-    L += ["## E1.1a ANM engine vs its re-coded rule", "",
-          "Bridge check (registered 0): " + ", ".join(f"{q} {v['pooled']}" for q, v in a["bridge_engine_vs_recoded"].items())
+    ar = a["sensitivity_reduced_panels"]
+    n_mm = sum(v["pooled"] for g in ("engine_vs_mean_rule", "closure_engine_vs_recoded", "bridge_engine_vs_recoded")
+               for v in a[g].values())
+    L += ["## Replication of the v3 (E1 site4) conclusions", "",
+          f"Decision key {res['decision_key']}; panels: the full frozen registered panels for every arm (addendum v2, as E1), "
+          "so every arm reads the same 12 evidence values. A conclusion replicates if the E6 difference has the v3 sign in a "
+          "majority of the external donors and the pooled two-stage 95% interval excludes 0 on that side. "
+          f"v3 direction from `{res['v3_directions']['file']}`" + ("" if res["v3_directions"]["available"] else " (missing: pending)") + ".", ""]
+    L += rep_table(primary_rows(Rk), PRIMARY_ROWS)
+    L.append(f"| E1.1a (ANM = mean rule, closure, bridge) | E1 passed: {a['replication']['v3_E1.1a_passed']} | "
+             f"mismatches {n_mm} | | {s['replication']['E1.1a']['status']} | |")
+    L += [""]
+    L += ["## E1.1a ANM engine vs the mean rule (registered panels, as E1)", "",
+          "Engine vs mean rule (registered 0): " + ", ".join(f"{q} {v['pooled']}" for q, v in a["engine_vs_mean_rule"].items())
+          + "; engine closure vs re-coded closure: " + ", ".join(f"{q} {v['pooled']}" for q, v in a["closure_engine_vs_recoded"].items())
+          + "; bridge (engine vs exact closed form): " + ", ".join(f"{q} {v['pooled']}" for q, v in a["bridge_engine_vs_recoded"].items())
           + f"; rejected events {a['engine_events_rejected']}; max |engine - closed form| "
           + ", ".join(f"{k} {v:.1e}" for k, v in a["max_abs_score_diff_engine_vs_recoded"].items())
-          + f". **{'pass' if a['bridge_passed'] else 'FAIL: E6 not interpretable'}**.", "",
-          f"Engine vs the mean rule (reduced panels: T and NK have 2 events, B and myeloid 3): Q1 {a['engine_vs_mean_rule']['Q1']['pooled']:,} "
-          f"cells ({_f(a['engine_vs_mean_rule']['Q1']['share'])}), Q2 {a['engine_vs_mean_rule']['Q2']['pooled']:,} "
-          f"({_f(a['engine_vs_mean_rule']['Q2']['share'])}); ranking identical: {a['ranking_identical_anm_vs_rule']}. "
-          f"Full registered panels: bridge and mean-rule mismatches "
-          + ", ".join(f"{q} {v['pooled']}" for q, v in {**a['bridge_full_panel'], **a['engine_vs_mean_rule_full_panel']}.items())
-          + f" (**{'pass' if a['full_panel_passed'] else 'FAIL'}**).", "", f"_{a['anm_unequal_panels_note']}_", ""]
+          + f"; ranking identical ANM vs rule: {a['ranking_identical_anm_vs_rule']}. "
+          + f"**{'pass' if a['passed'] else 'FAIL: E6 not interpretable'}**.", ""]
     for kn in (res["decision_key"],) + tuple(k for k in KEYS if k != res["decision_key"]):
         R = res["keys"][kn]
         L += [f"## Key `{kn}`" + (" (decision key)" if R["is_decision_key"] else " (other key)"), ""]
-        L += [f"c* (rule's realised Q1 coverage) {_f(R['coverage_c_star']['point'])} {_ci(R['coverage_c_star']['ci95'])}.", "",
+        L += [f"c* (rule's realised Q1 coverage, registered panels) {_f(R['coverage_c_star']['point'])} {_ci(R['coverage_c_star']['ci95'])}.", "",
               "### Q1 selective accuracy at matched coverage and AURC", "",
               "| arm | AURC [95% CI] | acc @c* | acc @0.90 | acc @0.70 |", "|---|---|---:|---:|---:|"]
         for arm, b in R["AURC"].items():
@@ -931,12 +1022,32 @@ def write_report(path: Path, res: dict) -> None:
             L.append(f"| {lab_} | {_f(cb['closure']['out_decline']['point'])} / {_f(cb['rule']['out_decline']['point'])} / "
                      f"{_f(cb['classifier']['out_decline']['point'])} | {_f(d['point'], 4)} {_ci(d['ci95'], 4)} | "
                      f"{_f(cb['closure - rule in-scope acc']['point'], 4)} | {cb['e1_decision_rule_with_guard']} |")
-        F = R["sensitivity_full_panel"]
-        L += ["", "### Sensitivity: full registered panels (CD5, CD94 evidence kept; never decides)", "",
-              f"AURC anm_full {_f(F['AURC']['anm_full']['point'])}, rule_full {_f(F['AURC']['rule_full']['point'])}, "
-              f"margin_full {_f(F['AURC']['margin_full']['point'])}; anm_full - margin_full {_f(F['anm_full - margin_full AURC']['point'], 4)} "
-              f"{_ci(F['anm_full - margin_full AURC']['ci95'], 4)}; C2 closure_full - rule_full OUT decline @c* "
-              f"{_f(F['C2 closure_full - rule_full OUT decline @c*']['point'], 4)} {_ci(F['C2 closure_full - rule_full OUT decline @c*']['ci95'], 4)}.", ""]
+        L += [""]
+
+    # ---------------- sensitivity: reduced panels, beside the primary, never deciding
+    Sk = Rk["sensitivity_reduced_panels"]
+    L += ["## Sensitivity: reduced panels (literal missing-protein reading; never decides)", "",
+          "T on CD3, CD2 and NK on CD122, CD56 (CD5 and CD94 dropped); arms `_red` on those panels, the frozen 12-feature "
+          "classifier as the version-1 comparator, and classifier10 on the 10 reduced-panel features. Shown beside the "
+          "primary; it never changes a primary verdict or replication status.", "",
+          f"E1.1a on the reduced panels: bridge (engine vs exact closed form) "
+          + ", ".join(f"{q} {v['pooled']}" for q, v in ar["bridge_engine_vs_recoded"].items())
+          + f", rejected events {ar['engine_events_rejected']} (**{'pass' if ar['bridge_passed'] else 'discrepancy'}**); "
+          f"engine vs mean rule Q1 {ar['engine_vs_mean_rule']['Q1_red']['pooled']:,} cells "
+          f"({_f(ar['engine_vs_mean_rule']['Q1_red']['share'])}), Q2 {ar['engine_vs_mean_rule']['Q2_red']['pooled']:,} "
+          f"({_f(ar['engine_vs_mean_rule']['Q2_red']['share'])}); ranking identical: {ar['ranking_identical_anm_red_vs_rule_red']}.",
+          "", f"_{ar['anm_unequal_panels_note']}_", "",
+          f"Decision key {res['decision_key']}; c*_red {_f(Sk['coverage_c_star_reduced']['point'])} "
+          f"{_ci(Sk['coverage_c_star_reduced']['ci95'])}.", "",
+          "| arm | AURC [95% CI] | acc @c*_red | acc @0.90 | acc @0.70 |", "|---|---|---:|---:|---:|"]
+    for arm, b in Sk["AURC"].items():
+        qa = Sk["Q1_selective_accuracy"][arm]
+        L.append(f"| {arm} | {_f(b['point'])} {_ci(b['ci95'])} | {_f(qa.get('c1r', {}).get('point'))} | "
+                 f"{_f(qa['g0.90']['point'])} | {_f(qa['g0.70']['point'])} |")
+    L += ["", "Replication rule applied to the reduced rows (sensitivity; v3 directions of the primary counterparts):", ""]
+    L += rep_table(sensitivity_rows(Rk), ())
+    L += ["", f"Other rows (anm_red - rule_red AURC, in-scope differences, other key): `E6_results.json` "
+          "(keys.*.sensitivity_reduced_panels).", ""]
     ops = res["operating_points"]
     dk = res["decision_key"]
     L += ["## Deployed operating points (bars from val; descriptive)", "",

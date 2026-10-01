@@ -10,11 +10,17 @@ Contents (registration experiments.E6 + the decisions this builder had to take, 
 * the contamination statement and its sources;
 * the external pack (d5k: 5,000 label-free cells per donor) and its reason; the official embedding it needs;
 * the gate with the missing-protein rule (exact clauses that remain), the per-donor estimator, the keys and the
-  key-validation failure rule; the panels that remain;
+  key-validation failure rule;
+* the panels: primary = the full frozen registered panels for every arm (addendum version 2, see ``REVISION_V2``);
+  sensitivity = the literal reduced-panel reading (absent panel proteins dropped) of version 1;
 * arms, endpoints, statistics, the replication rule and the sensitivity rows;
-* one number fixed from train/val by a registered procedure: the C of the secondary same-evidence classifier
-  (registered C grid, lowest val log-loss on val primary-key cells, ties -> smaller C);
-* disclosures (prep-order deviation, what the orchestrator and this builder have seen).
+* one number fixed from train/val by a registered procedure: the C of the same-evidence classifier of the reduced
+  sensitivity reading (registered C grid, lowest val log-loss on val primary-key cells, ties -> smaller C);
+* disclosures (prep-order deviation, what the orchestrator, the version-1 builder and the version-2 reviser have seen);
+* the version-2 revision record (change, reason, timing: before any external outcome).
+
+The builder refuses when outputs/v3/E6 (the real run's output directory) exists: the addendum can only be written or
+revised before any external outcome.
 
 Rows read: BMMC split train and val only (protein, cell types, embedding) for the secondary classifier's C. Of the
 external data only metadata is read: external_manifest.json (label names, ADT name mapping, the committed map),
@@ -51,14 +57,60 @@ from lib import v3_e1 as e1  # noqa: E402
 from lib import v3_e6 as e6  # noqa: E402
 from lib import v3_key as vk  # noqa: E402
 
-BUILDER_VERSION = "v3_e6_addendum 1.0"
+BUILDER_VERSION = "v3_e6_addendum 2.0"
+ADDENDUM_VERSION = 2
 ADDENDUM = ROOT / "registration" / "addenda" / "E6.json"
 HASHES = ROOT / "registration" / "addenda" / "HASHES.txt"
 EXT = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/data/processed/external_hao2021_d5k")
 EXT_EMB = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/data/processed/external_hao2021_d5k_official")
 PREP_REPORT = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/e6_external_prep/PREP_external_hao2021_d5k.md")
 E1_SITE4_RESULTS = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E1/E1_results.json")
+E6_OUT = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E6")   # the real run's outputs: must not exist
 COMMITTED_MAP_SHA = "5492a4176e1c661abefa3d287e32fa8dfcf2b12b6edfaeef93546e3c9f5e0660"
+V1 = {"addendum_version": 1, "sha256": "4854d02ac1b3259856e9fe5f7bae5badfebcac04057d1a84ac29e303657019db",
+      "commit": "3e921bee8b2dcbdab7064ccb951cd691a9dae1da", "builder": "v3_e6_addendum 1.0",
+      "runner_commits": ["88c4797174250f072107685bcca0febd37fa2f1d", "9bcb749ef25f2a53bb5114e45d6c9029eaa8fba8"]}
+
+# The version-2 revision, decided by the orchestrator and recorded here before any external outcome.
+REVISION_V2 = {
+    "addendum_version": 2,
+    "supersedes": V1,
+    "decided_by": "the orchestrator (the session that registered v3 and runs its experiments); recorded by this builder",
+    "decided_utc": "2026-10-01",
+    "change": [
+        "Primary panels: the full frozen registered Q1 panels for every arm (rule, ANM, closure, margin, entropy, "
+        "classifier), identical to E1: B CD20, CD22, CD268; T CD3, CD2, CD5; NK CD122, CD94, CD56; myeloid CD172a, "
+        "CD11c, CD62P. Every primary arm reads the same 12 evidence values; ANM has 3 events per class, so ANM = the "
+        "mean rule (registration anm.equivalence); the frozen classifier's 12 features are those same 12 values.",
+        "E1.1a primary: as E1, engine calls vs the mean rule's calls (Q1, Q2 on the registered panels, Q3 on the "
+        "anchors) and engine closure calls vs the re-coded closure readout (Q1, Q2); registered value 0. The bridge "
+        "check (engine vs its exact re-coded closed form at the engine's thresholds) is kept beside it, also 0.",
+        "Sensitivity: the literal reduced-panel reading that was version 1's primary (T on CD3, CD2; NK on CD122, "
+        "CD56; ANM on unequal panels; the frozen 12-feature classifier as version 1's comparator; classifier10 on the "
+        "10 remaining features) is reported beside the primary with its own c*, and never decides.",
+    ],
+    "unchanged": "The key: the gate keeps the registered missing-protein reduction exactly as in version 1 (CD94 "
+                 "removed from the NK count with nk_min 2 kept; the CD33 conditions removed from the NK and myeloid "
+                 "clauses; no clause dropped), the per-donor thresholds, both keys and the key-validation rule. Also "
+                 "unchanged: the annotation map (sha256 5492a417...0660), the contamination label, the external pack "
+                 "and embedding requirements, bars, the registered classifier, classifier10 and its C (re-derived by "
+                 "the same procedure, same value), the endpoints, statistics, replication rule and replication rows.",
+    "reason": "The registered E6 rule 'a panel protein absent -> that class is scored on its remaining panel "
+              "proteins' concerns evidence that is unavailable. In v3 the panel evidence is the frozen head's "
+              "prediction from RNA (registration evidence.teddy_head), which exists for CD5 and CD94 on every "
+              "external cell even though the external ADT panel does not measure them; only the key's gate reads "
+              "measured proteins, so only the gate loses evidence. E6's purpose is to replicate E1 with frozen rules "
+              "(registered E6.frozen: 'TEDDY and the phase-1 head ..., the evidence normaliser, panels, bars, "
+              "classifier, gate logic ...'). Version 1's reduced panels changed the rule, and with it the registered "
+              "ANM = mean rule equivalence, for a reason that does not apply to predicted evidence. The literal "
+              "reading stays visible as a sensitivity.",
+    "timing": "Decided and written before any external outcome: outputs/v3/E6 (the real run's output directory) did "
+              "not exist (checked by this builder at build time, recorded in 'checked_at_build'); no external key, "
+              "kappa, threshold, accuracy, call or score had been computed. The only E6 runs were val-only smoke runs "
+              "(BMMC val donor 18303 with 8 label-free pseudo-donors, outputs/v3/E6_smoke). The orchestrator has seen "
+              "site4 results of E1, E3 and E4 (none external) and no external E6 value. The stated reason is a "
+              "reading of the registration (what the panel evidence is), not of any result.",
+}
 
 # Written 2026-10-01 by the E6 builder from the 31 celltype.l2 names (keys of the pack manifest's class map, read
 # without their values) and registration_v3.json annotation_map / annotation_map_notes, before the committed map was
@@ -165,8 +217,9 @@ def external_metadata(ext: Path) -> dict:
 
 # ============================================================================ train/val number (secondary classifier C)
 def classifier10_core(args, reg, features: list[str]) -> dict:
-    """Registered classifier procedure (section 8) on the remaining panel proteins: training-cell primary key,
-    C = lowest val log-loss on val primary-key cells over the registered grid (ties -> smaller C). Train/val rows only."""
+    """Registered classifier procedure (section 8) on the reduced-panel proteins (sensitivity reading): training-cell
+    primary key, C = lowest val log-loss on val primary-key cells over the registered grid (ties -> smaller C).
+    Train/val rows only."""
     from sklearn.metrics import log_loss
 
     npz = np.load(args.processed / "cite_arrays.npz", allow_pickle=False)
@@ -209,7 +262,14 @@ def classifier10_core(args, reg, features: list[str]) -> dict:
 
 
 # ============================================================================ document
+def outputs_exist(out: Path | None = None) -> bool:
+    """True when the real run's output directory exists (then no external outcome may be assumed absent)."""
+    return (out if out is not None else E6_OUT).exists()
+
+
 def build(args) -> dict:
+    if outputs_exist():
+        raise SystemExit(f"{E6_OUT} exists: the E6 addendum can only be written or revised before any external outcome")
     reg = va.load_registration_amended(args.registration)
     E6 = reg["experiments"]["E6"]
     ext = external_metadata(args.external)
@@ -226,9 +286,12 @@ def build(args) -> dict:
 
     gate = reg["gate"]
     spec = e6.reduced_gate_spec(gate, ext["present"])
-    pan_reg = vk.question_panel(reg, "Q1")
-    pan = e6.reduced_panel(pan_reg, ext["present"])
+    pan_reg = vk.question_panel(reg, "Q1")            # primary (v2): the full frozen registered panels
+    pan = e6.reduced_panel(pan_reg, ext["present"])   # sensitivity: the literal reduced-panel reading (v1 primary)
     panel_absent = sorted({p for k in vk.LINEAGES for p in pan_reg[k] if p not in ext["present"]})
+    f12 = list(reg["classifier"]["primary"]["feature_proteins"])
+    if f12 != [p for k in vk.LINEAGES for p in pan_reg[k]]:
+        raise SystemExit("the registered classifier's features are not the registered primary panel's 12 proteins")
     anchors = vk.question_panel(reg, "Q3")
     if e6.reduced_panel(anchors, ext["present"]) != anchors:
         raise SystemExit("a Q3 anchor is not measured externally")
@@ -248,14 +311,19 @@ def build(args) -> dict:
     doc = {
         "addendum_to": "registration/registration_v3.json experiments.E6, as amended by A1, A2 and A3",
         "experiment": "E6",
-        "addendum_version": 1,
+        "addendum_version": ADDENDUM_VERSION,
         "title": "E6: external confirmation on Hao et al. 2021 PBMC CITE-seq (GEO GSE164378, 3' data) - " + e6.CONTAMINATION_LABEL,
         "registration_sha256": reg_sha,
         "amendments_sha256": am,
         "registered_E6": E6,
         "fixed_before_external_outcomes": "every choice here was written from the registration, the external label "
             "names and ADT names, and BMMC train/val cells, and committed before any external key, kappa, accuracy or "
-            "other outcome was computed; smoke runs of the E6 runner use val donor 18303 cells only",
+            "other outcome was computed; smoke runs of the E6 runner use val donor 18303 cells only. Version 1 (sha256 "
+            f"{V1['sha256'][:12]}, commit {V1['commit'][:7]}) and this version 2 (revision below) were both committed "
+            "before any external outcome",
+        "revision": {**REVISION_V2,
+                     "checked_at_build": {"outputs_v3_E6": str(E6_OUT), "exists": outputs_exist(),
+                                          "checked_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}},
         "contamination": CONTAMINATION,
         "external_data": {
             "dataset": ext["meta"]["dataset"],
@@ -353,13 +421,24 @@ def build(args) -> dict:
             "head": "phase-1 MLP + NB decoder mean, outputs/cite_phase1_official/best.pt (frozen; sha256 recorded by the runner)",
             "normaliser": "the registered training q95 per protein (registration evidence.teddy_head.q95_train_pred), clip [0, 1]",
             "measured_protein": "no measured external protein enters the evidence or any arm (key only)",
+            "absent_panel_proteins": "CD5 and CD94 are not measured by the external ADT panel, but their evidence is the "
+                                     "head's prediction from RNA and exists for every external cell; it is read exactly as "
+                                     "for every other panel protein",
         },
         "panels": {
             "registered_primary": pan_reg,
+            "primary": pan_reg,
+            "primary_rule": "addendum version 2: the full frozen registered panels for every arm, identical to E1 "
+                            "(registered E6.frozen: panels). The registered E6.missing_proteins clause for panels ('a panel "
+                            "protein absent -> that class is scored on its remaining panel proteins') concerns unavailable "
+                            "evidence; the panel evidence is predicted from RNA and is available for CD5 and CD94, so it "
+                            "does not bind here (revision above)",
+            "evidence_proteins_read_by_every_primary_arm": f12,
             "absent_externally": panel_absent,
-            "remaining_E6_primary": pan,
-            "rule": "registered E6.missing_proteins: a class whose panel protein is absent is scored on its remaining "
-                    "panel proteins: T on CD3, CD2 (CD5 absent); NK on CD122, CD56 (CD94 absent); B and myeloid unchanged",
+            "sensitivity_reduced": pan,
+            "sensitivity_rule": "the literal reading of registered E6.missing_proteins for panels (version 1's primary): T on "
+                                "CD3, CD2 (CD5 dropped); NK on CD122, CD56 (CD94 dropped); B and myeloid unchanged; "
+                                "reported beside the primary, never decides",
             "bars": {"Q1": reg["questions"]["Q1"]["bar"], "Q2": reg["questions"]["Q2"]["bar"],
                      "Q3": reg["questions"]["Q3"]["bar"], "note": "registered bars, unchanged (the score stays a mean in [0, 1])"},
             "q3_anchors": anchors, "q3_note": "all four anchors are measured; Q3 is used only for E1.1a",
@@ -368,49 +447,51 @@ def build(args) -> dict:
                              "panel is not changed",
         },
         "arms": {
-            "rule": "mean of the evidence over each class's remaining panel; argmax (B, T, NK, myeloid order on ties); "
-                    "call if the top score reaches the registered bar; confidence = top score",
+            "same_evidence": "every primary arm (rule, ANM, closure, margin, entropy, classifier) reads the same 12 evidence "
+                             "values: the registered primary panel's proteins as predicted by the frozen head",
+            "rule": "mean of the evidence over each class's registered panel (3 proteins per class); argmax (B, T, NK, "
+                    "myeloid order on ties); call if the top score reaches the registered bar; confidence = top score",
             "anm": "ANM finite_graph_scalar engine via finite_field_runner (ANM_ROOT), bridge_anm/lib/v3_e1.AnmBridge "
-                   "unchanged: one support event per remaining panel protein at t = 0 (B 3, T 2, NK 2, myeloid 3 events), "
-                   "registered field and closure weights; readout thresholds as registered (Q1 %.6f, Q2 %.6f = G(3) * 3 * bar; "
-                   "Q3 %.6f); confidence = top action score; ANM's own argmax" % (thr["Q1"], thr["Q2"], thr["Q3"]),
-            "anm_unequal_panels": "with unequal panel sizes ANM's action score is G(n_k) * n_k * S_k (G(1) %s, G(2) %s, "
-                                  "G(3) %s), so ANM is no longer the mean rule: a 2-event class scores about 2/3 of a 3-event "
-                                  "class at the same mean. The registered equivalence (registration anm.equivalence) assumes "
-                                  "equal panel sizes, which the registered missing-protein rule breaks; ANM is run as frozen, "
-                                  "not re-weighted, and the full-panel sensitivity shows the equal-size case"
-                                  % (gains["1"], gains["2"], gains["3"]),
-            "closure": "ANM closure readout (readout_coordinates over each action's event sites, registered weights); "
-                       "closure bars Q1 %s, Q2 %s; confidence = top closure score; closure argmax"
+                   "unchanged: one support event per registered panel protein at t = 0 (3 events per class), registered "
+                   "field and closure weights; readout thresholds as registered (Q1 %.6f, Q2 %.6f = G(3) * 3 * bar; Q3 %.6f); "
+                   "confidence = top action score; ANM's own argmax. With equal panel sizes the action score is "
+                   "G(3) * 3 * S_k (G(3) %s), so ANM's calls equal the mean rule's (registration anm.equivalence), checked "
+                   "cell by cell (E1.1a)" % (thr["Q1"], thr["Q2"], thr["Q3"], gains["3"]),
+            "closure": "ANM closure readout on the registered panels (readout_coordinates over each action's event sites, "
+                       "registered weights); closure bars Q1 %s, Q2 %s; confidence = top closure score; closure argmax"
                        % (reg["anm"]["closure_bar_Q1"], reg["anm"]["closure_bar_Q2"]),
-            "margin": "top-1 minus top-2 mean-rule score; ranks the rule's argmax calls",
-            "entropy": "1 - H(q)/log 4, q = S / sum(S) of the mean-rule scores (0 when sum S = 0); ranks the rule's argmax calls",
+            "margin": "top-1 minus top-2 mean-rule score (registered panels); ranks the rule's argmax calls",
+            "entropy": "1 - H(q)/log 4, q = S / sum(S) of the mean-rule scores (registered panels; 0 when sum S = 0); ranks "
+                       "the rule's argmax calls",
             "classifier": "frozen registered classifier: logistic regression on the 12 registered primary-panel features "
                           "(C = 100, lbfgs, max_iter 3000, seed 0), refit exactly as E1 on the BMMC training-cell primary "
-                          "key (58,657 cells, checked); it reads CD5 and CD94 evidence (predicted from RNA, exists for all "
-                          "cells) that the reduced rule panels no longer read - an asymmetry in the classifier's favour; "
-                          "its own lineage argmax, confidence = that probability; bars Q1 %s, Q2 %s for operating points"
+                          "key (58,657 cells, checked); the same 12 evidence values as the rule and ANM; its own lineage "
+                          "argmax, confidence = that probability; bars Q1 %s, Q2 %s for operating points"
                           % (reg["classifier"]["primary"]["bars"]["Q1"], reg["classifier"]["primary"]["bars"]["Q2"]),
-            "classifier10": "secondary, same evidence as the rule: the registered classifier procedure on the 10 remaining "
-                            "panel proteins (C fixed below from BMMC train/val); matched-coverage rows only (no bar)",
         },
         "endpoints": {
             "E1.1a": {
-                "bridge": "registered E1.1a for E6: engine calls vs the exact re-coded ANM on the same panel (each class a "
-                          "star with its own n_k events, v3_key.field_star; same thresholds): Q1, Q2, Q3 and closure Q1, Q2; "
-                          "registered value 0 per donor and pooled; any mismatch or rejected event -> E6 not interpretable "
-                          "(registered failure: stop)",
-                "vs_mean_rule": "engine calls vs the mean rule's calls (Q1, Q2): count and share per donor and pooled; "
-                                "expected nonzero under the reduced panels (above); reported, not a bridge failure. In the "
-                                "full-panel sensitivity the two checks coincide and 0 is required",
+                "primary": "as E1 (registration E1.exp1 E1.1a): cells where the engine's call differs from the mean rule's "
+                           "(Q1, Q2 on the registered panels at the registered bars; Q3 on the anchors at the Q3 bar) and "
+                           "where the engine's closure call differs from the re-coded closure readout's (closure bars Q1, "
+                           "Q2); registered value 0 per donor and pooled; any mismatch or rejected event -> E6 not "
+                           "interpretable (registered failure: stop)",
+                "bridge": "kept beside it: engine calls vs the exact re-coded ANM closed form on the same panel at the "
+                          "engine's own thresholds (each class a star with its n_k events, v3_key.field_star): Q1, Q2, Q3 "
+                          "and closure Q1, Q2; registered value 0; on the registered panels it coincides with the primary "
+                          "check",
+                "sensitivity_reduced": "on the reduced panels: the bridge check (0 expected; a mismatch is reported as a "
+                                       "discrepancy of the reduced reading) and engine vs mean rule (nonzero expected: "
+                                       "unequal panel sizes, see sensitivity); never decides",
             },
-            "Q1_selective_accuracy_at_matched_coverage": "every arm at each registered grid coverage (0.95 ... 0.50) and at "
-                "c* = the mean rule's realised Q1 coverage at its bar on the evaluated cells (recomputed per replicate), "
-                "decision key and the other key, per donor and pooled; difference rows (E1.4b): anm - margin and "
-                "anm - classifier at 0.90 and 0.70; deployed operating points (bars from val) descriptive",
+            "Q1_selective_accuracy_at_matched_coverage": "every primary arm at each registered grid coverage (0.95 ... 0.50) "
+                "and at c* = the mean rule's realised Q1 coverage at its bar on the evaluated cells (registered panels; "
+                "recomputed per replicate), decision key and the other key, per donor and pooled; difference rows "
+                "(E1.4b): anm - margin and anm - classifier at 0.90 and 0.70; deployed operating points (bars from val) "
+                "descriptive",
             "E1.4a": "AURC (trapezoid over the registered grid / 0.45). Primary: anm - margin (registered margin 0.005). "
-                     "Secondary: anm - classifier, anm - entropy, rule - margin (E1's 'top' form), anm - rule, "
-                     "anm - classifier10",
+                     "Secondary: anm - classifier, anm - entropy, rule - margin (E1's 'top' form; equal to anm - margin "
+                     "when ANM's ranking equals the rule's), anm - rule (0 expected)",
             "E1.C2": "OUT decline (share of key-OUT cells not among the selected cells) at matched coverage c in {c*, 0.80, "
                      "0.70}: ANM closure - mean rule (registered margin 0.05) with the in-scope selective accuracy "
                      "difference beside it (guard >= -0.005, as E1); classifier - rule secondary",
@@ -433,11 +514,13 @@ def build(args) -> dict:
                             "smoke E1 file is refused in the real run). The same direction is used for both E6 keys. A v3 "
                             "point of exactly 0 gives 'no v3 direction' (the E6 interval is reported)",
             "replication_rows": {
-                "E1.1a": "E1 splits.primary.E1.1a.passed; replicates if the E6 bridge check has 0 mismatches in every donor",
+                "E1.1a": "E1 splits.primary.E1.1a.passed; replicates if the E6 primary E1.1a (engine vs mean rule, closure "
+                         "and bridge checks) has 0 mismatches in every donor",
                 "E1.4a anm - margin AURC": "E1 E1.4.keys.primary.top_vs_margin.E1.4a_AURC (E1's 'top' = rule = ANM)",
                 "E1.4a anm - classifier AURC": "E1 top_vs_classifier.E1.4a_AURC (secondary)",
                 "E1.4a anm - entropy AURC": "E1 top_vs_entropy.E1.4a_AURC (secondary)",
-                "E1.4a rule - margin AURC": "same E1 number as anm - margin (secondary: E1's form on the E6 mean rule)",
+                "E1.4a rule - margin AURC": "same E1 number as anm - margin (secondary: E1's form on the E6 mean rule; "
+                                            "equal to anm - margin when the rankings coincide)",
                 "Q1 acc anm - margin @0.90 / @0.70": "E1 top_vs_margin.E1.4b_acc@0.90 / @0.70",
                 "Q1 acc anm - classifier @0.90 / @0.70": "E1 top_vs_classifier.E1.4b_acc@0.90 / @0.70 (secondary)",
                 "E1.C2 closure - rule OUT decline @c*, 0.80, 0.70": "E1 C2.keys.primary.{c_star, 0.80, 0.70}.closure_minus_rule_out_decline",
@@ -447,9 +530,41 @@ def build(args) -> dict:
                                        "reported beside the replication result and never replaces it",
         },
         "sensitivity": {
-            "full_registered_panels": "rule, ANM (engine, 3 events per class), closure, margin on the registered 12-protein "
-                                      "panel including CD5 and CD94 evidence (predicted; no measured protein enters evidence): "
-                                      "E1.1a, AURC anm - margin, C2 closure - rule at its own c*; never changes a verdict",
+            "reduced_panel_reading": {
+                "status": "sensitivity: reported beside the primary, never decides, never changes a primary verdict or "
+                          "replication status",
+                "what": "the literal reading of registered E6.missing_proteins for panels (version 1's primary)",
+                "panels": pan,
+                "arms": {
+                    "rule_red": "mean of the evidence over each class's reduced panel (B 3, T 2, NK 2, myeloid 3 proteins); "
+                                "registered bars; confidence = top score",
+                    "anm_red": "the same frozen ANM engine with one support event per reduced-panel protein (B 3, T 2, NK 2, "
+                               "myeloid 3 events) and the registered thresholds",
+                    "anm_unequal_panels": "with unequal panel sizes ANM's action score is G(n_k) * n_k * S_k (G(1) %s, "
+                                          "G(2) %s, G(3) %s), so anm_red is not the mean rule: a 2-event class scores about "
+                                          "2/3 of a 3-event class at the same mean. The registered equivalence (registration "
+                                          "anm.equivalence) assumes equal panel sizes; anm_red is run as frozen, not "
+                                          "re-weighted" % (gains["1"], gains["2"], gains["3"]),
+                    "closure_red": "ANM closure readout on the reduced panels, registered closure bars",
+                    "margin_red, entropy_red": "as the primary margin and entropy, on the reduced mean-rule scores",
+                    "classifier": "the frozen 12-feature registered classifier as version 1's comparator: it reads CD5 and "
+                                  "CD94 evidence that the reduced rule panels do not (an asymmetry in the classifier's "
+                                  "favour within this reading)",
+                    "classifier10": "same evidence as rule_red: the registered classifier procedure on the 10 reduced-panel "
+                                    "proteins (C fixed in computed.classifier10 from BMMC train/val); matched-coverage rows "
+                                    "only (no bar)",
+                },
+                "endpoints": "E1.1a (reduced bridge check and engine vs mean rule); Q1 selective accuracy at matched "
+                             "coverage (grid and c*_red = the reduced rule's realised Q1 coverage at its bar, recomputed per "
+                             "replicate); AURC anm_red - margin_red, anm_red - classifier, anm_red - entropy_red, "
+                             "rule_red - margin_red, anm_red - rule_red, anm_red - classifier10; E1.4b anm_red - margin_red, "
+                             "anm_red - classifier and anm_red - classifier10 at 0.90 and 0.70; E1.C2 closure_red - "
+                             "rule_red OUT decline at c*_red, 0.80, 0.70 with the in-scope difference; deployed operating "
+                             "points of rule_red, anm_red and closure_red; both keys, per donor and pooled, same bootstrap",
+                "replication": "the replication rule is applied to the reduced rows against the same v3 directions as "
+                               "their primary counterparts (anm_red - classifier10 against E1's anm - classifier) and "
+                               "reported in its own labelled table; it never replaces the primary replication result",
+            },
             "annotation_only_key": "always reported beside the decision key",
         },
         "computed": {"classifier10": clf10,
@@ -464,10 +579,18 @@ def build(args) -> dict:
                                     "order 'committed before any external ADT or RNA value is read' was therefore not met in "
                                     "time. No value changed a mapping: the independent re-derivation above, from names only, "
                                     "reproduces the committed map exactly (31 of 31, same sha256).",
-            "orchestrator_has_seen": "the orchestrating session has already seen site4 results of E1, E3 and E4. E6 takes no "
-                                     "number from them; E1's site4 point differences enter only as the v3 direction of the "
-                                     "replication rule, read by the runner at report time.",
-            "this_builder_read": "label names (31) before writing the map; then the committed map, the prep report "
+            "orchestrator_has_seen": "the orchestrating session has already seen site4 results of E1, E3 and E4 (none "
+                                     "external) and no external E6 value. E6 takes no number from them; E1's site4 point "
+                                     "differences enter only as the v3 direction of the replication rule, read by the "
+                                     "runner at report time. The orchestrator decided the version-2 revision (full "
+                                     "registered panels primary) with that knowledge and before any external outcome.",
+            "version_2_reviser_read": "the version-1 addendum, the E6 builder, runner, library and tests; the listing of "
+                                      "outputs/v3 (directory names only: no E6 directory, E6_smoke present); and the "
+                                      "val-only smoke outputs in outputs/v3/E6_smoke (run_state.json, the end of "
+                                      "progress.log and the E1.1a block of E6_results.json: BMMC val donor 18303 with "
+                                      "pseudo-donors, replication rows against E1's val smoke results). It read no "
+                                      "external ADT value, embedding value, prediction, key, kappa or site4 outcome.",
+            "this_builder_read": "(version-1 builder) label names (31) before writing the map; then the committed map, the prep report "
                                  "PREP_external_hao2021_d5k.md (per-donor annotation-class counts, family counts inside OUT, "
                                  "ADT coverage by name, gene, UMI and token statistics, integrity summaries with aggregate "
                                  "ADT-total ratios; no per-protein ADT value and no prediction), the manifest's ADT name mapping, prepare_stats.json donor and site counts, "
@@ -476,8 +599,9 @@ def build(args) -> dict:
                                  "site4 result paths the runner reads exist (types only, no value printed). It read no "
                                  "external ADT value, embedding value, label-vs-prediction comparison or site4 outcome.",
             "task_text_vs_panel": "the task text named CD335 and CD71 as absent (the registration's examples); both are "
-                                  "measured. The absent gate proteins are CD94 and CD33, the absent panel proteins CD5 and "
-                                  "CD94; the registered rule is applied to the actual absent set.",
+                                  "measured. The absent gate proteins are CD94 and CD33 and the gate is reduced by the "
+                                  "registered rule; the absent panel proteins CD5 and CD94 are read as predicted evidence in "
+                                  "the primary (version 2) and dropped only in the reduced-panel sensitivity.",
             "contamination": e6.CONTAMINATION_LABEL,
         },
         "outputs": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E6/: E6_results.json, REPORT.md, key_validity.json, "
@@ -491,6 +615,7 @@ def build(args) -> dict:
             "git_head_at_build": _git("rev-parse", "HEAD"),
             "built_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "rows_read": "BMMC train + val (classifier10 C); external: metadata only",
+            "supersedes": {"addendum_version": V1["addendum_version"], "sha256": V1["sha256"], "commit": V1["commit"]},
         },
     }
     return doc

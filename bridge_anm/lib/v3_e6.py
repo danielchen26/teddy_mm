@@ -9,9 +9,10 @@ What is here, all label-free unless it says "key":
   ``v3_key.gate_class_from_high`` exactly (tests/test_v3_e6.py);
 * the registered per-batch threshold estimator applied within each external donor (``per_donor_thresholds``);
 * the E6 keys and the key-validation rule (annotation vs per-donor gate kappa < 0.70 -> 'key not validated');
-* panels with absent proteins removed (``reduced_panel``), the rule scores on an explicit panel and the exact
-  closed form of ANM's ``finite_graph_scalar`` field on an explicit panel (per class, with that class's own
-  number of events), used for the E1.1a bridge check;
+* the rule scores on an explicit panel and the exact closed form of ANM's ``finite_graph_scalar`` field on an
+  explicit panel (per class, with that class's own number of events), used for the E1.1a bridge check; the E6
+  primary uses the full registered panels (addendum version 2), and panels with absent proteins removed
+  (``reduced_panel``) give the reduced-panel sensitivity reading;
 * the bootstrap evaluator (matched coverage, count-vector replicates, as v3_e1) and the E6 replication rule.
 
 Nothing here reads data or chooses a number; registered numbers come from the caller.
