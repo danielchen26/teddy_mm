@@ -13,7 +13,7 @@
  *   panel events at t = 0). Our head predicts them from TEDDY's embedding; TEDDY predicts no proteins.
  * 3 Retained state. The lattice's nodes slide onto a solid ring of beads: TEDDY's embedding (the bead
  *   ring of #teddy-pipeline; the bead count is illustrative). Mode B works on the head's outputs.
- *   Behind it stand TEDDY-G's 12 layers as dotted grey slabs: Mode A, next (planned, no results).
+ *   Behind it stand TEDDY-G's 12 layers as dotted grey slabs: Mode A (v3 E5 stopped at its gate; E5-M inconclusive).
  * 4 Readout. The gauge folds into a call chip ("call / no call"); only after the chip settles does a
  *   measured-protein stamp arrive (from below, never upstream) to grade it. No result is shown.
  * A thin arrow under the pedestals fills left to right; nothing runs back. The reset is a plain
@@ -116,7 +116,7 @@ export default function create(ctx) {
   const fillOrder = beads.map((_, i) => i).filter((i) => !taken.has(i));
   const emb = lab('', { size: 11.5, weight: 600, color: 'teddy', anchor: 'top' });
   const modeB = lab('', { size: 11, anchor: 'top' });
-  const modeA = lab('Mode A: next', { size: 11, color: 'muted', anchor: 'bottom' });
+  const modeA = lab('Mode A: E5, E5-M', { size: 11, color: 'muted', anchor: 'bottom' });
 
   /* ── 4 Readout: gauge → call chip, then the measured-protein stamp ── */
   const gauge = add(ctx.group(), 1);
@@ -154,7 +154,12 @@ export default function create(ctx) {
   const Q = {}, S = {}, ST = {}, R = {};
   let AY = -4.1, lay = '';
   function layout(force) {
-    const ppu = ctx.ppu(), ts = ctx.textScale, key = `${ppu.toFixed(3)}/${ts.toFixed(3)}`;
+    // contain the 16 x 9 frame and lay out to the height actually shown: on phones the page gives this stage
+    // extra height (16:10), which the default fit would spend by cropping the sides
+    const a = (ctx.width || 640) / (ctx.height || 360), HH = a > 16 / 9 ? 4.5 : 8 / a;
+    camera.left = -HH * a; camera.right = HH * a; camera.top = HH; camera.bottom = -HH;
+    camera.updateProjectionMatrix();
+    const ppu = ctx.ppu(), ts = ctx.textScale, key = `${ppu.toFixed(3)}/${ts.toFixed(3)}/${HH.toFixed(3)}`;
     if (key === lay && !force) return;
     lay = key;
     const px = (v) => v / ppu, colPx = COLW * ppu, gap = Math.max(0.1, px(4));
@@ -216,10 +221,10 @@ export default function create(ctx) {
     const PH = Math.max(0.72, px(th(12) + 8)), SH = Math.max(0.12, px(4)), aGap = Math.max(0.24, px(8));
     const gapI = Math.max(0.3, px(10)), mB = Math.max(0.28, px(9));
     const rels = [qRel, sRel, stRel, rRel], H = rels.map(([t, b]) => t - b);
-    const tops = [0, 1, 2].map(() => 4.5 - Math.max(0.2, px(8))).concat(4.5 - px(44));
+    const tops = [0, 1, 2].map(() => HH - Math.max(0.2, px(8))).concat(HH - px(44));
     const lift = aGap + PH + SH + gapI; // arrow line → bottom of the icons
     const hi = Math.min(...H.map((h, i) => tops[i] - h)) - lift;
-    AY = Math.max(-4.5 + mB, Math.min(-(lift + Math.max(...H)) / 2 - 0.15, hi));
+    AY = Math.max(-HH + mB, Math.min(-(lift + Math.max(...H)) / 2 - 0.15, hi));
     const PY = AY + aGap + PH / 2, yLo = AY + lift;
     const Y = rels.map(([, b]) => yLo - b);
     const PW = Math.min(COLW - 0.1, Math.max(3.3, px(tw('Retained state', 12, 600) + 14)));
@@ -280,7 +285,7 @@ export default function create(ctx) {
       links[k].setPoints([L3(k, 0), L3(k, 1), L3(k, 2)]);
       links[k + 3].setPoints([L3(0, k), L3(1, k), L3(2, k)]);
     });
-    at(modeA, inCol(2, ST.x + ST.sx, px(tw('Mode A: next', 11))), yst + ST.sy + ST.sh / 2 + gap);
+    at(modeA, inCol(2, ST.x + ST.sx, px(tw('Mode A: E5, E5-M', 11))), yst + ST.sy + ST.sh / 2 + gap);
     const ey = yst - ST.RR - ST.dp - gap;
     emb.setText(ST.emb); at(emb, inCol(2, ST.x, px(tw(ST.emb, 11.5, 600))), ey);
     modeB.setText(ST.mb); at(modeB, inCol(2, ST.x, px(tw(ST.mb, 11))), ey - ST.hEmb);

@@ -107,7 +107,7 @@ export default function create(ctx) {
   add(ctx.line(mPts, { color: 'accent', width: 2.4 }));
   const xp = sx(-U0), xm = sx(-U0 + LAG), ya = SY + SA + 0.16;
   add(ctx.arrow([xp, ya, 1.2], [xm, ya, 1.2], { color: 'ink', width: 1.5, head: 7, bend: 0.55 }));
-  lab('lag', (xp + xm) / 2, ya + 0.34, { anchor: 'bottom' });
+  const lagLab = lab('lag', (xp + xm) / 2, ya + 0.34, { anchor: 'bottom' });
   lab('drive', SX0, SY + 0.45, { anchor: 'bottom-left', color: 'muted' });
   lab('ring mean', sx(0.8 + LAG), SY - SA - 0.3, { anchor: 'top' });
   const head = add(ctx.line(seg2(), { color: 'faint', width: 1.2 })); // drive dot to mean dot: the gap now
@@ -138,6 +138,8 @@ export default function create(ctx) {
   let laidOut = 0;
   function layout(ppu) {
     const g = 4 / ppu, pad = 7 / ppu, lh = (11 * ctx.textScale * 1.22 + 2) / ppu;
+    // on a phone the label grows in world units: keep its top inside the 9-unit frame (it was cut at 360 px)
+    lagLab.position.y = Math.min(ya + 0.34, 4.5 - lh - 2 / ppu);
     const PT = 4.5 - 40 / ppu, PB = -4.5 + 8 / ppu, ph = (PT - PB - 2 * pad - 3 * lh - 5 * g) / 2;
     panel.setSize(PR - PL, PT - PB, 0.22);
     panel.position.y = (PT + PB) / 2;

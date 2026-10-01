@@ -1,0 +1,34 @@
+{
+ "script": "bridge_anm/v3_e1_addendum.py --leakcheck",
+ "started_utc": "2026-10-01T05:27:48Z",
+ "static": {
+  "file": "bridge_anm/v3_e1_addendum.py",
+  "issues": [],
+  "nontest_selector_present": true,
+  "passed": true
+ },
+ "real_core_sha256": "7a115a7c7e42e60d5fa2d225028dcc8d1275a7cb196804dbf85331f333297990",
+ "addendum_core_sha256": "7a115a7c7e42e60d5fa2d225028dcc8d1275a7cb196804dbf85331f333297990",
+ "real_matches_addendum": true,
+ "poison_test": {
+  "rows_poisoned": "test",
+  "n_rows": 16750,
+  "fraction": 1.0,
+  "seed": 101,
+  "what": "adt rows -> U(0, 8); cell_types -> random registered type; z rows -> N(0, 1)",
+  "core_sha256": "7a115a7c7e42e60d5fa2d225028dcc8d1275a7cb196804dbf85331f333297990",
+  "identical_to_real": true
+ },
+ "poison_val_mild_control": {
+  "rows_poisoned": "val",
+  "n_rows": 305,
+  "fraction": 0.05,
+  "seed": 303,
+  "what": "adt rows -> U(0, 8)",
+  "core_sha256": null,
+  "differs_from_real": true,
+  "builder_outcome": "stopped: registered numbers not reproduced (E1 would not run the registered methods): {'classifier_primary_val_log_loss': {'registered': 0.045278, 'recomputed': 0.048535, 'match': False}, 'classifier_q3_val_log_loss': {'registered': 0.035183, 'recomputed': 0.03754, 'match': False}, 'A1_q1labels_q3features_va"
+ },
+ "passed": true,
+ "finished_utc": "2026-10-01T05:29:24Z"
+}

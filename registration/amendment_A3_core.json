@@ -1,0 +1,180 @@
+{
+ "amendment_id": "teddy_mm_v3_A3",
+ "builder": "v3_build_amendment_A3 1.0",
+ "train_pairs": {
+  "rule": "as E3 evaluate (addendum declared.pairs): k = 10 cosine neighbours of the raw official z within each training donor (v3_e3.nkt_pairs_within_donors), NK-T pair = one key-NK and one key-T cell (registration primary key) of the same donor, flagged if cosine >= 0.949402",
+  "donors": [
+   "10886",
+   "11466",
+   "12710",
+   "15078",
+   "16710",
+   "28045"
+  ],
+  "n_pairs": 1967,
+  "n_flagged": 1293,
+  "per_donor": {
+   "10886": {
+    "n_pairs": 161,
+    "n_flagged": 112
+   },
+   "11466": {
+    "n_pairs": 246,
+    "n_flagged": 156
+   },
+   "12710": {
+    "n_pairs": 135,
+    "n_flagged": 48
+   },
+   "15078": {
+    "n_pairs": 415,
+    "n_flagged": 179
+   },
+   "16710": {
+    "n_pairs": 228,
+    "n_flagged": 98
+   },
+   "28045": {
+    "n_pairs": 782,
+    "n_flagged": 700
+   }
+  },
+  "pairs_sha256": "6a686eeb8d1e9f1346304b603eb9aa4a3b77dfc9becfe91a19346a8837547977"
+ },
+ "head_gap_ratio": {
+  "what": "the registered phase-1 head's gap ratio GR (E3 addendum declared.gap_ratio; evidence = prediction / registered q95_train_pred, clipped; measured = ADT / addendum q95_measured_train, clipped) on the training pairs",
+  "GR_head_flagged": 0.415683,
+  "GR_head_unflagged": 0.54728,
+  "unflagged_minus_flagged": 0.131596,
+  "per_donor": {
+   "10886": {
+    "GR_head_flagged": null,
+    "GR_head_unflagged": 0.860957,
+    "unflagged_minus_flagged": null
+   },
+   "11466": {
+    "GR_head_flagged": 0.350414,
+    "GR_head_unflagged": 0.449671,
+    "unflagged_minus_flagged": 0.099257
+   },
+   "12710": {
+    "GR_head_flagged": 0.726923,
+    "GR_head_unflagged": 0.925779,
+    "unflagged_minus_flagged": 0.198856
+   },
+   "15078": {
+    "GR_head_flagged": 0.639979,
+    "GR_head_unflagged": 0.512312,
+    "unflagged_minus_flagged": -0.127668
+   },
+   "16710": {
+    "GR_head_flagged": 0.925497,
+    "GR_head_unflagged": 0.558168,
+    "unflagged_minus_flagged": -0.36733
+   },
+   "28045": {
+    "GR_head_flagged": 0.369218,
+    "GR_head_unflagged": 0.557603,
+    "unflagged_minus_flagged": 0.188385
+   }
+  }
+ },
+ "scale_artefact_size": {
+  "statement": "if R2 keeps a common fraction s of R1's NK-T evidence differences, D_R2 - D_R1 = (1 - s) (GR_R1(unflagged) - GR_R1(flagged)); with a readout like the head as R1 the registered pooling margin 0.05 is reached by a pure rescaling with 1 - s = 0.05 / (GR_head(unflagged) - GR_head(flagged)) when that difference is positive",
+  "one_minus_s_reaching_margin": 0.379949,
+  "registered_margin": 0.05
+ },
+ "illustration": {
+  "what": "point values (pooled over the training pairs and per training donor; no bootstrap, no verdict) of D_R2 - D_R1, (b') term_flagged_R2_minus_R1 and (c') Dlog_R2_minus_Dlog_R1, computed as E3 evaluate does, for two constructed readout pairs with R1 = the head: (uniform_shrinkage) R2 = the head's NK-T evidence differences times s, which repairs nothing; (flagged_repair) R2 = the measured differences on flagged pairs and the head's on unflagged pairs; head and null set to R1 (they cancel)",
+  "s": 0.5,
+  "donor_order": [
+   "10886",
+   "11466",
+   "12710",
+   "15078",
+   "16710",
+   "28045"
+  ],
+  "scenarios": {
+   "uniform_shrinkage": {
+    "D_R2_minus_D_R1": {
+     "point": 0.065798,
+     "per_donor": {
+      "10886": null,
+      "11466": 0.049629,
+      "12710": 0.099428,
+      "15078": -0.063834,
+      "16710": -0.183665,
+      "28045": 0.094193
+     }
+    },
+    "term_flagged_R2_minus_R1": {
+     "point": -0.207842,
+     "per_donor": {
+      "10886": null,
+      "11466": -0.175207,
+      "12710": -0.363461,
+      "15078": -0.31999,
+      "16710": -0.462749,
+      "28045": -0.184609
+     }
+    },
+    "Dlog_R2_minus_Dlog_R1": {
+     "point": 0.0,
+     "per_donor": {
+      "10886": null,
+      "11466": 0.0,
+      "12710": 0.0,
+      "15078": 0.0,
+      "16710": 0.0,
+      "28045": 0.0
+     }
+    }
+   },
+   "flagged_repair": {
+    "D_R2_minus_D_R1": {
+     "point": 0.584317,
+     "per_donor": {
+      "10886": null,
+      "11466": 0.649586,
+      "12710": 0.273077,
+      "15078": 0.360021,
+      "16710": 0.074503,
+      "28045": 0.630782
+     }
+    },
+    "term_flagged_R2_minus_R1": {
+     "point": 0.584317,
+     "per_donor": {
+      "10886": null,
+      "11466": 0.649586,
+      "12710": 0.273077,
+      "15078": 0.360021,
+      "16710": 0.074503,
+      "28045": 0.630782
+     }
+    },
+    "Dlog_R2_minus_Dlog_R1": {
+     "point": 0.877831,
+     "per_donor": {
+      "10886": null,
+      "11466": 1.048641,
+      "12710": 0.318935,
+      "15078": 0.446319,
+      "16710": 0.077424,
+      "28045": 0.996368
+     }
+    }
+   }
+  },
+  "uniform_shrinkage_identity_abs_error": 0.0
+ },
+ "rows_read": {
+  "split_and_donor_columns": 90261,
+  "protein_cell_type_embedding_rows": 67405,
+  "val_rows_values_read": 0,
+  "site4_rows_values_read": 0,
+  "n_val_rows": 6106,
+  "n_site4_rows": 16750
+ }
+}

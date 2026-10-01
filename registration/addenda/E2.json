@@ -1,0 +1,291 @@
+{
+ "addendum_version": 1,
+ "amendment_sha256": "1f44be66bfc22a5bc428cf31a0bcd14047466005f4308386da195f55b767cdee",
+ "computed": {
+  "count_check": {
+   "max_deviation_ratio": 0.161647,
+   "n_cells": 2000,
+   "rule": "valid when max |q - rint(q)| / (1e-3 + 4e-7 rint(q)) <= 1",
+   "share_passing": 1.0
+  },
+  "genes": {
+   "dropped": [
+    {
+     "ensembl": "ENSG00000174175",
+     "in_processed": false,
+     "in_vocab": true,
+     "symbol": "SELP"
+    }
+   ],
+   "kept": [
+    {
+     "column": 6419,
+     "ensembl": "ENSG00000156738",
+     "symbol": "MS4A1",
+     "vocab_id": 9967
+    },
+    {
+     "column": 10435,
+     "ensembl": "ENSG00000012124",
+     "symbol": "CD22",
+     "vocab_id": 312
+    },
+    {
+     "column": 11560,
+     "ensembl": "ENSG00000159958",
+     "symbol": "TNFRSF13C",
+     "vocab_id": 10346
+    },
+    {
+     "column": 6787,
+     "ensembl": "ENSG00000198851",
+     "symbol": "CD3E",
+     "vocab_id": 17274
+    },
+    {
+     "column": 6788,
+     "ensembl": "ENSG00000167286",
+     "symbol": "CD3D",
+     "vocab_id": 11985
+    },
+    {
+     "column": 6789,
+     "ensembl": "ENSG00000160654",
+     "symbol": "CD3G",
+     "vocab_id": 10448
+    },
+    {
+     "column": 659,
+     "ensembl": "ENSG00000116824",
+     "symbol": "CD2",
+     "vocab_id": 4619
+    },
+    {
+     "column": 6425,
+     "ensembl": "ENSG00000110448",
+     "symbol": "CD5",
+     "vocab_id": 3772
+    },
+    {
+     "column": 11487,
+     "ensembl": "ENSG00000100385",
+     "symbol": "IL2RB",
+     "vocab_id": 2286
+    },
+    {
+     "column": 6956,
+     "ensembl": "ENSG00000134539",
+     "symbol": "KLRD1",
+     "vocab_id": 6880
+    },
+    {
+     "column": 6762,
+     "ensembl": "ENSG00000149294",
+     "symbol": "NCAM1",
+     "vocab_id": 9143
+    },
+    {
+     "column": 10919,
+     "ensembl": "ENSG00000198053",
+     "symbol": "SIRPA",
+     "vocab_id": 17010
+    },
+    {
+     "column": 8818,
+     "ensembl": "ENSG00000140678",
+     "symbol": "ITGAX",
+     "vocab_id": 7965
+    },
+    {
+     "column": 10810,
+     "ensembl": "ENSG00000189430",
+     "symbol": "NCR1",
+     "vocab_id": 16413
+    },
+    {
+     "column": 901,
+     "ensembl": "ENSG00000203747",
+     "symbol": "FCGR3A",
+     "vocab_id": 17449
+    },
+    {
+     "column": 6949,
+     "ensembl": "ENSG00000150045",
+     "symbol": "KLRF1",
+     "vocab_id": 9228
+    },
+    {
+     "column": 6961,
+     "ensembl": "ENSG00000134545",
+     "symbol": "KLRC1",
+     "vocab_id": 6881
+    },
+    {
+     "column": 907,
+     "ensembl": "ENSG00000198574",
+     "symbol": "SH2D1B",
+     "vocab_id": 17156
+    },
+    {
+     "column": 6424,
+     "ensembl": "ENSG00000013725",
+     "symbol": "CD6",
+     "vocab_id": 343
+    },
+    {
+     "column": 1868,
+     "ensembl": "ENSG00000178562",
+     "symbol": "CD28",
+     "vocab_id": 14269
+    }
+   ],
+   "nk_t_genes": [
+    "CD28",
+    "CD3D",
+    "CD3E",
+    "CD3G",
+    "CD5",
+    "CD6",
+    "FCGR3A",
+    "KLRC1",
+    "KLRD1",
+    "KLRF1",
+    "NCAM1",
+    "NCR1",
+    "SH2D1B"
+   ],
+   "panel_genes": [
+    "CD2",
+    "CD22",
+    "CD3D",
+    "CD3E",
+    "CD3G",
+    "CD5",
+    "IL2RB",
+    "ITGAX",
+    "KLRD1",
+    "MS4A1",
+    "NCAM1",
+    "SELP",
+    "SIRPA",
+    "TNFRSF13C"
+   ],
+   "reference": "data/raw/external_hao2021_gse164378/ref_10x_grch38_3.0.0/features_grch38_3.0.0.tsv.gz",
+   "reference_sha256": "17b6d8a40256da939179f0c0c8e560b2ca40ca4d32f75993666bc7eb95e20749",
+   "symbols": [
+    "MS4A1",
+    "CD22",
+    "TNFRSF13C",
+    "CD3E",
+    "CD3D",
+    "CD3G",
+    "CD2",
+    "CD5",
+    "IL2RB",
+    "KLRD1",
+    "NCAM1",
+    "SIRPA",
+    "ITGAX",
+    "SELP",
+    "NCR1",
+    "FCGR3A",
+    "KLRF1",
+    "KLRC1",
+    "SH2D1B",
+    "CD6",
+    "CD28"
+   ]
+  },
+  "leakage_self_check": {
+   "site4_poisoned_core_identical": true,
+   "val_poisoned_core_changed": true
+  },
+  "z_probe": {
+   "C": 100.0,
+   "C_grid": [
+    {
+     "C": 0.01,
+     "n_iter": 31,
+     "val_accuracy": 0.975833,
+     "val_log_loss": 0.21376
+    },
+    {
+     "C": 0.1,
+     "n_iter": 30,
+     "val_accuracy": 0.994179,
+     "val_log_loss": 0.061286
+    },
+    {
+     "C": 1.0,
+     "n_iter": 34,
+     "val_accuracy": 0.997178,
+     "val_log_loss": 0.022841
+    },
+    {
+     "C": 10.0,
+     "n_iter": 48,
+     "val_accuracy": 0.997707,
+     "val_log_loss": 0.013203
+    },
+    {
+     "C": 100.0,
+     "n_iter": 47,
+     "val_accuracy": 0.997707,
+     "val_log_loss": 0.012916
+    }
+   ],
+   "classes": [
+    "B",
+    "NK",
+    "OUT",
+    "T",
+    "myeloid"
+   ],
+   "coef_sha256": "a2ec66172e9fff1e631ddfc7b7c2885fec3b15f82b434d68eb662845005042e8",
+   "file": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E2/z_probe.npz",
+   "n_train": 58657,
+   "n_val": 5669
+  }
+ },
+ "experiment": "E2",
+ "provenance": {
+  "built_utc": "2026-10-01T05:23:12Z",
+  "cite_arrays_sha256": "be408eff537eeeca24129210592605f809724c3282d7c55e008b87b3c193c2da",
+  "e2_response_sha256": "d93739a8c012427faa90a616d47c7406321d4880313ad497ce3e0dec10a69c70",
+  "rows_read": "train and val rows of z, adt, cell types and RNA; split/site/donor metadata of all rows; site4 rows only inside the poisoned rebuild",
+  "script_sha256": "c02e56ad77013f93f9e7cd294fb7af68589f90d1b1580436a601468e44ae554e",
+  "z_sha256": "fb9aa8c77d544d84f716cf66bca8964c265f62d6dc1618a0c627d55268d3cd0b"
+ },
+ "registration_sha256": "e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3",
+ "spec": {
+  "addendum_to": "registration/registration_v3.json experiments.E2 as amended by A1 (A1.7 falsification text, A1.1 bootstrap); the registered cells, perturbations, measurements, linearity test, decomposition, comparator, margins and falsification are not changed here",
+  "addendum_version": 1,
+  "experiment": "E2",
+  "fixed_before_site4": "fixed on training and validation cells only and committed before any site4 forward pass of this script; smoke runs use val donor 18303 cells only",
+  "open_choices_fixed": {
+   "accuracy_loss_for_i": "Q1 decision accuracy on the primary key (correct call, or no call on a key-OUT case) over the unit's scored cases, baseline minus perturbed; the selective-accuracy version is reported beside it",
+   "anm": "ANM finite_graph_scalar from ANM_ROOT on the baseline and every case: 4 actions, 3 support events per class (value = evidence), all at t = 0, registered field; readout threshold v3_key.anm_readout_threshold(Q1); ANM calls are compared with the rule's on every case (a mismatch is reported as a bridge failure) and dANM with G(3) * 3 * dS",
+   "baseline": "each cell's stored official embedding (data/processed/cite_official/z_rna.npy) -> head -> evidence -> Q1 rule (the baseline E1 uses); every response is delta(eps) = x(perturbed) - x(baseline)",
+   "counts": "the stored RNA values are UMI counts times one per-cell factor; counts = rint(q), q = value / smallest non-zero value of the row; a row is valid when every |q - rint(q)| <= 1e-3 + 4e-7 * rint(q) (float32 rounding of the value and of the unit); invalid rows are flagged and reported (computed.count_check: 2000 train/val cells drawn with numpy default_rng(seeds.e2_thinning[0]))",
+   "criterion_ii": "cases = (test_primary e2_subset cell, seed) at kept fraction 0.2 (eps 0.8); y = the Q1 call differs from the baseline call; comparator score = -m (baseline margin top1 - top2); predictor score = -m_hat, m_hat = m + (0.8 / 0.05) * (mean_s msigned_s - m), msigned_s = S'[c0] - max_{k != c0} S'[k] at kept fraction 0.95, seed s (the comparator's baseline information plus the small-eps response); dAUROC = AUROC(-m_hat) - AUROC(-m), weighted Mann-Whitney (ties 1/2); (ii) holds if dAUROC >= 0.02 and the bootstrap lower bound > 0. Secondary rows: the bar-aware distance d = min(signed margin, distance of S[c0] to the bar on the side of the baseline call), extrapolated the same way, against baseline d and against m",
+   "embedding": "the official pipeline of scripts/03_embed_rna.py: model.hidden_states with the bool key-padding mask under torch.autocast fp16 on the device (MPS), gene-mean pooling; the variants of a chunk of cells are length-sorted and run in batches of 32 padded to the batch's longest sequence",
+   "empty_variant": "a variant left with no tokens gets no embedding: no call, z-probe class undefined (a lost case is then 'representation'), excluded from the linearity rows (counted)",
+   "floor": "one unperturbed re-embedding per cell through this script's pipeline; floor_x = ||x(re-embedding) - x(baseline)|| per cell and stage; the floor's own call changes are reported",
+   "gene_scaling": "for each E2 gene among the cell's baseline tokens, its official value (after /total x 1e4 and / median) is multiplied by (1 - eps), eps in [1.0, 0.5, 0.25], before torch.topk; eps = 1 removes the token",
+   "genes": "E2 genes = panel_coding_genes flattened, then nk_t_genes, first occurrence kept; Ensembl ids from the 10x GRCh38 3.0.0 features file data/raw/external_hao2021_gse164378/ref_10x_grch38_3.0.0/features_grch38_3.0.0.tsv.gz (the gene reference E5 uses; a 10x reference table, not the external dataset), checked to give the ids of scripts/mode_a_token_probes.py GENES for the 13 NK/T genes; genes absent from the processed gene list or the TEDDY vocabulary are dropped and listed (computed.genes)",
+   "interval_for_i": "pairs qualify on the point estimates; the share difference's interval is the registered two-stage bootstrap (B = 2000, seed 1, donors in sorted order; cells carry all their cases); replicates in which a unit has no lost case are dropped from that interval and counted; every (pair, label) test is listed; a Bonferroni-adjusted interval and the per-donor clause of the common win rule are reported beside the verdict (secondary)",
+   "linearity": "stages z (512-d l2(z)), evidence (12 panel values), score (4 rule scores); thinning uses the seed-averaged response mean_s delta_s(eps) per cell; gene scaling uses each (cell, gene) case; per pair and stage: share linear, share below floor, median rho and cosine over the test_primary e2_subset cells (thinning) or cases (gene scaling); also per gene",
+   "lost_cells_for_i": "distinct test_primary e2_subset cells with at least one lost case in the unit (>= 30 in both units, A1.7); share of a label = lost cases with the label / lost cases",
+   "measurements": "dz = ||l2(z') - l2(z)||; dv = ||v' - v|| over the 12 primary-panel evidences (clipped, as registered; the unclipped norm is reported beside it); dS = S'[c0] - S[c0] for the baseline argmax class c0 and dmargin = m(S') - m(S), m = top1 - top2; dANM = A'[c0] - A[c0], A = the ANM engine's action score; dcall = Q1 call changed",
+   "secondary_split": "donor 15078 (250 cells) is reported with the same procedure and never changes the verdict",
+   "smoke": "smoke runs use val donor 18303 cells only (--cell-pool val); no site4 RNA, embedding, protein or label is read before this addendum is committed",
+   "thinning": "x' ~ Binomial(counts, kept fraction) per gene with numpy default_rng([seed, global cell id, level index]), level index in the registered order [0.95, 0.9, 0.8, 0.6, 0.2, 0.05], seeds 11 and 12 (seeds.e2_thinning): independent draws per level and seed; thinned counts then go through the official preprocessing (counts/total x 1e4, / gene medians, top 2,048, zeros dropped)",
+   "units": "E2.dec and criterion (i) units = perturbation family x level: thinning per kept fraction (6 units; cases = cell x 2 seeds) and gene scaling per eps pooled over genes (3 units; cases = (cell, gene), each case weighted equally); secondary rows apply the same procedure to the thinning units plus the finer gene x eps units and never decide the verdict",
+   "verdict": "'adds information beyond the curve' if (i) or (ii) holds (A1's E2 text); otherwise 'adds nothing beyond the curve (falsified)'; whether the per-donor clause of the common win rule also holds is reported with each criterion",
+   "z_probe": "sklearn LogisticRegression(solver lbfgs, max_iter 3000, multinomial, no feature scaling) on L2-normalised z (z / (||z|| + 1e-6), the head's input) of training primary-key cells (5 classes, unscored excluded); C = argmin of the val primary-key log-loss over [0.01, 0.1, 1, 10, 100] (ties: the smaller C); the selected fit is saved to <out-dir>/z_probe.npz and the sha256 of its coefficients is recorded in computed.z_probe"
+  },
+  "outputs": "outputs/v3/E2/: E2_results.json, REPORT.md, progress.log, e2_progress.json, z_probe.npz, chunks/, e2_cases.npz; every result JSON carries registration_sha256, amendment_sha256 and addendum_sha256",
+  "script": "scripts/e2_response_decomposition.py (e2_response_decomposition v1)"
+ },
+ "spec_sha256": "86f33d9a4ee36c30cdd2a9dac37c2e94319064619346d8e1ef75d07a0316a817"
+}

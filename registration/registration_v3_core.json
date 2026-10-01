@@ -1,0 +1,4246 @@
+{
+ "registration_id": "teddy_mm_v3",
+ "builder": "v3_build_registration 1.0",
+ "splits": {
+  "cell_id": "global row index in data/processed/cite/cite_arrays.npz (bridge export id cite_site4_<index>)",
+  "train": {
+   "rule": "split == 'train' (sites 1-3, all donors except 18303)",
+   "n": 67405,
+   "sha256_indices": "0da6d39783b7ef2121d44e85d47a1a64867ca0b7dff3550245df77295dd59c1a",
+   "split": [
+    "train"
+   ],
+   "sites": null,
+   "donors": null,
+   "site_donor_counts": {
+    "site1|10886": 4978,
+    "site1|15078": 5227,
+    "site2|12710": 5584,
+    "site2|15078": 10465,
+    "site2|16710": 9122,
+    "site3|11466": 11473,
+    "site3|15078": 9521,
+    "site3|28045": 11035
+   }
+  },
+  "val": {
+   "rule": "split == 'val' (site1, donor 18303)",
+   "n": 6106,
+   "sha256_indices": "0e2787236c64d689edbfdc6492a53f407f8f196e55a154e06b0ed12865a0d477",
+   "split": [
+    "val"
+   ],
+   "sites": null,
+   "donors": [
+    "18303"
+   ]
+  },
+  "test_primary": {
+   "rule": "site4 cells of donors not in training",
+   "n": 11294,
+   "sha256_indices": "dd5cf5727b2939a33713862b6ce7f07ef93a608dabf146f188440c3a296a279f",
+   "split": [
+    "test"
+   ],
+   "sites": [
+    "site4"
+   ],
+   "donors": [
+    "13272",
+    "19593"
+   ],
+   "per_donor": {
+    "13272": 7365,
+    "19593": 3929
+   }
+  },
+  "test_secondary": {
+   "rule": "site4 cells of donor 15078 (in training at sites 1-3)",
+   "n": 5456,
+   "sha256_indices": "4dfab424f5987983b1b81e5bdda9211448881eff6f949bb3c079c4da96016049",
+   "split": [
+    "test"
+   ],
+   "sites": [
+    "site4"
+   ],
+   "donors": [
+    "15078"
+   ]
+  }
+ },
+ "classes": [
+  "B",
+  "T",
+  "NK",
+  "myeloid",
+  "OUT"
+ ],
+ "annotation_map": {
+  "Naive CD20+ B IGKC+": "B",
+  "Naive CD20+ B IGKC-": "B",
+  "Transitional B": "B",
+  "B1 B IGKC+": "B",
+  "B1 B IGKC-": "B",
+  "CD4+ T activated": "T",
+  "CD4+ T activated integrinB7+": "T",
+  "CD4+ T naive": "T",
+  "CD4+ T CD314+ CD45RA+": "T",
+  "CD8+ T naive": "T",
+  "CD8+ T naive CD127+ CD26- CD101-": "T",
+  "CD8+ T CD49f+": "T",
+  "CD8+ T CD57+ CD45RA+": "T",
+  "CD8+ T CD57+ CD45RO+": "T",
+  "CD8+ T CD69+ CD45RA+": "T",
+  "CD8+ T CD69+ CD45RO+": "T",
+  "CD8+ T TIGIT+ CD45RA+": "T",
+  "CD8+ T TIGIT+ CD45RO+": "T",
+  "T reg": "T",
+  "MAIT": "T",
+  "gdT TCRVD2+": "T",
+  "gdT CD158b+": "T",
+  "dnT": "T",
+  "T prog cycling": "T",
+  "NK": "NK",
+  "NK CD158e1+": "NK",
+  "CD14+ Mono": "myeloid",
+  "CD16+ Mono": "myeloid",
+  "cDC2": "myeloid",
+  "cDC1": "myeloid",
+  "HSC": "OUT",
+  "Lymph prog": "OUT",
+  "G/M prog": "OUT",
+  "MK/E prog": "OUT",
+  "Proerythroblast": "OUT",
+  "Erythroblast": "OUT",
+  "Normoblast": "OUT",
+  "Reticulocyte": "OUT",
+  "pDC": "OUT",
+  "Plasma cell IGKC+": "OUT",
+  "Plasma cell IGKC-": "OUT",
+  "Plasmablast IGKC+": "OUT",
+  "Plasmablast IGKC-": "OUT",
+  "ILC": "OUT",
+  "ILC1": "OUT"
+ },
+ "annotation_map_notes": {
+  "gdT CD158b+": "T by lineage (gamma-delta TCR, CD3 protein). They carry NK receptors (CD158b, CD56, CD94); the protein gate decides whether each one enters the key as T (CD3 high) or is unscored. Sensitivity key 'primary_no_gdT158' drops them.",
+  "gdT TCRVD2+": "T (Vdelta2 gamma-delta T; CD3 protein high).",
+  "dnT": "T (CD3+ CD4- CD8- T cells).",
+  "T prog cycling": "T: annotated as a T-committed cycling population; 24 training cells, none in val or site4.",
+  "CD4+ T CD314+ CD45RA+": "T; 92 training cells, 1 val, none in site4.",
+  "CD8+ T naive CD127+ CD26- CD101-": "T; 42 training cells, none in val or site4.",
+  "cDC1": "myeloid (conventional DC, like cDC2); 18 training cells, none in val or site4.",
+  "cDC2": "myeloid (conventional DC; CD11c and CD33 protein high).",
+  "pDC": "OUT: plasmacytoid DCs are not monocytes or conventional DCs and carry none of the four lineage panels (CD123/CD303 high, CD11c low); a lineage call on them is wrong.",
+  "ILC": "OUT: innate lymphoid cells lack a TCR and are not conventional NK cells. Many are NK-like in protein (CD56/CD94 high); they then gate NK and are unscored, not keyed NK.",
+  "ILC1": "OUT: as ILC. In this dataset most annotated ILC1 are CD3-protein high (T-like); those gate T and are unscored.",
+  "Plasma cell IGKC+": "OUT: antibody-secreting cells are a terminal B-lineage state outside the mature-B panel question (CD19 partly, CD20 low, CD38 very high).",
+  "Plasma cell IGKC-": "OUT, as plasma cells.",
+  "Plasmablast IGKC+": "OUT, as plasma cells.",
+  "Plasmablast IGKC-": "OUT, as plasma cells.",
+  "Lymph prog": "OUT: progenitor (B-committed in part; many are CD19 protein high and then unscored).",
+  "HSC": "OUT: stem cells; no lineage panel applies.",
+  "G/M prog": "OUT: progenitor.",
+  "MK/E prog": "OUT: progenitor.",
+  "Proerythroblast": "OUT: erythroid lineage.",
+  "Erythroblast": "OUT: erythroid lineage.",
+  "Normoblast": "OUT: erythroid lineage.",
+  "Reticulocyte": "OUT: erythroid lineage."
+ },
+ "data": {
+  "n_cells": 90261,
+  "n_adt": 134,
+  "n_cell_types_total": 45,
+  "adt_absent_checked": [
+   "CD34",
+   "CD235a",
+   "CD138",
+   "TCRgd"
+  ],
+  "adt_values": "CLR-normalised (float, as stored in cite_arrays.npz)",
+  "cell_types_per_split": {
+   "B1 B IGKC+": {
+    "train": 563,
+    "val": 41
+   },
+   "B1 B IGKC-": {
+    "train": 398,
+    "val": 48
+   },
+   "CD14+ Mono": {
+    "train": 20171,
+    "val": 309
+   },
+   "CD16+ Mono": {
+    "train": 2348,
+    "val": 28
+   },
+   "CD4+ T CD314+ CD45RA+": {
+    "train": 92,
+    "val": 1
+   },
+   "CD4+ T activated": {
+    "train": 5032,
+    "val": 547
+   },
+   "CD4+ T activated integrinB7+": {
+    "train": 684,
+    "val": 141
+   },
+   "CD4+ T naive": {
+    "train": 3924,
+    "val": 833
+   },
+   "CD8+ T CD49f+": {
+    "train": 615,
+    "val": 49
+   },
+   "CD8+ T CD57+ CD45RA+": {
+    "train": 692,
+    "val": 251
+   },
+   "CD8+ T CD57+ CD45RO+": {
+    "train": 431,
+    "val": 0
+   },
+   "CD8+ T CD69+ CD45RA+": {
+    "train": 474,
+    "val": 33
+   },
+   "CD8+ T CD69+ CD45RO+": {
+    "train": 517,
+    "val": 32
+   },
+   "CD8+ T TIGIT+ CD45RA+": {
+    "train": 843,
+    "val": 25
+   },
+   "CD8+ T TIGIT+ CD45RO+": {
+    "train": 934,
+    "val": 37
+   },
+   "CD8+ T naive": {
+    "train": 1454,
+    "val": 878
+   },
+   "CD8+ T naive CD127+ CD26- CD101-": {
+    "train": 42,
+    "val": 0
+   },
+   "Erythroblast": {
+    "train": 3472,
+    "val": 228
+   },
+   "G/M prog": {
+    "train": 1472,
+    "val": 45
+   },
+   "HSC": {
+    "train": 1246,
+    "val": 71
+   },
+   "ILC": {
+    "train": 135,
+    "val": 0
+   },
+   "ILC1": {
+    "train": 365,
+    "val": 40
+   },
+   "Lymph prog": {
+    "train": 931,
+    "val": 87
+   },
+   "MAIT": {
+    "train": 379,
+    "val": 109
+   },
+   "MK/E prog": {
+    "train": 486,
+    "val": 8
+   },
+   "NK": {
+    "train": 3779,
+    "val": 271
+   },
+   "NK CD158e1+": {
+    "train": 1861,
+    "val": 0
+   },
+   "Naive CD20+ B IGKC+": {
+    "train": 2458,
+    "val": 265
+   },
+   "Naive CD20+ B IGKC-": {
+    "train": 1167,
+    "val": 171
+   },
+   "Normoblast": {
+    "train": 1160,
+    "val": 129
+   },
+   "Plasma cell IGKC+": {
+    "train": 237,
+    "val": 9
+   },
+   "Plasma cell IGKC-": {
+    "train": 220,
+    "val": 0
+   },
+   "Plasmablast IGKC+": {
+    "train": 216,
+    "val": 0
+   },
+   "Plasmablast IGKC-": {
+    "train": 109,
+    "val": 0
+   },
+   "Proerythroblast": {
+    "train": 865,
+    "val": 26
+   },
+   "Reticulocyte": {
+    "train": 2972,
+    "val": 929
+   },
+   "T prog cycling": {
+    "train": 24,
+    "val": 0
+   },
+   "T reg": {
+    "train": 392,
+    "val": 36
+   },
+   "Transitional B": {
+    "train": 768,
+    "val": 250
+   },
+   "cDC1": {
+    "train": 18,
+    "val": 0
+   },
+   "cDC2": {
+    "train": 1449,
+    "val": 54
+   },
+   "dnT": {
+    "train": 23,
+    "val": 33
+   },
+   "gdT CD158b+": {
+    "train": 180,
+    "val": 62
+   },
+   "gdT TCRVD2+": {
+    "train": 161,
+    "val": 10
+   },
+   "pDC": {
+    "train": 1646,
+    "val": 20
+   }
+  }
+ },
+ "gate": {
+  "proteins": [
+   "CD3",
+   "CD19",
+   "CD20",
+   "CD56",
+   "CD94",
+   "CD335",
+   "CD16",
+   "CD14",
+   "CD33",
+   "CD11c",
+   "CD71"
+  ],
+  "threshold_method": "gmm_nonzero_post50",
+  "threshold_fit_on": "train",
+  "threshold_seed": 0,
+  "thresholds": {
+   "CD3": 0.68075,
+   "CD19": 0.622993,
+   "CD20": 1.254582,
+   "CD56": 1.063468,
+   "CD94": 1.532667,
+   "CD335": 0.895803,
+   "CD16": 0.64814,
+   "CD14": 0.601134,
+   "CD33": 0.59314,
+   "CD11c": 0.436573,
+   "CD71": 2.09056
+  },
+  "b_markers": [
+   "CD19"
+  ],
+  "nk_markers": [
+   "CD56",
+   "CD94",
+   "CD335",
+   "CD16"
+  ],
+  "nk_min_high": 2,
+  "high_definition": "measured CLR value > threshold (strictly greater)",
+  "rules_in_order": [
+   "OUT (erythroid) if CD71 high",
+   "T if CD3 high and no B marker high and CD14 not high",
+   "B if CD3 not high and a B marker high and CD14 not high",
+   "NK if CD3, B markers, CD14 and CD33 not high and at least nk_min_high of the NK markers high",
+   "myeloid if CD3 and B markers not high and any of CD14 / CD11c / CD33 high",
+   "OUT otherwise (no lineage gate passed)"
+  ],
+  "selection": {
+   "criterion": "highest mean per-batch Cohen kappa (gate vs annotation, 5 classes) over the 8 training batches (site x donor); ties -> fewer markers; confirmed on val",
+   "grid": {
+    "threshold_method": [
+     "otsu_nonzero",
+     "gmm_nonzero_post50",
+     "gmm_background_mu_plus_3sd"
+    ],
+    "b_markers": [
+     [
+      "CD19",
+      "CD20"
+     ],
+     [
+      "CD19"
+     ]
+    ],
+    "nk_markers": [
+     [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     [
+      "CD56",
+      "CD94",
+      "CD335"
+     ]
+    ]
+   },
+   "chosen": {
+    "threshold_method": "gmm_nonzero_post50",
+    "b_markers": [
+     "CD19"
+    ],
+    "nk_markers": [
+     "CD56",
+     "CD94",
+     "CD335",
+     "CD16"
+    ]
+   },
+   "chosen_mean_train_batch_kappa": 0.822485,
+   "chosen_min_train_batch_kappa": 0.709136,
+   "grid_results": [
+    {
+     "threshold_method": "otsu_nonzero",
+     "b_markers": [
+      "CD19",
+      "CD20"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     "mean_train_batch_kappa": 0.77063,
+     "min_train_batch_kappa": 0.487006,
+     "val_kappa5": 0.936859
+    },
+    {
+     "threshold_method": "otsu_nonzero",
+     "b_markers": [
+      "CD19",
+      "CD20"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335"
+     ],
+     "mean_train_batch_kappa": 0.757773,
+     "min_train_batch_kappa": 0.468165,
+     "val_kappa5": 0.936859
+    },
+    {
+     "threshold_method": "otsu_nonzero",
+     "b_markers": [
+      "CD19"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     "mean_train_batch_kappa": 0.766688,
+     "min_train_batch_kappa": 0.484656,
+     "val_kappa5": 0.938075
+    },
+    {
+     "threshold_method": "otsu_nonzero",
+     "b_markers": [
+      "CD19"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335"
+     ],
+     "mean_train_batch_kappa": 0.753793,
+     "min_train_batch_kappa": 0.465775,
+     "val_kappa5": 0.938075
+    },
+    {
+     "threshold_method": "gmm_nonzero_post50",
+     "b_markers": [
+      "CD19",
+      "CD20"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     "mean_train_batch_kappa": 0.821032,
+     "min_train_batch_kappa": 0.707293,
+     "val_kappa5": 0.889066
+    },
+    {
+     "threshold_method": "gmm_nonzero_post50",
+     "b_markers": [
+      "CD19",
+      "CD20"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335"
+     ],
+     "mean_train_batch_kappa": 0.800815,
+     "min_train_batch_kappa": 0.681738,
+     "val_kappa5": 0.888564
+    },
+    {
+     "threshold_method": "gmm_nonzero_post50",
+     "b_markers": [
+      "CD19"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     "mean_train_batch_kappa": 0.822485,
+     "min_train_batch_kappa": 0.709136,
+     "val_kappa5": 0.890531
+    },
+    {
+     "threshold_method": "gmm_nonzero_post50",
+     "b_markers": [
+      "CD19"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335"
+     ],
+     "mean_train_batch_kappa": 0.802245,
+     "min_train_batch_kappa": 0.683581,
+     "val_kappa5": 0.890029
+    },
+    {
+     "threshold_method": "gmm_background_mu_plus_3sd",
+     "b_markers": [
+      "CD19",
+      "CD20"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     "mean_train_batch_kappa": 0.814098,
+     "min_train_batch_kappa": 0.69194,
+     "val_kappa5": 0.897985
+    },
+    {
+     "threshold_method": "gmm_background_mu_plus_3sd",
+     "b_markers": [
+      "CD19",
+      "CD20"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335"
+     ],
+     "mean_train_batch_kappa": 0.787221,
+     "min_train_batch_kappa": 0.649233,
+     "val_kappa5": 0.896736
+    },
+    {
+     "threshold_method": "gmm_background_mu_plus_3sd",
+     "b_markers": [
+      "CD19"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335",
+      "CD16"
+     ],
+     "mean_train_batch_kappa": 0.814453,
+     "min_train_batch_kappa": 0.691914,
+     "val_kappa5": 0.89896
+    },
+    {
+     "threshold_method": "gmm_background_mu_plus_3sd",
+     "b_markers": [
+      "CD19"
+     ],
+     "nk_markers": [
+      "CD56",
+      "CD94",
+      "CD335"
+     ],
+     "mean_train_batch_kappa": 0.787568,
+     "min_train_batch_kappa": 0.648936,
+     "val_kappa5": 0.89771
+    }
+   ]
+  },
+  "val_target": {
+   "kappa5_min": 0.85,
+   "nk_precision_min": 0.9,
+   "erythroid_out_min": 0.75
+  },
+  "per_batch_thresholds_train_val": {
+   "site1|10886": {
+    "CD3": 0.92034,
+    "CD19": 0.726993,
+    "CD20": 0.846815,
+    "CD56": 0.857866,
+    "CD94": 0.954299,
+    "CD335": 0.777841,
+    "CD16": 0.693905,
+    "CD14": 0.603876,
+    "CD33": 0.484402,
+    "CD11c": 0.355155,
+    "CD71": 2.248725
+   },
+   "site1|15078": {
+    "CD3": 1.072107,
+    "CD19": 0.979977,
+    "CD20": 1.018518,
+    "CD56": 0.883525,
+    "CD94": 1.081455,
+    "CD335": 0.732099,
+    "CD16": 0.503535,
+    "CD14": 0.654479,
+    "CD33": 0.281479,
+    "CD11c": 0.391986,
+    "CD71": 4.070431
+   },
+   "site1|18303": {
+    "CD3": 1.201562,
+    "CD19": 0.865965,
+    "CD20": 0.956014,
+    "CD56": 0.905109,
+    "CD94": 1.127761,
+    "CD335": 1.239894,
+    "CD16": 0.640912,
+    "CD14": 0.582067,
+    "CD33": 0.414186,
+    "CD11c": 0.313218,
+    "CD71": 4.004294
+   },
+   "site2|12710": {
+    "CD3": 0.772451,
+    "CD19": 0.59881,
+    "CD20": 1.084004,
+    "CD56": 1.101046,
+    "CD94": 1.532842,
+    "CD335": 0.683972,
+    "CD16": 0.71772,
+    "CD14": 0.566947,
+    "CD33": 0.581009,
+    "CD11c": 0.404479,
+    "CD71": 2.664572
+   },
+   "site2|15078": {
+    "CD3": 0.614757,
+    "CD19": 0.57208,
+    "CD20": 0.903607,
+    "CD56": 0.837485,
+    "CD94": 1.321313,
+    "CD335": 0.709571,
+    "CD16": 0.62937,
+    "CD14": 0.436843,
+    "CD33": 0.441233,
+    "CD11c": 0.426968,
+    "CD71": 2.837514
+   },
+   "site2|16710": {
+    "CD3": 0.585827,
+    "CD19": 0.588827,
+    "CD20": 0.844579,
+    "CD56": 0.925566,
+    "CD94": 1.013624,
+    "CD335": 0.734881,
+    "CD16": 0.659751,
+    "CD14": 0.426171,
+    "CD33": 0.448556,
+    "CD11c": 0.444848,
+    "CD71": 1.738734
+   },
+   "site3|11466": {
+    "CD3": 0.664205,
+    "CD19": 0.539567,
+    "CD20": 0.71107,
+    "CD56": 0.893259,
+    "CD94": 1.20231,
+    "CD335": 0.626427,
+    "CD16": 0.529845,
+    "CD14": 0.62229,
+    "CD33": 0.650711,
+    "CD11c": 0.379982,
+    "CD71": 1.47995
+   },
+   "site3|15078": {
+    "CD3": 0.74459,
+    "CD19": 0.63228,
+    "CD20": 0.815343,
+    "CD56": 0.658861,
+    "CD94": 1.179184,
+    "CD335": 0.741916,
+    "CD16": 0.693234,
+    "CD14": 0.724698,
+    "CD33": 0.17983,
+    "CD11c": 0.276932,
+    "CD71": 2.183392
+   },
+   "site3|28045": {
+    "CD3": 0.613122,
+    "CD19": 0.573741,
+    "CD20": 0.646514,
+    "CD56": 1.033291,
+    "CD94": 1.012433,
+    "CD335": 0.723976,
+    "CD16": 0.60869,
+    "CD14": 0.581148,
+    "CD33": 0.360689,
+    "CD11c": 0.357215,
+    "CD71": 1.853789
+   }
+  }
+ },
+ "sensitivity_keys": {
+  "annotation_only": "annotation class for every cell (OUT included)",
+  "gate_only": "gated class for every cell",
+  "primary_per_batch": "agreement of annotation with a gate whose thresholds are re-estimated within each site x donor batch by the same declared estimator (label-free; uses the batch's own measured protein, so it is a verifier variant, never evidence)",
+  "no_gdT158": {
+   "excluded_type": "gdT CD158b+",
+   "rule": "primary key with gdT CD158b+ cells set to unscored"
+  }
+ },
+ "key_quality": {
+  "train": {
+   "n": 67405,
+   "agreement": 0.870217,
+   "kappa5": 0.825414,
+   "per_class": {
+    "B": {
+     "n_annotation": 5354,
+     "n_gated": 5379,
+     "n_agree": 4289,
+     "recall_vs_annotation": 0.801083,
+     "precision_vs_annotation": 0.79736
+    },
+    "T": {
+     "n_annotation": 16893,
+     "n_gated": 15412,
+     "n_agree": 14411,
+     "recall_vs_annotation": 0.853075,
+     "precision_vs_annotation": 0.935051
+    },
+    "NK": {
+     "n_annotation": 5640,
+     "n_gated": 4756,
+     "n_agree": 4419,
+     "recall_vs_annotation": 0.783511,
+     "precision_vs_annotation": 0.929142
+    },
+    "myeloid": {
+     "n_annotation": 23986,
+     "n_gated": 23640,
+     "n_agree": 22234,
+     "recall_vs_annotation": 0.926957,
+     "precision_vs_annotation": 0.940525
+    },
+    "OUT": {
+     "n_annotation": 15532,
+     "n_gated": 18218,
+     "n_agree": 13304,
+     "recall_vs_annotation": 0.856554,
+     "precision_vs_annotation": 0.730267
+    }
+   },
+   "primary_key_counts": {
+    "B": 4289,
+    "T": 14411,
+    "NK": 4419,
+    "myeloid": 22234,
+    "OUT": 13304,
+    "unscored": 8748
+   }
+  },
+  "val": {
+   "n": 6106,
+   "agreement": 0.928431,
+   "kappa5": 0.890531,
+   "per_class": {
+    "B": {
+     "n_annotation": 775,
+     "n_gated": 660,
+     "n_agree": 611,
+     "recall_vs_annotation": 0.788387,
+     "precision_vs_annotation": 0.925758
+    },
+    "T": {
+     "n_annotation": 3077,
+     "n_gated": 3050,
+     "n_agree": 2990,
+     "recall_vs_annotation": 0.971726,
+     "precision_vs_annotation": 0.980328
+    },
+    "NK": {
+     "n_annotation": 271,
+     "n_gated": 254,
+     "n_agree": 254,
+     "recall_vs_annotation": 0.937269,
+     "precision_vs_annotation": 1.0
+    },
+    "myeloid": {
+     "n_annotation": 391,
+     "n_gated": 389,
+     "n_agree": 348,
+     "recall_vs_annotation": 0.890026,
+     "precision_vs_annotation": 0.894602
+    },
+    "OUT": {
+     "n_annotation": 1592,
+     "n_gated": 1753,
+     "n_agree": 1466,
+     "recall_vs_annotation": 0.920854,
+     "precision_vs_annotation": 0.836281
+    }
+   },
+   "erythroid_gated_OUT_rate": 1.0,
+   "primary_key_counts": {
+    "B": 611,
+    "T": 2990,
+    "NK": 254,
+    "myeloid": 348,
+    "OUT": 1466,
+    "unscored": 437
+   }
+  },
+  "per_batch": {
+   "site1|10886": {
+    "n": 4978,
+    "agreement": 0.883086,
+    "kappa5": 0.837149,
+    "per_class": {
+     "B": {
+      "n_annotation": 446,
+      "n_gated": 316,
+      "n_agree": 305,
+      "recall_vs_annotation": 0.683857,
+      "precision_vs_annotation": 0.96519
+     },
+     "T": {
+      "n_annotation": 2251,
+      "n_gated": 2180,
+      "n_agree": 2095,
+      "recall_vs_annotation": 0.930697,
+      "precision_vs_annotation": 0.961009
+     },
+     "NK": {
+      "n_annotation": 534,
+      "n_gated": 661,
+      "n_agree": 511,
+      "recall_vs_annotation": 0.956929,
+      "precision_vs_annotation": 0.773071
+     },
+     "myeloid": {
+      "n_annotation": 930,
+      "n_gated": 895,
+      "n_agree": 852,
+      "recall_vs_annotation": 0.916129,
+      "precision_vs_annotation": 0.951955
+     },
+     "OUT": {
+      "n_annotation": 817,
+      "n_gated": 926,
+      "n_agree": 633,
+      "recall_vs_annotation": 0.774786,
+      "precision_vs_annotation": 0.683585
+     }
+    }
+   },
+   "site1|15078": {
+    "n": 5227,
+    "agreement": 0.921752,
+    "kappa5": 0.894549,
+    "per_class": {
+     "B": {
+      "n_annotation": 945,
+      "n_gated": 833,
+      "n_agree": 785,
+      "recall_vs_annotation": 0.830688,
+      "precision_vs_annotation": 0.942377
+     },
+     "T": {
+      "n_annotation": 1783,
+      "n_gated": 1723,
+      "n_agree": 1688,
+      "recall_vs_annotation": 0.946719,
+      "precision_vs_annotation": 0.979687
+     },
+     "NK": {
+      "n_annotation": 213,
+      "n_gated": 199,
+      "n_agree": 199,
+      "recall_vs_annotation": 0.934272,
+      "precision_vs_annotation": 1.0
+     },
+     "myeloid": {
+      "n_annotation": 814,
+      "n_gated": 748,
+      "n_agree": 745,
+      "recall_vs_annotation": 0.915233,
+      "precision_vs_annotation": 0.995989
+     },
+     "OUT": {
+      "n_annotation": 1472,
+      "n_gated": 1724,
+      "n_agree": 1401,
+      "recall_vs_annotation": 0.951766,
+      "precision_vs_annotation": 0.812645
+     }
+    }
+   },
+   "site1|18303": {
+    "n": 6106,
+    "agreement": 0.928431,
+    "kappa5": 0.890531,
+    "per_class": {
+     "B": {
+      "n_annotation": 775,
+      "n_gated": 660,
+      "n_agree": 611,
+      "recall_vs_annotation": 0.788387,
+      "precision_vs_annotation": 0.925758
+     },
+     "T": {
+      "n_annotation": 3077,
+      "n_gated": 3050,
+      "n_agree": 2990,
+      "recall_vs_annotation": 0.971726,
+      "precision_vs_annotation": 0.980328
+     },
+     "NK": {
+      "n_annotation": 271,
+      "n_gated": 254,
+      "n_agree": 254,
+      "recall_vs_annotation": 0.937269,
+      "precision_vs_annotation": 1.0
+     },
+     "myeloid": {
+      "n_annotation": 391,
+      "n_gated": 389,
+      "n_agree": 348,
+      "recall_vs_annotation": 0.890026,
+      "precision_vs_annotation": 0.894602
+     },
+     "OUT": {
+      "n_annotation": 1592,
+      "n_gated": 1753,
+      "n_agree": 1466,
+      "recall_vs_annotation": 0.920854,
+      "precision_vs_annotation": 0.836281
+     }
+    }
+   },
+   "site2|12710": {
+    "n": 5584,
+    "agreement": 0.858166,
+    "kappa5": 0.802244,
+    "per_class": {
+     "B": {
+      "n_annotation": 779,
+      "n_gated": 760,
+      "n_agree": 618,
+      "recall_vs_annotation": 0.793325,
+      "precision_vs_annotation": 0.813158
+     },
+     "T": {
+      "n_annotation": 952,
+      "n_gated": 886,
+      "n_agree": 831,
+      "recall_vs_annotation": 0.872899,
+      "precision_vs_annotation": 0.937923
+     },
+     "NK": {
+      "n_annotation": 156,
+      "n_gated": 132,
+      "n_agree": 130,
+      "recall_vs_annotation": 0.833333,
+      "precision_vs_annotation": 0.984848
+     },
+     "myeloid": {
+      "n_annotation": 1550,
+      "n_gated": 1357,
+      "n_agree": 1277,
+      "recall_vs_annotation": 0.823871,
+      "precision_vs_annotation": 0.941046
+     },
+     "OUT": {
+      "n_annotation": 2147,
+      "n_gated": 2449,
+      "n_agree": 1936,
+      "recall_vs_annotation": 0.901723,
+      "precision_vs_annotation": 0.790527
+     }
+    }
+   },
+   "site2|15078": {
+    "n": 10465,
+    "agreement": 0.902628,
+    "kappa5": 0.869952,
+    "per_class": {
+     "B": {
+      "n_annotation": 1157,
+      "n_gated": 1127,
+      "n_agree": 1005,
+      "recall_vs_annotation": 0.868626,
+      "precision_vs_annotation": 0.891748
+     },
+     "T": {
+      "n_annotation": 2693,
+      "n_gated": 2435,
+      "n_agree": 2372,
+      "recall_vs_annotation": 0.880802,
+      "precision_vs_annotation": 0.974127
+     },
+     "NK": {
+      "n_annotation": 541,
+      "n_gated": 513,
+      "n_agree": 467,
+      "recall_vs_annotation": 0.863216,
+      "precision_vs_annotation": 0.910331
+     },
+     "myeloid": {
+      "n_annotation": 3395,
+      "n_gated": 3155,
+      "n_agree": 3114,
+      "recall_vs_annotation": 0.917231,
+      "precision_vs_annotation": 0.987005
+     },
+     "OUT": {
+      "n_annotation": 2679,
+      "n_gated": 3235,
+      "n_agree": 2488,
+      "recall_vs_annotation": 0.928705,
+      "precision_vs_annotation": 0.769088
+     }
+    }
+   },
+   "site2|16710": {
+    "n": 9122,
+    "agreement": 0.924797,
+    "kappa5": 0.895123,
+    "per_class": {
+     "B": {
+      "n_annotation": 366,
+      "n_gated": 331,
+      "n_agree": 289,
+      "recall_vs_annotation": 0.789617,
+      "precision_vs_annotation": 0.873112
+     },
+     "T": {
+      "n_annotation": 2950,
+      "n_gated": 2907,
+      "n_agree": 2736,
+      "recall_vs_annotation": 0.927458,
+      "precision_vs_annotation": 0.941176
+     },
+     "NK": {
+      "n_annotation": 1868,
+      "n_gated": 1699,
+      "n_agree": 1694,
+      "recall_vs_annotation": 0.906852,
+      "precision_vs_annotation": 0.997057
+     },
+     "myeloid": {
+      "n_annotation": 3355,
+      "n_gated": 3331,
+      "n_agree": 3255,
+      "recall_vs_annotation": 0.970194,
+      "precision_vs_annotation": 0.977184
+     },
+     "OUT": {
+      "n_annotation": 583,
+      "n_gated": 854,
+      "n_agree": 462,
+      "recall_vs_annotation": 0.792453,
+      "precision_vs_annotation": 0.540984
+     }
+    }
+   },
+   "site3|11466": {
+    "n": 11473,
+    "agreement": 0.859235,
+    "kappa5": 0.761715,
+    "per_class": {
+     "B": {
+      "n_annotation": 409,
+      "n_gated": 562,
+      "n_agree": 328,
+      "recall_vs_annotation": 0.801956,
+      "precision_vs_annotation": 0.58363
+     },
+     "T": {
+      "n_annotation": 1042,
+      "n_gated": 971,
+      "n_agree": 758,
+      "recall_vs_annotation": 0.727447,
+      "precision_vs_annotation": 0.780639
+     },
+     "NK": {
+      "n_annotation": 1242,
+      "n_gated": 694,
+      "n_agree": 683,
+      "recall_vs_annotation": 0.549919,
+      "precision_vs_annotation": 0.98415
+     },
+     "myeloid": {
+      "n_annotation": 6741,
+      "n_gated": 7000,
+      "n_agree": 6497,
+      "recall_vs_annotation": 0.963804,
+      "precision_vs_annotation": 0.928143
+     },
+     "OUT": {
+      "n_annotation": 2039,
+      "n_gated": 2246,
+      "n_agree": 1592,
+      "recall_vs_annotation": 0.780775,
+      "precision_vs_annotation": 0.708816
+     }
+    }
+   },
+   "site3|15078": {
+    "n": 9521,
+    "agreement": 0.865455,
+    "kappa5": 0.810012,
+    "per_class": {
+     "B": {
+      "n_annotation": 700,
+      "n_gated": 755,
+      "n_agree": 551,
+      "recall_vs_annotation": 0.787143,
+      "precision_vs_annotation": 0.729801
+     },
+     "T": {
+      "n_annotation": 2217,
+      "n_gated": 1901,
+      "n_agree": 1819,
+      "recall_vs_annotation": 0.820478,
+      "precision_vs_annotation": 0.956865
+     },
+     "NK": {
+      "n_annotation": 219,
+      "n_gated": 181,
+      "n_agree": 152,
+      "recall_vs_annotation": 0.694064,
+      "precision_vs_annotation": 0.839779
+     },
+     "myeloid": {
+      "n_annotation": 3630,
+      "n_gated": 3722,
+      "n_agree": 3440,
+      "recall_vs_annotation": 0.947658,
+      "precision_vs_annotation": 0.924234
+     },
+     "OUT": {
+      "n_annotation": 2755,
+      "n_gated": 2962,
+      "n_agree": 2278,
+      "recall_vs_annotation": 0.82686,
+      "precision_vs_annotation": 0.769075
+     }
+    }
+   },
+   "site3|28045": {
+    "n": 11035,
+    "agreement": 0.785773,
+    "kappa5": 0.709136,
+    "per_class": {
+     "B": {
+      "n_annotation": 552,
+      "n_gated": 695,
+      "n_agree": 408,
+      "recall_vs_annotation": 0.73913,
+      "precision_vs_annotation": 0.58705
+     },
+     "T": {
+      "n_annotation": 3005,
+      "n_gated": 2409,
+      "n_agree": 2112,
+      "recall_vs_annotation": 0.702829,
+      "precision_vs_annotation": 0.876712
+     },
+     "NK": {
+      "n_annotation": 867,
+      "n_gated": 677,
+      "n_agree": 583,
+      "recall_vs_annotation": 0.672434,
+      "precision_vs_annotation": 0.861152
+     },
+     "myeloid": {
+      "n_annotation": 3571,
+      "n_gated": 3432,
+      "n_agree": 3054,
+      "recall_vs_annotation": 0.855223,
+      "precision_vs_annotation": 0.88986
+     },
+     "OUT": {
+      "n_annotation": 3040,
+      "n_gated": 3822,
+      "n_agree": 2514,
+      "recall_vs_annotation": 0.826974,
+      "precision_vs_annotation": 0.657771
+     }
+    }
+   }
+  },
+  "val_target_met": {
+   "kappa5": true,
+   "nk_precision": true,
+   "erythroid_out": true
+  },
+  "per_cell_type_train_val": {
+   "B1 B IGKC+": {
+    "n_train_val": 604,
+    "annotation_class": "B",
+    "gated": {
+     "B": 387,
+     "T": 0,
+     "NK": 0,
+     "myeloid": 1,
+     "OUT": 216
+    },
+    "in_primary_key": 387
+   },
+   "B1 B IGKC-": {
+    "n_train_val": 446,
+    "annotation_class": "B",
+    "gated": {
+     "B": 281,
+     "T": 2,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 163
+    },
+    "in_primary_key": 281
+   },
+   "CD14+ Mono": {
+    "n_train_val": 20480,
+    "annotation_class": "myeloid",
+    "gated": {
+     "B": 57,
+     "T": 148,
+     "NK": 9,
+     "myeloid": 19253,
+     "OUT": 1013
+    },
+    "in_primary_key": 19253
+   },
+   "CD16+ Mono": {
+    "n_train_val": 2376,
+    "annotation_class": "myeloid",
+    "gated": {
+     "B": 25,
+     "T": 74,
+     "NK": 40,
+     "myeloid": 2178,
+     "OUT": 59
+    },
+    "in_primary_key": 2178
+   },
+   "CD4+ T CD314+ CD45RA+": {
+    "n_train_val": 93,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 92,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 1
+    },
+    "in_primary_key": 92
+   },
+   "CD4+ T activated": {
+    "n_train_val": 5579,
+    "annotation_class": "T",
+    "gated": {
+     "B": 4,
+     "T": 4860,
+     "NK": 2,
+     "myeloid": 33,
+     "OUT": 680
+    },
+    "in_primary_key": 4860
+   },
+   "CD4+ T activated integrinB7+": {
+    "n_train_val": 825,
+    "annotation_class": "T",
+    "gated": {
+     "B": 2,
+     "T": 721,
+     "NK": 0,
+     "myeloid": 3,
+     "OUT": 99
+    },
+    "in_primary_key": 721
+   },
+   "CD4+ T naive": {
+    "n_train_val": 4757,
+    "annotation_class": "T",
+    "gated": {
+     "B": 1,
+     "T": 4337,
+     "NK": 0,
+     "myeloid": 3,
+     "OUT": 416
+    },
+    "in_primary_key": 4337
+   },
+   "CD8+ T CD49f+": {
+    "n_train_val": 664,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 601,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 63
+    },
+    "in_primary_key": 601
+   },
+   "CD8+ T CD57+ CD45RA+": {
+    "n_train_val": 943,
+    "annotation_class": "T",
+    "gated": {
+     "B": 2,
+     "T": 750,
+     "NK": 41,
+     "myeloid": 21,
+     "OUT": 129
+    },
+    "in_primary_key": 750
+   },
+   "CD8+ T CD57+ CD45RO+": {
+    "n_train_val": 431,
+    "annotation_class": "T",
+    "gated": {
+     "B": 2,
+     "T": 370,
+     "NK": 2,
+     "myeloid": 3,
+     "OUT": 54
+    },
+    "in_primary_key": 370
+   },
+   "CD8+ T CD69+ CD45RA+": {
+    "n_train_val": 507,
+    "annotation_class": "T",
+    "gated": {
+     "B": 2,
+     "T": 390,
+     "NK": 1,
+     "myeloid": 11,
+     "OUT": 103
+    },
+    "in_primary_key": 390
+   },
+   "CD8+ T CD69+ CD45RO+": {
+    "n_train_val": 549,
+    "annotation_class": "T",
+    "gated": {
+     "B": 4,
+     "T": 426,
+     "NK": 7,
+     "myeloid": 10,
+     "OUT": 102
+    },
+    "in_primary_key": 426
+   },
+   "CD8+ T TIGIT+ CD45RA+": {
+    "n_train_val": 868,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 769,
+     "NK": 3,
+     "myeloid": 6,
+     "OUT": 90
+    },
+    "in_primary_key": 769
+   },
+   "CD8+ T TIGIT+ CD45RO+": {
+    "n_train_val": 971,
+    "annotation_class": "T",
+    "gated": {
+     "B": 1,
+     "T": 869,
+     "NK": 0,
+     "myeloid": 3,
+     "OUT": 98
+    },
+    "in_primary_key": 869
+   },
+   "CD8+ T naive": {
+    "n_train_val": 2332,
+    "annotation_class": "T",
+    "gated": {
+     "B": 2,
+     "T": 2089,
+     "NK": 2,
+     "myeloid": 11,
+     "OUT": 228
+    },
+    "in_primary_key": 2089
+   },
+   "CD8+ T naive CD127+ CD26- CD101-": {
+    "n_train_val": 42,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 40,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 2
+    },
+    "in_primary_key": 40
+   },
+   "Erythroblast": {
+    "n_train_val": 3700,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 0,
+     "T": 0,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 3700
+    },
+    "in_primary_key": 3700
+   },
+   "G/M prog": {
+    "n_train_val": 1517,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 23,
+     "T": 29,
+     "NK": 2,
+     "myeloid": 476,
+     "OUT": 987
+    },
+    "in_primary_key": 987
+   },
+   "HSC": {
+    "n_train_val": 1317,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 34,
+     "T": 27,
+     "NK": 6,
+     "myeloid": 88,
+     "OUT": 1162
+    },
+    "in_primary_key": 1162
+   },
+   "ILC": {
+    "n_train_val": 135,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 2,
+     "T": 6,
+     "NK": 121,
+     "myeloid": 2,
+     "OUT": 4
+    },
+    "in_primary_key": 4
+   },
+   "ILC1": {
+    "n_train_val": 405,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 0,
+     "T": 344,
+     "NK": 3,
+     "myeloid": 3,
+     "OUT": 55
+    },
+    "in_primary_key": 55
+   },
+   "Lymph prog": {
+    "n_train_val": 1018,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 570,
+     "T": 10,
+     "NK": 2,
+     "myeloid": 12,
+     "OUT": 424
+    },
+    "in_primary_key": 424
+   },
+   "MAIT": {
+    "n_train_val": 488,
+    "annotation_class": "T",
+    "gated": {
+     "B": 1,
+     "T": 412,
+     "NK": 2,
+     "myeloid": 6,
+     "OUT": 67
+    },
+    "in_primary_key": 412
+   },
+   "MK/E prog": {
+    "n_train_val": 494,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 1,
+     "T": 3,
+     "NK": 0,
+     "myeloid": 8,
+     "OUT": 482
+    },
+    "in_primary_key": 482
+   },
+   "NK": {
+    "n_train_val": 4050,
+    "annotation_class": "NK",
+    "gated": {
+     "B": 47,
+     "T": 185,
+     "NK": 3102,
+     "myeloid": 418,
+     "OUT": 298
+    },
+    "in_primary_key": 3102
+   },
+   "NK CD158e1+": {
+    "n_train_val": 1861,
+    "annotation_class": "NK",
+    "gated": {
+     "B": 23,
+     "T": 72,
+     "NK": 1571,
+     "myeloid": 115,
+     "OUT": 80
+    },
+    "in_primary_key": 1571
+   },
+   "Naive CD20+ B IGKC+": {
+    "n_train_val": 2723,
+    "annotation_class": "B",
+    "gated": {
+     "B": 2282,
+     "T": 6,
+     "NK": 0,
+     "myeloid": 12,
+     "OUT": 423
+    },
+    "in_primary_key": 2282
+   },
+   "Naive CD20+ B IGKC-": {
+    "n_train_val": 1338,
+    "annotation_class": "B",
+    "gated": {
+     "B": 1130,
+     "T": 4,
+     "NK": 0,
+     "myeloid": 3,
+     "OUT": 201
+    },
+    "in_primary_key": 1130
+   },
+   "Normoblast": {
+    "n_train_val": 1289,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 0,
+     "T": 0,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 1289
+    },
+    "in_primary_key": 1289
+   },
+   "Plasma cell IGKC+": {
+    "n_train_val": 246,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 98,
+     "T": 4,
+     "NK": 0,
+     "myeloid": 12,
+     "OUT": 132
+    },
+    "in_primary_key": 132
+   },
+   "Plasma cell IGKC-": {
+    "n_train_val": 220,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 85,
+     "T": 1,
+     "NK": 2,
+     "myeloid": 8,
+     "OUT": 124
+    },
+    "in_primary_key": 124
+   },
+   "Plasmablast IGKC+": {
+    "n_train_val": 216,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 74,
+     "T": 2,
+     "NK": 2,
+     "myeloid": 6,
+     "OUT": 132
+    },
+    "in_primary_key": 132
+   },
+   "Plasmablast IGKC-": {
+    "n_train_val": 109,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 32,
+     "T": 1,
+     "NK": 2,
+     "myeloid": 4,
+     "OUT": 70
+    },
+    "in_primary_key": 70
+   },
+   "Proerythroblast": {
+    "n_train_val": 891,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 0,
+     "T": 1,
+     "NK": 0,
+     "myeloid": 15,
+     "OUT": 875
+    },
+    "in_primary_key": 875
+   },
+   "Reticulocyte": {
+    "n_train_val": 3901,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 0,
+     "T": 0,
+     "NK": 1,
+     "myeloid": 0,
+     "OUT": 3900
+    },
+    "in_primary_key": 3900
+   },
+   "T prog cycling": {
+    "n_train_val": 24,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 12,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 12
+    },
+    "in_primary_key": 12
+   },
+   "T reg": {
+    "n_train_val": 428,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 287,
+     "NK": 0,
+     "myeloid": 1,
+     "OUT": 140
+    },
+    "in_primary_key": 287
+   },
+   "Transitional B": {
+    "n_train_val": 1018,
+    "annotation_class": "B",
+    "gated": {
+     "B": 820,
+     "T": 5,
+     "NK": 0,
+     "myeloid": 2,
+     "OUT": 191
+    },
+    "in_primary_key": 820
+   },
+   "cDC1": {
+    "n_train_val": 18,
+    "annotation_class": "myeloid",
+    "gated": {
+     "B": 2,
+     "T": 2,
+     "NK": 0,
+     "myeloid": 13,
+     "OUT": 1
+    },
+    "in_primary_key": 13
+   },
+   "cDC2": {
+    "n_train_val": 1503,
+    "annotation_class": "myeloid",
+    "gated": {
+     "B": 26,
+     "T": 80,
+     "NK": 8,
+     "myeloid": 1138,
+     "OUT": 251
+    },
+    "in_primary_key": 1138
+   },
+   "dnT": {
+    "n_train_val": 56,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 48,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 8
+    },
+    "in_primary_key": 48
+   },
+   "gdT CD158b+": {
+    "n_train_val": 242,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 166,
+     "NK": 72,
+     "myeloid": 0,
+     "OUT": 4
+    },
+    "in_primary_key": 166
+   },
+   "gdT TCRVD2+": {
+    "n_train_val": 171,
+    "annotation_class": "T",
+    "gated": {
+     "B": 0,
+     "T": 162,
+     "NK": 0,
+     "myeloid": 0,
+     "OUT": 9
+    },
+    "in_primary_key": 162
+   },
+   "pDC": {
+    "n_train_val": 1666,
+    "annotation_class": "OUT",
+    "gated": {
+     "B": 19,
+     "T": 55,
+     "NK": 7,
+     "myeloid": 151,
+     "OUT": 1434
+    },
+    "in_primary_key": 1434
+   }
+  },
+  "per_batch_gate_sensitivity": {
+   "train": {
+    "n": 67405,
+    "agreement": 0.863363,
+    "kappa5": 0.816612,
+    "per_class": {
+     "B": {
+      "n_annotation": 5354,
+      "n_gated": 5699,
+      "n_agree": 4421,
+      "recall_vs_annotation": 0.825738,
+      "precision_vs_annotation": 0.77575
+     },
+     "T": {
+      "n_annotation": 16893,
+      "n_gated": 15696,
+      "n_agree": 14555,
+      "recall_vs_annotation": 0.861599,
+      "precision_vs_annotation": 0.927306
+     },
+     "NK": {
+      "n_annotation": 5640,
+      "n_gated": 5180,
+      "n_agree": 4426,
+      "recall_vs_annotation": 0.784752,
+      "precision_vs_annotation": 0.85444
+     },
+     "myeloid": {
+      "n_annotation": 23986,
+      "n_gated": 23564,
+      "n_agree": 21944,
+      "recall_vs_annotation": 0.914867,
+      "precision_vs_annotation": 0.931251
+     },
+     "OUT": {
+      "n_annotation": 15532,
+      "n_gated": 17266,
+      "n_agree": 12849,
+      "recall_vs_annotation": 0.82726,
+      "precision_vs_annotation": 0.744179
+     }
+    }
+   },
+   "val": {
+    "n": 6106,
+    "agreement": 0.951032,
+    "kappa5": 0.925799,
+    "per_class": {
+     "B": {
+      "n_annotation": 775,
+      "n_gated": 860,
+      "n_agree": 766,
+      "recall_vs_annotation": 0.988387,
+      "precision_vs_annotation": 0.890698
+     },
+     "T": {
+      "n_annotation": 3077,
+      "n_gated": 3102,
+      "n_agree": 3056,
+      "recall_vs_annotation": 0.993175,
+      "precision_vs_annotation": 0.985171
+     },
+     "NK": {
+      "n_annotation": 271,
+      "n_gated": 257,
+      "n_agree": 257,
+      "recall_vs_annotation": 0.948339,
+      "precision_vs_annotation": 1.0
+     },
+     "myeloid": {
+      "n_annotation": 391,
+      "n_gated": 505,
+      "n_agree": 382,
+      "recall_vs_annotation": 0.976982,
+      "precision_vs_annotation": 0.756436
+     },
+     "OUT": {
+      "n_annotation": 1592,
+      "n_gated": 1382,
+      "n_agree": 1346,
+      "recall_vs_annotation": 0.845477,
+      "precision_vs_annotation": 0.973951
+     }
+    }
+   }
+  }
+ },
+ "evidence": {
+  "teddy_head": {
+   "embedding": "official TEDDY-G gene-mean z (data/processed/cite_official/z_rna.npy), L2-normalised",
+   "head": "phase-1 MLP + NB decoder mean (no flow matching), outputs/cite_phase1_official/best.pt",
+   "size_factor": 1.0,
+   "normaliser": "95th percentile of the head's prediction over the training cells (split=train), per protein",
+   "clip": [
+    0.0,
+    1.0
+   ],
+   "why_size_factor_cancels": "prediction = softplus(.) * s for a constant s, and the training q95 scales by the same s, so the evidence is independent of s; no measured-protein array enters the evidence path",
+   "adt_names": [
+    "CD86",
+    "CD274",
+    "CD270",
+    "CD155",
+    "CD112",
+    "CD47",
+    "CD48",
+    "CD40",
+    "CD154",
+    "CD52",
+    "CD3",
+    "CD8",
+    "CD56",
+    "CD19",
+    "CD33",
+    "CD11c",
+    "HLA-A-B-C",
+    "CD45RA",
+    "CD123",
+    "CD7",
+    "CD105",
+    "CD49f",
+    "CD194",
+    "CD4",
+    "CD44",
+    "CD14",
+    "CD16",
+    "CD25",
+    "CD45RO",
+    "CD279",
+    "TIGIT",
+    "CD20",
+    "CD335",
+    "CD31",
+    "Podoplanin",
+    "CD146",
+    "IgM",
+    "CD5",
+    "CD195",
+    "CD32",
+    "CD196",
+    "CD185",
+    "CD103",
+    "CD69",
+    "CD62L",
+    "CD161",
+    "CD152",
+    "CD223",
+    "KLRG1",
+    "CD27",
+    "CD107a",
+    "CD95",
+    "CD134",
+    "HLA-DR",
+    "CD1c",
+    "CD11b",
+    "CD64",
+    "CD141",
+    "CD1d",
+    "CD314",
+    "CD35",
+    "CD57",
+    "CD272",
+    "CD278",
+    "CD58",
+    "CD39",
+    "CX3CR1",
+    "CD24",
+    "CD21",
+    "CD11a",
+    "CD79b",
+    "CD244",
+    "CD169",
+    "integrinB7",
+    "CD268",
+    "CD42b",
+    "CD54",
+    "CD62P",
+    "CD119",
+    "TCR",
+    "CD192",
+    "CD122",
+    "FceRIa",
+    "CD41",
+    "CD137",
+    "CD163",
+    "CD83",
+    "CD124",
+    "CD13",
+    "CD2",
+    "CD226",
+    "CD29",
+    "CD303",
+    "CD49b",
+    "CD81",
+    "IgD",
+    "CD18",
+    "CD28",
+    "CD38",
+    "CD127",
+    "CD45",
+    "CD22",
+    "CD71",
+    "CD26",
+    "CD115",
+    "CD63",
+    "CD304",
+    "CD36",
+    "CD172a",
+    "CD72",
+    "CD158",
+    "CD93",
+    "CD49a",
+    "CD49d",
+    "CD73",
+    "CD9",
+    "TCRVa7.2",
+    "TCRVd2",
+    "LOX-1",
+    "CD158b",
+    "CD158e1",
+    "CD142",
+    "CD319",
+    "CD352",
+    "CD94",
+    "CD162",
+    "CD85j",
+    "CD23",
+    "CD328",
+    "HLA-E",
+    "CD82",
+    "CD101",
+    "CD88",
+    "CD224"
+   ],
+   "q95_train_pred": [
+    0.685924,
+    1.162168,
+    1.303368,
+    0.590691,
+    1.111881,
+    2.576678,
+    2.701926,
+    1.08524,
+    1.816769,
+    1.985751,
+    2.096531,
+    1.237832,
+    2.027216,
+    1.832795,
+    1.490299,
+    1.650424,
+    2.093342,
+    3.48357,
+    0.778148,
+    2.424406,
+    1.378763,
+    2.146466,
+    0.498317,
+    1.957777,
+    2.448662,
+    1.05443,
+    2.057225,
+    0.287569,
+    1.930651,
+    1.428198,
+    1.066707,
+    1.489152,
+    1.235257,
+    1.750196,
+    1.058343,
+    0.317617,
+    1.971874,
+    2.864848,
+    1.1109,
+    1.849098,
+    1.078126,
+    0.911091,
+    0.479102,
+    0.301849,
+    1.066489,
+    0.939936,
+    1.348406,
+    0.942301,
+    1.548457,
+    1.252745,
+    1.0462,
+    2.216377,
+    0.740372,
+    1.905703,
+    0.659283,
+    1.109411,
+    0.65249,
+    2.005968,
+    1.399661,
+    1.443727,
+    2.3403,
+    1.610291,
+    0.737687,
+    1.074796,
+    2.148761,
+    1.063327,
+    1.935102,
+    1.918996,
+    0.775638,
+    2.610924,
+    0.909284,
+    1.473441,
+    0.430825,
+    1.156015,
+    0.473764,
+    0.311073,
+    1.439596,
+    0.986937,
+    0.898273,
+    1.258064,
+    1.286288,
+    1.25218,
+    1.375835,
+    2.806418,
+    1.131358,
+    1.01142,
+    1.833687,
+    1.347635,
+    1.028624,
+    2.382814,
+    1.267322,
+    2.132629,
+    0.861085,
+    1.185884,
+    2.227361,
+    0.540395,
+    1.118429,
+    1.732107,
+    2.387434,
+    1.205142,
+    2.863312,
+    1.15207,
+    6.670688,
+    1.217819,
+    1.415992,
+    1.680392,
+    0.76922,
+    3.031152,
+    1.667288,
+    2.122314,
+    0.548424,
+    0.925636,
+    0.527123,
+    1.919119,
+    1.125272,
+    2.300045,
+    0.22738,
+    0.12133,
+    0.651845,
+    0.734287,
+    0.464765,
+    0.699549,
+    0.917069,
+    2.003342,
+    2.064896,
+    2.670674,
+    0.691845,
+    1.61555,
+    1.653105,
+    1.055161,
+    2.108735,
+    1.710102,
+    2.492899,
+    1.382634
+   ]
+  }
+ },
+ "panels": {
+  "selection": {
+   "split": "val (donor 18303), primary-key cells (unscored excluded)",
+   "score": "worst-pair AUROC: for class k, the minimum over every other primary-key class c (OUT included, classes with >= 10 val cells) of the AUROC of the unclipped normalised head prediction for k versus c; ties by one-vs-rest AUROC, then name",
+   "rule": "each protein is assigned to the class where its worst-pair AUROC is highest; a class panel is its top 3 assigned proteins with worst-pair AUROC >= 0.8",
+   "candidates": "all 134 measured-panel proteins",
+   "criteria_computed_and_not_used": "one-vs-rest AUROC (saturates: many proteins within 0.002 of 1 on val) and Cohen's d (scale- and clip-dependent); both tables are in the dev log",
+   "n_val_cells_used": 5669,
+   "class_counts": {
+    "B": 611,
+    "T": 2990,
+    "NK": 254,
+    "myeloid": 348,
+    "OUT": 1466
+   },
+   "nk_must_consider": {
+    "CD56": {
+     "worst_pair_auroc_nk": 0.997488,
+     "auroc_nk_vs_rest": 0.998613,
+     "assigned_class": "NK",
+     "worst_pair_auroc_assigned": 0.997488,
+     "rank_for_nk": 3,
+     "auroc_nk_vs_t": 0.997488
+    },
+    "CD94": {
+     "worst_pair_auroc_nk": 0.998154,
+     "auroc_nk_vs_rest": 0.998981,
+     "assigned_class": "NK",
+     "worst_pair_auroc_assigned": 0.998154,
+     "rank_for_nk": 2,
+     "auroc_nk_vs_t": 0.998154
+    },
+    "CD335": {
+     "worst_pair_auroc_nk": 0.992972,
+     "auroc_nk_vs_rest": 0.997865,
+     "assigned_class": "NK",
+     "worst_pair_auroc_assigned": 0.992972,
+     "rank_for_nk": 4,
+     "auroc_nk_vs_t": 0.999673
+    },
+    "CD16": {
+     "worst_pair_auroc_nk": 0.992092,
+     "auroc_nk_vs_rest": 0.998661,
+     "assigned_class": "NK",
+     "worst_pair_auroc_assigned": 0.992092,
+     "rank_for_nk": 5,
+     "auroc_nk_vs_t": 0.998495
+    }
+   },
+   "top10_per_class": {
+    "B": [
+     {
+      "protein": "CD20",
+      "worst_pair_auroc": 0.993113,
+      "auroc_vs_rest": 0.997996,
+      "cohen_d": 3.128097,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD22",
+      "worst_pair_auroc": 0.990746,
+      "auroc_vs_rest": 0.997199,
+      "cohen_d": 3.35527,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD268",
+      "worst_pair_auroc": 0.989486,
+      "auroc_vs_rest": 0.995489,
+      "cohen_d": 2.006618,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD72",
+      "worst_pair_auroc": 0.989218,
+      "auroc_vs_rest": 0.996822,
+      "cohen_d": 5.726357,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD19",
+      "worst_pair_auroc": 0.981435,
+      "auroc_vs_rest": 0.994619,
+      "cohen_d": 7.418713,
+      "assigned": "B"
+     },
+     {
+      "protein": "HLA-DR",
+      "worst_pair_auroc": 0.963228,
+      "auroc_vs_rest": 0.987204,
+      "cohen_d": 4.900573,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD79b",
+      "worst_pair_auroc": 0.954395,
+      "auroc_vs_rest": 0.985076,
+      "cohen_d": 3.352053,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD21",
+      "worst_pair_auroc": 0.953276,
+      "auroc_vs_rest": 0.980113,
+      "cohen_d": 1.980304,
+      "assigned": "B"
+     },
+     {
+      "protein": "CD24",
+      "worst_pair_auroc": 0.935644,
+      "auroc_vs_rest": 0.981186,
+      "cohen_d": 1.912611,
+      "assigned": "B"
+     },
+     {
+      "protein": "IgM",
+      "worst_pair_auroc": 0.842007,
+      "auroc_vs_rest": 0.921628,
+      "cohen_d": 2.063778,
+      "assigned": "B"
+     }
+    ],
+    "T": [
+     {
+      "protein": "CD3",
+      "worst_pair_auroc": 0.998259,
+      "auroc_vs_rest": 0.998984,
+      "cohen_d": 6.616867,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD2",
+      "worst_pair_auroc": 0.996498,
+      "auroc_vs_rest": 0.999552,
+      "cohen_d": 6.793149,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD5",
+      "worst_pair_auroc": 0.993663,
+      "auroc_vs_rest": 0.995622,
+      "cohen_d": 5.453138,
+      "assigned": "T"
+     },
+     {
+      "protein": "TCR",
+      "worst_pair_auroc": 0.987199,
+      "auroc_vs_rest": 0.992408,
+      "cohen_d": 3.232357,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD278",
+      "worst_pair_auroc": 0.976851,
+      "auroc_vs_rest": 0.987143,
+      "cohen_d": 3.189328,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD48",
+      "worst_pair_auroc": 0.971948,
+      "auroc_vs_rest": 0.993201,
+      "cohen_d": 2.656266,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD27",
+      "worst_pair_auroc": 0.954774,
+      "auroc_vs_rest": 0.964961,
+      "cohen_d": 3.126671,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD44",
+      "worst_pair_auroc": 0.929537,
+      "auroc_vs_rest": 0.938041,
+      "cohen_d": 1.740595,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD127",
+      "worst_pair_auroc": 0.926838,
+      "auroc_vs_rest": 0.954602,
+      "cohen_d": 3.228217,
+      "assigned": "T"
+     },
+     {
+      "protein": "CD45",
+      "worst_pair_auroc": 0.888415,
+      "auroc_vs_rest": 0.985841,
+      "cohen_d": 2.419193,
+      "assigned": "T"
+     }
+    ],
+    "NK": [
+     {
+      "protein": "CD122",
+      "worst_pair_auroc": 0.999118,
+      "auroc_vs_rest": 0.999513,
+      "cohen_d": 8.146375,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD94",
+      "worst_pair_auroc": 0.998154,
+      "auroc_vs_rest": 0.998981,
+      "cohen_d": 6.614057,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD56",
+      "worst_pair_auroc": 0.997488,
+      "auroc_vs_rest": 0.998613,
+      "cohen_d": 6.787947,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD335",
+      "worst_pair_auroc": 0.992972,
+      "auroc_vs_rest": 0.997865,
+      "cohen_d": 4.422581,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD16",
+      "worst_pair_auroc": 0.992092,
+      "auroc_vs_rest": 0.998661,
+      "cohen_d": 5.178127,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD161",
+      "worst_pair_auroc": 0.985775,
+      "auroc_vs_rest": 0.992087,
+      "cohen_d": 4.946873,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD328",
+      "worst_pair_auroc": 0.983302,
+      "auroc_vs_rest": 0.998577,
+      "cohen_d": 6.351463,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD244",
+      "worst_pair_auroc": 0.971907,
+      "auroc_vs_rest": 0.988677,
+      "cohen_d": 4.960276,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD45RA",
+      "worst_pair_auroc": 0.953196,
+      "auroc_vs_rest": 0.972723,
+      "cohen_d": 2.104561,
+      "assigned": "NK"
+     },
+     {
+      "protein": "CD11a",
+      "worst_pair_auroc": 0.892201,
+      "auroc_vs_rest": 0.938631,
+      "cohen_d": 1.721087,
+      "assigned": "NK"
+     }
+    ],
+    "myeloid": [
+     {
+      "protein": "CD172a",
+      "worst_pair_auroc": 0.999703,
+      "auroc_vs_rest": 0.999793,
+      "cohen_d": 3.982002,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD11c",
+      "worst_pair_auroc": 0.999129,
+      "auroc_vs_rest": 0.999696,
+      "cohen_d": 6.551786,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD62P",
+      "worst_pair_auroc": 0.998912,
+      "auroc_vs_rest": 0.999681,
+      "cohen_d": 4.562643,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD93",
+      "worst_pair_auroc": 0.998883,
+      "auroc_vs_rest": 0.999674,
+      "cohen_d": 3.756033,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD41",
+      "worst_pair_auroc": 0.998463,
+      "auroc_vs_rest": 0.999531,
+      "cohen_d": 4.92331,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD64",
+      "worst_pair_auroc": 0.993965,
+      "auroc_vs_rest": 0.998318,
+      "cohen_d": 3.82825,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD86",
+      "worst_pair_auroc": 0.991807,
+      "auroc_vs_rest": 0.997547,
+      "cohen_d": 5.679109,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD33",
+      "worst_pair_auroc": 0.987016,
+      "auroc_vs_rest": 0.996412,
+      "cohen_d": 6.961632,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD13",
+      "worst_pair_auroc": 0.951214,
+      "auroc_vs_rest": 0.985996,
+      "cohen_d": 3.186939,
+      "assigned": "myeloid"
+     },
+     {
+      "protein": "CD31",
+      "worst_pair_auroc": 0.945153,
+      "auroc_vs_rest": 0.952521,
+      "cohen_d": 2.410634,
+      "assigned": "myeloid"
+     }
+    ]
+   },
+   "stability_same_rule_on_training_cells": {
+    "panel": {
+     "B": [
+      "CD22",
+      "CD72",
+      "CD20"
+     ],
+     "T": [
+      "CD3",
+      "CD5",
+      "TCR"
+     ],
+     "NK": [
+      "CD56",
+      "CD122",
+      "CD94"
+     ],
+     "myeloid": [
+      "CD172a",
+      "CD11c",
+      "CD41"
+     ]
+    },
+    "overlap_with_val_panel": {
+     "B": 2,
+     "T": 2,
+     "NK": 3,
+     "myeloid": 2
+    },
+    "note": "diagnostic only, on a seeded sample of 20,000 training primary-key cells (in-sample for the head)"
+   }
+  },
+  "primary": {
+   "proteins": {
+    "B": [
+     "CD20",
+     "CD22",
+     "CD268"
+    ],
+    "T": [
+     "CD3",
+     "CD2",
+     "CD5"
+    ],
+    "NK": [
+     "CD122",
+     "CD94",
+     "CD56"
+    ],
+    "myeloid": [
+     "CD172a",
+     "CD11c",
+     "CD62P"
+    ]
+   },
+   "weights": "equal within a class"
+  },
+  "sensitivity": [
+   "canonical9_plus_nk",
+   "canonical9_variant_plus_nk",
+   "val_k2",
+   "val_k5"
+  ],
+  "canonical9_plus_nk": {
+   "proteins": {
+    "B": [
+     "CD19",
+     "CD72",
+     "CD22"
+    ],
+    "T": [
+     "CD3",
+     "CD2",
+     "CD5"
+    ],
+    "NK": [
+     "CD122",
+     "CD94",
+     "CD56"
+    ],
+    "myeloid": [
+     "CD16",
+     "CD11c",
+     "CD36"
+    ]
+   },
+   "note": "old canonical 9-marker panel (chosen on site4 Pearson in v1/v2) plus the val-selected NK panel minus any protein already in it"
+  },
+  "canonical9_variant_plus_nk": {
+   "proteins": {
+    "B": [
+     "CD19",
+     "CD20",
+     "CD22"
+    ],
+    "T": [
+     "CD3",
+     "CD2",
+     "CD5"
+    ],
+    "NK": [
+     "CD122",
+     "CD94",
+     "CD56"
+    ],
+    "myeloid": [
+     "CD16",
+     "CD11c",
+     "CD14"
+    ]
+   },
+   "note": "canonical panel with CD20 for CD72 and CD14 for CD36, plus the val-selected NK panel"
+  },
+  "val_k2": {
+   "proteins": {
+    "B": [
+     "CD20",
+     "CD22"
+    ],
+    "T": [
+     "CD3",
+     "CD2"
+    ],
+    "NK": [
+     "CD122",
+     "CD94"
+    ],
+    "myeloid": [
+     "CD172a",
+     "CD11c"
+    ]
+   },
+   "note": "same rule, 2 per class"
+  },
+  "val_k5": {
+   "proteins": {
+    "B": [
+     "CD20",
+     "CD22",
+     "CD268",
+     "CD72",
+     "CD19"
+    ],
+    "T": [
+     "CD3",
+     "CD2",
+     "CD5",
+     "TCR",
+     "CD278"
+    ],
+    "NK": [
+     "CD122",
+     "CD94",
+     "CD56",
+     "CD335",
+     "CD16"
+    ],
+    "myeloid": [
+     "CD172a",
+     "CD11c",
+     "CD62P",
+     "CD93",
+     "CD41"
+    ]
+   },
+   "note": "same rule, 5 per class"
+  }
+ },
+ "questions": {
+  "Q1": {
+   "panel": "primary",
+   "bar": 0.298614,
+   "val_no_call_target": 0.15,
+   "val_no_call_realised": 0.150016,
+   "name": "soft 4-class lineage question",
+   "text": "From the TEDDY + head evidence, is this cell B, T, NK or myeloid? Call the class with the highest panel score if that score reaches the bar; otherwise no call.",
+   "actions": [
+    "B",
+    "T",
+    "NK",
+    "myeloid"
+   ],
+   "score": "equal-weight mean of the evidence over the class panel",
+   "key": "primary",
+   "val_outcome_rule": {
+    "n_cells": 6106,
+    "n_scored": 5669,
+    "coverage_all": 0.849984,
+    "n_called_scored": 4765,
+    "accuracy_of_calls": 0.865687,
+    "decision_accuracy": 0.887105,
+    "out_decline_rate": 0.616644
+   }
+  },
+  "Q2": {
+   "panel": "primary",
+   "bar": 0.661255,
+   "val_no_call_target": 0.3,
+   "val_no_call_realised": 0.300033,
+   "name": "strict 4-class lineage question",
+   "text": "As Q1 with a higher bar (nested: every Q2 call is a Q1 call with the same class).",
+   "actions": [
+    "B",
+    "T",
+    "NK",
+    "myeloid"
+   ],
+   "score": "as Q1",
+   "key": "primary",
+   "val_outcome_rule": {
+    "n_cells": 6106,
+    "n_scored": 5669,
+    "coverage_all": 0.699967,
+    "n_called_scored": 3974,
+    "accuracy_of_calls": 0.978359,
+    "decision_accuracy": 0.942494,
+    "out_decline_rate": 0.992497
+   }
+  },
+  "Q3": {
+   "panel": "anchors",
+   "anchors": {
+    "B": "CD19",
+    "T": "CD3",
+    "NK": "CD56",
+    "myeloid": "CD14"
+   },
+   "bar": 0.273973,
+   "val_no_call_target": 0.15,
+   "val_no_call_realised": 0.150016,
+   "name": "CD14-anchored question (B / T / NK / classical monocyte)",
+   "text": "Is this cell a B cell (CD19), T cell (CD3), NK cell (CD56) or a classical CD14+ monocyte (CD14)? Score each class by its one canonical anchor protein; call the highest if it reaches the bar; otherwise no call. Non-classical monocytes and dendritic cells are not an answer (no call).",
+   "actions": [
+    "B",
+    "T",
+    "NK",
+    "myeloid"
+   ],
+   "score": "evidence of the class anchor protein",
+   "key": {
+    "from": "primary",
+    "anchor_protein": "CD14",
+    "classical_types": [
+     "CD14+ Mono"
+    ],
+    "other_myeloid_types": [
+     "CD16+ Mono",
+     "cDC2",
+     "cDC1"
+    ],
+    "rule": "primary-key myeloid: annotated classical monocyte AND measured CD14 high -> myeloid; annotated other myeloid AND measured CD14 not high -> OUT (no call correct); else unscored"
+   },
+   "val_target": {
+    "cd14_gate_precision_for_classical_min": 0.9,
+    "cd14_gate_recall_for_classical_min": 0.7
+   },
+   "val_outcome_rule": {
+    "n_cells": 6106,
+    "n_scored": 5658,
+    "coverage_all": 0.849984,
+    "n_called_scored": 4768,
+    "accuracy_of_calls": 0.854866,
+    "decision_accuracy": 0.877695,
+    "out_decline_rate": 0.586684
+   },
+   "val_key_check": {
+    "n_primary_myeloid_val": 348,
+    "n_q3_myeloid_val": 286,
+    "n_q3_out_from_myeloid_val": 51,
+    "n_q3_unscored_from_myeloid_val": 11,
+    "cd14_gate_precision_for_classical": 0.979452,
+    "cd14_gate_recall_for_classical": 0.982818,
+    "cd14_gate_specificity_for_other_myeloid": 0.894737
+   },
+   "val_target_met": {
+    "precision": true,
+    "recall": true
+   },
+   "anchor_auroc_val": {
+    "CD19": {
+     "class": "B",
+     "worst_pair_auroc_val": 0.981435,
+     "auroc_vs_rest_val": 0.994619
+    },
+    "CD3": {
+     "class": "T",
+     "worst_pair_auroc_val": 0.998259,
+     "auroc_vs_rest_val": 0.998984
+    },
+    "CD56": {
+     "class": "NK",
+     "worst_pair_auroc_val": 0.997488,
+     "auroc_vs_rest_val": 0.998613
+    },
+    "CD14": {
+     "class": "myeloid",
+     "worst_pair_auroc_val": 0.937967,
+     "auroc_vs_rest_val": 0.982314,
+     "auroc_classical_vs_other_myeloid_val": 0.99856
+    }
+   }
+  }
+ },
+ "anm": {
+  "engine": "ANM finite_field_runner (ANM_ROOT, public v2 fix branch), kind finite_graph_scalar",
+  "field_representation": {
+   "kind": "finite_graph_scalar",
+   "steps": 4,
+   "retention": 0.82,
+   "diffusion": 0.16,
+   "source_scale": 1.0
+  },
+  "event_timing": "simultaneous: every evidence event of a cell at t = 0",
+  "event_value": "evidence v_p in [0, 1] (no weight: equal weights within a class)",
+  "actions": [
+   "B",
+   "T",
+   "NK",
+   "myeloid"
+  ],
+  "panel_sizes_equal": true,
+  "panel_size": 3,
+  "field_gain": {
+   "3": 0.370041,
+   "1": 0.364476
+  },
+  "readout_thresholds": {
+   "Q1": 0.331498,
+   "Q2": 0.734073,
+   "Q3": 0.099857
+  },
+  "readout_thresholds_note": "informational (rounded); v3_key.anm_readout_threshold recomputes field_gain(n) * n * bar exactly from the field parameters and the registered bar",
+  "equivalence": "with equal panel sizes and simultaneous events the ANM action score is field_gain(n) * n * S for every class, so ANM's calls equal the re-coded fixed rule's on every cell (checked cell by cell in E1; any mismatch is a failure)",
+  "closure_readout": {
+   "closure_weight": 1.0,
+   "mean_coordinate_weight": 0.25,
+   "direct_action_weight": 0.05
+  },
+  "closure_readout_note": "readout_coordinates over each action's event sites (ANM readout defaults); used only for C2 (nested readouts); its re-coded rule is reported beside it",
+  "closure_bar_Q1": 0.175321,
+  "closure_bar_Q2": 0.342623
+ },
+ "classifier": {
+  "primary": {
+   "model": "multinomial logistic regression (sklearn LogisticRegression, lbfgs, max_iter 3000)",
+   "features": "the primary-panel evidence (12 values, same as the rule and ANM)",
+   "feature_proteins": [
+    "CD20",
+    "CD22",
+    "CD268",
+    "CD3",
+    "CD2",
+    "CD5",
+    "CD122",
+    "CD94",
+    "CD56",
+    "CD172a",
+    "CD11c",
+    "CD62P"
+   ],
+   "labels": "primary key on training cells (5 classes incl. OUT; unscored excluded)",
+   "n_train_labelled": 58657,
+   "class_weight": null,
+   "seed": 0,
+   "C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+   ],
+   "C_selection": "lowest val log-loss on val primary-key cells",
+   "val_log_loss": [
+    {
+     "C": 0.01,
+     "val_log_loss": 0.097658
+    },
+    {
+     "C": 0.1,
+     "val_log_loss": 0.060488
+    },
+    {
+     "C": 1.0,
+     "val_log_loss": 0.051998
+    },
+    {
+     "C": 10.0,
+     "val_log_loss": 0.045805
+    },
+    {
+     "C": 100.0,
+     "val_log_loss": 0.045278
+    }
+   ],
+   "C": 100.0,
+   "decision": "call the lineage with the highest probability if that probability reaches the bar; otherwise no call (an OUT-probable cell has low lineage probabilities)",
+   "bars": {
+    "Q1": 0.001137,
+    "Q2": 0.928654
+   },
+   "bar_rule": "val quantile matching the question's declared val no-call rate"
+  },
+  "secondary": {
+   "model": "sklearn MLPClassifier(hidden_layer_sizes=(64,), alpha=1e-4, early_stopping=True, validation_fraction=0.1, max_iter=500, random_state=seed)",
+   "features": "as primary",
+   "hyperparameters": "fixed a priori (no tuning)"
+  },
+  "q3": {
+   "features": "primary-panel evidence plus the Q3 anchors not already in it",
+   "feature_proteins": [
+    "CD20",
+    "CD22",
+    "CD268",
+    "CD3",
+    "CD2",
+    "CD5",
+    "CD122",
+    "CD94",
+    "CD56",
+    "CD172a",
+    "CD11c",
+    "CD62P",
+    "CD19",
+    "CD14"
+   ],
+   "labels": "Q3 key on training cells",
+   "C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+   ],
+   "val_log_loss": [
+    {
+     "C": 0.01,
+     "val_log_loss": 0.073782
+    },
+    {
+     "C": 0.1,
+     "val_log_loss": 0.045281
+    },
+    {
+     "C": 1.0,
+     "val_log_loss": 0.04298
+    },
+    {
+     "C": 10.0,
+     "val_log_loss": 0.037127
+    },
+    {
+     "C": 100.0,
+     "val_log_loss": 0.035183
+    }
+   ],
+   "C": 100.0
+  }
+ },
+ "e3": {
+  "pairs_rule": "k = 10 cosine neighbours on the raw L2-normalised final z within the evaluated split; each neighbour edge kept once; NK-T pair = one primary-key NK and one primary-key T cell",
+  "flag_rule": "sufficiency-flagged pair: cosine >= flag_cosine (TEDDY puts the two cells closer than the median val NK-T neighbour pair)",
+  "flag_cosine": 0.949402,
+  "n_val_nkt_pairs": 171
+ },
+ "e2_subset": {
+  "rule": "seeded (seed 7) uniform sample without labels: 500 cells per primary donor, 250 from donor 15078",
+  "primary_indices": [
+   82919,
+   82921,
+   82932,
+   82949,
+   82977,
+   82995,
+   82997,
+   83012,
+   83042,
+   83048,
+   83073,
+   83091,
+   83110,
+   83115,
+   83142,
+   83164,
+   83178,
+   83184,
+   83188,
+   83199,
+   83233,
+   83241,
+   83260,
+   83261,
+   83265,
+   83270,
+   83277,
+   83284,
+   83306,
+   83309,
+   83322,
+   83342,
+   83387,
+   83454,
+   83508,
+   83518,
+   83532,
+   83533,
+   83535,
+   83547,
+   83569,
+   83573,
+   83586,
+   83600,
+   83639,
+   83650,
+   83652,
+   83662,
+   83687,
+   83688,
+   83704,
+   83713,
+   83715,
+   83717,
+   83729,
+   83764,
+   83796,
+   83800,
+   83816,
+   83819,
+   83839,
+   83863,
+   83867,
+   83875,
+   83877,
+   83880,
+   83909,
+   83917,
+   83943,
+   83950,
+   83967,
+   83968,
+   84002,
+   84013,
+   84024,
+   84061,
+   84080,
+   84084,
+   84100,
+   84101,
+   84109,
+   84127,
+   84142,
+   84165,
+   84173,
+   84190,
+   84222,
+   84229,
+   84248,
+   84254,
+   84269,
+   84286,
+   84287,
+   84309,
+   84337,
+   84339,
+   84353,
+   84383,
+   84398,
+   84402,
+   84426,
+   84443,
+   84458,
+   84469,
+   84470,
+   84471,
+   84507,
+   84537,
+   84572,
+   84583,
+   84585,
+   84597,
+   84611,
+   84619,
+   84620,
+   84621,
+   84652,
+   84664,
+   84672,
+   84694,
+   84696,
+   84726,
+   84740,
+   84753,
+   84755,
+   84771,
+   84814,
+   84820,
+   84832,
+   84856,
+   84868,
+   84875,
+   84959,
+   84982,
+   85001,
+   85036,
+   85046,
+   85049,
+   85078,
+   85093,
+   85103,
+   85104,
+   85106,
+   85114,
+   85119,
+   85123,
+   85149,
+   85151,
+   85168,
+   85185,
+   85200,
+   85213,
+   85248,
+   85250,
+   85284,
+   85293,
+   85321,
+   85331,
+   85361,
+   85363,
+   85400,
+   85412,
+   85413,
+   85441,
+   85460,
+   85481,
+   85524,
+   85544,
+   85545,
+   85549,
+   85558,
+   85574,
+   85598,
+   85601,
+   85635,
+   85637,
+   85671,
+   85682,
+   85694,
+   85695,
+   85708,
+   85713,
+   85718,
+   85739,
+   85756,
+   85790,
+   85822,
+   85834,
+   85841,
+   85865,
+   85867,
+   85871,
+   85923,
+   85946,
+   85952,
+   85961,
+   85963,
+   85966,
+   85971,
+   85975,
+   86010,
+   86042,
+   86048,
+   86068,
+   86074,
+   86075,
+   86115,
+   86117,
+   86121,
+   86179,
+   86190,
+   86192,
+   86193,
+   86204,
+   86215,
+   86251,
+   86253,
+   86262,
+   86269,
+   86283,
+   86289,
+   86304,
+   86312,
+   86334,
+   86337,
+   86344,
+   86346,
+   86374,
+   86380,
+   86410,
+   86431,
+   86439,
+   86456,
+   86457,
+   86505,
+   86536,
+   86544,
+   86573,
+   86577,
+   86600,
+   86603,
+   86617,
+   86618,
+   86634,
+   86657,
+   86662,
+   86681,
+   86713,
+   86720,
+   86758,
+   86759,
+   86773,
+   86779,
+   86807,
+   86824,
+   86850,
+   86868,
+   86897,
+   86906,
+   86913,
+   86983,
+   87002,
+   87006,
+   87017,
+   87035,
+   87047,
+   87064,
+   87068,
+   87074,
+   87089,
+   87112,
+   87123,
+   87129,
+   87156,
+   87162,
+   87164,
+   87172,
+   87177,
+   87178,
+   87182,
+   87188,
+   87190,
+   87240,
+   87241,
+   87252,
+   87272,
+   87336,
+   87340,
+   87345,
+   87353,
+   87354,
+   87363,
+   87378,
+   87410,
+   87413,
+   87423,
+   87465,
+   87467,
+   87476,
+   87498,
+   87504,
+   87522,
+   87540,
+   87545,
+   87567,
+   87594,
+   87603,
+   87625,
+   87643,
+   87672,
+   87674,
+   87679,
+   87695,
+   87723,
+   87728,
+   87729,
+   87732,
+   87735,
+   87737,
+   87746,
+   87752,
+   87770,
+   87772,
+   87785,
+   87815,
+   87818,
+   87853,
+   87898,
+   87904,
+   87912,
+   87916,
+   87922,
+   87948,
+   87955,
+   87982,
+   88008,
+   88015,
+   88039,
+   88042,
+   88056,
+   88060,
+   88146,
+   88168,
+   88170,
+   88187,
+   88198,
+   88204,
+   88225,
+   88239,
+   88240,
+   88255,
+   88265,
+   88267,
+   88319,
+   88336,
+   88366,
+   88380,
+   88382,
+   88383,
+   88411,
+   88434,
+   88468,
+   88489,
+   88490,
+   88497,
+   88518,
+   88533,
+   88535,
+   88546,
+   88571,
+   88593,
+   88596,
+   88624,
+   88649,
+   88659,
+   88674,
+   88679,
+   88688,
+   88693,
+   88703,
+   88713,
+   88715,
+   88731,
+   88733,
+   88750,
+   88781,
+   88782,
+   88786,
+   88793,
+   88801,
+   88820,
+   88825,
+   88828,
+   88840,
+   88903,
+   88912,
+   88915,
+   88929,
+   88937,
+   88947,
+   88964,
+   88971,
+   89011,
+   89012,
+   89013,
+   89024,
+   89031,
+   89052,
+   89058,
+   89071,
+   89072,
+   89103,
+   89115,
+   89125,
+   89173,
+   89177,
+   89193,
+   89242,
+   89243,
+   89253,
+   89295,
+   89301,
+   89304,
+   89317,
+   89327,
+   89341,
+   89345,
+   89363,
+   89374,
+   89375,
+   89383,
+   89418,
+   89429,
+   89435,
+   89443,
+   89453,
+   89476,
+   89477,
+   89496,
+   89500,
+   89505,
+   89516,
+   89520,
+   89528,
+   89532,
+   89560,
+   89578,
+   89585,
+   89600,
+   89608,
+   89615,
+   89641,
+   89653,
+   89660,
+   89668,
+   89673,
+   89684,
+   89688,
+   89709,
+   89711,
+   89717,
+   89722,
+   89724,
+   89728,
+   89730,
+   89763,
+   89778,
+   89779,
+   89791,
+   89820,
+   89822,
+   89835,
+   89868,
+   89877,
+   89886,
+   89895,
+   89929,
+   89939,
+   89945,
+   89956,
+   89962,
+   89977,
+   89980,
+   89990,
+   90023,
+   90024,
+   90043,
+   90056,
+   90107,
+   90109,
+   90118,
+   90126,
+   90170,
+   90178,
+   90195,
+   90208,
+   90221,
+   90238,
+   90239,
+   90255,
+   78978,
+   78988,
+   79014,
+   79015,
+   79016,
+   79017,
+   79020,
+   79034,
+   79052,
+   79058,
+   79062,
+   79065,
+   79083,
+   79096,
+   79126,
+   79129,
+   79139,
+   79144,
+   79159,
+   79162,
+   79164,
+   79181,
+   79183,
+   79202,
+   79204,
+   79211,
+   79218,
+   79224,
+   79233,
+   79235,
+   79240,
+   79245,
+   79248,
+   79250,
+   79255,
+   79257,
+   79278,
+   79279,
+   79299,
+   79301,
+   79339,
+   79359,
+   79378,
+   79381,
+   79400,
+   79420,
+   79422,
+   79437,
+   79438,
+   79444,
+   79446,
+   79448,
+   79455,
+   79464,
+   79467,
+   79484,
+   79487,
+   79489,
+   79491,
+   79504,
+   79514,
+   79518,
+   79524,
+   79526,
+   79535,
+   79539,
+   79542,
+   79545,
+   79546,
+   79552,
+   79578,
+   79581,
+   79590,
+   79592,
+   79601,
+   79605,
+   79616,
+   79618,
+   79623,
+   79629,
+   79634,
+   79638,
+   79641,
+   79642,
+   79645,
+   79646,
+   79647,
+   79651,
+   79661,
+   79665,
+   79674,
+   79678,
+   79686,
+   79688,
+   79714,
+   79716,
+   79724,
+   79728,
+   79731,
+   79733,
+   79734,
+   79743,
+   79746,
+   79773,
+   79779,
+   79786,
+   79790,
+   79808,
+   79814,
+   79820,
+   79821,
+   79854,
+   79861,
+   79862,
+   79864,
+   79866,
+   79872,
+   79905,
+   79912,
+   79921,
+   79923,
+   79926,
+   79935,
+   79949,
+   79950,
+   79954,
+   79955,
+   79961,
+   79970,
+   79974,
+   79975,
+   79979,
+   79981,
+   79983,
+   79984,
+   79991,
+   79995,
+   80006,
+   80008,
+   80009,
+   80035,
+   80045,
+   80054,
+   80059,
+   80066,
+   80074,
+   80093,
+   80101,
+   80111,
+   80125,
+   80152,
+   80157,
+   80173,
+   80177,
+   80181,
+   80182,
+   80186,
+   80188,
+   80191,
+   80206,
+   80225,
+   80239,
+   80250,
+   80252,
+   80254,
+   80260,
+   80271,
+   80274,
+   80284,
+   80293,
+   80294,
+   80310,
+   80311,
+   80321,
+   80329,
+   80348,
+   80349,
+   80350,
+   80351,
+   80358,
+   80365,
+   80367,
+   80374,
+   80388,
+   80397,
+   80400,
+   80405,
+   80409,
+   80410,
+   80416,
+   80422,
+   80442,
+   80445,
+   80452,
+   80456,
+   80457,
+   80463,
+   80488,
+   80495,
+   80506,
+   80508,
+   80510,
+   80517,
+   80522,
+   80524,
+   80525,
+   80530,
+   80543,
+   80547,
+   80558,
+   80567,
+   80570,
+   80595,
+   80596,
+   80598,
+   80599,
+   80624,
+   80644,
+   80647,
+   80651,
+   80653,
+   80656,
+   80665,
+   80674,
+   80677,
+   80680,
+   80692,
+   80693,
+   80718,
+   80722,
+   80723,
+   80729,
+   80731,
+   80751,
+   80754,
+   80759,
+   80780,
+   80787,
+   80792,
+   80793,
+   80795,
+   80801,
+   80821,
+   80824,
+   80829,
+   80832,
+   80848,
+   80855,
+   80863,
+   80867,
+   80868,
+   80870,
+   80875,
+   80878,
+   80882,
+   80887,
+   80907,
+   80946,
+   80951,
+   80972,
+   80976,
+   80984,
+   80994,
+   80997,
+   81012,
+   81023,
+   81025,
+   81027,
+   81042,
+   81049,
+   81054,
+   81060,
+   81061,
+   81065,
+   81068,
+   81077,
+   81080,
+   81115,
+   81119,
+   81124,
+   81126,
+   81131,
+   81137,
+   81140,
+   81146,
+   81150,
+   81153,
+   81155,
+   81164,
+   81166,
+   81167,
+   81174,
+   81180,
+   81183,
+   81198,
+   81199,
+   81206,
+   81207,
+   81218,
+   81227,
+   81228,
+   81238,
+   81240,
+   81255,
+   81270,
+   81273,
+   81296,
+   81297,
+   81307,
+   81311,
+   81317,
+   81318,
+   81329,
+   81333,
+   81344,
+   81350,
+   81359,
+   81365,
+   81371,
+   81405,
+   81417,
+   81444,
+   81450,
+   81453,
+   81484,
+   81485,
+   81501,
+   81551,
+   81567,
+   81581,
+   81584,
+   81592,
+   81595,
+   81601,
+   81603,
+   81606,
+   81607,
+   81608,
+   81621,
+   81623,
+   81628,
+   81630,
+   81631,
+   81660,
+   81661,
+   81662,
+   81665,
+   81666,
+   81667,
+   81685,
+   81687,
+   81689,
+   81697,
+   81703,
+   81712,
+   81719,
+   81721,
+   81736,
+   81737,
+   81740,
+   81743,
+   81744,
+   81747,
+   81750,
+   81753,
+   81757,
+   81767,
+   81781,
+   81789,
+   81791,
+   81795,
+   81796,
+   81797,
+   81803,
+   81810,
+   81821,
+   81824,
+   81829,
+   81842,
+   81848,
+   81851,
+   81853,
+   81874,
+   81878,
+   81880,
+   81884,
+   81897,
+   81899,
+   81904,
+   81906,
+   81939,
+   81947,
+   81951,
+   81960,
+   81961,
+   81963,
+   81969,
+   81979,
+   81999,
+   82006,
+   82010,
+   82033,
+   82034,
+   82039,
+   82042,
+   82048,
+   82058,
+   82059,
+   82061,
+   82079,
+   82087,
+   82093,
+   82094,
+   82113,
+   82135,
+   82146,
+   82150,
+   82151,
+   82159,
+   82161,
+   82163,
+   82166,
+   82180,
+   82184,
+   82190,
+   82197,
+   82205,
+   82209,
+   82218,
+   82244,
+   82248,
+   82253,
+   82265,
+   82270,
+   82307,
+   82309,
+   82320,
+   82335,
+   82338,
+   82347,
+   82349,
+   82352,
+   82360,
+   82361,
+   82365,
+   82375,
+   82378,
+   82387,
+   82389,
+   82391,
+   82402,
+   82408,
+   82410,
+   82419,
+   82424,
+   82425,
+   82441,
+   82449,
+   82490,
+   82502,
+   82504,
+   82514,
+   82528,
+   82536,
+   82547,
+   82557,
+   82558,
+   82569,
+   82573,
+   82578,
+   82613,
+   82635,
+   82639,
+   82644,
+   82657,
+   82670,
+   82684,
+   82687,
+   82693,
+   82713,
+   82721,
+   82731,
+   82740,
+   82752,
+   82753,
+   82757,
+   82774,
+   82780,
+   82784,
+   82795,
+   82804,
+   82810,
+   82817,
+   82850,
+   82864,
+   82885,
+   82886,
+   82888,
+   82889,
+   82895
+  ],
+  "secondary_indices": [
+   73542,
+   73571,
+   73580,
+   73590,
+   73622,
+   73664,
+   73672,
+   73694,
+   73728,
+   73769,
+   73777,
+   73832,
+   73846,
+   73881,
+   73908,
+   73924,
+   73959,
+   73968,
+   74008,
+   74019,
+   74041,
+   74054,
+   74056,
+   74087,
+   74098,
+   74112,
+   74116,
+   74118,
+   74137,
+   74153,
+   74156,
+   74168,
+   74180,
+   74215,
+   74233,
+   74242,
+   74253,
+   74311,
+   74364,
+   74443,
+   74449,
+   74459,
+   74484,
+   74499,
+   74509,
+   74556,
+   74566,
+   74590,
+   74637,
+   74638,
+   74640,
+   74806,
+   74808,
+   74821,
+   74881,
+   74891,
+   74900,
+   74923,
+   74932,
+   74937,
+   74940,
+   74981,
+   75028,
+   75031,
+   75036,
+   75078,
+   75100,
+   75101,
+   75102,
+   75120,
+   75124,
+   75139,
+   75143,
+   75145,
+   75151,
+   75153,
+   75198,
+   75206,
+   75214,
+   75220,
+   75286,
+   75309,
+   75441,
+   75454,
+   75469,
+   75493,
+   75522,
+   75575,
+   75586,
+   75587,
+   75608,
+   75671,
+   75676,
+   75707,
+   75716,
+   75725,
+   75726,
+   75749,
+   75751,
+   75762,
+   75763,
+   75772,
+   75787,
+   75789,
+   75855,
+   75872,
+   75946,
+   75949,
+   75961,
+   75984,
+   76000,
+   76007,
+   76010,
+   76015,
+   76020,
+   76173,
+   76185,
+   76222,
+   76229,
+   76230,
+   76269,
+   76273,
+   76299,
+   76313,
+   76368,
+   76370,
+   76374,
+   76388,
+   76389,
+   76433,
+   76434,
+   76466,
+   76494,
+   76497,
+   76512,
+   76516,
+   76525,
+   76565,
+   76568,
+   76587,
+   76649,
+   76672,
+   76686,
+   76695,
+   76724,
+   76735,
+   76753,
+   76758,
+   76761,
+   76763,
+   76773,
+   76797,
+   76831,
+   76856,
+   76930,
+   76986,
+   76988,
+   77000,
+   77032,
+   77042,
+   77059,
+   77097,
+   77143,
+   77192,
+   77201,
+   77220,
+   77240,
+   77249,
+   77292,
+   77299,
+   77327,
+   77352,
+   77355,
+   77407,
+   77408,
+   77433,
+   77474,
+   77525,
+   77555,
+   77565,
+   77580,
+   77587,
+   77594,
+   77627,
+   77640,
+   77648,
+   77674,
+   77699,
+   77705,
+   77725,
+   77733,
+   77771,
+   77779,
+   77800,
+   77806,
+   77809,
+   77812,
+   77830,
+   77836,
+   77872,
+   77907,
+   77926,
+   77934,
+   77946,
+   78002,
+   78029,
+   78038,
+   78046,
+   78086,
+   78105,
+   78135,
+   78172,
+   78184,
+   78216,
+   78221,
+   78236,
+   78237,
+   78266,
+   78275,
+   78278,
+   78282,
+   78327,
+   78335,
+   78349,
+   78354,
+   78360,
+   78413,
+   78415,
+   78438,
+   78462,
+   78488,
+   78490,
+   78508,
+   78527,
+   78532,
+   78562,
+   78564,
+   78579,
+   78582,
+   78601,
+   78651,
+   78704,
+   78717,
+   78742,
+   78794,
+   78801,
+   78826,
+   78829,
+   78855,
+   78868
+  ],
+  "sha256_primary": "b786e9160be6001d0169f0ba5008cf3703954673d87cf49ccbfc5e6821bd3b80",
+  "sha256_secondary": "29f8c39d342a5c5bad0030b903045e4c387e7f0ccf47f39a1ec8ef35bab2fec5"
+ },
+ "seeds": {
+  "global": 20260930,
+  "bootstrap": 1,
+  "classifier": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "label_cost_draws": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "e2_subset": 7,
+  "e2_thinning": [
+   11,
+   12
+  ],
+  "e3_token_subset": 13,
+  "e4_noise": 17,
+  "e5_cells": 19,
+  "e5_random_directions": 23
+ }
+}

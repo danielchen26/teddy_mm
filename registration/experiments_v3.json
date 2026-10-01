@@ -1,0 +1,197 @@
+{
+  "common": {
+    "arm_names": {
+      "rule": "TEDDY + fixed rule (re-coded question)",
+      "anm": "TEDDY + ANM (simultaneous events, shared scoring)",
+      "classifier": "TEDDY + trained classifier (same evidence, labels from training sites only)",
+      "margin": "TEDDY margin (top-1 minus top-2 rule score; a confidence score, not a separate decision)",
+      "declared_rule": "declared rule: used wherever ANM's field does not run (e.g. a trust-weighted average); never called ANM"
+    },
+    "evidence_rule": "every compared method reads the same evidence values of the same cells; no method reads measured protein or annotation of an evaluated cell",
+    "metrics": {
+      "coverage": "fraction of all cells of the evaluated split that receive a call (label-free denominator; unscored cells included)",
+      "selective_accuracy": "among called cells that are scored by the key: fraction whose call equals the key; a call on a key-OUT cell is wrong",
+      "decision_accuracy": "among scored cells: correct call, or no call on a key-OUT cell",
+      "out_decline_rate": "fraction of key-OUT cells with no call",
+      "per_class": "recall per key class; call table per annotated cell type (all 40 site4 types); calls on unscored cells reported separately"
+    },
+    "matched_coverage": {
+      "grid": [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5],
+      "rule": "at coverage c each method calls its ceil(c * N) most confident cells of the evaluated split (N = all cells of the split; ties broken by global cell index); this uses only each method's own scores, never labels",
+      "aurc": "area under selective accuracy vs coverage over the grid (trapezoid), divided by the coverage range 0.45",
+      "operating_point": "each method's deployed bar (from val) is also reported with its realised site4 coverage"
+    },
+    "confidence_scores": {
+      "rule": "top rule score max_k S_k",
+      "anm": "top ANM action score (a fixed multiple of the rule's top score; identical ranking)",
+      "margin": "S_top1 - S_top2",
+      "classifier": "highest lineage probability",
+      "entropy": "1 - H(q)/log(4) with q = S / sum(S)",
+      "anm_closure": "top closure-readout score (C2 only)"
+    },
+    "statistics": {
+      "bootstrap": "two-stage: resample donors with replacement, then cells (or pairs) with replacement within each drawn donor; B = 2000; seed = registration seeds.bootstrap; percentile 95% interval",
+      "per_donor": "every endpoint is also reported per donor (19593, 13272; secondary 15078)",
+      "two_donor_caveat": "the primary split has 2 donors, so the interval reflects the spread of the observed donors and cannot support population claims",
+      "win": "point difference >= margin AND bootstrap 95% lower bound > 0 AND the difference has the same sign and is >= margin/2 in each primary donor",
+      "loss": "mirror of win (difference <= -margin, upper bound < 0, both donors)",
+      "equivalent": "bootstrap 95% interval inside (-margin, +margin)",
+      "otherwise": "inconclusive",
+      "secondary_split": "donor 15078 is reported with the same rules and never changes a primary verdict"
+    },
+    "reporting": "report every pre-registered endpoint, including failures and inconclusive results; no site4 rerun with changed settings; anything decided after site4 is opened is labelled exploratory",
+    "addenda": "a builder may fix a number not given here only by a procedure written here, only from train/val cells, and must write it to registration/addenda/<experiment>.json, record its sha256 in registration/addenda/HASHES.txt and commit it before any site4 evaluation; v3_leakage_check.py must pass for that builder",
+    "outputs": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/<experiment>/ : <experiment>_results.json, REPORT.md, progress.log; every result JSON carries registration_sha256"
+  },
+  "E1": {
+    "name": "Mode B rerun on the v3 key: Experiments 1, 3, 4, 5 and C2 (nested readouts)",
+    "cells": ["test_primary", "test_secondary"],
+    "key": "primary (Q1, Q2); q3 (Q3); sensitivity: annotation_only, primary_per_batch, primary_no_gdT158",
+    "panels": "primary; sensitivity rows: canonical9_plus_nk, canonical9_variant_plus_nk, val_k2, val_k5 (rule and classifier; ANM on the primary panel)",
+    "exp1_change_the_question": {
+      "arms": ["rule", "anm", "classifier trained on Q1 labels answering Q3 without relabelling", "classifier trained on Q3 labels (all training-site labels)"],
+      "endpoints": {
+        "E1.1a": "cells where ANM's call differs from the re-coded rule's (Q1, Q2, Q3); pre-registered value 0",
+        "E1.1b": "fraction of cells whose call changes Q1 -> Q2 and Q1 -> Q3 (descriptive), per annotated type",
+        "E1.1c": "Q3 selective accuracy on the q3 key at the rule's realised Q3 coverage: rule vs Q1 classifier without relabelling",
+        "E1.1d": "same, rule vs Q3 classifier (label-rich ceiling)"
+      },
+      "margin": 0.01,
+      "failure": "any E1.1a mismatch means the bridge differs from its declared rule: stop and fix before any interpretation; 'zero labels to change the question' holds for any written rule and is reported as such, not as an ANM property"
+    },
+    "exp3_why_this_call": {
+      "anm": "leave-one-out over the called class's events (events at t = 0); top-1 marker = the event whose removal lowers the called action's score most; flip = the removal changes the call",
+      "rule": "closed form: top-1 marker = the panel protein with the largest evidence in the called class (equal weights); flip when S_called - v_p / 3 falls below the bar or below another class score",
+      "endpoints": {
+        "E1.3a": "agreement of ANM's top-1 marker with the closed form (pre-registered expectation 1.000; below 0.99 is reported as a discrepancy)",
+        "E1.3b": "per-donor share of each top-1 marker (descriptive); null = within-class permutation of marker identities per cell, 1000 permutations (no slot-preserving null)",
+        "E1.3c": "error rate of flip-sensitive calls vs the same number of lowest-margin calls"
+      },
+      "margin": 0.02,
+      "win": "flip-sensitive calls have a higher error rate than the matched lowest-margin calls by >= 0.02 (win rules): attribution flags errors beyond the margin",
+      "failure": "otherwise attribution adds no flagging value beyond TEDDY's margin"
+    },
+    "exp4_which_calls_to_trust": {
+      "scores": ["anm", "margin", "classifier", "entropy"],
+      "questions": ["Q1", "Q2"],
+      "endpoints": {"E1.4a": "AURC (primary)", "E1.4b": "selective accuracy at coverage 0.9 and 0.7"},
+      "comparison": "ANM soft score vs TEDDY margin (primary); vs classifier and entropy (secondary)",
+      "margin": 0.005,
+      "failure": "if ANM is not a win against the margin, the gate claim stays withdrawn"
+    },
+    "exp5_label_cost": {
+      "question": "Q3 (also Q1 for reference)",
+      "labels": "uniform random draws from training-site cells scored by the q3 key; n in [0, 25, 50, 100, 200, 500, 1000, 2000, 5000, all]; n = 0 is the Q1 classifier without relabelling; draws use seeds.label_cost_draws",
+      "classifier": "registration classifier.q3 (features, C); with a single class in a draw the classifier predicts that class",
+      "endpoint": "E1.5: n* = smallest n whose median-over-draws selective accuracy at the rule's realised Q3 coverage is >= the rule's minus 0.005",
+      "comparators": ["rule (0 labels)", "anm (0 labels, identical to the rule)", "classifier at each n"],
+      "note": "a measurement, not a win/loss test; zero labels holds for the fixed rule as well as for ANM"
+    },
+    "c2_nested_readouts": {
+      "nested_pair": "outer readout P_f = a call is made under the question's bar; inner readout Q_f = the call equals the key; Q2 calls are a subset of Q1 calls",
+      "arms": ["anm closure readout (readout_coordinates over each action's event sites, ANM defaults)", "rule (mean; equals ANM's action readout)", "re-coded closure rule (must equal ANM closure on every cell)", "classifier"],
+      "endpoint": "E1.C2: key-OUT decline rate in test_primary at matched overall coverage c in {rule's realised Q1 coverage, 0.8, 0.7}, with in-scope selective accuracy beside it",
+      "margin": 0.05,
+      "win": "ANM closure declines >= 0.05 more key-OUT cells than the mean rule at the same coverage (win rules) while its in-scope selective accuracy is not lower by more than 0.005",
+      "sensitivity": "all annotated-OUT cells (annotation_only key)",
+      "failure": "if not a win, ANM's nested readout does not decline out-of-scope cells better than the rule; the re-coded closure rule always equals ANM closure, so any win is a property of the readout form, which a written rule also implements"
+    },
+    "falsification": "ANM adds decision value in Mode B only through an ANM-specific readout; this is falsified for v3 if C2 and Exp. 4 are not wins"
+  },
+  "E2": {
+    "name": "Response decomposition (C3) and linearity (C5) under input perturbation",
+    "cells": "registration e2_subset (1,000 test_primary + 250 test_secondary cells; drawn without labels)",
+    "pipeline": "official TEDDY-G preprocessing exactly as data/processed/cite_official/z_rna_manifest.json (counts/total x 1e4, divide by TEDDY gene medians, top 2,048 tokens, fp16 autocast, gene-mean) -> frozen phase-1 head -> registered evidence -> Q1 rule and ANM",
+    "perturbations": {
+      "rna_thinning": {"fractions_kept": [0.95, 0.9, 0.8, 0.6, 0.2, 0.05], "epsilon": "1 - fraction kept", "method": "binomial thinning of each UMI count", "seeds": "seeds.e2_thinning (two draws per level)"},
+      "gene_scaling": {"epsilon": [1.0, 0.5, 0.25], "method": "multiply the gene's official value by (1 - epsilon) before ranking (epsilon = 1 masks the gene)", "cells": "only cells in which the gene is among the cell's tokens"},
+      "genes": {
+        "panel_coding_genes": {"CD20": "MS4A1", "CD22": "CD22", "CD268": "TNFRSF13C", "CD3": ["CD3E", "CD3D", "CD3G"], "CD2": "CD2", "CD5": "CD5", "CD122": "IL2RB", "CD94": "KLRD1", "CD56": "NCAM1", "CD172a": "SIRPA", "CD11c": "ITGAX", "CD62P": "SELP"},
+        "nk_t_genes": ["NCAM1", "KLRD1", "NCR1", "FCGR3A", "KLRF1", "KLRC1", "SH2D1B", "CD3E", "CD3D", "CD3G", "CD5", "CD6", "CD28"],
+        "ensembl": "symbols are mapped with a GRCh38 reference recorded in the E2 addendum; the 13 NK/T genes reuse the IDs in scripts/mode_a_token_probes.py; genes absent from the 12,052-gene vocabulary are dropped and listed"
+      },
+      "floor": "re-embed every unperturbed cell once to measure the numerical floor (fp16)"
+    },
+    "measurements": "per cell and perturbation: dz = ||z' - z|| (L2-normalised z); dv = ||v' - v|| over the 12 panel evidences; dS = change of the called class's score and of the margin; dANM = change of ANM's action score of the baseline call; dcall = call changed",
+    "linearity_C5": {
+      "pairs": "thinning (eps, eps/2) = (0.1, 0.05), (0.2, 0.1), (0.4, 0.2), (0.8, 0.4); gene scaling (1.0, 0.5), (0.5, 0.25)",
+      "test": "slope ratio rho = ||d(eps)|| / (2 ||d(eps/2)||) and cosine(d(eps), d(eps/2)) for dz, dv and dS; a cell is in the linear regime at a level if |rho - 1| <= 0.1, cosine >= 0.9 and ||d(eps/2)|| > 3 x floor",
+      "endpoint": "E2.lin: fraction of cells in the linear regime per level and stage (descriptive; thinning uses the seed-averaged response)"
+    },
+    "decomposition_C3": {
+      "z_probe": "multinomial logistic regression on L2-normalised z of training primary-key cells, C chosen on val by log-loss from [0.01, 0.1, 1, 10, 100] (addendum)",
+      "labels_per_lost_cell": "for a cell correct and called at baseline but wrong or not called after the perturbation: 'representation' if the z-probe's class on z' is wrong; else 'head' if the rule's argmax on v' is wrong; else 'decision' (right class below the bar)",
+      "endpoint": "E2.dec: shares of representation / head / decision among lost cells per perturbation family and level"
+    },
+    "comparator": "the plain perturbation -> accuracy curve (Q1 selective and decision accuracy vs epsilon)",
+    "falsification": "the decomposition adds information beyond the curve only if (i) two perturbations with accuracy losses within 0.02 of each other differ by >= 0.15 in a localisation share, or (ii) the small-eps response (dS at eps = 0.05 thinning, linearly extrapolated) predicts which cells change call at eps = 0.8 with AUROC >= 0.02 above baseline margin alone (bootstrap lower bound > 0); if neither holds, it adds nothing beyond the curve",
+    "compute": "about 0.118 s per cell embedding (official run, MPS fp16); 1,250 cells x (12 thinning + 1 floor + 3 per expressed gene) embeddings"
+  },
+  "E3": {
+    "name": "NK-T look-alike pairs under the v3 key (C4) and their repair on frozen TEDDY",
+    "cells": "test_primary; pairs by registration e3.pairs_rule; flagged by e3.flag_cosine (from val); variants all and no_gdT158",
+    "readouts": {
+      "head": "registered phase-1 head",
+      "R1_mlp_layer_means": "MLP on the 12 gene-mean layer outputs (z_rna_layer_means.npy, concatenated), 2 hidden layers of 256, dropout 0.1, Adam 1e-3, up to 30 epochs, early stopping on val MSE; trained on training-site cells; targets = measured panel proteins + CD335 and CD3, each / training q95 of measured, clipped to [0, 1]",
+      "R2_attention_pooling": "one learned query attending over layer-12 gene-token states, linear output to the same targets; trained on 4,000 training-site cells (seeds.e3_token_subset; one third key-NK, one third key-T, one third other) with 1,000 val cells for early stopping; Adam 1e-3, up to 50 epochs",
+      "null_seed_replicate": "the phase-1 head architecture retrained with seed 1 (scripts/04_train.py settings) as the regression-to-the-mean and instability null"
+    },
+    "gap_ratio": "per readout and protein p in {CD56, CD94, CD335, CD3}: median |predicted evidence difference| / median |measured evidence difference| within pairs; GR = mean over the 4 proteins; each readout normalised by the training q95 of its own predictions",
+    "endpoints": {
+      "E3.H3a": "D_R = [GR_R(flagged) - GR_head(flagged)] - [GR_R(unflagged) - GR_head(unflagged)] for R in {R1, R2}, minus the same quantity for the null; pre-registered: >= 0.05 with win rules (pairs resampled within donors)",
+      "E3.H3a_pooling": "D_R2 - D_R1 >= 0.05: the loss is in mean pooling",
+      "E3.H3b": "NK-vs-T selective accuracy among key-NK and key-T cells of test_primary at matched coverage 0.9 and 0.8: Q1 rule on head evidence vs on R1 / R2 evidence (confidence = top rule score)"
+    },
+    "trust_comparators": ["head margin", "entropy", "kNN label disagreement: share of the cell's 10 nearest training cells in z whose training key label differs from the call"],
+    "margin": {"H3a": 0.05, "H3b": 0.01},
+    "falsification": "if neither R1 nor R2 reaches D_R >= 0.05 over the null, 'the NK-T loss is in the readout or pooling and is repairable on frozen TEDDY' is rejected for this dataset"
+  },
+  "E4": {
+    "name": "Experiment 2 redesigned: two-channel fusion (C6)",
+    "cells": ["test_primary", "test_secondary"],
+    "key": "E4 key from the measured primary-panel proteins: Q1 scoring on measured panel evidence (measured / training q95 of measured, clipped); call the argmax if the top score >= tau_K, else OUT; tau_K chosen on val by maximum Cohen kappa against the annotation class over [0.05, 0.10, ..., 0.60] (addendum). Secondary: v3 primary key (partly circular for channel 2, disclosed)",
+    "channels": {
+      "channel1": "TEDDY + head prediction of the 12 panel proteins from RNA (registered evidence)",
+      "channel2": "ridge regression from the measured non-panel proteins (the 122 proteins outside the primary panel) to the measured panel evidence, alpha on val from [0.1, 1, 10, 100, 1000]; trained on training cells; it never receives a panel protein's measured value; normalised by the training q95 of its own predictions"
+    },
+    "noise_levels": {"L0": "none", "L1": "RNA thinned to 0.2 (channel 1 re-embedded)", "L2": "50% of channel-2 input proteins set to 0 per cell (seeds.e4_noise)", "L3": "L1 and L2"},
+    "trust": "per channel and level on val: mean over the 12 panel proteins of max(0, Pearson(channel evidence, measured evidence)); ANM source_scale = trust / max of the two channels' trust (addendum)",
+    "methods": {
+      "F0": "channel 1 alone, Q1 rule; F0b channel 2 alone",
+      "F1": "simple average of the two channels' class scores (declared rule)",
+      "F2": "trust-weighted average (declared rule; equals ANM without contradiction events and with the field's gain)",
+      "F3": "stacker: logistic regression on the 8 channel class scores, trained on val per noise level",
+      "F4": "learned fusion: logistic regression on the 24 evidence values, trained on training cells at L0",
+      "F5": "TEDDY + ANM fusion: support events per channel (source_scale = trust), contradiction events (for each channel, its top class contradicts every other class with value = that channel's top score x 0.5), all events at t = 0, action readout; bar from val at no-call 0.15 (addendum)"
+    },
+    "controls": ["F5 with no propagation (ANM no_propagation)", "F5 with channel 2 at t = 2 (declared order) vs t = 0 (time-blind)", "F5 without contradiction events (= F2)", "re-coded closed form of F5 (must equal F5 on every cell)"],
+    "endpoint": "E4: selective accuracy at matched coverage 0.8 (and 0.9) averaged over L0-L3, E4 key, test_primary: F5 vs the best of F1-F4 (primary) and F5 vs F2 (field effect)",
+    "margin": 0.01,
+    "outcomes": {"field_adds_value": "F5 wins against the best of F1-F4", "field_adds_nothing": "F5 - F2 equivalent within 0.01 (an acceptable, reportable outcome)", "field_hurts": "F5 loses"},
+    "failure": "if both channels' val trust differ by less than 0.01 at every level, the trust mechanism is untestable here; report so"
+  },
+  "E5": {
+    "name": "Mode A layer dynamics (C7): Jacobian-vector products through TEDDY's layers",
+    "cells": "unique test_primary cells in E3's NK-T pairs, at most 200 per primary donor (seeds.e5_cells)",
+    "direction": "NK-T direction per layer d_l = mean over training key-NK cells minus mean over training key-T cells of the gene-mean layer output (layers 1-12 from z_rna_layer_means.npy; input layer recomputed), unit-normalised",
+    "perturbation": "for each E2 gene present in the cell, delta h_0 at the gene's position = the gene's token embedding, unit-normalised; controls: random unit vectors at the same position and random other genes of the cell (seeds.e5_random_directions)",
+    "jvp": "delta h_l = J_l delta h_(l-1) via torch.func.jvp through each actual encoder layer (fp32, CPU, eval mode, bool key-padding mask, standard Python path), delta z_l = masked gene-mean of delta h_l; r_l = <delta z_l, d_l>; layer gain g_l = |r_l| / |r_(l-1)|",
+    "check": "central finite differences at eps in {1e-2, 1e-3}: relative error <= 0.05 and cosine >= 0.99 at eps = 1e-3 for >= 95% of (cell, gene) cases; otherwise E5 stops with 'JVP not validated'",
+    "endpoint": "E5: layer l* with the most negative median log g_l for the NK-T component; compared with the layer at which the linear NK-T protein-probe gap ratio drops most in outputs/mode_a_official/mode_a_results.json",
+    "margins": {"localisation_agreement_layers": 1, "direction_specificity_log_gain": 0.1},
+    "falsification": "if the JVP fails the finite-difference check, a linear-response description of TEDDY's layers is not valid at this scale; if the NK-T component's median log-gain at l* is within 0.1 of the random directions' (bootstrap), no layer localises the NK-T loss"
+  },
+  "E6": {
+    "name": "External confirmation (D11)",
+    "dataset_criteria": "CITE-seq with RNA counts, a published cell-type annotation, ADT that includes the gate proteins, never used in any teddy_mm analysis",
+    "candidate": "Hao et al. 2021 PBMC CITE-seq, GEO GSE164378 (3' data), present under data/raw/external_hao2021_gse164378 since 2026-09-30; not opened for this registration (no ADT names, values, RNA or labels read)",
+    "frozen": "TEDDY and the phase-1 head (no retraining), the evidence normaliser, panels, bars, classifier, gate logic and the annotation-map principles of this registration",
+    "gate_thresholds": "ADT CLR scales differ between datasets, so the BMMC thresholds do not transfer: the E6 primary key uses the registered per-batch estimator (gmm_nonzero_post50 within each external donor, label-free); annotation-only key reported too",
+    "missing_proteins": "a gate protein absent from the external panel drops the clause that uses it (CD335 -> NK count over the available NK markers, nk_min 2 kept; CD71 -> erythroid clause dropped); a panel protein absent -> that class is scored on its remaining panel proteins; listed in the addendum",
+    "annotation_map": "written from the external label names only and committed as an addendum (with sha256) before any external ADT or RNA value is read",
+    "contamination": "state whether GSE164378 is in TEDDY's pretraining corpus; if yes, label E6 'RNA possibly seen by TEDDY in pretraining'",
+    "endpoints": "E1's primary endpoints (E1.1a, E1.4a, E1.C2) and Q1 selective accuracy at matched coverage, per external donor",
+    "replication": "a v3 conclusion replicates if its sign holds in a majority of external donors and its two-stage bootstrap interval excludes 0 in the same direction",
+    "failure": "if annotation vs per-batch gate kappa < 0.70 on the external data, results are reported on the annotation-only key and labelled 'key not validated'"
+  }
+}

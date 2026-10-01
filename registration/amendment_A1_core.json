@@ -1,0 +1,199 @@
+{
+ "amendment_id": "teddy_mm_v3_A1",
+ "builder": "v3_build_amendment A1 1.0",
+ "matched_coverage": {
+  "tie_break": {
+   "method": "rank of the global cell index in numpy default_rng(seed).permutation(n_cells)",
+   "seed": 29,
+   "n_cells": 90261
+  },
+  "val_ties": {
+   "Q1": {
+    "share_top_score_exactly_1": 0.366197,
+    "share_cells_in_a_tie_group": 0.366197,
+    "largest_tie_group_share": 0.366197,
+    "share_margin_exactly_0": 0.0
+   },
+   "Q3": {
+    "share_top_score_exactly_1": 0.531444,
+    "share_cells_in_a_tie_group": 0.531772,
+    "largest_tie_group_share": 0.531444
+   }
+  },
+  "test_row_order_metadata": {
+   "n_test_rows": 16750,
+   "test_rows_contiguous": true,
+   "donor_blocks_in_row_order": 3
+  }
+ },
+ "e1_3": {
+  "rho_G_n_minus_1_over_G_n": {
+   "n": 3,
+   "rho": 0.992479,
+   "G_n": 0.370041,
+   "G_n_minus_1": 0.367257
+  },
+  "val_Q1": {
+   "n_calls": 5190,
+   "share_calls_with_tied_top_marker": 0.533333,
+   "n_flip_exact": 914,
+   "n_flip_registered_form": 908,
+   "n_calls_flip_status_differs": 6
+  }
+ },
+ "e4_channel2": {
+  "stored_adt_form": "per-cell CLR: expm1(stored) is a cell's integer count vector divided by one per-cell factor",
+  "clr_integrality_check": {
+   "n_cells": 2000,
+   "seed": 5,
+   "max_k": 5,
+   "rel_tol": 0.001,
+   "share_cells_integral": 1.0
+  },
+  "ridge_val_mean_r2": {
+   "alpha": 10.0,
+   "n_train": 20000,
+   "seed": 0,
+   "stored_nonpanel_values": 0.647964,
+   "panel_free_inputs": 0.637936,
+   "panel_free_inputs_plus_clr_scalar": 0.641594
+  },
+  "n_channel2_inputs": 122
+ },
+ "classifiers": {
+  "q1labels_q3features": {
+   "features": [
+    "CD20",
+    "CD22",
+    "CD268",
+    "CD3",
+    "CD2",
+    "CD5",
+    "CD122",
+    "CD94",
+    "CD56",
+    "CD172a",
+    "CD11c",
+    "CD62P",
+    "CD19",
+    "CD14"
+   ],
+   "C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+   ],
+   "val_log_loss": [
+    {
+     "C": 0.01,
+     "val_log_loss": 0.073346
+    },
+    {
+     "C": 0.1,
+     "val_log_loss": 0.046275
+    },
+    {
+     "C": 1.0,
+     "val_log_loss": 0.040072
+    },
+    {
+     "C": 10.0,
+     "val_log_loss": 0.035518
+    },
+    {
+     "C": 100.0,
+     "val_log_loss": 0.033674
+    }
+   ],
+   "C": 100.0,
+   "n_train_labelled": 58657,
+   "n_val_labelled": 5669,
+   "labels": "training-cell primary key (Q1 labels, 5 classes incl. OUT)"
+  },
+  "q1labels_anchors": {
+   "features": [
+    "CD19",
+    "CD3",
+    "CD56",
+    "CD14"
+   ],
+   "C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+   ],
+   "val_log_loss": [
+    {
+     "C": 0.01,
+     "val_log_loss": 0.180354
+    },
+    {
+     "C": 0.1,
+     "val_log_loss": 0.092885
+    },
+    {
+     "C": 1.0,
+     "val_log_loss": 0.065008
+    },
+    {
+     "C": 10.0,
+     "val_log_loss": 0.062309
+    },
+    {
+     "C": 100.0,
+     "val_log_loss": 0.062622
+    }
+   ],
+   "C": 10.0,
+   "n_train_labelled": 58657,
+   "n_val_labelled": 5669,
+   "labels": "training-cell primary key (Q1 labels, 5 classes incl. OUT)"
+  },
+  "q3labels_anchors": {
+   "features": [
+    "CD19",
+    "CD3",
+    "CD56",
+    "CD14"
+   ],
+   "C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+   ],
+   "val_log_loss": [
+    {
+     "C": 0.01,
+     "val_log_loss": 0.127127
+    },
+    {
+     "C": 0.1,
+     "val_log_loss": 0.063196
+    },
+    {
+     "C": 1.0,
+     "val_log_loss": 0.053331
+    },
+    {
+     "C": 10.0,
+     "val_log_loss": 0.050793
+    },
+    {
+     "C": 100.0,
+     "val_log_loss": 0.050537
+    }
+   ],
+   "C": 100.0,
+   "n_train_labelled": 53808,
+   "n_val_labelled": 5658,
+   "labels": "training-cell q3 key"
+  },
+  "model": "multinomial logistic regression (sklearn LogisticRegression, lbfgs, max_iter 3000, random_state 0); C by lowest val log-loss on labelled val cells, ties -> smaller C (as registration classifier)"
+ }
+}

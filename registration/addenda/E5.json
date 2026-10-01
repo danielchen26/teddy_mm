@@ -1,0 +1,37 @@
+{
+ "addendum_to": "registration/registration_v3.json, experiments.E5 (primary endpoint, cells, directions, perturbation, check, margins, falsification are the registered ones and are not changed here)",
+ "addendum_version": 3,
+ "experiment": "E5",
+ "fixed_before_site4": "fixed on training and validation cells only and committed before any site4 forward pass of this script; smoke runs use val donor 18303 cells only",
+ "infeasibilities_needing_an_amendment": [
+  "'standard Python path': forward-mode AD is not implemented for PyTorch's fused attention kernels (_transformer_encoder_layer_fwd, _native_multi_head_attention, _scaled_dot_product_flash_attention_for_cpu, _scaled_dot_product_attention_math_for_mps; torch 2.14, checked), so the JVP runs through explicit attention arithmetic with each layer's own weights; its forward equals the module's to about 6e-6 (every cell), its JVP equals a float64 CPU JVP to about 4e-6 relative and float64 central FD of the module to about 6e-5 at 1e-3 (val smoke)",
+  "'CPU': a CPU run of about 600 cells x ~20 cases is days; the device is MPS in float32 (same precision)",
+  "the float32 check at eps = 1e-3 reaches the float32 rounding floor for weak responses at depths 9-12: val smoke 4 of 36 cases with relative error 0.05-0.12 and cosine >= 0.993 there (|eps dz| / |z| about 2e-6), every case passing at 1e-2 and in float64 (S5). If the registered gate fails for this reason, the registered verdict is 'JVP not validated' unless an amendment adopting S5 is committed before site4"
+ ],
+ "open_choices_fixed": {
+  "cells": "E3 pairs rebuilt by registration e3.pairs_rule as amended by A1.8 (k = 10 cosine neighbours of the raw L2-normalised z_rna.npy within each test_primary donor, each edge once, one primary-key NK and one primary-key T cell; variant 'all'); unique cells; per primary donor in registration order, if more than 200, a draw without replacement with numpy default_rng(seeds.e5_cells), one generator for both donors",
+  "check_scope": "(cell, gene) cases = the self pushes; pass = relative error <= 0.05 and cosine >= 0.99 at every depth 1..12 at eps = 1e-3 (float32, the registered precision); eps = 1e-2 reported",
+  "comparator_layer": "the layer whose step has the largest drop of the mean over CD56 / CD94 / CD335 / CD3 of the no_gdT158 gap ratio in outputs/mode_a_official/mode_a_results.json (the 'all' variant reported)",
+  "endpoint_scope": "l* over the self pushes in the E5 cells; log g_l = log|r_l| - log|r_(l-1)|, r_l = <dz_l, unit(d_l)>, l = 1..12",
+  "genes": "E2 genes = panel_coding_genes (flattened) then nk_t_genes, first occurrence kept; Ensembl ids from data/raw/external_hao2021_gse164378/ref_10x_grch38_3.0.0/features_grch38_3.0.0.tsv.gz (10x GRCh38 3.0.0; checked to give the mode_a_token_probes ids for the 13 NK/T genes); genes absent from the processed genes or the TEDDY vocabulary are dropped and listed",
+  "keys": "primary key from bridge_anm/lib/v3_key.build_keys with the frozen registration (training NK / T for d_l, test_primary NK / T for the pairs)",
+  "other_control": "2 tokens of the cell that are not E2 genes, drawn with the same generator before the rand vectors, each pushed along its own embedding",
+  "precision_and_path": "float32; every layer evaluated with its own weights and explicit attention arithmetic (see infeasibilities); finite differences through the module's own layers",
+  "rand_control": "one Gaussian unit vector per (cell, gene) case at the same position, drawn in E2 gene order with numpy default_rng([seeds.e5_random_directions, cell index])",
+  "specificity": "D = median log g_{l*}(self) - median log g_{l*}(rand) over the E5 cells; two-stage bootstrap (common.statistics as amended by A1: B = 2000, seed 1, l* recomputed inside each replicate); 'no layer localises the NK-T loss' if the 95% interval lies inside (-0.1, 0.1) (common 'equivalent'); 'localised at l*' if D <= -0.1, upper bound < 0 and D <= -0.05 in each primary donor (common 'win'); otherwise inconclusive",
+  "tangent": "delta h_0 = ||E[gene]|| * v at the gene's position (v unit; the log-gain is scale-free); finite differences use c = eps / ||E[gene]||, i.e. eps times the unit vector, as registered"
+ },
+ "outputs": "outputs/v3/E5/: E5_results.json, REPORT.md, progress.log, cells/ (one file per cell); every result JSON carries registration_sha256 and addendum_sha256",
+ "script": "scripts/mode_a_layer_dynamics.py (mode_a_layer_dynamics v3)",
+ "secondary_analyses": {
+  "S1_localised_nkt_attenuation": "L_E5 has a two-stage upper bound < 0, is the argmin in >= 50% of the resamples and has median dG < 0 in both primary donors",
+  "S2_lookalike_specificity": "median G_12(E5 cells) - median G_12(random cells), nkt: upper bound < 0 and < 0 in both donors -> look-alike cells damp the push more",
+  "S3_head_transmission": "median (H_12 - G_12), H = head-score lens (gradient of mean(CD56, CD94, CD335) - CD3, predicted / train p95) over the training NK-T head-score gap, per A0",
+  "S4_linearity": "one-sided slopes D+-(e) vs the JVP and vs e/2 (tau 0.1) at e = 0.02 on every self and nkt case, and at 0.1 and 1.0 on the first 100 cells of the seeded order; linear range = largest e with pass rate >= 0.90 at every depth",
+  "S5_float64_check": "the registered central-FD check in float64 on the CPU through the module's own layers, one case per direction of the first 20 cells of the order, against the device float32 JVP",
+  "S6_float64_jvp": "the JVP of the first 2 cases of the first 2 cells recomputed in float64 on the CPU",
+  "nkt_push": "for the 7 NK/T genes CD3E, CD3D, NCAM1, KLRD1, NCR1, FCGR3A, KLRF1: a push along unit(mean_NK - mean_T) of the training input gene-mean; G_l = (d_l . dz_l / ||d_l||^2) / A0, A0 = ||E[gene]|| / (n ||d_0||), dG_l = G_l - G_{l-1}; L_E5 = argmin median dG_l",
+  "note": "pre-specified, reported separately, never change the registered E5 verdict",
+  "random_cells": "per primary donor 100 test_primary NK / T cells in no E3 pair, class proportions and token-count quintiles matched to the donor's E5 cells (seeds.e5_cells generator); a quintile with too few cells is filled at random from the donor's other cells of the class (logged)"
+ }
+}

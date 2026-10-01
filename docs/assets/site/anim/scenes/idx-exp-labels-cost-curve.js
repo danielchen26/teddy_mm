@@ -240,10 +240,19 @@ export default function create(ctx) {
       binS.setSize(sW, binH, Math.min(0.12, binH / 2)); binS.position.set(sX, by, 0);
       binP.setSize(pW, binH, Math.min(0.12, binH / 2)); binP.position.set(pX, by, 0);
       wall.setPoints([[wX, by - binH / 2 - wallX, 1], [wX, by + binH / 2 + wallX, 1]]).setWidth(P(0.07, 2.5, 4));
-      wallL.visible = wide;
       wallL.position.set(wX, by + binH / 2 + wallX + U(3), 1);
+      // lifted toward the chart, the "no overlap" word can land on ANM's numbers (650-800 px): then the pool's
+      // label carries it, as in the narrow layout
+      let wallOn = wide;
+      if (wide) {
+        const tx = tgt.position.x, ty = tgt.position.y, lh = lineH(fs.small);
+        const tw1 = U(tw(`declines ${pct(N.anmDeclines)} · exactness ${f3(N.anmExactness)}`, fs.small));
+        const wy = wallL.position.y, ww = U(tw('no overlap', fs.small)) / 2;
+        if (wX - ww < tx + tw1 && wX + ww > tx && wy < ty && wy + lh > ty - 2 * lh) wallOn = false;
+      }
+      wallL.visible = wallOn;
       binSL.position.set(sX, by - binH / 2 - U(3), 1);
-      binPL.setText(`${int(N.poolCells)} label-pool cells` + (wide ? '' : ' · no overlap'));
+      binPL.setText(`${int(N.poolCells)} label-pool cells` + (wallOn ? '' : ' · no overlap'));
       binPL.position.set(pX, by - binH / 2 - U(3), 1);
       binSL.visible = binPL.visible = !compact;
       binSLi.visible = binPLi.visible = compact;
@@ -312,11 +321,16 @@ export default function create(ctx) {
     axis[1].setPoints([[xb + U(3), axY, 1], [XE, axY, 1]]);
     brk[0].setPoints([[xb - U(3) - bw2, axY - bh, 1], [xb - U(3) + bw2, axY + bh, 1]]);
     brk[1].setPoints([[xb + U(3) - bw2, axY - bh, 1], [xb + U(3) + bw2, axY + bh, 1]]);
+    // on a log axis 500 and 1,000 sit close: on mid-size stages their labels overprinted ("5001,000"), so a
+    // tick label that would touch the previous shown one is dropped (the bars already say ≈ 500 and ≈ 1,000)
+    let lastR = -Infinity;
     ticks.forEach((k, i) => {
-      const x = X(qOf(k.v));
+      const x = X(qOf(k.v)), half = U(tw(k.l === ticks[0].l ? '0' : int(k.v), fs.tick)) / 2;
       k.t.setPoints([[x, axY - U(4), 1], [x, axY, 1]]);
       k.l.position.set(x, axY - tickOff, 1);
-      k.l.visible = wide || i === 0 || i === TICKS.length - 1;
+      const last = i === TICKS.length - 1;
+      k.l.visible = (wide || i === 0 || last) && (last || x - half > lastR + U(4));
+      if (k.l.visible) lastR = x + half;
     });
     axT.setText(wide ? 'labelled cells (log scale)' : 'labelled cells (log)');
     if (wide) axT.position.set((X(QB) + XE) / 2, axY - tickOff - lineH(fs.tick), 1);

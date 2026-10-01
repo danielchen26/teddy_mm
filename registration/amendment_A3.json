@@ -1,0 +1,319 @@
+{
+ "amendment_id": "teddy_mm_v3_A3",
+ "amends": {
+  "file": "registration/registration_v3.json",
+  "registration_sha256": "e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3",
+  "after": "registration/amendment_A2.json",
+  "amendment_A1_sha256": "1f44be66bfc22a5bc428cf31a0bcd14047466005f4308386da195f55b767cdee",
+  "amendment_A2_sha256": "20b64174b063d39997abf09877ae1ba152d935589b43630e15dd6ebe6d21fd36"
+ },
+ "title": "Amendment A3 to the v3 pre-registration: E3 H3a_pooling scale artefact",
+ "written_before": "any site4 (test) evaluation of E3; the only numbers computed here use split=train rows (protein, cell types, embedding) and the split and donor columns (leakage_check)",
+ "scope": "registration_v3.json, amendment_A1.json, amendment_A2.json and the addenda are unchanged; builders apply A1, A2, then A3 (v3_amend.load_registration_amended()). Where A3 differs from the registration as amended by A1 and A2, from A2 (supersedes_in_amendments) or from the E3 addendum (supersedes_in_addenda), A3 wins. A3 only makes one verdict stricter (A3.1) and concerns E3 only",
+ "disclosure": {
+  "E1_site4_results_seen": "before A3 was written, the orchestrating session had already seen the E1 site4 (test) results (E1 is the Mode B rerun). A3 concerns only E3 (the E3.H3a_pooling verdict) and follows from the algebra of the registered statistic (A2.1's algebra with R1 in the head's place); it reads no E1 output and nothing in it depends on an E1 result",
+  "E3_site4_state": "no E3 site4 evaluation had been run: E3 evaluate, the only E3 stage that reads site4 protein or cell types, needs R2's site4 predictions, which E3 r2_predict (a TEDDY + R2 forward of site4 RNA; no protein or label) was still writing while A3 was written; A3 and its builder read none of them. From A3 on, E3 evaluate on site4 is refused unless A3 is committed and matches",
+  "E3_val_smoke_seen": "the val-only smoke runs of E3 evaluate (val donor 18303, small subsets, labelled smoke) had been seen; A3's rule does not depend on them",
+  "numbers_computed_for_A3": "the only numbers computed for A3 use split=train rows (protein, cell types, embedding) and the split and donor columns (leakage_check)"
+ },
+ "findings": [
+  {
+   "id": "A3.1",
+   "area": "E3.H3a_pooling (D_R2 - D_R1, 'the loss is in mean pooling'): scale artefact of the registered contrast",
+   "found_by": "review of E3 before any site4 evaluation of E3: A2 left E3.H3a_pooling on the registered rule (A2.1 'H3a_pooling (D_R2 - D_R1) is unchanged'), and commit b4ecad4 then added the A2.1-style conditions (b') and (c') beside the registered pooling verdict as a secondary that never decides (scripts/v3_e3_nkt_repair.py, run_h3a / pooling_scale_check, decides: False)",
+   "finding": "the head and the null cancel in the registered pooling contrast: D_R2 - D_R1 = [GR_R2(fl) - GR_R1(fl)] - [GR_R2(unfl) - GR_R1(unfl)], which is not scale-free: if R2 keeps a common fraction s < 1 of R1's NK-T evidence differences (GR_R2 = s GR_R1 on every pair set), D_R2 - D_R1 = (1 - s) * (GR_R1(unfl) - GR_R1(fl)) > 0 whenever R1 keeps less of the gap on flagged pairs. Such an R2 recovers less of the measured gap than R1 on flagged pairs, yet can pass the registered win rule and support 'the loss is in mean pooling'. This is the algebra of A2.1 with R1 in the head's place",
+   "fix": "the registered D_R2 - D_R1 computation, margin 0.05 and win / loss / equivalent rules are kept. The pooling claim wins only if the registered rule gives a win AND, under the same registered two-stage donor bootstrap (B = 2000, seed 1, the same replicates as D_R2 - D_R1) and per-donor rule: (b') recovery on flagged pairs beyond R1: term_flagged_R2_minus_R1 = GR_R2(flagged) - GR_R1(flagged) > 0, its two-stage 95% interval excluding 0 (lower bound > 0) and > 0 in each primary donor; (c') the scale-free contrast Dlog_R2 - Dlog_R1 = [ln GR_R2(fl) - ln GR_R1(fl)] - [ln GR_R2(unfl) - ln GR_R1(unfl)] (Dlog_R as the E3 builder computes it, addendum secondary_H3a S1), > 0 with its two-stage 95% interval excluding 0 (lower bound > 0) and > 0 in each primary donor. An undefined value fails. If the registered pooling verdict is a win but (b') or (c') fails, the E3.H3a_pooling verdict is 'not supported (scale artefact)'; a loss, equivalent or inconclusive registered verdict is unchanged. (b') and (c') are the statistics term_flagged_R2_minus_R1 and Dlog_R2_minus_Dlog_R1 that the E3 evaluate code computes since commit b4ecad4 with decides = False; under A3 they decide. E3.H3a (as amended by A2.1), E3.H3b and the E3 falsification (A2.1) are unchanged",
+   "effect": "stricter: every A3 pooling win is a registered pooling win (v3_amend.a3_pooling_verdict). Training-pair illustration (computed; 1967 NK-T pairs of the 6 training donors, 1293 flagged): the head's GR is 0.415683 on flagged and 0.54728 on unflagged pairs, so with a head-like R1 a pure rescaling reaches the margin at 1 - s = 0.379949 (point estimate). R2 = 0.5 x R1 has D_R2 - D_R1 = 0.065798 with (b') -0.207842 and (c') 0.0: positive D, nothing repaired; a flagged-pair repair has (b') 0.584317 and (c') 0.877831. The head's flagged / unflagged difference varies in sign across training donors (computed.head_gap_ratio.per_donor), so the size of the artefact depends on R1; the rule does not"
+  }
+ ],
+ "experiments_overrides": {
+  "E3/endpoints/E3.H3a_pooling": "D_R2 - D_R1 >= 0.05: the loss is in mean pooling (registered; margin 0.05 with the registration win / loss / equivalent rules). A3.1: the pooling claim wins only if the registered rule wins and, under the same two-stage donor bootstrap and per-donor rule, (b') recovery on flagged pairs beyond R1: term_flagged_R2_minus_R1 = GR_R2(flagged) - GR_R1(flagged) > 0, its two-stage 95% interval excluding 0 (lower bound > 0) and > 0 in each primary donor and (c') the scale-free contrast Dlog_R2 - Dlog_R1 = [ln GR_R2(fl) - ln GR_R1(fl)] - [ln GR_R2(unfl) - ln GR_R1(unfl)] (Dlog_R as the E3 builder computes it, addendum secondary_H3a S1), > 0 with its two-stage 95% interval excluding 0 (lower bound > 0) and > 0 in each primary donor; a registered pooling win without (b') and (c') is 'not supported (scale artefact)'"
+ },
+ "e3": {
+  "h3a_pooling_win": {
+   "registered_D": "unchanged: D_R2 - D_R1 as registered, margin 0.05, registration win / loss / equivalent rules (E3 addendum declared.H3a: 'pooling = D_R2 - D_R1')",
+   "conditions": {
+    "b_prime": {
+     "statistic": "term_flagged_R2_minus_R1 = GR_R2(flagged) - GR_R1(flagged)",
+     "rule": "point > 0, two-stage 95% lower bound > 0, > 0 in each primary donor"
+    },
+    "c_prime": {
+     "statistic": "Dlog_R2_minus_Dlog_R1 = Dlog_R2 - Dlog_R1 (E3 addendum secondary_H3a S1)",
+     "rule": "point > 0, two-stage 95% lower bound > 0, > 0 in each primary donor"
+    }
+   },
+   "bootstrap": "the registered two-stage bootstrap of E3.H3a (A1.1): donors then pairs within donors, B = 2000, seed 1, the same replicates as D_R2 - D_R1; percentile interval over the defined replicates",
+   "verdict": "win if the registered pooling verdict is win and (b') and (c') hold; 'not supported (scale artefact)' if it is a win and (b') or (c') fails; otherwise the registered pooling verdict",
+   "decides": "test_primary, variant all; other splits, variants and sensitivities are reported with the same rule",
+   "statistics_in_code": "scripts/v3_e3_nkt_repair.py h3a_stats: term_flagged_R2_minus_R1, Dlog_R2_minus_Dlog_R1 (added by commit b4ecad4 as a secondary with decides = False)",
+   "functions": "v3_amend.a2_positive_condition, v3_amend.a3_pooling_verdict"
+  }
+ },
+ "supersedes_in_addenda": [
+  {
+   "file": "registration/addenda/E3.json",
+   "sha256": "09f932ed166cad029d4efcd3f9f022717854d69d9d41389ab3d74ab71ab9c513",
+   "unchanged_file": true,
+   "fields": [
+    "declared.H3a: 'pooling = D_R2 - D_R1; margin 0.05 with the registration win / loss / equivalent rules' -> the A3.1 pooling win (registered win plus (b') and (c'))",
+    "declared.secondary_H3a: S1 (Dlog_R) enters the A3.1 pooling condition (c') as Dlog_R2 - Dlog_R1"
+   ]
+  }
+ ],
+ "supersedes_in_amendments": [
+  {
+   "file": "registration/amendment_A2.json",
+   "sha256": "20b64174b063d39997abf09877ae1ba152d935589b43630e15dd6ebe6d21fd36",
+   "unchanged_file": true,
+   "fields": [
+    "findings A2.1 fix: 'H3a_pooling (D_R2 - D_R1) is unchanged' -> A3.1"
+   ]
+  }
+ ],
+ "change_log": [
+  {
+   "file": "registration/amendment_A3.json (+ .sha256, amendment_A3_core.json, AMENDMENT_A3.md)",
+   "change": "new amendment A3",
+   "reason": "A3.1 above; written before any site4 evaluation of E3"
+  },
+  {
+   "file": "bridge_anm/lib/v3_amend.py",
+   "change": "load_registration_amended() applies A1, A2, then A3, verifying the registration, A1, A2 and A3 hashes and that A3 names the registration, A1 and A2 on disk; amendment_A3_status() for the E3 site4 evaluate guard; a3_pooling_verdict()",
+   "reason": "every v3 builder reads the amended registration through this loader"
+  },
+  {
+   "file": "scripts/v3_e3_nkt_repair.py",
+   "change": "evaluate on site4 refuses unless A3 is committed and matches; the E3.H3a_pooling verdict is the A3.1 verdict, computed on unrounded values and the same replicates (the b4ecad4 secondary block becomes the deciding A3 block; the registered pooling verdict is reported beside it); DECLARED (the addendum's declared part) is unchanged",
+   "reason": "A3.1; earlier stages (null, r1, r2_states, r2_fit, r2_predict) are unchanged"
+  },
+  {
+   "file": "tests/test_v3_amend.py, tests/test_e2_response.py",
+   "change": "A3 loading, tamper / chain / missing-file detection, status, the E3 evaluate guard, A3.1 end to end through run_h3a / verdicts; the E2 guard test copies A3 (the loader needs it)",
+   "reason": "A3"
+  },
+  {
+   "file": "registration/HASHES.txt",
+   "change": "A3 lines; v3_amend.py line moved to the A3 version (the A2 version's sha256 is in amendment_A2.json provenance)",
+   "reason": "hash record of the registration files"
+  }
+ ],
+ "computed": {
+  "amendment_id": "teddy_mm_v3_A3",
+  "builder": "v3_build_amendment_A3 1.0",
+  "train_pairs": {
+   "rule": "as E3 evaluate (addendum declared.pairs): k = 10 cosine neighbours of the raw official z within each training donor (v3_e3.nkt_pairs_within_donors), NK-T pair = one key-NK and one key-T cell (registration primary key) of the same donor, flagged if cosine >= 0.949402",
+   "donors": [
+    "10886",
+    "11466",
+    "12710",
+    "15078",
+    "16710",
+    "28045"
+   ],
+   "n_pairs": 1967,
+   "n_flagged": 1293,
+   "per_donor": {
+    "10886": {
+     "n_pairs": 161,
+     "n_flagged": 112
+    },
+    "11466": {
+     "n_pairs": 246,
+     "n_flagged": 156
+    },
+    "12710": {
+     "n_pairs": 135,
+     "n_flagged": 48
+    },
+    "15078": {
+     "n_pairs": 415,
+     "n_flagged": 179
+    },
+    "16710": {
+     "n_pairs": 228,
+     "n_flagged": 98
+    },
+    "28045": {
+     "n_pairs": 782,
+     "n_flagged": 700
+    }
+   },
+   "pairs_sha256": "6a686eeb8d1e9f1346304b603eb9aa4a3b77dfc9becfe91a19346a8837547977"
+  },
+  "head_gap_ratio": {
+   "what": "the registered phase-1 head's gap ratio GR (E3 addendum declared.gap_ratio; evidence = prediction / registered q95_train_pred, clipped; measured = ADT / addendum q95_measured_train, clipped) on the training pairs",
+   "GR_head_flagged": 0.415683,
+   "GR_head_unflagged": 0.54728,
+   "unflagged_minus_flagged": 0.131596,
+   "per_donor": {
+    "10886": {
+     "GR_head_flagged": null,
+     "GR_head_unflagged": 0.860957,
+     "unflagged_minus_flagged": null
+    },
+    "11466": {
+     "GR_head_flagged": 0.350414,
+     "GR_head_unflagged": 0.449671,
+     "unflagged_minus_flagged": 0.099257
+    },
+    "12710": {
+     "GR_head_flagged": 0.726923,
+     "GR_head_unflagged": 0.925779,
+     "unflagged_minus_flagged": 0.198856
+    },
+    "15078": {
+     "GR_head_flagged": 0.639979,
+     "GR_head_unflagged": 0.512312,
+     "unflagged_minus_flagged": -0.127668
+    },
+    "16710": {
+     "GR_head_flagged": 0.925497,
+     "GR_head_unflagged": 0.558168,
+     "unflagged_minus_flagged": -0.36733
+    },
+    "28045": {
+     "GR_head_flagged": 0.369218,
+     "GR_head_unflagged": 0.557603,
+     "unflagged_minus_flagged": 0.188385
+    }
+   }
+  },
+  "scale_artefact_size": {
+   "statement": "if R2 keeps a common fraction s of R1's NK-T evidence differences, D_R2 - D_R1 = (1 - s) (GR_R1(unflagged) - GR_R1(flagged)); with a readout like the head as R1 the registered pooling margin 0.05 is reached by a pure rescaling with 1 - s = 0.05 / (GR_head(unflagged) - GR_head(flagged)) when that difference is positive",
+   "one_minus_s_reaching_margin": 0.379949,
+   "registered_margin": 0.05
+  },
+  "illustration": {
+   "what": "point values (pooled over the training pairs and per training donor; no bootstrap, no verdict) of D_R2 - D_R1, (b') term_flagged_R2_minus_R1 and (c') Dlog_R2_minus_Dlog_R1, computed as E3 evaluate does, for two constructed readout pairs with R1 = the head: (uniform_shrinkage) R2 = the head's NK-T evidence differences times s, which repairs nothing; (flagged_repair) R2 = the measured differences on flagged pairs and the head's on unflagged pairs; head and null set to R1 (they cancel)",
+   "s": 0.5,
+   "donor_order": [
+    "10886",
+    "11466",
+    "12710",
+    "15078",
+    "16710",
+    "28045"
+   ],
+   "scenarios": {
+    "uniform_shrinkage": {
+     "D_R2_minus_D_R1": {
+      "point": 0.065798,
+      "per_donor": {
+       "10886": null,
+       "11466": 0.049629,
+       "12710": 0.099428,
+       "15078": -0.063834,
+       "16710": -0.183665,
+       "28045": 0.094193
+      }
+     },
+     "term_flagged_R2_minus_R1": {
+      "point": -0.207842,
+      "per_donor": {
+       "10886": null,
+       "11466": -0.175207,
+       "12710": -0.363461,
+       "15078": -0.31999,
+       "16710": -0.462749,
+       "28045": -0.184609
+      }
+     },
+     "Dlog_R2_minus_Dlog_R1": {
+      "point": 0.0,
+      "per_donor": {
+       "10886": null,
+       "11466": 0.0,
+       "12710": 0.0,
+       "15078": 0.0,
+       "16710": 0.0,
+       "28045": 0.0
+      }
+     }
+    },
+    "flagged_repair": {
+     "D_R2_minus_D_R1": {
+      "point": 0.584317,
+      "per_donor": {
+       "10886": null,
+       "11466": 0.649586,
+       "12710": 0.273077,
+       "15078": 0.360021,
+       "16710": 0.074503,
+       "28045": 0.630782
+      }
+     },
+     "term_flagged_R2_minus_R1": {
+      "point": 0.584317,
+      "per_donor": {
+       "10886": null,
+       "11466": 0.649586,
+       "12710": 0.273077,
+       "15078": 0.360021,
+       "16710": 0.074503,
+       "28045": 0.630782
+      }
+     },
+     "Dlog_R2_minus_Dlog_R1": {
+      "point": 0.877831,
+      "per_donor": {
+       "10886": null,
+       "11466": 1.048641,
+       "12710": 0.318935,
+       "15078": 0.446319,
+       "16710": 0.077424,
+       "28045": 0.996368
+      }
+     }
+    }
+   },
+   "uniform_shrinkage_identity_abs_error": 0.0
+  },
+  "rows_read": {
+   "split_and_donor_columns": 90261,
+   "protein_cell_type_embedding_rows": 67405,
+   "val_rows_values_read": 0,
+   "site4_rows_values_read": 0,
+   "n_val_rows": 6106,
+   "n_site4_rows": 16750
+  }
+ },
+ "leakage_check": {
+  "pattern": "as A2 (v3_build_amendment_A2.py) and A1 (v3_leakage_check.py): rebuild the core from copies of the inputs whose rows of one split carry random protein, cell types and embedding, and compare bytes",
+  "real_core_sha256": "39de4a238f260cfd214e07f81c90015c9b34c96ab0d74dd908f75035c6da5476",
+  "poison_test": {
+   "seed": 101,
+   "role": "site4 rows poisoned: core must be byte-identical",
+   "core_sha256": "39de4a238f260cfd214e07f81c90015c9b34c96ab0d74dd908f75035c6da5476",
+   "identical_to_real": true
+  },
+  "poison_val": {
+   "seed": 303,
+   "role": "val rows poisoned: A3 reads no val value, so identical as well (information)",
+   "core_sha256": "39de4a238f260cfd214e07f81c90015c9b34c96ab0d74dd908f75035c6da5476",
+   "identical_to_real": true
+  },
+  "poison_train": {
+   "seed": 202,
+   "role": "positive control, training rows poisoned: core must change",
+   "core_sha256": "62289bd23334917d057e780812a40bfa96a8889f33296880aa564b8457982f74",
+   "identical_to_real": false
+  },
+  "passed": true
+ },
+ "provenance": {
+  "builder": "v3_build_amendment_A3 1.0",
+  "builder_sha256": "59d7cf1478109ce1a5545f3b66a240412c7fa48bb114f0b4cedc1473665ef4ec",
+  "v3_amend_sha256": "2655ed06ffb6e182d57c52f73d2a782e833ee17540a11762a4aa194a8b1dda91",
+  "v3_e3_sha256": "a1a3bfa08ca41a664e8134d425c011e4876f27ac8ad04ed54a6ee12297d9bede",
+  "v3_key_sha256": "45113585c4c2411a966814154ec41a58c0836c51e1f3f16e0fbe31b2e9424602",
+  "core_sha256": "39de4a238f260cfd214e07f81c90015c9b34c96ab0d74dd908f75035c6da5476",
+  "inputs": {
+   "cite_arrays_sha256": "be408eff537eeeca24129210592605f809724c3282d7c55e008b87b3c193c2da",
+   "z_sha256": "fb9aa8c77d544d84f716cf66bca8964c265f62d6dc1618a0c627d55268d3cd0b",
+   "ckpt_sha256": "b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15",
+   "addendum_E3_sha256": "09f932ed166cad029d4efcd3f9f022717854d69d9d41389ab3d74ab71ab9c513"
+  },
+  "built_utc": "2026-10-01T07:00:56Z",
+  "test_rows_read": "the split and donor columns only (leakage_check)"
+ }
+}

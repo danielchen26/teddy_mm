@@ -13,7 +13,7 @@
  * ("next question" at the door, "pay again", a stack sliding into the jar).
  */
 const NUMBERS = {
-  // index.html #problem, GAP 5: "Trained readout — 50–2,000 new labelled cells, again at every change."
+  // index.html #problem, GAP 5: "Trained readout — v2: 50–1,000 new labelled cells, again at every change." (v3 E1.5: n* = 0)
   labelsLow: 50,
   labelsHigh: 1000,
 };
@@ -74,7 +74,7 @@ export default function create(ctx) {
   add(ctx.box(JW, JH, { color: 'card', stroke: 'train', strokeWidth: 1.6, radius: 0.16 }), GX, JY, 2);
   const fill = add(ctx.box(JW - 0.24, JH - 0.24, { color: 'train', opacity: 0.3, radius: 0.06 }), GX, JY, 2.2);
   const FH = JH - 0.24, FB = JB + 0.12;
-  const TAG1 = `${NUMBERS.labelsLow}–${NUMBERS.labelsHigh.toLocaleString('en-US')} labels`, TAG2 = 'again at every change';
+  const TAG1 = `${NUMBERS.labelsLow}–${NUMBERS.labelsHigh.toLocaleString('en-US')} labels`, TAG2 = 'v2: again each change';
   const tag = lab(TAG1, { weight: 600, anchor: 'left' });
   const tag2 = lab(TAG2, { color: 'muted', anchor: 'left' });
   const prompt = lab('pay to pass', { color: 'bad', weight: 600, anchor: 'right' });
@@ -105,9 +105,9 @@ export default function create(ctx) {
     mc.font = `${wt} ${px}px ${family}`;
     return mc.measureText(s).width;
   };
-  const fit = (spr, text, span, base, wt = 500) => {   // span = world units the text may take
+  const fit = (spr, text, span, base, wt = 500, min = 11) => {   // span = world units the text may take
     const w = textW(text, base * ctx.textScale, wt) + 4;
-    spr.setSize(Math.max(11, Math.min(base, (base * span * ctx.ppu()) / w)));
+    spr.setSize(Math.max(min, Math.min(base, (base * span * ctx.ppu()) / w)));
   };
   const L = { W: 4, XG: -1.0, XW: -5.3 };
   let dead = false;
@@ -127,7 +127,7 @@ export default function create(ctx) {
     tag.position.set(TAG_X, JY + d + 0.02, 6);
     tag2.position.set(TAG_X, JY - d - 0.02, 6);
     fit(tag, TAG1, RIGHT - TAG_X, TXT, 600);
-    fit(tag2, TAG2, RIGHT - TAG_X, TXT);
+    fit(tag2, TAG2, RIGHT - TAG_X, TXT, 500, 10); // the muted second line may go a size smaller: at 11 it ran off the ~270 px thumbnail
     prompt.position.set(GX - 0.3, (JT + FLOOR) / 2, 6);
     pileLab.position.set(PILE[0][0] - CW / 2, RAIL + (PILE[1][1] - 1) * PITCH + COIN + 0.16, 6);
   }

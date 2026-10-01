@@ -99,6 +99,8 @@
 .anim.anim--compact .anim-btn { top: 6px; right: 6px; }
 /* a small stage has no room for the "Paused"/"Play" word over its corner: the icon and the paused outline say it */
 .anim.anim--compact .anim-btn-t { display: none; }
+/* on phones every stage is small: the word would cover scene labels near the top-right corner */
+@media (max-width: 440px) { .anim .anim-btn-t { display: none; } }
 
 /* play / pause control (injected by loader.js, sits over the stage's top-right corner) */
 .anim-btn {
