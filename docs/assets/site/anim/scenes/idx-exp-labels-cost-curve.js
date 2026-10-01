@@ -240,10 +240,19 @@ export default function create(ctx) {
       binS.setSize(sW, binH, Math.min(0.12, binH / 2)); binS.position.set(sX, by, 0);
       binP.setSize(pW, binH, Math.min(0.12, binH / 2)); binP.position.set(pX, by, 0);
       wall.setPoints([[wX, by - binH / 2 - wallX, 1], [wX, by + binH / 2 + wallX, 1]]).setWidth(P(0.07, 2.5, 4));
-      wallL.visible = wide;
       wallL.position.set(wX, by + binH / 2 + wallX + U(3), 1);
+      // lifted toward the chart, the "no overlap" word can land on ANM's numbers (650-800 px): then the pool's
+      // label carries it, as in the narrow layout
+      let wallOn = wide;
+      if (wide) {
+        const tx = tgt.position.x, ty = tgt.position.y, lh = lineH(fs.small);
+        const tw1 = U(tw(`declines ${pct(N.anmDeclines)} · exactness ${f3(N.anmExactness)}`, fs.small));
+        const wy = wallL.position.y, ww = U(tw('no overlap', fs.small)) / 2;
+        if (wX - ww < tx + tw1 && wX + ww > tx && wy < ty && wy + lh > ty - 2 * lh) wallOn = false;
+      }
+      wallL.visible = wallOn;
       binSL.position.set(sX, by - binH / 2 - U(3), 1);
-      binPL.setText(`${int(N.poolCells)} label-pool cells` + (wide ? '' : ' · no overlap'));
+      binPL.setText(`${int(N.poolCells)} label-pool cells` + (wallOn ? '' : ' · no overlap'));
       binPL.position.set(pX, by - binH / 2 - U(3), 1);
       binSL.visible = binPL.visible = !compact;
       binSLi.visible = binPLi.visible = compact;

@@ -192,7 +192,11 @@ export default function create(ctx) {
       endW = Math.max(endW, est(r.endText, 17, 0.6));
       endR = R.colB + endW;
     });
-    approx.position.set(R.midApprox ? R.colB + endW / 2 : endR + 0.3, (R.yA + R.yM) / 2, 0);
+    // between the two end values; in the wide layout keep it below the chip (on 650-800 px stages the chip
+    // reached over and the sign overprinted its corner)
+    const chipBot = R.yChip - (((L.small ? 10 : 11) * ctx.textScale * 1.22 + 10) / ppu) / 2;
+    const rowTop = R.yM + ((17 * ctx.textScale * 1.22 + 2) / ppu) / 2;
+    approx.position.set(R.midApprox ? R.colB + endW / 2 : endR + 0.3, R.midApprox ? Math.min((R.yA + R.yM) / 2, (chipBot + rowTop) / 2) : (R.yA + R.yM) / 2, 0);
     chip.setSize(L.small ? 10 : 11).position.set(R.x, R.yChip, 0);
     title.setSize(L.small ? 11 : 12).setAnchor(L.title[2]).position.set(L.title[0], L.title[1], 0);
     /* beat 2 */

@@ -590,6 +590,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 main figure.anim { min-width: 0; }
 main .anim > .anim-stage { aspect-ratio: var(--ar, 16 / 9); }
 @container main (max-width: 640px) { main .anim > .anim-stage { aspect-ratio: var(--ar-sm, var(--ar, 16 / 9)); } }
+/* the four experiment scenes need 16:9 until 760 px: a 21:8 stage there is under 270 px tall and their wide layouts overprinted */
+@container main (max-width: 760px) { main .anim[data-anim^="idx-exp-"] > .anim-stage { aspect-ratio: var(--ar-sm, 16 / 9); } }
 main .anim.a-strip, main .anim.a-wide { margin: 0 0 24px; }
 main .anim.a-hero { margin: 0 0 18px; }
 .lead .anim.a-inset { margin: 16px 0 0; }
