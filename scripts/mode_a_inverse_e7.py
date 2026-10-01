@@ -19,8 +19,11 @@ unchanged. E7 does the same on TEDDY at the layer-11 cut:
                                      positional input, so a swap is invisible to the consumer)
     matched / witness pairs          (unpatched, patched) with equal candidate state; witness = equal gene-mean,
                                      different G states (a patch that averages a G token)
-    development                      val donor 18303 only: magnitude from the positive control alone, then the
-                                     declared selection rule; none -> stop, keep the record, one declared follow-up
+    controls for support             the clamp (every token moved by the training NK-T gene-mean difference) and the
+                                     patch-region detectability witness (only a matched patch's tokens moved, the
+                                     gene-mean by the same vector); both must be detected for a support claim
+    development                      val donor 18303 only: the fixed magnitudes 1/32, 1/8, 1/2, then the declared
+                                     selection rule; none -> keep the record and run the one declared follow-up
     confirmation                     fresh site4 test_primary NK/T cells (none of E3's pairs, E5's or E5-M's cells),
                                      fresh pairs, a fresh magnitude; secondary family on E6's external donors
 
@@ -93,7 +96,10 @@ lp, vk = mld.lp, mld.vk
 from lib import v3_amend as va  # noqa: E402
 from lib import v3_e7 as v7  # noqa: E402
 
-SCRIPT_VERSION = "mode_a_inverse_e7 1.0"
+SCRIPT_VERSION = "mode_a_inverse_e7 1.1"
+ADDENDUM_VERSION = 2
+SUPERSEDES = {"addendum_version": 1, "sha256": "e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a",
+              "commit": "6dc5999", "script_version": "mode_a_inverse_e7 1.0"}
 MAIN = Path("/Users/tianchichen/Documents/GitHub/teddy_mm")
 _BASE = MAIN if MAIN.exists() else ROOT
 ADDENDUM, SELECTION = "E7.json", "E7_selection.json"
@@ -109,6 +115,7 @@ FRESH = (1 / 4,)  # the confirmation's fresh magnitude (never used in developmen
 KAPPA = 1.0  # clamp positive control: +- KAPPA x the training NK - T difference of the layer-11 gene-mean
 N_MATCHED = 8  # matched patches per magnitude; each has one G twin
 N_G_ONLY = 8  # G-only patches per cell (magnitude-free G witnesses)
+N_REGION = 2  # patch-region detectability witnesses per cell (+- on matched_1 at the stage's largest magnitude)
 N_DEV_PER_CLASS = N_F1_PER_CLASS = 100
 N_SITE4_PER_CLASS_PER_DONOR = 100
 N_EXT_PER_CLASS_PER_DONOR = 25
@@ -122,7 +129,7 @@ UNIT_MIN = 0.05
 N_BOOT = 2000
 GATES = {"padding_patch_gap_units": 1e-6, "layer12_mean_preserving_gap_units": 1e-5, "permutation_gap_units": 1e-5,
          "mean_preservation_abs": 1e-5, "module_vs_explicit_abs": 1e-4, "padded_vs_unpadded_abs": 1e-4,
-         "official_layer11_gene_mean_abs": 1e-3}
+         "official_layer11_gene_mean_abs": 1e-3, "patch_rows_changed_mismatch": 0, "intended_mean_shift_abs": 1e-5}
 N_SMOKE_MAX = 5
 EXIT_INCOMPLETE = 75
 _LOG = {"path": None}
@@ -212,18 +219,24 @@ DECLARED = {
                      "Confirmation: the same three with fresh pairs plus the fresh magnitude 1/4",
         "families_per_magnitude": f"{N_MATCHED} matched patches (m pairs among non-G tokens) and, for each, its G twin (the "
                                   "same pairs plus every G token averaged with its own non-G partner outside the patch: same "
-                                  "gene-mean, only the G states differ from the matched patch)",
+                                  "gene-mean; it differs from the matched patch only at the G tokens and their g non-G "
+                                  "partners, so the G states differ)",
         "g_only": f"{N_G_ONLY} G-only patches per cell (every G token averaged with its own random non-G partner, nothing "
                   "else): magnitude-free G witnesses, counted at every magnitude",
+        "patch_region": f"{N_REGION} patch-region histories per cell (the detectability witness): the region of matched_1 at "
+                        "the stage's largest magnitude (f = 1/2: its 2m non-G tokens) moved by +- KAPPA x dmu_11 x L / (2m) "
+                        "per token, so the gene-mean moves by exactly +- KAPPA x dmu_11 (the clamp's vector) while every "
+                        "other token, the G tokens included, keeps its state (v3_e7.apply_region_shift); never a matched "
+                        "pair (the gene-mean moves)",
         "draws": "numpy default_rng([20260930, 7, phase tag, global cell id, 1024 f]) per cell and magnitude (matched_i then "
                  "its twin's partners, i = 1..8: v3_e7.draw_patch_sets) and default_rng([20260930, 7, phase tag, cell, 1]) "
                  "for the G-only patches (v3_e7.draw_g_only); phase tags dev 1, followup 2, site4 3, external 4 (fresh "
                  "pairs at confirmation); uniform positions",
         "matched_pairs": "gene_mean: (unpatched, matched_i), (unpatched, twin_i), (matched_i, twin_i), (unpatched, "
                          "G-only_j); gene_mean_plus_G: (unpatched, matched_i); all_token_states: none",
-        "witness_pairs": "(matched_i, twin_i) and (unpatched, G-only_j): equal gene-mean, only the G states differ: matched "
-                         "under candidate 1, not under candidate 2; G-specific at every magnitude (the context patch is "
-                         "the same on both sides)",
+        "witness_pairs": "(matched_i, twin_i) and (unpatched, G-only_j): equal gene-mean, different G states (the G tokens "
+                         "and their g non-G partners differ; the context patch is the same on both sides): matched under "
+                         "candidate 1, not under candidate 2",
         "no_swaps": "a swap leaves the multiset of states unchanged, so the consumer's output is unchanged (architecture "
                     "fact; checked)",
     },
@@ -232,8 +245,9 @@ DECLARED = {
                    "tokenisation (label-free)",
     "per_cell_statistics": "d = observable difference between the two histories of a pair; D_gene_mean = max d over "
                            "candidate 1's matched pairs, D_gene_mean_plus_G = max d over candidate 2's, W = max d over the "
-                           "G witness pairs (W_context and W_pure reported), P = max d over (unpatched, clamp +-) "
-                           "(v3_e7.cell_summary), over every magnitude of the stage (G-only and clamp patches always count)",
+                           "G witness pairs (W_context and W_pure reported), P = max d over (unpatched, clamp +-), R = "
+                           "max d over (unpatched, patch region +-) (v3_e7.cell_summary), over every magnitude of the stage "
+                           "(G-only, clamp and patch-region patches always count)",
     "development": {
         "roster": f"val donor 18303 primary-key NK and T cells, eligible: {N_DEV_PER_CLASS} NK + {N_DEV_PER_CLASS} T drawn "
                   "with numpy default_rng([20260930, 7, 0]) (NK, then T), listed in rosters.dev with the processing order",
@@ -245,15 +259,17 @@ DECLARED = {
                           "retained candidate (dimension order) is selected, ties by declared order; none retained -> stop, "
                           "keep the record, and run the single declared follow-up",
         "gates": "implementation checks on every development cell and the float64 re-check on the first 10 cells of the "
-                 "order must pass for a selection to count; otherwise the record says stopped (precision / implementation) "
-                 "and no follow-up runs",
+                 "order must pass for a selection to count; otherwise the record says stopped (precision / implementation), "
+                 "no follow-up runs and E7 ends with no verdict (confirm and report are refused)",
         "follow_up": f"only if the development selection is null (not stopped), and only once, labelled 'follow-up after a "
                      f"null primary selection': the observable restricted to the NK-T score s (unit u_s), the same library, "
                      f"history class and rule, on the fresh roster rosters.followup ({N_F1_PER_CLASS} NK + {N_F1_PER_CLASS} "
                      "T val donor 18303 cells disjoint from rosters.dev, fixed here; fewer NK if fewer remain). Its develop "
                      "stage is refused until the null primary record is committed",
         "record": "registration/addenda/E7_selection.json (sha256 line in addenda/HASHES.txt), committed before any site4 "
-                  "or external forward of this script; it pins the development digest (sha256 of every development output)",
+                  "or external forward of this script; it pins the development digest (sha256 of every development output). "
+                  "Written once: select refuses to overwrite a primary record, to run the follow-up twice, or to run at all "
+                  "once any confirmation output exists",
     },
     "confirmation": {
         "site4": f"test_primary donors 13272 and 19593, primary-key NK and T cells, eligible, excluding every cell of "
@@ -283,9 +299,17 @@ DECLARED = {
                               "(pooled and each primary donor)",
         "positive_control": "detected if the lower end of the 95% interval of the median of P is > tol (pooled and each "
                             "primary donor): the consumer resolves a change of the retained gene-mean of this size; failure "
-                            "makes any support UNINFORMATIVE, never support",
-        "detectability_thresholds": "positive control and G witness: tol (the instrument must resolve a difference of "
-                                    "the tolerance size); numerical: the implementation gates and the float64 rule below",
+                            "makes any support UNINFORMATIVE, never support (a rejection never needs it)",
+        "detectability_witness": "detected if the lower end of the 95% interval of the median of R is > tol (pooled and "
+                                 "each primary donor): the consumer resolves the same change of the gene-mean when it is "
+                                 "delivered only through the tokens a matched patch touches. Support of the selected "
+                                 "candidate counts only if both the positive control and this witness are detected; "
+                                 "otherwise UNINFORMATIVE (a rejection never needs them). It rules out support reached "
+                                 "because the consumer does not see the patched non-G tokens, which the clamp cannot: the "
+                                 "clamp moves every token, the G tokens included",
+        "detectability_thresholds": "positive control, patch-region witness and G witness: tol (the instrument must resolve "
+                                    "a difference of the tolerance size); numerical: the implementation gates and the "
+                                    "float64 rule below",
         "two_donor_caveat": "2 primary donors: the intervals describe these donors, not a population",
         "verdicts": dict(v7.VERDICTS),
     },
@@ -296,6 +320,7 @@ DECLARED = {
                      "dmu[11], training cells, primary key; pinned by sha256 and copied here): the gene-mean moves by the "
                      "full NK - T difference (an NK/T-sized change of the retained state, as ANM's queried-sensor +1), the "
                      "deviations do not; P = max of the two differences",
+            "patch_region": "registered detectability witness: R (histories.patch_region, statistics.detectability_witness)",
             "G_witness": "registered: W (the revision is shown necessary only if W is detected and the gene-mean rejected)",
             "input_push": f"secondary and descriptive (the review's E5-M push): each G gene's token embedding doubled at the "
                           f"input, full forward, first {N_PUSH_CELLS} cells of each confirmation order; it acts at layer 0, "
@@ -314,6 +339,12 @@ DECLARED = {
                                   f"the real tokens: max |state difference| <= {GATES['module_vs_explicit_abs']}",
             "official_state": f"explicit float32 layer-11 gene-mean vs the official stored one (fp16 autocast): <= "
                               f"{GATES['official_layer11_gene_mean_abs']}",
+            "patch_applied": "every history changes exactly the layer-11 rows it names (2 per averaged pair, the region's "
+                             "rows, every row for the clamp): mismatch count <= "
+                             f"{GATES['patch_rows_changed_mismatch']} (a no-op patch would otherwise pass every other gate "
+                             "and give trivial support)",
+            "intended_mean_shift": "the clamp and patch-region histories move the gene-mean by +- KAPPA dmu_11: max "
+                                   f"|change - intended| <= {GATES['intended_mean_shift_abs']}",
             "rule": "any failure on any cell of a stage -> NOT_VALIDATED (no verdict)",
         },
     },
@@ -330,9 +361,11 @@ DECLARED = {
                     "(real-cell) perturbations: these are state interventions, not input histories (ANM v2: 'Propagation "
                     "imposes the state displacements; the readout alone is measured afresh')", "clinical value"],
     "fixed_before_development": "every choice and number here was fixed on training and validation cells and committed "
-                                "before any development forward of this script; no patch output on a val or site4 cell "
-                                "informed any choice (patch outputs were computed on training cells only: the 3 cells of "
-                                "architecture_check and the 7 of pre_registration_code_test)",
+                                "before any development forward of this script; no patch output on a development, "
+                                "follow-up or site4 cell informed any choice. Patch outputs were computed on training cells "
+                                "(the 3 of architecture_check, the 7 of pre_registration_code_test and the 4 of "
+                                "review_revision_v2) and, after version 1 was committed, on the 5 val smoke-pool cells of "
+                                "version 1's code smoke (outside both rosters; disclosed in review_revision_v2)",
     "pre_registration_code_test": "before this addendum, a first code run used 2 training cells without G tokens (code "
                                   "paths only), then the code ran on 2 annotated training cells (1 NK, 1 T; no val or "
                                   "site4 cell) with an earlier draft that used one-sided twins as the positive control and "
@@ -347,6 +380,32 @@ DECLARED = {
                                   "set to 1 (the full training NK - T difference, the interpretable NK/T-sized change; 0.2 "
                                   "had no rationale beyond being small); the same 3 cells were rerun on MPS to check the "
                                   "device path (float32 vs float64 within 1e-6). Nothing else changed after these code tests",
+    "review_revision_v2": "addendum version 2, written after an adversarial review and before any development forward; "
+                          "supersedes version 1 (sha256 e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a, "
+                          "commit 6dc5999). Seen before this revision: version 1's code smoke on 5 val smoke-pool cells "
+                          "(outside both rosters; never development, follow-up or confirmation cells): panel q95 of the "
+                          "per-cell maximum over the development magnitudes 0.139 (gene-mean) and 0.091 (gene-mean + G), "
+                          "median G witness 0.014, median clamp 0.210; score follow-up 0.074 / 0.055; the smoke "
+                          "confirmation family (the same 5 cells) REJECTED_NO_REVISION. Changes, none of which touches the "
+                          "tolerance, units, G, the library, rosters, magnitudes, the selection rule, the rejection "
+                          "criterion or the bootstrap: (1) the patch-region detectability witness R is added and support "
+                          "counts only if it is detected as well as the clamp (the clamp moves every token, the G tokens "
+                          "included, so it could not rule out support of gene-mean + G reached because the consumer does "
+                          "not see the patched non-G tokens); (2) a control failure now makes only a support claim "
+                          "UNINFORMATIVE (version 1 also turned a rejection of the selected candidate into UNINFORMATIVE, "
+                          "although rejections need no control, as when nothing is selected); (3) implementation gates "
+                          "patch_applied and intended_mean_shift (a no-op patch passed every version-1 gate and would have "
+                          "given trivial support); (4) a stopped development record ends E7 (version 1 would have run "
+                          "confirmation and reported that no candidate was selected) and select writes its record once; "
+                          "(5) wording: a G twin differs from its matched patch at the G tokens and their non-G partners. "
+                          "Checked on 4 training cells (the code-test pool, 2 NK + 2 T, float64 CPU) before this revision: "
+                          "every pair patch moves the gene-mean by <= 2.2e-16, candidate-2 matched patches leave the G "
+                          "rows bitwise unchanged, twins differ from their matched patch only at the G tokens and their "
+                          "partners; a version-2 code smoke on the same 4 cells (every stage) passed every gate, with the "
+                          "patch-region witness 0.92-1.00 times the clamp on each cell (so it adds no hurdle the clamp "
+                          "did not already pose on these cells; it closes the logical gap). (1) and (3) "
+                          "can only remove a support claim; (2) lets a rejection of a selected candidate stand; none "
+                          "changes the expected path (null selection, follow-up, rejections)",
 }
 
 
@@ -555,33 +614,50 @@ def consumer(ctx_layers, yhat, Hb):
 
 
 def build_histories(cid: int, ids_np: np.ndarray, gtok: set, fracs, phase: str) -> tuple[list, list, list]:
-    """History list of (kind, magnitude code, patch pairs, base index, clamp sign) for one cell: per magnitude the
-    matched patches and their G twins (base = the matched patch); then the G-only patches and the two clamp patches
-    (code 0)."""
+    """History list of (kind, magnitude code, patch pairs, base index, shift sign) for one cell: per magnitude the
+    matched patches and their G twins (base = the matched patch); then the G-only patches, the two clamp patches and
+    the two patch-region witnesses on matched_1 of the largest magnitude (base = that matched patch) (code 0)."""
     g_pos = [q for q, t in enumerate(ids_np) if int(t) in gtok]
     nong = [q for q, t in enumerate(ids_np) if int(t) not in gtok]
     hist = []
+    top = None
     for f in fracs:
         code = v7.frac_code(f)
         m = v7.pairs_for_fraction(f, len(nong), len(g_pos))
         rng = np.random.default_rng([SEED, E7_TAG, PHASE_TAG[phase], int(cid), code])
         M, T = v7.draw_patch_sets(rng, g_pos, nong, m, N_MATCHED)
         i0 = len(hist)
+        if top is None or f > top[0]:
+            top = (f, i0, M[0])
         hist += [(v7.KIND_MATCHED, code, p_, -1, 0) for p_ in M]
         hist += [(v7.KIND_TWIN, code, p_, i0 + i, 0) for i, p_ in enumerate(T)]
     rng = np.random.default_rng([SEED, E7_TAG, PHASE_TAG[phase], int(cid), 1])
     hist += [(v7.KIND_G_ONLY, 0, p_, -1, 0) for p_ in v7.draw_g_only(rng, g_pos, nong, N_G_ONLY)]
     none = np.zeros((0, 2), np.int64)
     hist += [(v7.KIND_CLAMP, 0, none, -1, 1), (v7.KIND_CLAMP, 0, none, -1, -1)]
+    hist += [(v7.KIND_REGION, 0, top[2], top[1], s_) for s_ in (1, -1)][:N_REGION]
     return hist, g_pos, nong
 
 
 def patched(H, hk, clamp_vec):
-    """The layer-11 states of one history (pair averages, or the clamp shift +- clamp_vec)."""
+    """The layer-11 states of one history (pair averages, the clamp shift +- clamp_vec, or the patch-region shift that
+    moves the gene-mean by +- clamp_vec through the patch's tokens only)."""
     k, _, pairs, _, sign = hk
     if k == v7.KIND_CLAMP:
         return v7.apply_clamp(H, sign * clamp_vec)
+    if k == v7.KIND_REGION:
+        return v7.apply_region_shift(H, pairs, sign * clamp_vec)
     return v7.apply_average(H, pairs)
+
+
+def intended_rows_and_shift(hk, L: int, clamp_vec):
+    """Rows a history must change and the gene-mean change it must produce (0 for pair averages)."""
+    k, _, pairs, _, sign = hk
+    if k == v7.KIND_CLAMP:
+        return L, sign * clamp_vec
+    if k == v7.KIND_REGION:
+        return int(v7.region_positions(pairs).size), sign * clamp_vec
+    return int(v7.region_positions(pairs).size), 0.0 * clamp_vec
 
 
 def run_cell(ctx: Ctx, cid: int, ids_np: np.ndarray, gtok: set, mags, phase: str, official_l11, do_f64: bool,
@@ -601,12 +677,17 @@ def run_cell(ctx: Ctx, cid: int, ids_np: np.ndarray, gtok: set, mags, phase: str
         y12 = mld.layer_fn(ctx.layers[11], H11[None])
         O0 = ctx.yhat(y12.mean(1))[0]
         O = torch.zeros(n, len(PROTEINS), dtype=torch.float64)
-        dmean = torch.zeros(n, dtype=torch.float64)
+        dmean = torch.zeros(n, dtype=torch.float64)  # max |gene-mean change - intended change| (0 for pair averages)
+        rows_mismatch = np.zeros(n, np.int64)  # |rows changed - rows the history names| (patch_applied gate)
         for b0 in range(0, n, ctx.batch):
             hb = hist[b0:b0 + ctx.batch]
             Hb = torch.stack([patched(H11, hk, ctx.clamp) for hk in hb])
             O[b0:b0 + len(hb)] = consumer(ctx.layers, ctx.yhat, Hb).cpu().double()
-            dmean[b0:b0 + len(hb)] = (Hb.mean(1) - z11[None]).abs().amax(-1).cpu().double()
+            want = [intended_rows_and_shift(hk, L, ctx.clamp) for hk in hb]
+            shift = torch.stack([w_[1] for w_ in want])
+            dmean[b0:b0 + len(hb)] = (Hb.mean(1) - z11[None] - shift).abs().amax(-1).cpu().double()
+            nchg = (Hb != H11[None]).any(-1).sum(-1).cpu().numpy()
+            rows_mismatch[b0:b0 + len(hb)] = np.abs(nchg - np.array([w_[0] for w_ in want]))
             del Hb
         # ---- controls
         rc = np.random.default_rng([SEED, E7_TAG, PHASE_TAG[phase], int(cid), 0])
@@ -635,7 +716,7 @@ def run_cell(ctx: Ctx, cid: int, ids_np: np.ndarray, gtok: set, mags, phase: str
                                                               if official_l11 is not None else None),
                            "head_cpu_mirror_vs_device_abs": float((ctx.yhat_cpu(y12c.mean(0)[None])[0].double()
                                                                    - O0.cpu().double()).abs().max())}
-        arr = {"O0": O0.cpu().double().numpy(), "O": O.numpy(), "dmean": dmean.numpy(),
+        arr = {"O0": O0.cpu().double().numpy(), "O": O.numpy(), "dmean": dmean.numpy(), "rows_mismatch": rows_mismatch,
                "O_perm": O_perm.cpu().double().numpy(), "O_l12": O_l12.cpu().double().numpy(),
                "O_pad0": O_pad0.double().numpy(), "O_pad1": O_pad1.double().numpy()}
         # ---- secondary positive control: input push on each G gene (token embedding doubled at the input)
@@ -942,7 +1023,8 @@ def stage_register(a) -> None:
              if not am.name.endswith("_core.json")}
     add = {
         "experiment": "E7",
-        "addendum_version": 1,
+        "addendum_version": ADDENDUM_VERSION,
+        "supersedes": SUPERSEDES,
         "title": "E7: TEDDY analog of ANM v2's inverse loop at the layer-11 cut, consumer fixed (Mode A)",
         "addendum_to": "registration/registration_v3.json as amended by A1, A2 and A3: a new pre-specified Mode A experiment "
                        "registered before any development or site4 forward of its script; nothing registered for E1-E6 "
@@ -953,7 +1035,7 @@ def stage_register(a) -> None:
         "declared": DECLARED,
         "constants": {"tol": TOL, "ladder": list(LADDER), "ladder_codes": [v7.frac_code(f) for f in LADDER],
                       "fresh": list(FRESH), "fresh_codes": [v7.frac_code(f) for f in FRESH], "kappa": KAPPA,
-                      "n_matched": N_MATCHED, "n_twin": N_MATCHED, "n_g_only": N_G_ONLY, "n_clamp": 2,
+                      "n_matched": N_MATCHED, "n_twin": N_MATCHED, "n_g_only": N_G_ONLY, "n_clamp": 2, "n_region": N_REGION,
                       "n_dev_per_class": N_DEV_PER_CLASS, "n_followup_per_class": N_F1_PER_CLASS,
                       "n_site4_per_class_per_donor": N_SITE4_PER_CLASS_PER_DONOR,
                       "n_external_per_class_per_donor": N_EXT_PER_CLASS_PER_DONOR, "min_nonG_tokens": MIN_NONG_TOKENS,
@@ -973,8 +1055,11 @@ def stage_register(a) -> None:
                       "clamp residuals on site4: the head's 0.709 / 0.72 at layer 11), the PR #16 review and the val / "
                       "train cell counts. Before writing this addendum it ran the architecture check on 3 training cells "
                       "(one average and one swap patch each, recorded in architecture_check) and counted val primary-key "
-                      "NK/T cells; it computed no patch output on any val or site4 cell. Site4 confirmation cells exclude "
-                      "every E3 / E5 / E5-M cell.",
+                      "NK/T cells; it computed no patch output on any val or site4 cell before version 1. Version 2 "
+                      "(declared.review_revision_v2) was written after version 1's code smoke on 5 val smoke-pool cells "
+                      "(outside both rosters) and a review check on 4 training cells; no development, follow-up, site4 "
+                      "or external forward of this script had run. Site4 confirmation cells exclude every E3 / E5 / E5-M "
+                      "cell.",
         "smoke": bool(a.smoke),
         "built_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
@@ -1296,16 +1381,19 @@ def units_of(add: dict) -> dict:
 def cell_gates(mc: dict, arr: dict, units: dict) -> dict:
     u = units["panel"]
     O0 = arr["O0"]
-    km = arr["kind"] != v7.KIND_CLAMP
+    km = ~np.isin(arr["kind"], v7.SHIFT_KINDS)
     c = mc["controls"]
     g = {"padding_patch_gap_units": float(v7.deltas(arr["O_pad1"], arr["O_pad0"], u)[0]),
          "layer12_mean_preserving_gap_units": float(v7.deltas(arr["O_l12"], O0, u)[0]),
          "permutation_gap_units": float(v7.deltas(arr["O_perm"], O0, u)[0]),
          "mean_preservation_abs": float(arr["dmean"][km].max()) if km.any() else 0.0,
          "module_vs_explicit_abs": c["module_vs_explicit_abs"], "padded_vs_unpadded_abs": c["padded_vs_unpadded_abs"],
-         "official_layer11_gene_mean_abs": c["official_layer11_gene_mean_abs"]}
-    ok = all(v is None or v <= GATES[k] for k, v in g.items())
-    return {"values": g, "ok": bool(ok)}
+         "official_layer11_gene_mean_abs": c["official_layer11_gene_mean_abs"],
+         "patch_rows_changed_mismatch": int(arr["rows_mismatch"].max()) if arr["rows_mismatch"].size else 0,
+         "intended_mean_shift_abs": float(arr["dmean"][~km].max()) if (~km).any() else 0.0}
+    present = bool((arr["kind"] == v7.KIND_CLAMP).sum() == 2 and (arr["kind"] == v7.KIND_REGION).sum() == N_REGION)
+    ok = all(v is None or v <= GATES[k] for k, v in g.items()) and present
+    return {"values": g, "controls_present": present, "ok": bool(ok)}
 
 
 def f64_gap(arr: dict, observable: str, units: dict) -> float | None:
@@ -1376,6 +1464,7 @@ def select_phase(a, add: dict, phase: str, observable: str) -> dict:
                             for c in v7.CANDIDATES[:2]}}
     return {"phase": phase, "observable": observable, "n_cells": len(rows), "magnitudes": [float(f) for f in LADDER],
             "positive_control_median_P": v7.finite_median([s["P"] for s in S1]),
+            "detectability_witness_median_R": v7.finite_median([s["R"] for s in S1]),
             "G_witness_median_W": v7.finite_median([s["W"] for s in S1]), "per_magnitude": per_rung, "rule": rule,
             "selected": selected, "stopped": stopped, "implementation_ok": impl_ok,
             "implementation_max": {k: max((g["values"][k] for g in gates if g["values"][k] is not None), default=None)
@@ -1389,7 +1478,13 @@ def select_phase(a, add: dict, phase: str, observable: str) -> dict:
 def stage_select(a, add: dict) -> None:
     sha = sha256_file(load_addendum(a)[1])
     sp = selection_path(a)
+    conf = [str(a.out_dir / fam) for fam in ("site4", "external") if (a.out_dir / fam / "cells").exists()
+            and any((a.out_dir / fam / "cells").iterdir())]
+    if conf and not a.smoke:
+        raise SystemExit("select refused: confirmation outputs already exist: " + ", ".join(conf))
     if a.roster == "dev":
+        if sp.exists() and not a.smoke:
+            raise SystemExit(f"select refused: {sp} exists; the development selection record is written once")
         prim = select_phase(a, add, "dev", "panel")
         stop = prim["stopped"] is not None
         rec = {"experiment": "E7", "record_version": 1, "addendum_sha256": sha, "primary": prim,
@@ -1399,6 +1494,8 @@ def stage_select(a, add: dict) -> None:
     else:
         if not sp.exists():
             raise SystemExit("no primary selection record")
+        if not a.smoke and git_committed(sp) is not True:
+            raise SystemExit("the null primary selection record must be committed before the follow-up selection")
         rec = json.loads(sp.read_text())
         if rec["primary"]["selected"] is not None or not rec.get("follow_up_required"):
             raise SystemExit("the follow-up runs only after a null primary selection")
@@ -1436,7 +1533,7 @@ def family_block(a, add: dict, sel: dict, family: str, observable: str, rows: li
     ix = np.arange(n)
     seed = int(add["constants"]["bootstrap_seed"])
     draws = [ix[d_] for d_ in v7.two_stage_draws(donor, cls, a.n_boot, seed)]
-    col = {k: np.array([s[k] for s in S], np.float64) for k in ("D_gene_mean", "D_gene_mean_plus_G", "W", "P",
+    col = {k: np.array([s[k] for s in S], np.float64) for k in ("D_gene_mean", "D_gene_mean_plus_G", "W", "P", "R",
                                                                   "W_context", "W_pure")}
 
     def med(x):
@@ -1445,7 +1542,7 @@ def family_block(a, add: dict, sel: dict, family: str, observable: str, rows: li
     def q(x):
         return lambda ii: v7.q95(x[ii])
     B = {}
-    for k in ("D_gene_mean", "D_gene_mean_plus_G", "W", "P"):
+    for k in ("D_gene_mean", "D_gene_mean_plus_G", "W", "P", "R"):
         B[f"median_{k}"] = v7.bounds(med(col[k]), ix, donor, cls, a.n_boot, seed, draws)
     # the per-cell difference in W - D_gene_mean_plus_G is reported (G excess) below
     for k in ("D_gene_mean", "D_gene_mean_plus_G"):
@@ -1454,23 +1551,24 @@ def family_block(a, add: dict, sel: dict, family: str, observable: str, rows: li
     status = {c: v7.candidate_status(B[f"median_D_{c}"], B[f"q95_D_{c}"], TOL, per_donor) for c in v7.CANDIDATES[:2]}
     status["all_token_states"] = "uninformative"
     pc_ok = v7.detects(B["median_P"], TOL, per_donor)
+    det_ok = v7.detects(B["median_R"], TOL, per_donor)
     sep_ok = v7.detects(B["median_W"], TOL, per_donor)
     gates = [cell_gates(mc, arr, units) for mc, arr in rows]
     impl_ok = all(g["ok"] for g in gates)
     f64 = [x for x in (f64_gap(arr, observable, units) for _, arr in rows) if x is not None]
     f64_ok = bool(f64) and max(f64) <= F64_TOL
-    V = v7.verdict(sel.get("selected"), status, pc_ok, sep_ok, impl_ok, f64_ok)
+    V = v7.verdict(sel.get("selected"), status, pc_ok, sep_ok, impl_ok, f64_ok, det_ok)
     other = "score" if observable == "panel" else "panel"
     S_o = summarise_cells(rows, other, units, mags)
     sec = {"other_observable": other,
-           "other_medians": {k: v7.finite_median([s[k] for s in S_o]) for k in ("D_gene_mean", "D_gene_mean_plus_G", "W", "P")},
+           "other_medians": {k: v7.finite_median([s[k] for s in S_o]) for k in ("D_gene_mean", "D_gene_mean_plus_G", "W", "P", "R")},
            "other_q95": {k: v7.q95([s[k] for s in S_o]) for k in ("D_gene_mean", "D_gene_mean_plus_G")},
            "per_magnitude": {}, "per_class": {}, "g_excess_median_W_minus_D2": v7.finite_median(col["W"] - col["D_gene_mean_plus_G"])}
     for f in mags:
         Sm = summarise_cells(rows, observable, units, [f])
         kf = str(v7.frac_code(f))
         sec["per_magnitude"][kf] = {k: v7.finite_median([s[k] for s in Sm]) for k in ("D_gene_mean", "D_gene_mean_plus_G",
-                                                                                      "W", "W_context", "W_pure", "P")}
+                                                                                      "W", "W_context", "W_pure", "P", "R")}
         sec["per_magnitude"][kf].update({f"q95_{k}": v7.q95([s[k] for s in Sm]) for k in ("D_gene_mean", "D_gene_mean_plus_G")})
     for c in ("NK", "T"):
         mk = cls == c
@@ -1482,11 +1580,12 @@ def family_block(a, add: dict, sel: dict, family: str, observable: str, rows: li
     sec["predicted_unit_reexpression_factor_per_protein"] = (u["panel"] / up).tolist()
     return {"family": family, "observable": observable, "n_cells": n, "magnitudes": list(mags),
             "by_donor_class": {f"{d_}/{c}": int(np.sum((donor == d_) & (cls == c))) for d_ in sorted(set(donor)) for c in ("NK", "T")},
-            "bounds": B, "status": status, "positive_control_detected": pc_ok, "G_witness_detected": sep_ok,
+            "bounds": B, "status": status, "positive_control_detected": pc_ok,
+            "patch_region_witness_detected": det_ok, "G_witness_detected": sep_ok,
             "implementation_ok": impl_ok, "implementation_max": {k: max((g["values"][k] for g in gates if g["values"][k] is not None), default=None) for k in GATES},
             "float64_max_gap": max(f64) if f64 else None, "float64_ok": f64_ok, "verdict": V, "secondary": sec,
             "per_cell": [{k: s[k] for k in ("cell", "class", "donor", "g_present", "ntokens", "D_gene_mean",
-                                           "D_gene_mean_plus_G", "W", "P")} for s in S]}
+                                           "D_gene_mean_plus_G", "W", "P", "R")} for s in S]}
 
 
 def stage_report(a, add: dict, sel: dict, reg_info: dict) -> None:
@@ -1557,7 +1656,8 @@ def write_report(out: Path, R: dict, add: dict) -> None:
             L.append(f"| {k} | {_f(v['value'])} | " + (f"[{_f(ci[0])}, {_f(ci[1])}]" if ci else "n/a") + " | "
                      + "; ".join(f"{d_} {_f(x['value'])} " + (f"[{_f(x['ci'][0])}, {_f(x['ci'][1])}]" if x["ci"] else "")
                                  for d_, x in v["per_donor"].items()) + " |")
-        L += ["", f"status {b['status']}; positive control detected {b['positive_control_detected']}; G witness detected "
+        L += ["", f"status {b['status']}; positive control detected {b['positive_control_detected']}; patch-region "
+                  f"witness detected {b['patch_region_witness_detected']}; G witness detected "
                   f"{b['G_witness_detected']}; implementation ok {b['implementation_ok']}; float64 max gap "
                   f"{_f(b['float64_max_gap'], 6)} (ok {b['float64_ok']})", "",
               f"implementation maxima `{json.dumps(b['implementation_max'])}`", "",
@@ -1565,6 +1665,13 @@ def write_report(out: Path, R: dict, add: dict) -> None:
     L += [f"tol {TOL} in units of the measured val NK-T gap per protein ({add['computed_train_val']['units']['panel']}); "
           f"score unit {add['computed_train_val']['units']['score']:.4f}."]
     (out / "REPORT.md").write_text("\n".join(L) + "\n")
+
+
+def refuse_if_stopped(sel: dict, stage: str) -> None:
+    """A stopped development record (implementation or precision gate) ends E7 with no verdict (registered)."""
+    decisive = sel.get("followup") or sel.get("primary") or {}
+    if decisive.get("stopped"):
+        raise SystemExit(f"{stage} refused: development stopped ({decisive['stopped']}); E7 ends with no verdict")
 
 
 # ============================================================================ main
@@ -1600,6 +1707,7 @@ def main(argv=None) -> int:
     sel = json.loads(sp.read_text())
     if not sel.get("final"):
         raise SystemExit("the selection record is not final (the declared follow-up is required first)")
+    refuse_if_stopped(sel, a.stage)
     if a.stage == "confirm":
         return stage_confirm(a, add, reg, sel)
     stage_report(a, add, sel, info)

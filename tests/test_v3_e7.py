@@ -73,6 +73,19 @@ def test_average_patch_preserves_the_gene_mean_and_one_sided_moves_it():
     assert np.allclose(Ht.numpy(), Ha)
 
 
+def test_region_shift_moves_the_mean_by_the_shift_through_the_patch_tokens_only():
+    rng = np.random.default_rng(7)
+    H, s = rng.standard_normal((40, 5)), rng.standard_normal(5)
+    pairs = np.array([[0, 7], [3, 9], [11, 20]])
+    Hr = v7.apply_region_shift(H, pairs, s)
+    assert np.allclose(Hr.mean(0) - H.mean(0), s)
+    changed = np.where(np.any(Hr != H, axis=1))[0]
+    assert changed.tolist() == sorted(pairs.ravel().tolist())
+    torch = pytest.importorskip("torch")
+    Ht = v7.apply_region_shift(torch.from_numpy(H), pairs, torch.from_numpy(s))
+    assert np.allclose(Ht.numpy(), Hr)
+
+
 def test_clamp_moves_the_mean_by_the_shift_and_keeps_the_deviations():
     rng = np.random.default_rng(3)
     H, s = rng.standard_normal((30, 5)), rng.standard_normal(5)
@@ -127,12 +140,14 @@ def test_layer12_output_mean_preserving_patch_leaves_the_pooled_state_unchanged(
 
 
 # ----------------------------------------------------------------------------- per-cell statistics
-def _cell(O0, Om, Ot, Og, Oc, code=128):
-    O = np.concatenate([Om, Ot, Og, Oc])
-    n_m, n_t, n_g, n_c = len(Om), len(Ot), len(Og), len(Oc)
-    kind = np.array([v7.KIND_MATCHED] * n_m + [v7.KIND_TWIN] * n_t + [v7.KIND_G_ONLY] * n_g + [v7.KIND_CLAMP] * n_c)
-    codes = np.array([code] * (n_m + n_t) + [0] * (n_g + n_c))
-    base = np.array([-1] * n_m + list(range(n_t)) + [-1] * (n_g + n_c))
+def _cell(O0, Om, Ot, Og, Oc, code=128, Or=None):
+    Or = np.zeros((0, 4)) if Or is None else Or
+    O = np.concatenate([Om, Ot, Og, Oc, Or])
+    n_m, n_t, n_g, n_c, n_r = len(Om), len(Ot), len(Og), len(Oc), len(Or)
+    kind = np.array([v7.KIND_MATCHED] * n_m + [v7.KIND_TWIN] * n_t + [v7.KIND_G_ONLY] * n_g + [v7.KIND_CLAMP] * n_c
+                    + [v7.KIND_REGION] * n_r)
+    codes = np.array([code] * (n_m + n_t) + [0] * (n_g + n_c + n_r))
+    base = np.array([-1] * n_m + list(range(n_t)) + [-1] * (n_g + n_c) + [0] * n_r)
     return O, np.asarray(O0, float), kind, codes, base
 
 
@@ -146,12 +161,15 @@ def test_cell_summary_separates_gene_mean_from_gene_mean_plus_g():
     Ot = Om + np.array([0.2, 0, 0, 0])  # G twins: only the G states differ from the matched patch -> large
     Og = np.full((2, 4), 0.03)
     Oc = np.array([[0.5, 0, 0, 0], [0, 0.4, 0, 0]])
-    s = v7.cell_summary(*_cell(O0, Om, Ot, Og, Oc), [128], dfun)
+    Or = np.array([[0, 0, 0.45, 0], [0, 0, 0, 0.35]])
+    s = v7.cell_summary(*_cell(O0, Om, Ot, Og, Oc, Or=Or), [128], dfun)
     assert np.isclose(s["D_gene_mean_plus_G"], 0.01) and np.isclose(s["D_gene_mean"], 0.21)
     assert np.isclose(s["W_context"], 0.2) and np.isclose(s["W_pure"], 0.03) and np.isclose(s["W"], 0.2)
-    assert np.isclose(s["P"], 0.5) and np.isnan(s["D_all_token_states"])
-    s2 = v7.cell_summary(*_cell(O0, Om, Ot, Og, Oc), [32], dfun)  # other magnitude: only code-0 patches count
+    assert np.isclose(s["P"], 0.5) and np.isclose(s["R"], 0.45) and np.isnan(s["D_all_token_states"])
+    assert s["n_region"] == 2 and s["n_clamp"] == 2  # the shift controls never enter a matched family
+    s2 = v7.cell_summary(*_cell(O0, Om, Ot, Og, Oc, Or=Or), [32], dfun)  # other magnitude: only code-0 patches count
     assert np.isnan(s2["D_gene_mean_plus_G"]) and np.isclose(s2["W"], 0.03) and np.isclose(s2["P"], 0.5)
+    assert np.isclose(s2["R"], 0.45)
 
 
 def test_score_and_deltas_units():
@@ -209,7 +227,8 @@ def test_bounds_support_and_reject():
 
 def test_verdict_table():
     sup, rej, unr = "supported", "rejected", "unresolved"
-    V = v7.verdict
+    def V(sel, st, pc, sep, impl, f64, det=True):
+        return v7.verdict(sel, st, pc, sep, impl, f64, det)
     assert V("gene_mean_plus_G", {"gene_mean": rej, "gene_mean_plus_G": sup}, True, True, True, True)["code"] == "LOOP_COMPLETE"
     assert V("gene_mean_plus_G", {"gene_mean": unr, "gene_mean_plus_G": sup}, True, True, True, True)["code"] == \
         "SUPPORTED_REVISION_NOT_SHOWN_NECESSARY"
@@ -217,8 +236,18 @@ def test_verdict_table():
         "SUPPORTED_REVISION_NOT_SHOWN_NECESSARY"
     assert V("gene_mean", {"gene_mean": sup, "gene_mean_plus_G": sup}, True, False, True, True)["code"] == "GENE_MEAN_SUPPORTED"
     assert V("gene_mean", {"gene_mean": sup, "gene_mean_plus_G": sup}, False, False, True, True)["code"] == "UNINFORMATIVE"
+    # the patch-region detectability witness gates every support claim, as the clamp does
+    assert V("gene_mean", {"gene_mean": sup, "gene_mean_plus_G": sup}, True, False, True, True, False)["code"] == "UNINFORMATIVE"
+    assert V("gene_mean_plus_G", {"gene_mean": rej, "gene_mean_plus_G": sup}, True, True, True, True, False)["code"] == \
+        "UNINFORMATIVE"
     assert V("gene_mean", {"gene_mean": rej, "gene_mean_plus_G": rej}, True, True, True, True)["code"] == "SELECTED_REJECTED"
-    assert V(None, {"gene_mean": rej, "gene_mean_plus_G": rej}, False, False, True, True)["code"] == "REJECTED_NO_REVISION"
+    # a rejection needs no control: a failed control never masks it
+    assert V("gene_mean", {"gene_mean": rej, "gene_mean_plus_G": rej}, False, False, True, True, False)["code"] == \
+        "SELECTED_REJECTED"
+    assert V("gene_mean", {"gene_mean": unr, "gene_mean_plus_G": unr}, False, False, True, True, False)["code"] == \
+        "SELECTED_UNRESOLVED"
+    assert V(None, {"gene_mean": rej, "gene_mean_plus_G": rej}, False, False, True, True, False)["code"] == \
+        "REJECTED_NO_REVISION"
     assert V(None, {"gene_mean": rej, "gene_mean_plus_G": unr}, True, True, True, True)["code"] == \
         "REJECTED_GENE_MEAN_NO_SELECTION"
     assert V(None, {"gene_mean": unr, "gene_mean_plus_G": unr}, True, True, True, True)["code"] == "NO_SELECTION_UNRESOLVED"
@@ -251,6 +280,11 @@ def test_histories_are_seeded_per_phase_and_fresh_at_confirmation():
     kinds = [h[0] for h in h1]
     assert kinds.count(v7.KIND_MATCHED) == 3 * m.N_MATCHED and kinds.count(v7.KIND_TWIN) == 3 * m.N_MATCHED
     assert kinds.count(v7.KIND_G_ONLY) == m.N_G_ONLY and kinds.count(v7.KIND_CLAMP) == 2
+    reg = [h for h in h1 if h[0] == v7.KIND_REGION]
+    assert len(reg) == m.N_REGION and sorted(h[4] for h in reg) == [-1, 1]
+    top = h1[reg[0][3]]  # the region is matched_1 of the largest magnitude: non-G tokens only
+    assert top[0] == v7.KIND_MATCHED and top[1] == v7.frac_code(max(m.LADDER)) and np.array_equal(reg[0][2], top[2])
+    assert not set(v7.region_positions(reg[0][2])) & set(g)
     pm = [h for h in h1 if h[0] == v7.KIND_MATCHED]
     p3 = [h for h in h3 if h[0] == v7.KIND_MATCHED]
     assert not any(np.array_equal(a[2], b[2]) for a, b in zip(pm, p3))  # fresh pairs at confirmation
@@ -298,6 +332,42 @@ def test_confirm_refused_without_a_final_committed_selection_record(tmp_path):
     a = _fake_registration(tmp_path, m, sel={"final": False, "addendum_sha256": "y", "primary": {"selected": None}})
     with pytest.raises(SystemExit, match="final development selection record"):
         m.check_registration(a, "confirm")
+
+
+def test_run_cell_gates_flag_a_no_op_patch_and_require_the_controls():
+    m = _script()
+    n = 6
+    kind = np.array([v7.KIND_MATCHED, v7.KIND_TWIN, v7.KIND_G_ONLY, v7.KIND_CLAMP, v7.KIND_CLAMP, v7.KIND_REGION])
+    arr = {"O0": np.zeros(4), "O_pad0": np.zeros((1, 4)), "O_pad1": np.zeros((1, 4)), "O_l12": np.zeros((1, 4)),
+           "O_perm": np.zeros((1, 4)), "dmean": np.zeros(n), "rows_mismatch": np.zeros(n, np.int64), "kind": kind}
+    mc = {"controls": {"module_vs_explicit_abs": 0.0, "padded_vs_unpadded_abs": 0.0, "official_layer11_gene_mean_abs": 0.0}}
+    units = {"panel": np.ones(4), "score": 1.0}
+    g = m.cell_gates(mc, {**arr, "kind": np.append(kind, v7.KIND_REGION), "dmean": np.zeros(n + 1),
+                          "rows_mismatch": np.zeros(n + 1, np.int64)}, units)
+    assert g["ok"] and g["controls_present"]
+    assert not m.cell_gates(mc, arr, units)["ok"]  # one patch-region history missing
+    full = {**arr, "kind": np.append(kind, v7.KIND_REGION), "dmean": np.zeros(n + 1)}
+    bad = {**full, "rows_mismatch": np.array([0, 0, 2, 0, 0, 0, 0])}  # a pair patch that changed no row
+    assert not m.cell_gates(mc, bad, units)["ok"]
+    shift = {**full, "rows_mismatch": np.zeros(n + 1, np.int64), "dmean": np.array([0, 0, 0, 0, 1e-3, 0, 0.0])}
+    assert not m.cell_gates(mc, shift, units)["ok"]  # the clamp did not move the gene-mean by its vector
+
+
+def test_select_writes_its_record_once_and_a_stopped_record_ends_e7(tmp_path):
+    m = _script()
+    a = _fake_registration(tmp_path, m, sel={"final": True, "primary": {"selected": None, "stopped": None}})
+    a.roster, a.cell_pool = "dev", "registered"
+    with pytest.raises(SystemExit, match="written once"):
+        m.stage_select(a, {})
+    (a.out_dir / "site4" / "cells").mkdir(parents=True)
+    (a.out_dir / "site4" / "cells" / "cell_1.npz").write_bytes(b"x")
+    with pytest.raises(SystemExit, match="confirmation outputs already exist"):
+        m.stage_select(a, {})
+    with pytest.raises(SystemExit, match="E7 ends with no verdict"):
+        m.refuse_if_stopped({"primary": {"stopped": "implementation check failed on a development cell"}}, "confirm")
+    with pytest.raises(SystemExit, match="E7 ends with no verdict"):
+        m.refuse_if_stopped({"primary": {"stopped": None}, "followup": {"stopped": "float64"}}, "report")
+    m.refuse_if_stopped({"primary": {"stopped": None}, "followup": {"stopped": None}}, "confirm")
 
 
 def test_committed_addendum_matches_the_code_on_disk():

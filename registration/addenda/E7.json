@@ -1,6 +1,6 @@
 {
  "addendum_to": "registration/registration_v3.json as amended by A1, A2 and A3: a new pre-specified Mode A experiment registered before any development or site4 forward of its script; nothing registered for E1-E6 changes",
- "addendum_version": 1,
+ "addendum_version": 2,
  "amendments_sha256": {
   "amendment_A1.json": "1f44be66bfc22a5bc428cf31a0bcd14047466005f4308386da195f55b767cdee",
   "amendment_A2.json": "20b64174b063d39997abf09877ae1ba152d935589b43630e15dd6ebe6d21fd36",
@@ -85,7 +85,7 @@
   },
   "note": "3 training cells (default_rng([20260930, 7, 5])); one average and one swap patch per cell at positions default_rng([20260930, 7, 6, cell]); no val or site4 cell"
  },
- "built_utc": "2026-10-01T22:00:02Z",
+ "built_utc": "2026-10-01T22:21:50Z",
  "computed_train_val": {
   "G": {
    "CD3D": {
@@ -4772,12 +4772,14 @@
    256
   ],
   "gates": {
+   "intended_mean_shift_abs": 1e-05,
    "layer12_mean_preserving_gap_units": 1e-05,
    "mean_preservation_abs": 1e-05,
    "module_vs_explicit_abs": 0.0001,
    "official_layer11_gene_mean_abs": 0.001,
    "padded_vs_unpadded_abs": 0.0001,
    "padding_patch_gap_units": 1e-06,
+   "patch_rows_changed_mismatch": 0,
    "permutation_gap_units": 1e-05
   },
   "kappa": 1.0,
@@ -4803,6 +4805,7 @@
   "n_matched": 8,
   "n_pad": 16,
   "n_push_cells": 50,
+  "n_region": 2,
   "n_site4_per_class_per_donor": 100,
   "n_twin": 8,
   "phase_tags": {
@@ -4876,40 +4879,44 @@
   "consumer": "fixed, never trained: E5's validated explicit-attention layer_fn with encoder.layers[11]'s own weights (forward equal to the module's to ~5e-6), mean over the cell's real tokens, then E5's load_head: z / (||z|| + 1e-6) -> MLP -> NB decoder mean at the training-median size factor, / training p95 of measured ADT (the frozen phase-1 head outputs/cite_phase1_official/best.pt, sha256 in inputs)",
   "controls": {
    "invariance_implementation": {
+    "intended_mean_shift": "the clamp and patch-region histories move the gene-mean by +- KAPPA dmu_11: max |change - intended| <= 1e-05",
     "layer12_mean_preserving_patch": "averaging two real tokens' layer-12 states leaves the gene-mean, hence the head, unchanged: <= 1e-05 gap units",
     "mean_preservation": "max |gene-mean change| of every pair-averaging patch <= 1e-05",
     "module_vs_explicit": "explicit layer_fn vs the module's layer 12 (unpadded) and the padded masked module on the real tokens: max |state difference| <= 0.0001",
     "official_state": "explicit float32 layer-11 gene-mean vs the official stored one (fp16 autocast): <= 0.001",
     "padding_patch": "layer 12 run by the module on the cell padded with 16 extra positions (bool key-padding mask, CPU float32); replacing one padding state must change the head by <= 1e-06 gap units (observed exactly 0 at register)",
+    "patch_applied": "every history changes exactly the layer-11 rows it names (2 per averaged pair, the region's rows, every row for the clamp): mismatch count <= 0 (a no-op patch would otherwise pass every other gate and give trivial support)",
     "permutation": "permuting the layer-11 rows changes the head by <= 1e-05 gap units (no positional input in layer 12)",
     "rule": "any failure on any cell of a stage -> NOT_VALIDATED (no verdict)"
    },
    "positive": {
     "G_witness": "registered: W (the revision is shown necessary only if W is detected and the gene-mean rejected)",
     "clamp": "registered: two clamp patches per cell, every layer-11 token moved by +1.0 and -1.0 x dmu_11 = E5's training NK - T difference of the layer-11 gene-mean (outputs/v3/E5/e5_directions.npz dmu[11], training cells, primary key; pinned by sha256 and copied here): the gene-mean moves by the full NK - T difference (an NK/T-sized change of the retained state, as ANM's queried-sensor +1), the deviations do not; P = max of the two differences",
-    "input_push": "secondary and descriptive (the review's E5-M push): each G gene's token embedding doubled at the input, full forward, first 50 cells of each confirmation order; it acts at layer 0, so it moves the cut's gene-mean and deviations together and does not decide"
+    "input_push": "secondary and descriptive (the review's E5-M push): each G gene's token embedding doubled at the input, full forward, first 50 cells of each confirmation order; it acts at layer 0, so it moves the cut's gene-mean and deviations together and does not decide",
+    "patch_region": "registered detectability witness: R (histories.patch_region, statistics.detectability_witness)"
    }
   },
   "development": {
    "follow_up": "only if the development selection is null (not stopped), and only once, labelled 'follow-up after a null primary selection': the observable restricted to the NK-T score s (unit u_s), the same library, history class and rule, on the fresh roster rosters.followup (100 NK + 100 T val donor 18303 cells disjoint from rosters.dev, fixed here; fewer NK if fewer remain). Its develop stage is refused until the null primary record is committed",
-   "gates": "implementation checks on every development cell and the float64 re-check on the first 10 cells of the order must pass for a selection to count; otherwise the record says stopped (precision / implementation) and no follow-up runs",
+   "gates": "implementation checks on every development cell and the float64 re-check on the first 10 cells of the order must pass for a selection to count; otherwise the record says stopped (precision / implementation), no follow-up runs and E7 ends with no verdict (confirm and report are refused)",
    "magnitudes": "1/32, 1/8, 1/2 (all; the history class is their union)",
-   "record": "registration/addenda/E7_selection.json (sha256 line in addenda/HASHES.txt), committed before any site4 or external forward of this script; it pins the development digest (sha256 of every development output)",
+   "record": "registration/addenda/E7_selection.json (sha256 line in addenda/HASHES.txt), committed before any site4 or external forward of this script; it pins the development digest (sha256 of every development output). Written once: select refuses to overwrite a primary record, to run the follow-up twice, or to run at all once any confirmation output exists",
    "roster": "val donor 18303 primary-key NK and T cells, eligible: 100 NK + 100 T drawn with numpy default_rng([20260930, 7, 0]) (NK, then T), listed in rosters.dev with the processing order",
    "selection_rule": "as ANM's study: a candidate is retained when it has >= 1 matched pair and its matched-pair differences on the development roster are <= tol, summarised as the 95th percentile over cells of the per-cell maximum over the whole class (the point value of the statistic the confirmation bounds; the literal max over every cell is recorded beside it and never decides); the minimal retained candidate (dimension order) is selected, ties by declared order; none retained -> stop, keep the record, and run the single declared follow-up"
   },
   "eligibility": "a cell enters any roster only if at least 1 G gene is among its tokens and it has >= 256 non-G tokens (at least 3 pairs at the smallest magnitude); computed from the official tokenisation (label-free)",
-  "fixed_before_development": "every choice and number here was fixed on training and validation cells and committed before any development forward of this script; no patch output on a val or site4 cell informed any choice (patch outputs were computed on training cells only: the 3 cells of architecture_check and the 7 of pre_registration_code_test)",
+  "fixed_before_development": "every choice and number here was fixed on training and validation cells and committed before any development forward of this script; no patch output on a development, follow-up or site4 cell informed any choice. Patch outputs were computed on training cells (the 3 of architecture_check, the 7 of pre_registration_code_test and the 4 of review_revision_v2) and, after version 1 was committed, on the 5 val smoke-pool cells of version 1's code smoke (outside both rosters; disclosed in review_revision_v2)",
   "float64_recheck": "the first 10 cells of every roster's order are recomputed in float64 on the CPU (layers 1-12 and the head, the same histories); if any history's difference differs from the float32 one by more than tol / 10 = 0.005, the stage is UNRESOLVED_PRECISION",
   "histories": {
    "class": "the declared history class = the unpatched cell and exact mean-preserving pair-averaging patches at the layer-11 cut at the declared magnitudes: disjoint pairs of real-token positions, each pair's two states replaced by their average (exact mean preservation in exact arithmetic; float32 rounding checked by the gate mean_preservation_abs)",
    "draws": "numpy default_rng([20260930, 7, phase tag, global cell id, 1024 f]) per cell and magnitude (matched_i then its twin's partners, i = 1..8: v3_e7.draw_patch_sets) and default_rng([20260930, 7, phase tag, cell, 1]) for the G-only patches (v3_e7.draw_g_only); phase tags dev 1, followup 2, site4 3, external 4 (fresh pairs at confirmation); uniform positions",
-   "families_per_magnitude": "8 matched patches (m pairs among non-G tokens) and, for each, its G twin (the same pairs plus every G token averaged with its own non-G partner outside the patch: same gene-mean, only the G states differ from the matched patch)",
+   "families_per_magnitude": "8 matched patches (m pairs among non-G tokens) and, for each, its G twin (the same pairs plus every G token averaged with its own non-G partner outside the patch: same gene-mean; it differs from the matched patch only at the G tokens and their g non-G partners, so the G states differ)",
    "g_only": "8 G-only patches per cell (every G token averaged with its own random non-G partner, nothing else): magnitude-free G witnesses, counted at every magnitude",
    "magnitude": "f = share of the cell's non-G tokens averaged: m = max(1, floor(f (n_nonG - g) / 2)) pairs (v3_e7.pairs_for_fraction). Development: f in {1/32, 1/8, 1/2}, all three (no adaptive magnitude). Confirmation: the same three with fresh pairs plus the fresh magnitude 1/4",
    "matched_pairs": "gene_mean: (unpatched, matched_i), (unpatched, twin_i), (matched_i, twin_i), (unpatched, G-only_j); gene_mean_plus_G: (unpatched, matched_i); all_token_states: none",
    "no_swaps": "a swap leaves the multiset of states unchanged, so the consumer's output is unchanged (architecture fact; checked)",
-   "witness_pairs": "(matched_i, twin_i) and (unpatched, G-only_j): equal gene-mean, only the G states differ: matched under candidate 1, not under candidate 2; G-specific at every magnitude (the context patch is the same on both sides)"
+   "patch_region": "2 patch-region histories per cell (the detectability witness): the region of matched_1 at the stage's largest magnitude (f = 1/2: its 2m non-G tokens) moved by +- KAPPA x dmu_11 x L / (2m) per token, so the gene-mean moves by exactly +- KAPPA x dmu_11 (the clamp's vector) while every other token, the G tokens included, keeps its state (v3_e7.apply_region_shift); never a matched pair (the gene-mean moves)",
+   "witness_pairs": "(matched_i, twin_i) and (unpatched, G-only_j): equal gene-mean, different G states (the G tokens and their g non-G partners differ; the context patch is the same on both sides): matched under candidate 1, not under candidate 2"
   },
   "observable": {
    "panel": "O = the head's predictions of CD56, CD94, CD335, CD3 (E3's gap proteins = E5's and E5-M's head proteins); difference between two histories = max over the proteins of |O_p - O'_p| / u_p",
@@ -4917,13 +4924,15 @@
    "secondary_units": "the head's own predicted val NK-T gap per protein (official z), reported as a re-expression; never decides",
    "units": "u_p = |median over val primary-key NK cells - median over val primary-key T cells| of the measured m_p = ADT_p / p95_p (p95 = the head's normaliser: lp.p95_replicate, training cells), val donor 18303 only, computed at register and frozen here; a protein with u_p < 0.05 would be dropped (recorded)"
   },
-  "per_cell_statistics": "d = observable difference between the two histories of a pair; D_gene_mean = max d over candidate 1's matched pairs, D_gene_mean_plus_G = max d over candidate 2's, W = max d over the G witness pairs (W_context and W_pure reported), P = max d over (unpatched, clamp +-) (v3_e7.cell_summary), over every magnitude of the stage (G-only and clamp patches always count)",
+  "per_cell_statistics": "d = observable difference between the two histories of a pair; D_gene_mean = max d over candidate 1's matched pairs, D_gene_mean_plus_G = max d over candidate 2's, W = max d over the G witness pairs (W_context and W_pure reported), P = max d over (unpatched, clamp +-), R = max d over (unpatched, patch region +-) (v3_e7.cell_summary), over every magnitude of the stage (G-only, clamp and patch-region patches always count)",
   "pre_registration_code_test": "before this addendum, a first code run used 2 training cells without G tokens (code paths only), then the code ran on 2 annotated training cells (1 NK, 1 T; no val or site4 cell) with an earlier draft that used one-sided twins as the positive control and a magnitude calibrated on them. Median per-cell maxima (panel, gap units): gene-mean 0.014 / 0.065 / 0.166 and gene-mean + G 0.013 / 0.055 / 0.149 at f = 1/32 / 1/8 / 1/2; G witness 0.007 / 0.011 / 0.027; one-sided twins 0.002 / 0.007 / 0.026, so a twin-calibrated magnitude (target 2 tol) would never have been reached: the twin moves the gene-mean by a random-walk sum. The draft was revised to the clamp positive control and the fixed three-magnitude class, and rerun on 3 annotated training cells (2 NK, 1 T) with the clamp at kappa 0.2: median P 0.049 (at the tolerance), median W 0.019, q95 of the per-cell maximum 0.227 (gene-mean) and 0.202 (gene-mean + G). kappa was then set to 1 (the full training NK - T difference, the interpretable NK/T-sized change; 0.2 had no rationale beyond being small); the same 3 cells were rerun on MPS to check the device path (float32 vs float64 within 1e-6). Nothing else changed after these code tests",
   "question": "TEDDY analog of ANM v2's inverse loop with the consumer fixed: is TEDDY's layer-11 gene-mean a sufficient retained state for the fixed consumer (layer 12 + gene-mean pooling + L2 normalisation + the frozen phase-1 head) on the registered NK/T panel, under a declared class of exact mean-preserving interventions at the layer-11 cut? If it is rejected, does a declared augmentation chosen by a declared rule on development data get bounded support on fresh comparisons?",
+  "review_revision_v2": "addendum version 2, written after an adversarial review and before any development forward; supersedes version 1 (sha256 e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a, commit 6dc5999). Seen before this revision: version 1's code smoke on 5 val smoke-pool cells (outside both rosters; never development, follow-up or confirmation cells): panel q95 of the per-cell maximum over the development magnitudes 0.139 (gene-mean) and 0.091 (gene-mean + G), median G witness 0.014, median clamp 0.210; score follow-up 0.074 / 0.055; the smoke confirmation family (the same 5 cells) REJECTED_NO_REVISION. Changes, none of which touches the tolerance, units, G, the library, rosters, magnitudes, the selection rule, the rejection criterion or the bootstrap: (1) the patch-region detectability witness R is added and support counts only if it is detected as well as the clamp (the clamp moves every token, the G tokens included, so it could not rule out support of gene-mean + G reached because the consumer does not see the patched non-G tokens); (2) a control failure now makes only a support claim UNINFORMATIVE (version 1 also turned a rejection of the selected candidate into UNINFORMATIVE, although rejections need no control, as when nothing is selected); (3) implementation gates patch_applied and intended_mean_shift (a no-op patch passed every version-1 gate and would have given trivial support); (4) a stopped development record ends E7 (version 1 would have run confirmation and reported that no candidate was selected) and select writes its record once; (5) wording: a G twin differs from its matched patch at the G tokens and their non-G partners. Checked on 4 training cells (the code-test pool, 2 NK + 2 T, float64 CPU) before this revision: every pair patch moves the gene-mean by <= 2.2e-16, candidate-2 matched patches leave the G rows bitwise unchanged, twins differ from their matched patch only at the G tokens and their partners; a version-2 code smoke on the same 4 cells (every stage) passed every gate, with the patch-region witness 0.92-1.00 times the clamp on each cell (so it adds no hurdle the clamp did not already pose on these cells; it closes the logical gap). (1) and (3) can only remove a support claim; (2) lets a rejection of a selected candidate stand; none changes the expected path (null selection, follow-up, rejections)",
   "statistics": {
    "bootstrap": "registration common.statistics: two-stage (donors with replacement, then cells with replacement within each drawn donor and class), B = 2000, seed = seeds.bootstrap (1), percentile 95% intervals; per donor: a cell bootstrap within the donor and class, same B and seed",
-   "detectability_thresholds": "positive control and G witness: tol (the instrument must resolve a difference of the tolerance size); numerical: the implementation gates and the float64 rule below",
-   "positive_control": "detected if the lower end of the 95% interval of the median of P is > tol (pooled and each primary donor): the consumer resolves a change of the retained gene-mean of this size; failure makes any support UNINFORMATIVE, never support",
+   "detectability_thresholds": "positive control, patch-region witness and G witness: tol (the instrument must resolve a difference of the tolerance size); numerical: the implementation gates and the float64 rule below",
+   "detectability_witness": "detected if the lower end of the 95% interval of the median of R is > tol (pooled and each primary donor): the consumer resolves the same change of the gene-mean when it is delivered only through the tokens a matched patch touches. Support of the selected candidate counts only if both the positive control and this witness are detected; otherwise UNINFORMATIVE (a rejection never needs them). It rules out support reached because the consumer does not see the patched non-G tokens, which the clamp cannot: the clamp moves every token, the G tokens included",
+   "positive_control": "detected if the lower end of the 95% interval of the median of P is > tol (pooled and each primary donor): the consumer resolves a change of the retained gene-mean of this size; failure makes any support UNINFORMATIVE, never support (a rejection never needs it)",
    "rejection": "candidate k is rejected if the lower end of the 95% interval of the median over cells of D_k is > tol, pooled and in each primary donor; otherwise unresolved. all_token_states: uninformative",
    "support": "candidate k has bounded support if the upper end of the 95% interval of the 95th percentile over cells of D_k is <= tol, pooled and in each primary donor",
    "two_donor_caveat": "2 primary donors: the intervals describe these donors, not a population",
@@ -4937,7 +4946,7 @@
     "SELECTED_REJECTED": "the candidate selected in development is rejected on fresh comparisons",
     "SELECTED_UNRESOLVED": "the candidate selected in development is neither supported nor rejected",
     "SUPPORTED_REVISION_NOT_SHOWN_NECESSARY": "the selected gene-mean + G representation has bounded support, but the gene-mean is not rejected (or the G witness is not detected) on fresh comparisons",
-    "UNINFORMATIVE": "the positive control failed (the clamp shift of the gene-mean does not exceed the tolerance): support cannot be declared",
+    "UNINFORMATIVE": "the selected candidate meets the support bound, but the positive control (clamp) or the patch-region detectability witness is not detected (the instrument does not resolve a change of the retained gene-mean of the declared size, through every token or through the patched tokens only): support cannot be declared",
     "UNRESOLVED_PRECISION": "the float64 re-check differs from float32 by more than tol / 10 on the re-check subset: unresolved"
    },
    "witness_separation": "the G witness is detected if the lower end of the 95% interval of the median of W is > tol (pooled and each primary donor)"
@@ -4948,7 +4957,7 @@
    "why": "a change of 5% of the measured NK-T difference of a protein is negligible for NK-vs-T reading; fixed before development and before any patch output on a val or site4 cell"
   }
  },
- "disclosure": "The registering session had read the published v3 results (E1-E6, E5-M, including E5-M's per-layer clamp residuals on site4: the head's 0.709 / 0.72 at layer 11), the PR #16 review and the val / train cell counts. Before writing this addendum it ran the architecture check on 3 training cells (one average and one swap patch each, recorded in architecture_check) and counted val primary-key NK/T cells; it computed no patch output on any val or site4 cell. Site4 confirmation cells exclude every E3 / E5 / E5-M cell.",
+ "disclosure": "The registering session had read the published v3 results (E1-E6, E5-M, including E5-M's per-layer clamp residuals on site4: the head's 0.709 / 0.72 at layer 11), the PR #16 review and the val / train cell counts. Before writing this addendum it ran the architecture check on 3 training cells (one average and one swap patch each, recorded in architecture_check) and counted val primary-key NK/T cells; it computed no patch output on any val or site4 cell before version 1. Version 2 (declared.review_revision_v2) was written after version 1's code smoke on 5 val smoke-pool cells (outside both rosters) and a review check on 4 training cells; no development, follow-up, site4 or external forward of this script had run. Site4 confirmation cells exclude every E3 / E5 / E5-M cell.",
  "experiment": "E7",
  "external_family": {
   "E6_addendum_sha256": "b82687a7d3fe824668911e4f2f8e7c40f2061554f264452a2c6dea017129f537",
@@ -4974,7 +4983,7 @@
  "inputs": {
   "code_sha256": {
    "layer_fn": "b5cb565c0964a0f3b7fb065a0c6beaf105838997d7069c59bf0077bfd66d5cd3",
-   "lib_v3_e7": "670b92563e91f7a0c68d4db77c67bcd0bfd30b97d6ab18a08a4a03993b9ec7c5",
+   "lib_v3_e7": "99ff09182ebdea099ce65543c3f70b94f8b813bc4f82f56cee221d69e7fe954a",
    "load_donors": "fcd5edcdf2a60d565e06235d8e4e516b1cd4160a317492831829de55c37b27f8",
    "load_head": "14969d32c7aeb2eff907c77296bc134696f76d39a85013ab4fc4acb0be528829",
    "primary_keys": "295f434a35ada7dc6e57bd7da80a0d7e58bc9812ac79a952c3ee6f8b74a015cc",
@@ -4998,7 +5007,7 @@
   "what": "site4 rows (split test) of adt -> U(0, 8), adt_size_factor -> U(0.1, 10), cell_types -> random type, RNA values -> U(0.5, 50) on the same sparsity, official z -> N(0, 1) (seed 101); positive control: val rows of adt -> U(0, 8) and of z -> N(0, 1) (seed 303)"
  },
  "registration_sha256": "e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3",
- "script": "scripts/mode_a_inverse_e7.py (mode_a_inverse_e7 1.0); statistics in bridge_anm/lib/v3_e7.py",
+ "script": "scripts/mode_a_inverse_e7.py (mode_a_inverse_e7 1.1); statistics in bridge_anm/lib/v3_e7.py",
  "site4_exclusions": {
   "e3_pair_cells_per_donor": {
    "13272": 171,
@@ -5013,5 +5022,11 @@
   "rule": "exclude every cell in e5_cells.npz (roles pair = all of E3's NK-T pair cells, checked against n_e3_pair_cells_per_donor; random) and in e5m_cells.npz"
  },
  "smoke": false,
+ "supersedes": {
+  "addendum_version": 1,
+  "commit": "6dc5999",
+  "script_version": "mode_a_inverse_e7 1.0",
+  "sha256": "e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a"
+ },
  "title": "E7: TEDDY analog of ANM v2's inverse loop at the layer-11 cut, consumer fixed (Mode A)"
 }

@@ -8,12 +8,15 @@ the registered NK/T panel (CD56, CD94, CD335, CD3). Histories are exact mean-pre
 layer-11 cut: a set of m disjoint token pairs, each pair's two states replaced by their average. For a declared
 candidate representation phi of the layer-11 state, a *matched pair* is two histories with equal phi; a *witness
 pair* has equal gene-mean but different G-token states (a matched patch and its G twin, or the unpatched cell and a
-G-only patch). This module
+G-only patch; the G tokens' non-G partners differ too). Two controls make support informative: the clamp (every token
+moved by the training NK-T gene-mean difference) and the patch-region detectability witness (only the tokens of a
+matched patch moved, so that the gene-mean moves by the same vector: a consumer blind to the patched, non-G tokens
+cannot pass it). This module
 
 * sizes and draws the patch sets (``pairs_for_fraction``, ``draw_patch_sets``, ``draw_g_only``) and applies them
-  (``apply_average``, numpy or torch);
+  (``apply_average``, ``apply_clamp``, ``apply_region_shift``; numpy or torch);
 * turns head outputs into differences in declared units (``deltas``, ``score``);
-* summarises each cell (``cell_summary``: D_gene_mean, D_gene_mean_plus_G, W, P);
+* summarises each cell (``cell_summary``: D_gene_mean, D_gene_mean_plus_G, W, P, R);
 * applies the declared selection rule (``dev_selection``);
 * computes the registered two-stage donor bootstrap bounds and the verdict (``two_stage_draws``,
   ``within_donor_draws``, ``bounds``, ``endpoint_flags``, ``verdict``).
@@ -26,8 +29,10 @@ from typing import Any, Callable, Iterable, Mapping, Sequence
 import numpy as np
 
 CANDIDATES = ("gene_mean", "gene_mean_plus_G", "all_token_states")
-KIND_MATCHED, KIND_TWIN, KIND_G_ONLY, KIND_CLAMP = 0, 1, 2, 3
-KIND_NAMES = {KIND_MATCHED: "matched", KIND_TWIN: "G_twin", KIND_G_ONLY: "G_only", KIND_CLAMP: "clamp"}
+KIND_MATCHED, KIND_TWIN, KIND_G_ONLY, KIND_CLAMP, KIND_REGION = 0, 1, 2, 3, 4
+KIND_NAMES = {KIND_MATCHED: "matched", KIND_TWIN: "G_twin", KIND_G_ONLY: "G_only", KIND_CLAMP: "clamp",
+              KIND_REGION: "patch_region"}
+SHIFT_KINDS = (KIND_CLAMP, KIND_REGION)  # histories that move the gene-mean by design (controls, never matched pairs)
 
 
 # --------------------------------------------------------------------------- patches
@@ -47,8 +52,9 @@ def draw_patch_sets(rng: np.random.Generator, g_pos: Sequence[int], nong_pos: Se
     """Matched patches at m pairs and their G twins, drawn in this order with one generator, for each i:
     matched_i: 2m distinct non-G positions, pairs (first m, next m);
     twin_i   : matched_i plus every G token averaged with its own non-G partner, the partners drawn among the non-G
-               tokens not in matched_i (same gene-mean as matched_i and as the unpatched cell; only the G states
-               differ from matched_i). No twin (empty list) if the cell has no G token.
+               tokens not in matched_i (same gene-mean as matched_i and as the unpatched cell; it differs from
+               matched_i only at the G tokens and their g non-G partners, so the G states differ and the candidate-2
+               state is not matched). No twin (empty list) if the cell has no G token.
     Each patch is an int64 array [pairs, 2] of real-token positions."""
     g = np.asarray(sorted(int(x) for x in g_pos), np.int64)
     ng = np.asarray(sorted(int(x) for x in nong_pos), np.int64)
@@ -101,6 +107,28 @@ def apply_clamp(H, shift):
     return H + shift[None, :]
 
 
+def region_positions(pairs: np.ndarray) -> np.ndarray:
+    """The distinct token positions a patch touches (its region)."""
+    return np.unique(np.asarray(pairs, np.int64).ravel())
+
+
+def apply_region_shift(H, pairs: np.ndarray, shift):
+    """Patch-region detectability witness: only the tokens of the patch's region (2m positions) are moved, each by
+    shift * L / |region|, so the gene-mean moves by exactly shift (as the clamp) while every token outside the region
+    keeps its state. shift: [d] (numpy or torch, as H)."""
+    pos = region_positions(pairs)
+    L = H.shape[0]
+    if hasattr(H, "clone"):
+        import torch
+        out = H.clone()
+        pi = torch.as_tensor(pos, device=H.device)
+    else:
+        out = np.array(H, copy=True)
+        pi = pos
+    out[pi] = H[pi] + (float(L) / float(pos.size)) * shift[None, :]
+    return out
+
+
 def touches(pairs: np.ndarray, positions: Iterable[int]) -> bool:
     s = set(int(x) for x in positions)
     return any(int(x) in s for x in np.asarray(pairs).ravel())
@@ -149,18 +177,21 @@ def _median(x: np.ndarray) -> float:
 
 def cell_summary(O: np.ndarray, O0: np.ndarray, kind: np.ndarray, code: np.ndarray, base: np.ndarray,
                  codes: Iterable[int], dfun: Callable[[np.ndarray, np.ndarray], np.ndarray]) -> dict[str, float]:
-    """Per-cell statistics over the histories whose magnitude code is in codes (the magnitude-free G-only and clamp
-    patches, code 0, always count). dfun(O_a, O_b) = observable difference row by row. Pairs:
+    """Per-cell statistics over the histories whose magnitude code is in codes (the magnitude-free G-only, clamp and
+    patch-region patches, code 0, always count). dfun(O_a, O_b) = observable difference row by row. Pairs:
       (unpatched, matched_i), (unpatched, twin_i), (matched_i, twin_i), (unpatched, G-only_j): equal gene-mean
       (matched pairs of candidate 1); (unpatched, matched_i): equal gene-mean and G states (matched pairs of
-      candidate 2); (matched_i, twin_i) and (unpatched, G-only_j): equal gene-mean, only the G states differ (the G
-      witness pairs); (unpatched, clamp_s): the positive control (gene-mean moved, deviations unchanged).
+      candidate 2); (matched_i, twin_i) and (unpatched, G-only_j): equal gene-mean, different G states (the G tokens
+      and their non-G partners differ: the G witness pairs); (unpatched, clamp_s): the positive control (gene-mean
+      moved, deviations unchanged); (unpatched, region_s): the patch-region detectability witness (gene-mean moved by
+      the clamp's vector through the tokens of a matched patch only).
     D_gene_mean = max over candidate 1's matched pairs; D_gene_mean_plus_G = max over candidate 2's; W = max over the
-    G witness pairs (W_context: (matched, twin) only; W_pure: G-only only); P = max over the clamp patches.
-    NaN where a family is empty (the all-token-states candidate has no matched pair by construction)."""
+    G witness pairs (W_context: (matched, twin) only; W_pure: G-only only); P = max over the clamp patches; R = max
+    over the patch-region patches. NaN where a family is empty (the all-token-states candidate has no matched pair by
+    construction)."""
     O = np.atleast_2d(np.asarray(O, np.float64))
     kind, code, base = np.asarray(kind), np.asarray(code), np.asarray(base)
-    sel = np.isin(code, list(codes)) | (kind == KIND_G_ONLY) | (kind == KIND_CLAMP)
+    sel = np.isin(code, list(codes)) | np.isin(kind, (KIND_G_ONLY,) + SHIFT_KINDS)
     idx = np.where(sel)[0]
     k = kind[idx]
     d0 = dfun(O[idx], np.asarray(O0, np.float64)) if idx.size else np.zeros(0)
@@ -170,12 +201,14 @@ def cell_summary(O: np.ndarray, O0: np.ndarray, kind: np.ndarray, code: np.ndarr
     d_tw = d0[k == KIND_TWIN]
     d_go = d0[k == KIND_G_ONLY]
     d_cl = d0[k == KIND_CLAMP]
+    d_rg = d0[k == KIND_REGION]
     return {"D_gene_mean": _max(np.concatenate([d_m, d_tw, d_ctx, d_go])),
             "D_gene_mean_plus_G": _max(d_m),
             "D_all_token_states": float("nan"),
             "W": _max(np.concatenate([d_ctx, d_go])), "W_context": _max(d_ctx), "W_pure": _max(d_go),
-            "P": _max(d_cl),
-            "n_matched": int(d_m.size), "n_twin": int(d_tw.size), "n_g_only": int(d_go.size), "n_clamp": int(d_cl.size)}
+            "P": _max(d_cl), "R": _max(d_rg),
+            "n_matched": int(d_m.size), "n_twin": int(d_tw.size), "n_g_only": int(d_go.size), "n_clamp": int(d_cl.size),
+            "n_region": int(d_rg.size)}
 
 
 # --------------------------------------------------------------------------- development
@@ -302,7 +335,8 @@ def supports(b_q95: Mapping[str, Any], tol: float, per_donor: bool = True) -> bo
 
 
 def detects(b_median: Mapping[str, Any], threshold: float, per_donor: bool = True) -> bool:
-    """Positive control / witness detectability: 95% lower bound of the median > threshold (pooled, each donor)."""
+    """Positive control / detectability witness / G witness: 95% lower bound of the median > threshold (pooled, each
+    donor)."""
     return rejects(b_median, threshold, per_donor)
 
 
@@ -328,8 +362,10 @@ VERDICTS = {
                                               "comparisons",
     "GENE_MEAN_SUPPORTED": "the selected gene-mean has bounded support on fresh comparisons with a passing positive "
                            "control: no revision needed for this consumer, intervention class and magnitudes",
-    "UNINFORMATIVE": "the positive control failed (the clamp shift of the gene-mean does not exceed the tolerance): "
-                     "support cannot be declared",
+    "UNINFORMATIVE": "the selected candidate meets the support bound, but the positive control (clamp) or the "
+                     "patch-region detectability witness is not detected (the instrument does not resolve a change of "
+                     "the retained gene-mean of the declared size, through every token or through the patched tokens "
+                     "only): support cannot be declared",
     "SELECTED_REJECTED": "the candidate selected in development is rejected on fresh comparisons",
     "SELECTED_UNRESOLVED": "the candidate selected in development is neither supported nor rejected",
     "REJECTED_NO_REVISION": "no candidate was selected in development; on fresh comparisons both the gene-mean and "
@@ -341,9 +377,11 @@ VERDICTS = {
 
 
 def verdict(selected: str | None, status: Mapping[str, str], pc_ok: bool, sep_ok: bool, impl_ok: bool,
-            f64_ok: bool) -> dict[str, Any]:
+            f64_ok: bool, det_ok: bool) -> dict[str, Any]:
     """Registered verdict of the primary confirmation family. status[c] in rejected / supported / unresolved for
-    gene_mean and gene_mean_plus_G; pc_ok = positive control detected; sep_ok = G witness detected."""
+    gene_mean and gene_mean_plus_G; pc_ok = positive control (clamp) detected; det_ok = patch-region detectability
+    witness detected; sep_ok = G witness detected. pc_ok and det_ok gate support only: a rejection rests on its own
+    witness pairs and never needs them."""
     if not impl_ok:
         code = "NOT_VALIDATED"
     elif not f64_ok:
@@ -355,7 +393,7 @@ def verdict(selected: str | None, status: Mapping[str, str], pc_ok: bool, sep_ok
             code = "REJECTED_GENE_MEAN_NO_SELECTION"
         else:
             code = "NO_SELECTION_UNRESOLVED"
-    elif not pc_ok:
+    elif status.get(selected) == "supported" and not (pc_ok and det_ok):
         code = "UNINFORMATIVE"
     elif status.get(selected) == "supported":
         if selected == "gene_mean_plus_G":
