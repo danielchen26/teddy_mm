@@ -1,0 +1,127 @@
+{
+ "addendum_to": "registration/registration_v3.json, experiments.E5. This addendum fixes what experiments_v3.json leaves open and lists where this build deviates from it (deviations_from_experiments_v3); the orchestrator reconciles the two before the site4 run",
+ "cells": {
+  "max_cells": 600,
+  "n_pair_cells_per_donor": 150,
+  "pair_cells": "per primary donor: the donor's cells in the no_gdT158 NK-T look-alike pairs of mode_a_layer_probes.py (site4 k = 10 cosine neighbours on raw z, fixed annotation key; rebuilt and checked against outputs/mode_a_official/mode_a_pair_gaps.npz); pairs taken in one seeded order (default_rng(19)), their cells of that donor added until n_pair_cells_per_donor",
+  "primary_donors": [
+   "13272",
+   "19593"
+  ],
+  "random_cells": "per primary donor and class: as many of the donor's site4 NK / T cells as among its chosen pair cells, no gdT CD158b+, in no look-alike pair ('all' variant), stratified to those pair cells' token-count quintiles (same generator)",
+  "seed": 19,
+  "split": "test_primary: site4 cells of the donors not in training (13272, 19593); donor 15078 (a training donor) is not used"
+ },
+ "comparators": "the static layer probes (outputs/mode_a_official/mode_a_results.json: NK-T probe order rate, no_gdT158 gap ratios, centred distance ratio per depth) and the token probes (outputs/mode_a_official/token); controls: rand and other pushes. E5 adds information beyond the probes only through H2-H5 and the own-token vs spread decomposition, which the static probes cannot give",
+ "deviations_from_experiments_v3": [
+  "cells: the mode_a no_gdT158 pairs (fixed annotation key of mode_a_layer_probes.py, k = 10 over all site4 cells) restricted to primary-donor cells (150 per donor, <= 200 as experiments_v3), not the E3 pairs under the v3 key (the v3 key needs registration_v3.json, not built when this was written); plus a matched random set, as the E5 build instructions ask",
+  "genes: the 7 declared NK/T genes, not every E2 gene (GPU time); 2 'other' tokens per cell as the random-gene control",
+  "JVP path: explicit attention arithmetic with the layers' own weights, float32 on the GPU (MPS), not the standard module path on the CPU: forward-mode AD is not implemented for PyTorch's fused attention kernels (_transformer_encoder_layer_fwd, _native_multi_head_attention, _scaled_dot_product_flash_attention_for_cpu, _scaled_dot_product_attention_math_for_mps; torch 2.14); the explicit forward is checked against the module forward for every cell and the JVP against a float64 CPU JVP",
+  "endpoint: the primary localisation statistic is the signed per-case step change dG_l (log|r_l| ignores sign reversals and is heavy-tailed when r_{l-1} is near 0); the experiments_v3 log-gain endpoint and its margins are computed as a secondary endpoint",
+  "linearity: one-sided slopes on an eps ladder are added, because a central difference cancels the quadratic part of the response, which the val smoke put at 10-20 % of the linear part at eps = 0.1",
+  "JVP check: run in float64 on the CPU for a declared subset (1e-3 in float32 hits the rounding floor for weak responses, see jvp_check.float32_diagnostic); the float32 version is reported"
+ ],
+ "eps": [
+  0.02,
+  0.1,
+  1.0
+ ],
+ "eps_cells": "eps_primary on every cell; 0.1 and 1.0 (and eps_abs 1e-2) on the first n_full_ladder cells of the seeded processing order (GPU time)",
+ "eps_choice": "fixed on val donor 18303 cells (smoke calibration, 2 cells, KLRD1/CD3E pushes): the one-sided slope error grows linearly with eps (about 0.03 at 0.02, 0.08 at 0.05, 0.16 at 0.1), the central error is near the float32 floor (about 1e-3) below 0.02; so 0.02 is the small-signal check and 0.1 and 1.0 measure how far the linear description reaches",
+ "eps_primary": 0.02,
+ "experiment": "E5",
+ "falsification": "If the JVP check fails, E5 stops ('JVP not validated'). C7 (the layer dynamics localise where the NK-T difference is attenuated) is falsified for this model if H1 holds and neither H2 nor H4 holds: the NK-T push then passes every layer without a localised attenuation, so the static probe curves are not explained by the dynamics of token perturbations. If H1 fails at eps = 0.02 the linear-response reading is inconclusive and the FD reading is reported instead.",
+ "finite_differences": "forwards through the module's own encoder layers (layer(h), no padding) at h_0 + c T for c in {0, +-e, +-e/2} for each eps run on the cell and c = +-eps_abs / ||E[token]|| for the JVP check, all in one batch shape; one-sided slopes D+(e) = (z(+e) - z0)/e, D-(e) = (z0 - z(-e))/e, central Dc = (D+ + D-)/2. The JVP (explicit arithmetic) is thereby checked against the module itself",
+ "fixed_before_site4": "every entry is fixed on training and validation cells only and committed before any site4 forward pass of this script; smoke runs use val donor 18303 cells only",
+ "genes": {
+  "CD3D": {
+   "class": "T",
+   "ensembl": "ENSG00000167286"
+  },
+  "CD3E": {
+   "class": "T",
+   "ensembl": "ENSG00000198851"
+  },
+  "FCGR3A": {
+   "class": "NK",
+   "ensembl": "ENSG00000203747"
+  },
+  "KLRD1": {
+   "class": "NK",
+   "ensembl": "ENSG00000134539"
+  },
+  "KLRF1": {
+   "class": "NK",
+   "ensembl": "ENSG00000150045"
+  },
+  "NCAM1": {
+   "class": "NK",
+   "ensembl": "ENSG00000149294"
+  },
+  "NCR1": {
+   "class": "NK",
+   "ensembl": "ENSG00000189430"
+  }
+ },
+ "genes_rule": "every declared gene among the cell's tokens gets an nkt and a self case; each cell gets one rand case (at one of its declared genes drawn with default_rng([23, cell index]), else at a random token) and n_other_genes 'other' cases",
+ "head": "Phase-1 head outputs/cite_phase1_official/best.pt: dec(mlp(z / ||z||), train-median size factor), z = gene-mean of layer 12 (as 04_train.py and mode_a_layer_probes.py)",
+ "head_score": "s_head = mean(yhat_CD56, yhat_CD94, yhat_CD335) - yhat_CD3, yhat = predicted ADT / train p95 (mode_a_layer_probes.p95_replicate), unclipped",
+ "hypotheses": {
+  "E5_v3_endpoint": "experiments_v3 E5 endpoint, computed as a secondary endpoint: per case r_l = <dz_l, unit(dmu_l)>, log g_l = log|r_l| - log|r_{l-1}|; self pushes in pair cells: l* = argmin_l median log g_l; agreement if within 1 layer of the layer of the largest one-step drop of the mean no_gdT158 gap ratio; specificity: median log g_{l*}(self) - median log g_{l*}(rand), two-stage interval inside (-0.1, 0.1) -> no layer localises the NK-T loss; <= -0.1 with upper bound < 0 and the same sign in both donors -> NK-T-specific attenuation at l*; otherwise inconclusive",
+  "H1_linearity": "at eps = 0.02 the one-sided pass rate is >= 0.90 at every depth 1..12 (directions nkt, self, rand, other; pair and random cells pooled). If not, H2-H5 are read from the one-sided FD gains D+ at eps = 0.02 and marked as such.",
+  "H2_localised_attenuation": "nkt, pair cells: L_E5 = argmin_{l=1..12} median dG_l has a two-stage 95% upper bound < 0, is the argmin in >= 50% of the two-stage resamples, and has median dG < 0 in each primary donor",
+  "H3_localisation_matches_probes": "|L_E5 - L_probe| <= 1, L_probe = argmin_{l=1..12} of the mean over CD56 / CD94 / CD335 / CD3 of the no_gdT158 gap ratio in outputs/mode_a_official/mode_a_results.json (read at run time; layer 9 in the file at registration)",
+  "H4_lookalike_specificity": "D = median G_12(pair) - median G_12(random), nkt: holds if the two-stage upper bound < 0 and D < 0 in each primary donor (look-alike cells damp NK-T pushes more); 'opposite' if lower bound > 0 and D > 0 in each donor; otherwise no evidence",
+  "H5_head_transmission": "median over nkt pair cases of (H_12 - G_12): two-stage upper bound < 0 and < 0 in each donor -> the head passes on less of the NK-T push than z carries; descriptive"
+ },
+ "jvp_check": {
+  "cpu64_jvp": "the JVP of the first 2 cases of the first 2 cells is recomputed in float64 on the CPU (reported)",
+  "eps_abs": [
+   0.001,
+   0.01
+  ],
+  "float32_diagnostic": "the same central FD in float32 on the device (every case at 1e-3, full-ladder cases at 1e-2) is reported, not used: at 1e-3 it reaches the float32 rounding floor for weak responses at depths 9-12 (val smoke: 4 of 36 cases with relative error 0.05-0.12 and cosine >= 0.993 there, every case passing at 1e-2)",
+  "n_fd64_cells": 20,
+  "rule": "experiments_v3 E5 check, run in float64: central FD on the unit tangent at eps_abs = 1e-3 and 1e-2, in float64 on the CPU through the module's own layers, for one case per direction (the first of each) of the first n_fd64_cells cells of the seeded order; relative error <= 0.05 and cosine >= 0.99 against the device float32 JVP at every depth 1..12 for >= 95% of the checked cases at 1e-3 -> validated; otherwise 'JVP not validated' and no E5 endpoint is read"
+ },
+ "linearity": {
+  "central_pass": "the same two conditions for Dc (odd part only; secondary)",
+  "curvature": "kappa = ||D+ - D-|| / ||D+ + D-|| (descriptive)",
+  "linear_range": "largest eps of the ladder with one-sided pass rate >= 0.90 at every depth 1..12, over the cases the eps was run on (descriptive)",
+  "one_sided_pass": "for both signs: ||D(eps) - JVP|| / ||JVP|| <= tau AND ||D(eps) - D(eps/2)|| / ||D(eps/2)|| <= tau, on the pooled dz_l (primary)",
+  "scalar_pass": "for both signs |G_D(eps) - G_JVP| <= tau * max(|G_JVP|, 0.1) (NK-T component only; secondary)",
+  "tau": 0.1
+ },
+ "model": "official TEDDY-G 70M (teddy_mwe/ckpt/teddy_g_70M), official preprocessing (teddy_mm/teddy_encoder.py: counts/total*1e4 / gene median, torch.topk 2048, zeros dropped, no CLS), float32, the cell's real tokens only (no padding); each layer with its own weights and explicit attention arithmetic, checked against the module forward for every cell",
+ "n_full_ladder": 100,
+ "outputs": "outputs/v3/E5/: E5_results.json, REPORT.md, progress.log, cells/ (one file per cell); every result JSON carries registration_sha256 (registration_v3.json) and addendum_sha256 (this file)",
+ "perturbation": {
+  "directions": {
+   "nkt": "unit(mu_NK - mu_T) of the input gene-mean over training NK and T cells (split 'train')",
+   "other": "control: n_other_genes tokens of the cell that are not declared genes, drawn with default_rng([23, cell index]), each pushed along its own embedding",
+   "rand": "one Gaussian unit vector, numpy default_rng(23), the same for every case (not orthogonalised)",
+   "self": "unit(E[gene])"
+  },
+  "n_other_genes": 2,
+  "site": "input state h_0 = E[id] + P[pos] at the token's position; nothing else changes",
+  "tangent": "||E[token]|| * v (v unit); finite differences scale it by eps"
+ },
+ "readout_directions": {
+  "head_gradient": "gradient of s_head at the cell's own float32 z",
+  "mu_diff": "dmu_l = mean_NK - mean_T of the depth-l gene-mean over training NK and T cells (depth 0 recomputed with mode_a_layer_probes.input_layer_means, depths 1..12 from z_rna_layer_means.npy)",
+  "probe": "logistic regression NK vs T on the train-standardised depth (mode_a_layer_probes.nkt_probe settings: C in (0.01, 0.1, 1) by val log-loss, class_weight balanced, seed 0); direction = coef / sd"
+ },
+ "registration_version": 2,
+ "response": "JVP: (h_l, dh_l) = torch.func.jvp(f_l, (h_{l-1},), (dh_{l-1},)), l = 1..12; dz_l = mean over the cell's tokens of dh_l; head response by JVP through L2 normalisation + head",
+ "script": "scripts/mode_a_layer_dynamics.py (mode_a_layer_dynamics v2)",
+ "statistics": {
+  "cell_interval": "cell-cluster bootstrap, B = 2000, seed 1 (reported, not used for decisions)",
+  "decision_interval": "two-stage bootstrap: donors with replacement, then cells with replacement within each drawn donor (all of a cell's cases kept); B = 2000, seed 1, percentile 95% (experiments_v3 common.statistics)",
+  "localisation": "by the per-case step change dG_l (the ratio of medians median G_l / median G_{l-1} is reported but not used: it is unstable when a median is near 0, as the val smoke showed)",
+  "per_donor": "every endpoint is also reported per primary donor; a directional verdict needs the same sign in both",
+  "summary": "median over cases (cell x token x direction)",
+  "two_donor_caveat": "2 primary donors: the interval reflects the spread of the observed donors only"
+ },
+ "title": "Mode A layer dynamics (claim C7): Jacobian-vector products through TEDDY-G's layers",
+ "units": "A0 = ||E[token]|| / (n ||dmu_0||), n = the cell's token count. G_l = (dmu_l . dz_l / ||dmu_l||^2) / A0 (G_0 = 1 for nkt); dG_l = G_l - G_{l-1}; P_l = (w_l . dz_l / w_l . dmu_l) / A0; H_l = (g_head . dz_l / (mean_trainNK s_head - mean_trainT s_head)) / A0; self pushes are sign-aligned by gene class (NK +1, T -1)"
+}
