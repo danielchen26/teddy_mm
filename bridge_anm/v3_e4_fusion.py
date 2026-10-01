@@ -902,8 +902,12 @@ def update_hash_lines(d: Path, entries: dict[str, str]) -> None:
 # ============================================================================ leakage
 def stage_leakage(a, reg, amend) -> None:
     """Rebuild the addendum core (a) from the real inputs, (b) with every site4 row of protein, cell type and
-    embedding replaced by random values (must be byte-identical to (a) and to the written addendum), (c) with the
-    val rows poisoned the same way, including the val L1 embedding (must differ)."""
+    embedding replaced by random values (must be byte-identical to (a) and to the written addendum), (c) positive
+    control with the val rows poisoned (must differ): val protein rows and cell types taken from other val cells (two
+    independent seeded permutations within val) and the val official and L1 embeddings random. Random val protein
+    values, as in (b), make the val E4 key degenerate on the full val set (a class with one cell), so the F3 cross-fit
+    cannot be fitted and the stage stopped before writing its report; the permutation keeps the class sizes and still
+    breaks every val cell's link between its RNA, protein and annotation."""
     ffr = e4.import_anm(a.anm_root)
     schema_base = json.loads((ROOT / "bridge_anm/schemas/cite_lineage_finite_field_v0.json").read_text())
     d = addenda_dir(a)
@@ -936,6 +940,20 @@ def stage_leakage(a, reg, amend) -> None:
             zz1[z1_rows] = rng.normal(size=(z1_rows.size, zz1.shape[1])).astype(np.float32)
         return f, zz0, zz1
 
+    def poisoned_val(rows: np.ndarray, seed: int, z1_rows: np.ndarray):
+        """(c): val protein and cell types permuted within val (independently), val embeddings random."""
+        rng = np.random.default_rng(seed)
+        f = dict(full)
+        f["adt"] = np.array(full["adt"], copy=True)
+        f["adt"][rows] = np.asarray(full["adt"])[rows[rng.permutation(rows.size)]]
+        f["cell_types"] = np.array(full["cell_types"], copy=True)
+        f["cell_types"][rows] = np.asarray(full["cell_types"])[rows[rng.permutation(rows.size)]]
+        zz0 = np.array(z0, copy=True)
+        zz0[rows] = rng.normal(size=(rows.size, zz0.shape[1])).astype(np.float32)
+        zz1 = np.array(z1, copy=True)
+        zz1[z1_rows] = rng.normal(size=(z1_rows.size, zz1.shape[1])).astype(np.float32)
+        return f, zz0, zz1
+
     t0 = time.time()
     real = core_sha(full, z0, z1)
     say(f"leakage: real core {real[:12]} ({time.time() - t0:.0f}s)")
@@ -943,16 +961,19 @@ def stage_leakage(a, reg, amend) -> None:
     s4 = core_sha(*poisoned(test_rows, 101))
     say(f"leakage: site4-poisoned core {s4[:12]} ({time.time() - t0:.0f}s)")
     val_rows = np.where(full["split"] == "val")[0]
-    s_val = core_sha(*poisoned(val_rows, 202, np.arange(z1.shape[0])))
+    s_val = core_sha(*poisoned_val(val_rows, 202, np.arange(z1.shape[0])))
     say(f"leakage: val-poisoned core {s_val[:12]} ({time.time() - t0:.0f}s)")
     rep = {"addendum_core_sha256": add["core_sha256"], "real_inputs_core_sha256": real,
            "site4_poisoned_core_sha256": s4, "val_poisoned_core_sha256": s_val,
            "checks": {"real equals the written addendum core": real == add["core_sha256"],
                       "site4-poisoned equals real (no site4 dependence)": s4 == real,
                       "val-poisoned differs (positive control)": s_val != real},
-           "poisoned": "protein (all 134), cell type and official embedding rows; the val control also poisons the val "
-                       "L1 re-embedding; site4 RNA is never read by prepare (its only RNA-derived input is the val L1 "
-                       "embedding)", "script_sha256": vk.sha256_file(Path(__file__)), "smoke": a.smoke}
+           "poisoned": "site4 rows: protein (all 134), cell type and official embedding replaced by random values; site4 "
+                       "RNA is never read by prepare (its only RNA-derived input is the val L1 embedding). Val positive "
+                       "control: val protein rows and cell types permuted within val (two independent seeded "
+                       "permutations; random protein values would leave a val E4 key class with one cell, so the F3 "
+                       "cross-fit could not be fitted), val official and L1 embeddings random",
+           "script_sha256": vk.sha256_file(Path(__file__)), "smoke": a.smoke}
     rep["passed"] = all(rep["checks"].values())
     (d / "E4_leakage_check.json").write_bytes(e4.json_dump(rep).encode())
     update_hash_lines(d, {"E4_leakage_check.json": vk.sha256_file(d / "E4_leakage_check.json")})
