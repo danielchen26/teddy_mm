@@ -328,11 +328,13 @@ def declared(core: dict) -> dict:
                 "mean over L0-L3; F3 scored by 5-fold cross-fitting on val with seeds.e4_noise), written to the E4 "
                 "addendum before site4"},
         {"id": "A1.10", "area": "addenda",
-         "finding": "the untracked E5 addendum replaces the registered primary endpoint (log-gain at l*) with dG_l and "
-                    "uses pooled site4 annotation-key pairs; the registration allows addenda only to fix numbers it "
-                    "leaves open",
-         "fix": "an addendum cannot replace a registered endpoint, key or cell set; the registered E5 endpoint stays "
-                "primary and dG_l is secondary unless a further amendment is committed before site4"},
+         "finding": "the E5 addendum (registration/addenda/E5.json, committed by the E5 builder in 820cce0) replaces "
+                    "the registered primary endpoint (log-gain at l*) with dG_l and takes its cells from pooled site4 "
+                    "pairs under the annotation key instead of E3's pairs under the v3 key; the registration allows "
+                    "addenda only to fix numbers it leaves open",
+         "fix": "an addendum cannot replace a registered endpoint, key or cell set; the registered E5 endpoint and "
+                "cell rule (E3's within-donor pairs, A1.8) stay primary, and dG_l and the pooled annotation-key pairs are "
+                "secondary, unless a further amendment is committed before site4"},
     ]
     review_notes = [
         "Class map: all 45 types (40 in site4) reviewed. Every assignment is defensible. pDC -> OUT is the most "

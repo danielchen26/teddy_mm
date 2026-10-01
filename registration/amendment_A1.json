@@ -65,8 +65,8 @@
   {
    "id": "A1.10",
    "area": "addenda",
-   "finding": "the untracked E5 addendum replaces the registered primary endpoint (log-gain at l*) with dG_l and uses pooled site4 annotation-key pairs; the registration allows addenda only to fix numbers it leaves open",
-   "fix": "an addendum cannot replace a registered endpoint, key or cell set; the registered E5 endpoint stays primary and dG_l is secondary unless a further amendment is committed before site4"
+   "finding": "the E5 addendum (registration/addenda/E5.json, committed by the E5 builder in 820cce0) replaces the registered primary endpoint (log-gain at l*) with dG_l and takes its cells from pooled site4 pairs under the annotation key instead of E3's pairs under the v3 key; the registration allows addenda only to fix numbers it leaves open",
+   "fix": "an addendum cannot replace a registered endpoint, key or cell set; the registered E5 endpoint and cell rule (E3's within-donor pairs, A1.8) stay primary, and dG_l and the pooled annotation-key pairs are secondary, unless a further amendment is committed before site4"
   }
  ],
  "review_notes": [
@@ -323,7 +323,7 @@
  },
  "provenance": {
   "builder": "v3_build_amendment A1 1.0",
-  "builder_sha256": "90181e24c46e316fc2f032dfb82ad0b7a56ddcc538bd883f6f75576d398e9231",
+  "builder_sha256": "0753dd41ce916e55807ba9baa90635ae867b4e884e63d2fb87c97e7ce2f824f5",
   "v3_amend_sha256": "0ae5d516236c916283ea83104389b4ecdfc8504d2624f12f9eb9c3b5763d5736",
   "v3_key_sha256": "45113585c4c2411a966814154ec41a58c0836c51e1f3f16e0fbe31b2e9424602",
   "core_sha256": "b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8",
@@ -332,7 +332,7 @@
    "z_sha256": "fb9aa8c77d544d84f716cf66bca8964c265f62d6dc1618a0c627d55268d3cd0b",
    "ckpt_sha256": "b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15"
   },
-  "built_utc": "2026-10-01T04:19:47Z",
+  "built_utc": "2026-10-01T04:25:39Z",
   "test_rows_read": "split / donor metadata only (see v3_leakage_check.py)"
  }
 }

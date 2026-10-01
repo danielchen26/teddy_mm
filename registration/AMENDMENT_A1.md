@@ -53,8 +53,8 @@
 
 ### A1.10 addenda
 
-- **Finding.** The untracked E5 addendum replaces the registered primary endpoint (log-gain at l*) with dG_l and uses pooled site4 annotation-key pairs; the registration allows addenda only to fix numbers it leaves open.
-- **Fix.** An addendum cannot replace a registered endpoint, key or cell set; the registered E5 endpoint stays primary and dG_l is secondary unless a further amendment is committed before site4.
+- **Finding.** The E5 addendum (registration/addenda/E5.json, committed by the E5 builder in 820cce0) replaces the registered primary endpoint (log-gain at l*) with dG_l and takes its cells from pooled site4 pairs under the annotation key instead of E3's pairs under the v3 key; the registration allows addenda only to fix numbers it leaves open.
+- **Fix.** An addendum cannot replace a registered endpoint, key or cell set; the registered E5 endpoint and cell rule (E3's within-donor pairs, A1.8) stay primary, and dG_l and the pooled annotation-key pairs are secondary, unless a further amendment is committed before site4.
 
 ## Numbers computed for A1 (train and val only)
 
@@ -109,4 +109,4 @@
 
 ## Provenance
 
-Builder `v3_build_amendment A1 1.0` sha256 `90181e24c46e316fc2f032dfb82ad0b7a56ddcc538bd883f6f75576d398e9231`; `v3_amend.py` sha256 `0ae5d516236c916283ea83104389b4ecdfc8504d2624f12f9eb9c3b5763d5736`; computed core sha256 `b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8`.
+Builder `v3_build_amendment A1 1.0` sha256 `0753dd41ce916e55807ba9baa90635ae867b4e884e63d2fb87c97e7ce2f824f5`; `v3_amend.py` sha256 `0ae5d516236c916283ea83104389b4ecdfc8504d2624f12f9eb9c3b5763d5736`; computed core sha256 `b069f310859bc9d5a073c25563f5bb6b367e41ca3a18626959c8df937a7272b8`.
