@@ -1,12 +1,12 @@
 # teddy_mm v3: registered results and claims ledger
 
-**Status (2026-10-01).** E1, E2, E3, E4 and E5 are final. **E5-M and E6 are pending: running, no results yet.** Nothing below reports an E5-M or E6 outcome.
+**Status (2026-10-01).** E1, E2, E3, E4 and E5 are final. **E5-M and E6 are pending.** Their results are not part of this version, and nothing below reports an E5-M or E6 outcome.
 
 **Sources.** Results: `outputs/v3/{E1,E2,E3,E4,E5}/REPORT.md` and `*_results.json`. Registration: `registration/REGISTRATION_v3.md` (`registration_v3.json`, sha256 `e4c8a33e…`), amendments `AMENDMENT_A1.md`, `AMENDMENT_A2.md`, `AMENDMENT_A3.md`, addenda `registration/addenda/*.json`. Earlier (v1/v2) results: `README.md` and `docs/reports/*_OFFICIAL.md`. Every number used here is in [`v3_numbers.json`](v3_numbers.json), each with its source file and key (section [Numbers](#numbers)).
 
 **Precision.** Numbers are printed at the precision of the experiment's own `REPORT.md`: 4 decimals for key validity, E3 and E4; 3 decimals for E1, E2 and E5. Where a number appears only in a results JSON, I round it to the same precision and say so. Full-precision values are in `v3_numbers.json`.
 
-> **中文摘要：** 本文汇总 v3 预注册实验 E1–E5 的最终结果（E5-M、E6 仍在运行，未报告任何结果），列出能说、不能说和未检验的结论；所有数字见 `v3_numbers.json`。
+> **中文摘要：** 本文汇总 v3 预注册实验 E1–E5 的最终结果（E5-M、E6 待定，本版未报告任何结果），列出能说、不能说和未检验的结论；所有数字见 `v3_numbers.json`。
 
 ---
 
@@ -37,7 +37,7 @@
 - **ANM equals a declared rule in this setup, and the registered tests found no decision value from ANM's readouts.** ANM's engine made the same call as the declared rule on every test cell for all three questions, and its closure readout matched its re-coded closed form on every cell (E1.1a: 0 mismatches). E1's falsification clause holds: neither the trust-gate test (E1.4) nor the nested-readout test (C2) is a win.
 - **Writing a new question with zero labels did not beat training.** On the changed question Q3, a classifier trained only on the old question's labels was more accurate than the declared rule (rule minus classifier −0.078 [−0.134, −0.028], loss), and the label-cost curve gives n* = 0.
 - **E2:** splitting perturbation losses into representation, head and decision shares added nothing beyond the plain accuracy curve (falsified). **E3:** the claim that the NK–T loss sits in the readout or pooling and can be repaired on frozen TEDDY is rejected; both trained readouts lost NK-vs-T accuracy to our head. **E4:** the ANM fusion arm lost to a stacker trained on the validation donor (registered outcome label "field hurts"); against the trust-weighted average, which is ANM without its contradiction events, it is inconclusive. **E5:** the registered derivative check failed in float32 (it passes in float64), so E5 stops with "JVP not validated".
-- **The answer key is weak for one of the two test donors** (donor 13272: annotation-vs-gate kappa 0.4177). Annotation-only results are therefore reported with equal prominence. In E1 every annotation-only verdict matches the primary-key verdict. In E4 the alternative key reported with equal prominence is the v3 primary key, and it gives the same verdicts.
+- **The answer key is weak for one of the two test donors** (donor 13272: annotation-vs-gate kappa 0.4177). Annotation-only results are therefore reported with equal prominence. In E1 every annotation-only verdict matches the primary-key verdict. In E4 the alternative key reported with equal prominence is the v3 primary key. It gives the same verdicts for the two registered comparisons, but not for every secondary one (see E4).
 
 > **中文：** 在本设置中 ANM 与声明规则逐细胞相同，预注册检验未发现 ANM 读出带来决策价值；零标签改问题不胜训练分类器；E2 被证伪，E3 被拒绝，E4 不敌验证集堆叠器，E5 的 JVP 检验在 float32 下未通过。
 
@@ -114,7 +114,7 @@ Local git commit times come from the committing machine. The GitHub push events 
 |---|---|---|---|---|
 | registration_v3.json | 03:54:53 | 04:24:22 (branch created) | first v3 site4 read: E5 cell selection 05:10:36 | **yes** |
 | A1 (final) | 04:37:04 | 07:57:00 | E5 05:10:36; E1 05:36:47; E3 08:42:23; E4 09:04:11; E2 10:41:58 | **no for E5 and E1** (committed before, pushed after); yes for E2, E3, E4 |
-| E5 addendum (v3, `0c4e028b`) | 04:50:00 | 07:57:00 | E5 05:10:36 (results written 10:42:46) | **no** (committed before; pushed while E5 was running) |
+| E5 addendum (v3, `0c4e028b`) | 04:50:00 | 07:57:00 | E5 05:10:36 (results written 10:42:46) | **no** (committed before; pushed while E5 was running). Its first version (`820cce0`, 04:19:49) was in the 04:24:22 push, but A1.10 made the registered endpoint and cells primary, which the v3 version records |
 | E2 addendum | 05:23:26 | 07:57:00 | E2 report 10:41:58 | yes |
 | E3 addendum | 05:25:05 | 07:57:00 | E3 evaluate 08:42:23 | yes |
 | E1 addendum | 05:30:59 | 07:57:00 | E1 05:36:47–05:44:44 | **no** (committed about 5 minutes before E1 started; pushed 2 h 12 min after it finished) |
@@ -129,6 +129,7 @@ So:
 - **Pushed before evaluation.** The registration, A2, A3 and the E2, E3, E4 and E5-M addenda reached GitHub before the site4 evaluation they govern. The E6 addenda reached GitHub before any external outcome. The addendum records `outputs/v3/E6` absent at 2026-10-01T10:40:07Z.
 - **Committed, not yet pushed.** For **E1** and **E5**, the governing files (A1, the E1 addendum, the E5 addendum v3) were committed locally before the evaluation, and each result file records their sha256 and `committed: true`. They were pushed to GitHub only afterwards (07:57:00). For these two experiments, ordering rests on local commit times and recorded hashes, not on an independent GitHub timestamp.
 - **E1 came before A2 and A3.** E1 finished at 05:44:44, before A2 (built 06:09:15) and A3 (built 07:00:56). Both concern only E2 and E3. A3 states that the E1 site4 results had been seen and that nothing in A3 depends on them. A2 does not say whether they had been seen. The E5-M and E6 addenda record the same disclosure (E1, and for E6 also E3 and E4, had been seen).
+- **E3's site4 pairs were built early, by E5.** E5's cell selection at 05:10:36 rebuilt E3's within-donor NK–T pairs on site4 from the primary key, so it read site4 protein and cell types. Its log records the pair count (253) and the cells per donor and class. This happened before the E3 addendum (committed 05:25:05), the E1 addendum, A2 and A3. No gap ratio, D statistic or NK-vs-T accuracy was computed then: the rest of E5's log until its results (10:42:46) holds train/val direction diagnostics and per-cell progress lines. A3 describes E3 evaluate as the only *E3* stage that reads site4 protein or cell types, which is true of E3's own stages, but it does not mention this E5 step.
 - **Key validity.** On test_primary the annotation-vs-gate kappa is 0.5781 (agreement 0.6847), below the registered 0.85, so the flag is raised. By donor: 13272 kappa 0.4177 (agreement 0.5617) and 19593 kappa 0.8798. In donor 13272 the gate puts 4,148 of 7,365 cells in OUT, against 1,707 annotated OUT cells. It recovers 0.443 of annotated T cells and 0.395 of annotated B cells (3 decimals from the JSON). A per-batch gate would raise kappa to 0.7019, but it is a sensitivity key only, because it reads site4 protein to set thresholds. 3,561 of 11,294 test_primary cells are unscored on the primary key. **Annotation-only rows are reported beside every primary-key row below.**
 - **Other disclosures** (registration section 13):
   - Site4 is not virgin: v1/v2 and an exploratory key prototype read it, and v3's design is informed by what they showed.
@@ -136,7 +137,7 @@ So:
   - The head's training size factors were divided by one global ADT-median scalar over all cells, site4 included. v3's evidence cancels constant scales; the effect on the head's weights cannot be tested without retraining.
   - Pretraining contamination of TEDDY with this dataset (GSE194122) is not verified.
 
-> **中文：** 预注册、A2、A3 及 E2/E3/E4/E5-M 附录在相应 site4 评估之前已推送到 GitHub；但 E1 和 E5 所依赖的 A1、E1 附录、E5 附录只是在评估前本地提交，推送晚于评估。E1 在 A2/A3 之前完成。供体 13272 的答案键 kappa 仅 0.4177，故仅注释键结果同等呈现。
+> **中文：** 预注册、A2、A3 及 E2/E3/E4/E5-M 附录在相应 site4 评估之前已推送到 GitHub；但 E1 和 E5 所依赖的 A1、E1 附录、E5 附录只是在评估前本地提交，推送晚于评估。E1 在 A2/A3 之前完成；E5 在 E3 附录、A2、A3 之前已在 site4 上重建了 E3 的配对（仅配对数，未计算 E3 统计量）。供体 13272 的答案键 kappa 仅 0.4177，故仅注释键结果同等呈现。
 
 ---
 
@@ -182,12 +183,13 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 - *Secondary:*
   - Q2: −0.009 [−0.015, 0.003], **equivalent**.
   - E1.3b deciding-marker shares within the called class, both donors pooled, against a permutation null with mean 1/3 (p = 0.0010 for each): CD20 decides 0.484 of B calls, CD2 0.618 of T, CD94 0.572 of NK and CD11c 0.832 of myeloid. The platelet protein CD62P decides only 0.043 of myeloid calls.
+  - The B share does not hold by donor: in donor 19593 CD20 decides 0.339 of B calls (p = 0.6494, at the null) and CD22 decides 0.491.
   - These shares describe the panel evidence. Any written rule reproduces them.
 
 **E1.4 (which calls to trust).**
 - **Question:** does ranking calls by ANM's top score (= G(3)·3 × the rule's top score, A1.4) order them better than TEDDY's margin?
 - **Primary endpoint:** AURC; margin 0.005. Q1 and Q2 share scores and key, so E1.4 is computed once.
-- **Registered verdict:** E1.4a **inconclusive**. "Unless ANM wins, the gate claim stays withdrawn."
+- **Registered verdict:** E1.4a **inconclusive**. The registered failure rule, as A1.4 words it: "if the top score (rule = ANM) is not a win against the margin, the gate claim stays withdrawn".
 
 | key | top score AURC | margin AURC | entropy AURC | classifier AURC | top minus margin [95% CI] | per donor | verdict |
 |---|---|---|---|---|---|---|---|
@@ -246,7 +248,7 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 - **Question:** when a cell's RNA is degraded (binomial thinning of UMIs) or one gene is scaled down, does splitting each lost call into "representation", "head" or "decision" tell us more than the plain perturbation → accuracy curve?
 - **Design:**
   - Cells: a label-free seeded sample of 500 cells per primary donor (1,000 cells, 23,116 cases) plus 250 cells of donor 15078. Official TEDDY-G preprocessing → frozen head → evidence → Q1 rule and ANM.
-  - Gene scaling covers the panel coding genes plus 13 NK/T genes. SELP is absent from the data and was dropped.
+  - Gene scaling covers the coding genes of the 12 panel proteins plus the registration's 13 NK/T genes. The two lists overlap (for example CD3E, NCAM1, KLRD1). SELP is absent from the data and was dropped, which leaves 20 distinct genes.
   - A lost cell is one that was called right at baseline and is not called right after the perturbation. Each lost cell gets a label in this order:
     - *representation*, if a z-probe (logistic regression on training embeddings, C = 100 chosen on val) is wrong on the perturbed embedding;
     - else *head*, if the rule's argmax on the perturbed evidence is wrong;
@@ -317,7 +319,11 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 - R1's flagged-pair recovery term is 0.1465 [0.0493, 0.1858], positive in both donors (0.1166 and 0.1056). Its scale-free contrast Dlog_R1 is 0.4384 [−0.3074, 1.3336], which does not exclude 0. So R1 keeps more of the gap on flagged pairs, but not specifically more than a rescaling would.
 - The point estimates of D_R1 and D_R2 exceed 0.05. The intervals include 0, and donor 19593 is negative.
 - Without gdT CD158b+ cells (163 pairs), D_R2 is a loss: −0.3165 [−0.5276, −0.1315].
-- The seed-1 null head separates NK from T better than the registered head: accuracy 0.8866 at 0.9; null − head +0.0547 [0.0185, 0.0828], per donor 0.0212 and 0.0762. This is descriptive, with no registered rule. Retraining the head with another seed moved NK-vs-T accuracy by about as much as R1 lowered it, so head-training variance is not small next to these comparisons.
+- The head's flagged-pair compression is not robust:
+  - By donor (values from the JSON, which stores 4 decimals), the head's gap ratio is 0.0694 flagged vs 0.5345 unflagged in 13272, but 0.3978 vs 0.4214 in 19593.
+  - Without gdT CD158b+ cells (163 pairs, 86 flagged) it is 0.4729 [0.3246, 0.7898] flagged vs 0.5137 [0.3258, 0.7393] unflagged.
+  - So the pooled 0.1169 vs 0.3985 comes mostly from gdT CD158b+ pairs in donor 13272, the donor with the weak key.
+- The seed-1 null head separates NK from T better than the registered head: accuracy 0.8866 at 0.9; null − head +0.0547 [0.0185, 0.0828], per donor 0.0212 and 0.0762. This is descriptive, with no registered rule. Retraining the head with another seed raised NK-vs-T accuracy by more than R1 lowered it (+0.0547 vs −0.0409), so head-training variance is not small next to these comparisons.
 - Ranking the head's calls by kNN label disagreement among training cells gives 0.9134 at 0.9, against 0.8501 for the head's margin.
 - On test_secondary, every H3a contrast is inconclusive, and R1 vs head is equivalent at 0.9.
 
@@ -326,7 +332,7 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 - R2 fits worse than R1 even on val (val Pearson CD56 0.5514 vs 0.7091).
 - The pairs are defined on the primary key, which is weak in donor 13272.
 
-> **中文：** E3：头部在近邻 NK–T 配对上压缩差异更甚，但"损失位于读出/池化并可在冻结 TEDDY 上修复"被拒绝；R1、R2 的 NK-T 准确率均输给原头部。
+> **中文：** E3："损失位于读出/池化并可在冻结 TEDDY 上修复"被拒绝；R1、R2 的 NK-T 准确率均输给原头部（注册判定）。头部在近邻配对上压缩差异更甚仅为描述性结果，区间重叠，且主要来自供体 13272 的 gdT CD158b+ 配对。
 
 ### E4: two-channel fusion (C6; Experiment 2 redesigned)
 
@@ -341,14 +347,14 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
   - F0: channel 1 alone. F0b: channel 2 alone.
   - F1: simple average (declared rule). F2: trust-weighted average (declared rule).
   - F3: stacker, a logistic regression on the 8 class scores trained on val per noise level.
-  - F4: learned fusion, a logistic regression on the 24 evidence values trained on training cells.
+  - F4: learned fusion, a logistic regression on the 24 evidence values trained on training cells at L0.
   - **F5: TEDDY + ANM fusion**, with per-channel source scale and contradiction events (each channel's top class contradicts the other classes at 0.5 × its top score), all at t = 0. F5's scores equal the closed form R(n_k)·[3 s1 S1_k + 3 s2 S2_k − 0.5 × each disagreeing channel's top score × its scale], where R(n_k) is the field's response per unit source for a class whose star has n_k event sites (its 6 support events plus the contradiction events attached to it), s1 and s2 are the source scales and S1_k, S2_k are the channels' class scores (code: `v3_e4.anm_fusion_closed`).
   - Controls: C1 no propagation; C2 channel 2 at t = 2; C3 no contradiction events (= F2 up to a constant).
 - **Comparator** (A1.9, chosen on val): F3. Val endpoints: F3 0.907165, F2 0.877892, F5 0.877021.
 - **Endpoint:** selective accuracy at coverage 0.8, averaged over L0–L3; margin 0.01.
 - **Registered verdict:** "primary F5 vs F3 at 0.8: **loss (field hurts)**, point −0.0815 [−0.1380, −0.0535]; field effect F5 vs F2: **inconclusive**, point +0.0034 [−0.0007, +0.0103]."
   - "Field hurts" is the registered name for F5 losing to the best non-ANM fusion. The field's own effect, F5 vs the trust-weighted average, is inconclusive.
-- **Key validity:** E4 key kappa vs annotation on test_primary 0.7668 (< 0.85), so the v3 primary key is reported with equal prominence. It gives the same verdicts: F5 − F3 −0.1125 [−0.1610, −0.0687] loss; F5 − F2 inconclusive.
+- **Key validity:** E4 key kappa vs annotation on test_primary 0.7668 (< 0.85), so the v3 primary key is reported with equal prominence. It gives the same verdicts for the two registered comparisons: F5 − F3 −0.1125 [−0.1610, −0.0687] loss; F5 − F2 inconclusive. E4's REPORT.md notes that this key is partly circular for channel 2.
 
 | method (E4 key, test_primary) | mean selective accuracy at 0.8 [95% CI] |
 |---|---|
@@ -372,7 +378,8 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 
 *Secondary:*
 - F5 − F2 at coverage 0.9: +0.0030 [+0.0017, +0.0067] → equivalent.
-- Fusing the two channels by the declared trust-weighted average beats channel 1 alone (F2 − F0 win). ANM's fusion adds nothing measurable over that rule.
+- On the E4 key, fusing the two channels by the declared trust-weighted average beats channel 1 alone (F2 − F0 win). The result does not carry over: on the v3 primary key it is inconclusive (+0.0073 [−0.0036, +0.0183], per donor −0.0009 and +0.0152), and on test_secondary it is equivalent (−0.0030 [−0.0071, +0.0013]).
+- ANM's fusion adds nothing measurable over that rule (F5 − F2 inconclusive at 0.8, equivalent at 0.9).
 - Declaring channel 2 at a later step (t = 2) changes nothing (equivalent).
 - C3 selects exactly the same cells as F2 at every level and coverage (0 differing cells). The ANM engine equals the closed form on every cell (bridge failure False).
 - On test_secondary, F5 − F3 is a loss and F5 − F2 is equivalent.
@@ -407,11 +414,11 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 
 > **中文：** E5：注册的有限差分检验在 float32、ε = 1e-3 下通过率 0.854 < 0.95（float64 通过），E5 按注册停止；次要分析不改变结论。
 
-### E5-M: is TEDDY's gene-mean state sufficient for an independent observer? (pending: running)
+### E5-M: is TEDDY's gene-mean state sufficient for an independent observer? (pending)
 
-**Status: pending.** No result exists. The registered design follows (addendum `E5M.json`, sha256 `65ab9efe…`, committed 07:39:16 UTC and pushed 07:57:00 UTC, before the site4 run started at 10:43:09 UTC).
+**Status: pending.** No E5-M outcome is reported in this version. The registered design follows (addendum `E5M.json`, sha256 `65ab9efe…`, committed 07:39:16 UTC and pushed 07:57:00 UTC, before the site4 run started at 10:43:09 UTC).
 
-- **Question:** at first order, is TEDDY's gene-mean layer-12 state (what our head reads) sufficient for an independent observer of the layer-12 token states, on the NK–T look-alike cells where the head loses the NK–T difference?
+- **Question:** at first order, is TEDDY's gene-mean layer-12 state (what our head reads) sufficient for an independent observer of the layer-12 token states, on the NK–T look-alike cells? (The addendum describes these as the cells "where the head loses the NK–T difference". That is its motivation, not a v3 result: E3's flagged-vs-unflagged contrast is descriptive only.)
 - **ANM framing (from the addendum):** the gene-mean state is a *declared candidate* retained state, tested against *declared* observers. The estimator H = Λ·pinv(Γ) is ANM's own clamp estimator, computed from clamps of the candidate state alone and never fitted on the tested responses. The readout-visible quotient is reported only as a diagnostic and is never used as the state.
 - **Observers:**
   - O_tok: E3's frozen R2.
@@ -424,22 +431,22 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 - **Falsified** if Δ_tok is equivalent (interval inside ±0.05) or a loss.
 - **Verdict labels:** PASS_SUFFICIENT, REJECT_SUFFICIENCY, H5M_FALSIFIED, INCONCLUSIVE, or NOT_VALIDATED (if the finite-difference gate or the positive control fails).
 
-> **中文：** E5-M（运行中，尚无结果）：检验 TEDDY 的基因均值状态对一个独立的 token 观察者是否充分；使用 ANM 自身的钳制估计量。
+> **中文：** E5-M（待定，本版未报告结果）：检验 TEDDY 的基因均值状态对一个独立的 token 观察者是否充分；使用 ANM 自身的钳制估计量。
 
-### E6: external confirmation on Hao et al. 2021 PBMC CITE-seq (pending: running)
+### E6: external confirmation on Hao et al. 2021 PBMC CITE-seq (pending)
 
-**Status: pending.** No external outcome exists. The registered design follows (addendum `E6.json` v2, sha256 `b82687a7…`, pushed 10:43:44 UTC before any external run).
+**Status: pending.** No external outcome is reported in this version (`outputs/v3/E6` did not exist at the time of writing). The registered design follows (addendum `E6.json` v2, sha256 `b82687a7…`, pushed 10:43:44 UTC before any external run).
 
 - **Data:** GSE164378, 3′ data; 40,000 cells, 5,000 per donor from 8 donors, chosen by donor id only.
 - **Frozen:** TEDDY, the head, the evidence normaliser, panels, bars, classifier and gate logic.
 - **Gate:** thresholds re-estimated within each external donor, label-free. CD33 and CD94 are absent from the external ADT panel, and their gate conditions are removed. CD5 and CD94 are absent panel proteins, but their evidence is the head's prediction from RNA, so it exists; a reduced-panel reading is a sensitivity.
 - **Endpoints:** E1.1a, E1.4a, E1.C2 and Q1 selective accuracy at matched coverage, per donor and pooled.
 - **Replication rule:** a v3 conclusion replicates if its sign holds in at least 5 of 8 donors and the pooled two-stage interval excludes 0 on the same side. By the addendum's rule, a v3 point of exactly 0 gives "no v3 direction"; E1's C2 point at c* is 0.000.
-- **Key not validated** if annotation-vs-gate kappa < 0.70, in which case results are reported on the annotation-only key.
+- **Key not validated** if the kappa between the annotation and the per-donor gate is below 0.70. Results are then reported on the annotation-only key.
 - **Contamination label:** "RNA possibly seen by TEDDY in pretraining". The annotation map (31 labels) was rederived independently with 31 of 31 agreeing.
 - **Disclosed deviation:** the external map's first version was revised after the prep step had read external values, so the registered order "committed before any external value is read" was not met in time.
 
-> **中文：** E6（运行中，尚无结果）：在外部 PBMC 数据上冻结所有规则复现 E1 主要终点；注意该数据的 RNA 可能已被 TEDDY 预训练见过。
+> **中文：** E6（待定，尚无外部结果）：在外部 PBMC 数据上冻结所有规则复现 E1 主要终点；注意该数据的 RNA 可能已被 TEDDY 预训练见过。
 
 ---
 
@@ -447,19 +454,21 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 
 ### 4.1 What we can claim
 
-| # | claim | evidence row |
-|---|---|---|
-| C1 | In this setup ANM's engine computes exactly the declared rule, as a check, not a gain. | E1.1a: 0 call mismatches for Q1, Q2, Q3 (vs the rule) and the closure readout (vs its re-coded form), test_primary and test_secondary. E2: 0 mismatches over all perturbation cases. E4: engine = closed form, bridge failure False. |
-| C2 | ANM's leave-one-out attribution equals the exact closed form. | E1.3a: top-set and flip agreement 1.0000 on 10,715 Q1 calls. |
-| C3 | The deciding marker is concentrated on one panel protein per class (a property of the evidence, reproducible by any rule). | E1.3b: CD11c 0.832 of myeloid, CD2 0.618 of T, CD94 0.572 of NK, CD20 0.484 of B calls; null 1/3, p = 0.0010. |
-| C4 | A logistic classifier on the same 12 evidence values orders calls better than the rule's (= ANM's) top score. | E1.4 secondary: AURC 0.942 vs 0.843; difference −0.099 [−0.163, −0.034], loss for the top score. |
-| C5 | A classifier trained only on the old question's labels answers the new CD14-anchored question better than the zero-label rule. | E1.1c: −0.078 [−0.134, −0.028], loss for the rule; annotation-only −0.054, loss. E1.5: n* = 0. |
-| C6 | Measured operating point of TEDDY + head + Q1 rule on unseen-donor site4 cells: coverage 0.949, selective accuracy 0.697 (primary key) / 0.730 (annotation-only), OUT decline 0.261. | E1 deployed operating points. |
-| C7 | TEDDY + head + rule loses decision accuracy gradually under RNA thinning: 0.022 at 80% of UMIs, 0.162 at 20%. | E2 comparator curve. |
-| C8 | The pipeline's response to these perturbations is not linear in their size. | E2 C5: at most 0.098 of cells in the linear regime at any stage. |
-| C9 | Two trained readouts of frozen TEDDY (a layer-mean MLP and attention pooling) separate NK from T worse than our head. Descriptive only: the head keeps 0.1169 of the measured NK–T gap on flagged look-alike pairs vs 0.3985 on unflagged pairs (intervals overlap). | E3.H3b losses at 0.9 and 0.8 (R1 −0.0409, R2 −0.1925 at 0.9); E3 GR table. |
-| C10 | Fusing a protein-regressor channel with TEDDY + head by the declared trust-weighted average improves on TEDDY + head alone, and a val-trained stacker does best. | E4: F2 − F0 +0.0143 [+0.0072, +0.0269] win (secondary); F3 0.9353 vs F5 0.8538. |
-| C11 | The registered E5 derivative check failed in float32 at ε = 1e-3. The registered verdict attributes this to float32 rounding, because the float64 version passes. | E5: 0.854 < 0.95; S5 1.000. |
+Status: **registered** means a registered verdict or check decides the claim. **Secondary** means a reported comparison that never decides a verdict. **Descriptive** means a measurement with no decision rule.
+
+| # | claim | status | evidence row |
+|---|---|---|---|
+| C1 | In this setup ANM's engine computes exactly the declared rule. This is a check, not a gain. | registered (E1.1a pass) | E1.1a: 0 call mismatches for Q1, Q2, Q3 (vs the rule) and the closure readout (vs its re-coded form), test_primary and test_secondary. E2: 0 mismatches over all perturbation cases. E4: engine = closed form, bridge failure False. |
+| C2 | ANM's leave-one-out attribution equals the exact closed form. | registered (E1.3a discrepancy False) | E1.3a: top-set and flip agreement 1.0000 on 10,715 Q1 calls. |
+| C3 | Pooled over both primary donors, one panel protein decides more calls than the 1/3 null in each class. This is a property of the evidence, and any rule reproduces it. For B it does not hold by donor. | secondary, descriptive | E1.3b: CD11c 0.832 of myeloid, CD2 0.618 of T, CD94 0.572 of NK, CD20 0.484 of B calls; null 1/3, p = 0.0010. In donor 19593, CD20 0.339 (p = 0.6494) and CD22 0.491 of B calls. |
+| C4 | A logistic classifier on the same 12 evidence values orders calls better than the rule's (= ANM's) top score. | secondary (E1.4) | AURC 0.942 vs 0.843; difference −0.099 [−0.163, −0.034], loss for the top score. |
+| C5 | A classifier trained only on the old question's labels answers the new CD14-anchored question better than the zero-label rule. | registered (E1.1c loss; E1.5 n*) | E1.1c: −0.078 [−0.134, −0.028], loss for the rule; annotation-only −0.054, loss. E1.5: n* = 0. |
+| C6 | Measured operating point of TEDDY + head + Q1 rule on unseen-donor site4 cells: coverage 0.949, selective accuracy 0.697 (primary key) / 0.730 (annotation-only), OUT decline 0.261. | descriptive | E1 deployed operating points. |
+| C7 | TEDDY + head + rule loses decision accuracy as RNA is thinned: 0.022 with 80% of UMIs kept, 0.162 with 20% kept (0.140 with 5% kept). | descriptive (E2's comparator curve) | E2 curve table. |
+| C8 | The pipeline's response to these perturbations is not linear in their size. | descriptive (C5, a registered measurement with no decision rule) | E2 C5: at most 0.098 of cells in the linear regime at any stage. |
+| C9 | Two trained readouts of frozen TEDDY (a layer-mean MLP and attention pooling) separate NK from T worse than the registered head. | registered (E3.H3b losses) | E3.H3b at 0.9: R1 −0.0409, R2 −0.1925; also losses at 0.8. Descriptive context: a seed-1 retrain of the head scored +0.0547 above it. The head's gap ratio of 0.1169 on flagged pairs vs 0.3985 on unflagged pairs is descriptive only: the intervals overlap, and without gdT CD158b+ pairs the ratios are 0.4729 vs 0.5137. |
+| C10 | A val-trained stacker fuses the two channels best, and ANM's fusion loses to it. On the E4 key, the declared trust-weighted average also beats TEDDY + head alone. | registered (F5 − F3 loss); secondary (F2 − F0) | E4: F3 0.9353 vs F5 0.8538. F2 − F0 is +0.0143 [+0.0072, +0.0269], a win on the E4 key, but inconclusive on the v3 primary key (+0.0073) and equivalent on test_secondary (−0.0030). |
+| C11 | The registered E5 derivative check failed in float32 at ε = 1e-3. The registered verdict attributes this to float32 rounding, because the float64 version passes. | registered (E5 gate) | E5: 0.854 < 0.95; S5 1.000. |
 
 ### 4.2 What we cannot claim (and which test rejected it)
 
@@ -483,15 +492,15 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 | # | not tested | why / status |
 |---|---|---|
 | T1 | ANM's field dynamics: retention over real processing steps, multi-step propagation, histories, feedback. | Every event enters at t = 0, so the field acts as a constant gain per class (G(3)·3·S). E4's t = 2 control is a declared order on one channel, not a history. |
-| T2 | Whether TEDDY's gene-mean state is sufficient for an independent token observer on look-alikes. | E5-M: pending, running. |
-| T3 | External replication on another dataset. | E6: pending, running; RNA possibly seen by TEDDY in pretraining. |
+| T2 | Whether TEDDY's gene-mean state is sufficient for an independent token observer on look-alikes. | E5-M: pending; not reported in this version. |
+| T3 | External replication on another dataset. | E6: pending; RNA possibly seen by TEDDY in pretraining. |
 | T4 | Pretraining contamination of TEDDY with GSE194122 (this dataset). | Not verified (registration section 13). |
 | T5 | Effect of the head's global ADT-median size factor (computed over all cells, site4 included) on its weights. | Not testable without retraining. |
 | T6 | Retraining TEDDY or the head; other heads, panels or questions beyond the registered ones. | Out of scope; TEDDY and the head are frozen. |
 | T7 | Comparison with TypeSafe AI's Jev. | Never called; the classifier is a stand-in. |
 | T8 | Validated layer-wise linear response in TEDDY. | E5 stopped at the registered gate; the float64 path passed but was not registered before site4. |
 
-> **中文：** 账本：能说的是 ANM 精确复现声明规则、分类器优于规则、头部在近邻 NK–T 配对上压缩差异等；不能说 ANM 提升决策、信任门控、嵌套读出、节省标签、融合或层定位；未检验的是 ANM 的场动力学、E5-M、E6 及污染问题。
+> **中文：** 账本：能说的是 ANM 精确复现声明规则、分类器优于规则、两个替代读出的 NK-T 准确率不如原头部等（每条标明注册判定、次要或描述性）；不能说 ANM 提升决策、信任门控、嵌套读出、节省标签、融合或层定位；未检验的是 ANM 的场动力学、E5-M、E6 及污染问题。
 
 ---
 
@@ -501,29 +510,29 @@ Cells: test_primary (11,294), with test_secondary reported under the same rules.
 
 **What that means in teddy_mm v3.**
 
-1. **A verifier of declared readouts.** ANM made it possible to state each readout as a declared object and check it cell by cell:
+1. **A check that the declared readouts are what the engine computes.** Each readout was stated as a declared object and checked against ANM's engine cell by cell:
    - E1.1a: 0 mismatches.
-   - E1.3a: 1.0000 agreement after A1.3. Comparing with the engine, which deletes an event's site, exposed that the registered closed form re-coded zeroing an event, not deleting it.
+   - E1.3a: 1.0000 agreement after A1.3. Reading the engine's leave-one-out, which deletes an event's site, showed that the registered closed form re-coded zeroing an event, not deleting it.
    - E4: engine = closed form.
-   This is the verifier role, and it worked.
-2. **No better decisions, by construction here.** All events enter at t = 0, so ANM's decision-layer calls equal a re-coded declared rule. Where its readout forms (top action score, closure readout, contradiction fusion) were tested, they did not beat TEDDY's margin, the mean rule, a trained classifier or a val-trained stacker (E1, E4). Calling this "TEDDY + ANM decides better" would be wrong. Where ANM's field does not run, the method is a declared rule.
+   These checks passed. They are bookkeeping: they show ANM computes the declared rules, not anything new about TEDDY. The paper's response-theory verification corresponds here to E2, E5 and E5-M (point 3).
+2. **No better decisions, by construction here.** All events enter at t = 0, so ANM's decision-layer calls equal a re-coded declared rule. Where its readout forms (top action score, closure readout, contradiction fusion) were tested, they did not beat TEDDY's margin, the mean rule, a trained classifier or a val-trained stacker (E1, E4). ANM's fusion did beat channel 1 alone on the E4 key (F5 − F0 +0.0177, win), but so does the declared trust-weighted average (F2 − F0 +0.0143, win), and F5 − F2 is inconclusive. Calling this "TEDDY + ANM decides better" would be wrong. Where ANM's field does not run, the method is a declared rule.
 3. **The response-theory tools have not yet produced a validated finding about TEDDY.**
    - E2's decomposition added nothing beyond the accuracy curve.
    - E5's registered derivative gate failed in float32.
-   - The one test that uses ANM's own sufficiency machinery on TEDDY's retained state, E5-M (TEDDY's gene-mean as a declared candidate, ANM's clamp estimator, independent observers), is still running. Until it reports, there is no ANM-based statement about whether TEDDY's embedding is sufficient for the NK–T distinction.
+   - E5-M is the one test that uses ANM's own sufficiency machinery on TEDDY's retained state: TEDDY's gene-mean as a declared candidate, ANM's clamp estimator, independent observers. It is pending and not reported in this version. Until it is, there is no ANM-based statement about whether TEDDY's embedding is sufficient for the NK–T distinction.
 4. **What TEDDY users can take away now** (not ANM-specific):
    - The pipeline's measured operating points under a five-class key with an explicit validity check. That check flagged donor 13272.
    - A trained classifier on the same evidence beats the declared rule even for a changed question.
-   - On NK–T look-alike pairs the head keeps a small share of the measured protein gap (point estimate 0.1169 on flagged pairs). Swapping in a layer-mean MLP or an attention-pooling readout of frozen TEDDY did not improve NK-vs-T accuracy (E3.H3b losses).
+   - Swapping in a layer-mean MLP or an attention-pooling readout of frozen TEDDY did not improve NK-vs-T accuracy over the registered head (E3.H3b losses). Whether the head compresses the NK–T gap more on look-alike pairs is not established. The pooled point estimates (0.1169 flagged vs 0.3985 unflagged) have overlapping intervals and come mostly from gdT CD158b+ pairs in donor 13272. Without those pairs the ratios are 0.4729 vs 0.5137.
    - The answer key itself is fragile for one test donor.
 
-> **中文：** ANM 在 teddy_mm 中的诚实角色是"响应理论验证器"：它精确验证了声明读出（0 不一致、1.0000 一致），但在所有事件 t = 0 的设置下不带来更好的决策；关于 TEDDY 嵌入是否充分的 ANM 检验（E5-M）仍在运行。
+> **中文：** 论文中 ANM 的角色是"响应理论验证器"。在 teddy_mm 中，引擎与声明读出逐细胞一致（0 不一致、1.0000 一致），这只是核对，不是关于 TEDDY 的新发现；所有事件在 t = 0 时 ANM 不带来更好的决策；E2、E5 未得出经验证的结论，关于 TEDDY 嵌入是否充分的 ANM 检验（E5-M）待定、本版未报告。
 
 ---
 
 ## Numbers
 
-`docs/reports/v3_numbers.json` is a flat map `{key: {value, source_file, source_key}}` of every number used above (877 entries).
+`docs/reports/v3_numbers.json` is a flat map `{key: {value, source_file, source_key}}` of every number used above (907 entries).
 
 - For a `.json` source, `source_key` is an RFC 6901 JSON Pointer, and the value was read from the file by a script, not typed.
 - For `README.md` and `REPORT.md` it is a line number.

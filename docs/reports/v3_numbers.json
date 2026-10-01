@@ -514,6 +514,26 @@
   "source_key": "/splits/primary/E1.3/Q1/E1.3a/top_set_agreement",
   "value": 1.0
  },
+ "E1.3b.Q1.19593.B:CD20.p_two_sided": {
+  "source_file": "outputs/v3/E1/E1_results.json",
+  "source_key": "/splits/primary/E1.3/Q1/E1.3b/per_donor/19593/all_calls/markers/B:CD20/p_two_sided",
+  "value": 0.6493506493506493
+ },
+ "E1.3b.Q1.19593.B:CD20.share_within_class": {
+  "source_file": "outputs/v3/E1/E1_results.json",
+  "source_key": "/splits/primary/E1.3/Q1/E1.3b/per_donor/19593/all_calls/markers/B:CD20/share_within_class",
+  "value": 0.338765754019993
+ },
+ "E1.3b.Q1.19593.B:CD22.p_two_sided": {
+  "source_file": "outputs/v3/E1/E1_results.json",
+  "source_key": "/splits/primary/E1.3/Q1/E1.3b/per_donor/19593/all_calls/markers/B:CD22/p_two_sided",
+  "value": 0.000999000999000999
+ },
+ "E1.3b.Q1.19593.B:CD22.share_within_class": {
+  "source_file": "outputs/v3/E1/E1_results.json",
+  "source_key": "/splits/primary/E1.3/Q1/E1.3b/per_donor/19593/all_calls/markers/B:CD22/share_within_class",
+  "value": 0.49065623641894657
+ },
  "E1.3b.Q1.all.B:CD20.p_two_sided": {
   "source_file": "outputs/v3/E1/E1_results.json",
   "source_key": "/splits/primary/E1.3/Q1/E1.3b/per_donor/all/all_calls/markers/B:CD20/p_two_sided",
@@ -2016,6 +2036,37 @@
    "SELP"
   ]
  },
+ "E2.genes.kept": {
+  "source_file": "outputs/v3/E2/E2_results.json",
+  "source_key": "/genes/kept",
+  "value": [
+   "MS4A1",
+   "CD22",
+   "TNFRSF13C",
+   "CD3E",
+   "CD3D",
+   "CD3G",
+   "CD2",
+   "CD5",
+   "IL2RB",
+   "KLRD1",
+   "NCAM1",
+   "SIRPA",
+   "ITGAX",
+   "NCR1",
+   "FCGR3A",
+   "KLRF1",
+   "KLRC1",
+   "SH2D1B",
+   "CD6",
+   "CD28"
+  ]
+ },
+ "E2.genes.n_kept": {
+  "source_file": "outputs/v3/E2/REPORT.md",
+  "source_key": "line 3 ('Genes kept: MS4A1, ... CD28': 20 names; = length of /genes/kept in E2_results.json)",
+  "value": 20
+ },
  "E2.linearity.gene_scaling.eps1_vs_eps0.5.evidence.share_linear": {
   "source_file": "outputs/v3/E2/E2_results.json",
   "source_key": "/results/test_primary/linearity/gene_scaling/eps1_vs_eps0.5/evidence/share_linear",
@@ -2606,6 +2657,56 @@
   "source_key": "/H3a/test_primary/no_gdT158/stats/D_R2/verdict",
   "value": "loss"
  },
+ "E3.H3a.no_gdT158.GR_head_flagged.ci95_high": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_flagged/ci95/1",
+  "value": 0.7898
+ },
+ "E3.H3a.no_gdT158.GR_head_flagged.ci95_low": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_flagged/ci95/0",
+  "value": 0.3246
+ },
+ "E3.H3a.no_gdT158.GR_head_flagged.donor_13272": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_flagged/per_donor/13272",
+  "value": 0.6233
+ },
+ "E3.H3a.no_gdT158.GR_head_flagged.donor_19593": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_flagged/per_donor/19593",
+  "value": 0.3978
+ },
+ "E3.H3a.no_gdT158.GR_head_flagged.point": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_flagged/point",
+  "value": 0.4729
+ },
+ "E3.H3a.no_gdT158.GR_head_unflagged.ci95_high": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_unflagged/ci95/1",
+  "value": 0.7393
+ },
+ "E3.H3a.no_gdT158.GR_head_unflagged.ci95_low": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_unflagged/ci95/0",
+  "value": 0.3258
+ },
+ "E3.H3a.no_gdT158.GR_head_unflagged.donor_13272": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_unflagged/per_donor/13272",
+  "value": 0.6442
+ },
+ "E3.H3a.no_gdT158.GR_head_unflagged.donor_19593": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_unflagged/per_donor/19593",
+  "value": 0.4214
+ },
+ "E3.H3a.no_gdT158.GR_head_unflagged.point": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/H3a/test_primary/no_gdT158/stats/GR_head_unflagged/point",
+  "value": 0.5137
+ },
  "E3.H3b.all.R1-head@0.8.ci95_high": {
   "source_file": "outputs/v3/E3/E3_results.json",
   "source_key": "/H3b/test_primary/all/stats/R1-head@0.8/ci95/1",
@@ -2956,6 +3057,11 @@
   "source_key": "/pairs/test_primary/variants/all/n_unique_cells",
   "value": 278
  },
+ "E3.pairs.no_gdT158.n_flagged": {
+  "source_file": "outputs/v3/E3/E3_results.json",
+  "source_key": "/pairs/test_primary/variants/no_gdT158/n_flagged",
+  "value": 86
+ },
  "E3.pairs.no_gdT158.n_pairs": {
   "source_file": "outputs/v3/E3/E3_results.json",
   "source_key": "/pairs/test_primary/variants/no_gdT158/n_pairs",
@@ -3056,6 +3162,44 @@
   "source_key": "/splits/test_primary/E4/channel_disagreement/L3/share_channels_disagree",
   "value": 0.44652027625287766
  },
+ "E4.checks.C3_equals_F2": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/checks/C3_equals_F2",
+  "value": {
+   "L0@0.8": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L0@0.9": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L1@0.8": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L1@0.9": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L2@0.8": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L2@0.9": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L3@0.8": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   },
+   "L3@0.9": {
+    "n_argmax_call_differs": 0,
+    "n_selection_differs": 0
+   }
+  }
+ },
  "E4.checks.C3_equals_F2.L0@0.8.n_selection_differs": {
   "source_file": "outputs/v3/E4/E4_results.json",
   "source_key": "/checks/C3_equals_F2/L0@0.8/n_selection_differs",
@@ -3085,6 +3229,31 @@
   "source_file": "outputs/v3/E4/E4_results.json",
   "source_key": "/key/test_primary/E4_kappa_vs_annotation",
   "value": 0.766763
+ },
+ "E4.secondary.F2_vs_F0@0.8.ci95_high": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_secondary/E4/comparisons/F2_vs_F0@0.8/ci95/1",
+  "value": 0.0012600229095073357
+ },
+ "E4.secondary.F2_vs_F0@0.8.ci95_low": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_secondary/E4/comparisons/F2_vs_F0@0.8/ci95/0",
+  "value": -0.00710194730813285
+ },
+ "E4.secondary.F2_vs_F0@0.8.decision": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_secondary/E4/comparisons/F2_vs_F0@0.8/decision",
+  "value": "equivalent"
+ },
+ "E4.secondary.F2_vs_F0@0.8.donor_15078": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_secondary/E4/comparisons/F2_vs_F0@0.8/per_donor/15078",
+  "value": -0.0030355097365405426
+ },
+ "E4.secondary.F2_vs_F0@0.8.point": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_secondary/E4/comparisons/F2_vs_F0@0.8/point",
+  "value": -0.0030355097365405426
  },
  "E4.secondary.F5_vs_F2@0.8.decision": {
   "source_file": "outputs/v3/E4/E4_results.json",
@@ -3615,6 +3784,36 @@
   "source_file": "outputs/v3/E4/E4_results.json",
   "source_key": "/splits/test_primary/E4/comparisons/F5_vs_comparator@0.9/point",
   "value": -0.08081652729955735
+ },
+ "E4.test_primary.v3_primary_key.F2_vs_F0@0.8.ci95_high": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_primary/v3_primary/comparisons/F2_vs_F0@0.8/ci95/1",
+  "value": 0.01830140728918989
+ },
+ "E4.test_primary.v3_primary_key.F2_vs_F0@0.8.ci95_low": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_primary/v3_primary/comparisons/F2_vs_F0@0.8/ci95/0",
+  "value": -0.0036069096306590746
+ },
+ "E4.test_primary.v3_primary_key.F2_vs_F0@0.8.decision": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_primary/v3_primary/comparisons/F2_vs_F0@0.8/decision",
+  "value": "inconclusive"
+ },
+ "E4.test_primary.v3_primary_key.F2_vs_F0@0.8.donor_13272": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_primary/v3_primary/comparisons/F2_vs_F0@0.8/per_donor/13272",
+  "value": -0.0008938682359538319
+ },
+ "E4.test_primary.v3_primary_key.F2_vs_F0@0.8.donor_19593": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_primary/v3_primary/comparisons/F2_vs_F0@0.8/per_donor/19593",
+  "value": 0.015227084357893883
+ },
+ "E4.test_primary.v3_primary_key.F2_vs_F0@0.8.point": {
+  "source_file": "outputs/v3/E4/E4_results.json",
+  "source_key": "/splits/test_primary/v3_primary/comparisons/F2_vs_F0@0.8/point",
+  "value": 0.00732842271173606
  },
  "E4.test_primary.v3_primary_key.F5_vs_F2@0.8.decision": {
   "source_file": "outputs/v3/E4/E4_results.json",
@@ -4306,6 +4505,11 @@
   "source_file": "outputs/v3/E4/progress.log",
   "source_key": "line 62 (2026-10-01T05:04:11-04:00 local)",
   "value": "2026-10-01T09:04:11Z"
+ },
+ "run.E5.E3_pairs_rebuilt_n_pairs": {
+  "source_file": "outputs/v3/E5/progress.log",
+  "source_key": "line 2 (2026-10-01T01:10:36-04:00 local): 'E3 pairs rebuilt within each test_primary donor (2s): 84284 edges, 253 NK-T pairs'",
+  "value": 253
  },
  "run.E5.results_written": {
   "source_file": "outputs/v3/E5/progress.log",
