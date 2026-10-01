@@ -30,6 +30,14 @@ Stages (each resumable; every stage appends to <out-dir>/progress.log):
 A stage that touches site4 cells (r2_predict on site4, evaluate) is refused unless registration_v3.json,
 amendment A1 and addenda/E3.json are committed with matching hashes. Smoke runs (--smoke NOTE) use val
 donor 18303 as the evaluated split and never read a site4 row.
+
+Full run (from the dev clone root, after the addendum commit; resumable, rerun the same command to continue):
+  PY=<venv312>/bin/python; R=/Users/tianchichen/Documents/GitHub/teddy_mm
+  $PY scripts/v3_e3_nkt_repair.py --stage all --out-dir $R/outputs/v3/E3 \
+      --ckpt /Users/tianchichen/Documents/GitHub/teddy_mwe/ckpt/teddy_g_70M \
+      --head-ckpt $R/outputs/cite_phase1_official/best.pt --device auto --threads 4
+  (or stage by stage: null, r2_states, r2_predict on the GPU; r1, r2_fit, evaluate on the CPU;
+   --time-budget-sec N makes r2_states / r2_predict stop cleanly after a shard, exit 75)
 """
 from __future__ import annotations
 
@@ -252,7 +260,7 @@ def parse_args(argv=None):
                    default="all")
     p.add_argument("--processed", type=Path, default=ROOT / "data/processed/cite")
     p.add_argument("--embed-dir", type=Path, default=ROOT / "data/processed/cite_official")
-    p.add_argument("--ckpt", type=Path, default=ROOT.parent / "teddy_mwe/ckpt/teddy_g_70M", help="TEDDY-G checkpoint folder")
+    p.add_argument("--ckpt", type=Path, default=MAIN.parent / "teddy_mwe/ckpt/teddy_g_70M", help="TEDDY-G checkpoint folder")
     p.add_argument("--medians", type=Path, default=ROOT / "data/reference/teddy_gene_medians.json")
     p.add_argument("--head-ckpt", type=Path, default=MAIN / "outputs/cite_phase1_official/best.pt")
     p.add_argument("--null-ckpt", type=Path, default=None, help="default <out-dir>/null_head_seed1/best.pt")
