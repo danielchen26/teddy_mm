@@ -195,16 +195,23 @@ $PY scripts/mode_a_inverse_e7.py --stage report --out-dir $OUT
 
 Every device stage is resumable: rerunning the same command skips finished cells. `--max-minutes N` pauses with exit code 75. Progress goes to `$OUT/progress.log` and `*/e7_progress.json`.
 
-Expected compute, from the code tests (MPS float32, uncontended; about 2× on CPU):
+**Smoke after registration** (commit `6dc5999`; 5 val smoke-pool cells outside both rosters; CPU float32 with every cell also re-checked in float64):
+
+- It ran every stage: develop, select, the declared follow-up, select, confirm and report.
+- Timings: 4.3 s per cell for develop (58 histories) and 6.1 s per cell for confirm (74 histories plus the input push), at 718–1,601 tokens.
+- Every implementation gate passed: padding patch 0.0; layer-12 mean-preserving patch 7e-09; permutation 1.1e-07; float64 within 1.3e-06.
+- It is a code check only, never a result, and it decides nothing.
+
+Expected compute, from the code tests and the smoke (MPS float32 uncontended is faster than the CPU figures):
 
 | run | cells | histories per cell | expected time |
 |---|---|---|---|
-| development | 200 | 58 | about 1–3 s per cell, 10 cells also in CPU float64 (about 10 s each); about 10–15 min |
+| development | 200 | 58 | CPU about 3 s per cell (about 4 s with float64 on the first 10); about 10–15 min |
 | follow-up (if needed) | 200 | 58 | the same |
-| site4 | ≤ 400 | 74 | about 20–30 min |
-| external | ≤ 400 | 74 | longer cells (median about 1,900 tokens); about 40–60 min |
+| site4 | ≤ 400 | 74 | CPU about 4–6 s per cell (push on the first 50); about 30–40 min |
+| external | ≤ 400 | 74 | longer cells (median about 1,900 tokens, attention cost about 2–3×); about 60–80 min on CPU |
 
-Total at most about 2 h of GPU. Select and report are CPU and take minutes.
+Total about 2–2.5 h on CPU and about 1 h on an uncontended MPS GPU. Select and report are CPU and take minutes.
 
 ## 12. What E7 can and cannot show
 
