@@ -1001,14 +1001,30 @@ def stage_evaluate(a, reg, amend) -> None:
     E2 = {"L0": e2_L0, "L1": e2_L0, "L2": e2_L2, "L3": e2_L2}
     say(f"evaluate: {ev_ids.size} cells, channels ready ({time.time() - t0:.0f}s); running every method and the ANM engine")
     scores, checks, disagree = {}, {}, {}
-    for L in e4.LEVELS:
+    cache = a.out_dir / "e4_cells_scores.npz"
+    add_sha = gate["files"]["E4.json"]["sha256"]
+    code_sha = sha_bytes(Path(__file__).read_bytes() + (ROOT / "bridge_anm/lib/v3_e4.py").read_bytes())
+    for L in e4.LEVELS:  # resumable: a level whose scores were saved under this addendum is not recomputed
+        part = a.out_dir / "levels" / f"{L}.npz"
+        if part.exists():
+            with np.load(part, allow_pickle=False) as P:
+                if (str(P["addendum_sha256"]) == add_sha and str(P["code_sha256"]) == code_sha
+                        and np.array_equal(P["cell_ids"], ev_ids)):
+                    scores[L] = {m: {"conf": P[f"{m}_conf"], "call": P[f"{m}_call"]} for m in METHODS}
+                    checks[L] = json.loads(str(P["checks"]))
+                    disagree[L] = P["disagree"]
+                    say(f"evaluate {L}: scores loaded from {part}")
+                    continue
         tl = time.time()
         ms = method_scores(L, E1[L], E2[L], reg, comp, models, ffr, schema_base, run_engine=True)
         checks[L] = ms.pop("_checks")
         disagree[L] = ms.pop("_disagree")
         scores[L] = ms
+        atomic_savez(part, cell_ids=ev_ids, addendum_sha256=np.array(add_sha), code_sha256=np.array(code_sha), checks=np.array(json.dumps(checks[L])),
+                     disagree=disagree[L], **{f"{m}_conf": ms[m]["conf"] for m in METHODS},
+                     **{f"{m}_call": ms[m]["call"] for m in METHODS})
         say(f"evaluate {L}: done in {time.time() - tl:.0f}s; engine vs closed form {json.dumps(checks[L])}")
-    atomic_savez(a.out_dir / "e4_cells_scores.npz", cell_ids=ev_ids,
+    atomic_savez(cache, cell_ids=ev_ids,
                  **{f"{L}_{m}_conf": scores[L][m]["conf"] for L in e4.LEVELS for m in METHODS},
                  **{f"{L}_{m}_call": scores[L][m]["call"] for L in e4.LEVELS for m in METHODS},
                  key_E4=key_e4, key_v3_primary=keys["v3_primary"])
