@@ -76,7 +76,8 @@ export default function create(ctx) {
   const bTitle = lab('gap kept', { anchor: 'left', weight: 600, size: 13 });
   const bars = NUMBERS.gapKept.map(([n, v]) => ({
     v, bar: ln({ color: 'teddy' }), name: lab(n, { anchor: 'right' }),
-    val: lab(v.toFixed(2), { anchor: 'left', color: 'teddy', weight: 600 }),
+    // a value just below 1 (CD335 0.88) would be cut by the dashed "1 = whole gap" line: give it a card plate
+    val: lab(v.toFixed(2), Object.assign({ anchor: 'left', color: 'teddy', weight: 600 }, v > 0.55 && v < 1 ? { bg: 'card', bgOpacity: 0.9, pad: 2 } : {})),
   }));
   const base = ln({ color: 'line', width: 1 });
   const one = ln({ color: 'muted', width: 1.4, dashed: [4, 4] });

@@ -105,7 +105,8 @@ export default function create(ctx) {
   const [LO, HI] = NUMBERS.random;
   const rTitle = at(lab('predicted gap', { anchor: 'left', weight: 600, size: 12.5 }), 0, 3.8, 10);
   const one = ln([[XR(1), 2.35, 3], [XR(1), R.yr - 0.31, 3]], { color: 'muted', width: 1.3, dashed: [4, 4] });
-  const oneLab = at(lab('1 = measured gap', { anchor: 'bottom', color: 'muted' }), XR(1), 2.42, 10);
+  // right-anchored just past the dashed line: centred on it, the label ran under the corner Play button on phones
+  const oneLab = at(lab('1 = measured gap', { anchor: 'bottom-right', color: 'muted' }), XR(1) + 0.25, 2.42, 10);
   const rows = NUMBERS.kept.map(([name, v], i) => ({
     v, y: R.rows[i], spring: springLine('teddy', 1.6, 5), a: dot('nk'), b: dot('t'),
     name: at(lab(name, { anchor: 'right', weight: 600 }), R.x0 - 0.3, R.rows[i], 10),
