@@ -107,9 +107,28 @@ def test_no_contradiction_is_proportional_to_trust_weighted_average(reg):
     A = e4.anm_fusion_closed(e1, e2, s[e4.CHANNELS[0]], s[e4.CHANNELS[1]], reg, contradiction=False)
     F2 = e4.fuse_trust_weighted(e4.class_scores12(e1, reg), e4.class_scores12(e2, reg), t1, t2)
     ratio = A / F2
-    np.testing.assert_allclose(ratio, ratio.flat[0], rtol=1e-5)  # source scales are rounded to 6 decimals
+    np.testing.assert_allclose(ratio, ratio.flat[0], rtol=1e-12)  # exact source-scale ratio: proportional to float rounding
     G6 = vk.field_gain(6, FIELD)
-    assert ratio.flat[0] == pytest.approx(G6 * 3 * (t1 + t2) / max(t1, t2), rel=1e-5)
+    assert ratio.flat[0] == pytest.approx(G6 * 3 * (t1 + t2) / max(t1, t2), rel=1e-12)
+
+
+def test_c3_and_f2_select_and_call_the_same_cells(reg):
+    """C3 (F5 without contradiction events) is a constant multiple of F2, so with the A1.1 tie-break both select the
+    same cells at every coverage and make the same calls (needs the exact source-scale ratio)."""
+    rng = np.random.default_rng(12)
+    n = 3000
+    e1 = np.clip(rng.uniform(-0.2, 1.3, (n, 12)), 0, 1)
+    e2 = np.clip(rng.uniform(-0.2, 1.3, (n, 12)), 0, 1)
+    e1[:400, 3:6] = 1.0  # many cells tied at the clip
+    ids = rng.choice(90261, size=n, replace=False)
+    for t1, t2 in ((0.828938, 0.813822), (0.754129, 0.452151), (0.611111, 0.777777)):
+        s = e4.source_scales({e4.CHANNELS[0]: t1, e4.CHANNELS[1]: t2})
+        C3 = e4.anm_fusion_closed(e1, e2, s[e4.CHANNELS[0]], s[e4.CHANNELS[1]], reg, contradiction=False)
+        F2 = e4.fuse_trust_weighted(e4.class_scores12(e1, reg), e4.class_scores12(e2, reg), t1, t2)
+        assert np.array_equal(e4.calls_from_scores(C3), e4.calls_from_scores(F2))
+        for cov in (0.5, 0.8, 0.9):
+            assert np.array_equal(e4.select_at_coverage(C3.max(1), ids, cov, AMEND),
+                                  e4.select_at_coverage(F2.max(1), ids, cov, AMEND))
 
 
 # ----------------------------------------------------------------------------- matched coverage and bootstrap
@@ -219,7 +238,9 @@ def test_trust_and_source_scales():
     assert r[0] == pytest.approx(1.0) and r[1] == pytest.approx(-1.0) and r[2] == 0.0
     assert t == pytest.approx(1.0 / 3)
     s = e4.source_scales({e4.CHANNELS[0]: 0.6, e4.CHANNELS[1]: 0.8})
-    assert s == {e4.CHANNELS[0]: 0.75, e4.CHANNELS[1]: 1.0}
+    assert s == {e4.CHANNELS[0]: 0.6 / 0.8, e4.CHANNELS[1]: 1.0}  # the exact ratio, not rounded
+    assert s[e4.CHANNELS[0]] == pytest.approx(0.75)
+    assert e4.source_scales({e4.CHANNELS[0]: 0.0, e4.CHANNELS[1]: 0.0}) == {e4.CHANNELS[0]: 0.0, e4.CHANNELS[1]: 0.0}
 
 
 def test_ridge_alpha_selection_prefers_the_smaller_on_ties():
@@ -229,6 +250,87 @@ def test_ridge_alpha_selection_prefers_the_smaller_on_ties():
     alpha, rows, model = e4.ridge_fit_select(X[:200], Y[:200], X[200:], Y[200:], alphas=(0.1, 1.0, 1000.0))
     assert alpha in (0.1, 1.0) and len(rows) == 3
     np.testing.assert_allclose(e4.linear_predict(X[200:], model.coef_, model.intercept_), model.predict(X[200:]))
+
+
+def _clr_float32(x):
+    """Stored ADT form: per-cell CLR log1p(x / g_c), g_c from every protein (panel included), stored as float32."""
+    g = np.exp(np.log1p(x).mean(axis=1, keepdims=True))
+    return np.log1p(x / g).astype(np.float32).astype(np.float64)
+
+
+def _toy_channel2(reg, n=400, seed=0):
+    rng = np.random.default_rng(seed)
+    flat = e4.panel_flat(reg)
+    names = flat[:6] + [f"np{i}" for i in range(40)] + flat[6:]
+    x = rng.poisson(rng.gamma(2.0, 6.0, size=(n, len(names)))).astype(np.float64)
+    x[:, 7] += 1
+    adt = _clr_float32(x)
+    w, _ = va.channel2_inputs(adt, names, flat)
+    m = e4.measured_evidence(adt, names, flat, np.percentile(adt[:, [names.index(p) for p in flat]], 95, axis=0))
+    _, _, ridge = e4.ridge_fit_select(w[: n // 2], m[: n // 2], w[n // 2:], m[n // 2:])
+    q95 = np.percentile(e4.linear_predict(w, ridge.coef_, ridge.intercept_), 95, axis=0)
+    return names, flat, x, adt, ridge.coef_, ridge.intercept_, q95, rng.choice(90261, size=n, replace=False)
+
+
+def test_channel2_evidence_is_invariant_to_panel_counts_end_to_end(reg):
+    """A1.2 end to end: inputs -> (L2 dropout) -> ridge -> normaliser. Changing only the panel counts changes the
+    stored non-panel values (the CLR factor includes the panel) but not the channel-2 evidence (float32 residue)."""
+    names, flat, x, adt, coef, icpt, q95, ids = _toy_channel2(reg)
+    pj = [names.index(p) for p in flat]
+    x2 = x.copy()
+    x2[:, pj] = np.random.default_rng(1).poisson(80.0, size=(x.shape[0], len(pj)))
+    adt2 = _clr_float32(x2)
+    nj = [i for i in range(len(names)) if i not in pj]
+    assert np.max(np.abs(adt2[:, nj] - adt[:, nj])) > 0.1  # the stored non-panel values do move
+    for kw in ({}, {"cell_ids": ids, "dropout_fraction": 0.5, "seed": 17}):
+        a = e4.channel2_evidence(adt, names, flat, coef, icpt, q95, **kw)
+        b = e4.channel2_evidence(adt2, names, flat, coef, icpt, q95, **kw)
+        assert np.max(np.abs(a - b)) < 1e-5
+        assert np.array_equal(e4.top_class(e4.class_scores12(a, reg)), e4.top_class(e4.class_scores12(b, reg)))
+
+
+def test_channel2_panel_invariance_check_passes_and_detects_a_leak(reg):
+    names, flat, x, adt, coef, icpt, q95, ids = _toy_channel2(reg)
+    inv = e4.channel2_panel_invariance(adt, names, flat, coef, icpt, q95, reg, ids, 0.5, 17)
+    assert inv["passed"] and inv["L0"]["panel_overwritten_bit_identical"] and inv["L2"]["panel_overwritten_bit_identical"]
+    assert inv["stored_nonpanel_max_abs_change"] > 0.1
+    # positive control: a path that lets one panel protein through as an input must fail the check
+    leaky_panel = flat[1:]  # flat[0] would then be read as a channel-2 input
+    w, cols = va.channel2_inputs(adt, names, leaky_panel)
+    assert flat[0] in cols
+    from sklearn.linear_model import Ridge
+
+    m = e4.measured_evidence(adt, names, flat, np.percentile(adt[:, [names.index(p) for p in flat]], 95, axis=0))
+    rl = Ridge(alpha=0.1).fit(w, m)
+    ql = np.percentile(e4.linear_predict(w, rl.coef_, rl.intercept_), 95, axis=0)
+    bad = e4.channel2_panel_invariance(adt, names, flat, rl.coef_, rl.intercept_, ql, reg, ids, 0.5, 17,
+                                       input_exclude=leaky_panel)
+    assert not bad["passed"] and not bad["L0"]["panel_overwritten_bit_identical"]
+
+
+def test_prepare_refuses_on_engine_mismatch_or_a1_2_failure():
+    run = _runner()
+    ok_cell = {"max_abs_engine_minus_closed_lt_1e-9": True, "n_cells_argmax_differs": 0, "n_rejected_events": 0}
+    comp = {"anm_engine_check_val": {L: {v: dict(ok_cell) for v in run.ANM_VARIANTS} for L in e4.LEVELS},
+            "channel2": {"a1_2_val_panel_invariance": {"passed": True}}}
+    assert run.prepare_refusals(comp) == []
+    comp["anm_engine_check_val"]["L2"]["F5"]["n_cells_argmax_differs"] = 1
+    assert len(run.prepare_refusals(comp)) == 1
+    comp["anm_engine_check_val"]["L2"]["F5"]["n_cells_argmax_differs"] = 0
+    comp["channel2"]["a1_2_val_panel_invariance"]["passed"] = False
+    assert len(run.prepare_refusals(comp)) == 1
+    del comp["channel2"]["a1_2_val_panel_invariance"]
+    assert len(run.prepare_refusals(comp)) == 1
+
+
+def test_names_say_declared_rule_and_closed_form():
+    run = _runner()
+    assert "declared rule" in run.ARM_NAMES["F1"] and "declared rule" in run.ARM_NAMES["F2"]
+    assert "ANM" not in run.ARM_NAMES["F1"] and "ANM" not in run.ARM_NAMES["F2"]
+    assert "closed form" in run.ARM_NAMES["F5"] and "contradiction" in run.ARM_NAMES["F5"]
+    assert "by construction" not in run.ARM_NAMES["C3"]
+    txt = run.ADDENDUM_TEXT["open_choices_fixed"]
+    assert "not rounded" in txt["trust"] and "F5_closed_form" in txt and "interpretation" in txt
 
 
 # ----------------------------------------------------------------------------- registration-level checks

@@ -11,7 +11,7 @@ Vocabulary
                 (channel 1 = TEDDY + head from RNA; channel 2 = ridge from the panel-free non-panel ADT)
   m12           measured panel evidence (stored ADT / training q95 of the stored ADT, clipped); key only
   S1, S2        class scores [n, 4] (LINEAGES order): equal-weight mean over each class panel
-  s1, s2        ANM per-channel source scales, trust_c / max(trust_1, trust_2) at the noise level
+  s1, s2        ANM per-channel source scales, trust_c / max(trust_1, trust_2) at the noise level (exact ratio)
 
 ANM fusion (F5). One action per lineage. Support events: every panel protein of every class, per
 channel, value s_c * e_c[p]. Contradiction events: for each channel, its top class k*_c (argmax of S_c,
@@ -19,7 +19,17 @@ first in LINEAGES order on ties) contradicts every other class j with value s_c 
 Times: channel 1 at t = 0, channel 2 at t = 0 (time-blind, primary) or t = 2 (declared order, control).
 ANM's ``finite_graph_scalar`` has a single schema ``source_scale`` (1.0, registered); the injection is
 ``source_scale * amplitude`` with amplitude = +value (support) or -value (contradiction), so multiplying
-the event value by s_c is exactly a per-channel source scale.
+the event value by s_c is exactly a per-channel source scale (float-identical: 1.0 * (s_c * v) = s_c * v). This
+needs s_c * v inside ANM's value range [0, 1], which holds because s_c = trust_c / max trust is in [0, 1] and the
+evidence is clipped to [0, 1] (contradiction values are at most 0.5); the clip in ``fusion_events`` never binds,
+and if it did the engine-vs-closed-form check would fail.
+
+What F5 computes. With every event at t = 0 and three proteins per class, the action score of class k is
+R(n_k) * [3 s1 S1_k + 3 s2 S2_k - 0.5 * sum_c s_c S_c,top_c * 1(k != top_c)], where n_k = 6 plus the number of
+channels whose top class is not k (6, 7 or 8 event sites) and R(6) < R(7) < R(8) (0.3784, 0.3812, 0.3840 for the
+registered field): a declared trust-weighted rule with a contradiction penalty and an event-count-dependent gain
+that ANM's field evaluates exactly. Without contradiction events (C3) every n_k = 6 and the score is a constant
+multiple of F2 (trust-weighted average), so C3 ranks and calls cells as F2 does.
 
 Closed form. Every event site is joined only to its own action site (build_graph), so the four actions
 are uncoupled stars and the field is linear: the action state is sum_e R(n_k, m_e) * amp_e, where n_k is
@@ -150,6 +160,63 @@ def normalised_evidence(pred: np.ndarray, q95: Sequence[float]) -> np.ndarray:
     return np.clip(np.asarray(pred, dtype=np.float64) / np.maximum(np.asarray(q95, dtype=np.float64), 1e-12)[None, :], 0.0, 1.0)
 
 
+def channel2_evidence(adt: np.ndarray, adt_names: Iterable[str], panel: Sequence[str], coef: np.ndarray,
+                      intercept: np.ndarray, q95_pred: Sequence[float], *, cell_ids: Sequence[int] | None = None,
+                      dropout_fraction: float | None = None, seed: int | None = None) -> np.ndarray:
+    """Channel-2 evidence from stored ADT rows: A1.2 inputs (v3_amend.channel2_inputs), optional L2 dropout,
+    ridge, normalised by the training q95 of the predictions and clipped (the prepare / evaluate path)."""
+    w, _ = va.channel2_inputs(adt, adt_names, panel)
+    if dropout_fraction is not None:
+        w = dropout_inputs(w, cell_ids, dropout_fraction, seed)
+    return normalised_evidence(linear_predict(w, coef, intercept), q95_pred)
+
+
+def channel2_panel_invariance(adt: np.ndarray, adt_names: Iterable[str], panel: Sequence[str], coef: np.ndarray,
+                              intercept: np.ndarray, q95_pred: Sequence[float], reg: dict[str, Any],
+                              cell_ids: Sequence[int], dropout_fraction: float, seed: int,
+                              factor_range: tuple[float, float] = (0.5, 2.0),
+                              input_exclude: Sequence[str] | None = None) -> dict[str, Any]:
+    """A1.2 numeric check on stored ADT rows (val in prepare): channel-2 evidence must not depend on the panel.
+
+    ``panel`` is the registered primary panel (the values perturbed); ``input_exclude`` is the protein list the
+    channel-2 path drops from its inputs (default: ``panel``), so a path that lets a panel protein through fails.
+
+    (a) the stored panel columns are overwritten with arbitrary values: the evidence must be bit-identical;
+    (b) the stored values are a per-cell CLR log1p(x / g_c) whose factor g_c includes the panel counts, so any change
+        of a cell's panel counts multiplies every non-panel u = expm1(stored) by g_c / g_c'. Each cell's factor is
+        rescaled by a seeded ratio in ``factor_range`` (numpy default_rng([seed, 3])), the panel values replaced, and
+        the rows re-stored in float32 like cite_arrays.npz: the stored non-panel values move, the evidence must not
+        (float32 storage leaves a residue near 1e-7). Both at L0 and with the L2 dropout."""
+    names = [str(x) for x in adt_names]
+    pset = set(map(str, panel))
+    excl = list(panel) if input_exclude is None else [str(p) for p in input_exclude]
+    pj = [i for i, n in enumerate(names) if n in pset]
+    nj = [i for i, n in enumerate(names) if n not in pset]
+    x = np.asarray(adt, dtype=np.float64)
+    rng = np.random.default_rng([int(seed), 3])
+    kw = {"cell_ids": cell_ids, "dropout_fraction": dropout_fraction, "seed": seed}
+    base = {"L0": channel2_evidence(x, names, excl, coef, intercept, q95_pred),
+            "L2": channel2_evidence(x, names, excl, coef, intercept, q95_pred, **kw)}
+    A = x.copy()
+    A[:, pj] = rng.gamma(1.0, 2.0, size=(x.shape[0], len(pj)))
+    r = rng.uniform(float(factor_range[0]), float(factor_range[1]), size=(x.shape[0], 1))
+    B = x.copy()
+    B[:, nj] = np.log1p(np.expm1(x[:, nj]) * r).astype(np.float32).astype(np.float64)
+    B[:, pj] = np.log1p(rng.gamma(1.0, 20.0, size=(x.shape[0], len(pj))) / r).astype(np.float32).astype(np.float64)
+    out: dict[str, Any] = {"n_cells": int(x.shape[0]), "factor_range": [float(v) for v in factor_range],
+                           "stored_nonpanel_median_abs_change": float(np.median(np.abs(B[:, nj] - x[:, nj]))) if nj else 0.0,
+                           "stored_nonpanel_max_abs_change": float(np.max(np.abs(B[:, nj] - x[:, nj]))) if nj and x.size else 0.0}
+    for L, ev in base.items():
+        a = channel2_evidence(A, names, excl, coef, intercept, q95_pred, **(kw if L == "L2" else {}))
+        b = channel2_evidence(B, names, excl, coef, intercept, q95_pred, **(kw if L == "L2" else {}))
+        out[L] = {"panel_overwritten_bit_identical": bool(np.array_equal(a, ev)),
+                  "factor_changed_max_abs_evidence_change": float(np.max(np.abs(b - ev))) if ev.size else 0.0,
+                  "factor_changed_n_cells_top_class_changes": int(np.sum(top_class(class_scores12(b, reg)) != top_class(class_scores12(ev, reg))))}
+    out["passed"] = bool(all(out[L]["panel_overwritten_bit_identical"] and out[L]["factor_changed_max_abs_evidence_change"] < 1e-5
+                             and out[L]["factor_changed_n_cells_top_class_changes"] == 0 for L in base))
+    return out
+
+
 def dropout_inputs(w: np.ndarray, cell_ids: Sequence[int], fraction: float, seed: int) -> np.ndarray:
     """L2 noise: per cell, round(fraction * n_inputs) channel-2 inputs set to 0, chosen by
     numpy default_rng([seed, 2, cell_id]).permutation(n_inputs) (label-free, the same for any subset)."""
@@ -196,9 +263,14 @@ def channel_trust(ev: np.ndarray, meas: np.ndarray) -> tuple[float, list[float]]
 
 
 def source_scales(trust: dict[str, float]) -> dict[str, float]:
-    """ANM source_scale per channel = trust / max trust (6 decimals)."""
+    """ANM source_scale per channel = trust / max trust, the exact float ratio (registered: trust / max trust).
+
+    Not rounded: with s_c = t_c / max(t) exactly, F5 without contradiction events (C3) is proportional to the
+    trust-weighted average F2 cell by cell up to float rounding (registered: F2 'equals ANM without contradiction
+    events'). Rounding s_c to 6 decimals would break that identity at the 1e-7 level. s_c lies in [0, 1], so the
+    event values s_c * e stay inside ANM's value range and are never clipped."""
     mx = max(float(trust[c]) for c in CHANNELS)
-    return {c: (round(float(trust[c]) / mx, 6) if mx > 0 else 0.0) for c in CHANNELS}
+    return {c: (float(trust[c]) / mx if mx > 0 else 0.0) for c in CHANNELS}
 
 
 # --------------------------------------------------------------------------- simple fusion rules

@@ -19,7 +19,8 @@ files. No site4 row is read (RNA, protein, labels or embedding) before that comm
              (declared rules); F3 stacker (val); F4 learned fusion (training cells, L0); F5 TEDDY + ANM fusion
              (support + contradiction events, per-channel source scale = trust / max trust, all at t = 0)
   controls   C1 F5 without propagation; C2 F5 with channel 2 at t = 2 (declared order); C3 F5 without
-             contradiction events (= F2); the re-coded closed form of F5 (must equal F5 on every cell)
+             contradiction events (a constant multiple of F2); the re-coded closed form of F5 (must equal F5 on
+             every cell)
   endpoint   selective accuracy at matched coverage 0.8 (0.9 secondary), mean over L0-L3, E4 key,
              test_primary: F5 vs the best of F1-F4 on val (A1.9) and F5 vs F2; margin 0.01; two-stage
              donor-then-cell bootstrap (B 2000, seed 1)
@@ -111,10 +112,13 @@ ARM_NAMES = {
     "F2": "trust-weighted average of the class scores (declared rule)",
     "F3": "stacker: logistic regression on the 8 class scores, trained on val per noise level",
     "F4": "learned fusion: logistic regression on the 24 evidence values, trained on training cells at L0",
-    "F5": "TEDDY + ANM fusion (ANM field runs: per-channel source scale, contradiction events, all at t = 0)",
-    "C1": "control: F5 without propagation (ANM no_propagation)",
+    "F5": "TEDDY + ANM fusion (ANM field runs: per-channel source scale, contradiction events, all at t = 0; its scores "
+          "equal the re-coded closed form v3_e4.anm_fusion_closed on every cell)",
+    "C1": "control: F5 without propagation (ANM no_propagation: every action score stays 0, so every call is B and the "
+          "selection is the A1.1 permutation)",
     "C2": "control: F5 with channel 2 at t = 2 (declared order instead of time-blind)",
-    "C3": "control: F5 without contradiction events (equals F2 by construction)",
+    "C3": "control: F5 without contradiction events (a constant multiple of F2 cell by cell, so the same ranking and "
+          "calls up to float rounding; checked)",
 }
 ADDENDUM_FILES = ("E4.json", "E4_models.json", "E4_leakage_check.json")
 
@@ -602,6 +606,15 @@ def prepare_core(full: dict, z0: np.ndarray, z1_ids: np.ndarray, z1: np.ndarray,
     comp["channel2"] = {"alpha": alpha, "alpha_grid_val_mean_r2": alpha_rows, "q95_train_pred": dict(zip(flat, q95c2)),
                         "n_inputs": len(cols),
                         "val_dropout_mean_inputs_zeroed": r6(np.mean(np.sum((w_vl_drop == 0) & (w_vl != 0), axis=1)))}
+    # A1.2 numeric check on val: the library path used by the check is the path above (asserted bit-identical)
+    kw2 = {"cell_ids": gid[vl], "dropout_fraction": DROPOUT_FRACTION, "seed": seed}
+    if not (np.array_equal(e4.channel2_evidence(adt[vl], names, flat, coef, icpt, q95c2), e2_vl)
+            and np.array_equal(e4.channel2_evidence(adt[vl], names, flat, coef, icpt, q95c2, **kw2), e2_vl_L2)):
+        raise SystemExit("channel-2 evidence path differs from v3_e4.channel2_evidence")
+    inv = e4.channel2_panel_invariance(adt[vl], names, flat, coef, icpt, q95c2, reg, gid[vl], DROPOUT_FRACTION, seed)
+    comp["channel2"]["a1_2_val_panel_invariance"] = {
+        k: ({kk: (float(f"{vv:.3g}") if isinstance(vv, float) else vv) for kk, vv in v.items()} if isinstance(v, dict)
+            else (float(f"{v:.3g}") if isinstance(v, float) else v)) for k, v in inv.items()}
 
     E1 = {"L0": e1_vl, "L1": e1_vl_L1, "L2": e1_vl, "L3": e1_vl_L1}
     E2 = {"L0": e2_vl, "L1": e2_vl, "L2": e2_vl_L2, "L3": e2_vl_L2}
@@ -630,7 +643,11 @@ def prepare_core(full: dict, z0: np.ndarray, z1_ids: np.ndarray, z1: np.ndarray,
     models["F4"] = {"classes": [str(c) for c in m4.classes_], "C": C4, "coef": m4.coef_, "intercept": m4.intercept_,
                     "features": [f"{e4.CHANNELS[0]}:{p}" for p in flat] + [f"{e4.CHANNELS[1]}:{p}" for p in flat]}
     comp["F4"] = {"C": C4, "val_log_loss": rows4, "n_train": int(tr.size),
-                  "max_abs_proba_check": float(np.abs(softmax_proba(X4_vl, m4.coef_, m4.intercept_) - m4.predict_proba(X4_vl)).max())}
+                  "max_abs_proba_check": float(np.abs(softmax_proba(X4_vl, m4.coef_, m4.intercept_) - m4.predict_proba(X4_vl)).max()),
+                  # disclosure: F4's channel-1 features on training cells are the head's in-sample predictions and
+                  # its channel-2 features the ridge's in-sample predictions (both were fit on these cells)
+                  "train_channel_trust_L0_in_sample": {e4.CHANNELS[0]: r6(e4.channel_trust(e1_tr, m_tr)[0]),
+                                                       e4.CHANNELS[1]: r6(e4.channel_trust(e2_tr, m_tr)[0])}}
 
     # ---- F3: per level, val, C by 5-fold cross-fitted log-loss; cross-fitted predictions for the val endpoint
     from sklearn.model_selection import StratifiedKFold
@@ -717,6 +734,14 @@ ADDENDUM_TEXT = {
                     "smaller alpha; refit on all training cells (coefficients in E4_models.json); evidence = prediction / "
                     "training q95 of its own predictions (6 decimals), clipped to [0, 1] like channel 1 (ANM event "
                     "values must lie in [0, 1])",
+        "channel2_a1_2_check": "computed.channel2.a1_2_val_panel_invariance, on the val cells (v3_e4.channel2_panel_"
+                               "invariance, the same path as prepare and evaluate, asserted bit-identical): (a) the stored "
+                               "panel columns overwritten with arbitrary values must leave the channel-2 evidence "
+                               "bit-identical; (b) each cell's per-cell CLR factor rescaled by a seeded ratio in [0.5, 2] "
+                               "(what any change of the panel counts does to the stored non-panel values), panel values "
+                               "replaced, rows re-stored in float32: the evidence may move only by float32 storage "
+                               "residue (< 1e-5) and no channel-2 top class may change; at L0 and with the L2 dropout. "
+                               "prepare writes no addendum if it fails",
         "L1_thinning": "integer counts = stored RNA row / its smallest non-zero value, rounded (the largest relative "
                        "deviation from an integer is reported); Binomial(count, 0.2) per gene with numpy "
                        "default_rng([seeds.e4_noise, 1, cell_id]); re-embedded with the settings of "
@@ -728,7 +753,8 @@ ADDENDUM_TEXT = {
                       "the clean ones",
         "trust": "Pearson over val cells at the level between the channel evidence (clipped) and the measured panel "
                  "evidence; a constant column gives r = 0; mean of max(0, r) over the 12 proteins, 6 decimals; ANM "
-                 "source scale = trust / max of the two channels' trust at the level, 6 decimals",
+                 "source scale = trust / max of the two channels' trust at the level, the exact float ratio of the "
+                 "6-decimal trusts (not rounded, so C3 is a constant multiple of F2 up to float rounding)",
         "untestable": "the trust mechanism is reported untestable if |trust_1 - trust_2| < 0.01 (6 decimals) at every "
                       "level; the endpoints are still computed and reported",
         "F1_F2": "class scores = equal-weight panel means per channel; F1 = their mean; F2 = (t1 S1 + t2 S2) / (t1 + t2) "
@@ -740,7 +766,9 @@ ADDENDUM_TEXT = {
               "the refit on all val cells at the level",
         "F4": "the same model on the 24 evidence values [e1, e2] of the training cells at L0, labels = E4 key on training "
               "cells; C from the same grid by val log-loss at L0 (the registered classifier procedure); applied "
-              "unchanged at every level",
+              "unchanged at every level. Disclosed: on training cells the channel-1 features are the phase-1 head's "
+              "in-sample predictions and the channel-2 features the ridge's in-sample predictions (both were fit on "
+              "these cells); computed.F4.train_channel_trust_L0_in_sample reports their trust beside the val trust",
         "F3_F4_decision": "registered classifier decision: the lineage with the highest probability; confidence = that "
                           "probability",
         "F5": "events as documented in bridge_anm/lib/v3_e4.py: support events s_c * e_c[p] for every channel, class and "
@@ -749,10 +777,21 @@ ADDENDUM_TEXT = {
               "(registered: steps 4, retention 0.82, diffusion 0.16, schema source_scale 1.0); action readout; "
               "readout_threshold = the F5 bar of the level. ANM's finite_graph_scalar has one schema source_scale, so "
               "the per-channel source scale multiplies the event value (identical, since the injection is source_scale "
-              "* amplitude and amplitude = +/- value)",
-        "controls": "C1 = F5 with ANM disable_propagation (every action stays 0, so its selection is the A1.1 "
-                    "permutation); C2 = F5 with channel 2 at t = 2; C3 = F5 without contradiction events (proportional "
-                    "to F2 cell by cell); closed form = v3_e4.anm_fusion_closed, checked against the engine on every cell",
+              "* amplitude and amplitude = +/- value; float-identical because the schema source_scale is 1.0; the "
+              "values stay in ANM's range [0, 1] because s_c is in [0, 1] and the evidence is clipped, so no event is "
+              "clipped or rejected)",
+        "F5_closed_form": "with every event at t = 0 and three proteins per class, F5's action score for class k is "
+                          "R(n_k) * [3 s1 S1_k + 3 s2 S2_k - 0.5 * sum over channels c whose top class is not k of "
+                          "s_c * S_c,top], n_k = 6 + that number of channels, R the field's star response (R(6) 0.3784, "
+                          "R(7) 0.3812, R(8) 0.3840): a declared trust-weighted rule with a contradiction penalty and an "
+                          "event-count-dependent gain, evaluated exactly by ANM's field",
+        "controls": "C1 = F5 with ANM disable_propagation (every action stays 0, so every call is B and its selection is "
+                    "the A1.1 permutation); C2 = F5 with channel 2 at t = 2; C3 = F5 without contradiction events (a "
+                    "constant multiple of F2 cell by cell: same ranking and calls up to float rounding, counted at "
+                    "evaluate); closed form = v3_e4.anm_fusion_closed, checked against the engine on every cell",
+        "prepare_refusal": "prepare writes no addendum (so no site4 work can start) if, on val, ANM's engine differs from "
+                           "the closed form on any cell and variant (|difference| >= 1e-9, a different argmax, or a "
+                           "rejected event) or channel 2 fails the A1.2 check",
         "bars": "each method's operating bar = val quantile at no-call 0.15 of its confidence at the level, 6 decimals; "
                 "reported with realised site4 coverage only (the endpoint is matched coverage)",
         "confidence": "F0, F0b, F1, F2: top class score; F3, F4: highest lineage probability; F5, C1-C3: top ANM action "
@@ -773,6 +812,12 @@ ADDENDUM_TEXT = {
                     "equivalent to the best non-ANM fusion', inconclusive; field effect (F5 vs F2): equivalent -> 'field "
                     "adds nothing' (acceptable), win -> 'contradiction events and field gain add over the trust-weighted "
                     "rule', loss -> 'they hurt', inconclusive",
+        "interpretation": "naming only (the registered outcome labels are unchanged): F1 and F2 are declared rules, never "
+                          "called ANM; F5 is the only fusion method where ANM's field runs (C1-C3 are its controls). "
+                          "Because F5 equals its closed form (F5_closed_form), a win or loss of F5 is reported as the "
+                          "effect of the contradiction events and the field's event-count-dependent gain on top of the "
+                          "trust-weighted rule, which ANM's field computes exactly, not as evidence of field dynamics "
+                          "beyond that closed form (as A1.4 for E1.4)",
         "key_validity_reporting": "reporting rule only (mirrors registration section 4.3 for the v3 key; no E4 key-validity "
                                   "rule is registered): the E4 key's kappa against the annotation is reported per site4 "
                                   "split before any method result; if it is below 0.85 on test_primary, the v3 primary-key "
@@ -799,6 +844,9 @@ def stage_prepare(a, reg, amend) -> None:
         smoke = {"val_ids": ids[: ids.size // 2], "n_train": a.smoke_n_train}
     say(f"prepare: data loaded ({time.time() - t0:.0f}s); computing the addendum core from train/val rows")
     comp, models = prepare_core(full, z0, z1_ids, z1, reg, amend, a.head_ckpt, ffr, schema_base, smoke)
+    refuse = prepare_refusals(comp)
+    if refuse:  # stricter than the evaluate-stage flag: no addendum is written, so no site4 work can start
+        raise SystemExit("prepare refused to write the E4 addendum: " + "; ".join(refuse))
     models_bytes = e4.json_dump(e4.jsonable(models)).encode()
     core = {"computed": comp, "models_sha256": sha_bytes(models_bytes)}
     core_bytes = e4.json_dump(e4.jsonable(core)).encode()
@@ -828,6 +876,20 @@ def stage_prepare(a, reg, amend) -> None:
     say(f"prepare done ({time.time() - t0:.0f}s): tau_K {comp['key']['tau_K']}, alpha {comp['channel2']['alpha']}, "
         f"trust {comp['trust']}, comparator {comp['best_comparator']}, untestable {comp['trust_untestable']}; "
         f"wrote {d / 'E4.json'} (core {add['core_sha256'][:12]})")
+
+
+def prepare_refusals(comp: dict) -> list[str]:
+    """Reasons not to write the addendum: on val, ANM's engine must equal the re-coded closed form on every cell and
+    variant (|difference| < 1e-9, same argmax, no rejected event), and channel 2 must pass the A1.2 panel check."""
+    bad = []
+    for L, per in comp["anm_engine_check_val"].items():
+        for k, v in per.items():
+            if not (v["max_abs_engine_minus_closed_lt_1e-9"] and v["n_cells_argmax_differs"] == 0 and v["n_rejected_events"] == 0):
+                bad.append(f"ANM engine != closed form on val ({k} at {L}: {v})")
+    inv = comp["channel2"].get("a1_2_val_panel_invariance")
+    if not (inv and inv.get("passed")):
+        bad.append(f"channel 2 fails the A1.2 val panel-invariance check ({inv})")
+    return bad
 
 
 def update_hash_lines(d: Path, entries: dict[str, str]) -> None:
@@ -1263,12 +1325,21 @@ def write_report(path: Path, R: dict, add: dict) -> None:
           f"{ck['anm_bridge_failure']} (max |difference| per level and variant in E4_results.json).",
           f"- C3 (F5 without contradiction events) vs F2 at matched coverage: cells whose selection differs, per level and "
           f"coverage: { {k: v['n_selection_differs'] for k, v in ck['C3_equals_F2'].items()} }.",
+          f"- A1.2 channel-2 panel check on val (addendum, prepare refuses on failure): "
+          f"{comp['channel2'].get('a1_2_val_panel_invariance')}.",
+          f"- F4 training features are in-sample for the head and the ridge (disclosed): training-cell trust at L0 "
+          f"{comp['F4'].get('train_channel_trust_L0_in_sample')} vs val trust {comp['trust']['L0']}.",
           f"- L1 re-embedding: {R['L1_embedding']}.", "",
           "## Arms", ""] + [f"- **{k}**: {v}" for k, v in R["arm_names"].items()] + [
           "", "## Notes", "",
-          "- F2 is a declared rule, not ANM. F5 is the only arm where ANM's field runs; C3 shows that without "
-          "contradiction events F5 ranks cells exactly as F2, so F5 - F2 is the effect of the contradiction events "
+          "- F1 and F2 are declared rules, not ANM. F5 is the only fusion method where ANM's field runs (C1-C3 are its "
+          "controls). C3 shows that without contradiction events F5 is a constant multiple of F2 (same ranking and "
+          "calls up to float rounding; counted under Checks), so F5 - F2 is the effect of the contradiction events "
           "together with the field's event-count-dependent gain.",
+          "- F5's scores equal a closed form (addendum F5_closed_form): R(n_k) * [3 s1 S1_k + 3 s2 S2_k - 0.5 x the "
+          "top score of each channel whose top class is not k, times its source scale], with R(6) < R(7) < R(8). A "
+          "difference between F5 and the other methods is the effect of this declared contradiction rule and gain, "
+          "which ANM's field computes exactly; it is not evidence of field dynamics beyond that closed form.",
           "- In this setup every event enters at t = 0 (time-blind), so ANM's retention contributes only a constant "
           "gain per star size; C2 (channel 2 at t = 2) shows what a declared order changes.",
           "- The E4 key is fixed by measured panel proteins that neither channel reads (channel 2 reads the 122 other "
