@@ -206,10 +206,26 @@ def guard_registration(st: dict, smoke: bool) -> None:
             "addendum names the registration and A1-A3 on disk": st["addendum_names_these_files"]}
     if not smoke:
         need.update({"registration and A1-A3 committed": st["registration_and_amendments_committed"],
-                     "addendum E6.json and HASHES.txt committed": st["addendum_committed"]})
+                     "addendum E6.json and HASHES.txt committed": st["addendum_committed"],
+                     "E6 runner and libraries committed and unmodified": st["code_committed_clean"]})
     bad = [k for k, ok in need.items() if not ok]
     if bad:
         raise SystemExit("E6 refused (commit the E6 addendum before any external outcome): " + "; ".join(bad))
+
+
+FROZEN_INPUTS = {"ckpt_sha256": "ckpt", "bmmc_cite_arrays_sha256": "processed", "bmmc_z_sha256": "z"}
+
+
+def guard_frozen_inputs(a, add: dict) -> dict:
+    """The phase-1 head checkpoint, the BMMC pack and the BMMC official z must be the files the addendum was built
+    on (addendum provenance.inputs); their sha256 are recorded in run_state.json and E6_results.json."""
+    want = add.get("provenance", {}).get("inputs", {})
+    paths = {"ckpt_sha256": a.ckpt, "bmmc_cite_arrays_sha256": a.processed / "cite_arrays.npz", "bmmc_z_sha256": a.z}
+    got = {k: (vk.sha256_file(p) if p.exists() else None) for k, p in paths.items()}
+    bad = [f"{k} {got[k]} != addendum {want.get(k)} ({paths[k]})" for k in FROZEN_INPUTS if got[k] != want.get(k)]
+    if bad:
+        raise SystemExit("E6 refused (frozen inputs differ from the addendum's provenance): " + "; ".join(bad))
+    return got
 
 
 def guard_external(a, add: dict) -> dict:
@@ -273,6 +289,7 @@ def fingerprint(a, st: dict, cfg: dict, ext_info: dict) -> str:
     h.update(json.dumps(st["amendments_sha256"], sort_keys=True).encode())
     for k, v in sorted(st["code_sha256"].items()):
         h.update(f"{k}={v}".encode())
+    h.update(json.dumps(st.get("frozen_inputs_sha256"), sort_keys=True).encode())
     for p in (a.processed / "cite_arrays.npz", a.z, a.ckpt):
         s = p.stat()
         h.update(f"{p}:{s.st_size}:{int(s.st_mtime)}".encode())
@@ -954,6 +971,7 @@ def main(argv=None) -> int:
     st = registration_state(a)
     guard_registration(st, a.smoke)
     add = json.loads(a.addendum.read_text())
+    st["frozen_inputs_sha256"] = guard_frozen_inputs(a, add)
     a.external = a.external or Path(add["external_data"]["pack"]).parent
     a.external_embedding = a.external_embedding or Path(add["external_data"]["embedding"]["dir"])
     cfg = run_config(a, reg)

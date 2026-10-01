@@ -249,10 +249,14 @@ def test_replication_rule():
 def test_guard_refuses_incomplete_embedding_and_uncommitted_addendum(tmp_path, add):
     R = _runner()
     st = {"addendum_hash_recorded": True, "addendum_names_these_files": True,
-          "registration_and_amendments_committed": True, "addendum_committed": False}
+          "registration_and_amendments_committed": True, "addendum_committed": False, "code_committed_clean": True}
     with pytest.raises(SystemExit, match="commit the E6 addendum"):
         R.guard_registration(st, smoke=False)
     R.guard_registration(st, smoke=True)
+    st_code = dict(st, addendum_committed=True, code_committed_clean=False)
+    with pytest.raises(SystemExit, match="runner and libraries committed"):
+        R.guard_registration(st_code, smoke=False)
+    R.guard_registration(dict(st_code, code_committed_clean=True), smoke=False)
     ext, emb = tmp_path / "ext", tmp_path / "emb"
     (emb / "shards").mkdir(parents=True)
     ext.mkdir()
@@ -263,6 +267,21 @@ def test_guard_refuses_incomplete_embedding_and_uncommitted_addendum(tmp_path, a
         R.guard_external(a, add)
     msg = str(exc.value)
     assert "pack sha256" in msg and "4 of 8 shards" in msg and "z_rna.npy" in msg
+
+
+def test_guard_refuses_frozen_inputs_other_than_the_addendums(tmp_path, add):
+    R = _runner()
+    proc = tmp_path / "proc"
+    proc.mkdir()
+    for p in (proc / "cite_arrays.npz", tmp_path / "z.npy", tmp_path / "best.pt"):
+        p.write_bytes(b"not the registered file")
+    a = R.parse_args(["--processed", str(proc), "--z", str(tmp_path / "z.npy"), "--ckpt", str(tmp_path / "best.pt")])
+    with pytest.raises(SystemExit, match="frozen inputs differ") as exc:
+        R.guard_frozen_inputs(a, add)
+    assert all(k in str(exc.value) for k in ("ckpt_sha256", "bmmc_cite_arrays_sha256", "bmmc_z_sha256"))
+    if HAVE_BMMC:
+        got = R.guard_frozen_inputs(R.parse_args([]), add)
+        assert got == {k: add["provenance"]["inputs"][k] for k in R.FROZEN_INPUTS}
 
 
 def test_n_boot_override_refused_outside_smoke():
@@ -283,6 +302,7 @@ def test_val_smoke_through_e6_path(tmp_path):
     res = json.loads((out / "E6_results.json").read_text())
     kv = json.loads((out / "key_validity.json").read_text())
     assert res["smoke"] and res["contamination_label"] == e6.CONTAMINATION_LABEL
+    assert res["state"]["frozen_inputs_sha256"]["ckpt_sha256"] == json.loads(ADDENDUM.read_text())["provenance"]["inputs"]["ckpt_sha256"]
     assert kv["gate_spec"]["absent_gate_proteins"] == ["CD33", "CD94"]
     assert res["E1.1a"]["bridge_passed"] and res["E1.1a"]["full_panel_passed"]
     assert res["consistency_checks"]["rule_Q1_at_c_star_equals_operating_point"]
