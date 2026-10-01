@@ -36,7 +36,10 @@ Stages
   report           CPU: clamp-H residuals, FD gate, positive control, two-stage bootstrap, H5M verdict, diagnostics
   all              select, respond, report
 Any site4 respond / report is refused unless registration_v3.json, every amendment (A1, A2, A3 if present) and
-the E5M addendum + H file are committed and their hashes match. Smoke runs use val donor 18303 (--cell-pool val).
+the E5M addendum + H file are committed and their hashes match, the amendments and code (E5's reused functions,
+bridge_anm/lib/v3_e5m.py) are the versions the addendum records, and R2 / the head are the recorded checkpoints.
+Smoke runs use val donor 18303 (--cell-pool val); --smoke on site4 respond / report is refused. A report written
+before every selected cell is done (e.g. after --max-minutes) is marked INTERIM ("final": false).
 
 Full run (from the repo root; R = the main checkout):
   PY=<venv>/bin/python; R=/Users/tianchichen/Documents/GitHub/teddy_mm
@@ -327,6 +330,8 @@ def parse_args(argv=None):
         p.error("--out-dir is required")
     if (a.limit or a.n_boot != N_BOOT or a.calib_limit or a.cell_pool == "val" or a.no_extras) and not a.smoke:
         p.error("--limit / --n-boot / --calib-limit / --cell-pool val / --no-extras are for smoke runs only (give --smoke NOTE)")
+    if a.smoke and a.cell_pool == "site4" and a.stage in ("respond", "report", "all"):
+        p.error("smoke runs use val cells only (--cell-pool val); a site4 respond / report is the registered run")
     return a
 
 
@@ -374,6 +379,13 @@ def git_committed(path: Path) -> bool | None:
         r2 = subprocess.run(["git", "-C", str(ROOT), "diff", "--quiet", "HEAD", "--", str(path)], capture_output=True)
         return r1.returncode == 0 and r2.returncode == 0
     except OSError:
+        return None
+
+
+def _git_head() -> str | None:
+    try:
+        return git("rev-parse", "HEAD").strip()
+    except (RuntimeError, OSError):
         return None
 
 
@@ -845,6 +857,18 @@ def check_registration(a, site4: bool) -> dict:
         hf_ = am.with_name(am.name + ".sha256")
         info["amendments"][am.name] = {"sha256": h, "committed": git_committed(am),
                                        "hash_file_matches": hf_.exists() and hf_.read_text().split()[0] == h}
+    # the amendments the addendum was registered under are the ones on disk
+    rec_am = add.get("amendments_sha256") or {}
+    info["addendum_amendments_match_disk"] = bool(rec_am) and all(
+        info["amendments"].get(n, {}).get("sha256") == s_ for n, s_ in rec_am.items())
+    # the code the addendum records (E5 functions reused here, the statistics module) is the code that runs
+    rec_in = add.get("inputs") or {}
+    info["code_now"] = {"e5_function_source_sha256": code_hashes(),
+                        "lib_v3_e5m_sha256": sha256_file(ROOT / "bridge_anm/lib/v3_e5m.py"),
+                        "script_sha256": sha256_file(Path(__file__).resolve())}
+    info["code_matches_addendum"] = bool(rec_in) and (
+        info["code_now"]["e5_function_source_sha256"] == rec_in.get("e5_function_source_sha256")
+        and info["code_now"]["lib_v3_e5m_sha256"] == rec_in.get("lib_v3_e5m_sha256"))
     if site4:
         need = {"registration_v3.json committed with a matching hash file": info["registration_ok"],
                 "every amendment (A1, A2, A3 if present) committed with a matching hash file":
@@ -857,7 +881,10 @@ def check_registration(a, site4: bool) -> dict:
                     info["H_file_matches_addendum"] and info["H_file_committed"] is True and info["H_file_hash_recorded"],
                 "addendum leakage check passed, not a smoke addendum": info["leakage_check_passed"] and not info["smoke_addendum"],
                 "R2 checkpoint and head checkpoint are the ones the addendum records":
-                    info["r2_matches_addendum"] and info["head_matches_addendum"]}
+                    info["r2_matches_addendum"] and info["head_matches_addendum"],
+                "amendments recorded in the addendum match the files on disk": info["addendum_amendments_match_disk"],
+                "E5 functions reused here and bridge_anm/lib/v3_e5m.py are the versions the addendum records":
+                    info["code_matches_addendum"]}
         bad = [k for k, ok in need.items() if not ok]
         if bad:
             raise SystemExit("site4 run refused (register and commit the E5M addendum first): " + "; ".join(bad))
@@ -1196,6 +1223,29 @@ def cell_stats(d, Hz: dict, anm) -> dict:
     return s
 
 
+def registered_block(C: dict, V: dict, cell_pool: str, n_done: int, n_selected: int) -> dict:
+    """The registered verdict block of the report. Labels only; the code and every number come from e5m.h5m_verdict.
+
+    * wording: h5m_verdict's H5M_FALSIFIED sentence says the level condition fails, which is untrue when Delta_tok is a
+      loss with the pair-cell level below the margin (PASS_SUFFICIENT needs Delta_tok equivalent): the sentence is
+      corrected, the code is kept;
+    * a report written before every selected cell is done (respond paused by --max-minutes, or report run early) is
+      marked INTERIM with "final": false; smoke (val) reports keep their smoke label."""
+    V = dict(V)
+    if V.get("code") == "H5M_FALSIFIED" and V.get("level_condition"):
+        V["verdict"] = ("H5M falsified (Delta_tok loss: a smaller share of the token readout's response flows through what "
+                        "pooling discards on look-alike cells than on matched random cells); the level condition holds on "
+                        "pair cells, but PASS_SUFFICIENT needs Delta_tok equivalent, so sufficiency is not declared")
+    complete = n_done == n_selected
+    out = {"contrasts": C, "margin": MARGIN, **V, "final": bool(complete and cell_pool == "site4")}
+    if cell_pool != "site4":
+        out["verdict"] = f"(smoke on {cell_pool} cells; not a registered result) {out['verdict']}"
+    elif not complete:
+        out["verdict"] = (f"INTERIM ({n_done} of {n_selected} cells done; not the registered result, rerun the same "
+                          f"command to finish) {out['verdict']}")
+    return out
+
+
 def stage_report(a, meta, reg, reg_info, Hz) -> None:
     out = a.out_dir
     sel, role, _, cls, donor = load_cells(out)
@@ -1223,7 +1273,9 @@ def stage_report(a, meta, reg, reg_info, Hz) -> None:
          "n_cells_selected": int(sel.size), "n_cells_done": len(metas), "complete": len(metas) == sel.size,
          "n_cells_without_columns": int(sum(1 for m in metas if m["n_columns"] == 0)),
          "n_cells_analysed": len(rows), "code": {"e5_function_source_sha256": code_hashes(),
-                                                  "lib_v3_e5m_sha256": sha256_file(ROOT / "bridge_anm/lib/v3_e5m.py")}}
+                                                  "lib_v3_e5m_sha256": sha256_file(ROOT / "bridge_anm/lib/v3_e5m.py"),
+                                                  "script_sha256": sha256_file(Path(__file__).resolve()),
+                                                  "git_head": _git_head()}}
     if not rows:
         write_json(out / "E5M_results.json", R)
         say("report: no analysed cells yet")
@@ -1252,7 +1304,12 @@ def stage_report(a, meta, reg, reg_info, Hz) -> None:
     gate["validated"] = bool(ok_all)
     R["fd_gate"] = gate
     r_head_max = float(np.nanmax(col("r_head")))
-    R["positive_control"] = {"r_head_max": r_head_max, "tol": POSITIVE_CONTROL_TOL, "passed": r_head_max <= POSITIVE_CONTROL_TOL}
+    R["positive_control"] = {"r_head_max": r_head_max, "tol": POSITIVE_CONTROL_TOL, "passed": r_head_max <= POSITIVE_CONTROL_TOL,
+                             "note": "by construction (O_head's K_O by forward mode and its clamp map by reverse mode, both of "
+                                     "the same head at z_12): it checks the derivative code, not the pooling decomposition; "
+                                     "the decomposition is checked by pipeline_checks (clamp_vs_direct_*: K_O - H K_z against "
+                                     "the observer's JVP along the pooling-discarded part; clamp_vs_frozen_train_clamp; "
+                                     "lam12_reverse_vs_primary), reported, not deciding"}
     R["pipeline_checks"] = {
         "explicit_vs_module_layer_means_max_abs": max(m.get("check_explicit_vs_module_layer_means_max_abs", 0.0) for m in metas),
         "clamp_vs_direct_tok_max_abs_diff": float(np.nanmax(np.abs(col("r_tok") - col("r_tok_direct")))),
@@ -1285,9 +1342,7 @@ def stage_report(a, meta, reg, reg_info, Hz) -> None:
         V = e5m.h5m_verdict(C, MARGIN, gate["validated"], R["positive_control"]["passed"])
     else:
         C, V = {}, {"code": "INCONCLUSIVE", "verdict": "only one role present"}
-    R["registered"] = {"contrasts": C, "margin": MARGIN, **V}
-    if a.cell_pool != "site4":
-        R["registered"]["verdict"] = f"(smoke on {a.cell_pool} cells; not a registered result) {R['registered']['verdict']}"
+    R["registered"] = registered_block(C, V, a.cell_pool, len(metas), int(sel.size))
     # ---------------- secondary
     sec = {}
     if {"pair", "random"} <= set(roles):
@@ -1361,7 +1416,7 @@ def write_report(out: Path, R: dict) -> None:
           "pooling-discarded token deviations held), so r = the share of the observer's first-order response that flows "
           "through what gene-mean pooling discards; r_head = 0 by construction (positive control).", "",
           f"Positive control: max r_head {R['positive_control']['r_head_max']:.2e} (gate <= {POSITIVE_CONTROL_TOL}): "
-          f"{R['positive_control']['passed']}.", "",
+          f"{R['positive_control']['passed']} ({R['positive_control'].get('note', '')}).", "",
           "## FD gate (Richardson derivative decides)", "", "| derivative / target | n | pass share | median rel. err | max rel. err | min cos |",
           "|---|---|---|---|---|---|"]
     for k, v in R["fd_gate"]["by_derivative_target"].items():

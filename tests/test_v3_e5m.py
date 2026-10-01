@@ -251,3 +251,57 @@ def test_smoke_flags_need_a_smoke_note():
         m.parse_args(["--stage", "respond", "--out-dir", "/tmp/x", "--cell-pool", "val"])
     a = m.parse_args(["--stage", "respond", "--out-dir", "/tmp/x", "--cell-pool", "val", "--smoke", "t"])
     assert a.cell_pool == "val" and a.jvp_chunk == 8
+
+
+# ----------------------------------------------------------------------------- guard and report labels (verifier, before site4)
+def test_guard_records_code_and_amendments_against_the_addendum(tmp_path):
+    m = _script()
+    reg = tmp_path / "registration"
+    (reg / "addenda").mkdir(parents=True)
+    am = reg / "amendment_A1.json"
+    am.write_text("{}")
+    import hashlib
+    sha_am = hashlib.sha256(am.read_bytes()).hexdigest()
+    now = {"e5_function_source_sha256": m.code_hashes(),
+           "lib_v3_e5m_sha256": m.sha256_file(REPO / "bridge_anm" / "lib" / "v3_e5m.py")}
+    add = {"declared": {}, "calibration": {"H_file_sha256": "x"}, "leakage_check": {"passed": True},
+           "amendments_sha256": {"amendment_A1.json": sha_am}, "inputs": now}
+    (reg / "addenda" / "E5M.json").write_text(json.dumps(add))
+    info = m.check_registration(SimpleNamespace(registration_dir=reg), site4=False)
+    assert info["code_matches_addendum"] and info["addendum_amendments_match_disk"]
+    add["inputs"] = {**now, "lib_v3_e5m_sha256": "0" * 64}
+    add["amendments_sha256"] = {"amendment_A1.json": "0" * 64}
+    (reg / "addenda" / "E5M.json").write_text(json.dumps(add))
+    info = m.check_registration(SimpleNamespace(registration_dir=reg), site4=False)
+    assert not info["code_matches_addendum"] and not info["addendum_amendments_match_disk"]
+    with pytest.raises(SystemExit, match="versions the addendum records"):
+        m.check_registration(SimpleNamespace(registration_dir=reg), site4=True)
+
+
+def test_committed_addendum_matches_the_code_and_amendments_on_disk():
+    m = _script()
+    if not (REPO / "registration" / "addenda" / "E5M.json").exists():
+        pytest.skip("no E5M addendum")
+    info = m.check_registration(SimpleNamespace(registration_dir=REPO / "registration"), site4=False)
+    assert info["code_matches_addendum"], "E5's reused functions or v3_e5m.py changed after the E5M addendum"
+    assert info["addendum_amendments_match_disk"]
+    assert info["declared_equals_script"]
+
+
+def test_smoke_on_site4_respond_or_report_is_refused():
+    m = _script()
+    for st in ("respond", "report", "all"):
+        with pytest.raises(SystemExit):
+            m.parse_args(["--stage", st, "--out-dir", "/tmp/x", "--smoke", "t"])
+    assert m.parse_args(["--stage", "select", "--out-dir", "/tmp/x", "--smoke", "t"]).cell_pool == "site4"
+
+
+def test_registered_block_marks_interim_and_corrects_the_loss_wording():
+    m = _script()
+    base = {"code": "H5M_FALSIFIED", "verdict": "x", "delta_tok_rule": "loss", "level_condition": True}
+    b = m.registered_block({}, base, "site4", 200, 200)
+    assert b["final"] and b["code"] == "H5M_FALSIFIED" and "level condition holds" in b["verdict"]
+    b = m.registered_block({}, {**base, "level_condition": False}, "site4", 120, 200)
+    assert not b["final"] and b["verdict"].startswith("INTERIM (120 of 200") and b["verdict"].endswith("x")
+    b = m.registered_block({}, {"code": "PASS_SUFFICIENT", "verdict": "y", "level_condition": True}, "val", 3, 12)
+    assert not b["final"] and b["verdict"].startswith("(smoke on val cells")
