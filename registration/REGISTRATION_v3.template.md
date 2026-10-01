@@ -127,7 +127,7 @@ Per annotated type (train + val):
 
 ## 5. Evidence
 
-Embedding: {{evidence.teddy_head.embedding}}. Head: {{evidence.teddy_head.head}}. Evidence for protein *p* = prediction / q95_p, clipped to [0, 1], where q95_p is the 95th percentile of the head's prediction for *p* over the training cells (134 values in the JSON). The decoder's size factor is the constant 1.0: {{evidence.teddy_head.why_size_factor_cancels}}. This replaces v2's measured-protein p95 and its train-median size factor (0.92663), which made the "RNA-only" prediction depend on measured-protein scale factors.
+Embedding: {{evidence.teddy_head.embedding}}. Head: {{evidence.teddy_head.head}}. Evidence for protein *p* = prediction / q95_p, clipped to [0, 1], where q95_p is the 95th percentile of the head's prediction for *p* over the training cells (134 values in the JSON). The decoder's size factor is the constant 1.0: {{evidence.teddy_head.why_size_factor_cancels}}. This replaces v2's normaliser (the training 95th percentile of measured protein) and its train-median size factor (0.92663, a constant from measured training-cell protein totals). Neither carried per-cell test information, but both put measured-protein scales into the evidence path; v3 has none.
 
 ---
 

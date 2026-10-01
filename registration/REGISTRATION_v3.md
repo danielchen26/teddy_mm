@@ -265,7 +265,7 @@ Per annotated type (train + val):
 
 ## 5. Evidence
 
-Embedding: official TEDDY-G gene-mean z (data/processed/cite_official/z_rna.npy), L2-normalised. Head: phase-1 MLP + NB decoder mean (no flow matching), outputs/cite_phase1_official/best.pt. Evidence for protein *p* = prediction / q95_p, clipped to [0, 1], where q95_p is the 95th percentile of the head's prediction for *p* over the training cells (134 values in the JSON). The decoder's size factor is the constant 1.0: prediction = softplus(.) * s for a constant s, and the training q95 scales by the same s, so the evidence is independent of s; no measured-protein array enters the evidence path. This replaces v2's measured-protein p95 and its train-median size factor (0.92663), which made the "RNA-only" prediction depend on measured-protein scale factors.
+Embedding: official TEDDY-G gene-mean z (data/processed/cite_official/z_rna.npy), L2-normalised. Head: phase-1 MLP + NB decoder mean (no flow matching), outputs/cite_phase1_official/best.pt. Evidence for protein *p* = prediction / q95_p, clipped to [0, 1], where q95_p is the 95th percentile of the head's prediction for *p* over the training cells (134 values in the JSON). The decoder's size factor is the constant 1.0: prediction = softplus(.) * s for a constant s, and the training q95 scales by the same s, so the evidence is independent of s; no measured-protein array enters the evidence path. This replaces v2's normaliser (the training 95th percentile of measured protein) and its train-median size factor (0.92663, a constant from measured training-cell protein totals). Neither carried per-cell test information, but both put measured-protein scales into the evidence path; v3 has none.
 
 ---
 
