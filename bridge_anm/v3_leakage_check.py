@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Prove that no site4 (test) label or measured site4 protein entered any v3 registration choice.
 
-Three checks; all must pass.
+Three checks; all must pass. Since amendment A1 they run for both builders: the registration
+builder (registration_v3_core.json) and the A1 builder (amendment_A1_core.json).
 
 1. Static: in the registration builder, every read of the protein matrix, the cell
    types and the embedding is restricted to the non-test rows (``[nt]`` with
@@ -36,7 +37,11 @@ import numpy as np  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILDER = ROOT / "bridge_anm" / "v3_build_registration.py"
+AMEND_BUILDER = ROOT / "bridge_anm" / "v3_build_amendment.py"
 KEYLIB = ROOT / "bridge_anm" / "lib" / "v3_key.py"
+AMENDLIB = ROOT / "bridge_anm" / "lib" / "v3_amend.py"
+BUILDERS = {"registration": (BUILDER, "registration_v3_core.json"),
+            "amendment_A1": (AMEND_BUILDER, "amendment_A1_core.json")}
 NEEDED_KEYS = ("split", "sites", "donors", "adt_names", "adt", "cell_types")
 FORBIDDEN_READS = ("test_per_protein", "adt_true", "hard_proof", "anm_cite_bridge", "scope_refine",
                    "mode_a_official", "keys_site4", "pred_test", "idx_test")
@@ -46,9 +51,9 @@ def sha(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
-def static_check() -> dict:
-    src = BUILDER.read_text()
-    res = {"file": str(BUILDER.relative_to(ROOT)), "issues": []}
+def static_check(builder: Path = BUILDER, libs: tuple[Path, ...] = (KEYLIB,)) -> dict:
+    src = builder.read_text()
+    res = {"file": str(builder.relative_to(ROOT)), "issues": []}
     m = re.search(r'nt = np\.where\(split != "test"\)\[0\]', src)
     res["nontest_selector_present"] = bool(m)
     if not m:
@@ -59,7 +64,7 @@ def static_check() -> dict:
             if not re.match(r'(?:\.astype\(str\)|, dtype=np\.float32\))?\[nt\]|nt\]', tail) and "[nt]" not in tail[:40]:
                 res["issues"].append(f"{pat} read without [nt] at offset {mm.start()}: {tail[:40]!r}")
     for word in FORBIDDEN_READS:
-        for f in (BUILDER, KEYLIB):
+        for f in (builder, *libs):
             if word in f.read_text():
                 res["issues"].append(f"{f.name} mentions {word!r}")
     res["passed"] = not res["issues"]
@@ -98,17 +103,43 @@ def write_poisoned(src_npz: Path, src_z: Path, out_dir: Path, rows: str, seed: i
     return out_dir / "cite_arrays.npz", out_dir / "z_rna.npy", info
 
 
-def build_core(processed_dir: Path, z: Path, ckpt: Path, out_dir: Path, python: str) -> bytes:
+def build_core(processed_dir: Path, z: Path, ckpt: Path, out_dir: Path, python: str,
+               which: str = "registration") -> bytes:
+    builder, core_name = BUILDERS[which]
     env = dict(os.environ)
     env.setdefault("OMP_NUM_THREADS", "4")
-    cmd = [python, str(BUILDER), "--core-only", "--processed", str(processed_dir), "--z", str(z),
+    cmd = [python, str(builder), "--core-only", "--processed", str(processed_dir), "--z", str(z),
            "--ckpt", str(ckpt), "--out-dir", str(out_dir)]
     t = time.time()
     r = subprocess.run(cmd, capture_output=True, text=True, env=env)
     if r.returncode != 0:
         raise RuntimeError(f"builder failed ({r.returncode}):\n{r.stdout[-3000:]}\n{r.stderr[-3000:]}")
-    print(f"  built core in {time.time() - t:.0f}s -> {out_dir}", flush=True)
-    return (out_dir / "registration_v3_core.json").read_bytes()
+    print(f"  built {which} core in {time.time() - t:.0f}s -> {out_dir}", flush=True)
+    return (out_dir / core_name).read_bytes()
+
+
+def amendment_checks(args, py: str, tmp_parent: Path, poisoned: dict[str, tuple[Path, Path]]) -> dict:
+    """The same invariance and positive controls for the A1 builder (reuses the poisoned copies)."""
+    rec = None
+    if args.amendment.exists():
+        rec = json.loads(args.amendment.read_text()).get("provenance", {}).get("core_sha256")
+    out = {"static": static_check(AMEND_BUILDER, (KEYLIB, AMENDLIB)), "registration_core_sha256": rec}
+    real = build_core(args.processed, args.z, args.ckpt, tmp_parent / "a1_real", py, "amendment_A1")
+    out["real_core_sha256"] = sha(real)
+    out["real_matches_amendment"] = (rec == sha(real)) if rec else None
+    for name, (npz_p, z_p) in poisoned.items():
+        try:
+            b = build_core(npz_p.parent, z_p, args.ckpt, tmp_parent / f"a1_{name}", py, "amendment_A1")
+            out[name] = {"core_sha256": sha(b), "identical_to_real": b == real, "builder_outcome": "completed"}
+        except RuntimeError as exc:
+            out[name] = {"core_sha256": None, "identical_to_real": False,
+                         "builder_outcome": "stopped: " + str(exc).strip().splitlines()[-1][:300]}
+        print(f"   A1 {name}: identical to real = {out[name]['identical_to_real']}", flush=True)
+    out["passed"] = bool(out["static"]["passed"] and out["poison_test"]["identical_to_real"]
+                         and not out.get("poison_val_control", {}).get("identical_to_real", False)
+                         and not out.get("poison_val_mild_control", {}).get("identical_to_real", False)
+                         and out["real_matches_amendment"] in (True, None))
+    return out
 
 
 def main(argv=None):
@@ -117,6 +148,8 @@ def main(argv=None):
     p.add_argument("--z", type=Path, default=ROOT / "data/processed/cite_official/z_rna.npy")
     p.add_argument("--ckpt", type=Path, default=ROOT / "outputs/outputs/cite_phase1_official/best.pt")
     p.add_argument("--registration", type=Path, default=ROOT / "registration/registration_v3.json")
+    p.add_argument("--amendment", type=Path, default=ROOT / "registration/amendment_A1.json")
+    p.add_argument("--skip-amendment", action="store_true")
     p.add_argument("--work-dir", type=Path, default=None, help="scratch dir for poisoned copies (deleted after)")
     p.add_argument("--report-dir", type=Path,
                    default=Path("/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/registration"))
@@ -166,6 +199,13 @@ def main(argv=None):
             pm = build_core(npz_m.parent, z_m, args.ckpt, tmp_parent / "core_poison_val_mild", py)
             report["poison_val_mild_control"] = {**info_m, "core_sha256": sha(pm), "differs_from_real": pm != real}
             print("   differs:", pm != real, flush=True)
+        if not args.skip_amendment:
+            print("6. amendment A1 builder: static, real, site4-poisoned and val-poisoned cores", flush=True)
+            poisoned = {"poison_test": (npz_p, z_p)}
+            if not args.skip_sensitivity:
+                poisoned.update({"poison_val_control": (npz_v, z_v), "poison_val_mild_control": (npz_m, z_m)})
+            report["amendment_A1"] = amendment_checks(args, py, tmp_parent, poisoned)
+            print("  ", "PASS" if report["amendment_A1"]["passed"] else "FAIL", flush=True)
     finally:
         if args.work_dir is None:
             import shutil
@@ -175,7 +215,8 @@ def main(argv=None):
     report["passed"] = bool(report["static"]["passed"] and report["poison_test"]["identical_to_real"]
                             and (report.get("poison_val_control", {}).get("differs_from_real", True))
                             and (report.get("poison_val_mild_control", {}).get("differs_from_real", True))
-                            and report["real_matches_registration"] in (True, None))
+                            and report["real_matches_registration"] in (True, None)
+                            and report.get("amendment_A1", {}).get("passed", True))
     report["finished_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     args.report_dir.mkdir(parents=True, exist_ok=True)
     js = json.dumps(report, indent=1) + "\n"
@@ -193,7 +234,17 @@ def main(argv=None):
         md.append(f"| positive control, all val rows replaced: output changes | {report['poison_val_control']['differs_from_real']} ({report['poison_val_control']['builder_outcome'][:80]}) |")
     if "poison_val_mild_control" in report:
         md.append(f"| mild positive control, protein of 5% of val rows replaced: core changes | {report['poison_val_mild_control']['differs_from_real']} |")
-    md += ["", f"Real core sha256: `{report['real_core_sha256']}`", "",
+    if "amendment_A1" in report:
+        a1 = report["amendment_A1"]
+        md += [f"| amendment A1 builder, static: protein / cell types / embedding only on non-test rows | {'pass' if a1['static']['passed'] else 'fail: ' + '; '.join(a1['static']['issues'])} |",
+               f"| amendment A1 core from the real inputs equals the core recorded in amendment_A1.json | {a1['real_matches_amendment']} |",
+               f"| amendment A1, site4 poisoned: core byte-identical | {a1['poison_test']['identical_to_real']} |"]
+        if "poison_val_control" in a1:
+            md.append(f"| amendment A1, all val rows poisoned: core changes | {not a1['poison_val_control']['identical_to_real']} |")
+        if "poison_val_mild_control" in a1:
+            md.append(f"| amendment A1, protein of 5% of val rows poisoned: core changes | {not a1['poison_val_mild_control']['identical_to_real']} |")
+    md += ["", f"Real core sha256: `{report['real_core_sha256']}`"
+           + (f"; amendment A1 core sha256: `{report['amendment_A1']['real_core_sha256']}`" if "amendment_A1" in report else ""), "",
            "The poisoned build reads the same split / site / donor metadata, so the registered splits and the "
            "label-free E2 subset are unchanged by construction; everything else in the core (gate thresholds, "
            "key quality, evidence normaliser, panels, bars, classifier settings, E3 flag threshold) is shown not "
