@@ -10,7 +10,7 @@
  *   for the page's four proteins as springs squeezed from 1 (dashed = the whole measured gap).
  *   Then random NK–T pairs far apart: their spring stays about full length, inside the page's band.
  * 4 A fork with two half-open doors, "lost in the embedding" and "unused by our head"; neither is lit,
- *   and a sign says Mode A will test (planned, no result).
+ *   and a sign says v3 E5-M is running (no result yet).
  * Every number drawn comes from NUMBERS below (section text and its sources). 12 s seamless loop;
  * the still frame shows beat 3 complete. The top-right corner stays empty for the play/pause button.
  */
@@ -142,7 +142,7 @@ export default function create(ctx) {
     knob: dot(D.tok, { px: 2.4 }),
     l: at(lab(D.text, { anchor: 'left', weight: 600, color: D.col, align: 'left' }), F.dx + F.w / 2 + 0.3, D.y, 10),
   }));
-  const sign = at(lab('Mode A\nwill test', { color: 'accent', weight: 600, bg: 'accent', bgOpacity: 0.13, pad: 6 }), F.dx, F.jy, 10);
+  const sign = at(lab('v3 E5-M\nrunning', { color: 'accent', weight: 600, bg: 'accent', bgOpacity: 0.13, pad: 6 }), F.dx, F.jy, 10);
 
   function update(t) {
     const u = ctx.loopT(t, PERIOD), ppu = ctx.ppu(), px = (p) => p / ppu;

@@ -13,7 +13,7 @@
  * ("next question" at the door, "pay again", a stack sliding into the jar).
  */
 const NUMBERS = {
-  // index.html #problem, GAP 5: "Trained readout — 50–2,000 new labelled cells, again at every change."
+  // index.html #problem, GAP 5: "Trained readout — v2: 50–1,000 new labelled cells, again at every change." (v3 E1.5: n* = 0)
   labelsLow: 50,
   labelsHigh: 1000,
 };
@@ -74,7 +74,7 @@ export default function create(ctx) {
   add(ctx.box(JW, JH, { color: 'card', stroke: 'train', strokeWidth: 1.6, radius: 0.16 }), GX, JY, 2);
   const fill = add(ctx.box(JW - 0.24, JH - 0.24, { color: 'train', opacity: 0.3, radius: 0.06 }), GX, JY, 2.2);
   const FH = JH - 0.24, FB = JB + 0.12;
-  const TAG1 = `${NUMBERS.labelsLow}–${NUMBERS.labelsHigh.toLocaleString('en-US')} labels`, TAG2 = 'again at every change';
+  const TAG1 = `${NUMBERS.labelsLow}–${NUMBERS.labelsHigh.toLocaleString('en-US')} labels`, TAG2 = 'v2: again each change';
   const tag = lab(TAG1, { weight: 600, anchor: 'left' });
   const tag2 = lab(TAG2, { color: 'muted', anchor: 'left' });
   const prompt = lab('pay to pass', { color: 'bad', weight: 600, anchor: 'right' });

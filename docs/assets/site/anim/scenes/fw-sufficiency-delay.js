@@ -1,5 +1,5 @@
 /*
- * fw-sufficiency-delay — anm-framework.html, #ai-state ("AI step 3: find and test the state").
+ * fw-sufficiency-delay — anm-framework.html, #ai-state ("AI step 3: declare a candidate state, then test it").
  * A time plot seen at a slight slant: time runs right, value runs up, the translucent plane is "now".
  * Both curves solve the page's delay equation ẋ(t) = −a x(t) − k x(t−τ) + u(t) with the same input
  * (u = 0 here), from two histories u₁ (blue) and u₂ (orange) that differ over the past window [t−τ, t)

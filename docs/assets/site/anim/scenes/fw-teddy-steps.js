@@ -13,7 +13,7 @@
  *   panel events at t = 0). Our head predicts them from TEDDY's embedding; TEDDY predicts no proteins.
  * 3 Retained state. The lattice's nodes slide onto a solid ring of beads: TEDDY's embedding (the bead
  *   ring of #teddy-pipeline; the bead count is illustrative). Mode B works on the head's outputs.
- *   Behind it stand TEDDY-G's 12 layers as dotted grey slabs: Mode A, next (planned, no results).
+ *   Behind it stand TEDDY-G's 12 layers as dotted grey slabs: Mode A (v3 E5 stopped at its gate; E5-M running).
  * 4 Readout. The gauge folds into a call chip ("call / no call"); only after the chip settles does a
  *   measured-protein stamp arrive (from below, never upstream) to grade it. No result is shown.
  * A thin arrow under the pedestals fills left to right; nothing runs back. The reset is a plain
@@ -116,7 +116,7 @@ export default function create(ctx) {
   const fillOrder = beads.map((_, i) => i).filter((i) => !taken.has(i));
   const emb = lab('', { size: 11.5, weight: 600, color: 'teddy', anchor: 'top' });
   const modeB = lab('', { size: 11, anchor: 'top' });
-  const modeA = lab('Mode A: next', { size: 11, color: 'muted', anchor: 'bottom' });
+  const modeA = lab('Mode A: E5, E5-M', { size: 11, color: 'muted', anchor: 'bottom' });
 
   /* ── 4 Readout: gauge → call chip, then the measured-protein stamp ── */
   const gauge = add(ctx.group(), 1);
@@ -280,7 +280,7 @@ export default function create(ctx) {
       links[k].setPoints([L3(k, 0), L3(k, 1), L3(k, 2)]);
       links[k + 3].setPoints([L3(0, k), L3(1, k), L3(2, k)]);
     });
-    at(modeA, inCol(2, ST.x + ST.sx, px(tw('Mode A: next', 11))), yst + ST.sy + ST.sh / 2 + gap);
+    at(modeA, inCol(2, ST.x + ST.sx, px(tw('Mode A: E5, E5-M', 11))), yst + ST.sy + ST.sh / 2 + gap);
     const ey = yst - ST.RR - ST.dp - gap;
     emb.setText(ST.emb); at(emb, inCol(2, ST.x, px(tw(ST.emb, 11.5, 600))), ey);
     modeB.setText(ST.mb); at(modeB, inCol(2, ST.x, px(tw(ST.mb, 11))), ey - ST.hEmb);

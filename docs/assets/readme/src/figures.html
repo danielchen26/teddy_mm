@@ -107,20 +107,20 @@ body { margin: 0; padding: 20px; background: #888; font-family: var(--font); col
 <div class="fig" id="hero">
   <div>
     <div class="brand"><i></i>TEDDY <span>×</span> ANM</div>
-    <div class="h1">Keep <span class="t">TEDDY</span> frozen.<br />Make the calls built on it editable, honest and auditable with <span class="a">ANM</span>.</div>
-    <p class="lede">A <b>declared decision layer</b> on top of the CITE-seq protein predictions our head makes from TEDDY’s embedding: change the question without labels, check every call, explain it. After the corrected rerun it makes the same calls as the fixed rule written for the same question. Tested head-to-head; <b>TEDDY is never retrained</b>.</p>
-    <div class="meta"><i></i>CITE-seq · NeurIPS 2021 BMMC · site4 holdout · 16,750 cells</div>
+    <div class="h1">Keep <span class="t">TEDDY</span> frozen.<br />Test, under registration, what <span class="a">ANM</span> adds to the calls built on it.</div>
+    <p class="lede">ANM’s engine as a decision layer on the CITE-seq protein predictions our head makes from TEDDY’s embedding. In the registered v3 tests it made <b>exactly a declared rule’s call on every test cell</b>, and none of its readouts added decision value over TEDDY’s margin, a trained classifier or a validation-trained fuser. <b>TEDDY is never retrained</b>.</p>
+    <div class="meta"><i></i>CITE-seq · NeurIPS 2021 BMMC · site4 · registered v3 tests on 11,294 unseen-donor cells</div>
   </div>
   <div class="pipe">
     <div class="pg pg-t">
       <span class="pg-lab">TEDDY · unchanged</span>
       <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>CITE-seq cell</b><span>RNA in; measured proteins kept aside as the answer key</span></div></div>
       <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span><div><b>TEDDY-G 70M · frozen</b><span>sums up each cell as a 512-number embedding</span></div></div>
-      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span><div><b>9 predicted proteins → typed evidence</b><span>B · T · myeloid lineage markers</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span><div><b>12 predicted proteins → typed evidence</b><span>B · T · NK · myeloid panels (v2: 9, no NK)</span></div></div>
     </div>
     <div class="pg pg-a">
       <span class="pg-lab">ANM · added</span>
-      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></svg></span><div><b>A written-down question (the observer)</b><span>soft · strict · B/T-priority rule — can it decide? was it right?</span></div></div>
+      <div class="node"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/></svg></span><div><b>A written-down question (the observer)</b><span>Q1 · Q2 · Q3 in v3 (v2: soft · strict · B/T-priority) — can it decide? was it right?</span></div></div>
       <div class="outs"><div>call</div><div>decline</div><div>why</div><div>trust</div></div>
     </div>
   </div>

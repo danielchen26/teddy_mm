@@ -8,7 +8,8 @@
  * 3 Share of the measured gap the predictions keep (page values): CD3 0.27, CD56 0.24, CD94 0.31,
  *   CD335 0.88; dashed 1 = the whole measured gap; band 0.8–1.5 = NK–T pairs that are not neighbours
  *   (faint pairs that keep their gap).
- * 4 An open fork between the embedding and our head: two unlit lamps and a Mode A probe (not run yet).
+ * 4 An open fork between the embedding and our head: two unlit lamps (the v2 readings, as questions) and the
+ *   Mode A probe, marked with the v3 outcome (E3 rejected the repair reading).
  * Wide layout 21 × 8 when the stage is at least 2:1 (desktop 21:8), else narrow 16 × 10 (phone 16:10).
  * 12 s seamless loop; the still frame shows beats 1–3 complete.
  */
@@ -91,12 +92,12 @@ export default function create(ctx) {
   const outLab = lab('proteins', { anchor: 'left', color: 'muted' });
   const head = add(ctx.box(2.5, 1, { color: 'soft', stroke: 'muted', radius: 0.2 }));
   const headLab = lab('our head', { weight: 600, size: 13 });
-  const lamps = ['part: our head’s readout', 'part: mean pooling · RNA'].map((t) => ({
+  const lamps = ['our head’s readout?', 'mean pooling? RNA?'].map((t) => ({
     br: ln({ color: 'faint', width: 1.3, dashed: [3, 4] }),
     ring: dot('muted', { hollow: true, ring: 0.3 }), bulb: dot('faint'), l: lab(t, { anchor: 'bottom' }),
   }));
   const probe = { line: ln({ color: 'accent', width: 1.6, dashed: [4, 4] }), ring: dot('accent', { hollow: true, ring: 0.32 }),
-    core: dot('accent'), l: lab('Mode A · MLP + token probes', { anchor: 'top', color: 'accent', weight: 600 }) };
+    core: dot('accent'), l: lab('v2 probes · v3 E3: no repair', { anchor: 'top', color: 'accent', weight: 600 }) };
 
   /* ── projection of the turning cloud (yaw oscillates, fixed pitch) ── */
   const CP = Math.cos(0.32), SP = Math.sin(0.32);
