@@ -168,7 +168,9 @@ export default function create(ctx) {
     });
     rows.forEach(([l, k]) => { l.position.y = B0 - 0.12 - k * r; });
     const g = Math.max(0.32, 11 / ppu); // slider numbers clear the knob at phone width
-    qNum.position.y = SY + g; pNum.position.y = SY - g;
+    // the number under the slider must not drop off the stage's bottom edge on a phone (it was cut by 2 px)
+    const lhN = (11 * ctx.textScale * 1.22 + 2) / ppu;
+    qNum.position.y = SY + g; pNum.position.y = SY - Math.min(g, Math.max(7 / ppu, SY + 4.5 - lhN - 1 / ppu));
   };
 
   /* η slider under the box: only the page's crossing values are labelled */
