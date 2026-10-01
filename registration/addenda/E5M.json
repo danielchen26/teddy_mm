@@ -1,0 +1,295 @@
+{
+ "addendum_to": "registration/registration_v3.json as amended by A1, A2 and A3: a new pre-specified Mode A experiment registered before any site4 forward of its script. It reuses E5's registered cell set and JVP machinery and E3's frozen R2; nothing registered for E1-E5 changes.",
+ "addendum_version": 1,
+ "amendments_sha256": {
+  "amendment_A1.json": "1f44be66bfc22a5bc428cf31a0bcd14047466005f4308386da195f55b767cdee",
+  "amendment_A2.json": "20b64174b063d39997abf09877ae1ba152d935589b43630e15dd6ebe6d21fd36",
+  "amendment_A3.json": "4bb2f8563172e76de0e825d2a01cafc4a5b6e863564f573de8b12d256a6b0045"
+ },
+ "calibration": {
+  "H_file": "registration/addenda/E5M_H.json",
+  "H_file_sha256": "96c77b182ab2c98aa7ccf9199c72318e0100ddfe01686c7cf165482d4e6c9668",
+  "compute": "measured 2026-10-01 03:22-03:27 on val cells, MPS shared with E5 respond, E3 r2_predict and the E6 external embed: about 25 s per typical cell (1,500 tokens, 12 columns, JVP chunk 8, FD on 3 columns), about 9 s at 800 tokens / 6 columns, about +20 s on the cells with all-column FD and per-layer clamps; 200 cells -> about 1.5 h expected (declared budget <= 2 h); CPU about 2x slower",
+  "core_sha256": "de31f690c83bf08d80e32ec8218a641aedee9250cb967c415e1e15be83894b82",
+  "e3_addendum_sha256": "09f932ed166cad029d4efcd3f9f022717854d69d9d41389ab3d74ab71ab9c513",
+  "observers_info": {
+   "n_train": 4000,
+   "n_val": 1000,
+   "observers": {
+    "head": {
+     "hidden": 512,
+     "p95": {
+      "CD3": 2.5359694957733154,
+      "CD335": 1.0952165126800537,
+      "CD56": 1.7708549499511719,
+      "CD94": 1.8090109825134277
+     },
+     "path": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1_official/best.pt",
+     "train_median_size_factor": 0.9266302585601807,
+     "z_dim": 512
+    },
+    "head_sha256": "b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15",
+    "r2": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E3/r2/r2.pt",
+    "r2_index": [
+     8,
+     7,
+     12,
+     3
+    ],
+    "r2_sha256": "0e516649ba8696bc70bd7c60cb257857cab9fdcd76f326165c506313fd994026",
+    "r2_targets": [
+     "CD20",
+     "CD22",
+     "CD268",
+     "CD3",
+     "CD2",
+     "CD5",
+     "CD122",
+     "CD94",
+     "CD56",
+     "CD172a",
+     "CD11c",
+     "CD62P",
+     "CD335"
+    ],
+    "r2_train_sha256": "2918192848a4555b6c741ae9febb119877ee1d3197c52818add540637398a76c",
+    "r2_val_sha256": "7bd6ab31fa514494bc96b8f655905752c5fe3033f78868eef1d6f4f15cfa3dab",
+    "rand_query": {
+     "median_logit_sd_r2": 0.4780418425798416,
+     "median_logit_sd_unit_random": 0.14044319838285446,
+     "norm": 3.403809141947039,
+     "r2_query_norm": 1.343552827835083,
+     "scale": 3.403809141947039
+    }
+   },
+   "r2_vs_e3_pred_subset_max_abs": 1.9073486328125e-06,
+   "sec": 79.7,
+   "states_genemean_cos_vs_z_rna_min": 0.9999999991283776,
+   "states_shard_addendum_sha256": [
+    "09f932ed166cad029d4efcd3f9f022717854d69d9d41389ab3d74ab71ab9c513"
+   ]
+  },
+  "rand_query_norm": 3.403809141947039,
+  "rand_row_norms": [
+   0.3908928960951122,
+   0.4134986899170503,
+   0.4064283321864881,
+   0.35050422583612767
+  ],
+  "seed_v_q_W": [
+   23,
+   5
+  ],
+  "summary": {
+   "lambdas": [
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0
+   ],
+   "observers": {
+    "head": {
+     "out_sd": [
+      0.44863372374101124,
+      0.39685553090114306,
+      0.3776040308688622,
+      0.2790549282034258
+     ],
+     "ridge": {
+      "lambda": 0.01,
+      "train_r2": [
+       0.937447,
+       0.931258,
+       0.905545,
+       0.94343
+      ],
+      "val_mse": {
+       "0.0001": 0.07638084,
+       "0.001": 0.07532837,
+       "0.01": 0.07243672,
+       "0.1": 0.07647178,
+       "1.0": 0.10401053,
+       "10.0": 0.2088231
+      },
+      "val_r2": [
+       0.846321,
+       0.830744,
+       0.828153,
+       0.944312
+      ]
+     },
+     "train_clamp_map_fro": 0.26790341940737505
+    },
+    "rand": {
+     "out_sd": [
+      0.2994541063601646,
+      0.4252514849180392,
+      0.39566092966687877,
+      0.4040629285519692
+     ],
+     "ridge": {
+      "lambda": 0.001,
+      "train_r2": [
+       0.994235,
+       0.997069,
+       0.997351,
+       0.998234
+      ],
+      "val_mse": {
+       "0.0001": 0.00444915,
+       "0.001": 0.00440894,
+       "0.01": 0.00638589,
+       "0.1": 0.02473326,
+       "1.0": 0.09359345,
+       "10.0": 0.28719462
+      },
+      "val_r2": [
+       0.995689,
+       0.994719,
+       0.998059,
+       0.996885
+      ]
+     },
+     "train_clamp_map_fro": 3.1103162305830074
+    },
+    "tok": {
+     "out_sd": [
+      0.35723782993958286,
+      0.23762273361501604,
+      0.21642760152656695,
+      0.32021191733197585
+     ],
+     "ridge": {
+      "lambda": 0.0001,
+      "train_r2": [
+       0.997184,
+       0.992616,
+       0.991174,
+       0.998058
+      ],
+      "val_mse": {
+       "0.0001": 0.00861124,
+       "0.001": 0.00868804,
+       "0.01": 0.01331232,
+       "0.1": 0.03974786,
+       "1.0": 0.08811196,
+       "10.0": 0.19167519
+      },
+      "val_r2": [
+       0.988877,
+       0.981391,
+       0.982924,
+       0.997309
+      ]
+     },
+     "train_clamp_map_fro": 4.291100849183899
+    }
+   }
+  },
+  "u_nkt_sha256": "ccab1d362f00ec15868a6ffb0d107500707686164ec3c94972b8feb271560dd7",
+  "u_nkt_source": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E5/e5_directions.npz"
+ },
+ "declared": {
+  "H": {
+   "primary_clamp": "per cell and observer, ANM's clamp estimator H = Lambda pinv(Gamma) with Gamma = I_512 (clamps of every coordinate of z_12) and Lambda = the observer's response to each clamp: the clamp of z_12 by delta moves every layer-12 token state by delta, i.e. changes z_12 by delta and leaves the pooling-discarded deviations h_t - z_12 unchanged (the orthogonal complement of the kernel of gene-mean pooling). Lambda = d O(H_12 + 1 delta') / d delta at 0 (reverse mode through the observer only). Computed before and independently of the source responses; no fitted number. Then K_O - H K_z = the observer's response to the pooling-discarded part dH_12 - 1 dz_12' of the token-state change, and r = its share of the observer's response. For O_head (a function of z) H is the head's Jacobian and r = 0 by construction: the positive control (gate: max r_head <= 0.001). For R2-form observers (O_tok, O_rand) the clamp moves every attention logit by the same amount, so the attention weights do not change and Lambda = W diag(1/sd) exactly: the same map for every cell, equal to the training-average clamp map frozen in E5M_H.json (pipeline check). r_tok is then the share of R2's response that comes from its attention departing from the gene-mean",
+   "secondary_training": "frozen 4 x 512 maps calibrated on E3's 4,000 R2 training cells (training split; E3 addendum r2_cells, hashes checked; states = E3's stored float16 layer-12 states, z = z_rna.npy, stored in registration/addenda/E5M_H.json: (a) ridge of the standardised outputs on raw z_12, lambda (relative to trace(Xc'Xc)/d) from [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0] by MSE on E3's 1,000 R2 val cells (the task's example; on val smoke cells its O_head residual was 1.7-2.0, i.e. it fails the positive control: reported only); (b) the training-average clamp map (mean over the 4,000 cells of each observer's Lambda at depth 12)",
+   "why_clamp_primary": "fixed on val before site4: a global linear map cannot represent a nonlinear observer's local derivative (val smoke: ridge residual of O_head, a function of z, 1.7-2.0), so the training map's residual mixes nonlinearity with pooling loss; the clamp map removes the nonlinearity exactly (r_head = 0) and isolates the pooling-discarded component"
+  },
+  "anm_framing": "z_12 is a DECLARED candidate retained state tested against DECLARED readouts. With m <= 21 source columns and d = 512, K_z has full column rank, so first-order kernel inclusion is automatic and NOT_INFORMATIVE (any K_O equals (K_O pinv K_z) K_z); the informative test is the residual of an H fixed without the tested responses (ANM paper SI; referee audit 2026-09-16). Primary H = ANM's own estimator H = Lambda pinv(Gamma) from clamps of the candidate state alone (analysis.py: 'Never use Ko or held-out endpoints to fit H'). The readout-visible quotient R_T/(R_T cap ker C_T) = C_T R_T has rank <= the readout dimension (4) and is reported only as a diagnostic; it is never used as the state.",
+  "candidate_state": {
+   "primary": "z_12 = gene-mean of the layer-12 token states (float32 explicit forward of E5)",
+   "secondary": "z_l = gene-mean of layer l, l = 0..11 (per-layer clamp maps, S1)"
+  },
+  "cells": {
+   "site4": "E5's registered cell set (registration E5.cells, E5 addendum 'cells': unique test_primary cells of E3's within-donor NK-T pairs under the v3 primary key, <= 200 per donor; E5 secondary 'random_cells': per donor 100 matched test_primary NK/T cells in no pair), read from E5's e5_cells.npz (or rebuilt with E5's own select code). Used (GPU budget): per primary donor the first 60 pair cells and the first 40 random cells of E5's seeded processing order (a seeded random subset; 200 cells). Processing order = E5's order restricted to these cells. A cell without any declared gene present has no column and is excluded (counted).",
+   "smoke": "val donor 18303 primary-key NK/T cells only (seeded draw; roles alternate pair / random so every code path runs); never a verdict"
+  },
+  "compute": {
+   "budget": "declared GPU budget <= 2 h at the contention measured when registering (calibration.compute); the run is resumable and --max-minutes only pauses it (the declared cells are never changed by time)",
+   "cells": "60 pair + 40 random E5 cells per primary donor",
+   "device": "MPS float32 (CPU allowed; same arithmetic)"
+  },
+  "derivatives": {
+   "K": "per cell one forward-mode JVP per column through every layer (E5's layer_fn, explicit attention with each layer's weights; forward AD does not run through fused attention): K_z (d x m) at every depth, the layer-12 token-state response dH_12, K_O for O_tok and O_rand by JVP of the observer at H_12 along dH_12, K_O for O_head by JVP of the head at z_12 along dz_12; float32 on the device",
+   "fd_gate": "central finite differences through the module's own layers at eps in [0.01, 0.02] (unit input push) on the 3 columns of the first present gene of the first 100 cells of the order, and on every column of the first 10; targets z_12 (raw), O_tok, O_head, O_rand (standardised); the gate derivative is the Richardson extrapolation (4 D(0.01) - D(0.02)) / 3 of the two central differences; pass = relative error <= 0.05 and cosine >= 0.99; validated if the pass share is >= 0.95 for every target; each eps alone is reported; otherwise 'JVP not validated' and no verdict",
+   "pipeline_checks": "explicit forward vs module forward layer means (every cell); per-cell clamp maps of O_tok and O_rand equal to the frozen training-average clamp maps (residuals agree); clamp residual of O_tok also computed directly as the JVP of R2 along the pooling-discarded part dH_12 - 1 dz_12' (must equal the H_clamp residual); same-cell fitted map K_O pinv(K_z) (~0: why kernel inclusion is automatic)"
+  },
+  "fairness": "every number fixed here comes from training / validation cells only (calibration: E3's R2 train / val subset; directions: E5's training u_nkt); no site4 label, protein, cell type, embedding or RNA informed any choice; smoke runs used val donor 18303 only",
+  "hypothesis": {
+   "H5M": "on NK-T pair cells the clamp-H residual of O_tok exceeds that on matched random cells: Delta_tok >= 0.05 with the common win rule (two-stage lower bound > 0, >= 0.025 in each primary donor), and it exceeds the random-observer null: DD_rand has a two-stage lower bound > 0",
+   "falsification": "H5M is falsified if Delta_tok is 'equivalent' (two-stage 95% interval inside (-0.05, 0.05)) or a common-rule 'loss'",
+   "scope": "first order (JVP) at the cells' own inputs, the declared sources and observers only; two primary donors (the interval reflects the observed donors); a PASS says nothing about other observers or larger pushes",
+   "verdicts": {
+    "H5M_FALSIFIED": "H5M falsified, but the level condition fails: no look-alike-specific excess, yet a share of O_tok's response above the margin flows through what pooling discards on pair and random cells alike (z_12 not sufficient for this observer, not specifically on look-alikes)",
+    "INCONCLUSIVE": "anything else (including a Delta_tok win that fails the O_rand null)",
+    "NOT_VALIDATED": "FD gate or positive control failed: E5-M stops",
+    "PASS_SUFFICIENT": "H5M falsified by equivalence AND level two-stage upper bound < margin (on pair cells less than 5% of O_tok's response norm flows through the pooling-discarded part; the clamp residual is an exact decomposition, validated by the FD gate and the positive control): z_12 suffices for this observer at first order, so the NK-T loss is in our head, not in pooling",
+    "REJECT_SUFFICIENCY": "H5M supported: pooling to z_12 discards information this independent observer uses on look-alike cells, more than on matched random cells and beyond a random token observer"
+   }
+  },
+  "observers": {
+   "O_head": "the phase-1 head on z_12 (E5's load_head: L2-normalised z, MLP + NB decoder mean at the training median size factor, / training p95): a function of z by construction (positive control)",
+   "O_rand": "R2's form (R2's mu / sd standardisation, one query, linear output) with a Gaussian query direction scaled so that the median over the 4,000 calibration training cells of the per-cell SD of its attention logits equals R2's (matched attention sharpness; a query of R2's plain norm attends almost uniformly: val smoke r about 0.03) and Gaussian output rows with the norms of R2's rows for the 4 proteins, bias 0; default_rng([seeds.e5_random_directions, 5]) after v_rand: q then W (negative control: a token observer with no NK-T training)",
+   "O_tok": "E3's frozen R2 (outputs/v3/E3/r2/r2.pt; one learned query over the layer-12 token states, linear output; trained on 4,000 training cells, early-stopped on 1,000 val cells) on the float32 layer-12 states of the explicit forward (no fp16 rounding: its derivative is zero almost everywhere)",
+   "outputs": "CD56, CD94, CD335, CD3 (E3's gap proteins = E5's head proteins), each divided by its SD over the calibration training cells (each protein carries equal weight; fixed in E5M_H.json)"
+  },
+  "question": "is TEDDY's gene-mean layer-12 state z_12 (what TEDDY's users and our head read) sufficient, at first order, for an independent observer of the layer-12 token states on the NK-T look-alike cells where the head loses the NK-T difference?",
+  "secondary": {
+   "S1_layers": "clamp residual r_O(z_l) for l = 0..12 on the first 30 cells of the order (Lambda_l by reverse mode from the observer to the layer-l token states, summed over tokens: clamping z_l moves every layer-l token, then the later layers act; even O_head is not a function of z_l for l < 12)",
+   "S2_log": "Delta on log r (scale-free)",
+   "S3_directions": "r_O on the self-, nkt- and rand-column subsets",
+   "S4_anm_status": "ANM analysis.analyze_factorization(K_z, K_O, Gamma = I_d, Lambda = H_clamp,O) per cell and observer at (atol, rtol) in [[0.0, 0.0001], [0.0, 0.05]]: counts of overall, source-kernel and factorization statuses (source kernel expected NOT_INFORMATIVE when K_z has full column rank)",
+   "S5_quotient": "rank (singular values > 0.05 x max) and participation ratio of K_O (diagnostic only, <= 4)",
+   "S6_near_null": "share of ||K_O||_F^2 in the near-null right-singular space of K_z (sigma <= tol x sigma_max), registered tol 0.05 (also 0.01)",
+   "S7_training_maps": "r_O and the contrasts with the frozen training maps (ridge, training-average clamp) at depth 12",
+   "S8_same_cell_fit": "r_tok with H fitted on the cell itself (automatic, ~0)",
+   "note": "pre-specified, reported separately, never change the verdict"
+  },
+  "sources": {
+   "columns": "m = 3 x (genes present), column order gene-major (declared gene order), then self, nkt, rand; unit input size for every column (eps cancels in the residual)",
+   "directions": "per present gene, 3 unit pushes of the input state h_0 at the gene's position: self = E[gene] / ||E[gene]||; nkt = E5's u_nkt (unit mean_NK - mean_T of the training input gene-mean, outputs/v3/E5/e5_directions.npz, training cells only; copied into E5M_H.json); rand = one fixed Gaussian unit vector (numpy default_rng([seeds.e5_random_directions, 5]), first draw) for every gene and cell",
+   "genes": "the 7 declared NK/T genes of E5's nkt push, in this order: CD3E, CD3D, NCAM1, KLRD1, NCR1, FCGR3A, KLRF1 (Ensembl ids by E5's gene reference; tokens present in the cell's 2,048-token input)"
+  },
+  "statistics": {
+   "bootstrap": "registration common.statistics: two-stage (donors with replacement, then cells with replacement within each drawn donor and role), B = 2000, seed = seeds.bootstrap, percentile 95% intervals, the same draws for every statistic; per-donor values on each primary donor's own cells",
+   "contrasts": "Delta_O = median r_O(pair cells) - median r_O(random cells), O in tok, rand (and head, ~0); DD_rand = Delta_tok - Delta_rand; level = median r_tok(pair); reported: median r_rand(pair)",
+   "margin": 0.05,
+   "residual": "r_O = ||K_O - H_clamp,O K_z||_F / ||K_O||_F per cell (K_O rows standardised), depth 12"
+  }
+ },
+ "disclosure": "the orchestrating session has already seen E1 (Mode B rerun) site4 results; nothing here depends on E1. This builder read E5's e5_cells.json counts (cells per role / donor / class, token-count medians; no outcome), already printed by E5's run, and no other site4 value. E3's R2 site4 predictions (being written) were not read.",
+ "experiment": "E5M",
+ "fixed_before_site4": "every choice and number here was fixed on training and validation cells only and committed before any site4 forward pass of this script",
+ "inputs": {
+  "anm_analysis": {
+   "file": "/private/tmp/claude-501/-Users-tianchichen-Documents-GitHub-teddy-mm/0828c10d-3512-46ba-b296-fafd23e4a760/scratchpad/anm_v2_fix/benchmarks/paper1_retained_response/analysis.py",
+   "sha256": "e89161ae7c209b29899b8f959b380fd1163b7dd7e05f36df2d03163123488b5b"
+  },
+  "e5_function_source_sha256": {
+   "e2_genes": "96340a1b3fddcd2ec926f87f1176bab7ca00c7ec69a01481d103a5d019ee0e33",
+   "layer_fn": "b5cb565c0964a0f3b7fb065a0c6beaf105838997d7069c59bf0077bfd66d5cd3",
+   "load_head": "14969d32c7aeb2eff907c77296bc134696f76d39a85013ab4fc4acb0be528829",
+   "primary_keys": "295f434a35ada7dc6e57bd7da80a0d7e58bc9812ac79a952c3ee6f8b74a015cc",
+   "stage_select": "f946c2c8d893d8939506dd5f55544b3effe0785ff2d16a9f1b14b3f02253cd4a",
+   "tokenise": "7d76a71d3fae03b78b8199e8b2113eafeece975ef52fa7cee8251537ef809f80"
+  },
+  "lib_v3_e5m_sha256": "3f7d71771bc5ef0d9a7f85b3553c0f5e1ef98fe22a60d5c7ce154aa718948ead"
+ },
+ "leakage_check": {
+  "n_site4_rows": 16750,
+  "passed": true,
+  "real_core_sha256": "de31f690c83bf08d80e32ec8218a641aedee9250cb967c415e1e15be83894b82",
+  "site4_poisoned_core_sha256": "de31f690c83bf08d80e32ec8218a641aedee9250cb967c415e1e15be83894b82",
+  "site4_poisoned_identical": true,
+  "static": "the calibration reads E3's stored states only for E3's R2 train / val cells (asserted), never outputs/v3/E3/r2/pred (site4 predictions) or any E1-E5 site4 result",
+  "val_poisoned_core_sha256": "cfdf624c65c1622e3b94c545df272415005787be6565d9f1441fef761d3343a2",
+  "val_poisoned_differs": true,
+  "what": "site4 rows of adt -> U(0, 8), adt_size_factor -> U(0.1, 10), cell_types -> random type, z_rna and z_rna_layer_means -> N(0, 1) (seed 101); positive control: val rows of z_rna and z_rna_layer_means -> N(0, 1) (seed 303)"
+ },
+ "registration_sha256": "e4c8a33e5c7c0b292d3a70a9063730c7ea0fd6d1519a705953bcf73ad8212bd3",
+ "script": "scripts/mode_a_observer_sufficiency.py (mode_a_observer_sufficiency 1.0); statistics in bridge_anm/lib/v3_e5m.py",
+ "smoke": false,
+ "title": "E5-M: observer-conditioned sufficiency of TEDDY's gene-mean state (Mode A)"
+}
