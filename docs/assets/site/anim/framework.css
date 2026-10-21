@@ -1,0 +1,60 @@
+/* Framework-only SVG explainers. No GPU / WebGL dependency. */
+:root { --max: 1280px; }
+.hero { background: radial-gradient(ellipse at 85% 0%, var(--accent-soft), transparent 56%); }
+.hero h1 { font-size: clamp(3rem, 6vw, 5rem); letter-spacing: -.055em; }
+.fs-grid, .fs.flip .fs-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); grid-template-areas: "head fig" "body fig"; gap: 0 44px; }
+.fs { padding: 64px 0; }
+.fs-fig { box-shadow: none; }
+.fs h2 { font-size: clamp(1.5rem, 2.3vw, 2rem); }
+.fs .fs-p { font-size: .97rem; line-height: 1.72; }
+.fs .zh { line-height: 1.8; }
+.anim.fw-explainer { border-radius: 20px; border-color: var(--line); box-shadow: 0 12px 36px rgb(0 0 0 / .035); }
+.fw-explainer .anim-stage { aspect-ratio: auto !important; cursor: auto; background: var(--bg-elev); overflow: visible; }
+.fw-viz-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px 10px; gap: 10px; font: 500 10px/1.4 var(--mono); letter-spacing: .08em; color: var(--ink-muted); text-transform: uppercase; }
+.fw-viz-header span:first-child { color: var(--accent); }
+.fw-steps { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); padding: 8px 20px 0; gap: 6px; }
+.fw-step { min-height: 39px; border: 0; border-bottom: 2px solid var(--line); border-radius: 4px 4px 0 0; background: transparent; color: var(--ink-muted); padding: 7px 3px; font: 500 11px/1.3 var(--font); cursor: pointer; }
+.fw-step[aria-current="step"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.fw-step:focus-visible,.fw-controls button:focus-visible,.fw-controls input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fw-svg { width: 100%; height: auto; display: block; overflow: hidden; font-family: var(--font); }
+.fw-svg .node { fill: var(--bg-elev); stroke: var(--line-strong); stroke-width: 1.4; }
+.fw-svg .node.active { stroke: var(--accent); stroke-width: 2; fill: var(--accent-soft); }
+.fw-svg .node.bad { stroke: var(--bad); fill: var(--bad-bg); }
+.fw-svg .node.orange { stroke: var(--s-teddy); fill: color-mix(in srgb,var(--s-teddy) 8%,var(--bg-elev)); }
+.fw-svg text { fill: var(--ink); font-size: 17px; font-weight: 500; }
+.fw-svg .small { fill: var(--ink-muted); font-size: 13px; font-weight: 400; }
+.fw-svg .tiny { fill: var(--ink-muted); font-size: 11px; font-family: var(--mono); font-weight: 400; letter-spacing: .04em; }
+.fw-svg .label { font-size: 14px; font-weight: 600; fill: var(--accent); }
+.fw-svg .bad-text { fill: var(--bad); }
+.fw-svg .edge { fill: none; stroke: var(--line-strong); stroke-width: 2; }
+.fw-svg .edge.active { stroke: var(--accent); stroke-width: 2.8; }
+.fw-svg .edge.dashed { stroke-dasharray: 6 5; }
+.fw-svg .pulse { fill: var(--accent); }
+.fw-svg .blue { stroke: var(--s-t); }
+.fw-svg .pink { stroke: var(--s-nk); }
+.fw-svg .grid { stroke: var(--line); stroke-width: 1; fill: none; }
+.fw-svg .wash { fill: var(--bg-soft); }
+.fw-svg .teddy-fill { fill: var(--s-teddy); }
+.fw-svg .teal-fill { fill: var(--accent); }
+.fw-svg .bad-fill { fill: var(--bad); }
+.fw-viz-note { min-height: 68px; margin: 0 22px; padding: 14px 0 18px; border-top: 1px solid var(--line); color: var(--ink); font-size: 13px; line-height: 1.65; }
+.fw-controls { display: flex; align-items: center; gap: 11px; padding: 13px 20px; background: var(--bg-soft); border-top: 1px solid var(--line); }
+.fw-controls button { flex: none; min-width: 36px; min-height: 36px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg-elev); color: var(--ink); font: 500 12px var(--font); cursor: pointer; }
+.fw-controls .fw-play { min-width: 64px; }
+.fw-controls input { min-width: 0; width: 100%; accent-color: var(--accent); cursor: pointer; }
+.fw-controls output { font: 11px var(--mono); white-space: nowrap; color: var(--ink-muted); }
+.fw-explainer > figcaption { padding: 13px 22px; font-size: 12px; line-height: 1.6; }
+@container main (max-width: 900px) {
+ .fs-grid,.fs.flip .fs-grid { grid-template-columns: minmax(0,1fr); grid-template-areas: "head" "fig" "body"; gap: 22px; }
+ .fs-fig { position: static; }
+ .fs { padding: 42px 0; }
+}
+@media (max-width: 480px) {
+ .fw-viz-header { padding: 15px 12px 8px; font-size: 8px; }
+ .fw-steps { padding-inline: 10px; gap: 3px; }
+ .fw-step { font-size: 10px; }
+ .fw-controls { padding: 10px; gap: 7px; }
+ .fw-controls button { padding-inline: 8px; }
+ .fw-viz-note { margin-inline: 14px; font-size: 12px; min-height: 85px; }
+}
+@media print { .fw-controls,.fw-steps { display: none; } .fs-fig { position: static; } }
