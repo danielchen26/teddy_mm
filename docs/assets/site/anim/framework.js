@@ -18,12 +18,12 @@ const phaseOn = (p,n) => Math.floor(p)===n?'active':'';
 const sweep = (x,y,x2,y2,p,n) => { const t=clamp(p-n);return p>=n&&p<n+1?dot(x+(x2-x)*t,y+(y2-y)*t):''; };
 const frame = inner => `<svg xmlns="${NS}" class="fw-svg" viewBox="0 0 720 420" role="img">${inner}</svg>`;
 const heading = (a,b) => text(30,42,a,'label')+text(30,65,b,'small');
-const footer = s => text(30,397,s,'tiny');
+const footer = s => { const words=s.split(' '),lines=[''];for(const word of words){let i=lines.length-1;if((lines[i]+' '+word).length>88)lines.push(word);else lines[i]+=(lines[i]?' ':'')+word;}return lines.map((line,i)=>text(30,lines.length>1?382+i*15:397,line,'tiny')).join(''); };
 
 function graph(p){
  const events=[['E1','support','A',132],['E2','contradiction','B',214],['E3','uncertainty ↓','A',296]];
  let s=heading('A typed record becomes inspectable evidence','Illustrative values • fixed open-loop updates');
- s+=box(30,127,143,78,'Source record','type / value / source',phaseOn(p,0));
+ s+=box(30,127,143,78,'Source record','type / value / ID',phaseOn(p,0));
  s+=box(30,260,143,78,'Schema check','validate record',phaseOn(p,1));
  s+=edge(101,205,101,255,p>=1)+sweep(101,205,101,255,p,0);
  for(const [id,type,target,y] of events){
@@ -48,7 +48,7 @@ function protocol(p){
  s+=edge(374,190,374,250,false,true)+text(397,221,'mediation?','small');
  s+=box(520,181,163,96,'Declared bounds','works / exact',phaseOn(p,3));
  s+=arrow(467,300,599,300,p>=3)+edge(599,300,599,281,p>=3);
- s+=dot(90+35*Math.sin(p*2),217,7);
+ s+=dot(90+35*Math.sin(p*2),244,7);
  return s+footer('DASHED RELATION = HYPOTHESIS, NOT ESTABLISHED CAUSAL MEDIATION');
 }
 function failure(p){
@@ -68,7 +68,7 @@ function failure(p){
 function inverse(p){
  let s=heading('Forward diagnosis / inverse sufficiency test','The question determines which distinctions the state must preserve');
  s+=text(30,113,'FORWARD','tiny')+text(385,113,'INVERSE','tiny');
- s+=box(30,145,126,74,'Δ state','resolved change',p>=1?'active':'');
+ s+=box(30,145,126,74,'Δ state','state moves',p>=1?'active':'');
  s+=arrow(162,182,206,182,false,true)+box(214,145,113,74,'Δ output','flat');
  s+=text(30,261,'Readout does not use it,','small')+text(30,283,'or its effects cancel.','small');
  s+=path('M382,170 C435,170 425,210 475,210','edge active')+path('M382,275 C435,275 425,210 475,210','edge active');
@@ -84,8 +84,8 @@ function history(p){
  s+=path('M35,244 C90,66 158,126 222,206 C254,240 290,215 320,210 C397,201 420,110 482,127 L640,127','edge blue');
  s+=path('M35,157 C108,326 179,320 238,246 C263,215 291,208 320,210 C399,210 419,312 482,312 L640,312','edge pink');
  s+=edge(320,89,320,339,false,true)+dot(320,210,9);
- s+=text(320,81,'now','tiny','middle')+text(102,350,'retained history','small')+text(493,350,'continuation','small');
- s+=text(510,108,'readout 1','small')+text(510,338,'readout 2','small');
+ s+=text(320,81,'now','tiny','middle')+text(102,350,'retained history','small')+text(493,359,'continuation','small');
+ s+=text(510,108,'readout 1','small')+text(510,329,'readout 2','small');
  if(p>=1)s+=`<rect x="40" y="95" width="279" height="230" rx="15" fill="var(--accent)" opacity=".06"/>`;
  if(p>=2)s+=text(351,190,'same candidate z','small');
  s+=text(30,380,p>=3?'A history-aware candidate must be tested again.':'The candidate merges histories that the future separates.','label');
@@ -159,7 +159,7 @@ function question(p){
 }
 function contrast(p){
  let s=heading('Measure the state and output apart','Two push sizes test the stability of the measured response');
- s+=box(30,156,180,104,p>=2?'Push ± ε / 2':'Push ± ε','same source and protocol',phaseOn(p,0));
+ s+=box(30,156,180,104,p>=2?'Push ± ε / 2':'Push ± ε','fixed protocol',phaseOn(p,0));
  for(let i=0;i<2;i++){
   const y=135+i*145;s+=arrow(220,208,292,y+32,p>=1)+box(298,y,364,92,i?'Readout response ΔO':'State response Δz','record separately',phaseOn(p,i+1));
   let w=(i?160:220)*(p>=2?.5:1);s+=`<rect x="317" y="${y+66}" width="${w}" height="6" rx="3" class="teal-fill"/>`;
