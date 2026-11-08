@@ -1,0 +1,53 @@
+# ANM 响应充分性诊断：声明模板。复制这份文件，按注释填写，然后：
+#   python -m anm_diag check 你的声明.yaml          # 先过合法性检查
+#   python -m anm_diag inspect --paths 路径.yaml     # 封存前只看元数据
+#   python -m anm_diag seal 你的声明.yaml --paths 路径.yaml --out 你的声明.sealed.yaml
+#   python -m anm_diag run 你的声明.sealed.yaml --adapter <适配器> --paths 路径.yaml --out runs/<名字>
+# 问题的形式（论文 §2.2）：源扰动 u 改变了读出 O；沿着系统真实的计算 s -> G(s)，哪一个保留状态 z = G(s)
+# 不再足以重现 O 的变化（ker K_z ⊄ ker K_O）？一份声明只问一个源、一组读出、一条链。
+anm_declaration: 1
+name: my_system_my_question            # 唯一名字，会写进记录和报告
+status: exploratory                    # 不要手写 sealed：用 seal 命令生成
+kind: sufficiency
+
+system:                                # 被检系统，整个检验中固定不动
+  id: <模型名和检查点>
+  frozen: true
+  inputs: [rna_counts]                 # 系统读入的测量（下面 measurements 的键）
+  notes: >
+    在这里写清楚封存前就要定的选择（例如头是否照原样用）。
+
+measurements:                          # 每个细胞测了什么；读出只能取自这里
+  rna_counts: {modality: rna, kind: counts}
+  adt_counts: {modality: protein, kind: counts}
+
+source:                                # 源扰动：必须受控，有对照
+  controlled: true
+  kind: crispr_ko                      # crispr_ko / crispri / drug / simulated ...
+  stratum: null                        # 可选：只取某一条件下的细胞（路径文件里的 obs_stratum 列）
+  control: [NT]                        # 对照标签（inspect 看数据里实际叫什么）
+  treated: [GENE1, GENE2]              # 处理组靶点；也可以写正则字符串，例如 "^MRP[LS]\\d"
+  cluster: target                      # 分折和重抽的单位：target 或 guide；少于 10 个会警告（K1）
+  # max_control_cells: 4000            # 可选：对照细胞的抽样上限（算力），配 control_seed，封存前定
+  # control_seed: 0
+
+readouts:                              # 读出 O：只能是测量，不能是模型输出或候选状态（R1）
+  - {id: OUT1, measurement: adt_counts, statistic: adt_clr, features: [PROTEIN1]}
+
+measurement_sharing: none              # 读出与系统输入共用一份测量时：count_split（首选）或 declared_shared（R2）
+
+nodes:                                 # 候选保留状态和探针；from 连成计算图
+  # role: chain（链上环节）/ probe（旁路探针，例如去掉顺序）/ positive_control（读出本身，检验能不能找回已知信息）/ technical
+  # operator: system（系统自己的算子）/ analysis（分析者的视图，只能当参照或探针）/ approximation（近似，不许上链，C2）
+  - {id: RAW,    from: rna_counts, op: log1p_cp10k,           operator: analysis, role: chain}
+  - {id: TOKENS, from: RAW,        op: teddy_official_tokens, operator: system,   role: chain}
+  - {id: Z,      from: TOKENS,     op: teddy_embedding,       operator: system,   role: chain}
+  - {id: SET,    from: TOKENS,     op: drop_order,            operator: analysis, role: probe}
+  - {id: ADT_OUT1, from: adt_counts, op: "adt_readout:OUT1",  operator: analysis, role: positive_control, readout: OUT1}
+
+chain: [RAW, TOKENS, Z]                # 第一个是输入的参照视图；之后每一环都必须是系统自己的算子，且由上一环算出（C1、C2）
+
+# readout_classes 不写就用默认：ridge（RidgeCV / logistic C=0.05）和 hgb（梯度提升，参数写死）。
+# 判定取并集：某一类的上界 < margin 就支持；所有类的下界都 > margin 才拒绝；其余未决。
+inference: {folds: 5, bootstrap: 1000, forward_bootstrap: 300, seed: 0, inverse: crossfit_partial_linear}
+decision: {margin_u: 0.10, step_margin: 0.10, alpha: 0.05}   # 容差必须在看结果之前定（K1）

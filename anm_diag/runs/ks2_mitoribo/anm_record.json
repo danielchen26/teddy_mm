@@ -1,0 +1,662 @@
+{
+ "anm_diag_version": "0.1.0",
+ "declaration": {
+  "status": "exploratory",
+  "kind": "sufficiency",
+  "measurement_sharing": "declared_shared",
+  "readout_classes": {
+   "ridge": {
+    "regressor": "RidgeCV",
+    "alphas": [
+     0.1,
+     0.31622776601683794,
+     1.0,
+     3.1622776601683795,
+     10.0,
+     31.622776601683793,
+     100.0,
+     316.22776601683796,
+     1000.0,
+     3162.2776601683795,
+     10000.0,
+     31622.776601683792,
+     100000.0
+    ],
+    "classifier": "LogisticRegression",
+    "C": 0.05
+   },
+   "hgb": {
+    "regressor": "HistGradientBoostingRegressor",
+    "classifier": "HistGradientBoostingClassifier",
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15
+   }
+  },
+  "inference": {
+   "folds": 5,
+   "bootstrap": 1000,
+   "forward_bootstrap": 300,
+   "seed": 0,
+   "standardize_on": "control",
+   "inverse": "crossfit_partial_linear"
+  },
+  "decision": {
+   "margin_u": 0.1,
+   "step_margin": 0.1,
+   "alpha": 0.05
+  },
+  "anm_declaration": 1,
+  "name": "ks2_teddy_mitoribo_dev",
+  "system": {
+   "id": "TEDDY-G-70M",
+   "frozen": true,
+   "inputs": [
+    "rna_counts"
+   ],
+   "notes": "official tokenisation (teddy_encoder.official_values + rank_encode_official), 12 encoder layers, gene-mean pooling"
+  },
+  "measurements": {
+   "rna_counts": {
+    "modality": "rna",
+    "kind": "counts"
+   }
+  },
+  "source": {
+   "controlled": true,
+   "kind": "crispri",
+   "control": "control",
+   "treated": "^MRP[LS]\\d",
+   "cluster": "target"
+  },
+  "readouts": [
+   {
+    "id": "MT",
+    "measurement": "rna_counts",
+    "statistic": "mean_log1p_cp10k",
+    "features": "^MT-",
+    "exclude_targets": true
+   },
+   {
+    "id": "PSM",
+    "measurement": "rna_counts",
+    "statistic": "mean_log1p_cp10k",
+    "features": "^PSM[ABCD]\\d+$",
+    "exclude_targets": true
+   }
+  ],
+  "nodes": [
+   {
+    "id": "RAW",
+    "from": "rna_counts",
+    "op": "log1p_cp10k",
+    "operator": "analysis",
+    "role": "chain"
+   },
+   {
+    "id": "TOKENS",
+    "from": "RAW",
+    "op": "teddy_official_tokens",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "Z",
+    "from": "TOKENS",
+    "op": "teddy_embedding",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "SET",
+    "from": "TOKENS",
+    "op": "drop_order",
+    "operator": "analysis",
+    "role": "probe"
+   },
+   {
+    "id": "DEPTH",
+    "from": "rna_counts",
+    "op": "depth",
+    "operator": "analysis",
+    "role": "technical"
+   },
+   {
+    "id": "READ_MT",
+    "from": "rna_counts",
+    "op": "readout_genes:MT",
+    "operator": "analysis",
+    "role": "positive_control",
+    "readout": "MT"
+   },
+   {
+    "id": "READ_PSM",
+    "from": "rna_counts",
+    "op": "readout_genes:PSM",
+    "operator": "analysis",
+    "role": "positive_control",
+    "readout": "PSM"
+   }
+  ],
+  "chain": [
+   "RAW",
+   "TOKENS",
+   "Z"
+  ]
+ },
+ "declaration_sha256": "bfe0a7edc0f1b24b03202449ab603cc836b5e1427ba863a9d66e70c30e47d18c",
+ "problems": [
+  {
+   "code": "R2",
+   "severity": "warning",
+   "message": "readout 'MT' shares measurement 'rna_counts' with the candidates (declared_shared): counting noise is shared; count splitting would remove it"
+  },
+  {
+   "code": "R2",
+   "severity": "warning",
+   "message": "readout 'PSM' shares measurement 'rna_counts' with the candidates (declared_shared): counting noise is shared; count splitting would remove it"
+  },
+  {
+   "code": "K1",
+   "severity": "warning",
+   "message": "only 6 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+  }
+ ],
+ "n_cells": 1956,
+ "n_treated": 240,
+ "n_treated_clusters": 6,
+ "forward": {
+  "auc": {
+   "RAW": 0.7890855672105672,
+   "TOKENS": 0.7169434731934732,
+   "Z": 0.7009858197358197,
+   "SET": 0.6695002913752913,
+   "DEPTH": 0.3704035547785548
+  },
+  "steps": {
+   "RAW->TOKENS": [
+    -0.10526120580808071,
+    -0.03671923562548576
+   ],
+   "TOKENS->Z": [
+    -0.10501742181429687,
+    0.06087436868686877
+   ],
+   "TOKENS->SET": [
+    -0.06629249222999221,
+    -0.029494767385392428
+   ]
+  },
+  "class": "ridge"
+ },
+ "readouts": {
+  "MT": {
+   "delta": 0.12427572249106707,
+   "delta_ci": [
+    0.051833947662941186,
+    0.1902911841279659
+   ],
+   "states": {
+    "RAW": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": -0.01134919996190152,
+     "ci": [
+      -0.08207290058406147,
+      0.08459065239734087
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": 0.3865868294289677,
+       "ci": [
+        0.10978301261592999,
+        0.49105293554653767
+       ]
+      },
+      "hgb": {
+       "u": -0.01134919996190152,
+       "ci": [
+        -0.08207290058406147,
+        0.08459065239734087
+       ]
+      }
+     }
+    },
+    "TOKENS": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.014981082004894723,
+     "ci": [
+      -0.14262285245866405,
+      0.09223817144929278
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": 0.6279709974208528,
+       "ci": [
+        0.3076333399784705,
+        0.7477237851795849
+       ]
+      },
+      "hgb": {
+       "u": 0.014981082004894723,
+       "ci": [
+        -0.14262285245866405,
+        0.09223817144929278
+       ]
+      }
+     }
+    },
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.4705548663371789,
+     "ci": [
+      0.29006631949070333,
+      0.6379902724111245
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.4705548663371789,
+       "ci": [
+        0.29006631949070333,
+        0.6379902724111245
+       ]
+      },
+      "hgb": {
+       "u": 0.783943944202961,
+       "ci": [
+        0.6394557990222228,
+        0.858200277391034
+       ]
+      }
+     }
+    },
+    "SET": {
+     "role": "probe",
+     "best_class": "hgb",
+     "u": 0.7826526756078986,
+     "ci": [
+      0.4729603839845491,
+      0.901518282765509
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.8027574845978317,
+       "ci": [
+        0.4669151748449645,
+        0.9163319721731785
+       ]
+      },
+      "hgb": {
+       "u": 0.7826526756078986,
+       "ci": [
+        0.4729603839845491,
+        0.901518282765509
+       ]
+      }
+     }
+    },
+    "DEPTH": {
+     "role": "technical",
+     "best_class": "hgb",
+     "u": 0.8656203131954926,
+     "ci": [
+      0.7898723964273107,
+      0.9631247661751622
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.9236559489114319,
+       "ci": [
+        0.8430603137363485,
+        0.9694059437059686
+       ]
+      },
+      "hgb": {
+       "u": 0.8656203131954926,
+       "ci": [
+        0.7898723964273107,
+        0.9631247661751622
+       ]
+      }
+     }
+    },
+    "READ_MT": {
+     "role": "positive_control",
+     "best_class": "hgb",
+     "u": -0.0008663087269557544,
+     "ci": [
+      -0.07167585332183553,
+      0.10274375118107482
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 2.7450118592756392e-06,
+       "ci": [
+        -4.292695744054174e-06,
+        1.1598462549147127e-05
+       ]
+      },
+      "hgb": {
+       "u": -0.0008663087269557544,
+       "ci": [
+        -0.07167585332183553,
+        0.10274375118107482
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "RAW->TOKENS": {
+     "best_class": [
+      -0.2112021498246705,
+      0.10479184051925433
+     ],
+     "same_class": {
+      "ridge": [
+       0.11263780391235727,
+       0.32852074387736285
+      ],
+      "hgb": [
+       -0.2112021498246705,
+       0.10479184051925433
+      ]
+     }
+    },
+    "TOKENS->Z": {
+     "best_class": [
+      0.30278951037062585,
+      0.678681068666675
+     ],
+     "same_class": {
+      "ridge": [
+       -0.32510451783832167,
+       0.16051363566144486
+      ],
+      "hgb": [
+       0.6564227851172564,
+       0.8867148609850598
+      ]
+     }
+    },
+    "TOKENS->SET": {
+     "best_class": [
+      0.5960903482547684,
+      0.8667443500791533
+     ],
+     "same_class": {
+      "ridge": [
+       0.1285522172513057,
+       0.21335305471963598
+      ],
+      "hgb": [
+       0.5960903482547684,
+       0.8667443500791533
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "control_failed",
+    "detail": "positive control not supported: the test cannot recover information known to be present; no verdict on the chain"
+   },
+   "exact": {
+    "cells": 240,
+    "tokens_identical": 0.171,
+    "median_move_over_delta": 0.147,
+    "frac_full_delta_hidden": 0.0,
+    "frac_resolved_beyond_noise": 0.0,
+    "note": "minimal family: readout genes move between rank neighbours, vocabulary total fixed"
+   }
+  },
+  "PSM": {
+   "delta": -0.07198190983189587,
+   "delta_ci": [
+    -0.08843651300523583,
+    -0.05660298328865862
+   ],
+   "states": {
+    "RAW": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.19261540076597253,
+     "ci": [
+      0.0833915680707186,
+      0.28802920775171564
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.19261540076597253,
+       "ci": [
+        0.0833915680707186,
+        0.28802920775171564
+       ]
+      },
+      "hgb": {
+       "u": 0.25655613755646145,
+       "ci": [
+        0.1905929503067865,
+        0.3385799662326897
+       ]
+      }
+     }
+    },
+    "TOKENS": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.3058122955453283,
+     "ci": [
+      0.23309375959203987,
+      0.38009194049173706
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.37586971379423834,
+       "ci": [
+        0.3088055950433833,
+        0.4483806414229006
+       ]
+      },
+      "hgb": {
+       "u": 0.3058122955453283,
+       "ci": [
+        0.23309375959203987,
+        0.38009194049173706
+       ]
+      }
+     }
+    },
+    "Z": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.43498256304217464,
+     "ci": [
+      0.31081101225142127,
+      0.541057649327209
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.4399848646620386,
+       "ci": [
+        0.3198057374728177,
+        0.5647382047630516
+       ]
+      },
+      "hgb": {
+       "u": 0.43498256304217464,
+       "ci": [
+        0.31081101225142127,
+        0.541057649327209
+       ]
+      }
+     }
+    },
+    "SET": {
+     "role": "probe",
+     "best_class": "ridge",
+     "u": 0.46186364772804744,
+     "ci": [
+      0.36525316324057633,
+      0.5451503112828047
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.46186364772804744,
+       "ci": [
+        0.36525316324057633,
+        0.5451503112828047
+       ]
+      },
+      "hgb": {
+       "u": 0.553592800525433,
+       "ci": [
+        0.447067302956006,
+        0.6490606064498794
+       ]
+      }
+     }
+    },
+    "DEPTH": {
+     "role": "technical",
+     "best_class": "hgb",
+     "u": 0.8394885602255726,
+     "ci": [
+      0.709719860026067,
+      0.9517984116112509
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.8911761316558456,
+       "ci": [
+        0.8046834325545592,
+        0.9690836721384333
+       ]
+      },
+      "hgb": {
+       "u": 0.8394885602255726,
+       "ci": [
+        0.709719860026067,
+        0.9517984116112509
+       ]
+      }
+     }
+    },
+    "READ_PSM": {
+     "role": "positive_control",
+     "best_class": "ridge",
+     "u": 2.816653966896899e-06,
+     "ci": [
+      -4.250202385143582e-06,
+      7.459284526379625e-06
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": 2.816653966896899e-06,
+       "ci": [
+        -4.250202385143582e-06,
+        7.459284526379625e-06
+       ]
+      },
+      "hgb": {
+       "u": 0.13530453575151782,
+       "ci": [
+        0.05615807724285173,
+        0.20425757902389993
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "RAW->TOKENS": {
+     "best_class": [
+      -0.012878503650846142,
+      0.27114608502538623
+     ],
+     "same_class": {
+      "ridge": [
+       0.09493831804434388,
+       0.26585763986761446
+      ],
+      "hgb": [
+       -0.02380942435854149,
+       0.11953369203246457
+      ]
+     }
+    },
+    "TOKENS->Z": {
+     "best_class": [
+      0.01628304853970774,
+      0.21828659439287715
+     ],
+     "same_class": {
+      "ridge": [
+       -0.06815329622397974,
+       0.20462376496978804
+      ],
+      "hgb": [
+       0.01628304853970774,
+       0.21828659439287715
+      ]
+     }
+    },
+    "TOKENS->SET": {
+     "best_class": [
+      0.05604893267350479,
+      0.2400470024880282
+     ],
+     "same_class": {
+      "ridge": [
+       -0.023480126788634332,
+       0.17280684808956387
+      ],
+      "hgb": [
+       0.13539574236751495,
+       0.3484603882451527
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "reference_unresolved",
+    "detail": "reference stage 'RAW' is unresolved: the readout class or the data cannot resolve this response; no claim about later stages"
+   },
+   "exact": {
+    "cells": 240,
+    "tokens_identical": 0.887,
+    "median_move_over_delta": 0.0,
+    "frac_full_delta_hidden": 0.0,
+    "frac_resolved_beyond_noise": 0.0,
+    "note": "minimal family: readout genes move between rank neighbours, vocabulary total fixed"
+   }
+  }
+ },
+ "provenance": {
+  "adapter": "ks2_teddy",
+  "measurement_sharing_split": false,
+  "sha256_counts": "70903aa8f85073c7",
+  "sha256_prep": "86d7619b2d1cb436",
+  "sha256_cells": "26334a983f6b91c4",
+  "sha256_vocab": "e184b550fa2c3971",
+  "sha256_medians": "3d3637fa24ef81bf",
+  "sha256_teddy_encoder": "6768e30688f89cdc",
+  "torch": "2.15.0+cu132",
+  "python": "3.13.18"
+ },
+ "runtime_s": 3335.4,
+ "exploratory": true
+}

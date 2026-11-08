@@ -1,0 +1,15 @@
+# KS-2 (Replogle et al. 2022, K562 essential-gene CRISPRi; TEDDY-G 70M embeddings of the development cells).
+# The KS-2 inputs are not distributed with this repository. Copy this file to paths/ks2.yaml and fill in the
+# locations of your own preprocessing outputs. Relative paths are resolved from the anm_diag/ folder.
+counts: ../ks2/pipe/out/counts.npz              # sparse counts of the KS-2 cells
+var: ../ks2/meta/var.csv.gz                     # gene table for the counts
+prep: <KS-2 pilot folder>/prep.npz              # pilot preprocessing (cell metadata, targets)
+cells: <KS-2 pilot folder>/rank_need.npy        # row indices of the 2,716 development cells
+vocab: ../../teddy_mwe/ckpt/teddy_g_70M/vocab.txt
+medians: ../data/reference/teddy_gene_medians.json
+encoder_dir: ../teddy_mm
+z_files:                                        # stored TEDDY embeddings (gene-mean, last layer)
+  - ../ks2/pipe/out/z_V.npz
+  - ../ks2/pipe/out/z_controls.npz
+# after running tools/layer_states.py:
+# layers: <KS-2 pilot folder>/layers_dev.npz

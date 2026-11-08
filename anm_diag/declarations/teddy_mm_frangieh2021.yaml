@@ -1,0 +1,68 @@
+# ANM declaration (filled from metadata only, not yet sealed): TEDDY-G 70M + teddy_mm phase-1 protein head,
+# Perturb-CITE-seq (Frangieh et al. 2021; scPerturb v1.3 files), melanoma cells, IFN-gamma condition.
+# Question: when the IFN-gamma signalling pathway is knocked out, measured surface MHC-I and PD-L1 fall.
+# Where along RNA -> tokens -> TEDDY -> head -> predicted protein is that protein response lost?
+# Filled from `python -m anm_diag inspect` and the obs/var tables only (no count matrix, no readout, no state):
+#   condition column perturbation_2, value "IFNγ"; guides in guide_id ("IFNGR1_3", several per cell joined by ";",
+#   missing when none was detected); non-targeting guides NO_SITE_* and ONE_NON-GENE_SITE_*; IRF1 is not in the
+#   library; protein names HLA_A (antibody HLA-ABC), CD274, HLA_E; 24 ADT features (20 proteins, 4 isotypes).
+anm_declaration: 1
+name: teddy_mm_frangieh2021_ifng_pathway
+status: exploratory
+kind: sufficiency
+
+system:
+  id: TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)
+  frozen: true
+  inputs: [rna_counts]
+  notes: >
+    The head was trained on bone-marrow CITE-seq (NeurIPS 2021); on melanoma cells it is out of its training
+    distribution. Declared choice: use it as trained (head stages then test this head on new cells).
+    Cells are labelled from their detected guides, not from the file's perturbation column (which calls 13,316
+    IFN-gamma cells "control" although they have no guide or guides for other genes): a control cell has only
+    non-targeting guides, a treated cell only guides for one target gene (plus any non-targeting guides); cells with
+    no guide or with guides for two genes are left out. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol table
+    that teddy_mm uses (tools/gene_map.py): the file's own Ensembl ids put HLA-A, -B, -C, -E, B2M and IFNGR2 on
+    alternate-haplotype ids outside TEDDY's vocabulary, which would drop exactly the MHC genes before TEDDY.
+
+measurements:
+  rna_counts: {modality: rna, kind: counts}
+  adt_counts: {modality: protein, kind: counts}
+
+source:
+  controlled: true
+  kind: crispr_ko
+  stratum: "IFNγ"               # perturbation_2 (paths obs_stratum)
+  assign_from_guides: true
+  control_guides: [NO_SITE, ONE_NON-GENE_SITE]
+  control: [control]
+  treated: [IFNGR1, IFNGR2, JAK1, JAK2, STAT1]      # IRF1 is not in this library
+  cluster: target
+  max_control_cells: 4000       # seeded subsample of the 6,444 non-targeting cells (compute budget), fixed now
+  control_seed: 0
+
+readouts:                       # CLR across the full 24-feature panel
+  - {id: MHC1,  measurement: adt_counts, statistic: adt_clr, features: [HLA_A]}
+  - {id: PDL1,  measurement: adt_counts, statistic: adt_clr, features: [CD274]}
+  - {id: HLAE,  measurement: adt_counts, statistic: adt_clr, features: [HLA_E]}
+
+measurement_sharing: none       # the readout is protein; no candidate reads protein
+
+nodes:
+  - {id: RAW,       from: rna_counts, op: log1p_cp10k,           operator: analysis, role: chain}
+  - {id: TOKENS,    from: RAW,        op: teddy_official_tokens, operator: system,   role: chain}
+  - {id: Z,         from: TOKENS,     op: teddy_embedding,       operator: system,   role: chain}
+  - {id: HEAD_LAT,  from: Z,          op: head_latent,           operator: system,   role: chain}
+  - {id: HEAD_OUT,  from: HEAD_LAT,   op: head_output,           operator: system,   role: chain}
+  - {id: SET,       from: TOKENS,     op: drop_order,            operator: analysis, role: probe}
+  - {id: MRNA_HLA,  from: RAW,        op: "rna_of_gene:HLA-A,HLA-B,HLA-C,B2M", operator: analysis, role: probe}
+  - {id: MRNA_PDL1, from: RAW,        op: "rna_of_gene:CD274",   operator: analysis, role: probe}
+  - {id: MRNA_HLAE, from: RAW,        op: "rna_of_gene:HLA-E",   operator: analysis, role: probe}
+  - {id: ADT_MHC1,  from: adt_counts, op: "adt_readout:MHC1",    operator: analysis, role: positive_control, readout: MHC1}
+  - {id: ADT_PDL1,  from: adt_counts, op: "adt_readout:PDL1",    operator: analysis, role: positive_control, readout: PDL1}
+  - {id: ADT_HLAE,  from: adt_counts, op: "adt_readout:HLAE",    operator: analysis, role: positive_control, readout: HLAE}
+
+chain: [RAW, TOKENS, Z, HEAD_LAT, HEAD_OUT]
+
+inference: {folds: 5, bootstrap: 1000, forward_bootstrap: 300, seed: 0, inverse: crossfit_partial_linear}
+decision: {margin_u: 0.10, step_margin: 0.10, alpha: 0.05}

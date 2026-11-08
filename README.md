@@ -9,6 +9,7 @@
   <a href="https://danielchen26.github.io/teddy_mm/"><b>Live site</b></a> ·
   <a href="https://danielchen26.github.io/teddy_mm/anm-loop.html"><b>Decision-loop report</b></a> ·
   <a href="https://danielchen26.github.io/teddy_mm/anm-framework.html"><b>How ANM works</b></a> ·
+  <a href="#anm-diagnosis-of-teddys-representation-nov-2026"><b>ANM diagnosis of TEDDY</b></a> ·
   <a href="#registered-experiments-v3"><b>Registered v3 results</b></a> ·
   <a href="#what-anm-brings-teddy-now">What ANM brings TEDDY now</a> ·
   <a href="#how-anm-and-teddy-connect">How ANM connects to TEDDY</a> ·
@@ -25,6 +26,25 @@
 <img alt="v3: registered tests, all eight final" src="https://img.shields.io/badge/v3-registered%20%C2%B7%20all%20eight%20final-6554c9?style=flat-square">
 
 </div>
+
+## ANM diagnosis of TEDDY's representation (Nov 2026)
+
+A different question from the decision-layer work below: **when a CRISPR knockout changes a measured protein, can that
+change still be recovered from each stage of TEDDY's computation** (normalized RNA → rank tokens → pooled embedding)?
+Run with [`anm_diag/`](anm_diag/), a declaration-driven runner that rejects illegal designs before any statistic and
+seals the design with data and code hashes. Full write-up: [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md).
+
+- **Sealed, run once (Perturb-CITE-seq, Frangieh 2021; ECCITE-seq, Papalexi 2021):** no TEDDY stage was rejected for
+  any of five protein readouts. For PD-L1 under IFN-γ-pathway knockouts in melanoma, TEDDY-G 70M's pooled embedding
+  retains the protein response (*u* = +0.04 [−0.01, +0.09], margin 0.10), while the PD-L1 transcript alone explains
+  almost none of it (*u* = +0.93). Papalexi and HLA-E are unresolved (five treated targets per dataset).
+- **Exploratory (KS-2, Replogle 2022 CRISPRi):** for mitoribosome knockdowns the MT gene-set response is recoverable
+  from TEDDY's rank tokens but not from the same genes without order or from the gene-mean embedding
+  (*u* = +0.47 [+0.29, +0.64]): the signal sits in rank order and pooling loses it.
+- **Withdrawn pending rerun:** the teddy_mm head stages. The first sealed run fed the head un-normalized embeddings;
+  RAW, TOKENS and Z do not use the head and stand.
+
+Phase-1 per-protein results and the limits of the 0.60 Pearson: [`docs/reports/PHASE1_PER_PROTEIN.md`](docs/reports/PHASE1_PER_PROTEIN.md).
 
 ## Registered experiments (v3)
 
@@ -433,6 +453,7 @@ Old → new names: Block N → Experiment N · arm → method · TEDDY alone →
 teddy_mm/
 ├── scripts/                   # phase 1: download → prepare → embed (frozen TEDDY) → train head → eval
 ├── teddy_mm/                  # TEDDY encoder wrapper, RNA → protein models, phase-2 scaffold
+├── anm_diag/                  # ANM response-sufficiency runner: declarations, sealed runs, tests (docs/ANM_DIAGNOSIS.md)
 ├── bridge_anm/                # TEDDY → ANM bridge
 │   ├── export_*.py            #   predictions → typed evidence
 │   ├── run_*.py, reverse_*.py #   the six experiments
@@ -453,6 +474,8 @@ teddy_mm/
 - Confidence cut-offs (on the v2 key never better than the fixed rule's own margin; v3 E1.4a inconclusive), and zero-label adoption of a new question (as for any written rule); v3: a classifier trained on the old question's labels still answered the new one better (E1.1c loss)
 - The registered v3 "can claim" list ([ledger](#registered-experiments-v3)): ANM's engine equals the declared rule and its leave-one-out equals the closed form (checks, not gains), plus measured operating points, degradation curves and NK-vs-T comparisons of TEDDY + head
 
+**Separately (Nov 2026):** the ANM response-sufficiency diagnosis of TEDDY's own stages (RAW → TOKENS → Z) has its own can / cannot claim list in [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md#what-can-and-cannot-be-claimed); it uses controlled perturbations and measured readouts, which the decision-layer work above does not.
+
 **Not claimed**
 
 - Better calls than TEDDY + fixed rule: they are identical by construction
@@ -470,6 +493,8 @@ teddy_mm/
 **TEDDY's earlier embedding** (`z_512`) was the mean of its last-layer tokens over real (unpadded) tokens at context length 512, with no gene-median normalisation (not pretrain 2048, not token 0, not a disease token), L2-normalized 512-D (`z_rna_512.npy`). Re-embedding a sample at 512 reproduces the stored embeddings (cosine 1.000000; at 1024 the median is 0.970). **This deviates from the official TEDDY-G pipeline:** the official model returns token 0 by default (no CLS token is added, so it is the top-ranked gene), and the official tutorial mean-pools over all 2,048 positions after gene-median normalisation. With the medians applied (512 tokens, same mean) the cosine to the stored embedding is 0.649 (median over 48 site4 cells), so the results are now rerun with the official preprocessing (counts / total × 10⁴, divided by TEDDY's gene medians, top 2,048 rank tokens, mean over gene tokens), which gave the same phase-1 Pearson. Full scope: [`docs/MODE_B_SCOPE.md`](docs/MODE_B_SCOPE.md).
 
 ## Reports
+
+ANM diagnosis of TEDDY (Nov 2026): [ANM_DIAGNOSIS](docs/ANM_DIAGNOSIS.md) · runs in [`anm_diag/runs/`](anm_diag/runs/) · phase-1 per protein: [PHASE1_PER_PROTEIN](docs/reports/PHASE1_PER_PROTEIN.md)
 
 Registered v3 (current): [V3_REGISTERED_RESULTS](docs/reports/V3_REGISTERED_RESULTS.md) · [v3_numbers.json](docs/reports/v3_numbers.json) · registration, amendments and addenda on branch [`exp/registered-v3`](https://github.com/danielchen26/teddy_mm/tree/exp/registered-v3/registration)
 
