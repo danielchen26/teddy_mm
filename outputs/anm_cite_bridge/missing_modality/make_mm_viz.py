@@ -8,6 +8,7 @@ evidence), never "TEDDY".
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -16,7 +17,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 OUT = Path(__file__).resolve().parent
-ANM_JEV = Path("/Users/tianchichen/Documents/GitHub/anm-jev")
+ANM_JEV = Path(os.environ.get("ANM_JEV_ROOT", str(Path(__file__).resolve().parents[4] / "anm-jev")))
 sys.path.insert(0, str(ANM_JEV))
 
 from anim.style import THEMES, W, H, Canvas, Clip, ease, mix, seg  # noqa: E402

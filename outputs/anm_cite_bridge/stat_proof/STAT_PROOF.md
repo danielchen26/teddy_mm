@@ -90,11 +90,11 @@
 ### Re-run
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
+cd <teddy_mm repo>
 PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python bridge_anm/export_cite_events.py --n-cells 0 --ood-n 2000
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_stat_proof.py
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_stat_proof.py
 ```
 
-Outputs: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/stat_proof/STAT_PROOF.md`, `stat_proof_results.json`.
+Outputs: `outputs/anm_cite_bridge/stat_proof/STAT_PROOF.md`, `stat_proof_results.json`.
 
 Generated: 2026-09-26 14:18:34 EDT

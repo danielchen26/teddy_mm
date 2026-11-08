@@ -21,7 +21,7 @@ from matplotlib.patches import FancyBboxPatch
 ROOT = Path(__file__).resolve().parents[4]  # teddy_mm
 PROOF = Path(__file__).resolve().parent.parent
 OUT = Path(__file__).resolve().parent
-ANM_JEV = Path("/Users/tianchichen/Documents/GitHub/anm-jev")
+ANM_JEV = Path(os.environ.get("ANM_JEV_ROOT", str(ROOT.parent / "anm-jev")))
 sys.path.insert(0, str(ANM_JEV))
 
 from anim.style import (  # noqa: E402

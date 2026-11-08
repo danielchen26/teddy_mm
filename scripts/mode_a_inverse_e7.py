@@ -100,7 +100,7 @@ SCRIPT_VERSION = "mode_a_inverse_e7 1.1"
 ADDENDUM_VERSION = 2
 SUPERSEDES = {"addendum_version": 1, "sha256": "e14a80ad591edf52da33b37ed7dad68a608efbc7d68f676bffa8c709d278038a",
               "commit": "6dc5999", "script_version": "mode_a_inverse_e7 1.0"}
-MAIN = Path("/Users/tianchichen/Documents/GitHub/teddy_mm")
+MAIN = Path(os.environ.get("TEDDY_MM_MAIN", str(ROOT)))  # main checkout that holds data/ and outputs/
 _BASE = MAIN if MAIN.exists() else ROOT
 ADDENDUM, SELECTION = "E7.json", "E7_selection.json"
 PROTEINS = ("CD56", "CD94", "CD335", "CD3")  # E3's gap proteins = E5's / E5-M's head proteins: the registered NK/T panel

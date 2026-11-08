@@ -41,10 +41,10 @@ A site4 run (any stage but select) is refused unless registration_v3.json and th
 match. Smoke runs use val-donor cells (--cell-pool val) only.
 
 Full run (from the repo root; not run inside the workflow). Paths to the main checkout's data and outputs:
-  PY=<venv>/bin/python; R=/Users/tianchichen/Documents/GitHub/teddy_mm
+  PY=<venv>/bin/python; R=<teddy_mm repo>
   PYTORCH_ENABLE_MPS_FALLBACK=1 $PY scripts/mode_a_layer_dynamics.py --stage all \
       --processed $R/data/processed/cite --embed-dir $R/data/processed/cite_official \
-      --ckpt /Users/tianchichen/Documents/GitHub/teddy_mwe/ckpt/teddy_g_70M \
+      --ckpt <teddy_mwe repo>/ckpt/teddy_g_70M \
       --medians $R/data/reference/teddy_gene_medians.json \
       --head-ckpt $R/outputs/cite_phase1_official/best.pt --probe-dir $R/outputs/mode_a_official \
       --out-dir $R/outputs/v3/E5 --device auto --threads 4

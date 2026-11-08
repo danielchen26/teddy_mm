@@ -1494,9 +1494,9 @@ def write_report(path: Path, results: dict):
 
     lines.append("### Re-run\n")
     lines.append("```bash")
-    lines.append("cd /Users/tianchichen/Documents/GitHub/teddy_mm")
+    lines.append("cd <teddy_mm repo>")
     lines.append(
-        "PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. "
+        "PYTHONPATH=<ANM repo>:. "
         ".venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100 "
         "--workers 9  # add --label-cost-split legacy --perm-null within_cell for the old numbers"
     )

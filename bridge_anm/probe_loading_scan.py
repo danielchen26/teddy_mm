@@ -12,6 +12,7 @@ NOT Mode A. Dim subsets are NOT true context-length variants.
 from __future__ import annotations
 
 import argparse
+import os
 import json
 import sys
 from pathlib import Path
@@ -154,7 +155,7 @@ def main():
 
     feasibility = check_reencode_feasibility(args.ckpt)
     # also check Air-typical ckpt path
-    air_ckpt = Path("/Users/tianchichen/Documents/GitHub/teddy_mwe/ckpt/teddy_g_70M")
+    air_ckpt = Path(os.environ.get("TEDDY_CKPT", str(Path(__file__).resolve().parents[2] / "teddy_mwe" / "ckpt" / "teddy_g_70M")))
     if air_ckpt.exists() and args.ckpt != air_ckpt:
         feasibility["alt_ckpt_check"] = check_reencode_feasibility(air_ckpt)
 

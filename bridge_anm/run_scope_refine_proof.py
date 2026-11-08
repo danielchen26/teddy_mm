@@ -1045,9 +1045,9 @@ def write_report(path: Path, results: dict) -> None:
     lines.append("### Re-run")
     lines.append("")
     lines.append("```bash")
-    lines.append("cd /Users/tianchichen/Documents/GitHub/teddy_mm")
+    lines.append("cd <teddy_mm repo>")
     lines.append(
-        "PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. "
+        "PYTHONPATH=<ANM repo>:. "
         ".venv/bin/python bridge_anm/run_scope_refine_proof.py"
     )
     lines.append("```")

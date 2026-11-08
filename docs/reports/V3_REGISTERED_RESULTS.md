@@ -772,6 +772,6 @@ Eight pre-registered experiments on frozen TEDDY tested the decision-gain claims
 - For E7, the git committer dates are read from the commits and the `progress.log` times from the log lines by the builder, not typed.
 - Every timestamp value is in UTC.
 
-`outputs/…` paths are under `/Users/tianchichen/Documents/GitHub/teddy_mm` and are not committed. `registration/…` and `README.md` are in this repository.
+`outputs/…` paths are under `<teddy_mm repo>` and are not committed. `registration/…` and `README.md` are in this repository.
 
 > **中文：** 本文用到的每个数字都以 `{value, source_file, source_key}` 形式收录于 `v3_numbers.json`，供之后更新页面使用。

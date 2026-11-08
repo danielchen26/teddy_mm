@@ -720,9 +720,9 @@ def write_report(path: Path, results: dict):
 
     lines.append("### Re-run\n")
     lines.append("```bash")
-    lines.append("cd /Users/tianchichen/Documents/GitHub/teddy_mm")
+    lines.append("cd <teddy_mm repo>")
     lines.append("PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python bridge_anm/export_cite_events.py --n-cells 0 --ood-n 2000")
-    lines.append("PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_stat_proof.py")
+    lines.append("PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_stat_proof.py")
     lines.append("```\n")
     lines.append(f"Outputs: `{path.parent}/STAT_PROOF.md`, `stat_proof_results.json`.\n")
     lines.append(f"Generated: {d.get('timestamp_local')}\n")

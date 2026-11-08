@@ -33,7 +33,7 @@ cells only (two label-free pseudo-donors), with small B; it never reads a site4 
 Full run (repo root):
   PY=<venv>/bin/python
   ANM_ROOT=<anm_v2_fix> $PY bridge_anm/v3_e1_mode_b.py --stage all \
-      --out-dir /Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E1 --threads 4
+      --out-dir outputs/v3/E1 --threads 4
 """
 from __future__ import annotations
 
@@ -78,8 +78,9 @@ K3 = ("q3", "q3_annotation_only")                                               
 KEY_NAMES = K1 + K3 + ("annotation", "gated", "gated_per_batch")
 LC_N = [0, 25, 50, 100, 200, 500, 1000, 2000, 5000, "all"]
 SCHEMA = ROOT / "bridge_anm" / "schemas" / "cite_lineage_finite_field_v0.json"
-DEFAULT_OUT = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E1")
-SMOKE_OUT = Path("/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/v3/E1_smoke")
+MAIN = Path(os.environ.get("TEDDY_MM_MAIN", str(ROOT)))  # main checkout that holds outputs/ (set when running from a worktree)
+DEFAULT_OUT = MAIN / "outputs" / "v3" / "E1"
+SMOKE_OUT = MAIN / "outputs" / "v3" / "E1_smoke"
 SMOKE = {"n_primary": 1600, "n_secondary": 600, "seed": 0, "n_boot": 40, "n_perm": 40,
          "lc_n": [0, 25, 200, "all"], "lc_draws": 2, "mlp_seeds": 1}
 
