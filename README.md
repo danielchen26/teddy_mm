@@ -30,19 +30,22 @@
 ## ANM diagnosis of TEDDY's representation (Nov 2026)
 
 A different question from the decision-layer work below: **when a CRISPR knockout changes a measured protein, can that
-change still be recovered from each stage of TEDDY's computation** (normalized RNA → rank tokens → pooled embedding)?
+change still be recovered from each stage of the computation** (normalized RNA → TEDDY's rank tokens → its pooled embedding → the teddy_mm protein head)?
 Run with [`anm_diag/`](anm_diag/), a declaration-driven runner that rejects illegal designs before any statistic and
 seals the design with data and code hashes. Full write-up: [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md).
 
 - **Sealed, run once (Perturb-CITE-seq, Frangieh 2021; ECCITE-seq, Papalexi 2021):** no TEDDY stage was rejected for
   any of five protein readouts. For PD-L1 under IFN-γ-pathway knockouts in melanoma, TEDDY-G 70M's pooled embedding
   retains the protein response (*u* = +0.04 [−0.01, +0.09], margin 0.10), while the PD-L1 transcript alone explains
-  almost none of it (*u* = +0.93). Papalexi and HLA-E are unresolved (five treated targets per dataset).
+  almost none of it (*u* = +0.93). The loss appears in the teddy_mm phase-1 head: *u* rises to +0.20 [+0.13, +0.26] at
+  its latent layer and +0.46 at its output (`loss_at` embedding → head latent). The other readouts show the same step
+  as a relative loss (five treated targets per dataset leave the input view itself unresolved).
+- **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
+  were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
+  (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
 - **Exploratory (KS-2, Replogle 2022 CRISPRi):** for mitoribosome knockdowns the MT gene-set response is recoverable
-  from TEDDY's rank tokens but not from the same genes without order or from the gene-mean embedding
-  (*u* = +0.47 [+0.29, +0.64]): the signal sits in rank order and pooling loses it.
-- **Withdrawn pending rerun:** the teddy_mm head stages. The first sealed run fed the head un-normalized embeddings;
-  RAW, TOKENS and Z do not use the head and stand.
+  from the input but not from the gene-mean embedding (*u* = +0.47 [+0.29, +0.64]) or from the genes without their
+  rank order.
 
 Phase-1 per-protein results and the limits of the 0.60 Pearson: [`docs/reports/PHASE1_PER_PROTEIN.md`](docs/reports/PHASE1_PER_PROTEIN.md).
 
@@ -474,7 +477,7 @@ teddy_mm/
 - Confidence cut-offs (on the v2 key never better than the fixed rule's own margin; v3 E1.4a inconclusive), and zero-label adoption of a new question (as for any written rule); v3: a classifier trained on the old question's labels still answered the new one better (E1.1c loss)
 - The registered v3 "can claim" list ([ledger](#registered-experiments-v3)): ANM's engine equals the declared rule and its leave-one-out equals the closed form (checks, not gains), plus measured operating points, degradation curves and NK-vs-T comparisons of TEDDY + head
 
-**Separately (Nov 2026):** the ANM response-sufficiency diagnosis of TEDDY's own stages (RAW → TOKENS → Z) has its own can / cannot claim list in [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md#what-can-and-cannot-be-claimed); it uses controlled perturbations and measured readouts, which the decision-layer work above does not.
+**Separately (Nov 2026):** the ANM response-sufficiency diagnosis of TEDDY's stages and the phase-1 head (RAW → TOKENS → Z → head) has its own can / cannot claim list in [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md#what-can-and-cannot-be-claimed); it uses controlled perturbations and measured readouts, which the decision-layer work above does not.
 
 **Not claimed**
 

@@ -1,0 +1,183 @@
+# SEALED: do not edit. A changed design is a new declaration.
+status: sealed
+kind: sufficiency
+measurement_sharing: none
+readout_classes:
+  ridge:
+    regressor: RidgeCV
+    alphas:
+    - 0.1
+    - 0.31622776601683794
+    - 1.0
+    - 3.1622776601683795
+    - 10.0
+    - 31.622776601683793
+    - 100.0
+    - 316.22776601683796
+    - 1000.0
+    - 3162.2776601683795
+    - 10000.0
+    - 31622.776601683792
+    - 100000.0
+    classifier: LogisticRegression
+    C: 0.05
+  hgb:
+    regressor: HistGradientBoostingRegressor
+    classifier: HistGradientBoostingClassifier
+    max_iter: 150
+    learning_rate: 0.05
+    max_leaf_nodes: 15
+inference:
+  folds: 5
+  bootstrap: 1000
+  forward_bootstrap: 300
+  seed: 0
+  standardize_on: control
+  inverse: crossfit_partial_linear
+decision:
+  margin_u: 0.1
+  step_margin: 0.1
+  alpha: 0.05
+anm_declaration: 1
+name: teddy_mm_frangieh2021_ifng_pathway
+system:
+  id: TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)
+  frozen: true
+  inputs:
+  - rna_counts
+  notes: 'The head was trained on bone-marrow CITE-seq (NeurIPS 2021); on melanoma
+    cells it is out of its training distribution. Declared choice: use it as trained
+    (head stages then test this head on new cells). Cells are labelled from their
+    detected guides, not from the file''s perturbation column (which calls 13,316
+    IFN-gamma cells "control" although they have no guide or guides for other genes):
+    a control cell has only non-targeting guides, a treated cell only guides for one
+    target gene (plus any non-targeting guides); cells with no guide or with guides
+    for two genes are left out. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol
+    table that teddy_mm uses (tools/gene_map.py): the file''s own Ensembl ids put
+    HLA-A, -B, -C, -E, B2M and IFNGR2 on alternate-haplotype ids outside TEDDY''s
+    vocabulary, which would drop exactly the MHC genes before TEDDY.
+
+    '
+measurements:
+  rna_counts:
+    modality: rna
+    kind: counts
+  adt_counts:
+    modality: protein
+    kind: counts
+source:
+  controlled: true
+  kind: crispr_ko
+  stratum: IFNγ
+  assign_from_guides: true
+  control_guides:
+  - NO_SITE
+  - ONE_NON-GENE_SITE
+  control:
+  - control
+  treated:
+  - IFNGR1
+  - IFNGR2
+  - JAK1
+  - JAK2
+  - STAT1
+  cluster: target
+  max_control_cells: 4000
+  control_seed: 0
+readouts:
+- id: MHC1
+  measurement: adt_counts
+  statistic: adt_clr
+  features:
+  - HLA_A
+- id: PDL1
+  measurement: adt_counts
+  statistic: adt_clr
+  features:
+  - CD274
+- id: HLAE
+  measurement: adt_counts
+  statistic: adt_clr
+  features:
+  - HLA_E
+nodes:
+- id: RAW
+  from: rna_counts
+  op: log1p_cp10k
+  operator: analysis
+  role: chain
+- id: TOKENS
+  from: RAW
+  op: teddy_official_tokens
+  operator: system
+  role: chain
+- id: Z
+  from: TOKENS
+  op: teddy_embedding
+  operator: system
+  role: chain
+- id: HEAD_LAT
+  from: Z
+  op: head_latent
+  operator: system
+  role: chain
+- id: HEAD_OUT
+  from: HEAD_LAT
+  op: head_output
+  operator: system
+  role: chain
+- id: SET
+  from: TOKENS
+  op: drop_order
+  operator: analysis
+  role: probe
+- id: MRNA_HLA
+  from: RAW
+  op: rna_of_gene:HLA-A,HLA-B,HLA-C,B2M
+  operator: analysis
+  role: probe
+- id: MRNA_PDL1
+  from: RAW
+  op: rna_of_gene:CD274
+  operator: analysis
+  role: probe
+- id: MRNA_HLAE
+  from: RAW
+  op: rna_of_gene:HLA-E
+  operator: analysis
+  role: probe
+- id: ADT_MHC1
+  from: adt_counts
+  op: adt_readout:MHC1
+  operator: analysis
+  role: positive_control
+  readout: MHC1
+- id: ADT_PDL1
+  from: adt_counts
+  op: adt_readout:PDL1
+  operator: analysis
+  role: positive_control
+  readout: PDL1
+- id: ADT_HLAE
+  from: adt_counts
+  op: adt_readout:HLAE
+  operator: analysis
+  role: positive_control
+  readout: HLAE
+chain:
+- RAW
+- TOKENS
+- Z
+- HEAD_LAT
+- HEAD_OUT
+data_hashes:
+  rna_h5ad: cc42ef38bcf703a00e0c77c7945dd53159b12d814c438ae8afeaed9bc71f48d1
+  adt_h5ad: 1f85827b5afad11a30d8ac99399772231110a1c3723bed6ecf7981a12cc3dbcc
+  vocab: e184b550fa2c3971dfa7cdaf056f9d8075b254a467e0bae302701d6eb899aef8
+  medians: 3d3637fa24ef81bf431aa42c8b85ffe656c22b999b2ef937428490704982c001
+  head_ckpt: b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15
+  teddy_ckpt: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  symbol_map: 8e427620b667eeda7644f818fd9320aeaa258fb65ba90cc352a105639ec3d0e0
+code_hash: cb8fca78dc476713ef2171c208e51f27ce9794168f6ad1ee2acbfca3978f128f
+sealed_at: '2026-11-08T21:36:08+00:00'
+seal_digest: 9d5f8f95a7b8d17c1abd52975d2f015a2f5f6f078dff16f3d04d61b8cf1dc669
