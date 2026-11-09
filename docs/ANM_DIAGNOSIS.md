@@ -6,9 +6,11 @@ Code and records: [`anm_diag/`](../anm_diag/) (how-to in its [README](../anm_dia
 > [!IMPORTANT]
 > **Status (9 Nov 2026).** The sealed tests are complete. TEDDY's own stages (RAW → TOKENS → Z) are never rejected.
 > After the head-input fix, the sealed rerun puts a loss between TEDDY's embedding and the teddy_mm head's latent layer
-> (Z → HEAD_LAT): absolute for Frangieh PD-L1, relative for the other readouts. A post hoc two-sided reread
-> (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later. A follow-up that splits the head
-> into its operations is designed but has not run. Details: [Corrections](#corrections-and-deviations).
+> (Z → HEAD_LAT): absolute for Frangieh PD-L1, relative for the other readouts. Two exploratory follow-ups, each sealed
+> and run once, have also run: splitting the head places the loss in its later layers and decoder (the normalization
+> and the first layer lose nothing), and a forward test of typed source events shows how the head responds to the
+> knockout direction. A rule written before the head split selects the next intervention (retrain the head with
+> IFN-γ-varied cells); that step has not run. Details: [Corrections](#corrections-and-deviations).
 
 ## The question
 
@@ -157,20 +159,66 @@ Frangieh PD-L1, Papalexi PD-L1 and PD-L2 are unchanged. The reread fits nothing 
 because the rule was changed after the sealed results were seen. (The reread uses anm_diag 0.2.0, which arrives with
 the head-split follow-up.)
 
-### Where in the head? (operator analysis and the next test)
+### Where in the head? Head split (exploratory, sealed, run once)
 
-The head computes HEAD_LAT = L3(SiLU(L2(SiLU(L1(z / (‖z‖ + 1e-6)))))). Its three 512 × 512 weight matrices, read
-without any cell data (`anm_diag/runs/teddy_mm_head/head_weight_svd.json`), are strongly anisotropic: in the first
-layer the largest-to-smallest singular-value ratio is about 37,000, and 493 of 512 singular values are below 10% of the
-largest (113 below 1%); the second and third layers are similar (497 and 481 below 10%).
+The head computes HEAD_LAT = L3(SiLU(L2(SiLU(L1(z / (‖z‖ + 1e-6)))))). The head-split declarations insert each of
+these operations as its own stage (Z_UNIT, L1, H1, L2, H2) and use the paper's two-sided rule; every stage shared with
+the head-fix rerun matches it digit for digit. Records: `anm_diag/runs/*_headsplit/`.
 
-*Why it matters.* A full-rank linear layer cannot destroy information, so a measured "loss" across a linear layer means
-a direction squeezed so small that ridge and gradient boosting no longer read it (the paper's bounded-class reading).
-Information can genuinely be destroyed only by the normalization (it discards the embedding's length) and by SiLU,
-which is not one-to-one: its minimum sits at x ≈ −1.28, so inputs below that fold onto values already taken between
-−1.28 and 0. A head-split declaration (exploratory, designed after the headfix results) inserts each of these
-operations as its own stage, so the loss can be pinned to the normalization (fix the head's input) or the MLP (retrain
-or constrain it). It is sealed and run once like the others; it has not run yet.
+Increase in |*u*| between neighbouring stages (95% interval; bold = lower bound above 0.10, a resolved step):
+
+| data | readout | Z → Z_UNIT | Z_UNIT → L1 | L1 → H1 | H1 → L2 | L2 → H2 | H2 → HEAD_LAT | HEAD_LAT → HEAD_OUT | root cause |
+|---|---|---|---|---|---|---|---|---|---|
+| Frangieh | PD-L1 | [−0.005, +0.004] | [−0.031, +0.025] | [−0.014, +0.019] | [−0.020, +0.026] | [−0.034, +0.054] | **[+0.108, +0.187]** | **[+0.223, +0.294]** | `loss_at` H1 → HEAD_LAT (via unresolved L2, H2) |
+| Frangieh | MHC-I | [−0.034, +0.011] | [−0.258, +0.152] | [+0.000, +0.000] | [−0.370, +0.237] | [−0.099, +0.082] | [−0.193, +0.178] | [−0.268, +0.229] | `reference_unresolved` |
+| Frangieh | HLA-E | [−0.140, +0.231] | [−0.367, +0.353] | [−0.030, +0.031] | [−0.267, +0.282] | **[+0.162, +0.647]** | [−0.057, +0.275] | **[+0.163, +0.993]** | `relative_loss_at` L2 → H2 |
+| Papalexi | PD-L1 | [+0.000, +0.006] | [−0.014, +0.032] | [−0.008, +0.030] | [+0.016, +0.044] | [+0.010, +0.038] | [+0.088, +0.166] | **[+0.111, +0.150]** | `relative_loss_at` HEAD_LAT → HEAD_OUT |
+| Papalexi | PD-L2 | [−0.011, +0.008] | [−0.052, +0.055] | [−0.024, +0.028] | [−0.001, +0.069] | [+0.044, +0.097] | [+0.099, +0.157] | **[+0.126, +0.182]** | `relative_loss_at` HEAD_LAT → HEAD_OUT |
+
+*Reading.* The resolved losses sit in the later half of the head and in the decoder; none in the first half. Dividing
+by the length changes |*u*| by at most 0.04 for PD-L1, PD-L2 and MHC-I; no readout loses anything at the first layer or
+its SiLU. Frangieh PD-L1 keeps bounded support through H1, and its resolved step is the third linear layer; HLA-E's is
+the second SiLU; for Papalexi each later step adds a little and the resolved step is the decoder.
+
+*Why, from the operators* (`head_operator_stats.json`, weights and TEDDY states only, no readouts): ‖z‖ varies by only
+4–5% across cells (coefficient of variation 0.041 and 0.050), so the normalization has almost nothing to discard; no
+input to the first SiLU falls on its folding branch (x < −1.2785), so on these cells it is one-to-one; 16% (Frangieh)
+and 28% (Papalexi) of the second SiLU's activations do, the first place where information can actually be destroyed.
+The third linear layer is full rank (weights in `runs/teddy_mm_head/head_weight_svd.json`: 481 of 512 singular values
+below 10% of the largest), so a loss measured there is a direction squeezed below what the declared readout classes
+read, not information gone. The decoder ends in 134 outputs and necessarily drops all other directions.
+
+This is exploratory (designed after the head-fix results) and changes no sealed verdict; it says where the loss sits,
+not why.
+
+### Forward: typed source events (exploratory, sealed, run once)
+
+The forward half gives the frozen pipeline typed in silico source events (site = gene, channel = count or gene
+embedding, sign and amplitude; plus a channel that moves Z itself) and follows the state displacement layer by layer
+and the head's predicted protein (log mean). Records: `anm_diag/runs/forward_typed_events/` (100 confirmatory cells per
+dataset; detection floors set on 20 separate development cells). The readout is model output, so this half describes
+how the model responds, not whether a stage is sufficient.
+
+- **Checks pass.** A routing control (counts of expressed genes outside TEDDY's vocabulary) leaves tokens, states and
+  outputs exactly unchanged; the baseline Z recomputed from the weights matches the stored TEDDY states to within 1e-6
+  (9.5e-7 and 4.8e-7).
+- **The knockout direction.** Moving Z along the measured knockout direction (treated mean − control mean) changes the
+  head's predicted PD-L1 by −0.135 [−0.156, −0.113] per full displacement in Frangieh: the measured sign, and larger
+  than all 12 random directions of the same length. In Papalexi it is +0.067 [+0.048, +0.086]: the opposite sign to the
+  measurement, at the 58th percentile of random directions. Consistent with the inverse result that the head does not
+  keep this contrast, most clearly in Papalexi.
+- Gene-level events, layer-by-layer displacements and step-refinement checks are in the report.
+
+### Step 4: closing the loop (rule fixed before the head split)
+
+`anm_diag/declarations/teddy_mm_step4_intervention_rule.md` (sha256 `d47f4660…`, written before the head split was sealed
+or run) maps the location of Frangieh PD-L1's loss to an intervention: normalization → add log‖z‖ to the head's input;
+first layer → retrain with a declared constraint on that layer; later layers or no single resolved step → retrain with
+training data that contains IFN-γ variation. Applied to the head-split record, the root-cause span and its only resolved
+step both fall in the last group, so the rule selects **retraining with IFN-γ-varied cells**. The criterion: the change
+against a control with the same recipe minus the change, at least 3 seeds each; it counts only if every treated seed
+brings HEAD_LAT to bounded support and the control does not, with a guardrail of no more than 0.02 drop in mean
+per-protein Pearson on teddy_mm's site4 test. This step has not run.
 
 ## Corrections and deviations
 
@@ -178,7 +226,7 @@ or constrain it). It is sealed and run once like the others; it has not run yet.
 |---|---|---|---|
 | 8 Nov, after the first sealed run | **Head input not normalized.** The adapter fed TEDDY's raw gene-mean embedding (L2 norm ≈ 26) to the phase-1 head; teddy_mm trains and evaluates the head on embeddings divided by their L2 norm (`scripts/04_train.py` line 101, `scripts/05_eval.py` line 55). | The first run's head stages tested an operator teddy_mm never uses; they are void (`runs/frangieh2021`, `runs/papalexi2021`). RAW, TOKENS, Z, the probes and the positive controls do not use the head. | Fixed in `PerturbCiteAdapter.head_input`, checked element-wise against teddy_mm's torch code (within 1e-5), `tests/test_head_operator.py`. Same designs resealed together before any rerun result, each run once (`runs/*_headfix`). Root causes and loss locations did not change; magnitudes did (HEAD_LAT, HEAD_OUT, first run → rerun): Frangieh PD-L1 +0.31 → +0.20, +0.58 → +0.46; MHC-I +0.12 → +0.01, +0.56 → +0.19 (output from reject to unresolved); HLA-E +1.19 → +0.94, +1.15 → +1.36; Papalexi within 0.04. The bad input amplified Frangieh's loss but was not its source. Because the fix came after results were seen, a strict reader may treat the head-stage conclusions as exploratory. |
 | 8 Nov, rerun | The rerun ran on a second Mac (Python 3.11.13 vs 3.11.15, identical package versions). | RAW, TOKENS and Z match the first run to three decimals, so only the head input changed between runs. | — |
-| 8 Nov, rerun seal | The rerun's seal records, for `teddy_ckpt`, the sha256 of an empty file (`e3b0c442…`): on the second Mac the checkpoint path read as zero bytes. | TEDDY was not run again: Z came from the states computed in the first run, whose seal certifies the real checkpoint (`ba0a98f9…`). The states file itself is outside both seals (by design it is made after sealing). The results are unaffected, but the rerun's seal does not certify the TEDDY weights. | Future seals should check that the checkpoint is fully present and hash the reused states file. |
+| 8–9 Nov, seals | The head-fix, head-split and first forward seals record, for `teddy_ckpt`, the sha256 of an empty file (`e3b0c442…`). The machine's Documents folder syncs through iCloud, and at sealing time the checkpoint was an undownloaded placeholder that read as zero bytes; loading uses memory mapping, which downloads it, so runs used the real file. | The weights never changed (sha256 `ba0a98f9…`, 284,887,424 bytes). Head-fix and head-split do not load TEDDY (they use the stored states); the forward run recomputes Z from the weights and matches the stored states to within 1e-6, which ties the states to the real checkpoint. | The sealing code now checks bytes read against the file size and refuses to seal otherwise (anm_diag 0.3.0). |
 | 8 Nov, first sealed run | Papalexi was sealed by the pipeline after the Frangieh results existed (the script sealed and ran one dataset at a time). | The design was fixed before any result: the sealed file's design fields match the declaration written before the run, field by field (md5 `514693684f…`). | The pipeline now seals all declarations before running any; the rerun's two declarations were sealed together. |
 | 9 Nov | Two-sided reread of all records (above). | MHC-I head claim and KS-2 ribosome `no_deficit` do not survive; HLA-E's step moves. | Exploratory; the sealed verdicts stand as recorded. |
 | KS-2 | First pass judged each stage by the class with the best point estimate; the MT positive control then failed by 0.003 (`control_failed`) although ridge recovered it exactly. | Reread with the union rule (support if any declared class supports) gives `loss_at` TOKENS → Z for MT. | The union rule is now the package's rule everywhere; because it was adopted after the first pass, KS-2 stays exploratory. |
@@ -212,9 +260,9 @@ embedding and its latent layer (*u* from +0.04 to +0.20 [+0.13, +0.26]).
 with the input view not within tolerance (the MHC-I claim does not survive the two-sided reread; HLA-E's step moves to
 HEAD_LAT → HEAD_OUT).
 
-**Exploratory:** the KS-2 pooling result; the two-sided reread; anything from the head-split test.
+**Exploratory:** the KS-2 pooling result; the two-sided reread; the head split (losses in the later layers and decoder, none at the normalization or the first layer); the forward test.
 
-**Cannot claim:** which operation inside the head loses the response; that the head loses it on bone-marrow cells;
+**Cannot claim:** why the head loses the response (the head split locates, it does not explain; the step-4 intervention has not run); that the head loses it on bone-marrow cells;
 that TEDDY is sufficient for perturbation responses in general; that a rejected stage is "broken" (a reject names a
 step of the map under declared readout classes).
 

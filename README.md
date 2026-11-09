@@ -40,6 +40,10 @@ seals the design with data and code hashes. Full write-up: [`docs/ANM_DIAGNOSIS.
   almost none of it (*u* = +0.93). The loss appears in the teddy_mm phase-1 head: *u* rises to +0.20 [+0.13, +0.26] at
   its latent layer and +0.46 at its output (`loss_at` embedding → head latent). The other readouts show the same step
   as a relative loss (five treated targets per dataset leave the input view itself unresolved).
+- **Exploratory follow-ups (sealed, run once):** splitting the head puts the loss in its later layers and decoder,
+  not in the input normalization or the first layer; a forward test of typed source events shows the head's PD-L1
+  prediction follows the knockout direction in melanoma but not in THP-1 cells. A rule written before the split picks
+  the next intervention: retrain the head with IFN-γ-varied cells, against an unchanged control.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

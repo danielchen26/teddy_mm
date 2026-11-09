@@ -1,0 +1,204 @@
+# SEALED: do not edit. A changed design is a new declaration.
+status: sealed
+kind: forward
+measurement_sharing: none
+readout_classes:
+  ridge:
+    regressor: RidgeCV
+    alphas:
+    - 0.1
+    - 0.31622776601683794
+    - 1.0
+    - 3.1622776601683795
+    - 10.0
+    - 31.622776601683793
+    - 100.0
+    - 316.22776601683796
+    - 1000.0
+    - 3162.2776601683795
+    - 10000.0
+    - 31622.776601683792
+    - 100000.0
+    classifier: LogisticRegression
+    C: 0.05
+  hgb:
+    regressor: HistGradientBoostingRegressor
+    classifier: HistGradientBoostingClassifier
+    max_iter: 150
+    learning_rate: 0.05
+    max_leaf_nodes: 15
+inference:
+  folds: 5
+  bootstrap: 1000
+  forward_bootstrap: 300
+  seed: 0
+  standardize_on: control
+decision:
+  margin_u: 0.1
+  step_margin: 0.1
+  alpha: 0.05
+  detection_floor: 10 x the largest of the precision error and the repeat difference
+    on development cells, for states and readouts separately; a response counts as
+    detected only above it
+  step_tolerance: 0.25
+  first_order: 'embed channel only: per site, the share of confirmatory cells passing,
+    and the cell-mean slopes'
+  reference: each site's response placed within the random-site distribution (descriptive,
+    no threshold)
+  intervals: cell bootstrap, 1000 draws, 95%
+anm_declaration: 1
+name: teddy_mm_forward_typed_events
+version: 2
+exploratory: true
+exploratory_reason: 'Designed after the sealed inverse runs located a loss in the
+  head; it asks how gene-level sources propagate step by step and how the head''s
+  protein readout responds. Exploratory evidence (ANM paper p. 8).
+
+  '
+system:
+  id: TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)
+  frozen: true
+datasets:
+  frangieh2021:
+    declaration: declarations/teddy_mm_frangieh2021.yaml
+    readouts:
+    - CD274
+    - HLA-A-B-C
+    - HLA-E
+  papalexi2021:
+    declaration: declarations/teddy_mm_papalexi2021.yaml
+    readouts:
+    - CD274
+baseline:
+  cells: control
+  development:
+    n: 20
+    seed: 1
+  confirmatory:
+    n: 100
+    seed: 2
+  sizes_reason: compute budget (about 2 x 22,000 TEDDY forward passes, roughly an
+    hour on the MacBook Pro), fixed now
+events:
+  time: 0
+  sites:
+    pathway:
+    - IFNGR1
+    - IFNGR2
+    - JAK1
+    - JAK2
+    - STAT1
+    - IRF1
+    readout_genes:
+    - CD274
+    - PDCD1LG2
+    - HLA-A
+    - HLA-B
+    - HLA-C
+    - B2M
+    - HLA-E
+    random:
+      n: 12
+      seed: 3
+      from: genes in TEDDY's vocabulary that are tokens in >= 90% of development cells
+  channels:
+    count:
+      eps:
+      - 1.0
+      - 0.5
+      record:
+      - rank shift
+      - admitted or removed
+      - number of tokens whose position moves
+    embed:
+      eps:
+      - 0.2
+      - 0.1
+    z_direction:
+      eps:
+      - 1.0
+      - 0.5
+      random_directions:
+        n: 12
+        seed: 5
+  signs:
+  - 1
+  - -1
+  skip: a site with zero count (count channel), not among the cell's tokens (embed
+    channel), or outside TEDDY's vocabulary (both) is skipped in that cell; skips
+    are counted and reported per site
+controls:
+  routing:
+    n: 2
+    seed: 4
+    sites: genes outside TEDDY's vocabulary
+    expect: state and readout change exactly 0
+  repeat: each development cell's baseline is run twice in the run's precision; reported
+    as a determinism check
+  precision: each development cell is also run in float64 on the CPU; the largest
+    float32-vs-float64 difference is the numerical error of one forward pass
+measurements:
+  state:
+  - input
+  - layer_1
+  - layer_2
+  - layer_3
+  - layer_4
+  - layer_5
+  - layer_6
+  - layer_7
+  - layer_8
+  - layer_9
+  - layer_10
+  - layer_11
+  - layer_12
+  - Z
+  - Z_UNIT
+  - L1
+  - H1
+  - L2
+  - H2
+  - HEAD_LAT
+  state_metric: relative displacement |dh| / |h|; Frobenius norm over real tokens
+    for input and layers
+  readout: head output log mean for the declared proteins, and the norm of the change
+    over all 134
+  slope: g(eps) = (O(+eps) - O(-eps)) / (2 eps)
+reporting:
+- 'per site and channel: propagation profile over steps, readout response, step check,
+  skips'
+- 'the count channel''s rank shifts, admissions and moved tokens: that is how the
+  source reaches TEDDY; counts are scaled before normalization, so a scaled count
+  need not be an integer'
+- 'z_direction: the head''s response to the measured knockout direction, placed among
+  the random directions'
+- state and readout responses side by side; no gain decomposition beyond the linear
+  case; a joint change is association under intervention, not mediation (SI S1.3)
+- 'a model readout, not a measurement: this half says how the model responds, not
+  whether a state is sufficient'
+locked_sha256: edcf7687f68178b879b095c29c6dda259dc72784ce69f7afbb412c556ea95a85
+data_hashes:
+  frangieh2021:rna_h5ad: cc42ef38bcf703a00e0c77c7945dd53159b12d814c438ae8afeaed9bc71f48d1
+  frangieh2021:adt_h5ad: 1f85827b5afad11a30d8ac99399772231110a1c3723bed6ecf7981a12cc3dbcc
+  frangieh2021:vocab: e184b550fa2c3971dfa7cdaf056f9d8075b254a467e0bae302701d6eb899aef8
+  frangieh2021:medians: 3d3637fa24ef81bf431aa42c8b85ffe656c22b999b2ef937428490704982c001
+  frangieh2021:head_ckpt: b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15
+  frangieh2021:teddy_ckpt: ba0a98f9b975dc42a1a2d384e9821e4f7cce795ba4bb17d2dfb940829438b0f3
+  frangieh2021:symbol_map: 8e427620b667eeda7644f818fd9320aeaa258fb65ba90cc352a105639ec3d0e0
+  frangieh2021:inverse_declaration: 2906b25fdf40a4ce6ffe31fad374d4740b1369e7ec2017315e4da8434252ccdb
+  frangieh2021:teddy_encoder: 6768e30688f89cdc349e70bfe67a209d1c9cd22074ceb09015fc8316d1220b21
+  frangieh2021:teddy_states: 216b77a003c62ad48006c43295bcdd82e47d1233f49ffb6fec79d1a9898c0348
+  papalexi2021:rna_h5ad: 03e9602d124c261281936717d5795445805e6e704a52b0310bcde94225aa0929
+  papalexi2021:adt_h5ad: e1e293c75dfebe09301bf32093703cfd5f50c17d6fb53144d8213e52e0e4e150
+  papalexi2021:vocab: e184b550fa2c3971dfa7cdaf056f9d8075b254a467e0bae302701d6eb899aef8
+  papalexi2021:medians: 3d3637fa24ef81bf431aa42c8b85ffe656c22b999b2ef937428490704982c001
+  papalexi2021:head_ckpt: b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15
+  papalexi2021:teddy_ckpt: ba0a98f9b975dc42a1a2d384e9821e4f7cce795ba4bb17d2dfb940829438b0f3
+  papalexi2021:symbol_map: 5d4320ce715f3e6d73c244bd353cc62066f592bc5ca046929cbb91d1ee82763a
+  papalexi2021:inverse_declaration: 3c65796b05d777be829209bdafde7d0d167a02cdc1a5363b930d00ced5d63749
+  papalexi2021:teddy_encoder: 6768e30688f89cdc349e70bfe67a209d1c9cd22074ceb09015fc8316d1220b21
+  papalexi2021:teddy_states: d2b2974da8c700fccbaca8318a6e5d56e4c0eecc24152e37c960792cfffe7193
+  head_adt_names: be408eff537eeeca24129210592605f809724c3282d7c55e008b87b3c193c2da
+code_hash: 136d337ed8e4ed2c0939b5569b2b19f008cc06b20fa95552cadb0e7e6ddebcbd
+sealed_at: '2026-11-09T17:16:30+00:00'
+seal_digest: 3e4015b42fca3a1a482588a5deca2c073e9c967cc0f7ec5710b9e520685d472b

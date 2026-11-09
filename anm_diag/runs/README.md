@@ -10,4 +10,6 @@ Each folder holds the JSON record (`anm_record.json`: declaration, every interva
 | [`frangieh2021_headfix/`](frangieh2021_headfix/) | Perturb-CITE-seq, melanoma, IFN-γ (5 treated targets, 5,171 cells) | sealed, run once (rerun after the head-input fix) | **all stages**, including the head |
 | [`papalexi2021_headfix/`](papalexi2021_headfix/) | ECCITE-seq, THP-1, IFN-γ (5 treated targets, 7,478 cells) | sealed, run once (rerun after the head-input fix) | **all stages**, including the head |
 | [`frangieh2021/`](frangieh2021/), [`papalexi2021/`](papalexi2021/) | first sealed run | superseded for the head | RAW, TOKENS, Z only; head stages void |
+| [`frangieh2021_headsplit/`](frangieh2021_headsplit/), [`papalexi2021_headsplit/`](papalexi2021_headsplit/) | the head split into its operations (two-sided rule) | sealed, exploratory | all stages; see folder README for code version |
+| [`forward_typed_events/`](forward_typed_events/) | typed source events through TEDDY and the head | sealed, exploratory | report and record; see folder README for code version |
 | [`teddy_mm_head/`](teddy_mm_head/) | singular values of the head's weight matrices (no cell data) | descriptive | — |
