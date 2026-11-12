@@ -264,6 +264,32 @@ With one target as the treated class the resampling unit is the guide (3 or 4 pe
 (5); intervals from so few clusters are approximate. Batch 4 exposed a weakness of the fold assignment (the declared seed put
 all five targets into one fold); `run` now falls back to the next seed for the folds and records it (`fold_seed`).
 
+### A closed loop on held-out genes (exploratory, 12 November)
+
+[`anm_diag/runs/loop_20261112/`](../anm_diag/runs/loop_20261112/), design, rule and an audit of the plan committed before
+the runs. The pooled audits name the step from Z to the head latent (the head's MLP) as the place where the PD-L1 response
+is lost. That prescribes repairing the MLP and rules out repairing the decoder alone. Both repairs were fitted with the
+same cells, loss and budget, each on four of a data set's five targets, and audited on the knockouts of the fifth and on
+control cells no fit had used.
+
+- **By the rule written first, the loop closed at the located step on both cell types.** PD-L1, pooled, *u* at the head
+  output: melanoma 0.45 as trained, 0.12 with the MLP repaired, 0.43 with the decoder repaired (Z 0.06); THP-1 0.54, 0.16,
+  0.47 (Z 0.12). After the MLP repair the tool names no step and the head adds 0.06 and 0.04 beyond Z; after the decoder
+  repair it names the same step as before.
+- **Gene by gene.** The tool names a head step for 10 of 10 held-out genes as trained, 10 of 10 after the decoder repair
+  and 0 of 10 after the MLP repair (5 "no loss in the head", 5 "not resolved"; IRF1 on THP-1 goes from 1.12 to 0.60).
+- **The average at the endpoint does not tell the two repairs apart.** With the decoder repaired the head's own PD-L1
+  output falls for unseen knockouts about as much as the measured protein; the audit still rejects it, because the latent
+  is unchanged.
+- **Cost and reach.** On 5,000 bone-marrow test cells the mean correlation over proteins falls from 0.602 to 0.560 to 0.567
+  (MLP repaired on melanoma) and 0.502 to 0.552 (on THP-1), more than the 0.02 allowed by the step-4 rule above; a head
+  repaired on one cell type is still rejected on the other. PD-L2 on THP-1, never in the fit, is repaired as well; HLA-E on
+  melanoma is not.
+
+This is not step 4 as sealed (one seed, a fine-tune of one part on one protein, compared with the head as trained), and by
+that rule's guard the repair would not be credited. What it shows is that the step the audit names is the one whose repair
+removes the loss, on genes the repair never saw and on a second cell type.
+
 ## Corrections and deviations
 
 | when | what | effect | status |
