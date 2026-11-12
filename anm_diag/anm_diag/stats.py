@@ -43,6 +43,28 @@ def folds_by_cluster(clusters, k, seed):
     return np.array([fo[g] for g in clusters])
 
 
+def fold_is_usable(fold, A, k):
+    """Every training part (all folds but one) must hold both treated and control cells."""
+    A = np.asarray(A)
+    return all(len(np.unique(A[fold != f])) == 2 for f in range(k))
+
+
+def usable_folds(clusters, A, k, seed, max_tries=100):
+    """Folds by cluster with the declared seed; if that split leaves a training part without treated cells
+    (or without controls), the next seeds are tried in order. Returns (fold, seed used).
+
+    folds_by_cluster deals whole clusters to folds at random. With few treated clusters they can all land in
+    one fold, and the model for every other fold is then trained on controls only. The fallback reads cluster
+    labels, the treatment indicator and the seed, never an outcome, and it leaves every split that was usable
+    exactly as it was."""
+    for s in range(int(seed), int(seed) + max_tries):
+        fold = folds_by_cluster(clusters, k, s)
+        if fold_is_usable(fold, A, k):
+            return fold, s
+    raise ValueError(f"no usable fold split within {max_tries} seeds: too few treated clusters for {k} folds "
+                     f"(cluster by a finer unit, e.g. source.cluster: guide)")
+
+
 def cluster_bootstrap(A, clusters, B, seed):
     gx = np.unique(clusters[A == 1])
     gi = {g: np.where(clusters == g)[0] for g in gx}

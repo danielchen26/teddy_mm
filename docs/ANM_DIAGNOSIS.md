@@ -220,6 +220,50 @@ against a control with the same recipe minus the change, at least 3 seeds each; 
 brings HEAD_LAT to bounded support and the control does not, with a guardrail of no more than 0.02 drop in mean
 per-protein Pearson on teddy_mm's site4 test. This step has not run.
 
+### The pooled source, separated (exploratory, 11 November)
+
+The two sealed head-fix runs each declare one source that pools several things: five target genes on the melanoma data, and
+five target genes with four batches on the THP-1 data. Writing the source as typed events (`anm_diag/events.py`, rule `S2`)
+flags this: a verdict for the pool says nothing about each pooled value. The same audit was therefore run for each target
+alone on both data sets and for each batch alone on THP-1 (13 runs, plus three quick pooled reruns that reproduce the sealed
+records to 0.0004 and 0.00012 in *u*). Records, results and scripts are in
+[`anm_diag/runs/split_20261111/`](../anm_diag/runs/split_20261111/). All of it was made after the pooled results were
+seen; the sealed verdicts stand.
+
+- **PD-L1: the pooled verdict is not produced by pooling.** On both data sets the head output is rejected for every target
+  and, on THP-1, for every batch; none of TEDDY's three stages is rejected. The MHC-I and HLA-E verdicts on the melanoma data
+  hold for the pool only (JAK1 alone has no resolved MHC-I response; only STAT1 alone has a resolved HLA-E response).
+- **On THP-1 the share lost in the head depends on the target.** Unreadable share at the head output: STAT1 0.28; IFNGR1,
+  IFNGR2 and JAK2 0.56 to 0.60; IRF1 1.07. For PD-L2, IRF1 is rejected already at TEDDY's embedding Z (0.44). The three
+  batches differ twofold in the size of the response (-0.47, -0.96, -0.88) and not in the share lost (0.44 to 0.54).
+- **Why the targets differ.** In TEDDY's embedding the shifts of IFNGR1, IFNGR2, JAK2 and STAT1 point almost the same way
+  (cosine 0.94 to 1.00); IRF1 has 0.26 to 0.30 with them, a shift a third as long, and changes 293 genes in the RNA against
+  742 to 1,535. The head is not insensitive to IRF1's direction (its latent reacts 3.1 times as much as to a random direction
+  of the same length; 2.3 to 2.9 for the other targets). From Z to the head output the gap between knockout and control
+  cells, relative to the spread between cells, grows for the other nine targets and shrinks only for IRF1 (0.14, 0.20, 0.09).
+  A reading compatible with this: the head carries the large shared change of the whole IFN-γ programme being switched off
+  and flattens the small, differently directed change of a knockout that sits next to the readout.
+- **Two follow-ups.** The decoder does not miss IRF1's latent shift (0.89 of it lies in directions that can change the
+  output, 0.88 for the other targets), but its output moves along two or three directions only and its gain along IRF1's
+  shift is about half. Batch 1 has a smaller mean shift and no larger loss because fewer of its cells are shifted (42% to 48%
+  against 63% to 73%) and PD-L1 changes half as much per unit of shift there; *u* is a share of each batch's own response.
+- **The reading put to a direct test** ([`anm_diag/runs/exposure_20261111/`](../anm_diag/runs/exposure_20261111/), design
+  committed before the runs). The head was fine-tuned on half of the THP-1 cells, once without and once with IRF1 knockout
+  cells, and audited on the other half. By the rule written in advance the question is not answered: with IRF1 cells the
+  head output is still rejected for IRF1 (*u* 0.66 against 1.13 as trained; the mark was half of 1.13). Outside the rule, the
+  numbers point away from the reading: without any IRF1 cell the fine-tuned head already reaches 0.72, and for JAK2 the two
+  fine-tuned heads are equal (0.36 against 0.66). Having seen THP-1 cells with their PD-L1 explains more than having seen a
+  small-footprint knockout.
+- **Token coverage.** The weak response to in-silico events is not a matter of which genes are among a cell's input tokens:
+  STAT1 is covered in every cell and its count event still moves Z by 3.3% and 2.0% of the shift under the real knockouts.
+- **Ledger and no-leakage.** The 155 verdicts of 15 runs contain no pair of opposite verdicts at the same readout and stage.
+  All 25 real knockout events of the two data sets pass the three no-leakage routes; the two KS-2 declarations are flagged
+  (readout and model input share the RNA counts; the origin of the labels is not declared).
+
+With one target as the treated class the resampling unit is the guide (3 or 4 per target), with one batch it is the target
+(5); intervals from so few clusters are approximate. Batch 4 exposed a weakness of the fold assignment (the declared seed put
+all five targets into one fold); `run` now falls back to the next seed for the folds and records it (`fold_seed`).
+
 ## Corrections and deviations
 
 | when | what | effect | status |

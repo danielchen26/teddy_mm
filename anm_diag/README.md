@@ -168,3 +168,34 @@ anm_diag/
 ```
 
 > **中文简介**：anm_diag 是按 ANM 论文（§2.2–§2.3、表 2、§8.3）写的通用诊断运行器：一份声明（YAML）+ 一个适配器。`check` 在算任何统计之前拒绝答不了 ANM 问题的设计；`seal` 把设计、数据哈希和代码哈希封存；`run` 给出每个候选状态 × 读出的 *u*、区间、三分判定（support / reject / unresolved）和根因。用它做过的检验和结果见 [`docs/ANM_DIAGNOSIS.md`](../docs/ANM_DIAGNOSIS.md)。
+
+## Folds when treated clusters are few
+
+Folds hold out whole clusters. With few treated clusters (one target split by guide, or five targets in one batch) a random
+deal can put every treated cluster into the same fold; the models for all other folds would then be trained on controls only.
+`run` checks this before any outcome is read: if the split from the declared seed is unusable, the next seeds are tried in
+order and the one used is written to the record as `fold_seed`, with a `K1` warning. A split that was usable is left exactly
+as it was, so finished records are unaffected. The resampling keeps the declared seed.
+
+## Typed source events
+
+`python -m anm_diag events <declaration> [--record anm_record.json] [--forward-record forward_record.json --dataset <name>] [--out events.jsonl]`
+writes the source of a run as typed events (time, site, channel, sign, amplitude, plus role, stratum, provenance, pool and an
+admission entry) and reports three things. It reads declarations and finished records only; no cell data is touched.
+
+- **closure**: which event fields a pooled source drops. A sufficiency source that merges several targets, several strata or a
+  label pattern into one treated arm gets warning `S2` from `check` until the pooling is declared under `source.pooling`
+  (ANM paper, SI S1.4.1: a field may be dropped only if no declared readout tells its values apart).
+- **no leakage**: every event carries a `no_leakage` entry with three routes by which a readout's measurement could have
+  entered it: how its cells were chosen (`S4`: from guides or from labels fixed by the design passes; from the measured response
+  is an error; an undeclared dataset label is a warning), whether the readout's measurement is also a system input (`R2`), and
+  whether the event acts on the readout's own gene (`S3`). The entry's status is the worst route.
+- **pooling evidence, ledger**: `events.pooling_evidence` sets the record of a pooled run beside one record per pooled site and
+  labels the pooling `holds`, `weak` or `differs`; `events.verdict_events` and `events.ledger_conflicts` write every verdict as an
+  event and list opposite verdicts between runs with the field in which the runs differ. A worked case, with the scripts that
+  made it, is in [`runs/split_20261111/`](runs/split_20261111/).
+- **admission**: for each pooled site, the share of confirmatory cells in which an in-silico event could be applied at all,
+  i.e. in which the gene is detected (count channel) or is among the cell's tokens (embed channel).
+- **join**: the head's response when Z is moved along the measured knockout direction (forward run), set beside the measured
+  change and the verdicts of the sufficiency run for the same readout. The forward number is the head's own output (log mean)
+  and the measured change is in the readout's statistic, so their ratio is an order of magnitude only.

@@ -3,6 +3,13 @@
 Each rule cites what it protects. Errors stop run(); warnings are written into the report.
 
   S1  a controlled source with a control group                  (paper §2: the source is an intervention)
+  S2  a source that pools events differing in site, stratum or
+      channel declares the pooling (warning)                    (SI S1.4.1: a field may be dropped only if no
+                                                                declared readout tells its values apart)
+  S3  a source that acts on a readout's own gene is flagged       (the input may carry nothing to read: a limit of
+      (warning)                                                 the input view, not of the system)
+  S4  the cells carrying a source event are not chosen from the    (SI S7.1.1: the endpoint stays hidden from the
+      measured response (error); an undeclared label origin warns  source until the verifier runs)
   R1  a readout is a measurement, never a node or model output  (Fig. 1: state and readout measured separately)
   R2  a readout's measurement must not feed any candidate,
       unless it is a declared system input with a sharing policy (else the readout leaks into the state)
@@ -62,6 +69,8 @@ def check(decl, n_treated_clusters=None, raise_on_error=False):
                                      "without a source cannot test retained information)"))
     if not src.get("control") or not src.get("treated"):
         out.append(_p("S1", "error", "source must name the control label and the treated class"))
+    from .events import check_source
+    out.extend(check_source(decl))
 
     # system
     if not decl["system"].get("frozen", False):
