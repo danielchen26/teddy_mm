@@ -135,9 +135,10 @@ fits). In that rule's words, the change trades one failure for another.
   `runs/split_20261111`, pool five genes without declaring it (rule `S2`).
 - "No loss in the head" is defined against Z on the same cells. Where Z is itself unresolved (both pooled audits) the
   repaired head is not shown to be right, only to add no loss beyond Z.
-- The designer knew an earlier run from another workspace (4b, not in this repository) in which retraining the MLP on the
-  melanoma cells removed the loss and retraining the decoder did not. New here: genes held out, a second cell type, the rule
-  written first, records in the repository.
+- The designer knew an earlier run from another workspace (4b, not in this repository): heads retrained on
+  bone-marrow data plus unperturbed control and IFN-γ cells, without knockout cells in training, in which retraining the MLP removed the loss on the melanoma knockout cells
+  and retraining the decoder did not. New here: a repair made directly on the existing head, a second cell type, the rule
+  written first, records in the repository. Genes are held out because this repair is fitted on knockout cells.
 - The repair does not transfer across cell types and costs accuracy on bone marrow. A repair meant to be kept would
   retrain the MLP on the original cells together with perturbation cells, and be audited again, bone marrow included.
 
