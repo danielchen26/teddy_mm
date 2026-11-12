@@ -1,0 +1,112 @@
+kind: sufficiency
+measurement_sharing: none
+readout_classes:
+  ridge:
+    regressor: RidgeCV
+    alphas:
+    - 0.1
+    - 0.31622776601683794
+    - 1.0
+    - 3.1622776601683795
+    - 10.0
+    - 31.622776601683793
+    - 100.0
+    - 316.22776601683796
+    - 1000.0
+    - 3162.2776601683795
+    - 10000.0
+    - 31622.776601683792
+    - 100000.0
+    classifier: LogisticRegression
+    C: 0.05
+  hgb:
+    regressor: HistGradientBoostingRegressor
+    classifier: HistGradientBoostingClassifier
+    max_iter: 150
+    learning_rate: 0.05
+    max_leaf_nodes: 15
+inference:
+  folds: 5
+  bootstrap: 1000
+  forward_bootstrap: 300
+  seed: 0
+  standardize_on: control
+  inverse: crossfit_partial_linear
+decision:
+  margin_u: 0.1
+  step_margin: 0.1
+  alpha: 0.05
+anm_declaration: 1
+name: loopguard_target_papalexi2021_JAK2_mlp_guarded
+system:
+  id: TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)
+  frozen: true
+  inputs:
+  - rna_counts
+  notes: 'Closed-loop test with a guard. Head: the head with only its latent network
+    (MLP) retrained, with a term in the loss that holds its outputs on bone-marrow
+    training cells (guarded repair, see DESIGN.md of this folder). Cells: the knockout
+    cells of JAK2, held out when this head was fitted, and the audit half of the control
+    cells. No head was fitted on any audited cell. The head was trained on bone-marrow
+    CITE-seq (NeurIPS 2021). THP-1 is a monocytic leukaemia line, closer to that training
+    set than melanoma cells but still a shift. Declared choice: use the head as trained.
+    Cells are taken by guide, intent-to-treat: no filtering by response-derived classes
+    (no mixscape KO/NP labels), since those are computed from the RNA response itself.
+    Targets are the guides'' genes, so folds and resampling are per gene, not per
+    guide. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol table that teddy_mm
+    uses (tools/gene_map.py), because the file''s own Ensembl ids put HLA and B2M
+    genes and IFNGR2 outside TEDDY''s vocabulary.
+
+    '
+measurements:
+  rna_counts:
+    modality: rna
+    kind: counts
+  adt_counts:
+    modality: protein
+    kind: counts
+source:
+  controlled: true
+  kind: crispr_ko
+  stratum:
+  - rep1-tx
+  - rep2-tx
+  - rep3-tx
+  - rep4-tx
+  assign_from_guides: true
+  control_guides:
+  - NT
+  control:
+  - control
+  treated:
+  - JAK2
+  cluster: guide
+  max_control_cells: 4000
+  control_seed: 0
+readouts:
+- id: PDL1
+  measurement: adt_counts
+  statistic: adt_log1p
+  features:
+  - PDL1
+nodes:
+- id: Z
+  from: rna_counts
+  op: teddy_embedding
+  operator: system
+  role: chain
+- id: HEAD_LAT
+  from: Z
+  op: head_latent
+  operator: system
+  role: chain
+- id: HEAD_OUT
+  from: HEAD_LAT
+  op: head_output
+  operator: system
+  role: chain
+chain:
+- Z
+- HEAD_LAT
+- HEAD_OUT
+status: exploratory
