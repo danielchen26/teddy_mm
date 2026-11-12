@@ -27,8 +27,8 @@ Half of *u* for the head as trained is 0.57; the head fine-tuned with IRF1 cells
   from 1.13 to 0.72; adding IRF1 knockout cells takes it to 0.66, well inside the intervals. For JAK2 the two fine-tuned
   heads are equal (0.36). The reading that the head has to see small-footprint knockouts is not what these numbers point to;
   that the head had never seen THP-1 cells with their PD-L1 explains more.
-- **What remains is mostly already missing at Z on these cells.** After fine-tuning, the head output is 0.17 to 0.23 above Z
-  for IRF1 (0.64 above for the head as trained) and 0.14 above Z for JAK2 (0.43 before). This subtraction was not in the design.
+- **What remains is mostly already missing at Z on these cells.** After fine-tuning, the head output is 0.18 to 0.23 above Z
+  for IRF1 (0.64 above for the head as trained) and 0.13 above Z for JAK2 (0.43 before). This subtraction was not in the design.
 - **The head's own PD-L1 output** (three splits). As trained it moves the wrong way for all five targets. Fine-tuned without
   IRF1 cells, it falls for IRF1 knockout cells by 0.61 to 0.82 of the measured fall; with IRF1 cells, by 0.72 to 1.00. For the
   four upstream knockouts both fine-tuned heads overshoot (1.15 to 1.71 of the measured fall).
