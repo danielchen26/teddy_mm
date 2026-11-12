@@ -28,6 +28,13 @@ source:                                # 源扰动：必须受控，有对照
   control: [NT]                        # 对照标签（inspect 看数据里实际叫什么）
   treated: [GENE1, GENE2]              # 处理组靶点；也可以写正则字符串，例如 "^MRP[LS]\\d"
   cluster: target                      # 分折和重抽的单位：target 或 guide；少于 10 个会警告（K1）
+  # Several treated labels, several strata or a label pattern are pooled into one treated arm. Say why that is
+  # allowed, per pooled field; otherwise `check` warns (S2) that the verdicts hold for the pool, not for each value.
+  # pooling:
+  #   site: "one pathway; each target is tested separately in <run>"
+  # Where the treated/control labels come from, when cells are not assigned from their guides (assign_from_guides).
+  # design: fixed by the experiment. response: derived from the measured response (rejected, S4). Undeclared: warning.
+  # label_basis: design
   # max_control_cells: 4000            # 可选：对照细胞的抽样上限（算力），配 control_seed，封存前定
   # control_seed: 0
 

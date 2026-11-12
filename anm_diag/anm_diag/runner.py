@@ -10,7 +10,7 @@ from . import __version__
 from .checks import CheckError, check, errors
 from .report import write_report
 from .spec import declaration_hash, load_declaration, node_map
-from .stats import Crossfit, ci, cluster_bootstrap, folds_by_cluster, forward_auc, theta
+from .stats import Crossfit, ci, cluster_bootstrap, forward_auc, theta, usable_folds
 from .verdicts import root_cause, verdict_union
 
 
@@ -46,7 +46,13 @@ def run(declaration, adapter, out_dir=None, log=print):
     ref_rows = (A == 0) if inf.get("standardize_on", "control") == "control" else slice(None)
     log(f"[{decl['name']}] cells {len(A)} (treated {A.sum()}, clusters {n_treated_clusters}); chain {chain}")
 
-    fold = folds_by_cluster(cl, int(inf["folds"]), int(inf["seed"]))
+    fold, fold_seed = usable_folds(cl, A, int(inf["folds"]), int(inf["seed"]))
+    if fold_seed != int(inf["seed"]):
+        msg = (f"with the declared seed {int(inf['seed'])} the treated clusters fell into one fold, which leaves nothing to "
+               f"train on; the folds use seed {fold_seed} (the resampling keeps the declared seed). The choice reads cluster "
+               f"labels and the treatment indicator only")
+        problems.append({"code": "K1", "severity": "warning", "message": msg})
+        log("  " + msg)
     boots = cluster_bootstrap(A, cl, int(inf["bootstrap"]), int(inf["seed"]))
     fboots = boots[: int(inf["forward_bootstrap"])]
     cf = Crossfit(A, fold, classes)
@@ -126,7 +132,7 @@ def run(declaration, adapter, out_dir=None, log=print):
     record = {
         "anm_diag_version": __version__, "declaration": decl, "declaration_sha256": declaration_hash(decl),
         "problems": problems, "n_cells": int(len(A)), "n_treated": int(A.sum()),
-        "n_treated_clusters": int(n_treated_clusters), "forward": {"auc": fwd, "steps": fwd_steps, "class": fwd_cls},
+        "n_treated_clusters": int(n_treated_clusters), "fold_seed": int(fold_seed), "forward": {"auc": fwd, "steps": fwd_steps, "class": fwd_cls},
         **results, "provenance": {**adapter.provenance(), "python": platform.python_version()},
         "runtime_s": round(time.time() - t0, 1),
         "exploratory": decl.get("status") != "sealed", "seal_verified": sealed_checked,

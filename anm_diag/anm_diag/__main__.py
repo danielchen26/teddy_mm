@@ -36,12 +36,33 @@ def main(argv=None):
     i = sub.add_parser("inspect"); i.add_argument("--paths", required=True); i.add_argument("--show", default="")
     s = sub.add_parser("seal"); s.add_argument("declaration"); s.add_argument("--paths", required=True)
     s.add_argument("--out", required=True)
+    v = sub.add_parser("events", help="write a declaration's source as typed events and check its closure")
+    v.add_argument("declaration"); v.add_argument("--record"); v.add_argument("--forward-record")
+    v.add_argument("--dataset"); v.add_argument("--out")
     a = ap.parse_args(argv)
     if a.cmd == "inspect":
         from .inspect_meta import inspect
         print(inspect(a.paths, [c for c in a.show.split(",") if c]))
         return 0
     decl = load_declaration(a.declaration)
+    if a.cmd == "events":
+        from . import events as ev
+        rec = json.load(open(a.record)) if a.record else None
+        evs = ev.source_events(decl, rec)
+        report = {"closure": ev.closure(evs), "problems": ev.check_source(decl)}
+        if a.forward_record and a.dataset:
+            fwd = json.load(open(a.forward_record))
+            evs += ev.forward_events(fwd, a.dataset)
+            sites = [s for s in ([decl["source"]["treated"]] if isinstance(decl["source"]["treated"], str)
+                                 else decl["source"]["treated"])]
+            report["admission"] = ev.admission(fwd, a.dataset, sites)
+            if rec:
+                report["join"] = {rid: ev.join(fwd, rec, a.dataset, rid) for rid in rec["readouts"]}
+        if a.out:
+            ev.write_jsonl(evs, a.out)
+        report["n_events"] = len(evs)
+        print(json.dumps(report, indent=1, ensure_ascii=False))
+        return 0
     if a.cmd == "seal":
         probs = check(decl)
         if errors(probs):
