@@ -285,10 +285,17 @@ control cells no fit had used.
   (MLP repaired on melanoma) and 0.502 to 0.552 (on THP-1), more than the 0.02 allowed by the step-4 rule above; a head
   repaired on one cell type is still rejected on the other. PD-L2 on THP-1, never in the fit, is repaired as well; HLA-E on
   melanoma is not.
+- **Repaired again within the guard** ([`anm_diag/runs/loop_guard_20261112/`](../anm_diag/runs/loop_guard_20261112/),
+  designed after the cost was seen, rule committed before its runs). The same repair of the MLP with one more term that
+  holds the head's outputs on 3,000 bone-marrow training cells; the weight of the term is chosen on bone-marrow validation
+  cells. By the rule the loop closes within the guard on both cell types: *u* at the head output 0.12 (melanoma) and 0.18
+  (THP-1), no step named, and a bone-marrow test score of 0.603 to 0.604 and 0.594 to 0.595 against 0.602. Gene by gene
+  the readings are those of the unguarded repair.
 
-This is not step 4 as sealed (one seed, a fine-tune of one part on one protein, compared with the head as trained), and by
-that rule's guard the repair would not be credited. What it shows is that the step the audit names is the one whose repair
-removes the loss, on genes the repair never saw and on a second cell type.
+Neither run is step 4 as sealed (one seed, a fine-tune of one part on one protein, compared with the head as trained and
+not with a control retrain; the head latent is not at "support"). What they show is that the step the audit names is the
+one whose repair removes the loss, on genes the repair never saw and on a second cell type, and that this repair can be
+made without the cost on the head's original task. It does not carry from one cell type to the other.
 
 ## Corrections and deviations
 

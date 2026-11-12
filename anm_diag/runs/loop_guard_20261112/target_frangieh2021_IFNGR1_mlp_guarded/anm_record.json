@@ -1,0 +1,292 @@
+{
+ "anm_diag_version": "0.1.0",
+ "declaration": {
+  "status": "exploratory",
+  "kind": "sufficiency",
+  "measurement_sharing": "none",
+  "readout_classes": {
+   "ridge": {
+    "regressor": "RidgeCV",
+    "alphas": [
+     0.1,
+     0.31622776601683794,
+     1.0,
+     3.1622776601683795,
+     10.0,
+     31.622776601683793,
+     100.0,
+     316.22776601683796,
+     1000.0,
+     3162.2776601683795,
+     10000.0,
+     31622.776601683792,
+     100000.0
+    ],
+    "classifier": "LogisticRegression",
+    "C": 0.05
+   },
+   "hgb": {
+    "regressor": "HistGradientBoostingRegressor",
+    "classifier": "HistGradientBoostingClassifier",
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15
+   }
+  },
+  "inference": {
+   "folds": 5,
+   "bootstrap": 1000,
+   "forward_bootstrap": 300,
+   "seed": 0,
+   "standardize_on": "control",
+   "inverse": "crossfit_partial_linear"
+  },
+  "decision": {
+   "margin_u": 0.1,
+   "step_margin": 0.1,
+   "alpha": 0.05
+  },
+  "anm_declaration": 1,
+  "name": "loopguard_target_frangieh2021_IFNGR1_mlp_guarded",
+  "system": {
+   "id": "TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)",
+   "frozen": true,
+   "inputs": [
+    "rna_counts"
+   ],
+   "notes": "Closed-loop test with a guard. Head: the head with only its latent network (MLP) retrained, with a term in the loss that holds its outputs on bone-marrow training cells (guarded repair, see DESIGN.md of this folder). Cells: the knockout cells of IFNGR1, held out when this head was fitted, and the audit half of the control cells. No head was fitted on any audited cell. The head was trained on bone-marrow CITE-seq (NeurIPS 2021); on melanoma cells it is out of its training distribution. Declared choice: use it as trained (head stages then test this head on new cells). Cells are labelled from their detected guides, not from the file's perturbation column (which calls 13,316 IFN-gamma cells \"control\" although they have no guide or guides for other genes): a control cell has only non-targeting guides, a treated cell only guides for one target gene (plus any non-targeting guides); cells with no guide or with guides for two genes are left out. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol table that teddy_mm uses (tools/gene_map.py): the file's own Ensembl ids put HLA-A, -B, -C, -E, B2M and IFNGR2 on alternate-haplotype ids outside TEDDY's vocabulary, which would drop exactly the MHC genes before TEDDY.\n"
+  },
+  "measurements": {
+   "rna_counts": {
+    "modality": "rna",
+    "kind": "counts"
+   },
+   "adt_counts": {
+    "modality": "protein",
+    "kind": "counts"
+   }
+  },
+  "source": {
+   "controlled": true,
+   "kind": "crispr_ko",
+   "stratum": "IFN\u03b3",
+   "assign_from_guides": true,
+   "control_guides": [
+    "NO_SITE",
+    "ONE_NON-GENE_SITE"
+   ],
+   "control": [
+    "control"
+   ],
+   "treated": [
+    "IFNGR1"
+   ],
+   "cluster": "guide",
+   "max_control_cells": 4000,
+   "control_seed": 0
+  },
+  "readouts": [
+   {
+    "id": "PDL1",
+    "measurement": "adt_counts",
+    "statistic": "adt_clr",
+    "features": [
+     "CD274"
+    ]
+   }
+  ],
+  "nodes": [
+   {
+    "id": "Z",
+    "from": "rna_counts",
+    "op": "teddy_embedding",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_LAT",
+    "from": "Z",
+    "op": "head_latent",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_OUT",
+    "from": "HEAD_LAT",
+    "op": "head_output",
+    "operator": "system",
+    "role": "chain"
+   }
+  ],
+  "chain": [
+   "Z",
+   "HEAD_LAT",
+   "HEAD_OUT"
+  ]
+ },
+ "declaration_sha256": "deacdf5bc720d39b18ebcd33999e33a47a7e5e865fbf16c2370fac632dbabc07",
+ "problems": [
+  {
+   "code": "C5",
+   "severity": "warning",
+   "message": "no positive control node: support verdicts will be marked uninformative"
+  }
+ ],
+ "n_cells": 2198,
+ "n_treated": 198,
+ "n_treated_clusters": 22,
+ "fold_seed": 0,
+ "forward": {
+  "auc": {
+   "Z": 0.8910959595959596,
+   "HEAD_LAT": 0.8771767676767677,
+   "HEAD_OUT": 0.859449494949495
+  },
+  "steps": {
+   "Z->HEAD_LAT": [
+    -0.052756776840131296,
+    0.020364443902439095
+   ],
+   "HEAD_LAT->HEAD_OUT": [
+    -0.0236836956521739,
+    -0.0012025961538462294
+   ]
+  },
+  "class": "ridge"
+ },
+ "readouts": {
+  "PDL1": {
+   "delta": -0.9207414289180857,
+   "delta_ci": [
+    -1.0158263429672019,
+    -0.6805077240530991
+   ],
+   "states": {
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.13597568290380863,
+     "ci": [
+      -0.10159368836238244,
+      0.228655593997656
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.13597568290380863,
+       "ci": [
+        -0.10159368836238244,
+        0.228655593997656
+       ]
+      },
+      "hgb": {
+       "u": 0.1950397033937347,
+       "ci": [
+        -0.12979636410545303,
+        0.2726026676378701
+       ]
+      }
+     }
+    },
+    "HEAD_LAT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.03561086594085813,
+     "ci": [
+      -0.14960293434015076,
+      0.09878133045585288
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": 0.061775294962087966,
+       "ci": [
+        -0.15483612732862484,
+        0.12457910741033809
+       ]
+      },
+      "hgb": {
+       "u": 0.03561086594085813,
+       "ci": [
+        -0.14960293434015076,
+        0.09878133045585288
+       ]
+      }
+     }
+    },
+    "HEAD_OUT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.017678148105259205,
+     "ci": [
+      -0.14816769913207425,
+      0.08060229979282088
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": 0.1139117165230031,
+       "ci": [
+        -0.10308526596152216,
+        0.1785431952492837
+       ]
+      },
+      "hgb": {
+       "u": 0.017678148105259205,
+       "ci": [
+        -0.14816769913207425,
+        0.08060229979282088
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "Z->HEAD_LAT": {
+     "best_class": [
+      -0.19354723658506967,
+      0.0176520701718958
+     ],
+     "same_class": {
+      "ridge": [
+       -0.16692220607999825,
+       0.05317009715073434
+      ],
+      "hgb": [
+       -0.23491778873266936,
+       0.04549565272609684
+      ]
+     }
+    },
+    "HEAD_LAT->HEAD_OUT": {
+     "best_class": [
+      -0.08016615062626464,
+      0.08006860822417555
+     ],
+     "same_class": {
+      "ridge": [
+       -0.035651793936176214,
+       0.11383215796932214
+      ],
+      "hgb": [
+       -0.08016615062626464,
+       0.08006860822417555
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "reference_unresolved",
+    "detail": "reference stage 'Z' is unresolved: the data cannot tell whether the input view reproduces this response; no claim about later stages"
+   },
+   "exact": null
+  }
+ },
+ "provenance": {
+  "adapter": "precomputed(perturb_cite features exported on the source machine)",
+  "python": "3.13.18"
+ },
+ "runtime_s": 90.6,
+ "exploratory": true,
+ "seal_verified": []
+}

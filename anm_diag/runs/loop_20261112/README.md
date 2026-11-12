@@ -56,6 +56,8 @@ latent taken alone is still above the margin (0.18).
 - As trained: the tool names a head step for 10 of 10 genes. After `decoder_only`: still 10 of 10. After `mlp_only`: 0 of
   10; 5 read "no loss in the head" and 5 "not resolved" (the output is more than 0.10 above Z but no step is named). In
   four of those five *u* at the output is 0.02 to 0.17. IRF1 is the one that clearly remains: 1.12 falls to 0.60.
+- "No loss in the head" compares with Z. For THP-1 JAK2 the head output taken alone is still rejected with `mlp_only`
+  (0.21 [0.16, 0.28]), while Z is at 0.15.
 - With about 200 knockout cells the tool does not always name the same step as the pooled audit. For the melanoma head
   as trained it names Z → head latent for one gene, head latent → head output for two, and Z → head output (no single
   step) for two. The prescription was taken from the pooled audit; repairing the MLP removed the loss for all five.
@@ -107,6 +109,12 @@ in one cell type, without the original training cells in the loss. The other 133
 is not the cause, and the held-out cells and audit controls were in no fit. The likely cause is the reference: with about
 2,200 cells the readout models learn less from the 512 numbers of Z than from a latent already fitted to PD-L1 on other
 cells, so *u* at Z is too high in small audits (also seen in `runs/exposure_20261111`).
+
+## Follow-up
+
+[`runs/loop_guard_20261112`](../loop_guard_20261112/) repeats the prescribed repair with a term that holds the head's outputs
+on bone-marrow training cells. By its rule, written before it ran, the loop then closes within the 0.02 guard on both cell
+types.
 
 ## Against the step-4 rule sealed on 9 November
 
