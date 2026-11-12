@@ -1,0 +1,166 @@
+{
+ "sufficiency": {
+  "teddy_mm_frangieh2021_headfix.sealed.yaml": {
+   "n_events": 5,
+   "status": {
+    "pass": 5
+   },
+   "routes": {
+    "assignment": [
+     "pass"
+    ],
+    "measurement": [
+     "pass"
+    ],
+    "site": [
+     "pass"
+    ]
+   },
+   "reasons": {
+    "assignment": [
+     "cells are assigned from their detected guides, a measurement that enters no readout"
+    ],
+    "measurement": [
+     "no readout uses an input of the audited system"
+    ],
+    "site": [
+     "the event does not act on a readout's own gene"
+    ]
+   },
+   "s4": []
+  },
+  "teddy_mm_papalexi2021_headfix.sealed.yaml": {
+   "n_events": 20,
+   "status": {
+    "pass": 20
+   },
+   "routes": {
+    "assignment": [
+     "pass"
+    ],
+    "measurement": [
+     "pass"
+    ],
+    "site": [
+     "pass"
+    ]
+   },
+   "reasons": {
+    "assignment": [
+     "cells are assigned from their detected guides, a measurement that enters no readout"
+    ],
+    "measurement": [
+     "no readout uses an input of the audited system"
+    ],
+    "site": [
+     "the event does not act on a readout's own gene"
+    ]
+   },
+   "s4": []
+  },
+  "ks2_teddy_ribo.yaml": {
+   "n_events": 1,
+   "status": {
+    "unknown": 1
+   },
+   "routes": {
+    "assignment": [
+     "unknown"
+    ],
+    "measurement": [
+     "flag"
+    ],
+    "site": [
+     "pass"
+    ]
+   },
+   "reasons": {
+    "assignment": [
+     "a dataset label whose origin is not declared (source.label_basis: design | response)"
+    ],
+    "measurement": [
+     "readout 'RP' shares the system input 'rna_counts' (declared_shared): counting noise is shared"
+    ],
+    "site": [
+     "the site is among a readout's genes, and the readout leaves the targeted gene out (exclude_targets)"
+    ]
+   },
+   "s4": [
+    {
+     "code": "S4",
+     "severity": "warning",
+     "message": "the source uses a dataset label whose origin is not declared: say source.label_basis: design (fixed by the experiment) or response (derived from the measured response)"
+    }
+   ]
+  },
+  "ks2_teddy_mitoribo.yaml": {
+   "n_events": 1,
+   "status": {
+    "unknown": 1
+   },
+   "routes": {
+    "assignment": [
+     "unknown"
+    ],
+    "measurement": [
+     "flag"
+    ],
+    "site": [
+     "pass"
+    ]
+   },
+   "reasons": {
+    "assignment": [
+     "a dataset label whose origin is not declared (source.label_basis: design | response)"
+    ],
+    "measurement": [
+     "readout 'MT' shares the system input 'rna_counts' (declared_shared): counting noise is shared"
+    ],
+    "site": [
+     "the event does not act on a readout's own gene"
+    ]
+   },
+   "s4": [
+    {
+     "code": "S4",
+     "severity": "warning",
+     "message": "the source uses a dataset label whose origin is not declared: say source.label_basis: design (fixed by the experiment) or response (derived from the measured response)"
+    }
+   ]
+  }
+ },
+ "forward": {
+  "frangieh2021": {
+   "n_events": 126,
+   "status": {
+    "pass": 98,
+    "flag": 28
+   },
+   "flagged_sites": [
+    "B2M",
+    "CD274",
+    "HLA-A",
+    "HLA-B",
+    "HLA-C",
+    "HLA-E",
+    "PDCD1LG2"
+   ]
+  },
+  "papalexi2021": {
+   "n_events": 126,
+   "status": {
+    "pass": 98,
+    "flag": 28
+   },
+   "flagged_sites": [
+    "B2M",
+    "CD274",
+    "HLA-A",
+    "HLA-B",
+    "HLA-C",
+    "HLA-E",
+    "PDCD1LG2"
+   ]
+  }
+ }
+}
