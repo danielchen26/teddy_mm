@@ -52,11 +52,27 @@ to 950, STAT1 1,535. The head is not insensitive to IRF1's direction: moved by t
 as much as to a random direction (2.3 to 2.9 for the other targets). The difference arises at the last step: from Z to the
 head output the gap between knockout and control cells, relative to the spread between cells, grows for the other nine
 targets (1.3 to 2.1 times) and shrinks only for IRF1 (0.14 at Z, 0.20 at the latent, 0.09 at the output). A reading
-compatible with this, not tested directly: the head carries the large shared change of the whole IFN-γ programme being
-switched off, and flattens the small, differently directed change left by a knockout that sits next to the readout. Not
-explained: batch 1 has a smaller mean shift and no larger loss. On THP-1 the head's own PD-L1 output moves the wrong way
+compatible with this: the head carries the large shared change of the whole IFN-γ programme being
+switched off, and flattens the small, differently directed change left by a knockout that sits next to the readout. The reading was put to a direct test in
+[`../exposure_20261111/`](../exposure_20261111/); the rule written in advance left it unanswered, and the numbers point
+elsewhere: a head fine-tuned on THP-1 cells without any IRF1 knockout already recovers most of what fine-tuning recovers. On THP-1 the head's own PD-L1 output moves the wrong way
 for all five targets, so "kept" here means that the 134 outputs together still carry information about the knockout, not
 that PD-L1 is predicted correctly.
+
+**The last step and batch 1, followed up** (`results/why_last_step.json`). The decoder does not miss IRF1's latent shift:
+0.89 of it lies in the directions that can change the output, as for the other targets (0.88). But the decoder moves its
+output along two or three directions only (effective rank 2.5), and its gain along IRF1's shift is about half that of the
+other targets (0.039 against 0.075 to 0.093); with the shift also shorter, the output moves by 0.35 against 1.59 to 2.53.
+Batch 1 has a smaller mean shift and no larger loss because fewer of its cells are shifted by the receptor and JAK2
+knockouts (42% to 48%, against 63% to 73% in batches 3 and 4), the shifted cells move as far (7.8 against 7.1 and 7.2), and
+PD-L1 changes half as much per unit of shift (−0.08 against −0.15 and −0.15). *u* is a share of each batch's own measured
+response, so a response that is smaller as a whole does not raise it. Whether batch 1 was stimulated less or its protein
+measurement is compressed cannot be told from these features.
+
+**Token coverage** (`results/token_coverage.json`). The weak response to in-silico events is not a matter of which genes
+are among a cell's input tokens. A count event could be applied on 8 to 100 of 100 cells (melanoma) and 63 to 100 (THP-1);
+where applied it moved Z by 1.5% to 5.3% of the mean shift under the real knockouts, and STAT1, covered in all 100 cells,
+reached 3.3% and 2.0%.
 
 **Ledger** (`results/ledger.json`). The verdicts of 15 runs (both sealed pooled runs, 10 per-target, 3 per-batch), 155 in
 all, contain no pair of opposite verdicts at the same readout and stage.
@@ -89,6 +105,7 @@ python export_features.py --paths ../../../paths/papalexi2021.yaml --declaration
 python run_one.py papalexi2021_target_IRF1       # one run, about an hour on one core
 python analyze_frangieh.py; python analyze_papalexi.py; python ledger.py; python no_leakage_table.py
 python join_closure_admission.py; python why_targets.py; python why_gap_over_spread.py
+python why_last_step.py; python token_coverage.py
 ```
 
 `*_pooled_full/` holds only a declaration: the pooled selection with every node, used for the feature export.

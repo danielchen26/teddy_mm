@@ -241,8 +241,21 @@ seen; the sealed verdicts stand.
   742 to 1,535. The head is not insensitive to IRF1's direction (its latent reacts 3.1 times as much as to a random direction
   of the same length; 2.3 to 2.9 for the other targets). From Z to the head output the gap between knockout and control
   cells, relative to the spread between cells, grows for the other nine targets and shrinks only for IRF1 (0.14, 0.20, 0.09).
-  A reading compatible with this, not tested directly: the head carries the large shared change of the whole IFN-γ programme
-  being switched off and flattens the small, differently directed change of a knockout that sits next to the readout.
+  A reading compatible with this: the head carries the large shared change of the whole IFN-γ programme being switched off
+  and flattens the small, differently directed change of a knockout that sits next to the readout.
+- **Two follow-ups.** The decoder does not miss IRF1's latent shift (0.89 of it lies in directions that can change the
+  output, 0.88 for the other targets), but its output moves along two or three directions only and its gain along IRF1's
+  shift is about half. Batch 1 has a smaller mean shift and no larger loss because fewer of its cells are shifted (42% to 48%
+  against 63% to 73%) and PD-L1 changes half as much per unit of shift there; *u* is a share of each batch's own response.
+- **The reading put to a direct test** ([`anm_diag/runs/exposure_20261111/`](../anm_diag/runs/exposure_20261111/), design
+  committed before the runs). The head was fine-tuned on half of the THP-1 cells, once without and once with IRF1 knockout
+  cells, and audited on the other half. By the rule written in advance the question is not answered: with IRF1 cells the
+  head output is still rejected for IRF1 (*u* 0.66 against 1.13 as trained; the mark was half of 1.13). Outside the rule, the
+  numbers point away from the reading: without any IRF1 cell the fine-tuned head already reaches 0.72, and for JAK2 the two
+  fine-tuned heads are equal (0.36 against 0.66). Having seen THP-1 cells with their PD-L1 explains more than having seen a
+  small-footprint knockout.
+- **Token coverage.** The weak response to in-silico events is not a matter of which genes are among a cell's input tokens:
+  STAT1 is covered in every cell and its count event still moves Z by 3.3% and 2.0% of the shift under the real knockouts.
 - **Ledger and no-leakage.** The 155 verdicts of 15 runs contain no pair of opposite verdicts at the same readout and stage.
   All 25 real knockout events of the two data sets pass the three no-leakage routes; the two KS-2 declarations are flagged
   (readout and model input share the RNA counts; the origin of the labels is not declared).

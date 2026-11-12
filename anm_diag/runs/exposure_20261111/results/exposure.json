@@ -1,0 +1,305 @@
+{
+ "runs": {
+  "as_trained_IRF1": {
+   "arm": "as_trained",
+   "target": "IRF1",
+   "n_cells": 1732,
+   "n_treated": 539,
+   "n_guides": 4,
+   "fold_seed": 0,
+   "delta": -0.2850283761731289,
+   "delta_ci": [
+    -0.5329011396753927,
+    -0.014180964674892015
+   ],
+   "runtime_s": 128.7,
+   "problems": [
+    "S2: the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum",
+    "C5: no positive control node: support verdicts will be marked uninformative",
+    "K1: only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+   ],
+   "stages": {
+    "Z": {
+     "u": 0.4883732862511848,
+     "ci": [
+      0.26648499799054154,
+      0.8073807210483769
+     ],
+     "verdict": "unresolved",
+     "best_class": "ridge"
+    },
+    "HEAD_LAT": {
+     "u": 0.9503267717500998,
+     "ci": [
+      0.8066265577678432,
+      1.6808334681114099
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_OUT": {
+     "u": 1.1306744699131075,
+     "ci": [
+      0.9890303359489898,
+      1.8153878193615163
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    }
+   }
+  },
+  "without_IRF1_IRF1": {
+   "arm": "without_IRF1",
+   "target": "IRF1",
+   "n_cells": 1732,
+   "n_treated": 539,
+   "n_guides": 4,
+   "fold_seed": 0,
+   "delta": -0.2850283761731289,
+   "delta_ci": [
+    -0.5329011396753927,
+    -0.014180964674892015
+   ],
+   "runtime_s": 125.3,
+   "problems": [
+    "S2: the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum",
+    "C5: no positive control node: support verdicts will be marked uninformative",
+    "K1: only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+   ],
+   "stages": {
+    "Z": {
+     "u": 0.4883732862511848,
+     "ci": [
+      0.26648499799054154,
+      0.8073807210483769
+     ],
+     "verdict": "unresolved",
+     "best_class": "ridge"
+    },
+    "HEAD_LAT": {
+     "u": 0.6511899939237241,
+     "ci": [
+      0.467010600928093,
+      0.977424676662079
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_OUT": {
+     "u": 0.7180127927334015,
+     "ci": [
+      0.5359308015359178,
+      0.9650292503288426
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    }
+   }
+  },
+  "with_IRF1_IRF1": {
+   "arm": "with_IRF1",
+   "target": "IRF1",
+   "n_cells": 1732,
+   "n_treated": 539,
+   "n_guides": 4,
+   "fold_seed": 0,
+   "delta": -0.2850283761731289,
+   "delta_ci": [
+    -0.5329011396753927,
+    -0.014180964674892015
+   ],
+   "runtime_s": 130.7,
+   "problems": [
+    "S2: the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum",
+    "C5: no positive control node: support verdicts will be marked uninformative",
+    "K1: only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+   ],
+   "stages": {
+    "Z": {
+     "u": 0.4883732862511848,
+     "ci": [
+      0.26648499799054154,
+      0.8073807210483769
+     ],
+     "verdict": "unresolved",
+     "best_class": "ridge"
+    },
+    "HEAD_LAT": {
+     "u": 0.5928058133339418,
+     "ci": [
+      0.37831058671691986,
+      0.8269108801817664
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_OUT": {
+     "u": 0.6639760905869652,
+     "ci": [
+      0.4045313281977822,
+      0.8706564273016174
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    }
+   }
+  },
+  "as_trained_JAK2": {
+   "arm": "as_trained",
+   "target": "JAK2",
+   "n_cells": 1706,
+   "n_treated": 513,
+   "n_guides": 4,
+   "fold_seed": 0,
+   "delta": -0.9548213234443813,
+   "delta_ci": [
+    -1.0384945665645633,
+    -0.8721306081329501
+   ],
+   "runtime_s": 124.7,
+   "problems": [
+    "S2: the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum",
+    "C5: no positive control node: support verdicts will be marked uninformative",
+    "K1: only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+   ],
+   "stages": {
+    "Z": {
+     "u": 0.224637744299249,
+     "ci": [
+      0.15671972916497806,
+      0.2865808237342598
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_LAT": {
+     "u": 0.5251055670893212,
+     "ci": [
+      0.45500098992456917,
+      0.5845928545126812
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_OUT": {
+     "u": 0.6552593849703064,
+     "ci": [
+      0.608366126380153,
+      0.6976460711838041
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    }
+   }
+  },
+  "without_IRF1_JAK2": {
+   "arm": "without_IRF1",
+   "target": "JAK2",
+   "n_cells": 1706,
+   "n_treated": 513,
+   "n_guides": 4,
+   "fold_seed": 0,
+   "delta": -0.9548213234443813,
+   "delta_ci": [
+    -1.0384945665645633,
+    -0.8721306081329501
+   ],
+   "runtime_s": 124.8,
+   "problems": [
+    "S2: the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum",
+    "C5: no positive control node: support verdicts will be marked uninformative",
+    "K1: only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+   ],
+   "stages": {
+    "Z": {
+     "u": 0.224637744299249,
+     "ci": [
+      0.15671972916497806,
+      0.2865808237342598
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_LAT": {
+     "u": 0.3236897042555197,
+     "ci": [
+      0.24493760712615395,
+      0.3935892045815061
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_OUT": {
+     "u": 0.3580062366206373,
+     "ci": [
+      0.3005921225103425,
+      0.40975213159682095
+     ],
+     "verdict": "reject",
+     "best_class": "hgb"
+    }
+   }
+  },
+  "with_IRF1_JAK2": {
+   "arm": "with_IRF1",
+   "target": "JAK2",
+   "n_cells": 1706,
+   "n_treated": 513,
+   "n_guides": 4,
+   "fold_seed": 0,
+   "delta": -0.9548213234443813,
+   "delta_ci": [
+    -1.0384945665645633,
+    -0.8721306081329501
+   ],
+   "runtime_s": 126.7,
+   "problems": [
+    "S2: the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum",
+    "C5: no positive control node: support verdicts will be marked uninformative",
+    "K1: only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+   ],
+   "stages": {
+    "Z": {
+     "u": 0.224637744299249,
+     "ci": [
+      0.15671972916497806,
+      0.2865808237342598
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_LAT": {
+     "u": 0.3048075850118904,
+     "ci": [
+      0.22333125435404913,
+      0.37546552194513594
+     ],
+     "verdict": "reject",
+     "best_class": "ridge"
+    },
+    "HEAD_OUT": {
+     "u": 0.3572574502894516,
+     "ci": [
+      0.3033770399984278,
+      0.4066298455157112
+     ],
+     "verdict": "reject",
+     "best_class": "hgb"
+    }
+   }
+  }
+ },
+ "rule": {
+  "u0": 1.1306744699131075,
+  "half_of_u0": 0.5653372349565537,
+  "meets_mark": {
+   "without_IRF1": false,
+   "with_IRF1": false
+  },
+  "still_rejected_above_mark": {
+   "without_IRF1": true,
+   "with_IRF1": true
+  },
+  "outcome": "not answered"
+ }
+}
