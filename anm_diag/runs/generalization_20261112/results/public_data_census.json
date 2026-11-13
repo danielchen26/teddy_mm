@@ -1,0 +1,50 @@
+{
+ "what": "public single-cell data with RNA and surface protein in the same cells, read for a loop that aims at unseen donors and diseases; assembled 12 Nov 2026 from the pages listed under sources; nothing was downloaded",
+ "needs": [
+  "whole-transcriptome RNA (TEDDY reads the whole transcriptome; targeted panels cannot be embedded)",
+  "antibodies that overlap the head's 134 outputs",
+  "donor labels, and for a disease claim patients and healthy donors processed in the same study",
+  "open access"
+ ],
+ "teddy_pretraining": {
+  "source": "CELLxGENE, downloaded 11 June 2024; 116 million cells after quality control; human and mouse; diseased cells included; datasets used for the paper's downstream tests were removed",
+  "consequence": "the RNA of any study that was in CELLxGENE by that date may have been seen by TEDDY; its protein was not. This has to be checked per dataset before a claim about TEDDY itself; it does not affect a claim about the head's protein prediction"
+ },
+ "status_values": {"checked": "taken from a page read on 12 Nov 2026", "recalled": "from memory, to be checked before use"},
+ "datasets": [
+  {"name": "Luecken et al. 2021 (NeurIPS 2021 BMMC CITE-seq)", "accession": "GSE194122", "tissue": "bone marrow mononuclear cells", "donors": "9 donors at 4 sites", "disease": "healthy only", "cells": 90261, "proteins": 134, "overlap_with_head": "134 of 134 (the training data)", "access": "open", "role": "in use: the head's training and test data", "status": "checked (the repository's own files)"},
+  {"name": "Hao et al. 2021 (PBMC, vaccine trial donors)", "accession": "GSE164378", "tissue": "PBMC", "donors": "8", "disease": "healthy only", "cells": 161764, "proteins": 228, "overlap_with_head": "112 of 134", "access": "open", "role": "in use: external evaluation; 40,000 cells embedded", "rna_in_teddy_pretraining": "possible", "status": "checked (the repository's own files)"},
+  {"name": "Stephenson et al. 2021, Nat Med (COVID-19 PBMC, three UK centres)", "accession": "E-MTAB-10026; EGAS00001005465; h5ad at covid19cellatlas.org", "tissue": "PBMC", "donors": "130 (the HCA page lists 120)", "disease": "COVID-19 from asymptomatic to critical; healthy; non-COVID severe respiratory illness; healthy volunteers given LPS", "cells": "more than 780,000", "proteins": "188 to 192 (TotalSeq-C)", "overlap_with_head": "not checked; needs the antibody list", "access": "processed data open (CC BY 4.0 on the HCA portal)", "role": "candidate: the largest open cohort with patients and healthy donors in one study", "rna_in_teddy_pretraining": "likely (public atlas since 2021); to be checked by dataset id", "status": "checked"},
+  {"name": "Liu et al. 2021, Cell (COVID-19, longitudinal)", "accession": "GSE161918", "tissue": "PBMC", "donors": "46 samples; donors not stated on the pages read", "disease": "COVID-19 and age-matched healthy", "cells": 372081, "proteins": "188 to 192", "overlap_with_head": "not checked", "access": "open (GEO)", "role": "candidate: a second COVID-19 cohort from another lab, same panel family", "rna_in_teddy_pretraining": "to be checked", "status": "checked"},
+  {"name": "COMBAT consortium 2022, Cell (blood atlas of COVID-19)", "accession": "Zenodo records 5139561 and 6120249; EGA; HCA project", "tissue": "PBMC (CITE-seq on 140 samples)", "donors": "about 140 samples; counts per group not on the pages read", "disease": "hospitalised and community COVID-19, sepsis, influenza, healthy volunteers aged 55 or over", "proteins": 192, "overlap_with_head": "not checked", "access": "processed data on Zenodo; raw data at EGA", "role": "candidate: three diseases and healthy donors in one study, so a disease contrast that is not only COVID-19", "rna_in_teddy_pretraining": "likely; to be checked", "status": "checked"},
+  {"name": "NeurIPS 2022 multimodal integration (CD34+ HSPC, CITE-seq)", "accession": "Kaggle open-problems-multimodal", "tissue": "mobilized CD34+ cells, 5 time points", "donors": "4", "disease": "healthy only", "proteins": 140, "overlap_with_head": "expected high (same panel family as the training data); not checked", "access": "open", "role": "candidate for donors only: few donors, same lab family as the training data", "status": "recalled"},
+  {"name": "Zhang et al. 2024, Nat Immunol (bone-marrow progenitor atlas)", "accession": "not on the pages read", "tissue": "bone marrow, sorted progenitor fractions", "donors": "4 + 4 healthy; 3 AML samples profiled with the 132-antibody panel", "disease": "healthy; 3 AML", "cells": "about 316,000 (titration) and 72,000 (optimized panel)", "proteins": "132 (optimized) of 266 TotalSeq-A", "overlap_with_head": "not checked", "access": "not checked", "role": "candidate for bone marrow: disease samples are too few for a disease claim", "status": "checked"},
+  {"name": "Terekhova et al. 2023, Immunity (healthy ageing blood atlas)", "accession": "Synapse syn49637038", "tissue": "PBMC", "donors": "166 (317 samples), 25 to 85 years", "disease": "healthy only", "cells": "about 2 million", "proteins": 20, "overlap_with_head": "at most 20", "access": "controlled (Synapse)", "role": "not suitable as it stands: 20 proteins", "status": "checked"},
+  {"name": "GSE345981 (multiple sclerosis)", "accession": "GSE345981", "tissue": "PBMC", "donors": "12 patients, 4 healthy", "disease": "multiple sclerosis; healthy", "proteins": 42, "overlap_with_head": "at most 42", "access": "open (GEO)", "role": "small panel; released after TEDDY's download date, so its RNA is unseen", "status": "checked"},
+  {"name": "GSE236233 (chronic myeloid leukemia under TKI)", "accession": "GSE236233", "tissue": "not stated", "donors": "not stated", "disease": "CML", "proteins": "more than 40", "access": "open (GEO)", "role": "small panel", "status": "checked"},
+  {"name": "Triana et al. 2021, Nat Immunol (bone marrow, AML)", "accession": "figshare project 94469", "tissue": "bone marrow", "donors": "6 healthy, 3 to 15 AML", "disease": "healthy; AML, APL", "proteins": "97 and 197 (BD AbSeq)", "access": "open", "role": "not usable: the RNA is mostly a targeted panel of 462 genes", "status": "checked"},
+  {"name": "10x Genomics, 128k PBMC with TotalSeq-C Universal Cocktail", "accession": "10x datasets page", "tissue": "PBMC", "donors": "1", "disease": "healthy", "cells": 140134, "proteins": "TotalSeq-C Human Universal Cocktail v1.0", "access": "open (CC BY 4.0)", "role": "not usable for donors: one donor", "status": "checked"}
+ ],
+ "reading": [
+  "Disease with many donors and a large panel exists in the open only for blood in infection: three COVID-19 cohorts with about 190 antibodies each, one of them with sepsis and influenza as well.",
+  "No open cohort was found with many cancer or autoimmune patients, whole-transcriptome RNA and a panel above about 50 antibodies. The bone-marrow leukemia sets are either targeted-RNA or have a handful of patients.",
+  "The overlap of the 190-antibody COVID-19 panels with the head's 134 outputs is not known until an antibody list is read; the 228-antibody panel of Hao 2021 overlapped 112.",
+  "Most large cohorts were public before June 2024, so their RNA may have been in TEDDY's pretraining data. Their protein was not."
+ ],
+ "sources": [
+  "https://arxiv.org/html/2503.03485v1",
+  "https://explore.data.humancellatlas.org/projects/b963bd4b-4bc1-4404-8425-69d74bc636b8",
+  "https://abdn.elsevierpure.com/en/publications/single-cell-multi-omics-analysis-of-the-immune-response-in-covid-/",
+  "https://db.cngb.org/trueblood/dataset/33713619",
+  "https://www.omicsdi.org/dataset/geo/GSE161918",
+  "https://www.medrxiv.org/content/medrxiv/early/2021/05/11/2021.05.11.21256877.full.pdf",
+  "https://zenodo.org/record/5139561",
+  "https://explore.data.humancellatlas.org/projects/cdabcf0b-7602-4abf-9afb-3b410e545703",
+  "https://www.nature.com/articles/s41590-024-01782-4",
+  "https://registry.opendata.aws/singlecellhumanbloodatlas/",
+  "https://www.omicsdi.org/dataset/geo/GSE345981",
+  "https://www.omicsdi.org/dataset/geo/GSE236233",
+  "https://pmc.ncbi.nlm.nih.gov/articles/PMC8642243",
+  "https://10xgenomics.com/datasets/128k-human-pbmcs-stained-with-totalseqc-human-universal-cocktail"
+ ]
+}
