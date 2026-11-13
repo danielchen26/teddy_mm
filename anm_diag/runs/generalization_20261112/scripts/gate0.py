@@ -14,6 +14,7 @@ pooled TEDDY state of scripts/03_teddy_embed.py, and the frozen head's predictio
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 import time
 from pathlib import Path
@@ -138,16 +139,10 @@ class View:
     def __init__(self, name: str, F: np.ndarray, Y: np.ndarray, meta: dict, rng: np.random.Generator):
         self.name, self.F, self.Y, self.m = name, F, Y, meta
         self.groups = meta["groups"]
-        self.block = {}
-        self.gstat = {}
-        for g in self.groups:
-            for f in range(N_FOLDS):
-                idx = g["folds"][f]
-                self.block[(g["id"], f)] = Stats.of(F[idx], Y[idx])
-            self.gstat[g["id"]] = total(self.block[(g["id"], f)] for f in range(N_FOLDS))
+        self.gstat = {g["id"]: total(Stats.of(F[idx], Y[idx]) for idx in g["folds"]) for g in self.groups}
         self.inner = {g["id"]: (g["idx"] if g["n"] <= INNER_CELLS else np.sort(rng.choice(g["idx"], INNER_CELLS, replace=False)))
                       for g in self.groups}
-        log(f"{name}: statistics for {len(self.block)} blocks, {F.shape[1]} features")
+        log(f"{name}: statistics for {len(self.gstat)} groups, {F.shape[1]} features")
 
     # ---- helpers
     def cols(self, g):
@@ -162,13 +157,14 @@ class View:
                 out[a] += np.nanmean(pearson(self.Y[idx][:, cols], model.predict(self.F[idx], alpha)[:, cols]))
         return out / max(len(groups), 1)
 
-    def across(self, d: int, fit_groups: list, targets: list, cache: dict) -> dict:
+    def across(self, d: int, fit_groups: list, targets: list) -> dict:
         """Fit on fit_groups, penalty chosen by leaving one donor of the fit set out in turn; predict targets."""
         cols = self.m["cols"][fit_groups[0]["dataset"]]
         ids = tuple(sorted(g["id"] for g in fit_groups))
         donors = sorted({g["donor"] for g in fit_groups})
         if len(donors) < 3:
             return {}
+        cache = {}      # models of this fit only
 
         def model(key_ids):
             key = (d, key_ids)
@@ -192,11 +188,12 @@ class View:
         """Cross-fitted within one group; the penalty is chosen inside each fit set (nested)."""
         gid, cols = g["id"], self.cols(g)
         cache = {}
+        blocks = [Stats.of(self.F[idx], self.Y[idx]) for idx in g["folds"]]
 
         def model(excl):
             key = frozenset(excl)
             if key not in cache:
-                cache[key] = Ridge(self.gstat[gid] - total(self.block[(gid, f)] for f in excl), d)
+                cache[key] = Ridge(self.gstat[gid] - total(blocks[f] for f in excl), d)
             return cache[key]
 
         pred = np.empty((g["n"], self.Y.shape[1]), np.float32)
@@ -225,14 +222,12 @@ class View:
         G = self.groups
         bm_train = [g for g in G if g["dataset"] == "bm" and g["split"] == "train"]
         out = {k: {} for k in "TSLC"}
-        cache = {}
         # T: what the head was trained on. For a training group, without its donor.
         unseen = [g for g in G if not (g["dataset"] == "bm" and g["split"] == "train")]
-        out["T"].update(self.across(d, bm_train, unseen, cache))
+        out["T"].update(self.across(d, bm_train, unseen))
         for dn in sorted({g["donor"] for g in bm_train}):
             out["T"].update(self.across(d, [g for g in bm_train if g["donor"] != dn],
-                                        [g for g in bm_train if g["donor"] == dn], cache))
-        del cache
+                                        [g for g in bm_train if g["donor"] == dn]))
         log(f"{self.name}/{label}: T done")
         # S: as T, and also without the group's site (bone marrow only; equals T where the site is already absent)
         for g in [g for g in G if g["dataset"] == "bm"]:
@@ -242,16 +237,15 @@ class View:
             if same:
                 out["S"][g["id"]] = out["T"][g["id"]]
             else:
-                out["S"].update(self.across(d, fit, [g], {}))
+                out["S"].update(self.across(d, fit, [g]))
         for g in [g for g in G if g["dataset"] != "bm"]:
             out["S"][g["id"]] = out["T"][g["id"]]
         log(f"{self.name}/{label}: S done")
         # L: the other donors of the same study
         for ds in sorted({g["dataset"] for g in G}):
-            cache_l = {}
             for dn in sorted({g["donor"] for g in G if g["dataset"] == ds}):
                 out["L"].update(self.across(d, [g for g in G if g["dataset"] == ds and g["donor"] != dn],
-                                            [g for g in G if g["dataset"] == ds and g["donor"] == dn], cache_l))
+                                            [g for g in G if g["dataset"] == ds and g["donor"] == dn]))
         log(f"{self.name}/{label}: L done")
         # C: the group's own cells
         for g in G:
@@ -312,7 +306,7 @@ def main():
         log(f"group {g['id']:24s} {g['split']:8s} n={g['n']}")
 
     # views
-    z = np.vstack([bm["z"], ext["z"]])
+    z = np.vstack([bm.pop("z"), ext.pop("z")])
     z = z / (np.linalg.norm(z, axis=1, keepdims=True) + 1e-6)          # as the head reads it
     Xz = standardize(z, ref)
     del z
@@ -333,6 +327,7 @@ def main():
             for fit in res:
                 preds[(vname, fit, label)] = res[fit]
         del V, F
+        gc.collect()
 
     # ---------------------------------------------------------------- scores, intervals, terms, donor shifts
     brng = np.random.default_rng(SEED + 99)
