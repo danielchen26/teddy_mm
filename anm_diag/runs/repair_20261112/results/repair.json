@@ -851,14 +851,507 @@
      "below_floor": false
     }
    }
+  },
+  "pooled_frangieh2021_joint_s1": {
+   "kind": "pooled",
+   "data": "frangieh2021",
+   "arm": "joint",
+   "target": null,
+   "seed": 1,
+   "n_cells": 3171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 146.9,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.12971528670865906,
+     "delta_ci": [
+      -0.17798747149239305,
+      -0.08039077236543642
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.46471341913362135,
+       "ci": [
+        -1.1080277925581454,
+        0.05014008354427627
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": -0.42641975490530826,
+       "ci": [
+        -1.5077326033664387,
+        0.26113765166639696
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": -0.33865956857965096,
+       "ci": [
+        -0.9530934195587654,
+        0.0932377465271383
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "no_deficit"
+     },
+     "added_by_head": 0.1260538505539704,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.8614168568686469,
+     "delta_ci": [
+      -0.943693358096226,
+      -0.7647971651366712
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.027550477928298428,
+       "ci": [
+        -0.029916026615813468,
+        0.08480923956520674
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.03735014353566858,
+       "ci": [
+        -0.0633883699024196,
+        0.1201048231954486
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.13854182778318758,
+       "ci": [
+        0.07676015528294837,
+        0.20994417246274014
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.11099134985488915,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.07287257063000181,
+     "delta_ci": [
+      -0.11372694568711582,
+      -0.031233865990755106
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.05890315666251245,
+       "ci": [
+        -1.2082760285409042,
+        0.5301162529698784
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.9372605864322928,
+       "ci": [
+        0.49574037831285167,
+        1.5786287704534576
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.7798594907289558,
+       "ci": [
+        -0.04584313864336287,
+        1.2726451497471118
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.8387626473914682,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_papalexi2021_joint_s1": {
+   "kind": "pooled",
+   "data": "papalexi2021",
+   "arm": "joint",
+   "target": null,
+   "seed": 1,
+   "n_cells": 6285,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 158.5,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7136085322256336,
+     "delta_ci": [
+      -0.8776919904695754,
+      -0.47879948192101485
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13347679082185152,
+       "ci": [
+        0.026329158234099502,
+        0.31497972212327574
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.241236227915421,
+       "ci": [
+        0.15683934471186184,
+        0.35560293502910084
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.15322072359324124,
+       "ci": [
+        0.03567430633274461,
+        0.34869446845091706
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.01974393277138972,
+     "status": "no loss in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.3067955960472732,
+     "delta_ci": [
+      -0.3590444082310072,
+      -0.24365110366054726
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13463699779938773,
+       "ci": [
+        -0.11071934528648328,
+        0.44427943004641
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.06063130231697115,
+       "ci": [
+        -0.14309672860242625,
+        0.4066649384995032
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.10419556958745291,
+       "ci": [
+        -0.3034487943125853,
+        0.5733738504384223
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": -0.030441428211934823,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_frangieh2021_joint_s2": {
+   "kind": "pooled",
+   "data": "frangieh2021",
+   "arm": "joint",
+   "target": null,
+   "seed": 2,
+   "n_cells": 3171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 158.5,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.16245299703001975,
+     "delta_ci": [
+      -0.20705196422959574,
+      -0.11141395641083958
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.35902544352739074,
+       "ci": [
+        -0.8238565964145659,
+        0.04299257599319042
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": -0.0593771107858527,
+       "ci": [
+        -0.5152199251709048,
+        0.29837603453432676
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": -0.12172368663203494,
+       "ci": [
+        -0.4735268752186498,
+        0.2209430891987184
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.23730175689535582,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.8638400200376023,
+     "delta_ci": [
+      -0.947924981783454,
+      -0.7712447991841478
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.01491971082726447,
+       "ci": [
+        -0.041064118573907495,
+        0.07488908269083899
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.033305258719564294,
+       "ci": [
+        -0.0724912900232904,
+        0.1488415785224227
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.15509515540278973,
+       "ci": [
+        0.09341637476560975,
+        0.22109649093933223
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.14017544457552525,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.098077258388163,
+     "delta_ci": [
+      -0.13780766054784946,
+      -0.054952626310119206
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.028832973541808967,
+       "ci": [
+        -0.6921426919555729,
+        0.5027475466921049
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.5682117535576193,
+       "ci": [
+        -0.07329419278516862,
+        1.045352600620367
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.8745655772755864,
+       "ci": [
+        0.39776534764287114,
+        1.2390593895640725
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.8457326037337775,
+     "status": "not resolved",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_papalexi2021_joint_s2": {
+   "kind": "pooled",
+   "data": "papalexi2021",
+   "arm": "joint",
+   "target": null,
+   "seed": 2,
+   "n_cells": 6285,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 155.4,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6832834759334755,
+     "delta_ci": [
+      -0.8520163727125409,
+      -0.45498807877590886
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13775801203410454,
+       "ci": [
+        0.020416238653133092,
+        0.3365729716264765
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.1695828115366358,
+       "ci": [
+        0.09493353384327706,
+        0.22339415976005433
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.14717531228177685,
+       "ci": [
+        0.03183394750117216,
+        0.35542759483975017
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.009417300247672317,
+     "status": "no loss in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.2840511722336357,
+     "delta_ci": [
+      -0.3381650841520051,
+      -0.22248447383599435
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.16381617582817984,
+       "ci": [
+        -0.1423588491020249,
+        0.5351381867554444
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": -0.05643018398415679,
+       "ci": [
+        -0.3225138980287681,
+        0.2058867728105979
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.09240776294424825,
+       "ci": [
+        -0.1503318823249904,
+        0.4083787906960403
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": -0.07140841288393159,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
   }
  },
- "missing": [
-  "pooled_frangieh2021_joint_s1",
-  "pooled_papalexi2021_joint_s1",
-  "pooled_frangieh2021_joint_s2",
-  "pooled_papalexi2021_joint_s2"
- ],
+ "missing": [],
  "rule": {
   "frangieh2021": {
    "pdl1": "not resolved",
@@ -1804,8 +2297,36 @@
   }
  },
  "replication": {
-  "frangieh2021": {},
-  "papalexi2021": {}
+  "frangieh2021": {
+   "s1": {
+    "pdl1": "not resolved",
+    "guard_kept": true,
+    "located_in_the_head": [
+     "HLAE"
+    ],
+    "outcome": "regressed"
+   },
+   "s2": {
+    "pdl1": "not resolved",
+    "guard_kept": true,
+    "located_in_the_head": [],
+    "outcome": "regressed"
+   }
+  },
+  "papalexi2021": {
+   "s1": {
+    "pdl1": "no loss in the head",
+    "guard_kept": true,
+    "located_in_the_head": [],
+    "outcome": "kept; nothing located in the head"
+   },
+   "s2": {
+    "pdl1": "no loss in the head",
+    "guard_kept": true,
+    "located_in_the_head": [],
+    "outcome": "kept; nothing located in the head"
+   }
+  }
  },
  "bone_marrow": {
   "as_trained": 0.601603943025081,
@@ -1822,8 +2343,30 @@
     "mean_fall": 0.004758473947121256,
     "largest_fall": 0.005547290204449551
    },
-   "1": null,
-   "2": null
+   "1": {
+    "heads": [
+     0.5973952011331047,
+     0.5969258537622151,
+     0.5971114548970634,
+     0.5975372419154694,
+     0.5967655992051039,
+     0.5961672726115747
+    ],
+    "mean_fall": 0.00462017243765922,
+    "largest_fall": 0.005436670413506373
+   },
+   "2": {
+    "heads": [
+     0.5978036016325462,
+     0.5973991465133458,
+     0.5973390875856421,
+     0.5977557199986909,
+     0.597387111380768,
+     0.5977351294233072
+    ],
+    "mean_fall": 0.004033976936031025,
+    "largest_fall": 0.004264855439438886
+   }
   },
   "final_head": {
    "mean_pearson": 0.5967391730907436,

@@ -5,6 +5,7 @@
   python -m anm_diag export-tokens DECLARATION --adapter perturb_cite --paths PATHS.yaml --out tokens.npz
   python -m anm_diag inspect --paths PATHS.yaml [--show col1,col2]       metadata only, before sealing
   python -m anm_diag seal DECLARATION --paths PATHS.yaml --out SEALED.yaml
+  python -m anm_diag loop admit|diagnose|closure ...                     finished runs read as a loop (loop.py, LOOP_PROTOCOL.md)
 """
 import argparse
 import json
@@ -25,6 +26,10 @@ def _adapter(name, paths):
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else list(argv)
+    if argv and argv[0] == "loop":                      # reads records only; has its own arguments
+        from .loop import main as loop_main
+        return loop_main(argv[1:])
     ap = argparse.ArgumentParser(prog="anm_diag")
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("check"); c.add_argument("declaration")
