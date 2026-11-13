@@ -34,6 +34,12 @@ change still be recovered from each stage of the computation** (normalized RNA �
 Run with [`anm_diag/`](anm_diag/), a declaration-driven runner that rejects illegal designs before any statistic and
 seals the design with data and code hashes. Full write-up: [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md).
 
+**Where this stands (12 Nov 2026).** TEDDY's own stages keep the PD-L1 response to IFN-γ-pathway knockouts; the teddy_mm
+phase-1 head loses about half of it, starting at its first network (the MLP). Repairing that step removes the loss on
+knockouts of genes the repair never saw, on two cell types, and with the head's outputs held on bone-marrow cells the
+repair stays within 0.02 on the head's original task. The head that `scripts/04_train.py` trains is still the unrepaired
+one: the repair has been shown on fine-tuned copies and is not yet part of the training recipe.
+
 - **Sealed, run once (Perturb-CITE-seq, Frangieh 2021; ECCITE-seq, Papalexi 2021):** no TEDDY stage was rejected for
   any of five protein readouts. For PD-L1 under IFN-γ-pathway knockouts in melanoma, TEDDY-G 70M's pooled embedding
   retains the protein response (*u* = +0.04 [−0.01, +0.09], margin 0.10), while the PD-L1 transcript alone explains
@@ -43,7 +49,21 @@ seals the design with data and code hashes. Full write-up: [`docs/ANM_DIAGNOSIS.
 - **Exploratory follow-ups (sealed, run once):** splitting the head puts the loss in its later layers and decoder,
   not in the input normalization or the first layer; a forward test of typed source events shows the head's PD-L1
   prediction follows the knockout direction in melanoma but not in THP-1 cells. A rule written before the split picks
-  the next intervention: retrain the head with IFN-γ-varied cells, against an unchanged control.
+  the next intervention: retrain the head with IFN-γ-varied cells, against an unchanged control. No run of that
+  retraining is recorded in this repository.
+- **Pooled source separated; typed source events (exploratory, 11 Nov):** the sealed runs pool five target genes (and, on
+  THP-1, four batches). With the source written as typed events (`anm_diag/anm_diag/events.py`), the audit was run for
+  each target and each batch alone. For PD-L1 the head output is rejected for every target on both data sets and no TEDDY
+  stage is; the share lost in the head differs by target (THP-1: STAT1 0.28, IRF1 1.07). The 155 verdicts of 15 runs
+  contain no pair of opposite verdicts.
+- **Closing the loop (exploratory, 12 Nov; designs and rules committed before the runs):** the head was repaired at the
+  step the audit names (its MLP) and, for comparison, at its decoder, each fit with one target gene held out and audited
+  on that gene's knockouts. PD-L1 *u* at the head output: melanoma 0.45 → 0.12 with the MLP repaired against 0.43 with
+  the decoder repaired; THP-1 0.54 → 0.16 against 0.47. That repair lowered the bone-marrow test score by 0.035 to 0.100.
+  Repeated with the head's outputs held on bone-marrow training cells it gives 0.12 and 0.18, with a score of 0.603 to
+  0.604 and 0.594 to 0.595 against 0.602. One seed, a fine-tune on one protein; a repair made on one cell type does not
+  carry to the other ([`anm_diag/runs/loop_20261112/`](anm_diag/runs/loop_20261112/),
+  [`loop_guard_20261112/`](anm_diag/runs/loop_guard_20261112/)).
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
