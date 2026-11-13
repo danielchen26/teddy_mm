@@ -1,0 +1,57 @@
+<svg viewBox="0 0 960 318" role="img" data-al-zh="源扰动进入系统，沿系统自己的运算依次产生状态 z0 到 zK 和模型输出；读出 O 在系统之外独立测量；对每一环计算 u，即只凭这一环解释不了的那部分响应。" data-al-en="The source perturbation enters the system, whose own computation produces states z0 to zK and the model output in turn; the readout O is measured independently, outside the system; at each stage u is the part of the response that this stage alone cannot explain.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+        <marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--accent)"/></marker>
+      </defs>
+      <rect class="sys" x="160" y="118" width="786" height="104" rx="4"/>
+      <text class="t-mu zh" x="170" y="110" font-size="12">被审计的系统（冻结）：每一步都是它自己的运算</text>
+      <text class="t-mu en" x="170" y="110" font-size="12">System under audit (frozen): every step is its own computation</text>
+      <rect class="bx" x="12" y="142" width="126" height="56" rx="3"/>
+      <text class="zh" x="75" y="166" font-size="13" text-anchor="middle" font-weight="600">源扰动 A</text>
+      <text class="en" x="75" y="166" font-size="13" text-anchor="middle" font-weight="600">Source A</text>
+      <text class="t-mu zh" x="75" y="185" font-size="11.5" text-anchor="middle">对照 0 · 处理 1</text>
+      <text class="t-mu en" x="75" y="185" font-size="11.5" text-anchor="middle">control 0 · treated 1</text>
+      <path class="ar" d="M138 170 H174" marker-end="url(#ah)"/>
+      <rect class="bx" x="176" y="142" width="128" height="56" rx="3"/>
+      <text class="zh" x="240" y="166" font-size="13" text-anchor="middle" font-weight="600">输入视图 z₀</text>
+      <text class="en" x="240" y="166" font-size="13" text-anchor="middle" font-weight="600">Input view z₀</text>
+      <text class="t-mu zh" x="240" y="185" font-size="11.5" text-anchor="middle">系统读入的测量</text>
+      <text class="t-mu en" x="240" y="185" font-size="11.5" text-anchor="middle">the system's input</text>
+      <path class="ar" d="M304 170 H352" marker-end="url(#ah)"/>
+      <text class="t-m" x="328" y="161" font-size="11.5" text-anchor="middle">F₁</text>
+      <rect class="bx" x="354" y="142" width="128" height="56" rx="3"/>
+      <text class="zh" x="418" y="166" font-size="13" text-anchor="middle" font-weight="600">状态 z₁</text>
+      <text class="en" x="418" y="166" font-size="13" text-anchor="middle" font-weight="600">State z₁</text>
+      <text class="t-mu" x="418" y="185" font-size="11.5" text-anchor="middle">= F₁(z₀)</text>
+      <path class="ar" d="M482 170 H530" marker-end="url(#ah)"/>
+      <text class="t-m" x="506" y="161" font-size="11.5" text-anchor="middle">F₂</text>
+      <text x="556" y="175" font-size="18" text-anchor="middle">⋯</text>
+      <path class="ar" d="M582 170 H630" marker-end="url(#ah)"/>
+      <text class="t-m" x="606" y="161" font-size="11.5" text-anchor="middle">F<tspan dy="3" font-size="9">K</tspan></text>
+      <rect class="bx" x="632" y="142" width="128" height="56" rx="3"/>
+      <text class="zh" x="696" y="166" font-size="13" text-anchor="middle" font-weight="600">状态 z<tspan dy="3" font-size="10">K</tspan></text>
+      <text class="en" x="696" y="166" font-size="13" text-anchor="middle" font-weight="600">State z<tspan dy="3" font-size="10">K</tspan></text>
+      <text class="t-mu" x="696" y="185" font-size="11.5" text-anchor="middle">= F<tspan dy="3" font-size="9">K</tspan><tspan dy="-3">(z</tspan><tspan dy="3" font-size="9">K−1</tspan><tspan dy="-3">)</tspan></text>
+      <path class="ar" d="M760 170 H808" marker-end="url(#ah)"/>
+      <rect class="bx" x="810" y="142" width="124" height="56" rx="3"/>
+      <text class="zh" x="872" y="166" font-size="13" text-anchor="middle" font-weight="600">模型输出</text>
+      <text class="en" x="872" y="166" font-size="13" text-anchor="middle" font-weight="600">Model output</text>
+      <text class="t-mu zh" x="872" y="185" font-size="11.5" text-anchor="middle">最后一环</text>
+      <text class="t-mu en" x="872" y="185" font-size="11.5" text-anchor="middle">last stage</text>
+      <rect class="ro" x="632" y="22" width="302" height="50" rx="3"/>
+      <text class="zh" x="783" y="44" font-size="13" text-anchor="middle" font-weight="600">读出 O：独立测量的结果</text>
+      <text class="en" x="783" y="44" font-size="13" text-anchor="middle" font-weight="600">Readout O: an independent measurement</text>
+      <text class="t-mu zh" x="783" y="61" font-size="11.5" text-anchor="middle">系统没有读过它</text>
+      <text class="t-mu en" x="783" y="61" font-size="11.5" text-anchor="middle">the system never reads it</text>
+      <path class="ar-d" d="M75 142 V47 H630" marker-end="url(#ahd)"/>
+      <text class="zh" x="350" y="38" font-size="12.5" text-anchor="middle">真实响应 Δ = E[O | 处理] − E[O | 对照]</text>
+      <text class="en" x="350" y="38" font-size="12.5" text-anchor="middle">True response Δ = E[O | treated] − E[O | control]</text>
+      <g font-size="12.5" text-anchor="middle">
+        <line class="tick" x1="240" y1="198" x2="240" y2="246"/><text class="t-m" x="240" y="262">u₀</text>
+        <line class="tick" x1="418" y1="198" x2="418" y2="246"/><text class="t-m" x="418" y="262">u₁</text>
+        <line class="tick" x1="696" y1="198" x2="696" y2="246"/><text class="t-m" x="696" y="262">u<tspan dy="3" font-size="9.5">K</tspan></text>
+        <line class="tick" x1="872" y1="198" x2="872" y2="246"/><text class="t-m" x="872" y="262">u<tspan dy="3" font-size="9.5">out</tspan></text>
+      </g>
+      <text class="zh" x="556" y="296" font-size="12.5" text-anchor="middle">对每一环问同一个问题：只凭这一环的状态，读出模型还剩多少 Δ 解释不了？（u = 0 全解释，u = 1 一点没解释）</text>
+      <text class="en" x="556" y="296" font-size="12.5" text-anchor="middle">The same question at every stage: from this state alone, how much of Δ is left unexplained? (u = 0: all explained; u = 1: none)</text>
+    </svg>
