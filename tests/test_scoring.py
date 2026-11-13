@@ -25,7 +25,7 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 BRIDGE_PY = REPO / "bridge_anm"
-MAIN_REPO = Path("/Users/tianchichen/Documents/GitHub/teddy_mm")
+MAIN_REPO = Path(os.environ.get("TEDDY_MM_MAIN", str(REPO)))
 DATA = Path(os.environ.get("SCORING_BRIDGE_DIR", str(MAIN_REPO / "outputs/anm_cite_bridge")))
 ANM_ROOT = Path(os.environ.get("ANM_ROOT", str(REPO.parent / "ANM")))
 # Last commit with the pre-fix scoring functions (reference for the legacy flag).

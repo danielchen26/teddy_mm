@@ -42,9 +42,9 @@ needs amendment A3 committed with a matching hash. Smoke runs (--smoke
 NOTE) use val donor 18303 as the evaluated split and never read a site4 row.
 
 Full run (from the dev clone root, after the addendum commit; resumable, rerun the same command to continue):
-  PY=<venv312>/bin/python; R=/Users/tianchichen/Documents/GitHub/teddy_mm
+  PY=<venv312>/bin/python; R=<teddy_mm repo>
   $PY scripts/v3_e3_nkt_repair.py --stage all --out-dir $R/outputs/v3/E3 \
-      --ckpt /Users/tianchichen/Documents/GitHub/teddy_mwe/ckpt/teddy_g_70M \
+      --ckpt <teddy_mwe repo>/ckpt/teddy_g_70M \
       --head-ckpt $R/outputs/cite_phase1_official/best.pt --device auto --threads 4
   (or stage by stage: null, r2_states, r2_predict on the GPU; r1, r2_fit, evaluate on the CPU;
    --time-budget-sec N makes r2_states / r2_predict stop cleanly after a shard, exit 75)
@@ -98,7 +98,7 @@ TRUST = ("head_margin", "head_entropy", "head_knn")
 STATE_SHARD = 250
 PRED_SHARD = 1000
 OFFICIAL_SEC_PER_CELL = 10615.457 / 90261  # z_rna_manifest.json: official run, MPS, fp16, batch 32
-MAIN = Path("/Users/tianchichen/Documents/GitHub/teddy_mm")
+MAIN = Path(os.environ.get("TEDDY_MM_MAIN", str(ROOT)))  # main checkout that holds data/ and outputs/
 
 # ============================================================================ addendum (declared part)
 # Fixed before any site4 evaluation; registration/addenda/E3.json = this dict + the train/val numbers that

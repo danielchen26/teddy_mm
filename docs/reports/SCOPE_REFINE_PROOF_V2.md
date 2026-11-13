@@ -163,10 +163,10 @@
 ### Re-run
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
+cd <teddy_mm repo>
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 ```
 
-Inputs: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_v2`. Outputs: `SCOPE_REFINE_PROOF.md`, `scope_refine_results.json` in the chosen `--out-dir` (default `outputs/anm_cite_bridge/scope_refine`). Flags: `--bridge-dir`, `--workers N`, `--skip-adt-only`, `--max-cells N`.
+Inputs: `outputs/anm_cite_bridge_v2`. Outputs: `SCOPE_REFINE_PROOF.md`, `scope_refine_results.json` in the chosen `--out-dir` (default `outputs/anm_cite_bridge/scope_refine`). Flags: `--bridge-dir`, `--workers N`, `--skip-adt-only`, `--max-cells N`.
 
 Generated: 2026-09-29 13:30:37 EDT

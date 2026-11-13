@@ -11,6 +11,8 @@ Open **[index.html](index.html)** for the public landing: a “Corrections” no
 
 Pages source: `/docs` on the default branch.
 - `MODE_B_SCOPE.md` — Mode B vs Mode A claim boundary + `z_512` definition
+- `ANM_DIAGNOSIS.md` — ANM response-sufficiency diagnosis of TEDDY (KS-2 exploratory; Perturb-CITE-seq and ECCITE-seq sealed: TEDDY's stages never rejected, loss in the teddy_mm head after the head-input fix); code and runs in `../anm_diag/`
+- `reports/PHASE1_PER_PROTEIN.md` — phase-1 per-protein test Pearson / R² (median 0.675 vs mean 0.603) and known limitations
 - `reports/REVERSE_STEP1.md` — must-separate z pairs (sufficiency-for-readout; not Mode A)
 - `reports/ANM_HELPS_TEDDY_LOOP.md` — deep proof: how Mode B veto→complement→verify helps TEDDY (figures `06`/`07`/`08`)
 - `reports/REVERSE_LOOP_SMALL.md` — veto/complement/verify stats on must-pairs

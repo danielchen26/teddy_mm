@@ -106,10 +106,10 @@ Avail 41.0 GiB / total 994.6 GiB (96% used). No cache purge needed.
 ### Re-run
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100 --workers 9  # add --label-cost-split legacy --perm-null within_cell for the old numbers
+cd <teddy_mm repo>
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_hard_proof.py --attr-n 0 --n-boot 200 --n-perm 100 --workers 9  # add --label-cost-split legacy --perm-null within_cell for the old numbers
 ```
 
-Outputs: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_v2/hard_proof/HARD_PROOF.md`, `hard_proof_results.json`, `attr_compact.npz`.
+Outputs: `outputs/anm_cite_bridge_v2/hard_proof/HARD_PROOF.md`, `hard_proof_results.json`, `attr_compact.npz`.
 
 Generated: 2026-09-29 13:27:36 EDT

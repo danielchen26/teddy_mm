@@ -1,0 +1,41 @@
+# ANM declaration: TEDDY-G 70M on Replogle 2022 K562, cytosolic ribosome knockdown (control class; KS-2 development cells)
+anm_declaration: 1
+name: ks2_teddy_ribo_dev
+status: exploratory
+kind: sufficiency
+
+system:
+  id: TEDDY-G-70M
+  frozen: true
+  inputs: [rna_counts]
+
+measurements:
+  rna_counts: {modality: rna, kind: counts}
+
+source:
+  controlled: true
+  kind: crispri
+  control: control
+  treated: "^RP[LS]\\d"
+  cluster: target
+
+readouts:
+  - {id: RP,  measurement: rna_counts, statistic: mean_log1p_cp10k, features: "^RP[LS]\\d",  exclude_targets: true}
+  - {id: MRP, measurement: rna_counts, statistic: mean_log1p_cp10k, features: "^MRP[LS]\\d", exclude_targets: true}
+  - {id: MT,  measurement: rna_counts, statistic: mean_log1p_cp10k, features: "^MT-",        exclude_targets: true}
+
+measurement_sharing: declared_shared
+
+nodes:
+  - {id: RAW,    from: rna_counts, op: log1p_cp10k,           operator: analysis, role: chain}
+  - {id: TOKENS, from: RAW,        op: teddy_official_tokens, operator: system,   role: chain}
+  - {id: Z,      from: TOKENS,     op: teddy_embedding,       operator: system,   role: chain}
+  - {id: SET,    from: TOKENS,     op: drop_order,            operator: analysis, role: probe}
+  - {id: READ_RP,  from: rna_counts, op: "readout_genes:RP",  operator: analysis, role: positive_control, readout: RP}
+  - {id: READ_MRP, from: rna_counts, op: "readout_genes:MRP", operator: analysis, role: positive_control, readout: MRP}
+  - {id: READ_MT,  from: rna_counts, op: "readout_genes:MT",  operator: analysis, role: positive_control, readout: MT}
+
+chain: [RAW, TOKENS, Z]
+
+inference: {folds: 5, bootstrap: 1000, forward_bootstrap: 300, seed: 0, inverse: crossfit_partial_linear}
+decision: {margin_u: 0.10, step_margin: 0.10, alpha: 0.05}

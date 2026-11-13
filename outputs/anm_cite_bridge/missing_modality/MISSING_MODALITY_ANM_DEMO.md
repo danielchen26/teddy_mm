@@ -107,10 +107,10 @@
 
 ## Paths
 
-- Report: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/MISSING_MODALITY_ANM_DEMO.md`
-- Results JSON: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_results.json`
-- Export: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl` / `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl`
-- Attr NPZ dir: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/attr`
+- Report: `outputs/anm_cite_bridge/missing_modality/MISSING_MODALITY_ANM_DEMO.md`
+- Results JSON: `outputs/anm_cite_bridge/missing_modality/missing_modality_results.json`
+- Export: `outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl` / `outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl`
+- Attr NPZ dir: `outputs/anm_cite_bridge/missing_modality/attr`
 - Scripts: `bridge_anm/export_missing_modality_events.py`, `bridge_anm/run_missing_modality_demo.py`
 - Phase-2 ckpt: `outputs/cite_phase2/best.pt` (metrics.json test≈0.25–0.28)
 

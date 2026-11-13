@@ -98,9 +98,9 @@
 
 ## Paths
 
-- Report: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_official/missing_modality_direct_e20/MISSING_MODALITY_ANM_DEMO.md`
-- Results JSON: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_official/missing_modality_direct_e20/missing_modality_results.json`
-- Export: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_official/missing_modality_direct_e20/missing_modality_events.jsonl` / `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_official/missing_modality_direct_e20/missing_modality_cells.jsonl`
-- Attr NPZ dir: `/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge_official/missing_modality_direct_e20/attr`
+- Report: `outputs/anm_cite_bridge_official/missing_modality_direct_e20/MISSING_MODALITY_ANM_DEMO.md`
+- Results JSON: `outputs/anm_cite_bridge_official/missing_modality_direct_e20/missing_modality_results.json`
+- Export: `outputs/anm_cite_bridge_official/missing_modality_direct_e20/missing_modality_events.jsonl` / `outputs/anm_cite_bridge_official/missing_modality_direct_e20/missing_modality_cells.jsonl`
+- Attr NPZ dir: `outputs/anm_cite_bridge_official/missing_modality_direct_e20/attr`
 
 Generated: 2026-09-30 18:11:25 EDT

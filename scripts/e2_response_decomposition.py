@@ -36,10 +36,10 @@ amendment_A1.json, amendment_A2.json and addenda/E2.json are committed, hash-che
 equal to this script's SPEC.
 
 Full run (not run inside the workflow):
-  R=/Users/tianchichen/Documents/GitHub/teddy_mm; PY=<venv>/bin/python
+  R=<teddy_mm repo>; PY=<venv>/bin/python
   ANM_ROOT=<anm_v2_fix> $PY scripts/e2_response_decomposition.py --stage all --cell-pool e2_subset \\
       --processed $R/data/processed/cite --embed-dir $R/data/processed/cite_official \\
-      --ckpt /Users/tianchichen/Documents/GitHub/teddy_mwe/ckpt/teddy_g_70M \\
+      --ckpt <teddy_mwe repo>/ckpt/teddy_g_70M \\
       --medians $R/data/reference/teddy_gene_medians.json \\
       --head-ckpt $R/outputs/cite_phase1_official/best.pt --out-dir $R/outputs/v3/E2 --device auto --threads 4
 """

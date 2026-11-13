@@ -133,8 +133,8 @@
 ### Re-run
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
+cd <teddy_mm repo>
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 ```
 
 Outputs: `outputs/anm_cite_bridge/scope_refine/SCOPE_REFINE_PROOF.md`, `scope_refine_results.json`.

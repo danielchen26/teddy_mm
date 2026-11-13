@@ -1,0 +1,19 @@
+# Paths for the Perturb-CITE-seq (Frangieh et al. 2021; scPerturb v1.3 files, Zenodo record 10044268).
+# Column names and labels were read with `python -m anm_diag inspect` (metadata only).
+# Relative paths are resolved from the anm_diag/ folder (tools/mac_teddy_mm.sh runs from there), so this file
+# works unchanged when anm_diag/ sits inside a teddy_mm checkout with TEDDY-G 70M in a sibling teddy_mwe checkout.
+# Point the entries elsewhere if your data live elsewhere; a changed path does not break a seal (hashes are per key).
+rna_h5ad: ../data/raw/perturb/FrangiehIzar2021_RNA.h5ad
+adt_h5ad: ../data/raw/perturb/FrangiehIzar2021_protein.h5ad
+obs_target: perturbation        # the file's own label (not used: the declaration assigns cells from their guides)
+obs_stratum: perturbation_2     # culture condition: Control / IFNγ / Co-culture
+obs_guide: guide_id             # detected guides, e.g. "IFNGR1_3;NO_SITE_664"; missing when none was detected
+guide_sep: ";"
+guide_gene_regex: "^(.+)_\\d+$"  # IFNGR1_3 -> IFNGR1, NO_SITE_47 -> NO_SITE
+symbol_map: ../data/reference/gene_map_frangieh2021.csv   # tools/gene_map.py (10x GRCh38-3.0.0 ids; the file's ensembl_id puts MHC genes outside TEDDY's vocabulary)
+vocab: ../../teddy_mwe/ckpt/teddy_g_70M/vocab.txt
+teddy_ckpt: ../../teddy_mwe/ckpt/teddy_g_70M/model.safetensors
+medians: ../data/reference/teddy_gene_medians.json
+encoder_dir: ../teddy_mm
+head_ckpt: ../outputs/cite_phase1_official/best.pt
+teddy_states: ../data/processed/frangieh2021_teddy_states.npz

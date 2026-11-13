@@ -1,0 +1,449 @@
+{
+ "anm_diag_version": "0.1.0",
+ "declaration": {
+  "status": "exploratory",
+  "kind": "sufficiency",
+  "measurement_sharing": "none",
+  "readout_classes": {
+   "ridge": {
+    "regressor": "RidgeCV",
+    "alphas": [
+     0.1,
+     0.31622776601683794,
+     1.0,
+     3.1622776601683795,
+     10.0,
+     31.622776601683793,
+     100.0,
+     316.22776601683796,
+     1000.0,
+     3162.2776601683795,
+     10000.0,
+     31622.776601683792,
+     100000.0
+    ],
+    "classifier": "LogisticRegression",
+    "C": 0.05
+   },
+   "hgb": {
+    "regressor": "HistGradientBoostingRegressor",
+    "classifier": "HistGradientBoostingClassifier",
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15
+   }
+  },
+  "inference": {
+   "folds": 5,
+   "bootstrap": 1000,
+   "forward_bootstrap": 300,
+   "seed": 0,
+   "standardize_on": "control",
+   "inverse": "crossfit_partial_linear"
+  },
+  "decision": {
+   "margin_u": 0.1,
+   "step_margin": 0.1,
+   "alpha": 0.05
+  },
+  "anm_declaration": 1,
+  "name": "loop_pooled_papalexi2021_mlp_only",
+  "system": {
+   "id": "TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)",
+   "frozen": true,
+   "inputs": [
+    "rna_counts"
+   ],
+   "notes": "Closed-loop test, see DESIGN.md. Head: the head with only its latent network (MLP) retrained. Cells: all knockout cells and the audit half of the control cells; each cell is passed through the head fitted with its target held out (control cells: one of the five heads, assigned at random). No head was fitted on any audited cell. The head was trained on bone-marrow CITE-seq (NeurIPS 2021). THP-1 is a monocytic leukaemia line, closer to that training set than melanoma cells but still a shift. Declared choice: use the head as trained. Cells are taken by guide, intent-to-treat: no filtering by response-derived classes (no mixscape KO/NP labels), since those are computed from the RNA response itself. Targets are the guides' genes, so folds and resampling are per gene, not per guide. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol table that teddy_mm uses (tools/gene_map.py), because the file's own Ensembl ids put HLA and B2M genes and IFNGR2 outside TEDDY's vocabulary.\n"
+  },
+  "measurements": {
+   "rna_counts": {
+    "modality": "rna",
+    "kind": "counts"
+   },
+   "adt_counts": {
+    "modality": "protein",
+    "kind": "counts"
+   }
+  },
+  "source": {
+   "controlled": true,
+   "kind": "crispr_ko",
+   "stratum": [
+    "rep1-tx",
+    "rep2-tx",
+    "rep3-tx",
+    "rep4-tx"
+   ],
+   "assign_from_guides": true,
+   "control_guides": [
+    "NT"
+   ],
+   "control": [
+    "control"
+   ],
+   "treated": [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK2",
+    "STAT1",
+    "IRF1"
+   ],
+   "cluster": "target",
+   "max_control_cells": 4000,
+   "control_seed": 0
+  },
+  "readouts": [
+   {
+    "id": "PDL1",
+    "measurement": "adt_counts",
+    "statistic": "adt_log1p",
+    "features": [
+     "PDL1"
+    ]
+   },
+   {
+    "id": "PDL2",
+    "measurement": "adt_counts",
+    "statistic": "adt_log1p",
+    "features": [
+     "PDL2"
+    ]
+   }
+  ],
+  "nodes": [
+   {
+    "id": "Z",
+    "from": "rna_counts",
+    "op": "teddy_embedding",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_LAT",
+    "from": "Z",
+    "op": "head_latent",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_OUT",
+    "from": "HEAD_LAT",
+    "op": "head_output",
+    "operator": "system",
+    "role": "chain"
+   }
+  ],
+  "chain": [
+   "Z",
+   "HEAD_LAT",
+   "HEAD_OUT"
+  ]
+ },
+ "declaration_sha256": "3c518609ddb103f39b89a3097f6960c2aa09dbd83bbfe137834b1e833db4ef67",
+ "problems": [
+  {
+   "code": "S2",
+   "severity": "warning",
+   "message": "the source pools events that differ in 'site' (5 values: IFNGR1, IFNGR2, IRF1, JAK2, STAT1) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each site"
+  },
+  {
+   "code": "S2",
+   "severity": "warning",
+   "message": "the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum"
+  },
+  {
+   "code": "C5",
+   "severity": "warning",
+   "message": "no positive control node: support verdicts will be marked uninformative"
+  },
+  {
+   "code": "K1",
+   "severity": "warning",
+   "message": "only 5 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+  }
+ ],
+ "n_cells": 6285,
+ "n_treated": 5092,
+ "n_treated_clusters": 5,
+ "fold_seed": 0,
+ "forward": {
+  "auc": {
+   "Z": 0.8350113156808273,
+   "HEAD_LAT": 0.14872062351146284,
+   "HEAD_OUT": 0.6302367535420352
+  },
+  "steps": {
+   "Z->HEAD_LAT": [
+    -0.732402469016926,
+    -0.6235644023142022
+   ],
+   "HEAD_LAT->HEAD_OUT": [
+    0.29274661776184496,
+    0.6355961170066857
+   ]
+  },
+  "class": "ridge"
+ },
+ "readouts": {
+  "PDL1": {
+   "delta": -0.6998195535900125,
+   "delta_ci": [
+    -0.8648221793042177,
+    -0.4755168334137777
+   ],
+   "states": {
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.11985948580856126,
+     "ci": [
+      0.014877326502401318,
+      0.2887903816660188
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.11985948580856126,
+       "ci": [
+        0.014877326502401318,
+        0.2887903816660188
+       ]
+      },
+      "hgb": {
+       "u": 0.245005615154981,
+       "ci": [
+        0.14743630653634043,
+        0.4081711803373629
+       ]
+      }
+     }
+    },
+    "HEAD_LAT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.18391119321030014,
+     "ci": [
+      0.11390019876420236,
+      0.3220478526141546
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.25347204719460914,
+       "ci": [
+        0.13859294925607632,
+        0.4436257175874081
+       ]
+      },
+      "hgb": {
+       "u": 0.18391119321030014,
+       "ci": [
+        0.11390019876420236,
+        0.3220478526141546
+       ]
+      }
+     }
+    },
+    "HEAD_OUT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.15574289608903014,
+     "ci": [
+      0.05067593662904044,
+      0.30312243094373703
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.19622226035516208,
+       "ci": [
+        0.0695968744099401,
+        0.38897264201679616
+       ]
+      },
+      "hgb": {
+       "u": 0.15574289608903014,
+       "ci": [
+        0.05067593662904044,
+        0.30312243094373703
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "Z->HEAD_LAT": {
+     "best_class": [
+      0.0038086440052172658,
+      0.1434266769061418
+     ],
+     "same_class": {
+      "ridge": [
+       0.05676768530141228,
+       0.24622362599502984
+      ],
+      "hgb": [
+       -0.1116593823962579,
+       0.0058366342644663415
+      ]
+     }
+    },
+    "HEAD_LAT->HEAD_OUT": {
+     "best_class": [
+      -0.10270335550365498,
+      0.011618925115423893
+     ],
+     "same_class": {
+      "ridge": [
+       -0.15131068621360794,
+       0.009846584346101195
+      ],
+      "hgb": [
+       -0.10270335550365498,
+       0.011618925115423893
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "reference_unresolved",
+    "detail": "reference stage 'Z' is unresolved: the data cannot tell whether the input view reproduces this response; no claim about later stages"
+   },
+   "exact": null
+  },
+  "PDL2": {
+   "delta": -0.312908354228291,
+   "delta_ci": [
+    -0.3670043842280876,
+    -0.24958345094407178
+   ],
+   "states": {
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.16416410704714446,
+     "ci": [
+      -0.0803402720372275,
+      0.4690764123845268
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.16416410704714446,
+       "ci": [
+        -0.0803402720372275,
+        0.4690764123845268
+       ]
+      },
+      "hgb": {
+       "u": 0.2884980802468705,
+       "ci": [
+        0.051750367410381644,
+        0.5730750139236126
+       ]
+      }
+     }
+    },
+    "HEAD_LAT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": -0.12145734020821948,
+     "ci": [
+      -0.44685111697822966,
+      0.3410650949445708
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.10279514572143499,
+       "ci": [
+        -0.20776271629483928,
+        0.4910042526223639
+       ]
+      },
+      "hgb": {
+       "u": -0.12145734020821948,
+       "ci": [
+        -0.44685111697822966,
+        0.3410650949445708
+       ]
+      }
+     }
+    },
+    "HEAD_OUT": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.14554178925311986,
+     "ci": [
+      -0.18999939659477064,
+      0.5116113547938773
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.14554178925311986,
+       "ci": [
+        -0.18999939659477064,
+        0.5116113547938773
+       ]
+      },
+      "hgb": {
+       "u": 0.15840667636327757,
+       "ci": [
+        -0.1683174585145848,
+        0.5168608247961461
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "Z->HEAD_LAT": {
+     "best_class": [
+      -0.4334246684352772,
+      -0.09626180468999276
+     ],
+     "same_class": {
+      "ridge": [
+       -0.23183981311975746,
+       0.1725242131633657
+      ],
+      "hgb": [
+       -0.5864394259114092,
+       -0.19759693216444713
+      ]
+     }
+    },
+    "HEAD_LAT->HEAD_OUT": {
+     "best_class": [
+      0.0840239058728419,
+      0.3935113837447064
+     ],
+     "same_class": {
+      "ridge": [
+       -0.2539333808454604,
+       0.255224608063604
+      ],
+      "hgb": [
+       0.06869285855659463,
+       0.44176275715896557
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "reference_unresolved",
+    "detail": "reference stage 'Z' is unresolved: the data cannot tell whether the input view reproduces this response; no claim about later stages"
+   },
+   "exact": null
+  }
+ },
+ "provenance": {
+  "adapter": "precomputed(perturb_cite features exported on the source machine)",
+  "python": "3.13.18"
+ },
+ "runtime_s": 200.1,
+ "exploratory": true,
+ "seal_verified": []
+}

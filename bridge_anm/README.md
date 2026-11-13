@@ -38,9 +38,9 @@ bridge_anm/
 ## Re-run (scaled statistical proof)
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
+cd <teddy_mm repo>
 PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python bridge_anm/export_cite_events.py --n-cells 0 --ood-n 2000
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_stat_proof.py --attr-n 250
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_stat_proof.py --attr-n 250
 ```
 
 Outputs: `outputs/anm_cite_bridge/stat_proof/STAT_PROOF.md`, `stat_proof_results.json`.
@@ -50,11 +50,11 @@ Does **not** retrain `best.pt`. Jev arm is a log-loss Choice stand-in.
 ## Missing-modality × ANM demo
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
+cd <teddy_mm repo>
 # phase-2 ckpt (weak ~0.25–0.28; optional if already present)
 # PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python scripts/06_train_bidirectional.py --processed data/processed/cite --out outputs/cite_phase2 --epochs 6
 PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python bridge_anm/export_missing_modality_events.py --n-cells 0
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_missing_modality_demo.py --attr-n 1200
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_missing_modality_demo.py --attr-n 1200
 python3 outputs/anm_cite_bridge/missing_modality/make_mm_viz.py
 ```
 
@@ -64,8 +64,8 @@ Hybrid export when phase-2 RNA pearson < 0.35. Do **not** claim win over phase-1
 ## Scope-refine proof (P_f / attribution)
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
+cd <teddy_mm repo>
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_scope_refine_proof.py
 ```
 
 Outputs: `outputs/anm_cite_bridge/scope_refine/SCOPE_REFINE_PROOF.md`, `scope_refine_results.json`.

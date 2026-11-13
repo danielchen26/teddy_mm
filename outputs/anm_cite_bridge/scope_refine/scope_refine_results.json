@@ -4,12 +4,12 @@
   "no_retrain_best_pt": true,
   "P_f_note": "Verifier P_f is binary (1 if recommended_action in actions else 0). \u03c4-sweep uses continuous soft_P=max(ANM action_scores) from the same field readout.",
   "paths": {
-    "cells": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_cells_meta.jsonl",
-    "events": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/cite_typed_events.jsonl",
-    "attr": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
-    "schema": "/Users/tianchichen/Documents/GitHub/teddy_mm/bridge_anm/schemas/cite_lineage_finite_field_v0.json",
-    "mm_cells": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl",
-    "mm_events": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl"
+    "cells": "outputs/anm_cite_bridge/cite_cells_meta.jsonl",
+    "events": "outputs/anm_cite_bridge/cite_typed_events.jsonl",
+    "attr": "outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
+    "schema": "bridge_anm/schemas/cite_lineage_finite_field_v0.json",
+    "mm_cells": "outputs/anm_cite_bridge/missing_modality/missing_modality_cells.jsonl",
+    "mm_events": "outputs/anm_cite_bridge/missing_modality/missing_modality_events.jsonl"
   },
   "claim1_gate": {
     "tag": "site4_phase1_export",

@@ -8,7 +8,7 @@
 - blocker: `torch_unavailable: ModuleNotFoundError: No module named 'torch'`
 - note: `ckpt_weights_bytes=284887424`
 - note: `processed_cite_arrays_present`
-- available on disk: `[{'ctx': 1024, 'path': '/Users/tianchichen/Documents/GitHub/teddy_mm/data/processed/cite/z_rna.npy', 'note': 'scripts/03_embed_rna.py default'}]`
+- available on disk: `[{'ctx': 1024, 'path': 'data/processed/cite/z_rna.npy', 'note': 'scripts/03_embed_rna.py default'}]`
 
 ## Proxy: leading-dim subsets of ctx1024 z_512
 

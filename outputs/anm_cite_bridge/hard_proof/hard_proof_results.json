@@ -11,7 +11,7 @@
     "n_cells_ood": 2000,
     "n_events": 168750,
     "device": "mps",
-    "ckpt": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/cite_phase1/best.pt",
+    "ckpt": "outputs/cite_phase1/best.pt",
     "compact": true,
     "phase1_mlp_pearson_quoted": {
       "CD19": 0.9321139392380869,
@@ -990,11 +990,11 @@
   "no_retrain_best_pt": true,
   "proof_sentence": "On the same TEDDY \u03b4u (site4/test full-n), ANM declaration edits the observer (O0\u2192O1 tighter abstain; O0\u2192O2 rewrites expected_action) with zero endpoint-label fit, keeping verifiable P_f/Q_f and auditable full-n LOO attribution (n_attr=16433, bootstrap B=200, permutation p=0.009900990099009901). TEDDY-alone silently over-answers where the declared observer abstains; Train+ANM (logistic/MLP/grid) must consume O2 labels to approach ANM's O2 abstain/strict operating point and still cannot buy editable-field attribution or label-free observer edits. Accuracy is secondary; not clinical.",
   "paths": {
-    "HARD_PROOF.md": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/HARD_PROOF.md",
-    "hard_proof_results.json": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/hard_proof_results.json",
-    "attr_compact.npz": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
-    "run_script": "/Users/tianchichen/Documents/GitHub/teddy_mm/bridge_anm/run_hard_proof.py",
-    "run_log": "/Users/tianchichen/Documents/GitHub/teddy_mm/outputs/anm_cite_bridge/hard_proof/run.log"
+    "HARD_PROOF.md": "outputs/anm_cite_bridge/hard_proof/HARD_PROOF.md",
+    "hard_proof_results.json": "outputs/anm_cite_bridge/hard_proof/hard_proof_results.json",
+    "attr_compact.npz": "outputs/anm_cite_bridge/hard_proof/attr_compact.npz",
+    "run_script": "bridge_anm/run_hard_proof.py",
+    "run_log": "outputs/anm_cite_bridge/hard_proof/run.log"
   },
   "train_curves_repaired": true
 }

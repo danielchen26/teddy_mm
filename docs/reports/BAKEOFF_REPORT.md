@@ -114,12 +114,12 @@
 ### Re-run
 
 ```bash
-cd /Users/tianchichen/Documents/GitHub/teddy_mm
+cd <teddy_mm repo>
 # (optional) refresh bridge instances if needed — do NOT retrain best.pt
 .venv/bin/python bridge_anm/adapt_to_anm.py --criterion O0 --max-cells 500
 .venv/bin/python bridge_anm/adapt_to_anm.py --criterion O1 --max-cells 500
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_demo.py
-PYTHONPATH=/Users/tianchichen/Documents/GitHub/ANM:. .venv/bin/python bridge_anm/run_bakeoff.py
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_demo.py
+PYTHONPATH=<ANM repo>:. .venv/bin/python bridge_anm/run_bakeoff.py
 ```
 
 Outputs: `outputs/anm_cite_bridge/bakeoff/BAKEOFF_REPORT.md`, `bakeoff_results.json`.

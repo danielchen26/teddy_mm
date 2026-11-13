@@ -42,7 +42,7 @@ Smoke runs use val donor 18303 (--cell-pool val); --smoke on site4 respond / rep
 before every selected cell is done (e.g. after --max-minutes) is marked INTERIM ("final": false).
 
 Full run (from the repo root; R = the main checkout):
-  PY=<venv>/bin/python; R=/Users/tianchichen/Documents/GitHub/teddy_mm
+  PY=<venv>/bin/python; R=<teddy_mm repo>
   ANM_ROOT=<anm_v2_fix> OMP_NUM_THREADS=4 PYTORCH_ENABLE_MPS_FALLBACK=1 $PY scripts/mode_a_observer_sufficiency.py \
       --stage all --out-dir $R/outputs/v3/E5M --device auto --threads 4 --jvp-chunk 8 --fd-batch 4
 (add --max-minutes N to pause after N minutes with exit code 75; the same command resumes)
@@ -96,7 +96,7 @@ from lib import v3_amend as va  # noqa: E402
 from lib import v3_e5m as e5m  # noqa: E402
 
 SCRIPT_VERSION = "mode_a_observer_sufficiency 1.0"
-MAIN = Path("/Users/tianchichen/Documents/GitHub/teddy_mm")
+MAIN = Path(os.environ.get("TEDDY_MM_MAIN", str(ROOT)))  # main checkout that holds data/ and outputs/
 _BASE = MAIN if MAIN.exists() else ROOT
 PROTEINS = ("CD56", "CD94", "CD335", "CD3")  # E3's gap proteins (= E5's PROTEINS), the registered NK/T readout panel
 assert tuple(mld.PROTEINS) == PROTEINS

@@ -1,0 +1,1013 @@
+{
+ "anm_diag_version": "0.1.0",
+ "declaration": {
+  "status": "sealed",
+  "kind": "sufficiency",
+  "measurement_sharing": "none",
+  "readout_classes": {
+   "ridge": {
+    "regressor": "RidgeCV",
+    "alphas": [
+     0.1,
+     0.31622776601683794,
+     1.0,
+     3.1622776601683795,
+     10.0,
+     31.622776601683793,
+     100.0,
+     316.22776601683796,
+     1000.0,
+     3162.2776601683795,
+     10000.0,
+     31622.776601683792,
+     100000.0
+    ],
+    "classifier": "LogisticRegression",
+    "C": 0.05
+   },
+   "hgb": {
+    "regressor": "HistGradientBoostingRegressor",
+    "classifier": "HistGradientBoostingClassifier",
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15
+   }
+  },
+  "inference": {
+   "folds": 5,
+   "bootstrap": 1000,
+   "forward_bootstrap": 300,
+   "seed": 0,
+   "standardize_on": "control",
+   "inverse": "crossfit_partial_linear"
+  },
+  "decision": {
+   "margin_u": 0.1,
+   "step_margin": 0.1,
+   "alpha": 0.05
+  },
+  "anm_declaration": 1,
+  "name": "teddy_mm_papalexi2021_ifng_pathway_pdl1",
+  "system": {
+   "id": "TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)",
+   "frozen": true,
+   "inputs": [
+    "rna_counts"
+   ],
+   "notes": "The head was trained on bone-marrow CITE-seq (NeurIPS 2021). THP-1 is a monocytic leukaemia line, closer to that training set than melanoma cells but still a shift. Declared choice: use the head as trained. Cells are taken by guide, intent-to-treat: no filtering by response-derived classes (no mixscape KO/NP labels), since those are computed from the RNA response itself. Targets are the guides' genes, so folds and resampling are per gene, not per guide. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol table that teddy_mm uses (tools/gene_map.py), because the file's own Ensembl ids put HLA and B2M genes and IFNGR2 outside TEDDY's vocabulary.\n"
+  },
+  "measurements": {
+   "rna_counts": {
+    "modality": "rna",
+    "kind": "counts"
+   },
+   "adt_counts": {
+    "modality": "protein",
+    "kind": "counts"
+   }
+  },
+  "source": {
+   "controlled": true,
+   "kind": "crispr_ko",
+   "stratum": [
+    "rep1-tx",
+    "rep2-tx",
+    "rep3-tx",
+    "rep4-tx"
+   ],
+   "assign_from_guides": true,
+   "control_guides": [
+    "NT"
+   ],
+   "control": [
+    "control"
+   ],
+   "treated": [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK2",
+    "STAT1",
+    "IRF1"
+   ],
+   "cluster": "target",
+   "max_control_cells": 4000,
+   "control_seed": 0
+  },
+  "readouts": [
+   {
+    "id": "PDL1",
+    "measurement": "adt_counts",
+    "statistic": "adt_log1p",
+    "features": [
+     "PDL1"
+    ]
+   },
+   {
+    "id": "PDL2",
+    "measurement": "adt_counts",
+    "statistic": "adt_log1p",
+    "features": [
+     "PDL2"
+    ]
+   }
+  ],
+  "nodes": [
+   {
+    "id": "RAW",
+    "from": "rna_counts",
+    "op": "log1p_cp10k",
+    "operator": "analysis",
+    "role": "chain"
+   },
+   {
+    "id": "TOKENS",
+    "from": "RAW",
+    "op": "teddy_official_tokens",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "Z",
+    "from": "TOKENS",
+    "op": "teddy_embedding",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_LAT",
+    "from": "Z",
+    "op": "head_latent",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_OUT",
+    "from": "HEAD_LAT",
+    "op": "head_output",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "SET",
+    "from": "TOKENS",
+    "op": "drop_order",
+    "operator": "analysis",
+    "role": "probe"
+   },
+   {
+    "id": "MRNA_PDL1",
+    "from": "RAW",
+    "op": "rna_of_gene:CD274",
+    "operator": "analysis",
+    "role": "probe"
+   },
+   {
+    "id": "MRNA_PDL2",
+    "from": "RAW",
+    "op": "rna_of_gene:PDCD1LG2",
+    "operator": "analysis",
+    "role": "probe"
+   },
+   {
+    "id": "ADT_PDL1",
+    "from": "adt_counts",
+    "op": "adt_readout:PDL1",
+    "operator": "analysis",
+    "role": "positive_control",
+    "readout": "PDL1"
+   },
+   {
+    "id": "ADT_PDL2",
+    "from": "adt_counts",
+    "op": "adt_readout:PDL2",
+    "operator": "analysis",
+    "role": "positive_control",
+    "readout": "PDL2"
+   }
+  ],
+  "chain": [
+   "RAW",
+   "TOKENS",
+   "Z",
+   "HEAD_LAT",
+   "HEAD_OUT"
+  ],
+  "data_hashes": {
+   "rna_h5ad": "03e9602d124c261281936717d5795445805e6e704a52b0310bcde94225aa0929",
+   "adt_h5ad": "e1e293c75dfebe09301bf32093703cfd5f50c17d6fb53144d8213e52e0e4e150",
+   "vocab": "e184b550fa2c3971dfa7cdaf056f9d8075b254a467e0bae302701d6eb899aef8",
+   "medians": "3d3637fa24ef81bf431aa42c8b85ffe656c22b999b2ef937428490704982c001",
+   "head_ckpt": "b0c543e2851232051552ae80269b7a1791350f80883b9bf3a17b565585c1de15",
+   "teddy_ckpt": "ba0a98f9b975dc42a1a2d384e9821e4f7cce795ba4bb17d2dfb940829438b0f3",
+   "symbol_map": "5d4320ce715f3e6d73c244bd353cc62066f592bc5ca046929cbb91d1ee82763a"
+  },
+  "code_hash": "0c49d30b4249040c5a174f3ebf6bc4ee2b87854e110e0294af58122f32947281",
+  "sealed_at": "2026-11-08T16:22:29+00:00",
+  "seal_digest": "09df5868c4b52dde029645a1133625d2689d9076e0cd4e9a8146f6592d9c61f2"
+ },
+ "declaration_sha256": "afd4ed69e1c5db94fea964ff5207ded75701b17ba843931a028d3ec5e9ac88dd",
+ "problems": [
+  {
+   "code": "K1",
+   "severity": "warning",
+   "message": "only 5 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+  }
+ ],
+ "n_cells": 7478,
+ "n_treated": 5092,
+ "n_treated_clusters": 5,
+ "forward": {
+  "auc": {
+   "RAW": 0.7671410588342973,
+   "TOKENS": 0.7526831941891987,
+   "Z": 0.756889371359113,
+   "HEAD_LAT": 0.6311996728757501,
+   "HEAD_OUT": 0.5680922822249981,
+   "SET": 0.7485371840449231,
+   "MRNA_PDL1": 0.29193411225076366,
+   "MRNA_PDL2": 0.24943503903695885
+  },
+  "steps": {
+   "RAW->TOKENS": [
+    -0.033815351676076126,
+    -0.002165054130844938
+   ],
+   "TOKENS->Z": [
+    -0.0044128391066626995,
+    0.014556783277777253
+   ],
+   "Z->HEAD_LAT": [
+    -0.16513001277964287,
+    -0.06091756072226068
+   ],
+   "HEAD_LAT->HEAD_OUT": [
+    -0.08210354534729009,
+    -0.0341307828810061
+   ],
+   "TOKENS->SET": [
+    -0.010222121707226504,
+    0.0017035720895323466
+   ],
+   "RAW->MRNA_PDL1": [
+    -0.5893836718535018,
+    -0.31725104328146614
+   ],
+   "RAW->MRNA_PDL2": [
+    -0.6285289136693191,
+    -0.35749308507384475
+   ]
+  },
+  "class": "ridge"
+ },
+ "readouts": {
+  "PDL1": {
+   "delta": -0.6934007382851783,
+   "delta_ci": [
+    -0.8564720603538121,
+    -0.4687997192206626
+   ],
+   "states": {
+    "RAW": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.0998818540790995,
+     "ci": [
+      0.0014821812169725735,
+      0.22764394284006073
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.1202589521325081,
+       "ci": [
+        -0.050630278568807884,
+        0.3710846464355255
+       ]
+      },
+      "hgb": {
+       "u": 0.0998818540790995,
+       "ci": [
+        0.0014821812169725735,
+        0.22764394284006073
+       ]
+      }
+     }
+    },
+    "TOKENS": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.12494142072818343,
+     "ci": [
+      -0.04367662133838912,
+      0.3651729985181757
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.12494142072818343,
+       "ci": [
+        -0.04367662133838912,
+        0.3651729985181757
+       ]
+      },
+      "hgb": {
+       "u": 0.13386466038336006,
+       "ci": [
+        -0.007658947482459026,
+        0.32320778457898236
+       ]
+      }
+     }
+    },
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.14607401850001014,
+     "ci": [
+      0.0381151656196624,
+      0.3222859434254941
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.14607401850001014,
+       "ci": [
+        0.0381151656196624,
+        0.3222859434254941
+       ]
+      },
+      "hgb": {
+       "u": 0.23725020365200564,
+       "ci": [
+        0.15636643453176494,
+        0.38456079779024305
+       ]
+      }
+     }
+    },
+    "HEAD_LAT": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.3551683641954977,
+     "ci": [
+      0.30691752943229056,
+      0.45293595807956116
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.3551683641954977,
+       "ci": [
+        0.30691752943229056,
+        0.45293595807956116
+       ]
+      },
+      "hgb": {
+       "u": 0.42997798650460056,
+       "ci": [
+        0.4004335242543394,
+        0.5108746974924903
+       ]
+      }
+     }
+    },
+    "HEAD_OUT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.4739438926831907,
+     "ci": [
+      0.43708700690646035,
+      0.5630232187974423
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.4875969946891556,
+       "ci": [
+        0.455172655360073,
+        0.574021793983139
+       ]
+      },
+      "hgb": {
+       "u": 0.4739438926831907,
+       "ci": [
+        0.43708700690646035,
+        0.5630232187974423
+       ]
+      }
+     }
+    },
+    "SET": {
+     "role": "probe",
+     "best_class": "ridge",
+     "u": 0.13702109225436396,
+     "ci": [
+      -0.04880403719707732,
+      0.4008128766360364
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.13702109225436396,
+       "ci": [
+        -0.04880403719707732,
+        0.4008128766360364
+       ]
+      },
+      "hgb": {
+       "u": 0.16763703176225872,
+       "ci": [
+        -0.008613475801186064,
+        0.4135876001728482
+       ]
+      }
+     }
+    },
+    "MRNA_PDL1": {
+     "role": "probe",
+     "best_class": "hgb",
+     "u": 0.6880674583831516,
+     "ci": [
+      0.6278309379038134,
+      0.7826811763896365
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.7232634417498979,
+       "ci": [
+        0.6513679297448508,
+        0.819408828923596
+       ]
+      },
+      "hgb": {
+       "u": 0.6880674583831516,
+       "ci": [
+        0.6278309379038134,
+        0.7826811763896365
+       ]
+      }
+     }
+    },
+    "MRNA_PDL2": {
+     "role": "probe",
+     "best_class": "hgb",
+     "u": 0.8062266762090327,
+     "ci": [
+      0.6894109233090064,
+      0.913237323895796
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.8299241345356961,
+       "ci": [
+        0.6958862699480918,
+        0.9428731910341706
+       ]
+      },
+      "hgb": {
+       "u": 0.8062266762090327,
+       "ci": [
+        0.6894109233090064,
+        0.913237323895796
+       ]
+      }
+     }
+    },
+    "ADT_PDL1": {
+     "role": "positive_control",
+     "best_class": "ridge",
+     "u": -7.982544528624819e-07,
+     "ci": [
+      -1.1814349449930587e-05,
+      4.507727481205445e-06
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": -7.982544528624819e-07,
+       "ci": [
+        -1.1814349449930587e-05,
+        4.507727481205445e-06
+       ]
+      },
+      "hgb": {
+       "u": 0.000647278173758731,
+       "ci": [
+        -0.0005192332551145962,
+        0.0016977781784116898
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "RAW->TOKENS": {
+     "best_class": [
+      -0.06254088426663272,
+      0.13469942424503964
+     ],
+     "same_class": {
+      "ridge": [
+       -0.016101680271796134,
+       0.024542219537802588
+      ],
+      "hgb": [
+       -0.015248974437473129,
+       0.09936003911843881
+      ]
+     }
+    },
+    "TOKENS->Z": {
+     "best_class": [
+      -0.0470350269329032,
+      0.09872458005767451
+     ],
+     "same_class": {
+      "ridge": [
+       -0.0470350269329032,
+       0.09872458005767451
+      ],
+      "hgb": [
+       0.0517187192877956,
+       0.17384377740462265
+      ]
+     }
+    },
+    "Z->HEAD_LAT": {
+     "best_class": [
+      0.12515974509070998,
+      0.28931377675506664
+     ],
+     "same_class": {
+      "ridge": [
+       0.12515974509070998,
+       0.28931377675506664
+      ],
+      "hgb": [
+       0.12126190351050607,
+       0.26422019716290296
+      ]
+     }
+    },
+    "HEAD_LAT->HEAD_OUT": {
+     "best_class": [
+      0.09287909031831404,
+      0.17733870965543813
+     ],
+     "same_class": {
+      "ridge": [
+       0.10916088699490654,
+       0.1830274327999162
+      ],
+      "hgb": [
+       0.02909751638639399,
+       0.06638243467966605
+      ]
+     }
+    },
+    "TOKENS->SET": {
+     "best_class": [
+      -0.014581984351853514,
+      0.03961003444879551
+     ],
+     "same_class": {
+      "ridge": [
+       -0.014581984351853514,
+       0.03961003444879551
+      ],
+      "hgb": [
+       -0.00841073553655556,
+       0.08523486941504421
+      ]
+     }
+    },
+    "RAW->MRNA_PDL1": {
+     "best_class": [
+      0.4094372279062624,
+      0.7359389255605377
+     ],
+     "same_class": {
+      "ridge": [
+       0.28966860074926526,
+       0.8365112780135173
+      ],
+      "hgb": [
+       0.4094372279062624,
+       0.7359389255605377
+      ]
+     }
+    },
+    "RAW->MRNA_PDL2": {
+     "best_class": [
+      0.47451073653412923,
+      0.8749748257871411
+     ],
+     "same_class": {
+      "ridge": [
+       0.32392433919278585,
+       0.9650716619805428
+      ],
+      "hgb": [
+       0.47451073653412923,
+       0.8749748257871411
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "relative_loss_at",
+    "from": "Z",
+    "to": "HEAD_LAT",
+    "detail": "reference 'RAW' is unresolved (the readout is not fully explained even by the input view), but 'Z' -> 'HEAD_LAT' adds a resolved loss (change in u > 0.1)"
+   },
+   "exact": null
+  },
+  "PDL2": {
+   "delta": -0.2867407327553413,
+   "delta_ci": [
+    -0.3381041936641141,
+    -0.22945546226936023
+   ],
+   "states": {
+    "RAW": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.07559523948851761,
+     "ci": [
+      -0.22913197012184114,
+      0.34389271975884955
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.07559523948851761,
+       "ci": [
+        -0.22913197012184114,
+        0.34389271975884955
+       ]
+      },
+      "hgb": {
+       "u": 0.14217482386852287,
+       "ci": [
+        -0.1359799259230589,
+        0.37840650561032246
+       ]
+      }
+     }
+    },
+    "TOKENS": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.08129352136331415,
+     "ci": [
+      -0.18992088812914557,
+      0.3053683364746938
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.08129352136331415,
+       "ci": [
+        -0.18992088812914557,
+        0.3053683364746938
+       ]
+      },
+      "hgb": {
+       "u": 0.14240628233638247,
+       "ci": [
+        -0.13017986805827206,
+        0.37468675885016867
+       ]
+      }
+     }
+    },
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.13202434539290037,
+     "ci": [
+      -0.10660426717688264,
+      0.3595865567170334
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.13202434539290037,
+       "ci": [
+        -0.10660426717688264,
+        0.3595865567170334
+       ]
+      },
+      "hgb": {
+       "u": 0.2303687136189571,
+       "ci": [
+        0.04431293989876849,
+        0.41767808827085806
+       ]
+      }
+     }
+    },
+    "HEAD_LAT": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.4244712616853142,
+     "ci": [
+      0.2510763346559192,
+      0.6426198041723364
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.4244712616853142,
+       "ci": [
+        0.2510763346559192,
+        0.6426198041723364
+       ]
+      },
+      "hgb": {
+       "u": 0.5427047212637655,
+       "ci": [
+        0.3895953374399045,
+        0.7458696577526781
+       ]
+      }
+     }
+    },
+    "HEAD_OUT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.5143683762384446,
+     "ci": [
+      0.34526880623293016,
+      0.7393011812191989
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.5287558022006634,
+       "ci": [
+        0.3782764053494811,
+        0.7436794587135023
+       ]
+      },
+      "hgb": {
+       "u": 0.5143683762384446,
+       "ci": [
+        0.34526880623293016,
+        0.7393011812191989
+       ]
+      }
+     }
+    },
+    "SET": {
+     "role": "probe",
+     "best_class": "ridge",
+     "u": 0.09273140301325414,
+     "ci": [
+      -0.22430495101704803,
+      0.3735548532664142
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.09273140301325414,
+       "ci": [
+        -0.22430495101704803,
+        0.3735548532664142
+       ]
+      },
+      "hgb": {
+       "u": 0.18826004732138388,
+       "ci": [
+        -0.15356305258480463,
+        0.484646775280877
+       ]
+      }
+     }
+    },
+    "MRNA_PDL1": {
+     "role": "probe",
+     "best_class": "hgb",
+     "u": 0.7598608790927086,
+     "ci": [
+      0.7210208730828209,
+      0.8223511629392418
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.8016364933013742,
+       "ci": [
+        0.7710356001153399,
+        0.8619111220228876
+       ]
+      },
+      "hgb": {
+       "u": 0.7598608790927086,
+       "ci": [
+        0.7210208730828209,
+        0.8223511629392418
+       ]
+      }
+     }
+    },
+    "MRNA_PDL2": {
+     "role": "probe",
+     "best_class": "hgb",
+     "u": 0.803623165466678,
+     "ci": [
+      0.7671893600768618,
+      0.8775174861558023
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.8330394423398456,
+       "ci": [
+        0.7845390529681924,
+        0.9143955915714341
+       ]
+      },
+      "hgb": {
+       "u": 0.803623165466678,
+       "ci": [
+        0.7671893600768618,
+        0.8775174861558023
+       ]
+      }
+     }
+    },
+    "ADT_PDL2": {
+     "role": "positive_control",
+     "best_class": "ridge",
+     "u": 1.1137033846412031e-06,
+     "ci": [
+      -5.216776164297248e-06,
+      4.978458717499389e-06
+     ],
+     "verdict": "support",
+     "by_class": {
+      "ridge": {
+       "u": 1.1137033846412031e-06,
+       "ci": [
+        -5.216776164297248e-06,
+        4.978458717499389e-06
+       ]
+      },
+      "hgb": {
+       "u": 0.0020290687575226715,
+       "ci": [
+        -0.0017735757646960863,
+        0.007384954029668524
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "RAW->TOKENS": {
+     "best_class": [
+      -0.05152735146398211,
+      0.07836095035155093
+     ],
+     "same_class": {
+      "ridge": [
+       -0.05152735146398211,
+       0.07836095035155093
+      ],
+      "hgb": [
+       -0.018457867943063148,
+       0.024573879820345056
+      ]
+     }
+    },
+    "TOKENS->Z": {
+     "best_class": [
+      0.010375141440013818,
+      0.1414121928036993
+     ],
+     "same_class": {
+      "ridge": [
+       0.010375141440013818,
+       0.1414121928036993
+      ],
+      "hgb": [
+       0.03061098948179153,
+       0.192342227542779
+      ]
+     }
+    },
+    "Z->HEAD_LAT": {
+     "best_class": [
+      0.24408165338995616,
+      0.37697506313797463
+     ],
+     "same_class": {
+      "ridge": [
+       0.24408165338995616,
+       0.37697506313797463
+      ],
+      "hgb": [
+       0.28033639519513825,
+       0.38320612329365134
+      ]
+     }
+    },
+    "HEAD_LAT->HEAD_OUT": {
+     "best_class": [
+      0.06213598502998373,
+      0.13258659806161602
+     ],
+     "same_class": {
+      "ridge": [
+       0.07736898434227954,
+       0.14202348937249534
+      ],
+      "hgb": [
+       -0.054833798520638584,
+       0.008752759268607448
+      ]
+     }
+    },
+    "TOKENS->SET": {
+     "best_class": [
+      -0.06623231203747687,
+      0.07363893436668875
+     ],
+     "same_class": {
+      "ridge": [
+       -0.06623231203747687,
+       0.07363893436668875
+      ],
+      "hgb": [
+       -0.034524875184295666,
+       0.11091093513153523
+      ]
+     }
+    },
+    "RAW->MRNA_PDL1": {
+     "best_class": [
+      0.4510905782629357,
+      0.9821255768778694
+     ],
+     "same_class": {
+      "ridge": [
+       0.46775788890914244,
+       1.0394277739395086
+      ],
+      "hgb": [
+       0.41803638811134164,
+       0.891458632732024
+      ]
+     }
+    },
+    "RAW->MRNA_PDL2": {
+     "best_class": [
+      0.44014072768979345,
+      1.0487753397408757
+     ],
+     "same_class": {
+      "ridge": [
+       0.44887868181404106,
+       1.0889252507900626
+      ],
+      "hgb": [
+       0.4015380475459198,
+       0.9612549008443114
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "relative_loss_at",
+    "from": "Z",
+    "to": "HEAD_LAT",
+    "detail": "reference 'RAW' is unresolved (the readout is not fully explained even by the input view), but 'Z' -> 'HEAD_LAT' adds a resolved loss (change in u > 0.1)"
+   },
+   "exact": null
+  }
+ },
+ "provenance": {
+  "adapter": "perturb_cite",
+  "sha256_rna_h5ad": "03e9602d124c2612",
+  "sha256_adt_h5ad": "e1e293c75dfebe09",
+  "sha256_vocab": "e184b550fa2c3971",
+  "sha256_medians": "3d3637fa24ef81bf",
+  "sha256_head_ckpt": "b0c543e285123205",
+  "sha256_teddy_states": "d2b2974da8c700fc",
+  "python": "3.11.15"
+ },
+ "runtime_s": 3406.2,
+ "exploratory": false,
+ "seal_verified": [
+  "adt_h5ad",
+  "head_ckpt",
+  "medians",
+  "rna_h5ad",
+  "symbol_map",
+  "teddy_ckpt",
+  "vocab"
+ ]
+}
