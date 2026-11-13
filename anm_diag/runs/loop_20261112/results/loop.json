@@ -1,0 +1,3188 @@
+{
+ "margin": 0.1,
+ "audits": {
+  "pooled_frangieh2021_as_trained": {
+   "kind": "pooled",
+   "data": "frangieh2021",
+   "arm": "as_trained",
+   "target": null,
+   "n_cells": 3171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 195.7,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.13562514196734857,
+     "delta_ci": [
+      -0.18391538131052926,
+      -0.08920884418362623
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.4251959055856074,
+       "ci": [
+        -1.0309822201524932,
+        0.015031145720920295
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": -0.06345196358179321,
+       "ci": [
+        -0.3991644426472711,
+        0.2416577659772146
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.19212028831637543,
+       "ci": [
+        -0.07100039893786866,
+        0.4004475878983227
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.6173161939019828,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.8698897661598914,
+     "delta_ci": [
+      -0.9529497649963542,
+      -0.7811914921052076
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.05648853289872578,
+       "ci": [
+        -0.0015098768511292485,
+        0.11168307264280775
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2182584880694007,
+       "ci": [
+        0.15415800352094877,
+        0.27023994807635815
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.44697907944743764,
+       "ci": [
+        0.4001082282432648,
+        0.4930151812609477
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.39049054654871185,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.07562700679685268,
+     "delta_ci": [
+      -0.11588112004918537,
+      -0.03533564845474964
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.3607511706915318,
+       "ci": [
+        -1.8405425933115376,
+        0.25579740706229814
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.7448664503026602,
+       "ci": [
+        0.10259568773612741,
+        1.0791637016793956
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 1.1117250028985541,
+       "ci": [
+        0.5193063326509911,
+        1.659729121030379
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 1.472476173590086,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_IFNGR1_as_trained": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "as_trained",
+   "target": "IFNGR1",
+   "n_cells": 2198,
+   "n_treated": 198,
+   "n_clusters": 22,
+   "fold_seed": 0,
+   "runtime_s": 93.0,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9207414289180857,
+     "delta_ci": [
+      -1.0158263429672019,
+      -0.6805077240530991
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13597568290380863,
+       "ci": [
+        -0.10159368836238244,
+        0.228655593997656
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2811178165412498,
+       "ci": [
+        0.06533135936079011,
+        0.34277746968366474
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.45982068826887545,
+       "ci": [
+        0.3495323130778643,
+        0.5235165143475693
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "HEAD_LAT",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.32384500536506683,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_IFNGR2_as_trained": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "as_trained",
+   "target": "IFNGR2",
+   "n_cells": 2278,
+   "n_treated": 278,
+   "n_clusters": 28,
+   "fold_seed": 0,
+   "runtime_s": 95.9,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.8437838818219409,
+     "delta_ci": [
+      -1.0541114115981682,
+      -0.5645626182671972
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.01644315087804557,
+       "ci": [
+        -0.22476507385888325,
+        0.0730086160970304
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.22949455123278417,
+       "ci": [
+        0.0059266338804297,
+        0.3286755097718946
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5161351759892904,
+       "ci": [
+        0.3604394311587567,
+        0.6068740071010219
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "loss_at",
+      "from": "Z",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.532578326867336,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_JAK1_as_trained": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "as_trained",
+   "target": "JAK1",
+   "n_cells": 2248,
+   "n_treated": 248,
+   "n_clusters": 23,
+   "fold_seed": 0,
+   "runtime_s": 90.1,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7135541314444958,
+     "delta_ci": [
+      -0.8327815438639422,
+      -0.5570149372617218
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.0440970450380229,
+       "ci": [
+        -0.24063983482062973,
+        0.05069484098846713
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.20458831073867817,
+       "ci": [
+        0.006813943309833253,
+        0.2784809986215801
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4142770586526407,
+       "ci": [
+        0.28570103919969425,
+        0.5118433647289699
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "loss_at",
+      "from": "Z",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.4583741036906636,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_JAK2_as_trained": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "as_trained",
+   "target": "JAK2",
+   "n_cells": 2244,
+   "n_treated": 244,
+   "n_clusters": 24,
+   "fold_seed": 0,
+   "runtime_s": 88.3,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9283335445866777,
+     "delta_ci": [
+      -1.05803783523358,
+      -0.6694590117135479
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.17989846087151876,
+       "ci": [
+        0.04816162996625552,
+        0.27796653555732853
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2699290881370344,
+       "ci": [
+        0.11388989873977594,
+        0.33746425723349843
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4999663533364939,
+       "ci": [
+        0.3889232938980202,
+        0.6053864180897255
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "HEAD_LAT",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.32006789246497513,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_STAT1_as_trained": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "as_trained",
+   "target": "STAT1",
+   "n_cells": 2203,
+   "n_treated": 203,
+   "n_clusters": 17,
+   "fold_seed": 0,
+   "runtime_s": 93.2,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9767851459289055,
+     "delta_ci": [
+      -1.1016603092869084,
+      -0.7989977558322541
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.03736678847494554,
+       "ci": [
+        -0.12287813563927417,
+        0.15938017560716142
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2833905164428809,
+       "ci": [
+        0.10361139683711408,
+        0.37298275356942395
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5245329025476004,
+       "ci": [
+        0.38577696892182056,
+        0.6065104625369198
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.48716611407265487,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_frangieh2021_mlp_only": {
+   "kind": "pooled",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": null,
+   "n_cells": 3171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 198.5,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.13562514196734857,
+     "delta_ci": [
+      -0.18391538131052926,
+      -0.08920884418362623
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.4251959055856074,
+       "ci": [
+        -1.0309822201524932,
+        0.015031145720920295
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": -0.052695403149923985,
+       "ci": [
+        -0.9964479611997417,
+        0.34111348090914273
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": -0.0009912239138457199,
+       "ci": [
+        -0.36132068011957286,
+        0.3032484170111544
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.4242046816717617,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.8698897661598914,
+     "delta_ci": [
+      -0.9529497649963542,
+      -0.7811914921052076
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.05648853289872578,
+       "ci": [
+        -0.0015098768511292485,
+        0.11168307264280775
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.09663675234461415,
+       "ci": [
+        0.006985644547445559,
+        0.1757265715795265
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.11925493003154573,
+       "ci": [
+        0.05236085225664969,
+        0.17308247001615576
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.06276639713281995,
+     "status": "no loss in the head",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.07562700679685268,
+     "delta_ci": [
+      -0.11588112004918537,
+      -0.03533564845474964
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.3607511706915318,
+       "ci": [
+        -1.8405425933115376,
+        0.25579740706229814
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.9084549201060578,
+       "ci": [
+        0.4896137062042722,
+        2.039044874820222
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.9122884757338044,
+       "ci": [
+        0.16133503562803944,
+        1.5480680609758188
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 1.2730396464253362,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_IFNGR1_mlp_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": "IFNGR1",
+   "n_cells": 2198,
+   "n_treated": 198,
+   "n_clusters": 22,
+   "fold_seed": 0,
+   "runtime_s": 93.8,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9207414289180857,
+     "delta_ci": [
+      -1.0158263429672019,
+      -0.6805077240530991
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13597568290380863,
+       "ci": [
+        -0.10159368836238244,
+        0.228655593997656
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.04122680536168867,
+       "ci": [
+        -0.16210296872051946,
+        0.11492095875123139
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.030349982144370315,
+       "ci": [
+        -0.20579476145788764,
+        0.08918377181229772
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": -0.1056257007594383,
+     "status": "no loss in the head",
+     "below_floor": true
+    }
+   }
+  },
+  "target_frangieh2021_IFNGR2_mlp_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": "IFNGR2",
+   "n_cells": 2278,
+   "n_treated": 278,
+   "n_clusters": 28,
+   "fold_seed": 0,
+   "runtime_s": 94.6,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.8437838818219409,
+     "delta_ci": [
+      -1.0541114115981682,
+      -0.5645626182671972
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.01644315087804557,
+       "ci": [
+        -0.22476507385888325,
+        0.0730086160970304
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.04701713558112581,
+       "ci": [
+        -0.10931231511537884,
+        0.12111280284003827
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.12667370707065792,
+       "ci": [
+        -0.04147270749124824,
+        0.19945434279395646
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.1431168579487035,
+     "status": "not resolved",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_JAK1_mlp_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": "JAK1",
+   "n_cells": 2248,
+   "n_treated": 248,
+   "n_clusters": 23,
+   "fold_seed": 0,
+   "runtime_s": 90.7,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7135541314444958,
+     "delta_ci": [
+      -0.8327815438639422,
+      -0.5570149372617218
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.0440970450380229,
+       "ci": [
+        -0.24063983482062973,
+        0.05069484098846713
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": -0.04711576306534186,
+       "ci": [
+        -0.24272119210204823,
+        0.028756190290109864
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": -0.037326517048769554,
+       "ci": [
+        -0.2200406873253117,
+        0.03995969164067002
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "no_deficit"
+     },
+     "added_by_head": 0.006770527989253344,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_JAK2_mlp_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": "JAK2",
+   "n_cells": 2244,
+   "n_treated": 244,
+   "n_clusters": 24,
+   "fold_seed": 0,
+   "runtime_s": 93.7,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9283335445866777,
+     "delta_ci": [
+      -1.05803783523358,
+      -0.6694590117135479
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.17989846087151876,
+       "ci": [
+        0.04816162996625552,
+        0.27796653555732853
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.0917867738779223,
+       "ci": [
+        -0.07799409215431702,
+        0.1776211004530412
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.11440691897946707,
+       "ci": [
+        -0.04161945055744062,
+        0.183054266552904
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": -0.06549154189205168,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_STAT1_mlp_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": "STAT1",
+   "n_cells": 2203,
+   "n_treated": 203,
+   "n_clusters": 17,
+   "fold_seed": 0,
+   "runtime_s": 91.2,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9767851459289055,
+     "delta_ci": [
+      -1.1016603092869084,
+      -0.7989977558322541
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.03736678847494554,
+       "ci": [
+        -0.12287813563927417,
+        0.15938017560716142
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.08179882341924576,
+       "ci": [
+        -0.06662064917863465,
+        0.18046996506901997
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.16675929463942882,
+       "ci": [
+        0.05081302479337114,
+        0.26064615828585064
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.12939250616448328,
+     "status": "not resolved",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_frangieh2021_decoder_only": {
+   "kind": "pooled",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": null,
+   "n_cells": 3171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 195.6,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.13562514196734857,
+     "delta_ci": [
+      -0.18391538131052926,
+      -0.08920884418362623
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.4251959055856074,
+       "ci": [
+        -1.0309822201524932,
+        0.015031145720920295
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": -0.06345196358179321,
+       "ci": [
+        -0.3991644426472711,
+        0.2416577659772146
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.086583958934343,
+       "ci": [
+        -0.23773842177817128,
+        0.3707533446753989
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.5117798645199504,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.8698897661598914,
+     "delta_ci": [
+      -0.9529497649963542,
+      -0.7811914921052076
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.05648853289872578,
+       "ci": [
+        -0.0015098768511292485,
+        0.11168307264280775
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2182584880694007,
+       "ci": [
+        0.15415800352094877,
+        0.27023994807635815
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.42787833283543714,
+       "ci": [
+        0.36891200075887287,
+        0.486392849462557
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.37138979993671134,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.07562700679685268,
+     "delta_ci": [
+      -0.11588112004918537,
+      -0.03533564845474964
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.3607511706915318,
+       "ci": [
+        -1.8405425933115376,
+        0.25579740706229814
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.7448664503026602,
+       "ci": [
+        0.10259568773612741,
+        1.0791637016793956
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 1.186029103571558,
+       "ci": [
+        0.8152132598016664,
+        1.7121260995487657
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 1.5467802742630898,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_IFNGR1_decoder_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": "IFNGR1",
+   "n_cells": 2198,
+   "n_treated": 198,
+   "n_clusters": 22,
+   "fold_seed": 0,
+   "runtime_s": 91.6,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9207414289180857,
+     "delta_ci": [
+      -1.0158263429672019,
+      -0.6805077240530991
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13597568290380863,
+       "ci": [
+        -0.10159368836238244,
+        0.228655593997656
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2811178165412498,
+       "ci": [
+        0.06533135936079011,
+        0.34277746968366474
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4387000219656385,
+       "ci": [
+        0.3402802755255483,
+        0.5429006373300613
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "HEAD_LAT",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.3027243390618299,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_IFNGR2_decoder_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": "IFNGR2",
+   "n_cells": 2278,
+   "n_treated": 278,
+   "n_clusters": 28,
+   "fold_seed": 0,
+   "runtime_s": 95.9,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.8437838818219409,
+     "delta_ci": [
+      -1.0541114115981682,
+      -0.5645626182671972
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.01644315087804557,
+       "ci": [
+        -0.22476507385888325,
+        0.0730086160970304
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.22949455123278417,
+       "ci": [
+        0.0059266338804297,
+        0.3286755097718946
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.506149482574433,
+       "ci": [
+        0.3828700628930075,
+        0.623128753025081
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "loss_at",
+      "from": "Z",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.5225926334524786,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_JAK1_decoder_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": "JAK1",
+   "n_cells": 2248,
+   "n_treated": 248,
+   "n_clusters": 23,
+   "fold_seed": 0,
+   "runtime_s": 89.3,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7135541314444958,
+     "delta_ci": [
+      -0.8327815438639422,
+      -0.5570149372617218
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.0440970450380229,
+       "ci": [
+        -0.24063983482062973,
+        0.05069484098846713
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.20458831073867817,
+       "ci": [
+        0.006813943309833253,
+        0.2784809986215801
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.40132695214026554,
+       "ci": [
+        0.2578229070544405,
+        0.515719437753911
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "loss_at",
+      "from": "Z",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.44542399717828846,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_JAK2_decoder_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": "JAK2",
+   "n_cells": 2244,
+   "n_treated": 244,
+   "n_clusters": 24,
+   "fold_seed": 0,
+   "runtime_s": 93.2,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9283335445866777,
+     "delta_ci": [
+      -1.05803783523358,
+      -0.6694590117135479
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.17989846087151876,
+       "ci": [
+        0.04816162996625552,
+        0.27796653555732853
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2699290881370344,
+       "ci": [
+        0.11388989873977594,
+        0.33746425723349843
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5047158782963103,
+       "ci": [
+        0.40447610358234865,
+        0.6302591651173
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "HEAD_LAT",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.32481741742479153,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_frangieh2021_STAT1_decoder_only": {
+   "kind": "target",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": "STAT1",
+   "n_cells": 2203,
+   "n_treated": 203,
+   "n_clusters": 17,
+   "fold_seed": 0,
+   "runtime_s": 93.0,
+   "problems": [
+    "C5"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.9767851459289055,
+     "delta_ci": [
+      -1.1016603092869084,
+      -0.7989977558322541
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.03736678847494554,
+       "ci": [
+        -0.12287813563927417,
+        0.15938017560716142
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2833905164428809,
+       "ci": [
+        0.10361139683711408,
+        0.37298275356942395
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.45836193723854707,
+       "ci": [
+        0.31642834927322183,
+        0.5550150366506814
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.42099514876360156,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "transfer_frangieh2021_mlp_only": {
+   "kind": "transfer",
+   "data": "frangieh2021",
+   "arm": "mlp_only",
+   "target": null,
+   "n_cells": 5171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 237.1,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.13790883611018767,
+     "delta_ci": [
+      -0.18164927097420486,
+      -0.09398718146761738
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.3700797907273926,
+       "ci": [
+        -0.9187709143904588,
+        0.01701237097620202
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": -0.06950694201837014,
+       "ci": [
+        -0.4016540596743526,
+        0.16645830285395824
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.15326676686351362,
+       "ci": [
+        -0.1302750604428836,
+        0.3791006677200855
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.5233465575909062,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.849418879111322,
+     "delta_ci": [
+      -0.9277784273501454,
+      -0.7620647672307783
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.04210369241067023,
+       "ci": [
+        -0.009622695071172357,
+        0.09006476800200923
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.1672775423831577,
+       "ci": [
+        0.0827050690747027,
+        0.23069773861433598
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.42916369111073666,
+       "ci": [
+        0.3588631332742833,
+        0.4823733567855188
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "loss_at",
+      "from": "Z",
+      "to": "HEAD_OUT"
+     },
+     "added_by_head": 0.3870599987000664,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.07885261364931437,
+     "delta_ci": [
+      -0.11469965399339707,
+      -0.0456352477812721
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.18311399487979266,
+       "ci": [
+        -0.49110496131039066,
+        0.5695097347566576
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": 0.6781367098973814,
+       "ci": [
+        0.26489608730814085,
+        0.9451587022123675
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 1.0380577924333443,
+       "ci": [
+        0.7565574849201605,
+        1.4149185062546983
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.8549437975535517,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "transfer_frangieh2021_decoder_only": {
+   "kind": "transfer",
+   "data": "frangieh2021",
+   "arm": "decoder_only",
+   "target": null,
+   "n_cells": 5171,
+   "n_treated": 1171,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 234.5,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "MHC1": {
+     "delta": -0.13790883611018767,
+     "delta_ci": [
+      -0.18164927097420486,
+      -0.09398718146761738
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.3700797907273926,
+       "ci": [
+        -0.9187709143904588,
+        0.01701237097620202
+       ],
+       "verdict": "support",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": 0.012433983172323842,
+       "ci": [
+        -0.3414574157734123,
+        0.2672340309274945
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.09815203927218917,
+       "ci": [
+        -0.21403882131979254,
+        0.3532622992849028
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "unresolved"
+     },
+     "added_by_head": 0.4682318299995818,
+     "status": "not resolved",
+     "below_floor": false
+    },
+    "PDL1": {
+     "delta": -0.849418879111322,
+     "delta_ci": [
+      -0.9277784273501454,
+      -0.7620647672307783
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.04210369241067023,
+       "ci": [
+        -0.009622695071172357,
+        0.09006476800200923
+       ],
+       "verdict": "support",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.2049782491046846,
+       "ci": [
+        0.1346915864969335,
+        0.2556983027494938
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4370184692266118,
+       "ci": [
+        0.3796715273555979,
+        0.47791093068379886
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.39491477681594156,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "HLAE": {
+     "delta": -0.07885261364931437,
+     "delta_ci": [
+      -0.11469965399339707,
+      -0.0456352477812721
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.18311399487979266,
+       "ci": [
+        -0.49110496131039066,
+        0.5695097347566576
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_LAT": {
+       "u": 0.9362734286253587,
+       "ci": [
+        0.5045481796883924,
+        1.271512723034449
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 1.3653103150681194,
+       "ci": [
+        1.0822989270102488,
+        1.7757997089216593
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 1.1821963201883268,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_papalexi2021_as_trained": {
+   "kind": "pooled",
+   "data": "papalexi2021",
+   "arm": "as_trained",
+   "target": null,
+   "n_cells": 6285,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 195.3,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6998195535900125,
+     "delta_ci": [
+      -0.8648221793042177,
+      -0.4755168334137777
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.11985948580856126,
+       "ci": [
+        0.014877326502401318,
+        0.2887903816660188
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.38815144135509366,
+       "ci": [
+        0.30979277379679215,
+        0.5244103647592375
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5385734741126212,
+       "ci": [
+        0.467112503168162,
+        0.632116830344756
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.41871398830406,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.312908354228291,
+     "delta_ci": [
+      -0.3670043842280876,
+      -0.24958345094407178
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.16416410704714446,
+       "ci": [
+        -0.0803402720372275,
+        0.4690764123845268
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.4699602835539986,
+       "ci": [
+        0.24533333306690755,
+        0.769734664867041
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.6452121636881352,
+       "ci": [
+        0.44124284576165995,
+        0.9353984968935721
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.4810480566409907,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IFNGR1_as_trained": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "as_trained",
+   "target": "IFNGR1",
+   "n_cells": 2532,
+   "n_treated": 1339,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 96.3,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7452667999481449,
+     "delta_ci": [
+      -0.9683755139350714,
+      -0.48579773830183326
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.00907820070367915,
+       "ci": [
+        -0.13619176422177226,
+        0.12755757898391676
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.37815973474269315,
+       "ci": [
+        0.185810069046145,
+        0.5036237940586731
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5501301821198752,
+       "ci": [
+        0.40066571416529884,
+        0.6476425698308413
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.541051981416196,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IFNGR2_as_trained": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "as_trained",
+   "target": "IFNGR2",
+   "n_cells": 2406,
+   "n_treated": 1213,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 94.1,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.8425981749913267,
+     "delta_ci": [
+      -0.9475064708472819,
+      -0.720011373877637
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.14197427693919532,
+       "ci": [
+        0.0869802477445528,
+        0.22344502290765542
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.43175313746556393,
+       "ci": [
+        0.36302838799409093,
+        0.5134291184259326
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.597471708708902,
+       "ci": [
+        0.513666627075716,
+        0.7042907722218025
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.4554974317697067,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_JAK2_as_trained": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "as_trained",
+   "target": "JAK2",
+   "n_cells": 2217,
+   "n_treated": 1024,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 90.7,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.908442116935018,
+     "delta_ci": [
+      -0.9988765510177321,
+      -0.8203574234495915
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.15311071863422956,
+       "ci": [
+        0.08238165297129403,
+        0.21627351912697174
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.45243897782327036,
+       "ci": [
+        0.3930803636305763,
+        0.4978881565001662
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.6357694009506163,
+       "ci": [
+        0.581029441867262,
+        0.683480660448815
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.48265868231638676,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_STAT1_as_trained": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "as_trained",
+   "target": "STAT1",
+   "n_cells": 1637,
+   "n_treated": 444,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 81.7,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6808517794346116,
+     "delta_ci": [
+      -0.8534516452227632,
+      -0.5892841709168367
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.1557568541880965,
+       "ci": [
+        -0.29319735784226897,
+        0.18634415121166176
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.17590697813761094,
+       "ci": [
+        0.05025078380360346,
+        0.5876856021556737
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.36290314947432906,
+       "ci": [
+        0.3029676609958465,
+        0.5819452484266909
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.5186600036624256,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IRF1_as_trained": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "as_trained",
+   "target": "IRF1",
+   "n_cells": 2265,
+   "n_treated": 1072,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 91.6,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.2900694194728291,
+     "delta_ci": [
+      -0.5307024679779053,
+      -0.0290942096918061
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.3257125869250183,
+       "ci": [
+        -0.1604003145994959,
+        0.5198232049888746
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.8822733291242333,
+       "ci": [
+        0.7479768851353124,
+        1.1572451196579756
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 1.1226173760173495,
+       "ci": [
+        0.9702355815480835,
+        1.3283577806522422
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.7969047890923311,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_papalexi2021_mlp_only": {
+   "kind": "pooled",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": null,
+   "n_cells": 6285,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 200.1,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6998195535900125,
+     "delta_ci": [
+      -0.8648221793042177,
+      -0.4755168334137777
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.11985948580856126,
+       "ci": [
+        0.014877326502401318,
+        0.2887903816660188
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.18391119321030014,
+       "ci": [
+        0.11390019876420236,
+        0.3220478526141546
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.15574289608903014,
+       "ci": [
+        0.05067593662904044,
+        0.30312243094373703
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.035883410280468875,
+     "status": "no loss in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.312908354228291,
+     "delta_ci": [
+      -0.3670043842280876,
+      -0.24958345094407178
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.16416410704714446,
+       "ci": [
+        -0.0803402720372275,
+        0.4690764123845268
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": -0.12145734020821948,
+       "ci": [
+        -0.44685111697822966,
+        0.3410650949445708
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.14554178925311986,
+       "ci": [
+        -0.18999939659477064,
+        0.5116113547938773
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": -0.018622317794024595,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IFNGR1_mlp_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": "IFNGR1",
+   "n_cells": 2532,
+   "n_treated": 1339,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 94.7,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7452667999481449,
+     "delta_ci": [
+      -0.9683755139350714,
+      -0.48579773830183326
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.00907820070367915,
+       "ci": [
+        -0.13619176422177226,
+        0.12755757898391676
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.11844472504546233,
+       "ci": [
+        -0.040738038288414796,
+        0.2276063740052037
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.14061403269983788,
+       "ci": [
+        0.021610992669361534,
+        0.22722845200301242
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.13153583199615873,
+     "status": "not resolved",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IFNGR2_mlp_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": "IFNGR2",
+   "n_cells": 2406,
+   "n_treated": 1213,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 100.1,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.8425981749913267,
+     "delta_ci": [
+      -0.9475064708472819,
+      -0.720011373877637
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.14197427693919532,
+       "ci": [
+        0.0869802477445528,
+        0.22344502290765542
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.18013531618753806,
+       "ci": [
+        0.11904093445882896,
+        0.27570474652809274
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.15131860350102033,
+       "ci": [
+        0.09050618820652391,
+        0.24273729863194984
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.009344326561825017,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_JAK2_mlp_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": "JAK2",
+   "n_cells": 2217,
+   "n_treated": 1024,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 91.1,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.908442116935018,
+     "delta_ci": [
+      -0.9988765510177321,
+      -0.8203574234495915
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.15311071863422956,
+       "ci": [
+        0.08238165297129403,
+        0.21627351912697174
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.22280713935214944,
+       "ci": [
+        0.16265868876366513,
+        0.28960731668151457
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.21034301165300073,
+       "ci": [
+        0.15531975416276825,
+        0.2772456646000884
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.05723229301877117,
+     "status": "no loss in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_STAT1_mlp_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": "STAT1",
+   "n_cells": 1637,
+   "n_treated": 444,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 81.3,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6808517794346116,
+     "delta_ci": [
+      -0.8534516452227632,
+      -0.5892841709168367
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.1557568541880965,
+       "ci": [
+        -0.29319735784226897,
+        0.18634415121166176
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": -0.008385169551758002,
+       "ci": [
+        -0.11297768003103983,
+        0.3045104407790871
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.02444742275023751,
+       "ci": [
+        -0.06287119525096972,
+        0.2905752642999177
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.18020427693833402,
+     "status": "not resolved",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IRF1_mlp_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": "IRF1",
+   "n_cells": 2265,
+   "n_treated": 1072,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 89.9,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.2900694194728291,
+     "delta_ci": [
+      -0.5307024679779053,
+      -0.0290942096918061
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.3257125869250183,
+       "ci": [
+        -0.1604003145994959,
+        0.5198232049888746
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.532959221380763,
+       "ci": [
+        -0.07346948858908839,
+        0.673762497445788
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5967889448797703,
+       "ci": [
+        0.025888223042281156,
+        0.7438711046498264
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "reference_unresolved"
+     },
+     "added_by_head": 0.271076357954752,
+     "status": "not resolved",
+     "below_floor": false
+    }
+   }
+  },
+  "pooled_papalexi2021_decoder_only": {
+   "kind": "pooled",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": null,
+   "n_cells": 6285,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 198.7,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6998195535900125,
+     "delta_ci": [
+      -0.8648221793042177,
+      -0.4755168334137777
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.11985948580856126,
+       "ci": [
+        0.014877326502401318,
+        0.2887903816660188
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.38815144135509366,
+       "ci": [
+        0.30979277379679215,
+        0.5244103647592375
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.47442947164452337,
+       "ci": [
+        0.4060600520106346,
+        0.5822883612071255
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.3545699858359621,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.312908354228291,
+     "delta_ci": [
+      -0.3670043842280876,
+      -0.24958345094407178
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.16416410704714446,
+       "ci": [
+        -0.0803402720372275,
+        0.4690764123845268
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.4699602835539986,
+       "ci": [
+        0.24533333306690755,
+        0.769734664867041
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.525496843811465,
+       "ci": [
+        0.3103997596156764,
+        0.802369759738729
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.36133273676432054,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IFNGR1_decoder_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": "IFNGR1",
+   "n_cells": 2532,
+   "n_treated": 1339,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 94.9,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.7452667999481449,
+     "delta_ci": [
+      -0.9683755139350714,
+      -0.48579773830183326
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.00907820070367915,
+       "ci": [
+        -0.13619176422177226,
+        0.12755757898391676
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.37815973474269315,
+       "ci": [
+        0.185810069046145,
+        0.5036237940586731
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4322282775698581,
+       "ci": [
+        0.23597419363699865,
+        0.5504657327080057
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.42315007686617895,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IFNGR2_decoder_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": "IFNGR2",
+   "n_cells": 2406,
+   "n_treated": 1213,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 92.9,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.8425981749913267,
+     "delta_ci": [
+      -0.9475064708472819,
+      -0.720011373877637
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.14197427693919532,
+       "ci": [
+        0.0869802477445528,
+        0.22344502290765542
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.43175313746556393,
+       "ci": [
+        0.36302838799409093,
+        0.5134291184259326
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.48397660663247644,
+       "ci": [
+        0.4057800866204564,
+        0.5894794809600369
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.34200232969328115,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_JAK2_decoder_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": "JAK2",
+   "n_cells": 2217,
+   "n_treated": 1024,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 91.5,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.908442116935018,
+     "delta_ci": [
+      -0.9988765510177321,
+      -0.8203574234495915
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.15311071863422956,
+       "ci": [
+        0.08238165297129403,
+        0.21627351912697174
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.45243897782327036,
+       "ci": [
+        0.3930803636305763,
+        0.4978881565001662
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5255668060093717,
+       "ci": [
+        0.47132398920961677,
+        0.5726435029656795
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.37245608737514213,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_STAT1_decoder_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": "STAT1",
+   "n_cells": 1637,
+   "n_treated": 444,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 81.6,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6808517794346116,
+     "delta_ci": [
+      -0.8534516452227632,
+      -0.5892841709168367
+     ],
+     "stages": {
+      "Z": {
+       "u": -0.1557568541880965,
+       "ci": [
+        -0.29319735784226897,
+        0.18634415121166176
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.17590697813761094,
+       "ci": [
+        0.05025078380360346,
+        0.5876856021556737
+       ],
+       "verdict": "unresolved",
+       "best_class": "hgb"
+      },
+      "HEAD_OUT": {
+       "u": 0.28888312091982943,
+       "ci": [
+        0.22249796121803206,
+        0.5319731285110655
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.44463997510792597,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "target_papalexi2021_IRF1_decoder_only": {
+   "kind": "target",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": "IRF1",
+   "n_cells": 2265,
+   "n_treated": 1072,
+   "n_clusters": 4,
+   "fold_seed": 0,
+   "runtime_s": 88.1,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.2900694194728291,
+     "delta_ci": [
+      -0.5307024679779053,
+      -0.0290942096918061
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.3257125869250183,
+       "ci": [
+        -0.1604003145994959,
+        0.5198232049888746
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.8822733291242333,
+       "ci": [
+        0.7479768851353124,
+        1.1572451196579756
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 1.0065099977405183,
+       "ci": [
+        0.8700765490169134,
+        1.3445851935875714
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.6807974108154999,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "transfer_papalexi2021_mlp_only": {
+   "kind": "transfer",
+   "data": "papalexi2021",
+   "arm": "mlp_only",
+   "target": null,
+   "n_cells": 7478,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 215.3,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6934007382851783,
+     "delta_ci": [
+      -0.8564720603538121,
+      -0.4687997192206626
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.14619427391286935,
+       "ci": [
+        0.03829523673580161,
+        0.3224582603205547
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.33163009780803215,
+       "ci": [
+        0.26297468423549897,
+        0.47146237850535966
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4022230706577649,
+       "ci": [
+        0.3628976576875561,
+        0.49603124945422594
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.25602879674489554,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.28674073275534123,
+     "delta_ci": [
+      -0.3381041936641141,
+      -0.22945546226936028
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13209131635683857,
+       "ci": [
+        -0.10659726144463227,
+        0.35969018861154034
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.39937704174783945,
+       "ci": [
+        0.20121420654732294,
+        0.6414732723072865
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5225115956377089,
+       "ci": [
+        0.35402888460104115,
+        0.7299470762694992
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.3904202792808703,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  },
+  "transfer_papalexi2021_decoder_only": {
+   "kind": "transfer",
+   "data": "papalexi2021",
+   "arm": "decoder_only",
+   "target": null,
+   "n_cells": 7478,
+   "n_treated": 5092,
+   "n_clusters": 5,
+   "fold_seed": 0,
+   "runtime_s": 218.4,
+   "problems": [
+    "C5",
+    "K1",
+    "S2"
+   ],
+   "readouts": {
+    "PDL1": {
+     "delta": -0.6934007382851783,
+     "delta_ci": [
+      -0.8564720603538121,
+      -0.4687997192206626
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.14619427391286935,
+       "ci": [
+        0.03829523673580161,
+        0.3224582603205547
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.34745877439383416,
+       "ci": [
+        0.2960799768215366,
+        0.45319562028994564
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.4685879418762049,
+       "ci": [
+        0.4294197566542087,
+        0.5788820543508069
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.3223936679633356,
+     "status": "located in the head",
+     "below_floor": false
+    },
+    "PDL2": {
+     "delta": -0.28674073275534123,
+     "delta_ci": [
+      -0.3381041936641141,
+      -0.22945546226936028
+     ],
+     "stages": {
+      "Z": {
+       "u": 0.13209131635683857,
+       "ci": [
+        -0.10659726144463227,
+        0.35969018861154034
+       ],
+       "verdict": "unresolved",
+       "best_class": "ridge"
+      },
+      "HEAD_LAT": {
+       "u": 0.40268823324479563,
+       "ci": [
+        0.22498472458369861,
+        0.6177306875420754
+       ],
+       "verdict": "reject",
+       "best_class": "ridge"
+      },
+      "HEAD_OUT": {
+       "u": 0.5654978687830414,
+       "ci": [
+        0.4008806138672598,
+        0.8004631440950843
+       ],
+       "verdict": "reject",
+       "best_class": "hgb"
+      }
+     },
+     "root_cause": {
+      "cause": "relative_loss_at",
+      "from": "Z",
+      "to": "HEAD_LAT"
+     },
+     "added_by_head": 0.43340655242620285,
+     "status": "located in the head",
+     "below_floor": false
+    }
+   }
+  }
+ },
+ "missing": [],
+ "rule": {
+  "frangieh2021": {
+   "located_step": {
+    "cause": "relative_loss_at",
+    "from": "Z",
+    "to": "HEAD_LAT"
+   },
+   "status": {
+    "as_trained": "located in the head",
+    "mlp_only": "no loss in the head",
+    "decoder_only": "located in the head"
+   },
+   "added_by_head": {
+    "as_trained": 0.39049054654871185,
+    "mlp_only": 0.06276639713281995,
+    "decoder_only": 0.37138979993671134
+   },
+   "outcome": "closed at the located step",
+   "single_head_audits": {
+    "as_trained": {
+     "located in the head": 5,
+     "no loss in the head": 0,
+     "not resolved": 0,
+     "no reading": 0
+    },
+    "mlp_only": {
+     "located in the head": 0,
+     "no loss in the head": 3,
+     "not resolved": 2,
+     "no reading": 0
+    },
+    "decoder_only": {
+     "located in the head": 5,
+     "no loss in the head": 0,
+     "not resolved": 0,
+     "no reading": 0
+    }
+   },
+   "other_readouts": {
+    "MHC1": {
+     "as_trained": "not resolved",
+     "mlp_only": "not resolved",
+     "decoder_only": "not resolved"
+    },
+    "HLAE": {
+     "as_trained": "located in the head",
+     "mlp_only": "located in the head",
+     "decoder_only": "located in the head"
+    }
+   },
+   "transfer": {
+    "mlp_only": "located in the head",
+    "decoder_only": "located in the head"
+   }
+  },
+  "papalexi2021": {
+   "located_step": {
+    "cause": "relative_loss_at",
+    "from": "Z",
+    "to": "HEAD_LAT"
+   },
+   "status": {
+    "as_trained": "located in the head",
+    "mlp_only": "no loss in the head",
+    "decoder_only": "located in the head"
+   },
+   "added_by_head": {
+    "as_trained": 0.41871398830406,
+    "mlp_only": 0.035883410280468875,
+    "decoder_only": 0.3545699858359621
+   },
+   "outcome": "closed at the located step",
+   "single_head_audits": {
+    "as_trained": {
+     "located in the head": 5,
+     "no loss in the head": 0,
+     "not resolved": 0,
+     "no reading": 0
+    },
+    "mlp_only": {
+     "located in the head": 0,
+     "no loss in the head": 2,
+     "not resolved": 3,
+     "no reading": 0
+    },
+    "decoder_only": {
+     "located in the head": 5,
+     "no loss in the head": 0,
+     "not resolved": 0,
+     "no reading": 0
+    }
+   },
+   "other_readouts": {
+    "PDL2": {
+     "as_trained": "located in the head",
+     "mlp_only": "no loss in the head",
+     "decoder_only": "located in the head"
+    }
+   },
+   "transfer": {
+    "mlp_only": "located in the head",
+    "decoder_only": "located in the head"
+   }
+  }
+ },
+ "below_floor": [
+  "target_frangieh2021_IFNGR1_mlp_only/PDL1"
+ ]
+}
