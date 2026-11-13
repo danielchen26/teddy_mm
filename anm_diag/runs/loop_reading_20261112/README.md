@@ -137,6 +137,35 @@ Audited on every cell of the data set, since the head never saw any of them. PD-
 A repair does not carry to the other cell type. With every control cell in the audit, the reference stage on melanoma is
 supported: the loop's own audits lose that by keeping half of the controls for the fits.
 
+## 6. What data are left: a census of the protein files
+
+[`tools/data_census.py`](../../tools/data_census.py) reads only the protein files and lists, per condition, the knockouts that
+change a measured protein clearly (at least 100 single-guide cells, a shift of at least 0.3 control standard deviations, and
+at least 3 times the half-width of its interval, with cells as units, so the ratio is optimistic). No model is involved
+(`results/data_census.json`).
+
+| data | cells | control-guide cells | target genes with enough cells | clear (gene, protein) responses | genes with one | genes that change PD-L1 |
+|---|---|---|---|---|---|---|
+| melanoma, IFN-γ | 87,590 | 6,306 | 203 | 20 | 17 | CD274 (-2.02), STAT1 (-1.30), JAK2 (-1.28), IFNGR1 (-1.26), IFNGR2 (-1.16), JAK1 (-0.96) |
+| melanoma, co-culture | 73,114 | 5,789 | 196 | 60 | 18 | CD274 (-2.14), STAT1 (-1.27), JAK2 (-1.20), IFNGR1 (-1.17), IFNGR2 (-1.12), JAK1 (-0.96), NPC1 (-0.41) |
+| melanoma, control | 57,627 | 3,864 | 176 | 10 | 10 | CD274 (-0.72) |
+| THP-1 | 20,729 | 2,386 | 24 | 24 | 9 | JAK2 (-1.29), IFNGR2 (-1.20), IFNGR1 (-1.14), STAT1 (-1.08), CMTM6 (-0.68), IRF1 (-0.52), CD86 (+0.30), BRD4 (+0.67) |
+
+The three rounds used the IFN-γ condition of the melanoma data and five genes of the THP-1 data. What they did not use:
+
+- **Melanoma, co-culture.** The same five genes change PD-L1 there by -0.96 to -1.27 standard deviations, on 1,846 single-guide
+  knockout cells, with 5,789 control-guide cells. No fit and no audit of the loop saw these cells: they could serve as
+  final data for the melanoma head (a new condition, the same cell type). Results of other heads on co-culture cells,
+  from work not recorded in this repository, were known when the loop was designed (design of round 1). MHC-I, too weak
+  to follow under IFN-γ, moves by -1.82 to -2.21 there.
+- **THP-1, other genes.** CMTM6 (-0.68), BRD4 (+0.67), CD86 (+0.30) change PD-L1 clearly and were in no fit or audit: new source genes for a final audit.
+  TEDDY's embedding would have to be computed for their cells.
+- **More clusters.** For PD-L1 no data set has ten source genes (6 in melanoma, 8 in THP-1). Gene clusters stay below the
+  protocol's ten; guides, three or four per gene, give more units.
+
+The census says where a response exists in the measurement. Whether TEDDY's embedding carries it (the reference stage)
+is a question for an audit.
+
 ## What this changes in how the rounds are read
 
 | the rounds' reports say | under the protocol |

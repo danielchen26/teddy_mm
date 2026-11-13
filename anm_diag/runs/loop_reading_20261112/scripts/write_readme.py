@@ -4,6 +4,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 R = json.load(open(HERE.parent / "results" / "loop_reading.json"))
+CEN = json.load(open(HERE.parent / "results" / "data_census.json"))
 DS = [("frangieh2021", "melanoma"), ("papalexi2021", "THP-1")]
 RO = {"PDL1": "PD-L1", "PDL2": "PD-L2", "HLAE": "HLA-E", "MHC1": "MHC-I"}
 ARM = {"decoder_only": "control: decoder repaired", "mlp_only": "round 1: MLP repaired", "mlp_guarded": "round 2: MLP repaired, bone-marrow outputs held", "joint_s0": "round 3: one fit for both cell types"}
@@ -157,6 +158,40 @@ Audited on every cell of the data set, since the head never saw any of them. PD-
 
 A repair does not carry to the other cell type. With every control cell in the audit, the reference stage on melanoma is
 supported: the loop's own audits lose that by keeping half of the controls for the fits.
+
+## 6. What data are left: a census of the protein files
+
+[`tools/data_census.py`](../../tools/data_census.py) reads only the protein files and lists, per condition, the knockouts that
+change a measured protein clearly (at least {CEN['frangieh2021']['thresholds']['min_cells']} single-guide cells, a shift of at least {CEN['frangieh2021']['thresholds']['min_shift_sd']:g} control standard deviations, and
+at least {CEN['frangieh2021']['thresholds']['min_shift_over_half_width']:g} times the half-width of its interval, with cells as units, so the ratio is optimistic). No model is involved
+(`results/data_census.json`).
+
+| data | cells | control-guide cells | target genes with enough cells | clear (gene, protein) responses | genes with one | genes that change PD-L1 |
+|---|---|---|---|---|---|---|""")
+for name, ds, conds in (("melanoma", "frangieh2021", ("IFNγ", "Co-culture", "Control")), ("THP-1", "papalexi2021", ("all",))):
+    for c in conds:
+        v = CEN[ds]["conditions"][c]; pd = [x for x in v["clear_responses"] if x["antibody"] in ("CD274", "PDL1")]
+        o.append(f"| {name}" + ("" if c == "all" else f", {'IFN-γ' if c == 'IFNγ' else c.lower()}") + f" | {v['cells']:,} | {v['control_guide_cells']:,} | {v['targets_with_min_cells']} | {len(v['clear_responses'])} | {len(v['targets_with_a_clear_response'])} | "
+                 + ", ".join(f"{x['target']} ({x['shift_sd']:+.2f})" for x in sorted(pd, key=lambda x: x["shift_sd"])) + " |")
+co = CEN["frangieh2021"]["conditions"]["Co-culture"]; five = ["IFNGR1", "IFNGR2", "JAK1", "JAK2", "STAT1"]
+cop = {x["target"]: x for x in co["clear_responses"] if x["antibody"] == "CD274"}; coh = {x["target"]: x for x in co["clear_responses"] if x["antibody"] == "HLA_A"}
+th = {x["target"]: x for x in CEN["papalexi2021"]["conditions"]["all"]["clear_responses"] if x["antibody"] == "PDL1"}; new = [g for g in th if g not in ("IFNGR1", "IFNGR2", "JAK2", "STAT1", "IRF1")]
+assert all(g in cop and g in coh for g in five)
+o.append(f"""
+The three rounds used the IFN-γ condition of the melanoma data and five genes of the THP-1 data. What they did not use:
+
+- **Melanoma, co-culture.** The same five genes change PD-L1 there by {max(cop[g]['shift_sd'] for g in five):+.2f} to {min(cop[g]['shift_sd'] for g in five):+.2f} standard deviations, on {sum(cop[g]['cells'] for g in five):,} single-guide
+  knockout cells, with {co['control_guide_cells']:,} control-guide cells. No fit and no audit of the loop saw these cells: they could serve as
+  final data for the melanoma head (a new condition, the same cell type). Results of other heads on co-culture cells,
+  from work not recorded in this repository, were known when the loop was designed (design of round 1). MHC-I, too weak
+  to follow under IFN-γ, moves by {max(coh[g]['shift_sd'] for g in five):+.2f} to {min(coh[g]['shift_sd'] for g in five):+.2f} there.
+- **THP-1, other genes.** {', '.join(f"{g} ({th[g]['shift_sd']:+.2f})" for g in new)} change PD-L1 clearly and were in no fit or audit: new source genes for a final audit.
+  TEDDY's embedding would have to be computed for their cells.
+- **More clusters.** For PD-L1 no data set has ten source genes ({len(CEN['frangieh2021']['conditions']['IFNγ']['targets_with_a_clear_response']) and sum(1 for x in CEN['frangieh2021']['conditions']['IFNγ']['clear_responses'] if x['antibody'] == 'CD274')} in melanoma, {len(th)} in THP-1). Gene clusters stay below the
+  protocol's ten; guides, three or four per gene, give more units.
+
+The census says where a response exists in the measurement. Whether TEDDY's embedding carries it (the reference stage)
+is a question for an audit.
 
 ## What this changes in how the rounds are read
 
