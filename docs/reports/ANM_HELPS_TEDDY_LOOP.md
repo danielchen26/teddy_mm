@@ -3,9 +3,9 @@
 **English primary.** Figure-first. Verified numbers only (from `reverse_loop_small_stats.json` / `REVERSE_LOOP_SMALL.md` / `REVERSE_STEP1.md`).  
 **Mode B** sufficiency-for-readout + typed-evidence decision loop — **not** Mode A residual-as-field / Jacobian / gene-perturb.
 
-> **Interactive version →** [danielchen26.github.io/teddy_mm/anm-loop.html](https://danielchen26.github.io/teddy_mm/anm-loop.html) — step-through veto → complement → verify, scoreboard by arm × metric × pair set, ANM vs feature swap. Same numbers as this file.
+> **Interactive version →** [danielchen26.github.io/teddy_mm/v3-anm-loop.html](https://danielchen26.github.io/teddy_mm/v3-anm-loop.html) — step-through veto → complement → verify, scoreboard by arm × metric × pair set, ANM vs feature swap. Same numbers as this file.
 
-Homepage section: [teddy_mm/#anm-loop](https://danielchen26.github.io/teddy_mm/#anm-loop) · source figures in [`docs/assets/infographics/`](../assets/infographics/).
+Homepage section: [teddy_mm/v3.html#anm-loop](https://danielchen26.github.io/teddy_mm/v3.html#anm-loop) · source figures in [`docs/assets/infographics/`](../assets/infographics/).
 
 ---
 
