@@ -1,5 +1,8 @@
 # Closing the loop within the guard — 12 November 2026
 
+> Read again by intervals, with the heads compared pairwise, in [`runs/loop_reading_20261112`](../loop_reading_20261112/)
+> (post hoc). The outcome reported in this file is by this run's own rule and stands as recorded.
+
 Exploratory, and a follow-up to [`runs/loop_20261112`](../loop_20261112/). The design and the rule are in
 [`DESIGN.md`](DESIGN.md), committed before any guarded head was fitted or audited (commit `e8157e0`). This file reports
 what came out.

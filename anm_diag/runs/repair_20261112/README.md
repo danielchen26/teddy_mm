@@ -1,5 +1,8 @@
 # Round 3 of the loop: one head for both cell types — 12 November 2026
 
+> Read again by intervals, with the heads compared pairwise, in [`runs/loop_reading_20261112`](../loop_reading_20261112/)
+> (post hoc). The outcome reported in this file is by this run's own rule and stands as recorded.
+
 Exploratory, and the third round after [`runs/loop_20261112`](../loop_20261112/) and
 [`runs/loop_guard_20261112`](../loop_guard_20261112/). The design and the rule are in [`DESIGN.md`](DESIGN.md), committed
 before any head of this round was fitted beyond a 20-step timing check and before any audit of this folder ran (commit
