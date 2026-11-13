@@ -13,11 +13,16 @@ embedding and the head's latent layer. This script makes the repair that was aud
 Two forms of it were audited on knockouts of genes held out of the fit, each against a rule written before it ran:
 
   one data set, PD-L1 only (anm_diag/runs/loop_guard_20261112)
-      Passed its rule on both cell types: the head adds no loss for PD-L1, and its bone-marrow score stays within 0.02.
-      The head is for the cell type it was repaired on; a head repaired on one was still found to lose the response on
-      the other (anm_diag/runs/loop_20261112).
+      Passed its rule on both cell types, and its bone-marrow score stays within 0.02. The head is for the cell type it
+      was repaired on; a head repaired on one was still found to lose the response on the other
+      (anm_diag/runs/loop_20261112).
   both data sets and every measured protein in one fit (anm_diag/runs/repair_20261112)
       Did not pass its rule on melanoma. Not recommended as it stands.
+
+What that does and does not show (anm_diag/runs/loop_reading_20261112, the same records read by intervals): repairing the
+MLP removes most of the loss the head adds for PD-L1 (84% on melanoma, 91% on THP-1), where repairing the decoder removes
+5% and 15%. It does not show a repaired head. No changed head has a supported output; on THP-1 the first form adds no
+loss by its interval, and on melanoma the loss is no longer resolved, which is not the same as shown absent.
 
 Perturbation cells are given as folders of exported features, one per data set, as written by the anm_diag adapters
 (`dense.npz` with A, target, guide, ids, readout__<ID>, and `node__Z.npy` with TEDDY's embedding). The form that passed:
