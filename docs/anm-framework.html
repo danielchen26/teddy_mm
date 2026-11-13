@@ -1,948 +1,291 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-ui="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The ANM framework — TEDDY × ANM</title>
-<meta name="description" content="How ANM measures a response chain: push one source, measure separately how a candidate retained state and a declared output move, compare the output with a boundary written in advance, and test and select the retained state for that output. The maths, two physics checks, the AI workflow (question, typed event graph, retained state, response) and how it runs on TEDDY’s workflow." />
-<meta name="color-scheme" content="light dark" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2713%27 fill=%27%23008c7e%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%275%27 fill=%27%23fff%27/%3E%3C/svg%3E" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How the audit works — TEDDY × ANM</title>
+<meta name="description" content="How an ANM audit is declared, sealed and read: roles, the statistic u and its verdicts, the checks that refuse illegal designs, typed source events, the loop from location to repair, and evidence grades.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=STIX+Two+Text:ital@1&display=swap">
 <style>
-/* tokens: copied from index.html. Lineage colours (--s-b/t/m/nk) repeat anim.css's --anim-b/t/m/nk values so the legend and marker chips match the animations; keep them in sync. */
-:root {
-  --bg: #f7f6f2; --bg-elev: #ffffff; --bg-soft: #f0efe9; --bg-sunk: #efece4;
-  --ink: #16181a; --ink-muted: #565b62; --ink-faint: #868b92; --line: #dcd9d0; --line-strong: #c4c0b5;
-  --accent: #0d6e6e; --accent-soft: #dcefee;
-  --warn: #8a4b12; --warn-bg: #f6e8d6; --good: #1f6b3a; --good-bg: #dcefe3; --bad: #a13a3a; --bad-bg: #f7e2de;
-  --s-teddy: #c8641f; --s-anm: #008c7e; --s-train: #6554c9; --s-neutral: #b9b5aa;
-  --s-measured: #16181a; --s-b: #4a3aa7; --s-t: #2a78d6; --s-m: #a88600; --s-nk: #c2458f;
-  --grid: #ece9e1; --dot: rgba(22,24,26,.075);
-  --shadow: 0 1px 2px rgba(22,24,26,.04), 0 10px 30px rgba(22,24,26,.06);
-  --r: 16px; --max: 1140px;
-  --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --stick: 102px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #111315; --bg-elev: #1b1e22; --bg-soft: #22262b; --bg-sunk: #15181b;
-    --ink: #ecebe6; --ink-muted: #a4a9b1; --ink-faint: #767c85; --line: #2d3238; --line-strong: #414850;
-    --accent: #5ec4c4; --accent-soft: #173332;
-    --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22; --bad: #e08a8a; --bad-bg: #3a2020;
-    --s-teddy: #c9722f; --s-anm: #10a092; --s-train: #8f7ee8; --s-neutral: #4a4f57;
-    --s-measured: #ecebe6; --s-b: #9a7cea; --s-t: #2b6ad6; --s-m: #a38b00; --s-nk: #d0508f;
-    --grid: #262a30; --dot: rgba(236,235,230,.06);
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #111315; --bg-elev: #1b1e22; --bg-soft: #22262b; --bg-sunk: #15181b;
-  --ink: #ecebe6; --ink-muted: #a4a9b1; --ink-faint: #767c85; --line: #2d3238; --line-strong: #414850;
-  --accent: #5ec4c4; --accent-soft: #173332;
-  --warn: #e0a86a; --warn-bg: #2f2418; --good: #7dcea0; --good-bg: #1a2e22; --bad: #e08a8a; --bad-bg: #3a2020;
-  --s-teddy: #c9722f; --s-anm: #10a092; --s-train: #8f7ee8; --s-neutral: #4a4f57;
-  --s-measured: #ecebe6; --s-b: #9a7cea; --s-t: #2b6ad6; --s-m: #a38b00; --s-nk: #d0508f;
-  --grid: #262a30; --dot: rgba(236,235,230,.06);
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
-body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
-a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
-code, .mono { font-family: var(--mono); font-size: .86em; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
-@media (min-width: 720px) { .wrap { padding: 0 28px; } }
-.card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
-main { container-type: inline-size; container-name: main; }
-
-/* ---------- top bar (as index.html) ---------- */
-.topbar { position: sticky; top: 0; z-index: 40; height: 56px; border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); }
-.topbar-inner { max-width: var(--max); margin: 0 auto; padding: 0 16px; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-@media (min-width: 720px) { .topbar-inner { padding: 0 28px; } }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); text-decoration: none; white-space: nowrap; }
-.brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--s-teddy), var(--s-anm)); }
-.brand .x { color: var(--ink-faint); font-weight: 500; }
-.nav { display: flex; align-items: center; gap: 2px; }
-.nav a { color: var(--ink-muted); text-decoration: none; font-size: .86rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; }
-.nav a:hover { color: var(--ink); background: var(--bg-soft); }
-.nav a.ext { color: var(--accent); font-weight: 600; }
-.nav a.cur { color: var(--ink); font-weight: 600; background: var(--bg-soft); box-shadow: inset 0 -2px 0 var(--s-anm); }
-.theme-btn { margin-left: 6px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); border-radius: 999px; padding: 5px 11px; font: inherit; font-size: .78rem; cursor: pointer; }
-.gh-link { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line);
-  background: var(--bg-elev); color: var(--ink); font-size: .78rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
-.nav a.gh-link { color: var(--ink); font-size: .78rem; padding: 5px 10px; border-radius: 999px; }
-.gh-link:hover, .nav a.gh-link:hover { border-color: var(--accent); color: var(--accent); background: var(--bg-elev); }
-@media (max-width: 1100px) { .gh-link .ghl { display: none; } .nav a.gh-link { padding: 5px 8px; } }
-@media (max-width: 1000px) { .nav a.hide-1000 { display: none; } }
-@media (max-width: 760px) { .nav a.hide-760 { display: none; } }
-@media (max-width: 480px) { .nav a.hide-480 { display: none; } }
-.mnav { display: none; position: relative; }
-@media (max-width: 760px) { .mnav { display: block; } }
-.mnav summary { list-style: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--ink);
-  padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev); }
-.mnav summary::-webkit-details-marker { display: none; }
-@media (max-width: 480px) { .mnav .mlabel { display: none; } .mnav summary { padding: 6px 9px; } }
-/* the four-pedestal scene needs a little more height than 16:9 on a phone, or its top label is cut */
-@media (max-width: 420px) { .anim[data-anim="fw-teddy-steps"] > .anim-stage { aspect-ratio: 16 / 10; } }
-.mnav-panel { position: fixed; top: 64px; right: 12px; width: min(300px, calc(100vw - 24px)); max-height: calc(100vh - 80px); overflow-y: auto;
-  padding: 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-elev); box-shadow: var(--shadow); display: grid; gap: 2px; z-index: 50; }
-.mnav-panel a { display: block; padding: 8px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .88rem; }
-.mnav-panel a:hover { background: var(--bg-soft); }
-.mnav-panel a.cur { font-weight: 600; background: var(--accent-soft); }
-.mnav-panel a.sub { padding-left: 22px; color: var(--ink-muted); font-size: .84rem; }
-.mnav-panel a.ext { color: var(--accent); font-weight: 600; border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; margin-top: 4px; padding-top: 10px; }
-.mnav-panel a.ext + a.ext { border-top: 0; margin-top: 0; }
-
-/* ---------- sticky in-page section nav ---------- */
-.secnav { position: sticky; top: 56px; z-index: 30; border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.sn { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 8px 0; scrollbar-width: none; overscroll-behavior-x: contain;
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
-.sn::-webkit-scrollbar { display: none; }
-.sn::after { content: ""; flex: none; width: 20px; }
-.sn-g { flex: none; font-family: var(--mono); font-size: .6rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); padding: 0 0 0 10px; }
-.sn-g:first-child { padding-left: 0; }
-.sn a { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev);
-  color: var(--ink-muted); text-decoration: none; font-size: .76rem; font-weight: 600; white-space: nowrap; transition: border-color .15s ease, color .15s ease, background .15s ease; }
-.sn a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--s-anm); opacity: .7; }
-.sn a[data-ch="teddy"]::before, .sn a[data-ch="next"]::before { background: var(--s-teddy); }
-.sn a[data-ch="physics"]::before { background: var(--ink-faint); }
-.sn a:hover { color: var(--ink); border-color: var(--ink-faint); }
-.sn a.on { color: var(--bg); background: var(--ink); border-color: var(--ink); }
-.sn a.on::before { background: var(--bg); opacity: 1; }
-
-/* ---------- hero ---------- */
-.hero { position: relative; padding: 52px 0 48px; overflow: hidden; }
-.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px); background-size: 22px 22px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 92%); mask-image: linear-gradient(to bottom, #000 25%, transparent 92%); }
-.hero .wrap { position: relative; }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .72rem; letter-spacing: .03em; color: var(--ink-muted);
-  background: var(--bg-elev); border: 1px solid var(--line); padding: 5px 11px; border-radius: 999px; max-width: 100%; }
-.eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--s-anm); flex: none; }
-h1 { font-size: clamp(2rem, 4.8vw, 3.1rem); line-height: 1.06; letter-spacing: -.038em; margin: 18px 0 14px; font-weight: 700; }
-h1 .a { color: var(--s-anm); }
-.lede { font-size: 1.07rem; color: var(--ink-muted); max-width: 40rem; margin: 0; }
-.lede .t { color: var(--s-teddy); font-weight: 600; } .lede .a { color: var(--s-anm); font-weight: 600; }
-.zh-hero { font-size: .82rem; color: var(--ink-faint); margin: 10px 0 0; }
-.chaps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 30px; }
-@container main (max-width: 900px) { .chaps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@container main (max-width: 540px) { .chaps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 24px; } .chc { padding: 10px 12px 11px; } .chc h3 { margin: 0; font-size: .96rem; } .chc .cl { display: none; } }
-.chc { padding: 14px 16px 14px; border-top: 3px solid var(--s-anm); min-width: 0; }
-.chc.td { border-top-color: var(--s-teddy); }
-.chc .cn { font-family: var(--mono); font-size: .66rem; font-weight: 600; letter-spacing: .06em; color: var(--ink-faint); }
-.chc h3 { font-size: 1.04rem; margin: 2px 0 8px; letter-spacing: -.012em; line-height: 1.3; }
-.chc h3 a { color: var(--ink); text-decoration: none; }
-.chc h3 a:hover { color: var(--accent); }
-.chc .cl { display: flex; flex-wrap: wrap; gap: 4px; }
-.chc .cl a { font-size: .74rem; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-muted); text-decoration: none; }
-.chc .cl a:hover { color: var(--ink); border-color: var(--accent); }
-.chc.ai .cl a + a::before { content: "→ "; color: var(--ink-faint); }
-.chc.ai .cl a:last-child::before { content: none; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 20px 0 0; padding: 0; list-style: none; font-size: .78rem; color: var(--ink-muted); }
-.legend li { display: inline-flex; align-items: center; gap: 6px; }
-.legend i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
-.legend .lk { font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
-
-/* ---------- chapter bands ---------- */
-.chap { padding: 72px 0 4px; border-top: 1px solid var(--line); scroll-margin-top: var(--stick); }
-.chap-row { display: flex; align-items: center; gap: 12px; }
-.chap-n { flex: none; font-family: var(--mono); font-size: .78rem; font-weight: 600; color: var(--bg); background: var(--ink); border-radius: 10px; padding: 4px 9px; }
-.chap[data-ch="teddy"] .chap-n, .chap[data-ch="next"] .chap-n { background: var(--s-teddy); }
-.chap[data-ch="idea"] .chap-n, .chap[data-ch="maths"] .chap-n, .chap[data-ch="ai"] .chap-n { background: var(--s-anm); }
-.chap-t { font-size: clamp(1.5rem, 3.2vw, 2.2rem); letter-spacing: -.032em; line-height: 1.1; margin: 0; }
-.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 0; margin: 14px 0 0; padding: 0; list-style: none; }
-.flow li { display: inline-flex; align-items: center; }
-.flow li:not(:last-child)::after { content: "→"; margin: 0 8px; color: var(--ink-faint); font-size: .9rem; }
-.flow a { font-size: .8rem; font-weight: 600; padding: 4px 11px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-soft); color: var(--ink); text-decoration: none; }
-.chap[data-ch="teddy"] .flow a { border-color: color-mix(in srgb, var(--s-teddy) 40%, var(--line)); background: color-mix(in srgb, var(--s-teddy) 10%, var(--bg-elev)); }
-.flow a:hover { border-color: var(--accent); }
-
-/* ---------- a section: heading, animation, text ---------- */
-.fs { padding: 44px 0 52px; scroll-margin-top: var(--stick); }
-.fs + .fs { border-top: 1px dashed var(--line); }
-.fs-grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); grid-template-rows: auto 1fr; grid-template-areas: "head fig" "body fig"; column-gap: 40px; }
-.fs.flip .fs-grid { grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); grid-template-areas: "fig head" "fig body"; }
-.fs-head { grid-area: head; min-width: 0; }
-.fs-fig { grid-area: fig; align-self: start; min-width: 0; position: sticky; top: calc(var(--stick) + 16px); }
-.fs-body { grid-area: body; min-width: 0; }
-@container main (max-width: 860px) {
-  .fs-grid, .fs.flip .fs-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "head" "fig" "body"; row-gap: 16px; }
-  .fs-fig { position: static; }
-}
-.kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
-.fs[data-ch="teddy"] .kicker, .fs[data-ch="next"] .kicker { color: var(--s-teddy); }
-.fs h2 { font-size: clamp(1.4rem, 2.7vw, 1.9rem); letter-spacing: -.028em; line-height: 1.18; margin: 0 0 14px; }
-.fs-p { margin: 0; font-size: 1.02rem; line-height: 1.62; }
-.fs-p + .fs-p, .notc + .fs-p { margin-top: 12px; }
-.fs-p b { font-weight: 600; }
-.fs-p sub, .four dd sub { font-size: .72em; line-height: 0; vertical-align: -.25em; }
-.tag { display: inline-flex; align-items: center; font-family: var(--mono); font-size: .6rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; line-height: 1.5;
-  padding: 1px 8px; border-radius: 999px; background: var(--bg-soft); color: var(--ink-muted); border: 1px solid var(--line); text-decoration: none; }
-.tag.warn { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 30%, var(--line)); }
-.tag.plan { background: transparent; color: var(--ink-muted); border-style: dashed; }
-.tag.rerun { background: transparent; color: var(--ink-muted); }
-
-/* the animation frame: anim.css draws the card (border, stage, caption); this adds the page's shadow */
-.fs-fig { border-radius: var(--r); box-shadow: var(--shadow); }
-.fs-fig > .anim { margin: 0; }
-
-/* maths */
-.math { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 26px; margin: 18px 0 0; padding: 8px 14px; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--line); max-width: 100%; }
-.math .eq { max-width: 100%; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
-.math .eq-l { display: block; margin: 8px 0 -4px; font-family: var(--mono); font-size: .62rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
-.math mjx-container[display="true"] { margin: 8px 0 !important; text-align: left !important; }
-.math mjx-container svg { max-width: none; }
-.math-note { flex-basis: 100%; margin: 0 0 8px; font-size: .8rem; color: var(--ink-muted); line-height: 1.45; }
-@container main (max-width: 520px) { .math { font-size: 14.5px; padding: 6px 12px; gap: 0 20px; } }
-
-.four { margin: 0; display: grid; gap: 8px; }
-.four > div { display: grid; grid-template-columns: 8.2rem minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--line); }
-.four dt { font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); }
-.four dd { margin: 0; font-size: .96rem; line-height: 1.5; }
-@container main (max-width: 480px) { .four > div { grid-template-columns: 1fr; gap: 2px; } }
-.notc { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
-.notc li { position: relative; padding: 8px 12px 8px 36px; border-radius: 10px; border: 1px dashed color-mix(in srgb, var(--bad) 40%, var(--line)); background: color-mix(in srgb, var(--bad-bg) 45%, var(--bg)); font-size: .96rem; line-height: 1.45; }
-.notc li::before { content: "✕"; position: absolute; left: 13px; top: 8px; color: var(--bad); font-weight: 700; }
-.panel9 { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 14px 0 0; }
-.panel9 .pl { display: inline-flex; align-items: center; gap: 5px; font-size: .74rem; font-weight: 600; margin-left: 6px; }
-.panel9 .pl:first-child { margin-left: 0; }
-.panel9 .pl i { width: 9px; height: 9px; border-radius: 3px; }
-.panel9 .b i { background: var(--s-b); } .panel9 .t i { background: var(--s-t); } .panel9 .m i { background: var(--s-m); }
-.panel9 em { font-style: normal; font-family: var(--mono); font-size: .7rem; padding: 1px 6px; border-radius: 6px; background: var(--bg-elev); border: 1px solid var(--line); color: var(--ink-muted); }
-
-.zh { font-size: .84rem; color: var(--ink-faint); margin: 14px 0 0; line-height: 1.6; }
-.zh::before { content: "中文"; font-size: .64rem; font-weight: 700; letter-spacing: .05em; padding: 1px 6px; border-radius: 5px; border: 1px solid var(--line); margin-right: 8px; color: var(--ink-muted); }
-details.src { margin: 12px 0 0; }
-details.src summary { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); padding: 2px 0; }
-details.src summary::-webkit-details-marker { display: none; }
-details.src summary::before { content: "+"; display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); font-size: .7rem; }
-details.src[open] summary::before { content: "–"; }
-details.src summary:hover { color: var(--accent); }
-details.src ul { margin: 6px 0 0; padding-left: 1.1rem; font-size: .78rem; color: var(--ink-muted); line-height: 1.5; }
-details.src li + li { margin-top: 3px; }
-details.src code { font-size: .72rem; overflow-wrap: anywhere; color: var(--ink); }
-
-/* v3: registered results (notes on the v2 findings; result cards in the figure column of the new sections) */
-.sup { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--s-nk) 40%, var(--line)); background: color-mix(in srgb, var(--s-nk) 7%, var(--bg-elev)); font-size: .92rem; color: var(--ink-muted); line-height: 1.55; }
-.sup > b:first-child { display: inline-block; font-family: var(--mono); font-size: .62rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--s-nk); margin-right: 8px; }
-.sup a { font-weight: 600; }
-.tag.v3 { background: transparent; color: var(--s-nk); border-color: color-mix(in srgb, var(--s-nk) 40%, var(--line)); }
-.fw-res { padding: 16px 18px 14px; border-radius: var(--r); background: var(--bg-elev); border: 1px solid var(--line); }
-.fw-res .rk { margin: 0 0 8px; font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
-.fw-res table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-.fw-res th, .fw-res td { padding: 6px 6px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.4; }
-.fw-res th:first-child, .fw-res td:first-child { padding-left: 0; }
-.fw-res thead th { font-family: var(--mono); font-size: .6rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
-.fw-res td.n { font-family: var(--mono); font-size: .76rem; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
-.fw-res td.n .ci { display: block; font-size: .66rem; color: var(--ink-faint); }
-.fw-res tr:last-child td { border-bottom: 0; }
-.fw-res .vd { font-family: var(--mono); font-size: .6rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
-.fw-res .vd.loss, .fw-res .vd.fail { color: var(--bad); } .fw-res .vd.pass { color: var(--good); } .fw-res .vd.pend { color: var(--warn); }
-.fw-res .fn { margin: 10px 0 0; font-size: .76rem; color: var(--ink-muted); line-height: 1.5; }
-.fw-res .big { margin: 2px 0 6px; font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--warn); }
-.fw-res .big.inc { color: var(--ink-muted); }
-footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--ink-muted); font-size: .84rem; }
-footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
-
-/* ---------- hover-defined terms (same look as guide.css) ---------- */
-.term { text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent); cursor: help; border-radius: 3px; }
-.term:hover, .term:focus-visible, .term.on { text-decoration-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); outline: none; }
-.tag.term { text-decoration: none; }
-.tag.term:hover, .tag.term.on { border-color: var(--accent); color: var(--accent); }
-#termtip { position: fixed; left: 0; top: 0; z-index: 90; width: max-content; max-width: min(320px, calc(100vw - 16px)); padding: 10px 12px 11px; border-radius: 12px;
-  background: var(--bg-elev); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 14px 36px rgba(0,0,0,.18);
-  font-family: var(--font); font-size: .8rem; line-height: 1.5; opacity: 0; pointer-events: none; transform: translateY(3px); transition: opacity .12s ease, transform .12s ease; visibility: hidden; }
-#termtip.on { opacity: 1; transform: none; visibility: visible; }
-#termtip b { display: block; font-size: .84rem; margin-bottom: 3px; color: var(--ink); }
-#termtip span { color: var(--ink-muted); }
+:root{ --bg:#fbfbf9; --panel:#f1f3f2; --line:#d3d9d6; --fg:#14212b; --muted:#55626b; --accent:#0f6b6e; --accent-tint:#dcecea;
+  --s1:#2a78d6; --s2:#c8641f; --s3:#7a4fd0; --good:#12873a; --warn:#a86e00; --bad:#c93535;
+  --sans:"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace; --math:"STIX Two Text","Times New Roman",serif; color-scheme:light }
+@media (prefers-color-scheme: dark){ :root{ --bg:#121618; --panel:#1b2125; --line:#2f393e; --fg:#e8ecea; --muted:#a6b1b6; --accent:#5fbdb8; --accent-tint:#17302f;
+  --s1:#5a9bea; --s2:#e58a4a; --s3:#a98bf0; --good:#3fbf6b; --warn:#f0b33a; --bad:#ee7b7b; color-scheme:dark } }
+*{ box-sizing:border-box }
+html{ scroll-padding-top:4.5rem }
+body{ margin:0; background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:16px; line-height:1.65 }
+:root[data-ui="zh"] body{ line-height:1.75 }
+:root:not([data-ui="zh"]) .zh, :root[data-ui="zh"] .en{ display:none !important }
+a{ color:var(--accent) } a:focus-visible, button:focus-visible, summary:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+header.site{ position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--line) }
+header.site .in{ max-width:62rem; margin:0 auto; padding:.6rem max(16px, env(safe-area-inset-right, 0px)) .6rem max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; align-items:center }
+.brand{ font-weight:600; color:var(--fg); text-decoration:none; margin-right:auto; white-space:nowrap }
+nav.pages{ display:flex; flex-wrap:wrap; gap:.2rem 1rem; font-size:.94rem }
+nav.pages a{ color:var(--fg); text-decoration:none; padding:.15rem 0; border-bottom:2px solid transparent }
+nav.pages a[aria-current="page"]{ border-color:var(--accent); font-weight:600 } nav.pages a:hover{ border-color:var(--line) }
+.lang{ display:flex; gap:.3rem }
+.lang button{ font:inherit; font-size:.86rem; line-height:1.3; padding:.3rem .6rem; border:1px solid var(--line); background:var(--bg); color:var(--fg); cursor:pointer; border-radius:3px }
+.lang button[aria-pressed="true"]{ background:var(--accent-tint); border-color:var(--accent); font-weight:600 }
+main{ max-width:62rem; margin:0 auto; padding:2.2rem max(16px, env(safe-area-inset-right, 0px)) 3rem max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; gap:2.75rem }
+section{ display:flex; flex-direction:column; gap:1rem; min-width:0; scroll-margin-top:4.5rem }
+.col{ max-width:46rem }
+h1{ font-size:2.05rem; line-height:1.2; font-weight:600; margin:0; text-wrap:balance; max-width:50rem }
+h2{ font-size:1.32rem; line-height:1.3; font-weight:600; margin:0; text-wrap:balance }
+h3{ font-size:1.02rem; font-weight:600; margin:.4rem 0 0 }
+p{ margin:0 }
+.eyebrow{ font-family:var(--mono); font-size:.8rem; color:var(--muted) }
+.lede{ font-size:1.1rem }
+.src{ color:var(--muted); font-size:.9rem }
+code,.mono{ font-family:var(--mono); font-size:.88em }
+.m{ font-family:var(--math); font-style:italic; font-size:1.08em; white-space:nowrap }
+.sh{ display:flex; gap:.7rem; align-items:baseline }
+.sn{ font-family:var(--mono); font-size:.85rem; font-weight:500; color:var(--accent); border:1px solid var(--accent); min-width:1.55rem; text-align:center; border-radius:3px; flex:none; line-height:1.5 }
+figure{ margin:0; display:flex; flex-direction:column; gap:.6rem; min-width:0 }
+figcaption{ color:var(--muted); font-size:.9rem; max-width:46rem }
+.scroll{ overflow-x:auto; border:1px solid var(--line); background:var(--panel) }
+.scroll svg{ display:block; width:100%; height:auto }
+svg text{ font-family:var(--sans); fill:currentColor }
+svg .t-m{ font-family:var(--mono) } svg .t-mu{ fill:var(--muted) }
+svg .bx{ fill:var(--bg); stroke:currentColor; stroke-width:1.2 }
+svg .sys{ fill:none; stroke:var(--muted); stroke-width:1; stroke-dasharray:5 4 }
+svg .ro{ fill:var(--accent-tint); stroke:var(--accent); stroke-width:1.4 }
+svg .ar{ fill:none; stroke:currentColor; stroke-width:1.3 } svg .ar-d{ fill:none; stroke:var(--accent); stroke-width:1.5; stroke-dasharray:6 4 }
+svg .tick{ stroke:var(--muted); stroke-width:1; stroke-dasharray:2 3 } svg .band{ fill:var(--accent-tint) } svg .ax{ stroke:var(--muted); stroke-width:1 }
+.tw{ overflow-x:auto }
+table{ border-collapse:collapse; width:100%; font-size:.92rem; font-variant-numeric:tabular-nums }
+th,td{ text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--line); vertical-align:top }
+th{ font-weight:600; color:var(--muted); font-size:.82rem }
+td.n{ white-space:nowrap; font-family:var(--mono); font-size:.84rem }
+td.k{ font-weight:600; white-space:nowrap }
+.st{ white-space:nowrap; font-weight:500 }
+.st::before{ content:""; display:inline-block; width:.6em; height:.6em; margin-right:.4em; border-radius:50% }
+.st.ok::before{ background:var(--good) } .st.no::before{ background:var(--bad); border-radius:0 } .st.un::before{ background:var(--warn); border-radius:0; transform:rotate(45deg) }
+.note{ border-left:2px solid var(--accent); padding:.2rem 0 .2rem 1rem; max-width:46rem }
+.glance{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:1px; background:var(--line); border:1px solid var(--line) }
+.gcard{ background:var(--bg); padding:.9rem 1rem 1rem; display:flex; flex-direction:column; gap:.4rem; min-width:0 }
+.gcard .k{ font-family:var(--mono); font-size:.76rem; color:var(--accent); letter-spacing:.04em }
+.gcard .big{ font-size:1.16rem; font-weight:600; line-height:1.3; text-wrap:balance; font-variant-numeric:tabular-nums }
+.gcard p{ font-size:.9rem; line-height:1.55; color:var(--muted) }
+.gcard a{ font-size:.86rem; margin-top:auto; padding-top:.2rem }
+ul.pts, ol.pts{ margin:0; padding-left:1.2rem; display:flex; flex-direction:column; gap:.45rem; max-width:46rem }
+ul.pts b, ol.pts b, dl.roles b{ font-weight:600 }
+dl.roles{ display:grid; grid-template-columns:minmax(7rem,11rem) 1fr; gap:.55rem 1.25rem; margin:0; max-width:46rem }
+dl.roles dt{ font-weight:600 } dl.roles dd{ margin:0; min-width:0 }
+ol.defs{ margin:0; padding-left:1.4rem; display:flex; flex-direction:column; gap:.65rem; max-width:46rem }
+details.more{ max-width:46rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line) }
+details.more.wide{ max-width:none }
+details.more > summary{ cursor:pointer; padding:.6rem 0; color:var(--accent); font-size:.94rem; font-weight:500 }
+details.more > .db{ display:flex; flex-direction:column; gap:.9rem; padding:.2rem 0 1.1rem; min-width:0 }
+a.next{ display:flex; flex-wrap:wrap; gap:.2rem 1rem; align-items:baseline; max-width:46rem; padding:.8rem 1rem; border:1px solid var(--accent); background:var(--accent-tint); color:var(--fg); text-decoration:none }
+a.next .t{ flex:1 1 16rem; min-width:0; font-weight:500 } a.next .go{ color:var(--accent); font-weight:600 } a.next:hover .t{ text-decoration:underline }
+.steps{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(13.5rem, 1fr)); gap:.6rem }
+.steps li{ border:1px solid var(--line); background:var(--panel); padding:.65rem .8rem .75rem; min-width:0; display:flex; flex-direction:column; gap:.3rem; font-size:.92rem; line-height:1.6 }
+.steps .h{ display:flex; gap:.5rem; align-items:baseline; font-weight:600; font-size:1rem } .steps .h .mono{ color:var(--accent) }
+footer{ border-top:1px solid var(--line); color:var(--muted); font-size:.88rem }
+footer .in{ max-width:62rem; margin:0 auto; padding:1.2rem max(16px, env(safe-area-inset-right, 0px)) 2rem max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; gap:.4rem }
+@media (max-width:900px){ .glance{ grid-template-columns:1fr 1fr } }
+@media (max-width:560px){ .glance{ grid-template-columns:1fr } h1{ font-size:1.6rem } dl.roles{ grid-template-columns:1fr; gap:.1rem 0 } dl.roles dd{ margin-bottom:.6rem } }
 </style>
-<script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script>
-<link rel="stylesheet" href="assets/site/anim/anim.css" />
-<script>
-window.MathJax = {
-  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
-  svg: { fontCache: 'global' },
-  options: { ignoreHtmlClass: 'tex2jax_ignore', processHtmlClass: 'tex2jax_process' }
-};
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script"></script>
-<script type="module" src="assets/site/anim/loader.js"></script>
 </head>
-<body class="tex2jax_ignore">
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="index.html" aria-label="TEDDY × ANM home"><span class="brand-mark" aria-hidden="true"></span>TEDDY <span class="x">×</span> ANM</a>
-    <nav class="nav" aria-label="Site">
-      <a href="index.html" class="hide-760">Overview</a>
-      <a href="anm-framework.html" class="cur hide-480" aria-current="page">ANM framework</a>
-      <a href="anm-loop.html" class="ext hide-1000">Loop report ↗</a>
-      <details class="mnav">
-        <summary aria-label="Open menu"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="mlabel">Menu</span></summary>
-        <div class="mnav-panel">
-          <a href="index.html">Overview</a>
-          <a href="anm-framework.html" class="cur" aria-current="page">ANM framework</a>
-          <a href="#ch-idea" class="sub">01 · The idea</a><a href="#ch-maths" class="sub">02 · The maths</a><a href="#ch-physics" class="sub">03 · Physics</a><a href="#ch-ai" class="sub">04 · AI workflows</a><a href="#ch-teddy" class="sub">05 · TEDDY</a><a href="#ch-next" class="sub">06 · Next</a>
-          <a href="anm-loop.html" class="ext">Decision-loop report ↗</a>
-          <a href="https://github.com/danielchen26/teddy_mm" class="ext" target="_blank" rel="noopener">GitHub repository ↗</a>
-        </div>
-      </details>
-      <a class="gh-link hide-760" href="https://github.com/danielchen26/teddy_mm" target="_blank" rel="noopener" aria-label="GitHub repository" title="GitHub repository"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="ghl">GitHub</span></a>
-      <button class="theme-btn" type="button" id="themeBtn" aria-label="Toggle light or dark theme">Theme</button>
-    </nav>
-  </div>
-</header>
-<nav class="secnav" aria-label="Sections on this page">
-  <div class="wrap"><div class="sn"><span class="sn-g">Idea</span><a href="#problem" data-ch="idea">Problem</a><a href="#idea" data-ch="idea">Protocol</a><a href="#forward-inverse" data-ch="idea">Forward · inverse</a><span class="sn-g">Maths</span><a href="#math-response" data-ch="maths">Response</a><a href="#math-checks" data-ch="maths">Two checks</a><a href="#math-steps" data-ch="maths">Steps</a><span class="sn-g">Physics</span><a href="#physics-ring" data-ch="physics">Delayed ring</a><a href="#physics-flock" data-ch="physics">Flock</a><span class="sn-g">AI</span><a href="#ai-question" data-ch="ai">1 · Question</a><a href="#ai-graph" data-ch="ai">2 · Event graph</a><a href="#ai-state" data-ch="ai">3 · State</a><a href="#ai-response" data-ch="ai">4 · Response</a><a href="#ai-inventory" data-ch="ai">Case</a><span class="sn-g">TEDDY</span><a href="#teddy-pipeline" data-ch="teddy">Pipeline</a><a href="#teddy-steps" data-ch="teddy">Four steps</a><a href="#teddy-same-calls" data-ch="teddy">Same calls</a><a href="#teddy-nkt" data-ch="teddy">NK–T</a><a href="#teddy-depth" data-ch="teddy">Depth</a><a href="#teddy-e2" data-ch="teddy">E2 · response</a><a href="#teddy-e5" data-ch="teddy">E5 · layers</a><a href="#teddy-e5m" data-ch="teddy">E5-M · sufficiency</a><a href="#teddy-e7" data-ch="teddy">E7 · inverse loop</a><a href="#teddy-scope" data-ch="teddy">Not claimed</a><span class="sn-g">Next</span><a href="#mode-a" data-ch="next">Mode A</a></div></div>
-</nav>
+<body>
+<header class="site"><div class="in">
+  <a class="brand" href="index.html">TEDDY × ANM</a>
+  <nav class="pages" aria-label="Pages"><a href="index.html"><span class="zh">总览</span><span class="en">Overview</span></a><a href="anm-framework.html" aria-current="page"><span class="zh">审计怎么做</span><span class="en">How the audit works</span></a><a href="anm-loop.html"><span class="zh">闭环</span><span class="en">The loop</span></a><a href="https://github.com/danielchen26/teddy_mm/blob/main/docs/ANM_DIAGNOSIS.md"><span class="zh">诊断全文</span><span class="en">Full write-up</span></a><a href="https://github.com/danielchen26/teddy_mm">GitHub</a></nav>
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="zh" aria-pressed="false">中文</button></div>
+</div></header>
+<main>
+<section>
+  <p class="eyebrow">ANM · arXiv 2610.14549 · <span class="mono">anm_diag</span></p>
+  <h1><span class="zh">审计怎么做</span><span class="en">How the audit works</span></h1>
+  <p class="lede col"><span class="zh">给定一个模型和一次受控的扰动，审计回答三个问题：实测的响应在模型内部哪一步还读得出来，从哪一步开始读不出来，改了模型以后有没有变好。</span><span class="en">Given a model and one controlled perturbation, the audit answers three questions: at which internal step the measured response can still be read, where it stops being readable, and whether changing the model made it better.</span></p>
+</section>
 
-<main id="top">
-  <section class="hero" id="overview">
-    <div class="wrap">
-      <span class="eyebrow"><i></i><span>Framework · physics · AI · TEDDY</span></span>
-      <h1>The <span class="a">ANM</span> framework</h1>
-      <p class="lede">One response protocol: push a source, measure the state and the readout apart, and test which state is enough. Shown on physics, on <span class="a">AI workflows</span> and on <span class="t">TEDDY</span>’s workflow.</p>
-      <p class="zh-hero" lang="zh">一套响应协议：推动一个源，分别测状态和读出，再检验哪个状态够用；用在物理、AI 工作流和 TEDDY 的工作流上。</p>
-      <div class="chaps"><div class="chc card"><span class="cn">01</span><h3><a href="#ch-idea">The idea</a></h3><div class="cl"><a href="#problem">Problem</a><a href="#idea">Protocol</a><a href="#forward-inverse">Forward · inverse</a></div></div><div class="chc card"><span class="cn">02</span><h3><a href="#ch-maths">The maths</a></h3><div class="cl"><a href="#math-response">Response</a><a href="#math-checks">Two checks</a><a href="#math-steps">Steps</a></div></div><div class="chc card"><span class="cn">03</span><h3><a href="#ch-physics">Physics</a></h3><div class="cl"><a href="#physics-ring">Delayed ring</a><a href="#physics-flock">Flock</a></div></div><div class="chc card ai"><span class="cn">04</span><h3><a href="#ch-ai">AI workflows</a></h3><div class="cl"><a href="#ai-question">Question</a><a href="#ai-graph">Event graph</a><a href="#ai-state">State</a><a href="#ai-response">Response</a><a href="#ai-inventory">Case</a></div></div><div class="chc card td"><span class="cn">05</span><h3><a href="#ch-teddy">TEDDY</a></h3><div class="cl"><a href="#teddy-pipeline">Pipeline</a><a href="#teddy-steps">Four steps</a><a href="#teddy-same-calls">Same calls</a><a href="#teddy-nkt">NK–T</a><a href="#teddy-depth">Depth</a><a href="#teddy-e2">E2</a><a href="#teddy-e5">E5</a><a href="#teddy-e5m">E5-M</a><a href="#teddy-e7">E7</a><a href="#teddy-scope">Not claimed</a></div></div><div class="chc card td"><span class="cn">06</span><h3><a href="#ch-next">Next</a></h3><div class="cl"><a href="#mode-a">Mode A</a></div></div></div>
-      <ul class="legend" aria-label="Colours in the animations">
-        <li class="lk">Colours</li>
-        <li><i style="background:var(--s-anm)"></i>ANM · retained state</li>
-        <li><i style="background:var(--s-teddy)"></i>TEDDY</li>
-        <li><i style="background:var(--s-measured)"></i>measured protein</li>
-        <li><i style="background:var(--s-b)"></i>B</li>
-        <li><i style="background:var(--s-t)"></i>T</li>
-        <li><i style="background:var(--s-m)"></i>myeloid</li>
-        <li><i style="background:var(--s-nk)"></i>NK</li>
-        <li><i style="background:var(--good)"></i>pass</li>
-        <li><i style="background:var(--bad)"></i>failure</li>
-      </ul>
-    </div>
-  </section>
+<section id="roles">
+  <div class="sh"><span class="sn">1</span><h2><span class="zh">先声明五样东西</span><span class="en">Five things are declared first</span></h2></div>
+  <p class="col"><span class="zh">审计前先声明五样东西，连同数据和代码的指纹（sha256）一起封存，再只跑一次。</span><span class="en">Five things are declared before the audit and sealed together with fingerprints (sha256) of the data and code. The run is then made once.</span></p>
+  <figure><div class="scroll"><svg style="min-width:720px" viewBox="0 0 960 318" role="img" data-al-zh="源扰动进入系统，沿系统自己的运算依次产生状态 z0 到 zK 和模型输出；读出 O 在系统之外独立测量；对每一环计算 u，即只凭这一环解释不了的那部分响应。" data-al-en="The source perturbation enters the system, whose own computation produces states z0 to zK and the model output in turn; the readout O is measured independently, outside the system; at each stage u is the part of the response that this stage alone cannot explain.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+        <marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--accent)"/></marker>
+      </defs>
+      <rect class="sys" x="160" y="118" width="786" height="104" rx="4"/>
+      <text class="t-mu zh" x="170" y="110" font-size="12">被审计的系统（冻结）：每一步都是它自己的运算</text>
+      <text class="t-mu en" x="170" y="110" font-size="12">System under audit (frozen): every step is its own computation</text>
+      <rect class="bx" x="12" y="142" width="126" height="56" rx="3"/>
+      <text class="zh" x="75" y="166" font-size="13" text-anchor="middle" font-weight="600">源扰动 A</text>
+      <text class="en" x="75" y="166" font-size="13" text-anchor="middle" font-weight="600">Source A</text>
+      <text class="t-mu zh" x="75" y="185" font-size="11.5" text-anchor="middle">对照 0 · 处理 1</text>
+      <text class="t-mu en" x="75" y="185" font-size="11.5" text-anchor="middle">control 0 · treated 1</text>
+      <path class="ar" d="M138 170 H174" marker-end="url(#ah)"/>
+      <rect class="bx" x="176" y="142" width="128" height="56" rx="3"/>
+      <text class="zh" x="240" y="166" font-size="13" text-anchor="middle" font-weight="600">输入视图 z₀</text>
+      <text class="en" x="240" y="166" font-size="13" text-anchor="middle" font-weight="600">Input view z₀</text>
+      <text class="t-mu zh" x="240" y="185" font-size="11.5" text-anchor="middle">系统读入的测量</text>
+      <text class="t-mu en" x="240" y="185" font-size="11.5" text-anchor="middle">the system's input</text>
+      <path class="ar" d="M304 170 H352" marker-end="url(#ah)"/>
+      <text class="t-m" x="328" y="161" font-size="11.5" text-anchor="middle">F₁</text>
+      <rect class="bx" x="354" y="142" width="128" height="56" rx="3"/>
+      <text class="zh" x="418" y="166" font-size="13" text-anchor="middle" font-weight="600">状态 z₁</text>
+      <text class="en" x="418" y="166" font-size="13" text-anchor="middle" font-weight="600">State z₁</text>
+      <text class="t-mu" x="418" y="185" font-size="11.5" text-anchor="middle">= F₁(z₀)</text>
+      <path class="ar" d="M482 170 H530" marker-end="url(#ah)"/>
+      <text class="t-m" x="506" y="161" font-size="11.5" text-anchor="middle">F₂</text>
+      <text x="556" y="175" font-size="18" text-anchor="middle">⋯</text>
+      <path class="ar" d="M582 170 H630" marker-end="url(#ah)"/>
+      <text class="t-m" x="606" y="161" font-size="11.5" text-anchor="middle">F<tspan dy="3" font-size="9">K</tspan></text>
+      <rect class="bx" x="632" y="142" width="128" height="56" rx="3"/>
+      <text class="zh" x="696" y="166" font-size="13" text-anchor="middle" font-weight="600">状态 z<tspan dy="3" font-size="10">K</tspan></text>
+      <text class="en" x="696" y="166" font-size="13" text-anchor="middle" font-weight="600">State z<tspan dy="3" font-size="10">K</tspan></text>
+      <text class="t-mu" x="696" y="185" font-size="11.5" text-anchor="middle">= F<tspan dy="3" font-size="9">K</tspan><tspan dy="-3">(z</tspan><tspan dy="3" font-size="9">K−1</tspan><tspan dy="-3">)</tspan></text>
+      <path class="ar" d="M760 170 H808" marker-end="url(#ah)"/>
+      <rect class="bx" x="810" y="142" width="124" height="56" rx="3"/>
+      <text class="zh" x="872" y="166" font-size="13" text-anchor="middle" font-weight="600">模型输出</text>
+      <text class="en" x="872" y="166" font-size="13" text-anchor="middle" font-weight="600">Model output</text>
+      <text class="t-mu zh" x="872" y="185" font-size="11.5" text-anchor="middle">最后一环</text>
+      <text class="t-mu en" x="872" y="185" font-size="11.5" text-anchor="middle">last stage</text>
+      <rect class="ro" x="632" y="22" width="302" height="50" rx="3"/>
+      <text class="zh" x="783" y="44" font-size="13" text-anchor="middle" font-weight="600">读出 O：独立测量的结果</text>
+      <text class="en" x="783" y="44" font-size="13" text-anchor="middle" font-weight="600">Readout O: an independent measurement</text>
+      <text class="t-mu zh" x="783" y="61" font-size="11.5" text-anchor="middle">系统没有读过它</text>
+      <text class="t-mu en" x="783" y="61" font-size="11.5" text-anchor="middle">the system never reads it</text>
+      <path class="ar-d" d="M75 142 V47 H630" marker-end="url(#ahd)"/>
+      <text class="zh" x="350" y="38" font-size="12.5" text-anchor="middle">真实响应 Δ = E[O | 处理] − E[O | 对照]</text>
+      <text class="en" x="350" y="38" font-size="12.5" text-anchor="middle">True response Δ = E[O | treated] − E[O | control]</text>
+      <g font-size="12.5" text-anchor="middle">
+        <line class="tick" x1="240" y1="198" x2="240" y2="246"/><text class="t-m" x="240" y="262">u₀</text>
+        <line class="tick" x1="418" y1="198" x2="418" y2="246"/><text class="t-m" x="418" y="262">u₁</text>
+        <line class="tick" x1="696" y1="198" x2="696" y2="246"/><text class="t-m" x="696" y="262">u<tspan dy="3" font-size="9.5">K</tspan></text>
+        <line class="tick" x1="872" y1="198" x2="872" y2="246"/><text class="t-m" x="872" y="262">u<tspan dy="3" font-size="9.5">out</tspan></text>
+      </g>
+      <text class="zh" x="556" y="296" font-size="12.5" text-anchor="middle">对每一环问同一个问题：只凭这一环的状态，读出模型还剩多少 Δ 解释不了？（u = 0 全解释，u = 1 一点没解释）</text>
+      <text class="en" x="556" y="296" font-size="12.5" text-anchor="middle">The same question at every stage: from this state alone, how much of Δ is left unexplained? (u = 0: all explained; u = 1: none)</text>
+    </svg>
+</div>
+  <figcaption><span class="zh">扰动同时改变系统的输入和系统外独立测量的读出。审计沿着系统自己的计算，一环一环地问这个响应还在不在。</span><span class="en">The perturbation changes both the system's input and a readout measured independently, outside the system. The audit follows the system's own computation and asks at each stage whether the response is still there.</span></figcaption></figure>
+  <dl class="roles">
+    <dt><span class="zh">系统</span><span class="en">System</span></dt><dd><span class="zh">冻结的模型，和它实际读入的输入。</span><span class="en">The frozen model and the input it actually reads.</span></dd>
+    <dt><span class="zh">源</span><span class="en">Source</span></dt><dd><span class="zh">受控的扰动，带对照组。</span><span class="en">A controlled perturbation with a control group.</span></dd>
+    <dt><span class="zh">读出</span><span class="en">Readout</span> <span class="m">O</span></dt><dd><span class="zh">独立测量的结果。它不取自模型的输出，也不喂给任何候选状态。</span><span class="en">An independent measurement, never taken from the model's output and never fed to a candidate state.</span></dd>
+    <dt><span class="zh">候选状态链</span><span class="en">Candidate states</span></dt><dd><span class="m">z₀, z₁, …, z<sub>K</sub></span><span class="zh">：系统沿着自己的计算逐步产生的中间量。分析者不在链上加压缩或近似。</span><span class="en">: intermediates the system produces step by step. The analyst adds no compression or approximation to the chain.</span></dd>
+    <dt><span class="zh">读出模型和判定</span><span class="en">Readout classes and verdict</span></dt><dd><span class="zh">用哪几类读出模型（线性的 ridge、树模型 HGB）、容差 <span class="m">ε</span>、置信水平、哪种区间。</span><span class="en">Which readout classes (linear ridge, tree-based HGB), the margin <span class="m">ε</span>, the confidence level and the interval type.</span></dd>
+  </dl>
 
-  <div class="chap" id="ch-idea" data-ch="idea">
-    <div class="wrap">
-      <div class="chap-row"><span class="chap-n">01</span><h2 class="chap-t">The idea</h2></div>
-      
-    </div>
-  </div>
-  <section class="fs" id="problem" aria-labelledby="problem-h" data-ch="idea">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">1.1 · The idea</p>
-          <h2 id="problem-h">A score says it failed, not where</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-problem-same-score"><div class="anim-stage" role="img" aria-label="Two pipelines fail in different places, one inside the carried state and one at the output, yet both end in the same red cross."></div><figcaption>Two different failures, one identical score.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Pipelines are usually judged by one final score. A wrong answer tells you <b>something failed, not where</b>: which input caused it, whether the information was lost in the carried state or ignored at the output, and whether the system is degraded or broken.</p><p class="zh" lang="zh">只看最终分数，只知道错了，不知道错在哪：是哪个输入，信息丢在中间状态还是读出没用上，是变差了还是已经坏了。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/introduction.tex</code> 3–10, 20–25</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="idea" aria-labelledby="idea-h" data-ch="idea">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">1.2 · The idea</p>
-          <h2 id="idea-h">Push, follow, read, compare</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-push-follow-read"><div class="anim-stage" role="img" aria-label="A knob moves one tick, a ripple crosses a lattice of springs, and a gauge needle moves and is compared with two bands drawn before the push."></div><figcaption>A known push, traced through the state, read against pre-drawn bands.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">ANM measures a <b>response chain</b>. <b>Push</b> one source by a known amount, measure separately how a <span class="term" data-term="candidate">candidate</span> retained state and a declared output move (<b>follow</b> source → state, <b>read</b> source → output), and <b>compare</b> the output with a boundary declared in advance: ‘still works’ and the stricter ‘exactly right’. The push is an intervention, so the source → output response is interventional; that the output change passes through the state is a hypothesis the paper does not establish.</p><p class="zh" lang="zh">ANM 测的是一条响应链：给源一个已知大小的推动，分别测候选保留状态和声明的读出怎么变（源 → 状态，源 → 读出），再把读出和事先声明的边界（还能用 / 完全正确）比较。推动是干预，所以源 → 读出的响应是干预性的；但读出的变化经由该状态传递，论文只当作假设，没有证明。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/introduction.tex</code> 20–25 (state and readout responses measured separately)</li><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 65–74</li><li>Paper (8f8c7780) · <code>sections/conditions.tex</code> 1–31 (operating boundaries; nested readouts)</li><li>Paper (8f8c7780) · <code>sections/introduction.tex</code> 121–122 (“the dashed state-to-readout relation is a hypothesis, not an established causal path”); <code>sections/protocol.tex</code> 122 (“State measurement and causal intervention answer different questions”); <code>sections/discussion.tex</code> 112–114 (causal mediation requires separate evidence)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="forward-inverse" aria-labelledby="forward-inverse-h" data-ch="idea">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">1.3 · The idea</p>
-          <h2 id="forward-inverse-h">Forward: where lost. Inverse: is it enough?</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-forward-inverse"><div class="anim-stage" role="img" aria-label="Left: the state lattice deforms but the gauge does not move. Right: two input paths land on one state point that leads to two different outputs."></div><figcaption>State moves, output flat; same state, two outputs.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p"><b>Forward:</b> if the state moves but the output stays flat, the information arrived and the readout does not use it, or cancels it. <b>Inverse:</b> if two inputs reach the same state but give different outputs, the state is missing something the output depends on. For a declared observer the same test also selects: within a candidate set declared in advance, keep the candidates with no such violation and take the one with the fewest states (<a href="#ai-state">4.3</a>).</p><p class="zh" lang="zh">正向：状态动了、输出不动，说明信息到了，但读出没用上（或被抵消）。逆向：两个输入到了同一个状态却给出不同输出，说明状态漏了输出所依赖的东西。声明观测者之后，同一检验还能做选择：在事先声明的候选集合里，保留没有这种违例的候选，取状态数最少的那个（见 4.3）。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/introduction.tex</code> 24–35</li><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 157–191</li><li>Paper (8f8c7780) · <code>appendix/theory.tex</code> 158–163 (a state change with no endpoint change can mean cancellation or robustness; an association is not mediation)</li><li>Paper (8f8c7780) · <code>abstract.tex</code> 7–9 (resolved readout differences between histories assigned the same state constrain the representation); <code>sections/worked_example.tex</code> 110–112 (selection keeps candidates with no observed same-state violation and chooses the fewest states)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="chap" id="ch-maths" data-ch="maths">
-    <div class="wrap">
-      <div class="chap-row"><span class="chap-n">02</span><h2 class="chap-t">The maths</h2></div>
-      
-    </div>
-  </div>
-  <section class="fs flip" id="math-response" aria-labelledby="math-response-h" data-ch="maths">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">2.1 · The maths</p>
-          <h2 id="math-response-h">The response along the real run</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-response-sum"><div class="anim-stage" role="img" aria-label="Pushes enter a chain of state slabs at different steps, are rotated and rescaled at each step, and stack into one output change at the end."></div><figcaption>Each push is carried forward by A, then summed at readout.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Along the actual run, a small push at step <i>t</i> enters through <i>B</i><sub><i>t</i></sub>, is carried forward by each later step’s <i>A</i>, and is read at the end. The output change is the sum of every push, each carried to the end. No equilibrium needed.</p><div class="math tex2jax_process"><div class="eq">\[\delta s_t = A_t\,\delta s_{t-1} + B_t\,\delta u_t\]</div><div class="eq">\[A_t=\mathrm D_sF_t,\ B_t=\mathrm D_uF_t\]</div><div class="eq">\[\delta O_T = \mathrm D_sO_T(s_T)\sum_{t=1}^{T}\Phi(T,t)\,B_t\,\delta u_t\]</div><div class="eq">\[\Phi(T,t)=A_T\cdots A_{t+1},\ \Phi(T,T)=I\]</div></div><p class="zh" lang="zh">沿着系统真实的运行轨迹，第 t 步的小推动经 B_t 注入，被之后每一步的 A 传下去，最后被读出。输出变化是所有推动各自传到终点后的和，不需要平衡态。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 76–98 (finite-graph linear response; finite-window endpoint response)</li><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 84–117 (a stationary susceptibility is only the special case that needs closure and stability)</li><li>Paper (8f8c7780) · <code>appendix/theory.tex</code> 89–102 (full tangent recursion, with the initial-history term)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="math-checks" aria-labelledby="math-checks-h" data-ch="maths">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">2.2 · The maths</p>
-          <h2 id="math-checks-h">Two checks: linearity and nested readouts</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-linearity-nested"><div class="anim-stage" role="img" aria-label="Two secant lines agree on a straight curve and disagree on a bent one; a ball leaves the inner &#x27;exactly right&#x27; disc before the outer &#x27;still works&#x27; disc."></div><figcaption>Halve the push: same slope means linear. Exact sits inside works.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Linearity is checked, not assumed: the slope measured with a push ε must match the slope with ε/2. The readouts are nested: ‘exactly right’ can only happen inside ‘still works’, so losing the first while keeping the second separates degraded from broken.</p><div class="math tex2jax_process"><div class="eq">\[\frac{O(u_0+\varepsilon)-O(u_0-\varepsilon)}{2\varepsilon}\approx\frac{O(u_0+\varepsilon/2)-O(u_0-\varepsilon/2)}{\varepsilon}\]</div><div class="eq">\[0\le Q_f\le P_f\le 1\]</div><div class="eq">\[w=P_f,\ r=Q_f/P_f\]</div></div><p class="zh" lang="zh">线性是检验出来的，不是假设的：用 ε 和 ε/2 测得的斜率必须一致。读出是嵌套的：“完全正确”只能发生在“还能用”之内，所以前者丢了而后者还在，就能区分“变差”和“坏了”。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 113–115 (step refinement)</li><li>Paper (8f8c7780) · <code>appendix/empirical.tex</code> 143–145, 191–196 (ε = 0.1 on baseline 0.5, ε/2 = 0.05; slopes must agree within 25%)</li><li>Paper (8f8c7780) · <code>sections/conditions.tex</code> 11–31 (nested observables)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="math-steps" aria-labelledby="math-steps-h" data-ch="maths">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">2.3 · The maths</p>
-          <h2 id="math-steps-h">A step is any real processing order</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-step-orders"><div class="anim-stage" role="img" aria-label="Three tracks advance a state, with its remembered past, by clock ticks, iterations and layers. A fourth shows markers entered one by one ending unequal, then entered together ending equal."></div><figcaption>Clocks, iterations, layers: real orders. A made-up order biases.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Step <i>t</i> can be clock time, an iteration, an evidence arrival or a network layer, if it is the real processing order. Memory, feedback and delay live in the state and in <i>A</i><sub><i>t</i></sub>. A made-up order biases results; our <span class="term" data-term="panelorder">old panel order</span> did.</p><div class="math tex2jax_process"><div class="eq">\[s_t=F_t(s_{t-1},u_t)\]</div><div class="eq">\[\text{delay }\tau:\ s_t\ni\xi^t(\theta)=c(t+\theta),\ -\tau\le\theta\le 0\]</div></div><p class="zh" lang="zh">步 t 可以是物理时间、迭代、证据到达或网络层，只要是真实的处理顺序；记忆、反馈、延迟都放进状态和 A_t。编造的顺序会带来偏差，旧桥接的面板顺序就是这样。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 47–57 (with delay, keep the history segment); <code>sections/protocol.tex</code> 81–83</li><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 882 (every value is multiplied by the retention factor each tick)</li><li>teddy_mm · <code>bridge_anm/export_cite_events.py</code> 36–47, branch <code>fix/anm-bridge-corrections</code> (all panel events at t = 0)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="chap" id="ch-physics" data-ch="physics">
-    <div class="wrap">
-      <div class="chap-row"><span class="chap-n">03</span><h2 class="chap-t">Physics</h2></div>
-      
-    </div>
-  </div>
-  <section class="fs" id="physics-ring" aria-labelledby="physics-ring-h" data-ch="physics">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">3.1 · Physics<span class="tag ">calibration</span></p>
-          <h2 id="physics-ring-h">Physics I: a delayed ring, measured vs theory</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-delay-ring"><div class="anim-stage" role="img" aria-label="A ring of 64 bobbing spheres exchanges delayed beads along links; the ring&#x27;s mean follows the drive with a lag, and measured points lie on the analytic curve."></div><figcaption>Delay forces the state to carry history; measurement matches theory.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">64 sites on a ring, each coupled to four neighbours with delay τ, are driven by a sine. The retained state must include the history. Over 13 delays, measured amplitude and phase stayed within 2.51×10⁻³ (relative) and 0.74° of theory: <b>a calibration of the measurement</b>.</p><div class="math tex2jax_process"><div class="eq">\[\dot c_i(t)=-a\,c_i(t)+\frac{K}{4}\sum_{j\in N_i}c_j(t-\tau)+F\cos(\Omega t)+\sigma\xi_i(t)\]</div><div class="eq">\[\hat Z=\frac{2}{T_{\rm win}}\int_{\rm window} m(t)\,e^{-i\Omega t}\,dt\]</div><div class="eq">\[m(t)=\tfrac{1}{64}\textstyle\sum_i c_i(t)\]</div></div><p class="zh" lang="zh">64 个位点的环，每个与 4 个邻居以延迟 τ 耦合，受正弦驱动，保留状态必须包含历史。13 个延迟上，测得的幅度和相位与解析解相差不超过 2.51×10⁻³（相对）和 0.74°。这是对测量本身的校准。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 121–145, 199–202, table rows 230–231</li><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 140–141; <code>appendix/physical_measurements.tex</code> 25–30 (a = 1, K = 0.40, F = 0.25, Ω = 0.35, σ = 0.015, τ ∈ [0.43, 0.46])</li><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 216–219 (maxima of 100-seed means over 13 delays, including finite-window estimator bias)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="physics-flock" aria-labelledby="physics-flock-h" data-ch="physics">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">3.2 · Physics</p>
-          <h2 id="physics-flock-h">Physics II: two flock readouts fail apart</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-flock-readouts"><div class="anim-stage" role="img" aria-label="As noise rises, arrows in a box spread their headings. The share inside a 30° wedge drops below half well before the mean-heading arrow does."></div><figcaption>Headings broaden: the 30° count fails before the mean direction.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">256 particles align with neighbours and a field while angular noise η rises. Alignment within 30° of the field is first below one half at η = 0.35, polarization only at 0.60. Alignment fell first at all three tested tolerances; <b>the readouts are not nested</b>.</p><div class="math tex2jax_process"><div class="eq">\[\theta_i(t+1)=\operatorname{Arg}\Big(\sum_{j\in N_i}e^{i\theta_j(t)}+h\,e^{i\theta_{\hat e}}\Big)+\eta\,\xi_i(t)\]</div><div class="eq">\[P_f=\Big\langle\Big|\tfrac{1}{256}\sum_i e^{i\theta_i}\Big|\Big\rangle\]</div><div class="eq">\[Q_f=\big\langle\text{share with }|\theta_i-\theta_{\hat e}|\le 30^\circ\big\rangle\]</div></div><p class="zh" lang="zh">256 个粒子与邻居和外场对齐，角噪声 η 逐渐升高。30° 以内的对齐比例在 η=0.35 首次低于一半，极化到 0.60 才低于一半。三种测试容差下都是对齐先跌；两个读出不是嵌套的。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 274–321, 349–353</li><li>Paper (8f8c7780) · <code>sections/physics.tex</code> 279–284 (N = 256, box L = 8, field h = 0.6 at 0°)</li><li>Paper (8f8c7780) · <code>appendix/physical_measurements.tex</code> 328–332 (tolerances 20°/30°/45° give 0.25/0.35/0.50 against 0.60 for polarization; the order can reverse near 45.5°)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="chap" id="ch-ai" data-ch="ai">
-    <div class="wrap">
-      <div class="chap-row"><span class="chap-n">04</span><h2 class="chap-t">AI workflows</h2></div>
-      <ol class="flow"><li><a href="#ai-question">Question</a></li><li><a href="#ai-graph">Event graph</a></li><li><a href="#ai-state">Retained state</a></li><li><a href="#ai-response">Response</a></li></ol>
-    </div>
-  </div>
-  <section class="fs" id="ai-question" aria-labelledby="ai-question-h" data-ch="ai">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">4.1 · AI workflows</p>
-          <h2 id="ai-question-h">AI step 1: write the question down</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-ai-question"><div class="anim-stage" role="img" aria-label="A written question becomes a gauge with a threshold and two bands. A locked answer key is opened only after the needle stops, to stamp the result."></div><figcaption>Question and boundary first; the key only grades afterwards.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">First declare the <span class="term" data-term="observer">observer</span>: what is read, which answers are allowed, and the boundary. ‘Still works’ = an allowed answer cleared the bar; ‘exactly right’ = it matches the key. <b>The key grades only after the readout and never enters the evidence.</b></p><div class="math tex2jax_process"><div class="eq">\[\text{call}=\begin{cases}\arg\max_a S_a &amp; \max_a S_a\ge\theta\\ \text{no call} &amp; \text{otherwise}\end{cases}\]</div><div class="eq">\[P_f=\mathbb 1[\text{call made}]\]</div><div class="eq">\[Q_f=\mathbb 1[\text{call}=a^{\ast}]\]</div><div class="eq">\[r_f=Q_f/P_f\]</div></div><p class="zh" lang="zh">先写下观察者：读什么、允许哪些答案、边界在哪里。“还能用”是有答案过了门槛，“完全正确”是答案与答案标准一致。答案标准只在读出之后打分，从不进入证据。</p><details class="src"><summary>Sources</summary><ul><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 925–975 (the best action is the call if it clears the threshold, otherwise no call), 978–998 (verify: P_f, Q_f, r_f)</li><li>teddy_mm · <code>bridge_anm/schemas/cite_lineage_finite_field_v0.json</code> 51–74 (no-leakage rule), 93–102 (observables, verifier)</li><li>Paper (8f8c7780) · <code>appendix/history_decision.tex</code> 11–29</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="ai-graph" aria-labelledby="ai-graph-h" data-ch="ai">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">4.2 · AI workflows</p>
-          <h2 id="ai-graph-h">AI step 2: build the typed event graph</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-event-graph"><div class="anim-stage" role="img" aria-label="Log records pass through a schema gate, become coloured event spheres linked to answer rings, and pulses spread step by step until one answer rises above a threshold plane."></div><figcaption>Records pass a schema, become typed pulses, spread to answers.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Each record becomes a <b>typed event</b> (time, target answer, type, sign, value, provenance), admitted, repaired or rejected by a schema. Event nodes link to answer nodes; fixed updates retain and spread values at each step, and a separate model or program reads the resulting state. In the paper’s words, these graph dynamics are “prescribed and open-loop, without readout feedback”. States are specified from outside; no live multi-agent claim.</p><div class="math tex2jax_process"><div class="eq">\[s&#x27;=\rho\,s_t+\beta\,b_t\]</div><div class="eq">\[s_{t+1}=(I+\kappa W^{\top})\,s&#x27;\]</div><div class="eq">\[b_t[e]=\begin{cases}+v_e&amp;\text{support}\\-v_e&amp;\text{contradiction}\\+0.25\,v_e&amp;\text{uncertainty reduction}\end{cases}\]</div><div class="eq">\[W_{e\to a}=1,\ W_{a\to e}=0.15\]</div></div><p class="zh" lang="zh">每条记录变成一个类型化事件（时间、目标答案、类型、符号、数值、来源），由模式接收、修复或拒绝。事件节点连到答案节点；固定的更新规则每一步保留一部分值并沿边扩散，再由另一个模型或程序读取所得状态。论文原文说这些图动力学 “prescribed and open-loop, without readout feedback”（预先规定、开环，读出不反馈）。状态由外部指定，不声称是在线多智能体形成的状态。</p><details class="src"><summary>Sources</summary><ul><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 220–227 (signed amplitude), 234–353 (schema: admitted / repaired / rejected), 818–848 (graph weights), 851–900 (linear update)</li><li>Paper (8f8c7780) · <code>sections/ai_evidence.tex</code> 4–17 (a model extracts events, a numerical graph retains them, separate model calls read a table derived from its state), 91–92 (“The dynamics are prescribed and open-loop, without readout feedback”); <code>sections/cross_domain.tex</code> 64–68; <code>sections/introduction.tex</code> 39–46</li><li>Paper (8f8c7780) · <code>sections/ai_evidence.tex</code> 62–75 (the graph study uses its own settings: α = 0.72, β = 0.45, four updates)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="ai-state" aria-labelledby="ai-state-h" data-ch="ai">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">4.3 · AI workflows</p>
-          <h2 id="ai-state-h">AI step 3: test candidate states, then select one</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-sufficiency-delay"><div class="anim-stage" role="img" aria-label="Two value curves differ in the past, meet at the present, then diverge; keeping the last τ of history as the state tells them apart."></div><figcaption>Same present, different past: the present value is not enough.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">The retained state is a <span class="term" data-term="candidate">candidate</span> declared before the run; its choice is an experimental hypothesis, not established sufficiency. It is enough only if <b>equal states always give equal readouts</b>. With delay, two histories with the same present value but different pasts evolve differently, so the present value is not enough. A same-state violation shows what the state must separate.</p><p class="fs-p"><b>For a declared observer the responses also select the state.</b> Fix the readout, the pushes and the window. A candidate is rejected when identical states give resolved differences in output distributions. Then, within a candidate set declared in advance, the candidates with no observed same-state violation are kept, the one with the fewest states is selected, and it is fixed and validated on new comparisons. In the paper’s exact construction this gives the coarsest sufficient representation, 2 states. <b>Limits:</b> the candidate set is given, so this selects rather than discovers new variables, and such tests “constrain adequacy without uniquely identifying a missing variable”.</p><p class="fs-p"><b>A model-based instance.</b> The v2 draft has one model-based instance of this test, with the downstream model and its interface fixed. On recipient A only, 768 new calls (512 base + 256 control) reject a snapshot description: histories with the same snapshot but opposite routing differ by at least 0.8358 (largest probability difference). An association description chosen from declared candidates gets bounded support on four new histories and two continuation combinations: at most 0.0821, below the fixed margin 0.15. The broader development screen selected none, and the recipient-A scope was chosen after it. All 768 answers matched the reference, so support there coincides with the model answering correctly (our observation). The model is unchanged: this supports the analyst’s description, not a repair of the model.</p><p class="fs-p"><b>The inverse loop, in the paper’s words.</b> “Exactly equal retained states give a readout difference beyond measurement error” → “Reject sufficiency for these histories under the declared conditions” → “Separate the violating histories in a revised representation; test it with system and interface unchanged”. “Selection is within a supplied library, not discovery of a unique hidden variable”. In its broader development comparison “No candidate qualifies”; the restricted follow-up then gives each candidate its own outcome: the snapshot descriptions have rejected comparisons, every association-matched comparison has an upper bound below the margin, and “Full history has no matched-history comparison and remains uninformative”.</p><p class="fs-p"><b>On TEDDY: E7 (registered, final).</b> We registered the same three steps at TEDDY’s layer-11 cut, with the downstream component fixed (TEDDY’s layer 12, gene-mean pooling and our frozen head) and the same kind of rule (keep a candidate whose development differences stay within the tolerance; take the smallest); the third was not reached. The histories are exact <span class="term" data-term="meanpatch">mean-preserving state interventions</span>. The declared library holds the layer-11 gene-mean, the gene-mean plus the six marker genes’ token states, and all token states. In the paper’s terms, the outcome is a rejection, as for its snapshot descriptions, together with a development comparison in which no candidate qualifies. Histories with the same layer-11 gene-mean gave readouts that differ beyond the tolerance on fresh site4 comparisons (median 0.125 [0.090, 0.161] of the measured NK–T gap, tolerance 0.05), and the marker-token augmentation was rejected too (0.122). No candidate passed in development, so <b>no revised representation was validated</b>. <a href="#teddy-e7">E7 →</a></p><div class="math tex2jax_process"><div class="eq">\[\mathsf z_T(u_1)=\mathsf z_T(u_2)\ \Longrightarrow\ \mathsf o_T(u_1)=\mathsf o_T(u_2)\]</div><div class="eq">\[\ker\mathcal K_{z,T}\subseteq\ker\mathcal K_{O,T}\iff\mathcal K_{O,T}=\mathcal H\,\mathcal K_{z,T}\]</div><div class="eq">\[\dot x(t)=-a\,x(t)-k\,x(t-\tau)+u(t)\]</div></div><p class="zh" lang="zh">保留状态是运行前声明的候选坐标，声明本身是实验假设，不等于充分。候选状态只有在“同一状态必给同一读出”时才够用。有延迟时，当前值相同但过去不同的两段历史会走向不同结果，所以只看当前值不够。一旦出现“同状态、不同读出”，就知道状态必须区分什么。</p><p class="zh" lang="zh">声明观测者之后，同样的响应还能选择保留状态：固定读出、推动和时间窗；同一状态下输出分布有可分辨差异的候选被否决；在事先声明的候选集合里，保留没有违例的候选，选出状态数最少的那个，固定后用新的比较验证。论文的精确构造由此得到最粗的充分表示，2 个状态。局限：候选集合是给定的，所以这是选择而不是发现新变量；这些检验“只约束充分性，不唯一确定缺失的变量”。</p><p class="zh" lang="zh">基于模型的实例：v2 草稿中有一项基于模型的此类检验，下游模型及其接口固定。仅针对接收者 A，768 次新调用（512 次基础 + 256 次对照）否决了快照描述：快照相同、路由相反的历史，最大概率差至少 0.8358。从声明候选中选出的关联描述，在四个新历史和两个后续组合上获得有界支持：至多 0.0821，低于固定容差 0.15。较广的开发筛选未选出任何候选，“仅接收者 A” 的范围在那之后确定。768 个回答全部答对，所以那里的“支持”与模型答对重合（我们的观察）。模型不变，支持的是分析者的描述，不是对模型的修复。</p><p class="zh" lang="zh">论文对逆向闭环的表述：若“完全相同的保留状态给出超出测量误差的读出差异”，就“在声明条件下否决这些历史的充分性”，再“用修订后的表示区分违反的历史，并在系统与接口不变的情况下检验”；选择只在给定的候选库内进行，不是发现唯一的隐藏变量；较广的开发比较中“没有候选合格”，限定后的后续比较再对每个候选分别给出结果：快照类描述有被否决的比较，每个关联匹配比较的上界都低于容差，全历史没有匹配历史的比较、无信息。TEDDY 上的 E7（预注册，已完成）在第 11 层切点、下游组件固定时按这三步、用同类规则（开发阶段差异不超过容差的候选保留，取最小者）预注册（第三步未进行）：历史是精确的保均值状态干预；gene-mean 在新的 site4 比较上被否决（中位差异 0.125 [0.090, 0.161]，容差 0.05），加六个标记基因 token 状态的候选也被否决（0.122）；开发阶段没有候选通过，因此没有验证任何修订后的表示。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 3–14, 157–191</li><li>Paper (8f8c7780) · <code>abstract.tex</code> 7–9 (resolved readout differences at the same assigned state constrain the representation); <code>sections/introduction.tex</code> 23 (the choice of representation is an experimental hypothesis), 34–35 (tests constrain adequacy without uniquely identifying a missing variable), 95–96 (the exact routing construction identifies a sufficient association state); <code>sections/worked_example.tex</code> 4–11 (select a revision from a specified candidate set, check it on new deterministic executions), 74 (the coarsest sufficient representation has two states), 110–112 (no observed same-state violation, fewest states)</li><li>teddy_mm · <code>registration/addenda/E7.json</code> (selection rule: the minimal retained candidate, ties by declared order)</li><li>Paper (8f8c7780) · <code>appendix/theory.tex</code> 72–156 (retained-state criterion; delayed-history example 128–132), 189–199 (inverse use); <code>sections/physics.tex</code> 59–72 (a present-value description omits a delayed response)</li><li>Paper (8f8c7780) · <code>sections/inverse_model.tex</code> 3–10 (fixed downstream model; refinement changes only the description being tested), 42–48 (broader development comparison: no candidate qualifies), 53–56 (recipient A, chosen after the broader development observations), 68–78 (four new histories, two continuation combinations, 768 new calls), 138–150 (512/512 base and 256/256 control answers match the reference; bounds 0.0821 and 0.8358; margin 0.15), 152–158 (separate outcome per candidate), 160–165 (recipient A only; selection within a supplied library); <code>sections/protocol.tex</code> 240–243 (the inverse-loop row); <code>sections/introduction.tex</code> 96–98 (support for a recipient-specific readout selected after a broader comparison supported no candidate)</li><li>teddy_mm · <code>docs/reports/V3_REGISTERED_RESULTS.md</code> § E7; numbers in <code>docs/reports/v3_numbers.json</code> (keys <code>E7.*</code>)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="ai-response" aria-labelledby="ai-response-h" data-ch="ai">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">4.4 · AI workflows</p>
-          <h2 id="ai-response-h">AI step 4: measure the response</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-measure-contrast"><div class="anim-stage" role="img" aria-label="An event value is pushed by a full step and a half step. Separate meters show the state and readout changes, and the slope rods agree in only a few directions."></div><figcaption>State and readout measured apart; halving the push tests linearity.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Push one event’s value up and down by ε, then by ε/2, and measure how far the state moved and how far the readout moved, <b>separately</b>. In the graph study, fresh model readouts changed in 9 of 12 directions; only 2 passed the step-halving check. The paper’s words: “Thus imposed state motion need not yield a resolved or step-consistent model response”; its graph dynamics are “prescribed and open-loop, without readout feedback”. What ANM outputs here is the response chain: which pushes move the state and which move the readout. That the readout change passes through the state is not established: “the dashed state-to-readout relation is a hypothesis, not an established causal path” (PR #16).</p><div class="math tex2jax_process"><div class="eq">\[\Delta z_d(T)=z_{d,+}(T)-z_{d,-}(T)\]</div><div class="eq">\[\hat g_d(\varepsilon)=\frac{s_{d,+}-s_{d,-}}{2\varepsilon}\]</div><div class="eq">\[\frac{|\hat g_d(\varepsilon)-\hat g_d(\varepsilon/2)|}{\max\{|\hat g_d(\varepsilon)|,|\hat g_d(\varepsilon/2)|\}}\le 0.25\]</div></div><p class="zh" lang="zh">把一个事件的值上下各推 ε，再推 ε/2，分别测状态移动了多少、读出移动了多少。在图研究中，新鲜模型读出在 12 个方向里有 9 个发生变化，只有 2 个通过步长减半检验。论文原文：“Thus imposed state motion need not yield a resolved or step-consistent model response”（强加的状态移动不一定带来可分辨、步长一致的模型响应）；其图动力学 “prescribed and open-loop, without readout feedback”（预先规定、开环，读出不反馈）。ANM 在这里输出的是响应链：哪些推动让状态动、哪些让读出动；读出的变化是否经由状态传递，论文没有证明（PR #16：状态到读出的虚线关系是假设，不是已确立的因果路径）。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>sections/ai_evidence.tex</code> 127–165 (state change 12/12, readout change 9/12, slope agreement 2/12: 154–158; quoted sentence 159–160), 91–92 (open-loop)</li><li>Paper (8f8c7780) · <code>appendix/empirical.tex</code> 143–145, 182–199 (ε = 0.1 on baseline 0.5, ε/2 = 0.05; 25% tolerance)</li><li>Paper (8f8c7780) · <code>appendix/theory.tex</code> 158–163</li><li>Paper (8f8c7780) · <code>sections/introduction.tex</code> 121–122; <code>sections/protocol.tex</code> 122</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="ai-inventory" aria-labelledby="ai-inventory-h" data-ch="ai">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">4.5 · AI workflows<span class="tag warn">exploratory</span></p>
-          <h2 id="ai-inventory-h">AI case: a missing response, restored</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-inventory-join"><div class="anim-stage" role="img" aria-label="Swapping two warehouses should change the answer from 14 to 9, but the model stays at 9 until each request card is joined to its return token. Three controls stay at 9."></div><figcaption>Joining each request to its return restored the missing 14→9.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Swapping two requests’ warehouses should move the answer 14→9; the model stayed 9→9. A request–return join, fixed in advance, restored 14→9; three controls stayed 9→9. Exploratory, one known case; calibration missed (21/24 vs 22/24); ordinary diagnosis picks the same join.</p><div class="math tex2jax_process"><div class="eq">\[z_P=(\text{ALB-C},\ 10\text{ units},\ \text{rev }7):\ \text{unchanged by the swap}\]</div><div class="eq">\[z_H=(z_P,\ \text{requests A–C}):\ \text{changes}\]</div><div class="eq">\[\text{required }\Delta=9-14=-5\]</div></div><p class="zh" lang="zh">交换两个请求的仓库，答案应从 14 变成 9，模型却一直是 9→9。按事先固定的规则把每个请求与它的返回结果连接起来后，恢复为 14→9；三个对照仍是 9→9。这是探索性结果：一个已知案例，校准未达标（21/24 对 22/24），普通诊断也会选同一个连接。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>appendix/history_decision.tex</code> 23–29 (case 3: 14→9)</li><li>Paper (8f8c7780) · <code>appendix/history_decision.tex</code> 31–43 (calibration 21/24, below the fixed 22/24; ordinary and response-based diagnostics select the same join), 65–96 (paired follow-up)</li><li>Paper (8f8c7780) · <code>sections/discussion.tex</code> 70–76 (exploratory; ordinary diagnosis selects the same operation)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="chap" id="ch-teddy" data-ch="teddy">
-    <div class="wrap">
-      <div class="chap-row"><span class="chap-n">05</span><h2 class="chap-t">TEDDY</h2></div>
-      <ol class="flow"><li><a href="#teddy-pipeline">TEDDY embeds</a></li><li><a href="#teddy-pipeline">our head predicts</a></li><li><a href="#teddy-steps">ANM’s engine decides</a></li><li><a href="#teddy-steps">measured grades</a></li></ol>
-    </div>
-  </div>
-  <section class="fs flip" id="teddy-pipeline" aria-labelledby="teddy-pipeline-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.1 · TEDDY<span class="tag rerun term" data-term="rerun">official rerun</span></p>
-          <h2 id="teddy-pipeline-h">TEDDY embeds, our head predicts, ANM’s engine decides</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-teddy-pipeline"><div class="anim-stage" role="img" aria-label="A cell&#x27;s RNA passes through frozen TEDDY into a 512-bead embedding. Our small head then predicts 134 proteins, 9 of which feed ANM&#x27;s call, and measured protein only grades at the end."></div><figcaption>TEDDY embeds; our head predicts proteins; ANM’s engine decides; measured grades.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Each <span class="term" data-term="citeseq">CITE-seq</span> cell’s RNA goes through frozen <span class="term" data-term="teddy">TEDDY-G 70M</span>, an RNA model, giving a 512-number embedding. <span class="term" data-term="head">Our own small head</span>, trained on training sites’ measured proteins, predicts 134 surface proteins (held-out <span class="term" data-term="site4">site4</span> mean Pearson 0.603). ANM reads 9 of them (v2; the registered v3 tests read 12, three each for B, T, NK and myeloid, chosen on validation, and divide each prediction by the training 95th percentile of the head’s own predictions, so no measured protein enters the evidence). Measured protein only grades. Numbers come from the official TEDDY-G preprocessing (counts / total × 10⁴, divided by TEDDY’s gene medians, top 2,048 rank tokens, mean over gene tokens); the earlier non-official preprocessing gave the same phase-1 Pearson.</p><div class="panel9" role="group" aria-label="The 9 panel proteins ANM reads"><span class="pl b"><i></i>B</span><em>CD19</em><em>CD72</em><em>CD22</em><span class="pl t"><i></i>T</span><em>CD3</em><em>CD2</em><em>CD5</em><span class="pl m"><i></i>Myeloid</span><em>CD16</em><em>CD11c</em><em>CD36</em></div><div class="math tex2jax_process"><div class="eq">\[z=\operatorname{mean}_{\text{real tokens}}\,h_{12}(x_{\rm RNA})\in\mathbb R^{512}\]</div><div class="eq">\[(\mu,\theta)=\mathrm{Dec}_{\rm NB}\big(\mathrm{MLP}(z),\ \mathrm{sf}\big)\]</div><div class="eq">\[\hat y=\mu\in\mathbb R^{134}\]</div><div class="eq">\[\mathrm{sf}=0.92663\]</div></div><p class="zh" lang="zh">每个 CITE-seq 细胞的 RNA 经过冻结的 TEDDY-G 70M（一个 RNA 模型）得到 512 维嵌入。我们自己训练的小 head 用训练 site 的实测蛋白学习，预测 134 个表面蛋白（留出 site4 平均 Pearson 0.603）。ANM 只读其中 9 个（v2；v3 为 12 个，证据中不含实测蛋白），实测蛋白只用来打分。TEDDY 本身不预测蛋白。数字来自 TEDDY-G 官方预处理（计数/总数×10⁴、除以 TEDDY 基因中位数、取前 2,048 个基因排序 token、基因 token 平均）；此前的非官方预处理给出相同的 phase-1 Pearson。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>scripts/03_embed_rna.py</code> 42–53 (total-count scaling to 1e4, rank encoding, frozen TEDDY forward)</li><li>teddy_mm · <code>teddy_mm/teddy_encoder.py</code> 32–37 (mean over real tokens), 68–90 (rank encoding)</li><li>teddy_mm · <code>scripts/04_train.py</code> 91–135 (MLP + negative-binomial decoder; flow-matching variant)</li><li>teddy_mm · <code>bridge_anm/lib/lineage_panels.py</code> 63–72 (the 9 panel proteins)</li><li>Overview page · size factor 0.92663; test Pearson 0.603 (MLP)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="teddy-steps" aria-labelledby="teddy-steps-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.2 · TEDDY</p>
-          <h2 id="teddy-steps-h">The same four steps on TEDDY’s workflow</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-teddy-steps"><div class="anim-stage" role="img" aria-label="Four pedestals turn the generic protocol icons into TEDDY&#x27;s pieces: a written lineage question, nine predicted markers entering together, TEDDY&#x27;s embedding, and a call graded by measured protein."></div><figcaption>Question, sources, state, readout: the same steps on TEDDY.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <dl class="four"><div><dt>Question</dt><dd>a written lineage question (<span class="term" data-term="soft">soft</span>, <span class="term" data-term="strict">strict</span> or <span class="term" data-term="btprio">B/T-priority</span> in v2; Q1, Q2, Q3 on five classes in v3).</dd></div><div><dt>Sources</dt><dd>the head-predicted panel proteins (9 in v2, 12 in v3), all entering at t = 0.</dd></div><div><dt>Retained state</dt><dd>a <span class="term" data-term="candidate">declared candidate</span>: TEDDY’s gene-mean embedding, tested rather than assumed sufficient (v3 E5-M: inconclusive for the one observer tested; E7 ran the reject → select → validate test at the layer-11 cut and selected nothing). <span class="term" data-term="modeb">Mode B</span> works on the head’s outputs; <span class="term" data-term="modea">Mode A</span> steps through TEDDY’s layers (v3 E5).</dd></div><div><dt>Readout</dt><dd>call or no call, graded by measured protein.</dd></div></dl><p class="zh" lang="zh">问题：写下的谱系问题（v2 为宽松、严格、B/T 优先；v3 为五类上的 Q1、Q2、Q3）。源：head 预测的面板蛋白（v2 为 9 个，v3 为 12 个），都在 t = 0 进入。保留状态：声明的候选状态，即 TEDDY 的基因均值嵌入，需要检验而非假定充分（v3 E5-M：对所测的一个观察者判定为不确定；E7 在第 11 层切点运行了“否决 → 选择 → 验证”检验，什么也没选出）；Mode B 作用在 head 的输出上，Mode A 以 TEDDY 的层为步（v3 E5）。读出：判或不判，由实测蛋白打分。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>bridge_anm/lib/lineage_panels.py</code> 1–72, branch <code>fix/anm-bridge-corrections</code> (one scoring function for the three questions)</li><li>teddy_mm · <code>bridge_anm/export_cite_events.py</code> 36–47 (all panel events at t = 0)</li><li>teddy_mm · <code>bridge_anm/schemas/cite_lineage_finite_field_v0.json</code> 84–92 (finite_graph_scalar, 4 steps, retention 0.82, diffusion 0.16, bar 0.12)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="teddy-same-calls" aria-labelledby="teddy-same-calls-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.3 · TEDDY<span class="tag v3">confirmed in v3 E1</span></p>
-          <h2 id="teddy-same-calls-h">Finding: ANM’s calls equal the fixed rule</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-teddy-same-calls"><div class="anim-stage" role="img" aria-label="ANM&#x27;s lineage bars are the fixed rule&#x27;s bars scaled by one constant, and the threshold is scaled the same way, so all 16,750 cells land in the same bins under every question."></div><figcaption>One constant apart: same ranking, same bar, same call.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">All nine markers enter at once into a linear graph with uncoupled lineages, so each ANM score is a fixed multiple of the <span class="term" data-term="fixedrule">rule</span>’s. On all 16,750 held-out cells and three questions, <b>calls are identical</b>: a check that the engine computes the rule, not better accuracy.</p><p class="sup"><b>v3 · registered</b>The same holds on the 11,294 unseen-donor test cells and the three v3 questions: 0 mismatches (E1.1a), with G(3) = 0.370041 the field’s gain for a class with 3 events. None of ANM’s readouts (top action score, closure readout, leave-one-out) beat TEDDY’s margin, the mean rule or a trained classifier, and a classifier trained on the old question’s labels answered a new question better than the zero-label rule (−0.078 [−0.134, −0.028], loss). On 40,000 external PBMC cells (E6; RNA possibly seen by TEDDY in pretraining) the engine again made the declared rule’s call in every donor. <a href="index.html#v3-e1">E1 →</a> · <a href="index.html#v3-e6">E6 →</a></p><div class="math tex2jax_process"><div class="eq">\[S^{\rm ANM}_l=G\,c\,S^{\rm rule}_l\]</div><div class="eq">\[S^{\rm rule}_l=\frac{1}{c}\sum_{p\in l}\tilde w_p\,v_p\]</div><div class="eq">\[\theta^{\rm ANM}=G\,c\,\theta^{\rm rule}\ \Rightarrow\ \text{same call}\]</div></div><p class="zh" lang="zh">九个标记同时进入一个线性、谱系之间互不耦合的图，所以 ANM 的分数正好是规则分数的固定倍数。在 16,750 个留出细胞、三个问题上，判定完全相同：这只是核对引擎算的就是规则，不是更高的准确率。v3 在 11,294 个未见供体细胞上再次确认（0 不一致），且 ANM 的读出均未胜过 TEDDY 的分数差或训练分类器；E6 在外部 PBMC 数据的每个供体上同样 0 不一致。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>bridge_anm/lib/lineage_panels.py</code> 12–47 (shared scoring), 453–487 (field gain G; ANM bar = G·c·rule bar), branch <code>fix/anm-bridge-corrections</code></li><li>ANM · <code>active_neural_matter/field/finite_field_runner.py</code> 851–900 (linear update)</li><li>Overview page · 16,750 cells, all three questions, identical calls</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="teddy-nkt" aria-labelledby="teddy-nkt-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.4 · TEDDY<span class="tag rerun term" data-term="rerun">official rerun</span><span class="tag warn">superseded by v3 E3</span></p>
-          <h2 id="teddy-nkt-h">Finding: NK and T nearly merge</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-nkt-compression"><div class="anim-stage" role="img" aria-label="An NK and a T cell almost touch in the embedding. Our head&#x27;s predicted CD3 gap is a compressed spring next to the measured gap, while random distant pairs are not compressed. A fork asks whether the embedding or the head is responsible."></div><figcaption>v2 prototype: nearly merged cells, right direction, squeezed gap; an MLP probe on the same embedding kept more of it.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">v2 prototype of a sufficiency test, with TEDDY’s embedding as the declared candidate state: for 453 NK–T pairs that TEDDY’s embedding nearly merges, our head’s predicted gaps are <b>a quarter to a third of the measured ones</b> (CD335 0.88), right in direction. Random NK–T pairs: 0.8–1.5. Lost in the embedding, or unused by our head? <span class="term" data-term="modea">Mode A</span> probes on the frozen embedding: a linear probe keeps about as much as our head, but an MLP probe keeps about twice as much for CD56, CD94 and CD3, and gene-token states keep more than the gene-mean. v2 read this as: part of the loss is in our head’s readout and in mean pooling; part may not be in the detected RNA.</p><p class="sup"><b>Superseded by v3 E3</b>The registered test rejected “the NK–T loss is in the readout or pooling and is repairable on frozen TEDDY”: a layer-mean MLP (R1) and attention pooling over layer-12 gene tokens (R2) both told NK from T less accurately than our head (−0.0409 and −0.1925 at coverage 0.9, losses). On 253 within-donor pairs the head’s gap ratio is 0.1169 on flagged vs 0.3985 on unflagged pairs, with overlapping intervals and mostly from gdT CD158b+ pairs in the donor with the weak answer key; without them 0.4729 vs 0.5137. <a href="#teddy-e5m">E5-M</a> then tested the gene-mean against a token observer: inconclusive, for that one observer. <a href="index.html#v3-e3">E3 →</a></p><div class="math tex2jax_process"><div class="eq">\[\|\widehat{\Delta O}\|\le L_h\,\varepsilon_z+\varepsilon_O\]</div><p class="math-note">near-matched states: a violation rejects the readout class, here our head, not the state alone</p></div><p class="zh" lang="zh">充分性检验：在 TEDDY 嵌入里几乎重合的 453 对 NK–T 细胞中，我们的 head 预测的差距方向正确，但只有实测差距的四分之一到三分之一（CD335 为 0.88）；随机 NK–T 对为 0.8–1.5。是嵌入丢了差别，还是 head 没用上？冻结嵌入上的 Mode A 探针：线性探针保留的与 head 相当，但 MLP 探针对 CD56、CD94、CD3 约保留两倍，基因 token 状态又比基因平均保留更多。v2 的解读是：一部分损失在 head 的读出和平均池化，一部分可能不在检出的 RNA 里。v3 E3（预注册）拒绝了“损失位于读出/池化并可在冻结 TEDDY 上修复”：两种读出的 NK/T 准确率均不如 head；头部在近邻配对上压缩更甚只是描述性结果。</p><details class="src"><summary>Sources</summary><ul><li>Paper (8f8c7780) · <code>appendix/theory.tex</code> 172–187 (approximate match and sensitivity bound); <code>sections/protocol.tex</code> 196–209, 245–248</li><li>Overview page · Look-alike cells (453 pairs; ratios CD3 0.27, CD56 0.24, CD94 0.31, CD335 0.88; random non-neighbour pairs 0.8–1.5)</li><li>teddy_mm · <code>outputs/mode_a_official/mode_a_results.json</code> (linear layer probes on the same pairs; head reference), <code>mode_a_nonlinear_results.json</code> (MLP / kNN), <code>token/mode_a_token_results.json</code> (token level)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="teddy-depth" aria-labelledby="teddy-depth-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.5 · TEDDY<span class="tag warn">prototype</span><span class="tag rerun term" data-term="rerun">official rerun</span></p>
-          <h2 id="teddy-depth-h">Finding: a response to sequencing depth</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-depth-thinning"><div class="anim-stage" role="img" aria-label="A cell&#x27;s RNA dots are thinned down to 5 percent. The embedding and predicted markers wobble, and Pearson and lineage accuracy fall modestly from full depth to 5 percent."></div><figcaption>Fewer reads in: a graceful decline on validation cells (v2 prototype), steeper on unseen donors (v3 E2).</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">Push the source down: keep a fraction of each cell’s RNA counts, re-embed, and follow it to the call. At 5% of counts, panel-protein Pearson falls 0.936 → 0.855 and lineage accuracy 0.983 → 0.959 on 1,500 validation cells (prototype): <b>a graceful decline</b>, gentler than with the earlier preprocessing (0.805 and 0.917 at 5%).</p><p class="sup"><b>v3 E2 · unseen donors</b>On the five-class key the decline is steeper: decision accuracy falls by 0.022 with 80% of UMIs kept, 0.162 with 20% and 0.140 with 5% (baseline 0.716). See <a href="#teddy-e2">5.6</a>.</p><div class="math tex2jax_process"><div class="eq">\[x^{(f)}_g\sim\mathrm{Binomial}(x_g,\,f)\]</div><div class="eq">\[f\in\{1,\ 0.5,\ 0.2,\ 0.1,\ 0.05\}\]</div></div><p class="zh" lang="zh">把源往下推：只保留每个细胞一部分 RNA 计数，重新嵌入，一直跟到判定。保留 5% 计数时，面板蛋白 Pearson 从 0.936 降到 0.855，谱系准确率从 0.983 降到 0.959（1,500 个验证细胞，原型）：下降平缓，比此前的预处理（5% 时为 0.805 和 0.917）更稳。v3 E2 在未见供体、五类答案键上下降更明显：保留 20% 时决策准确率下降 0.162。</p><details class="src"><summary>Sources</summary><ul><li>Overview page · Experiment 2 redesign prototype (5% of counts, median 305 UMIs; 1,500 validation cells, donor 18303; held-out site not used). Experiment 2 itself stays withdrawn.</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="teddy-e2" aria-labelledby="teddy-e2-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.6 · TEDDY<span class="tag v3">v3 E2 · registered · final</span></p>
-          <h2 id="teddy-e2-h">E2: push the RNA, follow it to the call</h2>
-        </header>
-        <div class="fs-fig">
-          <div class="fw-res">
-            <p class="rk">Test cells, primary key · decision-accuracy loss [95% CI]</p>
-            <table>
-              <thead><tr><th scope="col">Push</th><th scope="col">Loss</th><th scope="col">Lost calls: representation / head / decision</th></tr></thead>
-              <tbody>
-                <tr><td>80% of UMIs kept</td><td class="n">0.022<span class="ci">[0.004, 0.042]</span></td><td>0.000 / 1.000 / 0.000 (25)</td></tr>
-                <tr><td>20% kept</td><td class="n">0.162<span class="ci">[0.121, 0.194]</span></td><td>0.069 / 0.931 / 0.000 (112)</td></tr>
-                <tr><td>5% kept</td><td class="n">0.140<span class="ci">[0.112, 0.172]</span></td><td>0.281 / 0.719 / 0.000 (125)</td></tr>
-                <tr><td>one gene masked</td><td class="n">0.012<span class="ci">[0.001, 0.024]</span></td><td>0.000 / 1.000 / 0.000 (20)</td></tr>
-              </tbody>
-            </table>
-            <p class="fn">Criterion (ii): AUROC of the small-ε response minus TEDDY’s margin −0.092 [−0.125, −0.057], <span class="vd loss">loss</span>. Criterion (i): 0 qualifying pairs. Verdict: <b>adds nothing beyond the curve (falsified)</b>.</p>
-          </div>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">The forward question on TEDDY’s workflow: thin each cell’s UMIs or scale one gene among its tokens, re-embed with the official preprocessing, and follow the change through our frozen head and the evidence to the Q1 call (1,000 unseen-donor cells, 23,116 cases; ANM’s engine matched the rule in every case). Each lost call was labelled <b>representation</b> if a probe on the perturbed embedding was wrong, else <b>head</b>, else <b>decision</b>. Registered rule: the split must tell more than the plain accuracy curve. It did not.</p>
-          <p class="fs-p"><b>Nonlinear at the input.</b> TEDDY reads genes as rank tokens, and thinning reorders them, so even small pushes change the input in jumps. The response is not linear at these sizes: at most 0.098 of cells pass the step-halving check at any stage, and the embedding is the least linear stage (median slope ratio 0.667, cosine 0.564 between the ε = 0.1 and ε = 0.05 responses, where linear would give 1 and 1). The rank-token reading is an interpretation, not separately tested.</p>
-          <p class="fs-p"><b>Losses are labelled “head”, partly by construction.</b> Most lost calls are labelled head (0.931 at 20% kept). But the embedding probe is near-perfect on validation (0.9977) and is checked first, so “representation” rarely fires; and no lost call fell below the bar (“decision” 0.000), while coverage rose under thinning (0.961 at 80% kept, 1.000 at 20%). So this does not show that the information is lost in our head.</p>
-          <div class="math tex2jax_process"><div class="eq">\[\rho=\frac{\Delta(\varepsilon)/\varepsilon}{\Delta(\varepsilon/2)/(\varepsilon/2)},\quad \text{linear: } |\rho-1|\le 0.1,\ \cos\ge 0.9\]</div><div class="eq">\[\text{lost call}\to\begin{cases}\text{representation}&amp;\text{probe wrong on } z\\\text{head}&amp;\text{else, rule argmax wrong}\\\text{decision}&amp;\text{else}\end{cases}\]</div></div>
-          <p class="zh" lang="zh">E2（预注册，已证伪）：稀释 RNA 或缩放一个基因，经 TEDDY、head、证据一直跟到判定；按阶段给丢失的判定贴标签，并不比普通的准确率曲线多提供信息。响应在输入端就不是线性的（TEDDY 读取的是基因排序 token）；“头部”占多数部分源于标签顺序的构造。</p>
-          <details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>docs/reports/V3_REGISTERED_RESULTS.md</code> § E2; numbers in <code>docs/reports/v3_numbers.json</code> (keys <code>E2.*</code>)</li><li>teddy_mm · <code>scripts/e2_response_decomposition.py</code>, <code>bridge_anm/lib/e2_response.py</code></li><li>Registration · <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E2.json" target="_blank" rel="noopener">addenda/E2.json</a>, amendments A1.7 and A2.3</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="teddy-e5" aria-labelledby="teddy-e5-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.7 · TEDDY<span class="tag v3">v3 E5 · registered · final</span></p>
-          <h2 id="teddy-e5-h">E5: the NK–T push through TEDDY’s layers</h2>
-        </header>
-        <div class="fs-fig">
-          <div class="fw-res">
-            <p class="rk">Registered gate: finite differences vs JVP</p>
-            <table>
-              <thead><tr><th scope="col">Check</th><th scope="col">Cases</th><th scope="col">Pass share</th></tr></thead>
-              <tbody>
-                <tr><td>float32, ε = 1e-3 (registered)</td><td class="n">2,671</td><td class="n">0.854 <span class="vd fail">&lt; 0.95</span></td></tr>
-                <tr><td>float32, ε = 1e-2</td><td class="n">571</td><td class="n">1.000</td></tr>
-                <tr><td>float64, both ε (secondary)</td><td class="n">79</td><td class="n">1.000</td></tr>
-              </tbody>
-            </table>
-            <p class="fn">Verdict: <b>JVP not validated, E5 stops</b>. Computed anyway: l* = 11 vs the probe’s layer 9 (no agreement within 1 layer); specificity vs random directions 0.115 [−0.007, 0.174], inconclusive. Secondary: an NK − T input push keeps a median 0.285 of its NK–T component by layer 5 and 0.503 at layer 12.</p>
-          </div>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">TEDDY’s layers are a real processing order, so a push can be followed layer by layer (Mode A). E5 pushed each panel or NK/T gene’s input token along its own embedding on 478 unseen-donor cells (7,862 cases), carried the exact first-order change through each of the 12 post-norm layers with <span class="term" data-term="jvp">Jacobian-vector products</span>, and projected it on the training NK-minus-T direction. The registered question: in which layer does the NK–T component shrink most, and is it the layer where a linear NK–T probe’s gap ratio drops most?</p>
-          <p class="fs-p"><b>The registered gate failed in float32; float64 passes.</b> Before any layer is read, finite differences must agree with the JVP in at least 95% of cases. In float32 at ε = 1e-3 they agreed in 0.854; the float64 version of the same check passes in all 79 cases, so the registered verdict attributes the failure to float32 rounding. No amendment adopting the float64 path was committed before site4, so the verdict stands: no layer is localised.</p>
-          <p class="fs-p"><b>Descriptive only:</b> for a push along the training NK − T input direction, the largest single-layer drop of its NK–T component is at layer 2 (median step −0.217 [−0.229, −0.197]); look-alike cells do not damp it more than random NK/T cells, and the head does not pass less of it than the layer-12 state.</p>
-          <div class="math tex2jax_process"><div class="eq">\[\delta h_l=J_l\,\delta h_{l-1},\quad J_l=\partial f_l/\partial h\,\big|_{h_{l-1}}\]</div><div class="eq">\[\text{gate: }\frac{\|\mathrm{FD}_\varepsilon-\mathrm{JVP}\|}{\|\mathrm{JVP}\|}\le 0.05,\ \cos\ge 0.99\ \text{in}\ge 95\%\]</div><div class="eq">\[l^\ast=\arg\min_l\ \mathrm{median}\big(\log|r_l|-\log|r_{l-1}|\big)\]</div></div>
-          <p class="zh" lang="zh">E5（预注册）：沿基因输入 token 推动，用 Jacobian-向量积跟着 TEDDY 的 12 层走，看 NK–T 分量在哪一层收缩最多。注册的有限差分检验在 float32、ε = 1e-3 下通过率 0.854 &lt; 0.95（float64 全部通过），按规则停止，未定位任何层；次要分析仅为描述性。</p>
-          <details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>docs/reports/V3_REGISTERED_RESULTS.md</code> § E5; numbers in <code>docs/reports/v3_numbers.json</code> (keys <code>E5.*</code>)</li><li>teddy_mm · <code>scripts/mode_a_layer_dynamics.py</code> (explicit attention arithmetic for the JVP; fused kernels have no forward-mode derivative)</li><li>Registration · <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E5.json" target="_blank" rel="noopener">addenda/E5.json</a> (deviations: Apple-GPU float32 instead of the CPU)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="teddy-e5m" aria-labelledby="teddy-e5m-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.8 · TEDDY<span class="tag v3">v3 E5-M · registered · final</span></p>
-          <h2 id="teddy-e5m-h">E5-M: is the gene-mean enough for another observer?</h2>
-        </header>
-        <div class="fs-fig">
-          <div class="fw-res">
-            <p class="rk">Registered verdict</p>
-            <p class="big inc">inconclusive</p>
-            <table>
-              <thead><tr><th scope="col">Declared observer · median clamp residual</th><th scope="col">Pair cells</th><th scope="col">Random cells</th></tr></thead>
-              <tbody>
-                <tr><td>O_tok · E3’s frozen R2 on the layer-12 token states (tested)</td><td class="n">0.085<span class="ci">[0.071, 0.096]</span></td><td class="n">0.127<span class="ci">[0.098, 0.142]</span></td></tr>
-                <tr><td>O_rand · random token observer of R2’s form (negative control)</td><td class="n">0.067</td><td class="n">0.068</td></tr>
-                <tr><td>O_head · our head on the gene-mean (positive control)</td><td class="n">0.000</td><td class="n">0.000</td></tr>
-              </tbody>
-            </table>
-            <p class="fn">Δ_tok (pair − random, R2) −0.043 [−0.062, −0.011]: the opposite sign to H5M; not a loss (the point does not reach −0.05) and not equivalent (the interval passes −0.05). The pair-cell level 0.085 is above 0.05, so PASS_SUFFICIENT is not reached. Derivative gate: pass share 1.000 for every target; positive control passed. 195 test cells (60 pair and 40 random per primary donor, fixed before site4; 5 contain none of the 7 genes).</p>
-          </div>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">The one v3 test that uses ANM’s own sufficiency machinery on TEDDY. The <span class="term" data-term="candidate">declared candidate</span> retained state is the gene-mean of TEDDY’s layer-12 token states, which our head reads. It was tested, at first order, against declared observers (E3’s attention-pooling readout R2 on the layer-12 token states, a random token observer and our head as a positive control), on NK–T look-alike pair cells and matched random cells. Addendum <code>E5M.json</code> (sha256 <code>65ab9efe…</code>) was committed 07:39:16 and pushed 07:57:00 UTC, before the site4 run started at 10:43:09.</p>
-          <p class="fs-p"><b>What it found.</b> For R2, a median 0.085 of its first-order response on look-alike pair cells flows through what gene-mean pooling discards, against 0.127 on random cells: smaller, not larger, on look-alikes. The random observer shows no such gap (0.067 vs 0.068). The registered verdict is <b>inconclusive</b>: neither “pooling loses the look-alike difference” nor “the gene-mean state is sufficient” is established, and the measurement holds for this one observer only. R2’s attention is nearly uniform (a median 1,141.957 effective of 1,368 tokens, E3), and an observer that attends almost uniformly departs little from the gene-mean by construction.</p>
-          <p class="fs-p"><b>How it decided.</b> ANM’s <span class="term" data-term="clamp">clamp estimator</span> H = Λ·pinv(Γ) is computed from clamps of the candidate alone, never fitted on the tested responses. The per-cell residual is the share of an observer’s response that flows through what gene-mean pooling discards. H5M needed the pair-minus-random difference for R2 to reach 0.05 under the common win rule and to exceed the random-observer null. The readout-visible quotient is a diagnostic only, never the state: R2’s response has rank 4 in 128 cells, 3 in 62, 2 in 4 and 1 in 1, with a median participation ratio of 1.221 on pair and 1.388 on random cells, so it is effectively one- or two-dimensional.</p>
-          <p class="fs-p"><b>ANM’s own factorization check.</b> <code>analyze_factorization</code> at rtol 1e-4 rejects the gene-mean as an <i>exact</i> first-order retained state for R2 in 195 of 195 cells; any relative residual above 1e-4 rejects, so it says nothing about size. Its source-kernel test is not informative in all 195, as the paper predicts: with at most 21 push columns against 512 coordinates, K_z has full column rank in every cell, so first-order kernel inclusion holds automatically. The informative quantity is the clamp residual of an H fixed without the tested responses.</p>
-          <p class="fs-p">It tests one declared candidate against declared observers, with no selection step: for the observer tested it can reject that candidate or support it within a margin, but it cannot select among candidates or identify TEDDY’s minimal degrees of freedom. <a href="#teddy-e7">E7</a> adds the selection step.</p>
-          <div class="math tex2jax_process"><div class="eq">\[H=\Lambda\,\mathrm{pinv}(\Gamma)\]</div><div class="eq">\[r_O=\frac{\|K_O-H\,K_z\|}{\|K_O\|}\]</div><div class="eq"><span class="eq-l">H5M (registered)</span>\[\Delta_{\rm tok}=\mathrm{median}\,r_{O_{\rm tok}}(\text{pairs})-\mathrm{median}\,r_{O_{\rm tok}}(\text{random})\ \ge 0.05\]</div><div class="eq"><span class="eq-l">measured</span>\[\Delta_{\rm tok}=-0.043\ [-0.062,\,-0.011]\]</div></div>
-          <p class="zh" lang="zh">E5-M（预注册，判定为“不确定”）：把 TEDDY 的基因均值作为声明的候选保留状态，用 ANM 自身的钳制估计量（只用候选状态的钳制计算，不拟合被检验的响应）检验它对独立 token 观察者是否充分。对 E3 的 R2，一阶下其响应流经池化丢弃部分的中位份额在相似配对细胞上为 0.085，在随机细胞上为 0.127，方向与假设相反；未达到损失边界，也不等价；0.085 高于 0.05，故也不能说基因均值充分。ANM 的分解检验在 rtol 1e-4 下全部拒绝精确分解，源核检验不提供信息（与论文预期一致）。读出可见商只作诊断。结论只针对这一个注意力近乎均匀的观察者。它只检验一个声明的候选、没有选择步骤：对所测的观察者，它能否决这个候选或在容差内支持它，但不能在候选之间做选择，也不能确定 TEDDY 的最小自由度；E7 加上了选择步骤。</p>
-          <details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>docs/reports/V3_REGISTERED_RESULTS.md</code> § E5-M; numbers in <code>docs/reports/v3_numbers.json</code> (keys <code>E5M.*</code>, from <code>outputs/v3/E5M/E5M_results.json</code>)</li><li>teddy_mm · <code>scripts/mode_a_observer_sufficiency.py</code>, <code>bridge_anm/lib/v3_e5m.py</code></li><li>Registration · <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E5M.json" target="_blank" rel="noopener">addenda/E5M.json</a></li><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 3–8 (a candidate retained state; response comparisons test whether it preserves the distinctions the readout needs); <code>sections/introduction.tex</code> 23</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs" id="teddy-e7" aria-labelledby="teddy-e7-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.9 · TEDDY<span class="tag v3">v3 E7 · registered · final</span></p>
-          <h2 id="teddy-e7-h">E7: the inverse loop at TEDDY’s layer-11 cut</h2>
-        </header>
-        <div class="fs-fig">
-          <div class="fw-res">
-            <p class="rk">Registered verdict</p>
-            <p class="big">rejected · no revision</p>
-            <table>
-              <thead><tr><th scope="col">Declared candidate · median D</th><th scope="col">Site4 (fresh)</th><th scope="col">Val, 95th pct</th></tr></thead>
-              <tbody>
-                <tr><td>layer-11 gene-mean</td><td class="n">0.125<span class="ci">[0.090, 0.161]</span></td><td class="n">0.276</td></tr>
-                <tr><td>gene-mean + the 6 marker genes’ token states</td><td class="n">0.122<span class="ci">[0.086, 0.153]</span></td><td class="n">0.256</td></tr>
-                <tr><td>all token states (no matched pair)</td><td class="n">—</td><td class="n">—</td></tr>
-              </tbody>
-            </table>
-            <p class="fn">D: a cell’s largest readout difference between histories with the same candidate state, in units of the measured val NK–T gap; tolerance 0.05. Both candidates are <span class="vd fail">rejected</span> (every lower end above 0.05; donors 0.094 and 0.153 for the gene-mean), and none passed in development or in the declared follow-up (0.236 and 0.236). Positive control 0.261 and detectability witness 0.260 detected; G witness 0.013 not detected. External (secondary): 0.112 [0.097, 0.136].</p>
-          </div>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p">The ANM paper’s inverse loop (<a href="#ai-state">4.3</a>), run on TEDDY. The downstream component is fixed and never trained: the token states leaving TEDDY’s layer 11 → TEDDY’s own layer 12 → the mean over real tokens → our frozen head, read on CD56, CD94, CD335 and CD3. Layer 12 has no positional input, so it sees only the set of token states. The histories are exact <span class="term" data-term="meanpatch">mean-preserving state interventions</span>: disjoint pairs of tokens other than the six marker genes (G: NCAM1, KLRD1, NCR1, CD3E, CD3D, CD3G) have their states replaced by their average, for 1/32, 1/8 or 1/2 of those tokens, plus a fresh 1/4 in confirmation. Addendum <code>E7.json</code> version 2 (sha256 <code>c35e91c5…</code>) was pushed at 22:25:53 UTC, before any development run. The selection records were pushed at 22:40:19, and the site4 confirmation started at 22:40:20 by the local clock.</p>
-          <p class="fs-p"><b>Step 1, reject: done.</b> On fresh site4 cells, fresh pairs and a fresh size, histories with exactly the same layer-11 gene-mean give readouts that differ beyond the tolerance. The median is 0.125, and in both donors the interval lies above 0.05. Holding the six marker genes’ token states fixed as well does not remove the difference (0.122). Changing only the marker states, at a fixed gene-mean, moves the readout by a median 0.013. So for this downstream component and these interventions, what layer 12 and the head use is spread over the other tokens’ states: it is not held by the gene-mean, nor by the marker tokens. The controls show the comparisons could see a change. Clamping the gene-mean by the training NK − T difference moves the readout by 0.261, and delivering that shift through the patched tokens alone moves it by 0.260.</p>
-          <p class="fs-p"><b>Step 2, select: no revision.</b> On the validation donor, a candidate is kept if the 95th percentile of D is at most 0.05. The gene-mean scored 0.276 and the marker-token augmentation 0.256. The declared follow-up, with the NK–T score as readout, scored 0.236 for both. None was selected. In the paper’s terms this parallels its broader development comparison, in which “No candidate qualifies”; in the paper, a recipient-A scope chosen afterwards then led to a supported description, which E7 did not attempt. <b>Step 3, validate: not reached.</b> No revised representation is validated.</p>
-          <p class="fs-p"><b>Secondary.</b> The difference grows with the patch size: the site4 median is 0.022 at 1/32 (below the tolerance), 0.046 at 1/8, 0.073 at 1/4 and 0.125 at 1/2. It is larger in NK cells (0.141) than in T cells (0.091). <b>Limits.</b> The patches are exact state interventions at one cut, off the data manifold, not biological variation. The test covers one downstream component, a small declared library and 2 primary donors. It does not explain the NK–T loss or say what the RNA contains. The design was revised twice after code tests on training cells and once after a val smoke-pool check, all disclosed in the addendum.</p>
-          <div class="math tex2jax_process"><div class="eq">\[d(u,u')=\max_{p}\ \frac{|O_p(u)-O_p(u')|}{u_p},\qquad u_p=\big|\mathrm{med}_{\rm NK}-\mathrm{med}_{\rm T}\big|\ \text{(val, measured)}\]</div><div class="eq"><span class="eq-l">reject candidate k</span>\[\mathrm{CI}_{95}^{\rm low}\big(\mathrm{median}\ D_k\big)>0.05\ \text{pooled and in each donor}\]</div><div class="eq"><span class="eq-l">measured, gene-mean</span>\[\mathrm{median}\ D=0.125\ [0.090,\,0.161]\]</div></div>
-          <p class="zh" lang="zh">E7（预注册，判定 REJECTED_NO_REVISION）：在 TEDDY 第 11 层切点运行论文的逆向闭环，下游组件固定（第 12 层 + gene-mean 池化 + 冻结 head），历史是精确的保均值状态干预。第一步（否决）完成：gene-mean 相同的历史在新的 site4 比较上读出差异超过容差（中位数 0.125 [0.090, 0.161]），固定六个标记基因的 token 状态也不能消除差异（0.122）；只改变标记基因状态时读出几乎不动（0.013）。第二步（选择）没有得到修订：开发阶段 95 分位数为 0.276、0.256，事先声明的后续为 0.236、0.236。第三步（验证）没有进行，没有验证任何修订后的表示。差异随补丁幅度增大，NK 大于 T。局限：切点上的状态干预（偏离数据流形），不是生物学变异；一个下游组件、一个小的候选库、2 个主要供体；不解释 NK–T 损失。</p>
-          <details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>docs/reports/V3_REGISTERED_RESULTS.md</code> § E7; numbers in <code>docs/reports/v3_numbers.json</code> (keys <code>E7.*</code>, from <code>outputs/v3/E7/E7_results.json</code> and <code>registration/addenda/E7_selection.json</code>)</li><li>teddy_mm · <code>scripts/mode_a_inverse_e7.py</code>, <code>bridge_anm/lib/v3_e7.py</code></li><li>Registration · <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/addenda/E7.json" target="_blank" rel="noopener">addenda/E7.json</a>, <a href="https://github.com/danielchen26/teddy_mm/blob/exp/registered-v3/registration/E7_REGISTRATION.md" target="_blank" rel="noopener">E7_REGISTRATION.md</a></li><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 240–243; <code>sections/inverse_model.tex</code> 42, 152–158, 163–165; <code>sections/introduction.tex</code> 96–98</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="fs flip" id="teddy-scope" aria-labelledby="teddy-scope-h" data-ch="teddy">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">5.10 · TEDDY</p>
-          <h2 id="teddy-scope-h">What we do not claim</h2>
-        </header>
-        <div class="fs-fig">
-        </div>
-        <div class="fs-body">
-          <p class="fs-p"><b>Not claimed</b> (the registered list is the <a href="index.html#v3-ledger">v3 claims ledger</a>):</p><ul class="notc"><li>that ANM makes calls more accurate: in v3 its engine equals a declared rule on every test cell, and none of its readouts beat TEDDY’s margin or a trained classifier</li><li>that TEDDY predicts proteins</li><li>that a readout of frozen TEDDY repairs the NK–T gap (v3 E3 rejected), or that a TEDDY layer localises it (v3 E5 not validated)</li><li>that gene-mean pooling loses the NK–T look-alike difference, or that TEDDY’s gene-mean state is sufficient for it: E5-M was inconclusive for the one observer tested</li><li>that a revised TEDDY representation is validated, or that E7 explains the NK–T loss: E7 rejected the layer-11 gene-mean and the marker-token augmentation for one fixed downstream component, with no revision selected, using state interventions that are not biological variation</li><li>that ANM found a sufficient TEDDY state or TEDDY’s minimal degrees of freedom: the response test selects only within a candidate set declared in advance, and on TEDDY (E7) it selected none</li><li>ANM’s field dynamics on TEDDY: every event enters at t = 0, so the field is a constant gain per class</li></ul><p class="fs-p">Numbers now use the official TEDDY-G preprocessing (gene-median normalisation, top 2,048 rank tokens, mean over gene tokens); our earlier non-official preprocessing (no gene-median normalisation, 512 tokens) gave the same phase-1 Pearson.</p><p class="zh" lang="zh">不声称：ANM 让判定更准（v3 中与声明规则逐细胞相同）；TEDDY 预测蛋白；冻结 TEDDY 的读出能修复 NK–T 差距（v3 E3 拒绝），或某一层定位了它（v3 E5 未验证）；基因均值池化丢失了 NK–T 相似细胞的差异，或基因均值状态对其充分（E5-M 对所测的一个观察者判定为不确定）；TEDDY 的某个修订表示已被验证，或 E7 解释了 NK–T 损失（E7 对一个固定下游组件否决了第 11 层 gene-mean 及标记基因 token 增广，未选出修订，且用的是状态干预而非生物学变异）；ANM 找出了充分的 TEDDY 状态或其最小自由度（响应检验只在事先声明的候选集合内选择，E7 在 TEDDY 上什么也没选出）；场动力学（所有事件在 t = 0）。数字现已改用 TEDDY-G 官方预处理（基因中位数归一化、前 2,048 个排序 token、基因 token 平均）；我们此前的非官方预处理（没有基因中位数归一化，512 个 token）给出相同的 phase-1 Pearson。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>scripts/03_embed_rna.py</code> 42–53 (earlier preprocessing: total-count scaling to 1e4, then rank; no per-gene median division)</li><li>teddy_mm · <code>teddy_mm/teddy_encoder.py</code> 36–37 (mean over real tokens)</li><li>Official TEDDY · <code>preprocess.py</code> 284–300 (the gene-median step, skipped earlier and now applied)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="chap" id="ch-next" data-ch="next">
-    <div class="wrap">
-      <div class="chap-row"><span class="chap-n">06</span><h2 class="chap-t">Next</h2></div>
-      
-    </div>
-  </div>
-  <section class="fs" id="mode-a" aria-labelledby="mode-a-h" data-ch="next">
-    <div class="wrap">
-      <div class="fs-grid">
-        <header class="fs-head">
-          <p class="kicker">6.1 · Next<span class="tag plan">v2 probes</span><span class="tag v3">v3 E5 · E5-M · E7 final</span></p>
-          <h2 id="mode-a-h">Next: TEDDY’s layers as the steps</h2>
-        </header>
-        <div class="fs-fig">
-          <figure class="anim" data-anim="fw-mode-a-layers"><div class="anim-stage" role="img" aria-label="Gene-token sheets for an NK and a T cell pass through twelve layer slabs with residual updates and attention arcs; dashed probe bars after each slab mark where the NK–T difference is probed."></div><figcaption>Layers become steps; probe NK versus T after each one.</figcaption></figure>
-        </div>
-        <div class="fs-body">
-          <p class="fs-p"><span class="term" data-term="modea">Mode A</span> treats TEDDY’s transformer layers as the steps. The per-gene residual stream (and its gene-mean, which our head reads) is a <span class="term" data-term="candidate">candidate</span> retained state, to be tested against a declared readout (and, within a declared candidate set, selected), not assumed sufficient; attention couples genes. v2 probes, on the frozen embedding: a linear NK-vs-T probe separates NK from T at every layer (held-out AUC 0.991–0.997). On the 453 look-alike pairs our head keeps 0.24 / 0.31 / 0.88 / 0.27 of the measured CD56 / CD94 / CD335 / CD3 gap and a linear probe on z about the same (0.28 / 0.40 / 0.40 / 0.28), but an MLP probe on the same z keeps about twice as much (0.47 / 0.59 / 0.74 / 0.61; MLP − head interval above 0 for CD56, CD94 and CD3 at every depth). At token level (probes fit on 990 other site4 NK/T cells, scored on the 483 pair cells), the states of 13 NK/T gene tokens keep more than the gene-mean of the same forward pass (layer 12, MLP, tokens + gene-mean 0.58 / 0.62 / 0.72 / 0.56 vs gene-mean 0.41 / 0.43 / 0.49 / 0.45), and about as much already at the input layer: the information is mostly which genes are detected and at what rank; the gene-mean keeps less of it, and TEDDY’s layers neither add nor remove much of it. Even the best probe keeps only about half to three-quarters, and key genes are often not detected (CD3E among the tokens in 45% of the NK and 60% of the T pair cells). v2 read this as: part of the loss is in our head’s readout and in mean pooling, and part may not be in the detected RNA (caveats: one site; probes are not the head’s objective; within-site protocol for the token probes; some intervals overlap; the pairs were chosen for closeness in z).</p><p class="sup"><b>v3 · registered</b>E3 tested the repair reading and rejected it: a layer-mean MLP and attention pooling over layer-12 gene tokens both told NK from T less accurately than our head. <a href="#teddy-e5">E5</a> followed a push through the layers with Jacobian-vector products and stopped at its derivative check (float32; float64 passes). <a href="#teddy-e5m">E5-M</a>, the sufficiency test of the gene-mean, was inconclusive for the one observer tested. <a href="#teddy-e7">E7</a> ran the paper’s inverse loop at the layer-11 cut with the downstream component fixed: the layer-11 gene-mean was rejected, and no revision was selected. Gene perturbations beyond E2’s are not done.</p><div class="math tex2jax_process"><div class="eq">\[h_{l+1}=h_l+f_l(h_l)\ \Rightarrow\ \delta h_{l+1}=\big(I+\partial f_l/\partial h\big)\,\delta h_l\]</div><div class="eq"><span class="eq-l">TEDDY-G blocks are post-norm</span>\[A_l=\frac{\partial h_{l+1}}{\partial h_l}=J_{\rm LN_2}\,(I+\partial\,\mathrm{FF})\,J_{\rm LN_1}\,(I+\partial\,\mathrm{Attn})\]</div><div class="eq">\[z=\operatorname{mean}_{\text{real tokens}}h_{12}\]</div></div><p class="zh" lang="zh">Mode A 把 TEDDY 的 transformer 层当作步：按基因的残差流（及 head 读取的基因均值）是候选保留状态，需要用声明的读出检验（并在声明的候选集合内选择），而非假定充分；注意力让基因之间相互耦合。目前冻结嵌入上的探针：线性 NK/T 探针在每一层都能区分 NK 与 T（留出 AUC 0.991–0.997）。在 453 对相似细胞上，我们的 head 保留实测 CD56 / CD94 / CD335 / CD3 差距的 0.24 / 0.31 / 0.88 / 0.27，z 上的线性探针大致相同（0.28 / 0.40 / 0.40 / 0.28），而同一 z 上的 MLP 探针约为两倍（0.47 / 0.59 / 0.74 / 0.61；CD56、CD94、CD3 的 MLP − head 区间在每一层都大于 0）。在 token 层面（探针在另外 990 个 site4 NK/T 细胞上拟合，在 483 个配对细胞上打分），13 个 NK/T 基因 token 的状态比同一次前向的基因平均保留更多（第 12 层 MLP，token + 基因平均 0.58 / 0.62 / 0.72 / 0.56，基因平均 0.41 / 0.43 / 0.49 / 0.45），在输入层就已相当：信息主要是检出了哪些基因、排在第几；基因平均保留得更少，TEDDY 的各层既不明显增加也不明显减少。最好的探针也只保留约一半到四分之三，关键基因常常没有检出（CD3E 只出现在 45% 的 NK 和 60% 的 T 配对细胞的 token 中）。v2 的解读是：一部分损失在 head 的读出和平均池化，一部分可能不在检出的 RNA 里（单一 site；探针不是 head 的训练目标；token 探针在 site4 内部拟合；部分区间重叠；这些对按 z 中的接近程度选出）。v3：E3 拒绝了“可在冻结 TEDDY 上修复”；E5 用 Jacobian-向量积跟踪各层，停在导数检验；E5-M（基因均值的充分性检验）对所测的一个观察者判定为不确定；E7 在第 11 层切点、下游组件固定时运行了论文的逆向闭环，否决了第 11 层 gene-mean，且未选出修订。</p><details class="src"><summary>Sources</summary><ul><li>teddy_mm · <code>teddy_mm/teddy_encoder.py</code> 13–37 (<code>norm_first = cfg.get('pre_norm', False)</code>: post-norm blocks; mean over real tokens)</li><li>TEDDY-G 70M · <code>config.json</code> (12 layers, d_model 512, 8 heads, no pre_norm key); official TEDDY <code>model.py</code> 72, 119</li><li>Paper (8f8c7780) · <code>sections/protocol.tex</code> 81–83 (transition on a declared grid)</li><li>teddy_mm · <code>outputs/mode_a_official/mode_a_results.json</code> (layer probes, head reference), <code>mode_a_nonlinear_results.json</code> (MLP / kNN), <code>token/mode_a_token_results.json</code> (token level, gene presence)</li></ul></details>
-        </div>
-      </div>
-    </div>
-  </section>
+</section>
+
+<section id="verdict">
+  <div class="sh"><span class="sn">2</span><h2><span class="zh">检验量和判定</span><span class="en">The statistic and the verdict</span></h2></div>
+  <p class="col"><span class="zh">对每一环 <span class='m'>z</span>，用声明的读出模型（线性的 ridge 和树模型 HGB，按靶点交叉拟合）拟合读出和处理，再看扣掉这一环知道的一切之后，处理还能解释读出多少：<span class='m'>θ(z) = E[(O − m(z))(A − e(z))] / E[(A − e(z))²]</span>，<span class="m">u</span> <span class='m'>= θ(z) / Δ</span>。<span class="m">u</span> 是读不出的那部分占实测响应 <span class='m'>Δ</span> 的比例：0 是全读得出，1 是一点读不出。</span><span class="en">For each stage <span class='m'>z</span>, the declared readout models (linear ridge and tree-based HGB, cross-fitted by target) fit the readout and the treatment; what counts is how much of the readout the treatment still explains once everything the stage knows has been used: <span class='m'>θ(z) = E[(O − m(z))(A − e(z))] / E[(A − e(z))²]</span>, <span class="m">u</span> <span class='m'>= θ(z) / Δ</span>. <span class="m">u</span> is the unreadable part as a share of the measured response <span class='m'>Δ</span>: 0 means all of it is readable, 1 none.</span></p>
+  <figure><div class="scroll"><svg style="min-width:720px" viewBox="0 0 860 214" role="img" data-al-zh="u 的数轴上，容差带是负 0.10 到正 0.10。区间整个在带内是支持，跨过带的边是未决，每一类读出都在带外是否定。" data-al-en="On the u axis the margin band runs from minus 0.10 to plus 0.10. An interval wholly inside the band is support, one crossing its edge is unresolved, and every readout class outside the band is rejection.">
+      <rect class="band" x="210" y="26" width="140" height="132"/>
+      <line class="ax" x1="40" y1="158" x2="820" y2="158"/>
+      <g font-size="11.5" text-anchor="middle" class="t-m">
+        <line class="ax" x1="70" y1="158" x2="70" y2="164"/><text x="70" y="180">−0.3</text>
+        <line class="ax" x1="210" y1="158" x2="210" y2="164"/><text x="210" y="180">−0.1</text>
+        <line class="ax" x1="280" y1="158" x2="280" y2="164"/><text x="280" y="180">0</text>
+        <line class="ax" x1="350" y1="158" x2="350" y2="164"/><text x="350" y="180">+0.1</text>
+        <line class="ax" x1="490" y1="158" x2="490" y2="164"/><text x="490" y="180">+0.3</text>
+        <line class="ax" x1="630" y1="158" x2="630" y2="164"/><text x="630" y="180">+0.5</text>
+      </g>
+      <text class="zh" x="280" y="204" font-size="12" text-anchor="middle">容差带 (−ε, ε)，这里 ε = 0.10</text>
+      <text class="en" x="280" y="204" font-size="12" text-anchor="middle">Margin band (−ε, ε), here ε = 0.10</text>
+      <text x="790" y="180" font-size="12" text-anchor="middle" class="t-m">u</text>
+      <g stroke-width="2.5" stroke-linecap="butt">
+        <line x1="273" y1="50" x2="343" y2="50" style="stroke:var(--s1)"/>
+        <line x1="301" y1="92" x2="419" y2="92" style="stroke:var(--s2)"/>
+        <line x1="374.5" y1="126" x2="459" y2="126" style="stroke:var(--s1)"/>
+        <line x1="546" y1="140" x2="613" y2="140" style="stroke:var(--s2)"/>
+      </g>
+      <g>
+        <circle cx="309.4" cy="50" r="4.5" style="fill:var(--s1);stroke:var(--accent-tint);stroke-width:2"/>
+        <circle cx="362.6" cy="92" r="4.5" style="fill:var(--s2);stroke:var(--panel);stroke-width:2"/>
+        <circle cx="423.5" cy="126" r="4.5" style="fill:var(--s1);stroke:var(--panel);stroke-width:2"/>
+        <circle cx="581.7" cy="140" r="4.5" style="fill:var(--s2);stroke:var(--panel);stroke-width:2"/>
+      </g>
+      <g font-size="12.5" class="zh">
+        <text x="440" y="46" font-weight="600">支持</text><text x="476" y="46" class="t-mu">某一类读出模型的整个区间在带内</text>
+        <text x="440" y="64" class="t-mu" font-size="11.5">例：Z，ridge，+0.04 [−0.01, +0.09]</text>
+        <text x="440" y="96" font-weight="600">未决</text><text x="476" y="96" class="t-mu">区间跨过带的边（同一环的 HGB）</text>
+        <text x="650" y="130" font-weight="600">否定</text><text x="686" y="130" class="t-mu">每一类都在带外</text>
+        <text x="650" y="148" class="t-mu" font-size="11.5">例：HEAD_LAT 的 ridge 和 HGB</text>
+      </g>
+      <g font-size="12.5" class="en">
+        <text x="440" y="46" font-weight="600">Support</text><text x="498" y="46" class="t-mu">one readout class lies wholly inside the band</text>
+        <text x="440" y="64" class="t-mu" font-size="11.5">e.g. Z, ridge, +0.04 [−0.01, +0.09]</text>
+        <text x="440" y="96" font-weight="600">Unresolved</text><text x="518" y="96" class="t-mu">the interval crosses the band's edge (HGB, same stage)</text>
+        <text x="650" y="130" font-weight="600">Reject</text><text x="698" y="130" class="t-mu">every class is outside</text>
+        <text x="650" y="148" class="t-mu" font-size="11.5">e.g. ridge and HGB at HEAD_LAT</text>
+      </g>
+    </svg>
+</div>
+  <figcaption><span class="zh">判定规则，用封存检验里的真实区间画出。支持只需要有一类读出模型读得出；否定要求每一类都读不出，所以否定总是相对于声明的那几类读出模型。</span><span class="en">The verdict rule, drawn with real intervals from the sealed test. Support needs only one readout class to read the response; rejection needs every class to fail, so a rejection is always relative to the declared classes.</span></figcaption></figure>
+  <p class="col"><span class="zh">沿链把判定连起来，工具给出一个根因（按顺序取第一个成立的）：</span><span class="en">Reading the verdicts along the chain, the tool prints one root cause (the first that applies, in this order):</span></p>
+  <div class="tw col"><table><thead><tr><th><span class="zh">根因</span><span class="en">Root cause</span></th><th><span class="zh">含义</span><span class="en">Meaning</span></th></tr></thead><tbody><tr><td class="mono">no_effect</td><td><span class="zh">读出没有可解释的响应</span><span class="en">the readout has no response to explain</span></td></tr><tr><td class="mono">control_failed</td><td><span class="zh">阳性对照没读出来，这次检验本身不可信</span><span class="en">the positive control is not recovered, so the test itself is not trusted</span></td></tr><tr><td class="mono">loss_at</td><td><span class="zh">参照环得到支持，后面某一环被否定：丢失在两者之间</span><span class="en">the reference stage is supported and a later one is rejected: the loss lies between them</span></td></tr><tr><td class="mono">relative_loss_at</td><td><span class="zh">参照环没在容差内，但有一步明确多丢了</span><span class="en">the reference stage is not within tolerance, but one step adds a resolved loss</span></td></tr><tr><td class="mono">reference_unresolved</td><td><span class="zh">参照环没定清，也没有哪一步明确多丢</span><span class="en">the reference stage is unresolved and no step adds a resolved loss</span></td></tr><tr><td class="mono">unresolved</td><td><span class="zh">区间跨过容差，下不了结论</span><span class="en">the intervals cross the margin; no conclusion</span></td></tr><tr><td class="mono">no_deficit</td><td><span class="zh">每一环都在容差内</span><span class="en">every stage is within the margin</span></td></tr></tbody></table></div>
+</section>
+
+<section id="checks">
+  <div class="sh"><span class="sn">3</span><h2><span class="zh">不合法的设计，不给跑</span><span class="en">Illegal designs refuse to run</span></h2></div>
+  <p class="col"><span class="zh">统计之前先查设计。下面每一条都对应一种我们自己或别人犯过的错。</span><span class="en">The design is checked before any statistic. Each rule below stands for a mistake that we or others have made.</span></p>
+  <div class="tw"><table><thead><tr><th><span class="zh">代号</span><span class="en">Code</span></th><th><span class="zh">规则</span><span class="en">Rule</span></th><th><span class="zh">防的是什么</span><span class="en">What it prevents</span></th></tr></thead><tbody><tr><td class="k mono">S1</td><td><span class="zh">必须有带对照的受控源扰动</span><span class="en">a controlled source perturbation with controls is required</span></td><td><span class="zh">没有源的“决策层”分析</span><span class="en">a decision layer with no source</span></td></tr><tr><td class="k mono">R1</td><td><span class="zh">读出必须是测量，不能是模型的节点</span><span class="en">a readout must be a measurement, not a node</span></td><td><span class="zh">拿模型自己的预测给模型打分</span><span class="en">scoring the model against its own prediction</span></td></tr><tr><td class="k mono">R2</td><td><span class="zh">读出的测量不能流进候选状态；如果它也是系统的输入，要声明共享方式</span><span class="en">a readout's measurement must not flow into a candidate state; if it is also a system input, the sharing must be declared</span></td><td><span class="zh">把实测蛋白喂进去，再和实测蛋白比</span><span class="en">feeding measured protein in and scoring against measured protein</span></td></tr><tr><td class="k mono">C1</td><td><span class="zh">链上每一环都由上一环算出</span><span class="en">each chain stage must be computed from the previous one</span></td><td><span class="zh">比较不在同一条计算路径上的量</span><span class="en">comparing quantities that are not on one computation path</span></td></tr><tr><td class="k mono">C2</td><td><span class="zh">参照环之后的每一环都是系统自己的运算</span><span class="en">stages after the reference must be the system's own operators</span></td><td><span class="zh">路径上混进近似的分词器</span><span class="en">an approximate tokenizer on the path</span></td></tr><tr><td class="k mono">C3</td><td><span class="zh">分析者不加压缩（PCA、k-means 等）</span><span class="en">no analyst compression (PCA, k-means, …)</span></td><td><span class="zh">没声明的降维造成的假象</span><span class="en">artefacts of an undeclared dimension reduction</span></td></tr><tr><td class="k mono">C4</td><td><span class="zh">不遮输入，不改权重，不替换状态</span><span class="en">no input masking, weight edits or state replacement</span></td><td><span class="zh">把对系统的干预当成充分性检验</span><span class="en">taking an intervention on the system for a sufficiency test</span></td></tr><tr><td class="k mono">E1</td><td><span class="zh">检验量必须是连续的条件检验</span><span class="en">the statistic must be a continuous conditional test</span></td><td><span class="zh">粗糙的聚类划分</span><span class="en">a coarse partition into clusters</span></td></tr><tr><td class="k mono">K1</td><td><span class="zh">容差必须声明；处理的靶点少于 10 个时给出警告</span><span class="en">the tolerance must be declared; a warning below 10 treated targets</span></td><td><span class="zh">事后挑容差；把宽区间当结论</span><span class="en">choosing the tolerance afterwards; reading wide intervals as results</span></td></tr><tr><td class="k mono">seal</td><td><span class="zh">运行前核对封存的摘要、数据哈希和代码哈希</span><span class="en">the run verifies the seal digest, the data hashes and the code hash</span></td><td><span class="zh">封存之后改设计、数据或代码</span><span class="en">changing design, data or code after sealing</span></td></tr></tbody></table></div>
+</section>
+
+<section id="events">
+  <div class="sh"><span class="sn">4</span><h2><span class="zh">类型化的源事件：事件图怎么建</span><span class="en">Typed source events: how the event graph is built</span></h2></div>
+  <p class="col"><span class="zh">一次运行的源不是一个标签，而是一组事件。每个事件写明：什么时候、打在哪个位点（哪个基因）、走哪个通道、方向和幅度，再加上角色、层、来源、合并方式和准入。<span class='mono'>python -m anm_diag events</span> 只读声明和已有的记录，不碰细胞数据，写出事件并报告三件事。</span><span class="en">The source of a run is not one label but a set of events. Each event states when, at which site (which gene), through which channel, with what sign and amplitude, plus its role, stratum, provenance, pooling and admission. <span class='mono'>python -m anm_diag events</span> reads declarations and finished records only, touches no cell data, writes the events and reports three things.</span></p>
+  <ul class="pts">
+    <li><span class="zh"><b>合并丢了哪些字段（规则 S2）。</b>把几个靶基因、几个批次并成一个处理组，等于丢掉“位点”或“层”这个字段。合并的判定不等于每个被合并的值的判定，所以合并要声明，否则给出警告。</span><span class="en"><b>Which fields a pooled source drops (rule S2).</b> Merging several target genes or batches into one treated arm drops the field “site” or “stratum”. A verdict for the pool is not a verdict for each pooled value, so pooling must be declared or a warning is raised.</span></li>
+    <li><span class="zh"><b>防泄漏（规则 S3、S4、R2）。</b>每个事件带三条检查：细胞是怎么选出来的（按向导或设计，不能按实测的响应）；读出的测量是不是也进了系统的输入；事件打的是不是读出自己的基因。</span><span class="en"><b>No leakage (rules S3, S4, R2).</b> Each event carries three checks: how its cells were chosen (by guide or design, never by the measured response); whether the readout's measurement is also a system input; whether the event acts on the readout's own gene.</span></li>
+    <li><span class="zh"><b>判定台账。</b>每个判定也写成事件，再列出不同运行之间相反的判定，以及它们在哪个字段上不同。</span><span class="en"><b>The verdict ledger.</b> Every verdict is written as an event too, and opposite verdicts between runs are listed with the field in which the runs differ.</span></li>
+  </ul>
+  <p class="note"><span class="zh">用在封存的两次运行上：合并的源被标出来，于是对每个靶基因、每个批次单独重审（<a href="https://github.com/danielchen26/teddy_mm/tree/main/anm_diag/runs/split_20261111"><span class="mono">runs/split_20261111</span></a>）。PD-L1 的定位对每个靶基因都成立；15 次运行的 155 条判定里没有一对相反；两套数据的 25 个真实敲除事件都通过了三条防泄漏检查。</span><span class="en">Applied to the two sealed runs: the pooled source is flagged, so the audit was repeated for each target gene and each batch alone (<a href="https://github.com/danielchen26/teddy_mm/tree/main/anm_diag/runs/split_20261111"><span class="mono">runs/split_20261111</span></a>). The PD-L1 location holds for every target gene; the 155 verdicts of 15 runs contain no opposite pair; all 25 real knockout events of the two data sets pass the three leakage checks.</span></p>
+</section>
+
+<section id="loop">
+  <div class="sh"><span class="sn">5</span><h2><span class="zh">闭环</span><span class="en">The loop</span></h2></div>
+  <p class="col"><span class="zh">定位是观察，闭环是检验这个观察：照定位去改系统，再用同一个审计量一遍。</span><span class="en">A location is an observation; the loop tests it: change the system where the location points and measure again with the same audit.</span></p>
+  <figure><div class="scroll"><svg style="min-width:820px" viewBox="0 0 960 166" role="img" data-al-zh="闭环的六步：审计，定位，开方，修，再审，护栏；然后回到审计。" data-al-en="The six steps of the loop: audit, locate, prescribe, repair, audit again, guard; then back to the audit."><defs><marker id="la" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs><rect class="bx" x="12" y="34" width="138" height="80" rx="3"/><text class="zh " x="81.0" y="60" font-size="13" text-anchor="middle" font-weight="600">1 · 审计</text><text class="en " x="81.0" y="60" font-size="13" text-anchor="middle" font-weight="600">1 · Audit</text><text class="zh t-mu" x="81.0" y="81" font-size="10.5" text-anchor="middle">跟踪实测的响应</text><text class="en t-mu" x="81.0" y="81" font-size="10.5" text-anchor="middle">follow the measured</text><text class="zh t-mu" x="81.0" y="96" font-size="10.5" text-anchor="middle">一环一环</text><text class="en t-mu" x="81.0" y="96" font-size="10.5" text-anchor="middle">response, stage by stage</text><path class="ar" d="M150 74.0 H170" marker-end="url(#la)"/><rect class="ro" x="172" y="34" width="138" height="80" rx="3"/><text class="zh " x="241.0" y="60" font-size="13" text-anchor="middle" font-weight="600">2 · 定位</text><text class="en " x="241.0" y="60" font-size="13" text-anchor="middle" font-weight="600">2 · Locate</text><text class="zh t-mu" x="241.0" y="81" font-size="10.5" text-anchor="middle">工具指出</text><text class="en t-mu" x="241.0" y="81" font-size="10.5" text-anchor="middle">the tool names the</text><text class="zh t-mu" x="241.0" y="96" font-size="10.5" text-anchor="middle">丢在哪一步</text><text class="en t-mu" x="241.0" y="96" font-size="10.5" text-anchor="middle">step that loses it</text><path class="ar" d="M310 74.0 H330" marker-end="url(#la)"/><rect class="bx" x="332" y="34" width="138" height="80" rx="3"/><text class="zh " x="401.0" y="60" font-size="13" text-anchor="middle" font-weight="600">3 · 开方</text><text class="en " x="401.0" y="60" font-size="13" text-anchor="middle" font-weight="600">3 · Prescribe</text><text class="zh t-mu" x="401.0" y="81" font-size="10.5" text-anchor="middle">改那一步；再写下</text><text class="en t-mu" x="401.0" y="81" font-size="10.5" text-anchor="middle">change that step; name</text><text class="zh t-mu" x="401.0" y="96" font-size="10.5" text-anchor="middle">不该有用的改法</text><text class="en t-mu" x="401.0" y="96" font-size="10.5" text-anchor="middle">a change that should fail</text><path class="ar" d="M470 74.0 H490" marker-end="url(#la)"/><rect class="bx" x="492" y="34" width="138" height="80" rx="3"/><text class="zh " x="561.0" y="60" font-size="13" text-anchor="middle" font-weight="600">4 · 修</text><text class="en " x="561.0" y="60" font-size="13" text-anchor="middle" font-weight="600">4 · Repair</text><text class="zh t-mu" x="561.0" y="81" font-size="10.5" text-anchor="middle">留出一部分基因</text><text class="en t-mu" x="561.0" y="81" font-size="10.5" text-anchor="middle">hold out genes</text><text class="zh t-mu" x="561.0" y="96" font-size="10.5" text-anchor="middle">和对照细胞</text><text class="en t-mu" x="561.0" y="96" font-size="10.5" text-anchor="middle">and control cells</text><path class="ar" d="M630 74.0 H650" marker-end="url(#la)"/><rect class="ro" x="652" y="34" width="138" height="80" rx="3"/><text class="zh " x="721.0" y="60" font-size="13" text-anchor="middle" font-weight="600">5 · 再审</text><text class="en " x="721.0" y="60" font-size="13" text-anchor="middle" font-weight="600">5 · Audit again</text><text class="zh t-mu" x="721.0" y="81" font-size="10.5" text-anchor="middle">只用修复时</text><text class="en t-mu" x="721.0" y="81" font-size="10.5" text-anchor="middle">only on cells the</text><text class="zh t-mu" x="721.0" y="96" font-size="10.5" text-anchor="middle">没见过的细胞</text><text class="en t-mu" x="721.0" y="96" font-size="10.5" text-anchor="middle">repair never saw</text><path class="ar" d="M790 74.0 H810" marker-end="url(#la)"/><rect class="bx" x="812" y="34" width="138" height="80" rx="3"/><text class="zh " x="881.0" y="60" font-size="13" text-anchor="middle" font-weight="600">6 · 护栏</text><text class="en " x="881.0" y="60" font-size="13" text-anchor="middle" font-weight="600">6 · Guard</text><text class="zh t-mu" x="881.0" y="81" font-size="10.5" text-anchor="middle">原任务</text><text class="en t-mu" x="881.0" y="81" font-size="10.5" text-anchor="middle">the original task</text><text class="zh t-mu" x="881.0" y="96" font-size="10.5" text-anchor="middle">不能掉</text><text class="en t-mu" x="881.0" y="96" font-size="10.5" text-anchor="middle">must hold</text><path class="ar-d" d="M881.0 114 V140 H81.0 V117" marker-end="url(#la)"/><text class="zh " x="481.0" y="158" font-size="11.5" text-anchor="middle">再审还指出的丢失，进下一轮</text><text class="en " x="481.0" y="158" font-size="11.5" text-anchor="middle">what the next audit still locates goes into the next round</text><text class="zh t-mu" x="12" y="18" font-size="11.5" text-anchor="start">每一轮的设计和判定规则先提交，再运行</text><text class="en t-mu" x="12" y="18" font-size="11.5" text-anchor="start">The design and the decision rule of each round are committed before it runs</text></svg></div>
+  <figcaption><span class="zh">第 3 步同时写下一个按定位不该有用的改法，和该有用的那个用同样的数据、损失和步数各做一遍。第 5 步只用修复时留出的基因和没参与拟合的对照细胞。</span><span class="en">Step 3 also names a change that, by the location, should not help; it is made with the same data, loss and budget as the one that should. Step 5 uses only genes held out of the repair and control cells that no fit used.</span></figcaption></figure>
+  <a class="next" href="anm-loop.html"><span class="t"><span class="zh">在 teddy_mm 的头上走过的几轮</span><span class="en">The rounds run on the teddy_mm head</span></span><span class="go" aria-hidden="true">→</span></a>
+</section>
+
+<section id="grades">
+  <div class="sh"><span class="sn">6</span><h2><span class="zh">证据等级</span><span class="en">Evidence grades</span></h2></div>
+  <ul class="pts">
+    <li><span class="zh"><b>封存、只跑一次：确认性。</b>声明连同数据和代码的哈希先封存；封存后改过设计、数据或代码，运行会被拒绝。</span><span class="en"><b>Sealed and run once: confirmatory.</b> The declaration is sealed with hashes of data and code; a run is refused if design, data or code changed after sealing.</span></li>
+    <li><span class="zh"><b>设计先提交，但在看过别的结果之后才定：探索性。</b>闭环的各轮属于这一类，提交历史能看出先后。</span><span class="en"><b>Design committed first, but fixed after other results were seen: exploratory.</b> The rounds of the loop are of this kind; the commit history shows the order.</span></li>
+    <li><span class="zh"><b>事后重读：探索性，原来的判定不变。</b></span><span class="en"><b>Post hoc rereading: exploratory, and the original verdicts stand.</b></span></li>
+  </ul>
+  <details class="more"><summary><span class="zh">形式定义（10 条）</span><span class="en">Formal definitions (10 items)</span></summary><div class="db"><ol class="defs"><li><span class="zh"><b>响应。</b><span class="m">Δ = E[O | A = 1] − E[O | A = 0]</span>。它的区间不含 0 才继续；否则没有响应可查。</span><span class="en"><b>Response.</b> <span class="m">Δ = E[O | A = 1] − E[O | A = 0]</span>. The audit continues only if its interval excludes 0; otherwise there is no response to examine.</span></li>
+<li><span class="zh"><b>充分性。</b>状态 <span class="m">z</span> 对读出充分，是指给定状态以后，读出的均值不再依赖有没有扰动：<span class="m">E[O | z, A] = E[O | z]</span>。论文写作 <span class="m">O = Ō ∘ G</span>。</span><span class="en"><b>Sufficiency.</b> A state <span class="m">z</span> is sufficient for the readout when, given the state, the mean readout no longer depends on the perturbation: <span class="m">E[O | z, A] = E[O | z]</span>. The paper writes <span class="m">O = Ō ∘ G</span>.</span></li>
+<li><span class="zh"><b>到达。</b>先看扰动有没有到达这一环：只凭这一环的状态，能不能把处理和对照分开（AUC）。没有到达的环谈不上保留。</span><span class="en"><b>Arrival.</b> First check that the perturbation reaches the stage: can the state alone separate treated from control (AUC)? A stage it never reached cannot retain anything.</span></li>
+<li><span class="zh"><b>检验量。</b><span class="m">θ(z) = E[(O − m(z))(A − e(z))] / E[(A − e(z))²]</span>，<span class="m">u(z) = θ(z) / Δ</span>。<span class="m">m</span> 和 <span class="m">e</span> 是声明的读出模型，交叉拟合。<span class="m">u</span> 是同状态下还剩的差别占 <span class="m">Δ</span> 的比例，按重叠加权平均。</span><span class="en"><b>Statistic.</b> <span class="m">θ(z) = E[(O − m(z))(A − e(z))] / E[(A − e(z))²]</span>, <span class="m">u(z) = θ(z) / Δ</span>. <span class="m">m</span> and <span class="m">e</span> are the declared readout models, cross-fitted. <span class="m">u</span> is the share of <span class="m">Δ</span> that remains at equal state, an overlap-weighted average.</span></li>
+<li><span class="zh"><b>判定。</b>某一类读出模型的整个区间落在 <span class="m">(−ε, ε)</span> 里，是<b>支持</b>；每一类都整个落在外面，是<b>否定</b>；其余是<b>未决</b>。</span><span class="en"><b>Verdict.</b> One readout class with its whole interval inside <span class="m">(−ε, ε)</span>: <b>support</b>. Every class wholly outside: <b>reject</b>. Otherwise: <b>unresolved</b>.</span></li>
+<li><span class="zh"><b>定位。</b>参照环（输入视图）先要得到支持。沿链找到第一个被否定的环，丢失就在它和最后一个得到支持的环之间。</span><span class="en"><b>Localisation.</b> The reference stage (the input view) must be supported first. Find the first rejected stage along the chain; the loss lies between it and the last supported stage.</span></li>
+<li><span class="zh"><b>这个丢失说明什么。</b>看这段路上每一步的映射。全是可逆映射，信息就还在，被否定的只是读出模型（论文表 2 第 3 行）。有不可逆的步骤，表示本身才可能丢了信息。</span><span class="en"><b>What the loss means.</b> Look at each map on that stretch. If all are invertible, the information is still there and only the readout class is rejected (paper Table 2, row 3). Only a non-invertible step can have lost information in the representation itself.</span></li>
+<li><span class="zh"><b>对照。</b>把读出自己当状态，<span class="m">u</span> 应为 0。把某个状态的行打乱，它必须被否定，否则“支持”不算数。每个状态报告有效细胞数。</span><span class="en"><b>Controls.</b> Using the readout itself as the state must give <span class="m">u</span> = 0. A state with shuffled rows must be rejected, or “support” means nothing. Each state reports its effective number of cells.</span></li>
+<li><span class="zh"><b>闭环。</b>改了系统、带着对照再测以后，原来被否定的环得到支持，而对照组没有，才能说这次改动消除了丢失。两处一起变只说明干预下有关联，不说明谁经过谁；要分清是传播变了还是读出变了，得有状态的测量或者有选择的干预（SI S1.3）。</span><span class="en"><b>Closing the loop.</b> A change removed the loss only if, after changing the system and measuring again with a control arm, the rejected stage becomes supported and the control arm's does not. Two things moving together show association under intervention, not which passes through which; telling a change in propagation from a change in readout needs state measurements or selective interventions (SI S1.3).</span></li>
+<li><span class="zh"><b>证据等级。</b>先封存、再只跑一次的结果是确认性的。看过结果之后才定的方法，只算探索性证据，原来的判定不变（论文第 8 页）。</span><span class="en"><b>Evidence grade.</b> Sealed first and run once: confirmatory. A method fixed after seeing results gives exploratory evidence, and the original verdict stands (paper, p. 8).</span></li>
+</ol></div></details>
+</section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <span><b style="color:var(--ink)">TEDDY × ANM</b> · the ANM framework · English primary</span>
-    <span>Numbers are those on the overview page and in the ANM paper; v3 numbers from <code>docs/reports/v3_numbers.json</code>. Paper line numbers in Sources refer to the ANM paper’s v2 draft (PR #16, v37, commit <code>8f8c7780</code>, 2026-10-09; not yet released; <code>paper/arxiv/open_to_public_v2/</code>). Not clinical.</span>
-  </div>
-</footer>
-
+<footer><div class="in">
+  <p><span class="zh">这三页上的每个数字都由 <span class='mono'>scripts/build_site.py</span> 从仓库里提交的记录读出（<span class='mono'>anm_diag/runs/</span>）。更新于 2026 年 11 月 12 日。</span><span class="en">Every number on these three pages is read by <span class='mono'>scripts/build_site.py</span> from records committed in the repository (<span class='mono'>anm_diag/runs/</span>). Updated 12 November 2026.</span></p>
+  <p><span class="zh">方法：Active Neural Matter（arXiv 2610.14549）。把模型的中间量当作候选状态，是对论文定义的套用。</span><span class="en">Method: Active Neural Matter (arXiv 2610.14549). Treating a model's intermediate quantities as candidate states is an application of the paper's definitions.</span> · <a href="v3.html"><span class="zh">2026 年 10 月的旧页面（已存档）</span><span class="en">The pages of October 2026 (archived)</span></a></p>
+</div></footer>
 <script>
-(function () {
-  'use strict';
-  function $(s, r) { return (r || document).querySelector(s); }
-  function $$(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- theme (same key and labels as index.html) ---------- */
-  var root = document.documentElement, btn = $('#themeBtn'), stored = null;
-  try { stored = localStorage.getItem('teddy-anm-theme'); } catch (e) {}
-  function label() { var t = root.getAttribute('data-theme'); btn.textContent = !t ? 'Theme' : (t === 'dark' ? 'Light' : 'Dark'); }
-  if (stored === 'dark' || stored === 'light') root.setAttribute('data-theme', stored);
-  label();
-  btn.addEventListener('click', function () {
-    var c = root.getAttribute('data-theme');
-    var next = !c ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark') : (c === 'dark' ? 'light' : 'dark');
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('teddy-anm-theme', next); } catch (e) {}
-    label();
-  });
-
-  /* ---------- mobile menu ---------- */
-  var mnav = $('.mnav');
-  if (mnav) {
-    $$('.mnav-panel a', mnav).forEach(function (a) { a.addEventListener('click', function () { mnav.open = false; }); });
-    document.addEventListener('click', function (e) { if (mnav.open && !mnav.contains(e.target)) mnav.open = false; });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mnav.open) { mnav.open = false; $('summary', mnav).focus(); } });
+(function(){
+  var root = document.documentElement, saved = null;
+  try { saved = localStorage.getItem('teddy-anm-lang'); } catch (e) {}
+  function set(l){
+    root.setAttribute('data-ui', l); root.lang = l === 'zh' ? 'zh-Hans' : 'en';
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.l === l)); });
+    document.querySelectorAll('[data-al-' + l + ']').forEach(function(el){ el.setAttribute('aria-label', el.getAttribute('data-al-' + l)); });
+    try { localStorage.setItem('teddy-anm-lang', l); } catch (e) {}
   }
-
-  /* ---------- sticky section nav: highlight the section in view ---------- */
-  var sn = $('.sn'), links = {}, active = null;
-  $$('.sn a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
-  function setActive(id) {
-    if (id === active) return;
-    active = id;
-    Object.keys(links).forEach(function (k) {
-      var on = k === id;
-      links[k].classList.toggle('on', on);
-      if (on) links[k].setAttribute('aria-current', 'true'); else links[k].removeAttribute('aria-current');
-    });
-    var a = links[id];
-    if (a && sn.scrollWidth > sn.clientWidth) {
-      var left = a.offsetLeft - sn.offsetLeft - (sn.clientWidth - a.offsetWidth) / 2;
-      try { sn.scrollTo({ left: Math.max(0, left), behavior: reduce ? 'auto' : 'smooth' }); } catch (e) { sn.scrollLeft = left; }
-    }
-  }
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) setActive(en.target.id); });
-    }, { rootMargin: '-38% 0px -58% 0px' });
-    $$('main section.fs').forEach(function (s) { io.observe(s); });
-    var hero = $('#overview');
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) setActive(null); });
-    }, { rootMargin: '-38% 0px -58% 0px' }).observe(hero);
-  }
-
-  /* ---------- maths: shrink an equation that is wider than its box (down to 72%), else it scrolls ---------- */
-  function fitMath() {
-    $$('.math .eq').forEach(function (eq) {
-      var c = eq.querySelector('mjx-container'), svg = c && c.querySelector('svg');
-      if (!svg) return;
-      c.style.fontSize = '';
-      var box = eq.parentElement, cs = getComputedStyle(box);
-      var need = svg.getBoundingClientRect().width, have = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 1;
-      if (need > have) c.style.fontSize = (Math.max(0.72, have / need) * 100).toFixed(1) + '%';
-    });
-  }
-  var fitT = null;
-  function whenMath() {
-    if (window.MathJax && MathJax.startup && MathJax.startup.promise) MathJax.startup.promise.then(fitMath);
-    else setTimeout(whenMath, 200);
-  }
-  window.addEventListener('load', whenMath);
-  window.addEventListener('resize', function () { clearTimeout(fitT); fitT = setTimeout(fitMath, 150); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (window.MathJax && MathJax.startup && MathJax.startup.document) fitMath(); });
-
-  /* ---------- hover-defined terms ---------- */
-  var TERMS = {"teddy": ["TEDDY-G 70M", "An RNA foundation model: 12 transformer layers, 512 wide. Kept frozen here. It turns a cell’s RNA into a 512-number embedding and predicts no proteins."], "head": ["Our head", "Trained in teddy_mm on the training sites’ measured proteins: an MLP with a negative-binomial protein decoder (plus a flow-matching variant). It reads TEDDY’s embedding and a size factor (train median 0.92663) and predicts 134 surface proteins."], "citeseq": ["CITE-seq", "Measures RNA and surface proteins in the same cell."], "site4": ["site4 · held out", "A CITE-seq site never used in training: 16,750 cells. The registered v3 tests use its two donors that appear in no other split (13272 and 19593, 11,294 cells) as the primary test set. Its measured proteins only grade answers."], "observer": ["Observer · the question", "The question, written down before the run: what is read, which answers are allowed, and the bar a call must clear. In the ANM paper a declared observer also fixes the perturbations and the window, and candidate retained states are tested and selected for it."], "panelorder": ["Old panel order", "The first bridge run entered the 9 markers one step apart, in list order. Each step multiplies every value by the retention factor, so earlier markers ended weaker. Now all 9 enter at step 0."], "fixedrule": ["The fixed rule", "The same written question read straight off the predicted markers (9 in v2; 12 in v3, where it is called the declared rule): score each lineage, call the best if it clears the bar, otherwise no call. No graph."], "soft": ["Soft question", "All 9 markers weigh equally; call the best lineage if its score reaches 0.12."], "strict": ["Strict question", "A weighted mean with the key markers CD19, CD3 and CD16 at weight 2; the score must reach 0.28."], "btprio": ["B/T-priority question", "Only CD19, CD3 and CD16 count, with B ×1.5, T ×1.3 and myeloid ×0.5; bar 0.20 as declared (0.1333 on the shared score scale)."], "modeb": ["Mode B · done", "ANM works on our head’s outputs: the predicted panel proteins (9 in v2, 12 in v3) as typed evidence, every event at t = 0, so its calls equal a re-coded declared rule (v3 E1: 0 mismatches). TEDDY and the head are not changed."], "modea": ["Mode A · looking inside TEDDY", "TEDDY’s transformer layers become the steps; the per-gene residual stream or its gene-mean is a declared candidate retained state. v2 probes: on the NK–T look-alike pairs an MLP probe on the embedding kept about twice as much of the gap as our head. v3 (registered): E5 followed a push through the layers and stopped at its derivative check; E5-M, the sufficiency test of the gene-mean, was inconclusive for one observer; E7, the paper’s inverse loop at the layer-11 cut, rejected the layer-11 gene-mean with no revision selected; E3, which compared readouts of TEDDY’s layer and token states, rejected the repair reading (both lost NK-vs-T accuracy to our head)."], "candidate": ["Declared candidate retained state", "In the ANM paper’s v2 draft (PR #16, v37, at 8f8c7780; not yet released) the retained state is a candidate, declared before the run and then tested against a declared readout; its choice is an experimental hypothesis, not established sufficiency. The same responses also select it, for a declared observer (readout, perturbations, window): a candidate is rejected when histories with identical states give resolved differences in outputs; within a candidate set declared in advance, those with no observed violation are kept and the one with the fewest states is selected, fixed and validated on new comparisons (in the paper’s exact construction: the coarsest sufficient representation, 2 states). The set is given, so this selects rather than discovers; the readout-visible quotient is only a diagnostic. Here: TEDDY’s gene-mean embedding, or inside TEDDY the per-gene residual stream; E7 ran the loop at the layer-11 cut and selected nothing."], "jvp": ["Jacobian-vector product (JVP)", "The exact first-order change of each layer’s state for a small push at TEDDY’s input, by forward-mode derivatives through each of the 12 layers. E5’s registered gate required finite differences to agree with it in at least 95% of cases; in float32 at ε = 1e-3 they agreed in 0.854."], "clamp": ["Clamp estimator (H)", "ANM’s estimator of how a declared observer depends on the candidate state: H = Λ·pinv(Γ), computed from clamps of the candidate alone and never fitted on the tested responses."], "rerun": ["Official rerun", "These numbers use the official TEDDY-G preprocessing: counts / total × 10⁴, divided by TEDDY’s gene medians, top 2,048 rank tokens, no CLS token, mean over gene tokens. teddy_mm’s earlier non-official preprocessing gave the same phase-1 Pearson."], "meanpatch": ["Mean-preserving state intervention (E7)", "An exact change of TEDDY’s layer-11 token states that leaves their mean unchanged: disjoint pairs of token states are each replaced by their average. Two such histories share the gene-mean, so a readout difference beyond the tolerance rejects the gene-mean as a sufficient state for that readout. The changed states are not ones a real cell produces (off the data manifold): an intervention on internal states, not biological variation."], "inverse": ["Inverse loop (PR #16)", "The ANM paper’s v2 draft (PR #16, v37, at 8f8c7780; not yet released) tests a description of a model in three steps, with the downstream component (a fixed program or model) unchanged. Reject: histories with exactly the same candidate state give readouts that differ beyond the tolerance. Select: within a declared candidate library, keep the candidates with no observed same-state violation on development data and choose the one with the fewest states. Validate: fix it and test it on fresh comparisons. Selection works only within the library; it does not discover a missing variable. In the paper’s real-model study the broader screen selected none, and support came only after the readout was restricted to recipient A. On TEDDY, E7 ran it at the layer-11 cut: the rejection held, no revision was selected, and nothing was validated."]};
-  var tip = document.createElement('div');
-  tip.id = 'termtip'; tip.setAttribute('role', 'tooltip');
-  document.body.appendChild(tip);
-  var cur = null;
-  $$('.term[data-term]').forEach(function (el) {
-    var t = TERMS[el.getAttribute('data-term')];
-    if (!t) return;
-    el.setAttribute('tabindex', '0');
-    el.setAttribute('role', 'button');
-    el.setAttribute('aria-label', el.textContent + ': ' + t[0] + '. ' + t[1]);
-  });
-  function place(el) {
-    var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, vw = document.documentElement.clientWidth;
-    var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), vw - w - 8);
-    var y = r.bottom + 8;
-    if (y + h > window.innerHeight - 8) y = Math.max(8, r.top - h - 8);
-    tip.style.left = x + 'px'; tip.style.top = y + 'px';
-  }
-  function show(el) {
-    var t = TERMS[el.getAttribute('data-term')];
-    if (!t) return;
-    if (cur && cur !== el) cur.classList.remove('on');
-    tip.innerHTML = '';
-    var b = document.createElement('b'); b.textContent = t[0];
-    var s = document.createElement('span'); s.textContent = t[1];
-    tip.appendChild(b); tip.appendChild(s);
-    cur = el; el.classList.add('on');
-    tip.classList.add('on');
-    place(el);
-  }
-  function hide() { tip.classList.remove('on'); if (cur) cur.classList.remove('on'); cur = null; }
-  function termOf(e) { return e.target && e.target.closest ? e.target.closest('.term[data-term]') : null; }
-  document.addEventListener('pointerover', function (e) { var t = termOf(e); if (t && e.pointerType !== 'touch') show(t); });
-  document.addEventListener('pointerout', function (e) { var t = termOf(e); if (t && e.pointerType !== 'touch' && !(e.relatedTarget && t.contains(e.relatedTarget))) hide(); });
-  document.addEventListener('focusin', function (e) { var t = termOf(e); if (t) show(t); });
-  document.addEventListener('focusout', function (e) { if (termOf(e)) hide(); });
-  document.addEventListener('click', function (e) { var t = termOf(e); if (t) { if (cur === t) hide(); else show(t); } else if (cur) hide(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cur) hide(); });
-  window.addEventListener('scroll', function () { if (cur) place(cur); }, { passive: true });
-  window.addEventListener('resize', function () { if (cur) place(cur); });
+  document.querySelectorAll('.lang button').forEach(function(b){ b.addEventListener('click', function(){ set(b.dataset.l); }); });
+  set(saved === 'zh' ? 'zh' : 'en');
 })();
 </script>
 </body>

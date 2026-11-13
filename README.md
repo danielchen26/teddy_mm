@@ -7,8 +7,9 @@
 
 <p>
   <a href="https://danielchen26.github.io/teddy_mm/"><b>Live site</b></a> ·
-  <a href="https://danielchen26.github.io/teddy_mm/anm-loop.html"><b>Decision-loop report</b></a> ·
-  <a href="https://danielchen26.github.io/teddy_mm/anm-framework.html"><b>How ANM works</b></a> ·
+  <a href="https://danielchen26.github.io/teddy_mm/anm-framework.html"><b>How the audit works</b></a> ·
+  <a href="https://danielchen26.github.io/teddy_mm/anm-loop.html"><b>The loop: locate, repair, audit again</b></a> ·
+  <a href="https://danielchen26.github.io/teddy_mm/v3.html">Archived v3 site</a> ·
   <a href="#anm-diagnosis-of-teddys-representation-nov-2026"><b>ANM diagnosis of TEDDY</b></a> ·
   <a href="#registered-experiments-v3"><b>Registered v3 results</b></a> ·
   <a href="#what-anm-brings-teddy-now">What ANM brings TEDDY now</a> ·
@@ -198,7 +199,7 @@ After the bridge fixes, ANM does **not** make TEDDY more accurate: on all 16,750
 >
 > **Disclosures.** Donor 15078 is in training at other sites and is 32.6% of the site4 test cells. The "out-of-site check" is held-out donor 18303 at a training site, which was also the validation set. The 9 panel proteins were chosen by test-set Pearson. **The numbers above now use the official TEDDY-G preprocessing** (rerun done; same phase-1 Pearson). The earlier, non-official preprocessing: teddy_mm's embedding was a mean over real tokens at 512 tokens with no gene-median normalisation, whereas official TEDDY-G returns token 0 by default (no CLS token is added, so it is the top-ranked gene) and its tutorial mean-pools over all 2,048 positions after gene-median normalisation. With the medians applied (512 tokens, same mean), the cosine to the stored embedding is 0.649 (median over 48 site4 cells).
 
-> Linked names (in blue) jump to [Key terms](#key-terms), where each one is explained in plain words. On the [live site](https://danielchen26.github.io/teddy_mm/) they are underlined and explain themselves on hover or tap, and a guide column shows the whole workflow.
+> Linked names (in blue) jump to [Key terms](#key-terms), where each one is explained in plain words. On the [live site](https://danielchen26.github.io/teddy_mm/v3.html) they are underlined and explain themselves on hover or tap, and a guide column shows the whole workflow.
 
 ## What this is
 
@@ -212,7 +213,7 @@ After the bridge fixes, ANM does **not** make TEDDY more accurate: on all 16,750
 
 ## How ANM and TEDDY connect
 
-New to ANM? Start with **[How ANM works: physics, AI workflows and TEDDY](https://danielchen26.github.io/teddy_mm/anm-framework.html)** (source: [`docs/anm-framework.html`](docs/anm-framework.html)).
+New to ANM? Start with **[How ANM works: physics, AI workflows and TEDDY](https://danielchen26.github.io/teddy_mm/v3-anm-framework.html)** (source: [`docs/v3-anm-framework.html`](docs/v3-anm-framework.html)).
 
 Three roles, one direction. Nothing flows back into TEDDY.
 
@@ -326,14 +327,14 @@ Every experiment follows the same protocol:
 
 | # | Experiment | What we do | Key result (corrected rerun) | Report |
 |---|---|---|---|---|
-| 1 | [Change the question](https://danielchen26.github.io/teddy_mm/#edit) | Write the question three ways (soft → strict → B/T-priority); see who follows it without new labels | ANM “no calls” 272 → 1,493 → 2,551, the same call as the re-coded fixed rule on every cell; trained classifier flat at 43; the B/T-priority rule changes 12.48% of expected answers | [HARD_PROOF_OFFICIAL](docs/reports/HARD_PROOF_OFFICIAL.md) ([V2](docs/reports/HARD_PROOF_V2.md): earlier preprocessing) |
-| 2 | [When RNA is missing](https://danielchen26.github.io/teddy_mm/#missing) | Take RNA away, so TEDDY can’t run; declare how far to trust a protein-only stand-in | Withdrawn; redesigned as v3 E2 and E4 (first run: “no calls” 0 → 1,664). Prototype: ANM with a trust per level = the fixed rule with a stricter bar per level | [MISSING_MODALITY](docs/reports/MISSING_MODALITY_ANM_DEMO.md) (first run) · official prototype: [FM](docs/reports/MISSING_MODALITY_OFFICIAL_FM.md) · [direct](docs/reports/MISSING_MODALITY_OFFICIAL_DIRECT.md) |
-| 3 | [Why this call?](https://danielchen26.github.io/teddy_mm/#attr) | Remove one marker's evidence at a time → the marker that decides → how far from flipping; [bootstrap](#t-bootstrap) 200×, permutation 100× within lineage | 16,478 cells · 30.0% of calls flip · CD2 decides most often, 17.9% (p ≈ 0.0099), CD5 close behind at 17.3% (was 23.6%); the top marker is the largest normalised value in the called lineage, not an ANM effect | [HARD_PROOF_OFFICIAL](docs/reports/HARD_PROOF_OFFICIAL.md) ([V2](docs/reports/HARD_PROOF_V2.md): earlier preprocessing) |
-| 4 | [Which calls to trust?](https://danielchen26.github.io/teddy_mm/#scope) | Keep the fixed rule's call only where ANM is confident ([soft_P](#t-softp)), or where the rule's own margin is largest; compare at the same [coverage](#t-coverage); hard cells vs random ones | Keeping 40%: 0.9993 vs 0.9994 (soft), 0.9988 vs 0.9988 (B/T-priority), never better than the margin at any coverage; soft_P reaches 1.11 (a score); hard cells 0.791 vs 0.939, mostly NK/ILC (3.1×) and erythroid (3.4×) | [SCOPE_REFINE_PROOF_OFFICIAL](docs/reports/SCOPE_REFINE_PROOF_OFFICIAL.md) ([V2](docs/reports/SCOPE_REFINE_PROOF_V2.md): earlier preprocessing) |
-| 5 | [Cost of a new question](https://danielchen26.github.io/teddy_mm/#labels) | Train classifiers on 50 → 10,619 labels (pool of 11,725 cells, disjoint from the 5,025 scored) until they copy ANM's B/T-priority answers | Copying needs ≈ 50 (grid) / 500 (logistic) / 1,000 (MLP, was 200) labels; ANM needs 0, as does any written rule | [HARD_PROOF_OFFICIAL](docs/reports/HARD_PROOF_OFFICIAL.md) ([V2](docs/reports/HARD_PROOF_V2.md): earlier preprocessing) |
-| 6 | [Look-alike cells](https://danielchen26.github.io/teddy_mm/anm-loop.html) | Flag look-alike pairs TEDDY's [embedding](#t-z512) can't separate → swap in measured protein as evidence → check again | Withdrawn; redesigned as v3 E3, E5 and E5-M (first run: false agreement 0.85 → 0.40). Prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 453 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.148 vs measured 0.621) | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) (first run) |
+| 1 | [Change the question](https://danielchen26.github.io/teddy_mm/v3.html#edit) | Write the question three ways (soft → strict → B/T-priority); see who follows it without new labels | ANM “no calls” 272 → 1,493 → 2,551, the same call as the re-coded fixed rule on every cell; trained classifier flat at 43; the B/T-priority rule changes 12.48% of expected answers | [HARD_PROOF_OFFICIAL](docs/reports/HARD_PROOF_OFFICIAL.md) ([V2](docs/reports/HARD_PROOF_V2.md): earlier preprocessing) |
+| 2 | [When RNA is missing](https://danielchen26.github.io/teddy_mm/v3.html#missing) | Take RNA away, so TEDDY can’t run; declare how far to trust a protein-only stand-in | Withdrawn; redesigned as v3 E2 and E4 (first run: “no calls” 0 → 1,664). Prototype: ANM with a trust per level = the fixed rule with a stricter bar per level | [MISSING_MODALITY](docs/reports/MISSING_MODALITY_ANM_DEMO.md) (first run) · official prototype: [FM](docs/reports/MISSING_MODALITY_OFFICIAL_FM.md) · [direct](docs/reports/MISSING_MODALITY_OFFICIAL_DIRECT.md) |
+| 3 | [Why this call?](https://danielchen26.github.io/teddy_mm/v3.html#attr) | Remove one marker's evidence at a time → the marker that decides → how far from flipping; [bootstrap](#t-bootstrap) 200×, permutation 100× within lineage | 16,478 cells · 30.0% of calls flip · CD2 decides most often, 17.9% (p ≈ 0.0099), CD5 close behind at 17.3% (was 23.6%); the top marker is the largest normalised value in the called lineage, not an ANM effect | [HARD_PROOF_OFFICIAL](docs/reports/HARD_PROOF_OFFICIAL.md) ([V2](docs/reports/HARD_PROOF_V2.md): earlier preprocessing) |
+| 4 | [Which calls to trust?](https://danielchen26.github.io/teddy_mm/v3.html#scope) | Keep the fixed rule's call only where ANM is confident ([soft_P](#t-softp)), or where the rule's own margin is largest; compare at the same [coverage](#t-coverage); hard cells vs random ones | Keeping 40%: 0.9993 vs 0.9994 (soft), 0.9988 vs 0.9988 (B/T-priority), never better than the margin at any coverage; soft_P reaches 1.11 (a score); hard cells 0.791 vs 0.939, mostly NK/ILC (3.1×) and erythroid (3.4×) | [SCOPE_REFINE_PROOF_OFFICIAL](docs/reports/SCOPE_REFINE_PROOF_OFFICIAL.md) ([V2](docs/reports/SCOPE_REFINE_PROOF_V2.md): earlier preprocessing) |
+| 5 | [Cost of a new question](https://danielchen26.github.io/teddy_mm/v3.html#labels) | Train classifiers on 50 → 10,619 labels (pool of 11,725 cells, disjoint from the 5,025 scored) until they copy ANM's B/T-priority answers | Copying needs ≈ 50 (grid) / 500 (logistic) / 1,000 (MLP, was 200) labels; ANM needs 0, as does any written rule | [HARD_PROOF_OFFICIAL](docs/reports/HARD_PROOF_OFFICIAL.md) ([V2](docs/reports/HARD_PROOF_V2.md): earlier preprocessing) |
+| 6 | [Look-alike cells](https://danielchen26.github.io/teddy_mm/v3-anm-loop.html) | Flag look-alike pairs TEDDY's [embedding](#t-z512) can't separate → swap in measured protein as evidence → check again | Withdrawn; redesigned as v3 E3, E5 and E5-M (first run: false agreement 0.85 → 0.40). Prototype: the TEDDY + head predictions separate NK from T in the right direction but compress the differences (on the 453 site4 NK–T pairs without “gdT CD158b+” cells, which look NK-like in both predicted and measured protein: median predicted CD56 gap 0.148 vs measured 0.621) | [REVERSE_LOOP_SMALL](docs/reports/REVERSE_LOOP_SMALL.md) (first run) |
 
-Charts, data tables and every number's source: **[danielchen26.github.io/teddy_mm](https://danielchen26.github.io/teddy_mm/)**.
+Charts, data tables and every number's source: **[danielchen26.github.io/teddy_mm](https://danielchen26.github.io/teddy_mm/v3.html)**.
 
 ## Quickstart
 
