@@ -1,0 +1,65 @@
+{
+ "decoder_identical_to_as_trained": {
+  "numpy": true,
+  "torch": true
+ },
+ "mlp_weights": {
+  "largest_change_from_as_trained": 0.15690937638282776,
+  "largest_difference_numpy_torch": 0.001298561692237854
+ },
+ "bone_marrow_test": {
+  "n_cells": 5000,
+  "score_as_trained": 0.601603943025081,
+  "score_numpy": 0.5967391730907436,
+  "score_torch": 0.5967410485357988,
+  "outputs_rms_change_from_as_trained": 0.09255744340481971,
+  "outputs_rms_difference_numpy_torch": 9.614064130369842e-05
+ },
+ "perturbation_cells": {
+  "frangieh2021": {
+   "outputs_rms_change_from_as_trained": 0.08898349605461219,
+   "outputs_rms_difference_numpy_torch": 6.532153457850731e-05
+  },
+  "papalexi2021": {
+   "outputs_rms_change_from_as_trained": 0.20288231466059464,
+   "outputs_rms_difference_numpy_torch": 0.00015822857323439133
+  }
+ },
+ "round_2_recipe": {
+  "what": "scripts/07_repair_head.py with one data set, PDL1=CD274 only, --hold-out IFNGR1, against heads/<data set>__IFNGR1__mlp_guarded.npz of runs/loop_guard_20261112",
+  "frangieh2021": {
+   "decoder_identical_to_as_trained": true,
+   "perturbation_cells": {
+    "outputs_rms_change_from_as_trained": 0.06464316150934019,
+    "outputs_rms_difference_numpy_torch": 0.00043312187979880495
+   },
+   "held_out_knockout_cells": {
+    "n": 198,
+    "outputs_rms_change_from_as_trained": 0.0692324737555949,
+    "outputs_rms_difference_numpy_torch": 0.00041018237410089185
+   },
+   "bone_marrow_test": {
+    "score_numpy": 0.6032903762193892,
+    "score_torch": 0.6033139724676737,
+    "outputs_rms_difference_numpy_torch": 0.0002640275196989013
+   }
+  },
+  "papalexi2021": {
+   "decoder_identical_to_as_trained": true,
+   "perturbation_cells": {
+    "outputs_rms_change_from_as_trained": 0.20136966816777735,
+    "outputs_rms_difference_numpy_torch": 0.0003365314195036931
+   },
+   "held_out_knockout_cells": {
+    "n": 1339,
+    "outputs_rms_change_from_as_trained": 0.2086618919307463,
+    "outputs_rms_difference_numpy_torch": 0.0002954240547445072
+   },
+   "bone_marrow_test": {
+    "score_numpy": 0.5945895932748133,
+    "score_torch": 0.5945852656435509,
+    "outputs_rms_difference_numpy_torch": 0.00022289630490682954
+   }
+  }
+ }
+}
