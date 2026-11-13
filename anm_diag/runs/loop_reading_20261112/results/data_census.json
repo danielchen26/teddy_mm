@@ -1,0 +1,1090 @@
+{
+ "what": "which knockouts change which measured proteins, by condition; written by data_census.py from the protein files only",
+ "frangieh2021": {
+  "cells": 218331,
+  "antibodies": [
+   "CD117",
+   "CD119",
+   "CD140a",
+   "CD140b",
+   "CD172a",
+   "CD184",
+   "CD202b",
+   "CD274",
+   "CD29",
+   "CD309",
+   "CD44",
+   "CD47",
+   "CD49f",
+   "CD58",
+   "CD59",
+   "CD61",
+   "HLA_A",
+   "Rat_IgG2a",
+   "Mouse_IgG1",
+   "Mouse_IgG2a",
+   "Mouse_IgG2b",
+   "HLA_E",
+   "CD9",
+   "CD279"
+  ],
+  "antibodies_with_a_head_output": {
+   "CD119": "CD119",
+   "CD172a": "CD172a",
+   "CD274": "CD274",
+   "CD29": "CD29",
+   "CD44": "CD44",
+   "CD47": "CD47",
+   "CD49f": "CD49f",
+   "CD58": "CD58",
+   "HLA_A": "HLA-A-B-C",
+   "HLA_E": "HLA-E",
+   "CD9": "CD9",
+   "CD279": "CD279"
+  },
+  "isotype_controls": [
+   "Rat_IgG2a",
+   "Mouse_IgG1",
+   "Mouse_IgG2a",
+   "Mouse_IgG2b"
+  ],
+  "thresholds": {
+   "min_cells": 100,
+   "min_shift_sd": 0.3,
+   "min_shift_over_half_width": 3.0
+  },
+  "conditions": {
+   "Co-culture": {
+    "cells": 73114,
+    "single_guide_cells": 46542,
+    "control_guide_cells": 5789,
+    "targets": 248,
+    "targets_with_min_cells": 196,
+    "clear_responses": [
+     {
+      "target": "B2M",
+      "antibody": "HLA_A",
+      "cells": 268,
+      "shift_sd": -3.588,
+      "over_half_width": 16.2,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD47",
+      "antibody": "CD47",
+      "cells": 186,
+      "shift_sd": -3.428,
+      "over_half_width": 13.6,
+      "head_output": "CD47"
+     },
+     {
+      "target": "CD44",
+      "antibody": "CD44",
+      "cells": 270,
+      "shift_sd": -2.533,
+      "over_half_width": 5.8,
+      "head_output": "CD44"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "HLA_A",
+      "cells": 361,
+      "shift_sd": -2.215,
+      "over_half_width": 18.5,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD274",
+      "antibody": "CD274",
+      "cells": 215,
+      "shift_sd": -2.144,
+      "over_half_width": 17.8,
+      "head_output": "CD274"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "HLA_A",
+      "cells": 361,
+      "shift_sd": -2.126,
+      "over_half_width": 15.4,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "HLA_A",
+      "cells": 401,
+      "shift_sd": -1.969,
+      "over_half_width": 16.3,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "HLA_A",
+      "cells": 435,
+      "shift_sd": -1.902,
+      "over_half_width": 15.5,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "TAPBP",
+      "antibody": "HLA_A",
+      "cells": 156,
+      "shift_sd": -1.833,
+      "over_half_width": 11.3,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "HLA_A",
+      "cells": 288,
+      "shift_sd": -1.818,
+      "over_half_width": 12.6,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD58",
+      "antibody": "CD58",
+      "cells": 267,
+      "shift_sd": -1.737,
+      "over_half_width": 16.7,
+      "head_output": "CD58"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD119",
+      "cells": 288,
+      "shift_sd": -1.501,
+      "over_half_width": 14.5,
+      "head_output": "CD119"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD274",
+      "cells": 361,
+      "shift_sd": -1.275,
+      "over_half_width": 11.8,
+      "head_output": "CD274"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD274",
+      "cells": 401,
+      "shift_sd": -1.196,
+      "over_half_width": 12.1,
+      "head_output": "CD274"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD274",
+      "cells": 288,
+      "shift_sd": -1.171,
+      "over_half_width": 9.8,
+      "head_output": "CD274"
+     },
+     {
+      "target": "ITGA3",
+      "antibody": "CD49f",
+      "cells": 197,
+      "shift_sd": 1.154,
+      "over_half_width": 8.6,
+      "head_output": "CD49f"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD274",
+      "cells": 435,
+      "shift_sd": -1.122,
+      "over_half_width": 11.0,
+      "head_output": "CD274"
+     },
+     {
+      "target": "CD59",
+      "antibody": "CD59",
+      "cells": 231,
+      "shift_sd": -1.06,
+      "over_half_width": 7.0,
+      "head_output": null
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD274",
+      "cells": 361,
+      "shift_sd": -0.959,
+      "over_half_width": 8.3,
+      "head_output": "CD274"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD9",
+      "cells": 361,
+      "shift_sd": 0.939,
+      "over_half_width": 9.3,
+      "head_output": "CD9"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD59",
+      "cells": 288,
+      "shift_sd": 0.83,
+      "over_half_width": 7.4,
+      "head_output": null
+     },
+     {
+      "target": "HLA-B",
+      "antibody": "HLA_A",
+      "cells": 137,
+      "shift_sd": -0.826,
+      "over_half_width": 5.4,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD47",
+      "cells": 361,
+      "shift_sd": -0.807,
+      "over_half_width": 8.0,
+      "head_output": "CD47"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD47",
+      "cells": 401,
+      "shift_sd": -0.773,
+      "over_half_width": 7.8,
+      "head_output": "CD47"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD9",
+      "cells": 288,
+      "shift_sd": 0.771,
+      "over_half_width": 6.3,
+      "head_output": "CD9"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD47",
+      "cells": 361,
+      "shift_sd": -0.748,
+      "over_half_width": 6.7,
+      "head_output": "CD47"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD59",
+      "cells": 361,
+      "shift_sd": 0.739,
+      "over_half_width": 6.9,
+      "head_output": null
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD9",
+      "cells": 361,
+      "shift_sd": 0.738,
+      "over_half_width": 7.4,
+      "head_output": "CD9"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD59",
+      "cells": 361,
+      "shift_sd": 0.728,
+      "over_half_width": 6.9,
+      "head_output": null
+     },
+     {
+      "target": "CD44",
+      "antibody": "CD47",
+      "cells": 270,
+      "shift_sd": 0.708,
+      "over_half_width": 4.7,
+      "head_output": "CD47"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD9",
+      "cells": 435,
+      "shift_sd": 0.708,
+      "over_half_width": 7.8,
+      "head_output": "CD9"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD9",
+      "cells": 401,
+      "shift_sd": 0.685,
+      "over_half_width": 7.4,
+      "head_output": "CD9"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD59",
+      "cells": 401,
+      "shift_sd": 0.648,
+      "over_half_width": 6.9,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD47",
+      "cells": 435,
+      "shift_sd": -0.642,
+      "over_half_width": 6.7,
+      "head_output": "CD47"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD47",
+      "cells": 288,
+      "shift_sd": -0.64,
+      "over_half_width": 5.4,
+      "head_output": "CD47"
+     },
+     {
+      "target": "HLA-C",
+      "antibody": "HLA_A",
+      "cells": 156,
+      "shift_sd": -0.625,
+      "over_half_width": 3.1,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD59",
+      "cells": 435,
+      "shift_sd": 0.618,
+      "over_half_width": 6.7,
+      "head_output": null
+     },
+     {
+      "target": "SSR2",
+      "antibody": "CD9",
+      "cells": 134,
+      "shift_sd": 0.613,
+      "over_half_width": 3.4,
+      "head_output": "CD9"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD117",
+      "cells": 288,
+      "shift_sd": 0.607,
+      "over_half_width": 4.5,
+      "head_output": null
+     },
+     {
+      "target": "B2M",
+      "antibody": "CD9",
+      "cells": 268,
+      "shift_sd": 0.568,
+      "over_half_width": 4.4,
+      "head_output": "CD9"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD117",
+      "cells": 361,
+      "shift_sd": 0.54,
+      "over_half_width": 3.9,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD119",
+      "cells": 435,
+      "shift_sd": 0.539,
+      "over_half_width": 5.3,
+      "head_output": "CD119"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD119",
+      "cells": 401,
+      "shift_sd": 0.533,
+      "over_half_width": 5.3,
+      "head_output": "CD119"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD58",
+      "cells": 288,
+      "shift_sd": 0.529,
+      "over_half_width": 4.3,
+      "head_output": "CD58"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD58",
+      "cells": 361,
+      "shift_sd": 0.527,
+      "over_half_width": 5.2,
+      "head_output": "CD58"
+     },
+     {
+      "target": "B2M",
+      "antibody": "CD59",
+      "cells": 268,
+      "shift_sd": 0.524,
+      "over_half_width": 4.3,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD61",
+      "cells": 288,
+      "shift_sd": 0.514,
+      "over_half_width": 4.0,
+      "head_output": null
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD58",
+      "cells": 401,
+      "shift_sd": 0.514,
+      "over_half_width": 5.2,
+      "head_output": "CD58"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD119",
+      "cells": 361,
+      "shift_sd": 0.498,
+      "over_half_width": 4.4,
+      "head_output": "CD119"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD140a",
+      "cells": 288,
+      "shift_sd": 0.492,
+      "over_half_width": 3.9,
+      "head_output": null
+     },
+     {
+      "target": "HLA-E",
+      "antibody": "HLA_E",
+      "cells": 178,
+      "shift_sd": -0.474,
+      "over_half_width": 4.3,
+      "head_output": "HLA-E"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD117",
+      "cells": 401,
+      "shift_sd": 0.456,
+      "over_half_width": 4.1,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD58",
+      "cells": 435,
+      "shift_sd": 0.441,
+      "over_half_width": 4.4,
+      "head_output": "CD58"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD117",
+      "cells": 361,
+      "shift_sd": 0.436,
+      "over_half_width": 3.4,
+      "head_output": null
+     },
+     {
+      "target": "NPC1",
+      "antibody": "CD274",
+      "cells": 227,
+      "shift_sd": -0.415,
+      "over_half_width": 3.1,
+      "head_output": "CD274"
+     },
+     {
+      "target": "B2M",
+      "antibody": "CD47",
+      "cells": 268,
+      "shift_sd": 0.413,
+      "over_half_width": 3.3,
+      "head_output": "CD47"
+     },
+     {
+      "target": "CD44",
+      "antibody": "HLA_A",
+      "cells": 270,
+      "shift_sd": 0.411,
+      "over_half_width": 3.2,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD140b",
+      "cells": 288,
+      "shift_sd": 0.382,
+      "over_half_width": 3.3,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD202b",
+      "cells": 288,
+      "shift_sd": 0.379,
+      "over_half_width": 3.5,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD117",
+      "cells": 435,
+      "shift_sd": 0.325,
+      "over_half_width": 3.2,
+      "head_output": null
+     }
+    ],
+    "targets_with_a_clear_response": [
+     "B2M",
+     "CD274",
+     "CD44",
+     "CD47",
+     "CD58",
+     "CD59",
+     "HLA-B",
+     "HLA-C",
+     "HLA-E",
+     "IFNGR1",
+     "IFNGR2",
+     "ITGA3",
+     "JAK1",
+     "JAK2",
+     "NPC1",
+     "SSR2",
+     "STAT1",
+     "TAPBP"
+    ]
+   },
+   "Control": {
+    "cells": 57627,
+    "single_guide_cells": 30612,
+    "control_guide_cells": 3864,
+    "targets": 248,
+    "targets_with_min_cells": 176,
+    "clear_responses": [
+     {
+      "target": "CD47",
+      "antibody": "CD47",
+      "cells": 130,
+      "shift_sd": -2.456,
+      "over_half_width": 10.0,
+      "head_output": "CD47"
+     },
+     {
+      "target": "B2M",
+      "antibody": "HLA_A",
+      "cells": 132,
+      "shift_sd": -2.452,
+      "over_half_width": 9.5,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD58",
+      "antibody": "CD58",
+      "cells": 128,
+      "shift_sd": -2.231,
+      "over_half_width": 12.2,
+      "head_output": "CD58"
+     },
+     {
+      "target": "TAPBP",
+      "antibody": "HLA_A",
+      "cells": 124,
+      "shift_sd": -1.784,
+      "over_half_width": 8.8,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD44",
+      "antibody": "CD44",
+      "cells": 158,
+      "shift_sd": -1.707,
+      "over_half_width": 4.0,
+      "head_output": "CD44"
+     },
+     {
+      "target": "CD59",
+      "antibody": "CD59",
+      "cells": 151,
+      "shift_sd": -1.355,
+      "over_half_width": 5.9,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD119",
+      "cells": 136,
+      "shift_sd": -1.12,
+      "over_half_width": 5.6,
+      "head_output": "CD119"
+     },
+     {
+      "target": "STAT3",
+      "antibody": "HLA_A",
+      "cells": 123,
+      "shift_sd": 0.862,
+      "over_half_width": 3.6,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD274",
+      "antibody": "CD274",
+      "cells": 141,
+      "shift_sd": -0.72,
+      "over_half_width": 6.6,
+      "head_output": "CD274"
+     },
+     {
+      "target": "ITGA3",
+      "antibody": "CD49f",
+      "cells": 145,
+      "shift_sd": 0.627,
+      "over_half_width": 3.8,
+      "head_output": "CD49f"
+     }
+    ],
+    "targets_with_a_clear_response": [
+     "B2M",
+     "CD274",
+     "CD44",
+     "CD47",
+     "CD58",
+     "CD59",
+     "IFNGR1",
+     "ITGA3",
+     "STAT3",
+     "TAPBP"
+    ]
+   },
+   "IFNγ": {
+    "cells": 87590,
+    "single_guide_cells": 50258,
+    "control_guide_cells": 6306,
+    "targets": 248,
+    "targets_with_min_cells": 203,
+    "clear_responses": [
+     {
+      "target": "B2M",
+      "antibody": "HLA_A",
+      "cells": 256,
+      "shift_sd": -2.939,
+      "over_half_width": 14.2,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD47",
+      "antibody": "CD47",
+      "cells": 235,
+      "shift_sd": -2.777,
+      "over_half_width": 16.0,
+      "head_output": "CD47"
+     },
+     {
+      "target": "CD58",
+      "antibody": "CD58",
+      "cells": 205,
+      "shift_sd": -2.218,
+      "over_half_width": 12.2,
+      "head_output": "CD58"
+     },
+     {
+      "target": "CD274",
+      "antibody": "CD274",
+      "cells": 270,
+      "shift_sd": -2.019,
+      "over_half_width": 19.1,
+      "head_output": "CD274"
+     },
+     {
+      "target": "TAPBP",
+      "antibody": "HLA_A",
+      "cells": 201,
+      "shift_sd": -1.59,
+      "over_half_width": 9.6,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD59",
+      "antibody": "CD59",
+      "cells": 266,
+      "shift_sd": -1.427,
+      "over_half_width": 8.3,
+      "head_output": null
+     },
+     {
+      "target": "CD44",
+      "antibody": "CD44",
+      "cells": 240,
+      "shift_sd": -1.315,
+      "over_half_width": 3.9,
+      "head_output": "CD44"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD274",
+      "cells": 189,
+      "shift_sd": -1.301,
+      "over_half_width": 9.2,
+      "head_output": "CD274"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD274",
+      "cells": 221,
+      "shift_sd": -1.28,
+      "over_half_width": 9.0,
+      "head_output": "CD274"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD274",
+      "cells": 179,
+      "shift_sd": -1.262,
+      "over_half_width": 8.2,
+      "head_output": "CD274"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD274",
+      "cells": 254,
+      "shift_sd": -1.162,
+      "over_half_width": 8.3,
+      "head_output": "CD274"
+     },
+     {
+      "target": "JAK1",
+      "antibody": "CD274",
+      "cells": 225,
+      "shift_sd": -0.96,
+      "over_half_width": 6.2,
+      "head_output": "CD274"
+     },
+     {
+      "target": "ITGA3",
+      "antibody": "CD49f",
+      "cells": 199,
+      "shift_sd": 0.736,
+      "over_half_width": 4.6,
+      "head_output": "CD49f"
+     },
+     {
+      "target": "HLA-B",
+      "antibody": "HLA_A",
+      "cells": 147,
+      "shift_sd": -0.715,
+      "over_half_width": 4.1,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "SSR2",
+      "antibody": "CD9",
+      "cells": 182,
+      "shift_sd": 0.659,
+      "over_half_width": 4.4,
+      "head_output": "CD9"
+     },
+     {
+      "target": "HLA-C",
+      "antibody": "HLA_A",
+      "cells": 164,
+      "shift_sd": -0.622,
+      "over_half_width": 3.9,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "STAT3",
+      "antibody": "HLA_A",
+      "cells": 187,
+      "shift_sd": 0.592,
+      "over_half_width": 3.0,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "SSR2",
+      "antibody": "HLA_A",
+      "cells": 182,
+      "shift_sd": 0.471,
+      "over_half_width": 3.4,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "CD44",
+      "antibody": "HLA_A",
+      "cells": 240,
+      "shift_sd": 0.428,
+      "over_half_width": 3.1,
+      "head_output": "HLA-A-B-C"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD119",
+      "cells": 254,
+      "shift_sd": 0.414,
+      "over_half_width": 3.5,
+      "head_output": "CD119"
+     }
+    ],
+    "targets_with_a_clear_response": [
+     "B2M",
+     "CD274",
+     "CD44",
+     "CD47",
+     "CD58",
+     "CD59",
+     "HLA-B",
+     "HLA-C",
+     "IFNGR1",
+     "IFNGR2",
+     "ITGA3",
+     "JAK1",
+     "JAK2",
+     "SSR2",
+     "STAT1",
+     "STAT3",
+     "TAPBP"
+    ]
+   }
+  }
+ },
+ "papalexi2021": {
+  "cells": 20729,
+  "antibodies": [
+   "CD86",
+   "PDL1",
+   "PDL2",
+   "CD366"
+  ],
+  "antibodies_with_a_head_output": {
+   "CD86": "CD86",
+   "PDL1": "CD274"
+  },
+  "isotype_controls": [],
+  "thresholds": {
+   "min_cells": 100,
+   "min_shift_sd": 0.3,
+   "min_shift_over_half_width": 3.0
+  },
+  "conditions": {
+   "all": {
+    "cells": 20729,
+    "single_guide_cells": 20729,
+    "control_guide_cells": 2386,
+    "targets": 25,
+    "targets_with_min_cells": 24,
+    "clear_responses": [
+     {
+      "target": "JAK2",
+      "antibody": "PDL1",
+      "cells": 1024,
+      "shift_sd": -1.292,
+      "over_half_width": 18.8,
+      "head_output": "CD274"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "PDL1",
+      "cells": 1213,
+      "shift_sd": -1.201,
+      "over_half_width": 17.5,
+      "head_output": "CD274"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "PDL1",
+      "cells": 1341,
+      "shift_sd": -1.142,
+      "over_half_width": 17.8,
+      "head_output": "CD274"
+     },
+     {
+      "target": "STAT1",
+      "antibody": "PDL1",
+      "cells": 444,
+      "shift_sd": -1.079,
+      "over_half_width": 11.1,
+      "head_output": "CD274"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD366",
+      "cells": 1024,
+      "shift_sd": 0.796,
+      "over_half_width": 10.9,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD366",
+      "cells": 1341,
+      "shift_sd": 0.739,
+      "over_half_width": 11.7,
+      "head_output": null
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD366",
+      "cells": 1213,
+      "shift_sd": 0.729,
+      "over_half_width": 10.7,
+      "head_output": null
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD366",
+      "cells": 444,
+      "shift_sd": 0.714,
+      "over_half_width": 7.0,
+      "head_output": null
+     },
+     {
+      "target": "CMTM6",
+      "antibody": "PDL1",
+      "cells": 817,
+      "shift_sd": -0.684,
+      "over_half_width": 8.6,
+      "head_output": "CD274"
+     },
+     {
+      "target": "BRD4",
+      "antibody": "PDL1",
+      "cells": 341,
+      "shift_sd": 0.669,
+      "over_half_width": 5.2,
+      "head_output": "CD274"
+     },
+     {
+      "target": "CD86",
+      "antibody": "CD86",
+      "cells": 1197,
+      "shift_sd": -0.661,
+      "over_half_width": 9.9,
+      "head_output": "CD86"
+     },
+     {
+      "target": "IRF1",
+      "antibody": "PDL1",
+      "cells": 1073,
+      "shift_sd": -0.524,
+      "over_half_width": 7.0,
+      "head_output": "CD274"
+     },
+     {
+      "target": "IRF1",
+      "antibody": "CD366",
+      "cells": 1073,
+      "shift_sd": 0.52,
+      "over_half_width": 7.4,
+      "head_output": null
+     },
+     {
+      "target": "PDCD1LG2",
+      "antibody": "PDL2",
+      "cells": 617,
+      "shift_sd": -0.506,
+      "over_half_width": 5.2,
+      "head_output": null
+     },
+     {
+      "target": "STAT1",
+      "antibody": "CD86",
+      "cells": 444,
+      "shift_sd": 0.478,
+      "over_half_width": 5.2,
+      "head_output": "CD86"
+     },
+     {
+      "target": "JAK2",
+      "antibody": "CD86",
+      "cells": 1024,
+      "shift_sd": 0.474,
+      "over_half_width": 6.8,
+      "head_output": "CD86"
+     },
+     {
+      "target": "IFNGR1",
+      "antibody": "CD86",
+      "cells": 1341,
+      "shift_sd": 0.46,
+      "over_half_width": 7.4,
+      "head_output": "CD86"
+     },
+     {
+      "target": "IFNGR2",
+      "antibody": "CD86",
+      "cells": 1213,
+      "shift_sd": 0.444,
+      "over_half_width": 6.8,
+      "head_output": "CD86"
+     },
+     {
+      "target": "BRD4",
+      "antibody": "CD86",
+      "cells": 341,
+      "shift_sd": -0.423,
+      "over_half_width": 3.8,
+      "head_output": "CD86"
+     },
+     {
+      "target": "IRF1",
+      "antibody": "PDL2",
+      "cells": 1073,
+      "shift_sd": -0.396,
+      "over_half_width": 5.6,
+      "head_output": null
+     },
+     {
+      "target": "CMTM6",
+      "antibody": "PDL2",
+      "cells": 817,
+      "shift_sd": 0.318,
+      "over_half_width": 3.8,
+      "head_output": null
+     },
+     {
+      "target": "IRF1",
+      "antibody": "CD86",
+      "cells": 1073,
+      "shift_sd": 0.31,
+      "over_half_width": 4.5,
+      "head_output": "CD86"
+     },
+     {
+      "target": "CD86",
+      "antibody": "PDL1",
+      "cells": 1197,
+      "shift_sd": 0.304,
+      "over_half_width": 4.4,
+      "head_output": "CD274"
+     },
+     {
+      "target": "CD86",
+      "antibody": "CD366",
+      "cells": 1197,
+      "shift_sd": 0.301,
+      "over_half_width": 4.7,
+      "head_output": null
+     }
+    ],
+    "targets_with_a_clear_response": [
+     "BRD4",
+     "CD86",
+     "CMTM6",
+     "IFNGR1",
+     "IFNGR2",
+     "IRF1",
+     "JAK2",
+     "PDCD1LG2",
+     "STAT1"
+    ]
+   }
+  }
+ }
+}

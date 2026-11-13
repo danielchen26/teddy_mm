@@ -11,9 +11,11 @@ Code and records: [`anm_diag/`](../anm_diag/) (how-to in its [README](../anm_dia
 > and the first layer lose nothing), and a forward test of typed source events shows how the head responds to the
 > knockout direction. A rule written before the head split selects the next intervention (retrain the head with
 > IFN-γ-varied cells); no run of that step is recorded in this repository. Exploratory work since: the pooled source
-> separated by target and batch (11 Nov), and two closed-loop runs (12 Nov) in which repairing the step the audit names
-> removes the loss on held-out genes, within the 0.02 guard on the head's original task once its bone-marrow outputs are
-> held. The head that teddy_mm trains is still the unrepaired one. Details: [Corrections](#corrections-and-deviations).
+> separated by target and batch (11 Nov), and three rounds of a loop (12 Nov), re-read afterwards by intervals. On
+> held-out genes, repairing the step the audit names removes 84% and 91% of what the head loses, and repairing the decoder
+> 5% and 15%. No repaired head is yet shown to be free of the loss (none has a supported output), and a third round, one
+> head for both cell types, did not pass its rule. The head that teddy_mm trains is still the unrepaired one; the repair
+> is `scripts/07_repair_head.py`, a fine-tune, one head per cell type. Details: [Corrections](#corrections-and-deviations).
 
 ## The question
 
@@ -295,11 +297,62 @@ control cells no fit had used.
   cells. By the rule the loop closes within the guard on both cell types: *u* at the head output 0.12 (melanoma) and 0.18
   (THP-1), no step named, and a bone-marrow test score of 0.603 to 0.604 and 0.594 to 0.595 against 0.602. Gene by gene
   the readings are those of the unguarded repair.
+- **Round 3, one head for both cell types: not passed** ([`anm_diag/runs/repair_20261112/`](../anm_diag/runs/repair_20261112/),
+  designed after round 2 was read, with the rule and a stopping rule committed before its runs). After round 2 the audit
+  still located HLA-E on melanoma in the head, and a head repaired on one cell type still failed on the other. So the MLP
+  was repaired once more, in one fit for both cell types and on every measured protein the head has an output for, with
+  six target genes held out in turn. By the rule melanoma regressed, on all three splits of the controls: the head adds
+  0.109, 0.111 and 0.140 to *u* at Z for PD-L1, where the margin is 0.10. THP-1 passes on all three, and the bone-marrow
+  score stays within the guard (0.596 to 0.598 against 0.602). HLA-E on melanoma is still located in the head. The fit did
+  not learn it even on the genes it was trained on (the head's own HLA-E output rises on those knockouts while the
+  measured protein falls slightly), so the round shows that this fit does not repair HLA-E, not that the MLP cannot. By
+  the stopping rule no further variant of the fit is tried on these audit cells.
+- **The repair as a script.** [`scripts/07_repair_head.py`](../scripts/07_repair_head.py) makes the repair with teddy_mm's
+  own model code and writes a checkpoint in the format of `scripts/04_train.py`. Its heads match the audited ones (outputs
+  within 0.001). Fitted on all genes in the form of round 2, the two heads score 0.604 (melanoma) and 0.596 (THP-1) in
+  `scripts/05_eval.py` on the full bone-marrow test split, against 0.603 as trained. Only the route from the MLP through
+  the decoder is repaired; the flow-matching branch is unchanged.
 
-Neither run is step 4 as sealed (one seed, a fine-tune of one part on one protein, compared with the head as trained and
-not with a control retrain; the head latent is not at "support"). What they show is that the step the audit names is the
-one whose repair removes the loss, on genes the repair never saw and on a second cell type, and that this repair can be
-made without the cost on the head's original task. It does not carry from one cell type to the other.
+### The three rounds re-read by intervals (post hoc, exploratory)
+
+[`anm_diag/runs/loop_reading_20261112/`](../anm_diag/runs/loop_reading_20261112/), read with
+[`anm_diag/anm_diag/loop.py`](../anm_diag/anm_diag/loop.py) under [`anm_diag/LOOP_PROTOCOL.md`](../anm_diag/LOOP_PROTOCOL.md).
+No fit and no audit was made for it. The rounds above decided by comparing a point value with 0.10. Their records hold
+bootstrap draws, and the audits of all heads of a data set share cells, folds and resamples, so the loss a head adds
+between two stages and the difference between two heads have intervals. The protocol separates two questions.
+
+**Is the located step the one that matters?** Two repairs against one baseline, PD-L1, Z → head output:
+
+| cells | head as trained adds | MLP repaired removes | decoder repaired removes | reading |
+|---|---|---|---|---|
+| melanoma | 0.39 [0.338, 0.436] | 84% [74%, 98%] | 5% [-4%, 13%] | located step confirmed |
+| THP-1 | 0.42 [0.318, 0.495] | 91% [85%, 99%] | 15% [8%, 21%] | located step confirmed |
+
+Nine of the ten held-out genes pass the admission check one at a time, and all nine read the same way.
+
+**Is a repaired head free of the loss?** Graded: the output is supported (the paper's closing of a loop); no added loss
+shown (the interval of what the head adds lies below 0.10); the loss is no longer resolved (the interval crosses 0.10).
+
+| cells | round 1 | round 2 | round 3 |
+|---|---|---|---|
+| melanoma | 0.063 [0.009, 0.110]: loss no longer resolved | 0.064 [0.013, 0.112]: loss no longer resolved | 0.109 [0.057, 0.157]: loss no longer resolved |
+| THP-1 | 0.036 [0.003, 0.066]: no added loss shown | 0.060 [0.029, 0.096]: no added loss shown | 0.047 [-0.005, 0.098]: no added loss shown |
+
+No repaired head has a supported output. One reason lies in the design: the repairs used half of the control cells, and
+on the cells left for the audit the reference stage Z is itself unresolved, where the sealed run, with every control,
+supports it. The decoder repair closes nothing on either cell type.
+
+Further readings. On melanoma the joint head of round 3 adds 0.044 [0.002, 0.090] more than the head of round 2, in a
+paired comparison; on THP-1 no difference is resolved. HLA-E and MHC-I do not pass the admission check on these cells
+(their response is 1.9 and 2.9 times the half-width of its interval, where 3 is wanted), so they were not targets that
+could be followed. A census of the protein files finds 1,846 knockout cells of the same five genes in the melanoma
+co-culture condition that no fit or audit of the loop has used.
+
+None of these runs is step 4 as sealed (one training seed, a fine-tune of one part, compared with the head as trained
+and not with a control retrain; the head latent is not at "support"). What they show is that the step the audit names is
+the one whose repair removes most of the PD-L1 loss, on genes the repair never saw and on a second cell type, and that
+this repair can be made without the cost on the head's original task. They do not show a repaired head: no output is
+supported, a repair does not carry from one cell type to the other, and one head for both is not established.
 
 ## Corrections and deviations
 

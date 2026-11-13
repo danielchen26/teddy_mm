@@ -1,0 +1,87 @@
+{
+ "what": "teddy_mm's own evaluation (scripts/05_eval.py, size factor train-median) on the full bone-marrow test split (16,750 cells), for the head as trained and for heads made by scripts/07_repair_head.py at seed 0 with no gene held out and hold weight 1. 'joint' is the repair of this round (both data sets, every measured protein). 'melanoma_pdl1' and 'thp1_pdl1' are the repair of runs/loop_guard_20261112 (one data set, PD-L1 only). The flow-matching route does not use the MLP and is unchanged. None of these heads is audited: each was fitted on the knockout cells an audit would use.",
+ "as_trained": {
+  "n_test": 16750,
+  "n_proteins": 134,
+  "size_factor": "train-median",
+  "mean_pearson_mlp": 0.6027010886350935,
+  "mean_pearson_fm": 0.5821253080393156,
+  "pearson_mlp": {
+   "CD274": 0.3962054824924508,
+   "HLA-A-B-C": 0.5738729717913333,
+   "HLA-E": 0.32248673823195884
+  }
+ },
+ "joint": {
+  "n_test": 16750,
+  "n_proteins": 134,
+  "size_factor": "train-median",
+  "mean_pearson_mlp": 0.5975749101218321,
+  "mean_pearson_fm": 0.5821253080393156,
+  "pearson_mlp": {
+   "CD274": 0.39206833048620054,
+   "HLA-A-B-C": 0.5730857327872801,
+   "HLA-E": 0.2950580118479073
+  },
+  "change_per_protein": {
+   "mean": -0.0051261785132614346,
+   "min": -0.050272477337100385,
+   "max": 0.016457908927895004,
+   "lower_by_more_than_0.02": 9
+  }
+ },
+ "melanoma_pdl1": {
+  "n_test": 16750,
+  "n_proteins": 134,
+  "size_factor": "train-median",
+  "mean_pearson_mlp": 0.6043039409601367,
+  "mean_pearson_fm": 0.5821253080393156,
+  "pearson_mlp": {
+   "CD274": 0.39375059111992644,
+   "HLA-A-B-C": 0.5811704452636797,
+   "HLA-E": 0.3168042862917151
+  },
+  "change_per_protein": {
+   "mean": 0.0016028523250432162,
+   "min": -0.010807551513553504,
+   "max": 0.014802623162459838,
+   "lower_by_more_than_0.02": 0
+  },
+  "fit": {
+   "cells": 5171,
+   "fitted": 2561,
+   "set_aside": 610,
+   "controls_never_fitted": 2000,
+   "trained_outputs": "PDL1=CD274",
+   "kept_step": 400,
+   "bone_marrow_outputs_moved_rms": 0.0313226655125618
+  }
+ },
+ "thp1_pdl1": {
+  "n_test": 16750,
+  "n_proteins": 134,
+  "size_factor": "train-median",
+  "mean_pearson_mlp": 0.5955397533685799,
+  "mean_pearson_fm": 0.5821253080393156,
+  "pearson_mlp": {
+   "CD274": 0.39674565357479885,
+   "HLA-A-B-C": 0.5656083328447412,
+   "HLA-E": 0.2902067845495228
+  },
+  "change_per_protein": {
+   "mean": -0.007161335266513633,
+   "min": -0.05146599296019505,
+   "max": 0.01738703072116432,
+   "lower_by_more_than_0.02": 8
+  },
+  "fit": {
+   "cells": 7478,
+   "fitted": 5043,
+   "set_aside": 1242,
+   "controls_never_fitted": 1193,
+   "trained_outputs": "PDL1=CD274",
+   "kept_step": 400,
+   "bone_marrow_outputs_moved_rms": 0.0632716566324234
+  }
+ }
+}

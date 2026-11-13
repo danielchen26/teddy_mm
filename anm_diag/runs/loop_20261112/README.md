@@ -1,5 +1,8 @@
 # Closing the loop: repairing the step the audit names — 12 November 2026
 
+> Read again by intervals, with the heads compared pairwise, in [`runs/loop_reading_20261112`](../loop_reading_20261112/)
+> (post hoc). The outcome reported in this file is by this run's own rule and stands as recorded.
+
 Exploratory. The design, the rule and an audit of the plan are in [`DESIGN.md`](DESIGN.md), committed before any run
 (commit `7b1f4c8`). This file reports what came out.
 

@@ -1,0 +1,306 @@
+{
+ "anm_diag_version": "0.1.0",
+ "declaration": {
+  "status": "exploratory",
+  "kind": "sufficiency",
+  "measurement_sharing": "none",
+  "readout_classes": {
+   "ridge": {
+    "regressor": "RidgeCV",
+    "alphas": [
+     0.1,
+     0.31622776601683794,
+     1.0,
+     3.1622776601683795,
+     10.0,
+     31.622776601683793,
+     100.0,
+     316.22776601683796,
+     1000.0,
+     3162.2776601683795,
+     10000.0,
+     31622.776601683792,
+     100000.0
+    ],
+    "classifier": "LogisticRegression",
+    "C": 0.05
+   },
+   "hgb": {
+    "regressor": "HistGradientBoostingRegressor",
+    "classifier": "HistGradientBoostingClassifier",
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15
+   }
+  },
+  "inference": {
+   "folds": 5,
+   "bootstrap": 1000,
+   "forward_bootstrap": 300,
+   "seed": 0,
+   "standardize_on": "control",
+   "inverse": "crossfit_partial_linear"
+  },
+  "decision": {
+   "margin_u": 0.1,
+   "step_margin": 0.1,
+   "alpha": 0.05
+  },
+  "anm_declaration": 1,
+  "name": "repair_target_papalexi2021_JAK2_joint_s0",
+  "system": {
+   "id": "TEDDY-G-70M + teddy_mm phase-1 head (cite_phase1_official/best.pt)",
+   "frozen": true,
+   "inputs": [
+    "rna_counts"
+   ],
+   "notes": "Closed-loop test, round 3. Head: the head with only its latent network (MLP) retrained, in one fit for both cell types and for every measured protein the head predicts, with a term in the loss that holds its outputs on bone-marrow training cells (round 3, see DESIGN.md of this folder). Split of the control cells: seed 0. Cells: the knockout cells of JAK2, held out when this head was fitted, and the audit half of the control cells. No head was fitted on any audited cell. The head was trained on bone-marrow CITE-seq (NeurIPS 2021). THP-1 is a monocytic leukaemia line, closer to that training set than melanoma cells but still a shift. Declared choice: use the head as trained. Cells are taken by guide, intent-to-treat: no filtering by response-derived classes (no mixscape KO/NP labels), since those are computed from the RNA response itself. Targets are the guides' genes, so folds and resampling are per gene, not per guide. Genes reach TEDDY through the 10x GRCh38-3.0.0 symbol table that teddy_mm uses (tools/gene_map.py), because the file's own Ensembl ids put HLA and B2M genes and IFNGR2 outside TEDDY's vocabulary.\n"
+  },
+  "measurements": {
+   "rna_counts": {
+    "modality": "rna",
+    "kind": "counts"
+   },
+   "adt_counts": {
+    "modality": "protein",
+    "kind": "counts"
+   }
+  },
+  "source": {
+   "controlled": true,
+   "kind": "crispr_ko",
+   "stratum": [
+    "rep1-tx",
+    "rep2-tx",
+    "rep3-tx",
+    "rep4-tx"
+   ],
+   "assign_from_guides": true,
+   "control_guides": [
+    "NT"
+   ],
+   "control": [
+    "control"
+   ],
+   "treated": [
+    "JAK2"
+   ],
+   "cluster": "guide",
+   "max_control_cells": 4000,
+   "control_seed": 0
+  },
+  "readouts": [
+   {
+    "id": "PDL1",
+    "measurement": "adt_counts",
+    "statistic": "adt_log1p",
+    "features": [
+     "PDL1"
+    ]
+   }
+  ],
+  "nodes": [
+   {
+    "id": "Z",
+    "from": "rna_counts",
+    "op": "teddy_embedding",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_LAT",
+    "from": "Z",
+    "op": "head_latent",
+    "operator": "system",
+    "role": "chain"
+   },
+   {
+    "id": "HEAD_OUT",
+    "from": "HEAD_LAT",
+    "op": "head_output",
+    "operator": "system",
+    "role": "chain"
+   }
+  ],
+  "chain": [
+   "Z",
+   "HEAD_LAT",
+   "HEAD_OUT"
+  ]
+ },
+ "declaration_sha256": "40cc989fa3f20dcbb88c9b250c03aec2065c6cce1f5789af14c3fce09b3800f2",
+ "problems": [
+  {
+   "code": "S2",
+   "severity": "warning",
+   "message": "the source pools events that differ in 'stratum' (4 values: rep1-tx, rep2-tx, rep3-tx, rep4-tx) without declaring it under source.pooling: the verdicts hold for the pooled source, not for each stratum"
+  },
+  {
+   "code": "C5",
+   "severity": "warning",
+   "message": "no positive control node: support verdicts will be marked uninformative"
+  },
+  {
+   "code": "K1",
+   "severity": "warning",
+   "message": "only 4 treated clusters: cluster-bootstrap intervals are unreliable; read directions only"
+  }
+ ],
+ "n_cells": 2217,
+ "n_treated": 1024,
+ "n_treated_clusters": 4,
+ "fold_seed": 0,
+ "forward": {
+  "auc": {
+   "Z": 0.8926526155176027,
+   "HEAD_LAT": 0.8670262403080471,
+   "HEAD_OUT": 0.8389883369132439
+  },
+  "steps": {
+   "Z->HEAD_LAT": [
+    -0.041029035576711684,
+    -0.008466503598577854
+   ],
+   "HEAD_LAT->HEAD_OUT": [
+    -0.03597427012964235,
+    -0.019177157984548304
+   ]
+  },
+  "class": "ridge"
+ },
+ "readouts": {
+  "PDL1": {
+   "delta": -0.908442116935018,
+   "delta_ci": [
+    -0.9988765510177321,
+    -0.8203574234495915
+   ],
+   "states": {
+    "Z": {
+     "role": "chain",
+     "best_class": "ridge",
+     "u": 0.15311071863422956,
+     "ci": [
+      0.08238165297129403,
+      0.21627351912697174
+     ],
+     "verdict": "unresolved",
+     "by_class": {
+      "ridge": {
+       "u": 0.15311071863422956,
+       "ci": [
+        0.08238165297129403,
+        0.21627351912697174
+       ]
+      },
+      "hgb": {
+       "u": 0.31039409500417153,
+       "ci": [
+        0.25185809385835073,
+        0.3593171982616865
+       ]
+      }
+     }
+    },
+    "HEAD_LAT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.213707010860072,
+     "ci": [
+      0.16572625286091833,
+      0.26553440127909295
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.21825161433022922,
+       "ci": [
+        0.1546690071638506,
+        0.28681372785875203
+       ]
+      },
+      "hgb": {
+       "u": 0.213707010860072,
+       "ci": [
+        0.16572625286091833,
+        0.26553440127909295
+       ]
+      }
+     }
+    },
+    "HEAD_OUT": {
+     "role": "chain",
+     "best_class": "hgb",
+     "u": 0.22143986356537482,
+     "ci": [
+      0.16806106197915646,
+      0.276972723486765
+     ],
+     "verdict": "reject",
+     "by_class": {
+      "ridge": {
+       "u": 0.2355753053159003,
+       "ci": [
+        0.1819196899317164,
+        0.29335140985205876
+       ]
+      },
+      "hgb": {
+       "u": 0.22143986356537482,
+       "ci": [
+        0.16806106197915646,
+        0.276972723486765
+       ]
+      }
+     }
+    }
+   },
+   "steps": {
+    "Z->HEAD_LAT": {
+     "best_class": [
+      0.0173280885543691,
+      0.11336001550980877
+     ],
+     "same_class": {
+      "ridge": [
+       0.017280489640401523,
+       0.12706003886939465
+      ],
+      "hgb": [
+       -0.14007927707951023,
+       -0.038443065146842474
+      ]
+     }
+    },
+    "HEAD_LAT->HEAD_OUT": {
+     "best_class": [
+      -0.02008096023729367,
+      0.03823913513357327
+     ],
+     "same_class": {
+      "ridge": [
+       -0.011988314675730733,
+       0.042481140075071776
+      ],
+      "hgb": [
+       -0.02008096023729367,
+       0.03823913513357327
+      ]
+     }
+    }
+   },
+   "root_cause": {
+    "cause": "reference_unresolved",
+    "detail": "reference stage 'Z' is unresolved: the data cannot tell whether the input view reproduces this response; no claim about later stages"
+   },
+   "exact": null
+  }
+ },
+ "provenance": {
+  "adapter": "precomputed(perturb_cite features exported on the source machine)",
+  "python": "3.13.18"
+ },
+ "runtime_s": 59.0,
+ "exploratory": true,
+ "seal_verified": []
+}

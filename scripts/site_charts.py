@@ -77,6 +77,33 @@ def cost(tx, rows, base, guard=0.02, colors=None):
     s.append(tx((left + W - right) / 2, yb + 34, "骨髓测试细胞上的得分（每行是一组头的最低到最高）", "Score on bone-marrow test cells (each row: lowest to highest of a group of heads)", "middle", 11.5))
     return "".join(s) + "</svg>"
 
+
+def share(tx, rows, arms=(("mlp_only", "修 MLP（定位到的那一步）", "MLP repaired (the located step)"), ("decoder_only", "只修解码器（对照）", "decoder repaired (control)")), colors=None):
+    """rows: [(zh, en, {arm: (point, lo, hi)})]: the share of the baseline's added loss that each change removes, with intervals."""
+    col = dict((a[0], a[3]) for a in ARMS); col.update(colors or {}); shp = dict((a[0], a[5]) for a in ARMS)
+    W, left, right, top, band = 760, 168, 150, 30, 50; H = top + band * len(rows) + 74
+    x0, x1 = -0.25, 1.3; X = lambda v: left + (W - left - right) * (min(max(v, x0), x1) - x0) / (x1 - x0); yb = top + band * len(rows)
+    pc = lambda v: f"{100 * v:.0f}%".replace("-0%", "0%").replace("-", "−")
+    d_zh = "；".join(f"{r[0]}：" + "，".join(f"{a[1]} {pc(r[2][a[0]][0])}（{pc(r[2][a[0]][1])} 到 {pc(r[2][a[0]][2])}）" for a in arms) for r in rows)
+    d_en = "; ".join(f"{r[1]}: " + ", ".join(f"{a[2]} {pc(r[2][a[0]][0])} ({pc(r[2][a[0]][1])} to {pc(r[2][a[0]][2])})" for a in arms) for r in rows)
+    s = [f'<svg style="min-width:620px" viewBox="0 0 {W} {H}" role="img" data-al-zh="头多丢的那部分响应被每种修法去掉的比例。{d_zh}。" data-al-en="Share of the loss the head adds that each repair removes. {d_en}.">']
+    for v in (0, 0.25, 0.5, 0.75, 1.0):
+        s.append(f'<line x1="{X(v):.1f}" y1="{top - 4}" x2="{X(v):.1f}" y2="{yb}" stroke="var(--line)" stroke-width="{1.3 if v in (0, 1.0) else .7}"/><text x="{X(v):.1f}" y="{yb + 15}" font-size="11" text-anchor="middle" style="fill:var(--muted);font-family:var(--mono)">{pc(v)}</text>')
+    for k, (zh, en, vals) in enumerate(rows):
+        cy = top + band * (k + 0.5)
+        if k:
+            s.append(f'<line x1="{left - 150}" y1="{top + band * k}" x2="{W - 12}" y2="{top + band * k}" stroke="var(--line)" stroke-width=".7"/>')
+        s.append(tx(left - 14, cy + 4, zh, en, "end", 12, weight=600))
+        for j, (arm, _, _) in enumerate(arms):
+            pt, lo, hi = vals[arm]; y = cy + (j - (len(arms) - 1) / 2) * 17; c = col[arm]
+            s.append(f'<line x1="{X(lo):.1f}" y1="{y:.1f}" x2="{X(hi):.1f}" y2="{y:.1f}" style="stroke:{c}" stroke-width="2.6" stroke-linecap="round"/>' + mark(shp[arm], X(pt), y, c, 4.6)
+                     + f'<text x="{X(hi) + 10:.1f}" y="{y + 4:.1f}" font-size="11" style="fill:var(--fg, currentColor);font-family:var(--mono)">{pc(pt)} [{pc(lo)}, {pc(hi)}]</text>')
+    s.append(tx((left + W - right) / 2, yb + 34, "头在 Z 到输出之间多丢的部分，被去掉的比例", "Share removed of the loss the head adds between Z and its output", "middle", 11.5))
+    for j, (arm, zh, en) in enumerate(arms):
+        lx = left + j * 270; ly = yb + 58; c = col[arm]
+        s.append(f'<line x1="{lx}" y1="{ly}" x2="{lx + 26}" y2="{ly}" style="stroke:{c}" stroke-width="2.6"/>' + mark(shp[arm], lx + 13, ly, c, 4.2) + tx(lx + 33, ly + 4, zh, en, "start", 11.5))
+    return "".join(s) + "</svg>"
+
 CHAIN = [("RAW", "归一化的 RNA", "normalized RNA"), ("TOKENS", "TEDDY 的词元", "TEDDY's tokens"), ("Z", "嵌入 Z", "embedding Z"), ("HEAD_LAT", "头的中间层", "head latent"), ("HEAD_OUT", "头的输出", "head output")]
 VC = {"support": "var(--good)", "reject": "var(--bad)", "unresolved": "var(--warn)"}
 def chain(tx, panels, readout="PDL1"):

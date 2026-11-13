@@ -51,7 +51,16 @@ HAVE3 = (RUNS / "repair_20261112" / "results" / "repair.json").exists()
 R = J("repair_20261112", "results", "repair.json") if HAVE3 else None
 A = {**L["audits"], **G["audits"], **(R["audits"] if HAVE3 else {})}
 BASE = LC["as_trained"]["mean_pearson"]
-ARM_OF_ROUND = ["as_trained", "mlp_only", "mlp_guarded"] + (["joint_s0"] if HAVE3 else [])
+PASSED3 = bool(HAVE3 and R["one_head_for_both"])        # round 3 by its own rule
+FE = J("repair_20261112", "results", "full_test_eval.json") if HAVE3 else None
+TC = J("repair_20261112", "results", "torch_check.json") if HAVE3 else None
+OS = J("repair_20261112", "results", "own_shift.json") if HAVE3 else None
+LR = J("loop_reading_20261112", "results", "loop_reading.json")          # the rounds re-read under LOOP_PROTOCOL.md (anm_diag/loop.py)
+CEN = J("loop_reading_20261112", "results", "data_census.json")          # which knockouts change which measured proteins
+SP, S1, S2 = "Z->HEAD_OUT", "Z->HEAD_LAT", "HEAD_LAT->HEAD_OUT"
+GRADE = {"absolute": ("ok", "头得到“支持”", "head supported"), "relative": ("ok", "确认没有多丢", "no added loss shown"), "loss no longer resolved": ("un", "丢失不再定得清", "loss no longer resolved"),
+         "not closed": ("no", "仍然丢", "still lost"), "not testable": ("un", "无法检验", "not testable")}
+ROUND_ARMS = [("decoder_only", "对照", "control"), ("mlp_only", "第 1 轮", "round 1"), ("mlp_guarded", "第 2 轮", "round 2"), ("joint_s0", "第 3 轮", "round 3")]
 assert all(SEAL[d]["seal_verified"] for d in SEAL) and all(L["rule"][d]["outcome"] == "closed at the located step" for d, *_ in DS) and all(G["rule"][d]["outcome"] == "closed within the guard" for d, *_ in DS)
 
 
@@ -109,6 +118,45 @@ def f2(v):
 
 def rng3(lo, hi):
     return f"{lo:.3f}" if abs(hi - lo) < 5e-4 else f"{lo:.3f}–{hi:.3f}"
+
+
+def dg(ds, ro="PDL1", span=SP):
+    return LR["diagnosis"]["pooled"][ds][ro][span]
+
+
+def clo(ds, arm, ro="PDL1", span=SP):
+    return LR["closure"][ds][arm][ro][span]
+
+
+def added(ds, arm, ro="PDL1", span=SP):
+    return LR["steps"][ds][ro][arm][span]
+
+
+def pct(v):
+    return f"{100 * v + 0.0:.0f}%".replace("-0%", "0%").replace("-", "−")
+
+
+def pci(iv, en=False):
+    return pct(iv[0]) + (" to " if en else " 到 ") + pct(iv[1])
+
+
+def ivs(iv, d=2):
+    return "[" + f"{iv[0]:.{d}f}".replace("-", "−") + ", " + f"{iv[1]:.{d}f}".replace("-", "−") + "]"
+
+
+def grade(g):
+    c, zh, en = GRADE[g]
+    return f'<span class="st {c}">{bi(zh, en)}</span>'
+
+
+def span_cell(ds, arm, ro="PDL1"):
+    """The loss a head adds from Z to its output, with its interval, and how that reads."""
+    if arm == "as_trained":
+        b = added(ds, arm, ro)
+        assert b["reading"] == "loss"
+        return f'<td class="n">{f2(b["added"])} {ivs(b["ci"])}<br><span class="st no">{bi("在头里丢", "lost in the head")}</span></td>'
+    c = clo(ds, arm, ro)
+    return f'<td class="n">{f2(c["arm_span"]["added"])} {ivs(c["arm_span"]["ci"])}<br>{grade(c["grade"])}</td>'
 
 
 # ---------------------------------------------------------------- shell
@@ -251,29 +299,24 @@ def sh(n, zh, en):
 
 # ---------------------------------------------------------------- shared blocks
 def rounds_table():
-    """The loop so far, one row per round."""
     m, t = "frangieh2021", "papalexi2021"
-    left2 = sorted(RO[r] for r, v in G["audits"][f"pooled_{m}_mlp_guarded"]["readouts"].items() if v["status"] == "located in the head")
+    assert all(R["rule"][d]["outcome"] == o for d, o in ((m, "regressed"), (t, "kept; nothing located in the head"))) and all(v["outcome"] == "regressed" for v in R["replication"][m].values())
     rows = [
-        (("0", "不改：原来的头", "none: the head as trained"), ("第一次审计", "the first audit"), "as_trained",
-         ("PD-L1 的响应在头里丢，从嵌入到头的中间层（头的 MLP）开始", "the PD-L1 response is lost in the head, from the embedding to the head latent (the head's MLP)")),
-        (("1", "只修 MLP，训 PD-L1", "repair the MLP on PD-L1"), ("审计指到的那一步", "the step the audit names"), "mlp_only",
-         ("骨髓原任务掉分超过 0.02（由准确率的护栏发现）", "the original bone-marrow task falls by more than 0.02 (found by the accuracy guard)")),
-        (("2", "同样的修法，按住骨髓上的输出", "the same, with the bone-marrow outputs held"), ("上一轮的代价", "the cost of round 1"), "mlp_guarded",
-         (f"{'、'.join(left2)} 在黑色素瘤上仍在头里丢；在一种细胞上修的头，到另一种细胞上仍然丢", f"{', '.join(left2)} is still lost in the head on melanoma; a head repaired on one cell type still loses it on the other")),
+        (("0", "不改：原来的头", "none: the head as trained"), "as_trained", ("封存的检验把丢失定位在嵌入到头的中间层（头的 MLP）", "the sealed test locates the loss between the embedding and the head latent (the head's MLP)")),
+        (("对照", "只修解码器，训 PD-L1", "control"), "decoder_only", ("按定位不该有用的修法", "the repair that should not help, by the location")),
+        (("1", "只修 MLP，训 PD-L1", "repair the MLP on PD-L1"), "mlp_only", ("在定位到的那一步闭环；骨髓原任务掉出界限", "closed at the located step; the bone-marrow task falls beyond the guard")),
+        (("2", "同样的修法，按住骨髓上的输出", "the same, with the bone-marrow outputs held"), "mlp_guarded", ("在界限内闭环", "closed within the guard")),
+        (("3", "一个头：两种细胞和全部实测蛋白一起修", "one head: both cell types and every measured protein in one repair"), "joint_s0", ("没有通过：黑色素瘤上退步，三次划分都是", "not passed: regressed on melanoma, on all three splits")),
     ]
-    if HAVE3:
-        still = {ds: R["rule"][ds]["located_in_the_head"] for ds, *_ in DS}
-        s_zh = "；".join(f"{d[3]}：{'、'.join(RO[x] for x in still[d[0]])} 仍在头里丢" for d in DS if still[d[0]]) or "头里不再有被指出的丢失"
-        s_en = "; ".join(f"{d[4]}: {', '.join(RO[x] for x in still[d[0]])} still lost in the head" for d in DS if still[d[0]]) or "no loss is located in the head any more"
-        rows.append((("3", "一个头，两种细胞和全部实测蛋白一起修", "one head: both cell types and every measured protein in one repair"), ("上一轮审计还指出的两处", "the two findings the round-2 audit still located"), "joint_s0", (s_zh, s_en)))
+    rows[1] = (("对照", "只修解码器，训 PD-L1", "repair the decoder on PD-L1"), "decoder_only", rows[1][2])
     body = []
-    for (n, czh, cen), (wzh, wen), arm, (lzh, len_) in rows:
+    for (n, czh, cen), arm, (ozh, oen) in rows:
         lo, hi = bm_range(arm)
-        body.append(f'<tr><td class="k">{n}</td><td>{bi(czh, cen)}<br><span class="src">{bi("依据：" + wzh, "prompted by " + wen)}</span></td><td class="n">{f2(u_out(m, arm))}<br>{stat(po(m, arm)["status"])}</td><td class="n">{f2(u_out(t, arm))}<br>{stat(po(t, arm)["status"])}</td><td class="n">{rng3(lo, hi)}</td><td>{bi(lzh, len_)}</td></tr>')
-    return ('<div class="tw"><table><thead><tr><th>' + bi("轮", "Round") + '</th><th>' + bi("改了什么", "What was changed") + '</th><th>' + bi("PD-L1，黑色素瘤", "PD-L1, melanoma") + '</th><th>' + bi("PD-L1，THP-1", "PD-L1, THP-1")
-            + '</th><th>' + bi("骨髓测试得分", "Bone-marrow test score") + '</th><th>' + bi("再审之后还剩什么", "What the next audit still found") + '</th></tr></thead><tbody>' + "".join(body) + '</tbody></table></div>'
-            + '<p class="src col">' + bi(f"PD-L1 两列是头的输出上读不出的比例 {U}，在修复时留出的基因的敲除细胞上审计。骨髓得分是这一轮各个头的最低到最高；事先定的界限是比原来的头低不超过 0.02。", f"The PD-L1 columns give the unreadable share {U} at the head output, audited on knockout cells of genes held out of the repair. The bone-marrow score is the lowest to highest of that round's heads; the guard set in advance is at most 0.02 below the head as trained.") + '</p>')
+        body.append(f'<tr><td class="k">{bi(n, "control") if n == "对照" else n}</td><td>{bi(czh, cen)}</td>{span_cell(m, arm)}{span_cell(t, arm)}<td class="n">{rng3(lo, hi)}</td><td>{bi(ozh, oen)}</td></tr>')
+    return ('<div class="tw"><table><thead><tr><th>' + bi("轮", "Round") + '</th><th>' + bi("改了什么", "What was changed") + '</th><th>' + bi("黑色素瘤：头多丢的", "Melanoma: added by the head") + '</th><th>' + bi("THP-1：头多丢的", "THP-1: added by the head")
+            + '</th><th>' + bi("骨髓测试得分", "Bone-marrow test score") + '</th><th>' + bi("按这一轮事先写的规则", "By the round's own rule") + '</th></tr></thead><tbody>' + "".join(body) + '</tbody></table></div>'
+            + '<p class="src col">' + bi(f"“头多丢的”是 PD-L1 在头的输出上的 {U} 减去在 Z 上的 {U}，方括号是区间，在修复时留出的基因的敲除细胞上审计。区间整个在 0.10 以上：仍然丢；整个在 0.10 以下：确认没有多丢；跨过 0.10：丢失不再定得清，也就是既没看到丢，也没证明不丢。这一列是事后按区间重读的；最后一列是每一轮当时按自己的规则（比较一个点值和 0.10）得到的结论。骨髓得分是这一轮各个头的最低到最高，界限是比原来的头低不超过 0.02。",
+                                      f"“Added by the head” is {U} for PD-L1 at the head output minus {U} at Z, with its interval, audited on knockout cells of genes held out of the repair. An interval wholly above 0.10: still lost. Wholly below 0.10: no added loss shown. Across 0.10: the loss is no longer resolved, which means it is not seen and its absence is not shown either. This column is a later re-reading by intervals; the last column is what each round concluded at the time under its own rule, which compared a point value with 0.10. The bone-marrow score is the lowest to highest of that round's heads; the guard is at most 0.02 below the head as trained.") + '</p>')
 
 
 def loop_chart():
@@ -297,12 +340,16 @@ def index():
     m, t = "frangieh2021", "papalexi2021"
     z, lat, out = sealed(m, "PDL1", "Z"), sealed(m, "PDL1", "HEAD_LAT"), sealed(m, "PDL1", "HEAD_OUT")
     assert z["verdict"] == "support" and lat["verdict"] == "reject" and SEAL[m]["readouts"]["PDL1"]["root_cause"]["cause"] == "loss_at"
-    last = ARM_OF_ROUND[-1]; lo, hi = bm_range(last)
+    lo, hi = bm_range("mlp_guarded"); dm, dt = dg(m), dg(t)
     cards = [
         (("定位", "LOCATE"), f'{U} {f2(z["u"])} → {f2(lat["u"])} → {f2(out["u"])}', ("封存、只跑一次。IFN-γ 通路敲除后 PD-L1 的响应，在 TEDDY 的嵌入里读得出，到头的中间层开始读不出，到输出丢了近一半。", "Sealed and run once. The PD-L1 response to IFN-γ-pathway knockouts is readable from TEDDY's embedding, starts to go at the head latent and is nearly half gone at the head's output."), ("#where", "看第 1 节", "See section 1")),
         (("拆开", "SEPARATE"), bi(f"{cnt('as_trained', 'located in the head')} / 10 个靶基因", f"{cnt('as_trained', 'located in the head')} of 10 target genes"), ("合并的源拆成单个靶基因后，PD-L1 的响应在每一个上都被指出在头里丢；TEDDY 自己的三环没有一环被否定。", "With the pooled source separated into single target genes, the PD-L1 response is located in the head for each one; none of TEDDY's own three stages is rejected."), ("anm-framework.html#events", "看类型化事件", "See typed events")),
-        (("修", "REPAIR"), f'{U} {f2(u_out(m, "as_trained"))} → {f2(u_out(m, last))}', (f"只修审计指到的那一步（头的 MLP），在没见过的基因上丢失消失；只修解码器，仍是 {f2(u_out(m, 'decoder_only'))}。THP-1 上 {f2(u_out(t, 'as_trained'))} → {f2(u_out(t, last))}。", f"Repairing only the step the audit names (the head's MLP) removes the loss on unseen genes; repairing the decoder leaves {f2(u_out(m, 'decoder_only'))}. On THP-1: {f2(u_out(t, 'as_trained'))} → {f2(u_out(t, last))}."), ("anm-loop.html", "看闭环", "See the loop")),
-        (("守住原任务", "KEEP THE OLD TASK"), f"{BASE:.3f} → {rng3(lo, hi)}", ("修的时候把头在骨髓细胞上的输出按住，原任务的得分留在事先定的 0.02 以内。不按住时掉到 0.50 到 0.57。", "With the head's outputs held on bone-marrow cells during the repair, the score on its original task stays within the 0.02 set in advance. Without that it falls to 0.50–0.57."), ("anm-loop.html#cost", "看代价", "See the cost")),
+        (("两种修法对比", "TWO REPAIRS COMPARED"), bi(f"{pct(dm['located']['share_removed']['point'])} 对 {pct(dm['control']['share_removed']['point'])}", f"{pct(dm['located']['share_removed']['point'])} against {pct(dm['control']['share_removed']['point'])}"),
+         (f"头多丢的那部分 PD-L1 响应，修审计指到的那一步（MLP）去掉 {pct(dm['located']['share_removed']['point'])}，只修解码器去掉 {pct(dm['control']['share_removed']['point'])}。THP-1 上是 {pct(dt['located']['share_removed']['point'])} 对 {pct(dt['control']['share_removed']['point'])}。都在修复时没见过的基因上审计。",
+          f"Of the PD-L1 response the head loses, repairing the step the audit names (the MLP) removes {pct(dm['located']['share_removed']['point'])}; repairing only the decoder removes {pct(dm['control']['share_removed']['point'])}. On THP-1: {pct(dt['located']['share_removed']['point'])} against {pct(dt['control']['share_removed']['point'])}. All audited on genes the repair never saw."), ("anm-loop.html#diagnose", "看两种修法的对比", "See the comparison")),
+        (("修好了吗", "IS IT REPAIRED"), bi("还不能说", "Not shown yet"),
+         (f"修过的头没有一个被判“支持”。THP-1 上确认没有多丢，黑色素瘤上丢失不再定得清。按住骨髓输出后，原任务的得分是 {rng3(lo, hi)}（原来 {BASE:.3f}），在事先定的 0.02 以内。",
+          f"No repaired head is given “support”. On THP-1 no added loss is shown; on melanoma the loss is no longer resolved. With the bone-marrow outputs held, the score on the original task is {rng3(lo, hi)} ({BASE:.3f} as trained), within the 0.02 set in advance."), ("anm-loop.html#closure", "看修过的头", "See the changed heads")),
     ]
     glance = '<div class="glance">' + "".join(f'<div class="gcard"><span class="k">{bi(*k)}</span><span class="big">{big}</span><p>{bi(*p)}</p><a href="{a[0]}">{bi(a[1], a[2])}</a></div>' for k, big, p, a in cards) + '</div>'
     other = []
@@ -315,14 +362,16 @@ def index():
         ("frangieh2021_headsplit", "papalexi2021_headsplit", ("探索性，封存", "exploratory, sealed"), ("把头拆成七环：丢失在后面的层和解码器，不在输入归一化和第一层", "the head split into seven stages: the loss is in its later layers and decoder, not in the input normalization or the first layer")),
         ("split_20261111", "exposure_20261111", ("探索性", "exploratory"), ("合并的源按靶基因和批次拆开，源写成类型化事件；对 IRF1 的一个解释做了直接检验，按规则没有回答", "the pooled source separated by target gene and batch, with the source written as typed events; a direct test of one explanation for IRF1, not answered by its rule")),
         ("loop_20261112", "loop_guard_20261112", ("探索性，规则先提交", "exploratory, rule committed first"), ("闭环第 1、2 轮：修 MLP 有效，修解码器无效；按住骨髓输出后在界限内", "rounds 1 and 2 of the loop: repairing the MLP works and the decoder does not; within the guard once the bone-marrow outputs are held")),
-    ] + ([("repair_20261112", None, ("探索性，规则先提交", "exploratory, rule committed first"), ("闭环第 3 轮：一个头同时修两种细胞和全部实测蛋白，另在两次重新划分上重复", "round 3 of the loop: one head repaired for both cell types and every measured protein, repeated on two fresh splits"))] if HAVE3 else [])
+        ("repair_20261112", None, ("探索性，规则先提交", "exploratory, rule committed first"), ("闭环第 3 轮：一个头同时修两种细胞和全部实测蛋白，另在两次重新划分上重复；按它自己的规则没有通过", "round 3 of the loop: one head repaired for both cell types and every measured protein, repeated on two fresh splits; it did not pass its own rule")),
+        ("loop_reading_20261112", None, ("事后重读，探索性", "post hoc re-reading, exploratory"), ("三轮按闭环协议重读，不做新的拟合和审计：两种修法的对比、修过的头的等级、台账，以及数据清查", "the three rounds re-read under the loop protocol, with no new fit or audit: the two repairs compared, the grade of each changed head, the ledger, and a census of the data")),
+    ]
     repo_rows = "".join(f'<tr><td>{gh("anm_diag/runs/" + a, a)}' + (f'<br>{gh("anm_diag/runs/" + b, b)}' if b else "") + f'</td><td>{bi(*g)}</td><td>{bi(*w)}</td></tr>' for a, b, g, w in repo)
     body = f"""<section>
   <p class="eyebrow">TEDDY-G 70M · teddy_mm phase-1 head · {bi("ANM 审计", "ANM audit")} · {bi(UPDATED[0], UPDATED[1])}</p>
   <h1>{bi("敲除引起的响应，TEDDY 留住了；接在它后面的蛋白头丢了近一半。", "TEDDY keeps the response to a knockout. The protein head built on it loses nearly half.")}</h1>
-  <p class="lede col">{bi("ANM 审计沿着模型自己的计算，一环一环地跟踪一个实测的响应，指出它从哪一步开始读不出来。在两套 Perturb-CITE-seq 数据上，这一步是 teddy_mm 蛋白头的第一段网络。只修这一步，丢失就在修复时没见过的敲除上消失；修别处没有用。", "An ANM audit follows one measured response through each stage of a model's own computation and names the step where it stops being readable. On two Perturb-CITE-seq data sets that step is the first network of the teddy_mm protein head. Repairing that step removes the loss on knockouts the repair never saw; repairing elsewhere does not.")}</p>
+  <p class="lede col">{bi("ANM 审计沿着模型自己的计算，一环一环地跟踪一个实测的响应，指出它从哪一步开始读不出来。在两套 Perturb-CITE-seq 数据上，这一步是 teddy_mm 蛋白头的第一段网络。修这一步，头多丢的部分在修复时没见过的敲除上去掉八到九成；修别处只去掉一成左右。修过的头还没有被证明不再丢。", "An ANM audit follows one measured response through each stage of a model's own computation and names the step where it stops being readable. On two Perturb-CITE-seq data sets that step is the first network of the teddy_mm protein head. Repairing that step removes 84% and 91% of what the head loses, on knockouts the repair never saw; repairing elsewhere removes 5% and 15%. No repaired head is yet shown to be free of the loss.")}</p>
   {glance}
-  <p class="src col">{bi("现在的状态：修复是在头的微调副本上验证的，<span class='mono'>scripts/04_train.py</span> 训出来的头还是没修的那个。" + ("修法已经写成脚本 <span class='mono'>scripts/07_repair_head.py</span>，见“闭环”一页。" if HAVE3 else ""), "Where this stands: the repair is shown on fine-tuned copies of the head; the head that <span class='mono'>scripts/04_train.py</span> trains is still the unrepaired one." + (" The repair exists as a script, <span class='mono'>scripts/07_repair_head.py</span>; see the page on the loop." if HAVE3 else ""))}</p>
+  <p class="src col">{bi("现在的状态：修复是在头的微调副本上做的，一个训练种子；<span class='mono'>scripts/04_train.py</span> 训出来的头还是没修的那个。修法写成了脚本 <span class='mono'>scripts/07_repair_head.py</span>，每种细胞修一个头。想修成一个头管两种细胞的第 3 轮，在黑色素瘤上比分开修略差。", "Where this stands: the repairs are fine-tuned copies of the head, with one training seed; the head that <span class='mono'>scripts/04_train.py</span> trains is still the unrepaired one. The repair exists as a script, <span class='mono'>scripts/07_repair_head.py</span>, which repairs one head per cell type. Round 3, which tried one head for both cell types, is slightly worse on melanoma than the separate repair.")}</p>
 </section>
 
 <section id="where">
@@ -339,16 +388,16 @@ def index():
 
 <section id="loop">
   {sh(2, "闭环：定位，修，再审", "The loop: locate, repair, audit again")}
-  <p class="col">{bi("定位只是观察。要知道它对不对，就照它去改，再用同一把尺子量一遍。每一轮的设计和判定规则都在跑之前提交进仓库。", "A location is an observation. To learn whether it is right, change the model where it points and measure again with the same instrument. The design and the decision rule of every round were committed to the repository before the round was run.")}</p>
+  <p class="col">{bi("定位只是观察。要知道它对不对，就照它去改，再用同一把尺子量一遍。每一轮的设计和判定规则都在跑之前提交进仓库。三轮做完以后，又按区间把它们重读了一遍，下表两种读法都列出。", "A location is an observation. To learn whether it is right, change the model where it points and measure again with the same instrument. The design and the decision rule of every round were committed to the repository before the round was run. After the three rounds they were read again by intervals, and the table gives both readings.")}</p>
   {rounds_table()}
-  <a class="next" href="anm-loop.html"><span class="t">{bi("每一轮的图、对照、代价和限制", "Figures, the control, the cost and the limits of each round")}</span><span class="go" aria-hidden="true">→</span></a>
+  <a class="next" href="anm-loop.html"><span class="t">{bi("两种修法的对比、修过的头、代价和限制", "The two repairs compared, the changed heads, the cost and the limits")}</span><span class="go" aria-hidden="true">→</span></a>
 </section>
 
 <section id="repo">
   {sh(3, "仓库里有什么", "What the repository holds")}
   <div class="tw"><table><thead><tr><th>{bi("运行记录", "Run records")}</th><th>{bi("证据等级", "Evidence grade")}</th><th>{bi("内容", "What it is")}</th></tr></thead><tbody>{repo_rows}</tbody></table></div>
   <ul class="pts">
-    <li>{bi(f"审计的代码和测试在 {gh('anm_diag')}；写法和全部修正记录在 <a href='{GH}/blob/main/docs/ANM_DIAGNOSIS.md'>诊断全文</a>。", f"The audit's code and tests are in {gh('anm_diag')}; the write-up with every correction is the <a href='{GH}/blob/main/docs/ANM_DIAGNOSIS.md'>full diagnosis</a>.")}</li>
+    <li>{bi(f"审计的代码和测试在 {gh('anm_diag')}；写法和全部修正记录在 <a href='{GH}/blob/main/docs/ANM_DIAGNOSIS.md'>诊断全文</a>。闭环怎么做才算数，写在 <a href='{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md'>闭环协议</a> 里，读法的代码是 <span class='mono'>anm_diag/loop.py</span>。", f"The audit's code and tests are in {gh('anm_diag')}; the write-up with every correction is the <a href='{GH}/blob/main/docs/ANM_DIAGNOSIS.md'>full diagnosis</a>. What a loop must do to count is in the <a href='{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md'>loop protocol</a>, and the readings are made by <span class='mono'>anm_diag/loop.py</span>.")}</li>
     <li>{bi("封存的第 4 步规则（三个种子、带对照的重训）在仓库里，但按它做的重训没有记录在仓库里，这里不报告它的任何数字。", "The sealed step-4 rule (three seeds, a retrain with a control arm) is in the repository; no retrain made under it is recorded there, and no number from one is reported here.")}</li>
   </ul>
 </section>
@@ -357,8 +406,8 @@ def index():
   {sh(4, "能说什么，不能说什么", "What can and cannot be claimed")}
   <ul class="pts">
     <li>{bi("<b>能说（封存的检验）。</b>在 Frangieh 2021 的 IFN-γ 通路敲除上，TEDDY-G 70M 的嵌入保留了解释 PD-L1 蛋白响应所需的信息（容差 0.10 以内）；五个蛋白读出上 TEDDY 没有一环被否定；teddy_mm 的头在嵌入和它的中间层之间丢掉了 PD-L1 的响应。", "<b>Can claim (sealed tests).</b> For the IFN-γ-pathway knockouts of Frangieh 2021, TEDDY-G 70M's embedding keeps the information that explains the PD-L1 protein response, within a 0.10 margin; no TEDDY stage is rejected for any of five protein readouts; the teddy_mm head loses the PD-L1 response between the embedding and its latent layer.")}</li>
-    <li>{bi("<b>探索性。</b>把头拆开、把源拆开、类型化事件，以及闭环的各轮：修头的 MLP 消除了留出基因上的丢失，修解码器没有；按住骨髓输出后代价在 0.02 以内。", "<b>Exploratory.</b> The head split, the source separated, typed events, and the rounds of the loop: repairing the head's MLP removes the loss on held-out genes and repairing its decoder does not; with the bone-marrow outputs held the cost stays within 0.02.")}</li>
-    <li>{bi("<b>不能说。</b>训练脚本训出的头已经修好（修好的是微调副本，一个种子）；修复能带到第三种细胞；头为什么丢；TEDDY 对一般的扰动响应都够用；被否定的环“坏了”（否定只是在声明的读出模型下指出一步）。", "<b>Cannot claim.</b> That the head the training script produces is repaired (the repaired heads are fine-tuned copies, one seed); that the repair carries to a third cell type; why the head loses the response; that TEDDY is sufficient for perturbation responses in general; that a rejected stage is “broken” (a rejection names a step, under the declared readout classes).")}</li>
+    <li>{bi("<b>探索性。</b>把头拆开、把源拆开、类型化事件，以及闭环的各轮和对它们的重读：在留出的基因上，修头的 MLP 去掉头多丢的八到九成，修解码器去掉一成左右；按住骨髓输出后代价在 0.02 以内；THP-1 上修过的头确认没有多丢。", "<b>Exploratory.</b> The head split, the source separated, typed events, the rounds of the loop and their re-reading: on held-out genes, repairing the head's MLP removes 84% and 91% of what the head loses and repairing its decoder removes 5% and 15%; with the bone-marrow outputs held the cost stays within 0.02; on THP-1 the changed heads are shown to add no loss.")}</li>
+    <li>{bi("<b>不能说。</b>头已经修好（没有一个修过的头被判“支持”，黑色素瘤上连没有多丢都没确认；修的是微调副本，一个种子）；一个头能同时管两种细胞；修复能带到第三种细胞；头为什么丢；TEDDY 对一般的扰动响应都够用；被否定的环“坏了”（否定只是在声明的读出模型下指出一步）。", "<b>Cannot claim.</b> That the head is repaired (no changed head is supported, and on melanoma not even the absence of an added loss is shown; the changed heads are fine-tuned copies, one seed); that one head serves both cell types; that the repair carries to a third cell type; why the head loses the response; that TEDDY is sufficient for perturbation responses in general; that a rejected stage is “broken” (a rejection names a step, under the declared readout classes).")}</li>
   </ul>
 </section>
 
@@ -366,8 +415,8 @@ def index():
   {sh(5, "这个站点以前的内容", "Earlier work on this site")}
   <p class="col">{bi("2026 年 10 月的页面问的是另一个问题：把 ANM 当作 TEDDY 之上的决策层，有没有增益。注册的 v3 检验的结论是没有：ANM 的引擎算出的正好是一条声明的规则。那些页面原样存档：", "The pages of October 2026 asked a different question: does ANM add anything as a decision layer on top of TEDDY. The registered v3 tests found that it does not: ANM's engine computes exactly a declared rule. Those pages are kept as they were:")} <a href="v3.html">{bi("注册的决策层检验", "registered decision-layer tests")}</a> · <a href="v3-anm-framework.html">{bi("当时的框架页", "the framework page of that time")}</a> · <a href="v3-anm-loop.html">{bi("决策回路的首次记录", "the first decision-loop record")}</a>.</p>
 </section>"""
-    page("index.html", "TEDDY × ANM: where a knockout response is lost, and the loop that repairs it",
-         "An ANM audit of TEDDY-G 70M and the teddy_mm protein head on two Perturb-CITE-seq data sets: TEDDY's stages keep the PD-L1 response to IFN-γ-pathway knockouts, the head loses nearly half of it at its first network, and repairing that step removes the loss on held-out genes.", body)
+    page("index.html", "TEDDY × ANM: where a knockout response is lost, and the loop that tests it",
+         "An ANM audit of TEDDY-G 70M and the teddy_mm protein head on two Perturb-CITE-seq data sets: TEDDY's stages keep the PD-L1 response to IFN-γ-pathway knockouts, the head loses nearly half of it at its first network, and repairing that step removes 84% and 91% of the loss on held-out genes, against 5% and 15% for a repair made elsewhere.", body)
 
 
 # ---------------------------------------------------------------- framework
@@ -460,6 +509,15 @@ def framework():
   <p class="col">{bi("定位是观察，闭环是检验这个观察：照定位去改系统，再用同一个审计量一遍。", "A location is an observation; the loop tests it: change the system where the location points and measure again with the same audit.")}</p>
   <figure><div class="scroll">{loop_diagram()}</div>
   <figcaption>{bi("第 3 步同时写下一个按定位不该有用的改法，和该有用的那个用同样的数据、损失和步数各做一遍。第 5 步只用修复时留出的基因和没参与拟合的对照细胞。", "Step 3 also names a change that, by the location, should not help; it is made with the same data, loss and budget as the one that should. Step 5 uses only genes held out of the repair and control cells that no fit used.")}</figcaption></figure>
+  <p class="col">{bi("闭环其实是两个，问的问题不同，要的证据也不同。", "There are two loops. They ask different questions and need different evidence.")}</p>
+  <div class="tw"><table><thead><tr><th></th><th>{bi("诊断闭环", "Diagnostic loop")}</th><th>{bi("修复闭环", "Repair loop")}</th></tr></thead><tbody>
+    <tr><td class="k">{bi("问题", "Question")}</td><td>{bi("定位到的那一步，是不是这个响应的要害", "Is the located step the one that matters for this response")}</td><td>{bi("改过的系统还丢不丢，原来的任务还在不在", "Is the changed system free of the loss, and still good at its own task")}</td></tr>
+    <tr><td class="k">{bi("比什么", "What is compared")}</td><td>{bi("同一个基线上的两种改法：一种改在定位到的那一步，一种改在别处", "two changes against one baseline: one at the located step, one elsewhere")}</td><td>{bi("改过的系统，对只差这一处改动的对照", "the changed system against a control that differs only by the change")}</td></tr>
+    <tr><td class="k">{bi("量什么", "Quantity")}</td><td>{bi("基线多丢的部分，被每种改法去掉的比例，和两者之差，都带区间", "the share of the baseline's loss each change removes, and the difference, each with an interval")}</td><td>{bi("改过的系统还多丢多少（带区间），和末端那一环的判定", "what the changed system still adds, with its interval, and the verdict of the end stage")}</td></tr>
+    <tr><td class="k">{bi("结论的性质", "Kind of claim")}</td><td>{bi("一种改法比另一种去掉得多", "one change removes more than the other")}</td><td>{bi("丢失不在了", "the loss is absent")}</td></tr>
+    <tr><td class="k">{bi("需要什么", "What it needs")}</td><td>{bi("基线的丢失相对它的区间够大", "a baseline loss that is large against its interval")}</td><td>{bi("区间相对容差够窄；没被任何设计决定用过的数据", "intervals narrow against the margin; data no design decision has seen")}</td></tr>
+  </tbody></table></div>
+  <p class="col">{bi("诊断闭环过了，只说明该在哪里动手，不说明系统修好了。每一步花钱之前先过一道便宜的关：准入、定位、开方子、修复准入、开发审计、终审、用途。准入这一关在动手之前就回答“这批数据能不能认出一个修好的系统”。读法由 <span class='mono'>python -m anm_diag loop admit | diagnose | closure</span> 从已有的运行记录里算，不做新的拟合。", "Passing the diagnostic loop says where to work. It does not say the system is repaired. A cheap gate stands before every step that costs something: admission, location, prescription, admission of the change, development audit, final audit, use. Admission answers, before anything is changed, whether these data could recognize a repaired system at all. The readings are made by <span class='mono'>python -m anm_diag loop admit | diagnose | closure</span> from the records of finished runs, with no new fit.")} <a href="{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md">{bi("闭环协议全文", "The loop protocol in full")}</a></p>
   <a class="next" href="anm-loop.html"><span class="t">{bi("在 teddy_mm 的头上走过的几轮", "The rounds run on the teddy_mm head")}</span><span class="go" aria-hidden="true">→</span></a>
 </section>
 
@@ -473,111 +531,204 @@ def framework():
   <details class="more"><summary>{bi("形式定义（10 条）", "Formal definitions (10 items)")}</summary><div class="db"><ol class="defs">{frag("definitions.html")}</ol></div></details>
 </section>"""
     page("anm-framework.html", "How the audit works — TEDDY × ANM",
-         "How an ANM audit is declared, sealed and read: roles, the statistic u and its verdicts, the checks that refuse illegal designs, typed source events, the loop from location to repair, and evidence grades.", body)
+         "How an ANM audit is declared, sealed and read: roles, the statistic u and its verdicts, the checks that refuse illegal designs, typed source events, the two loops that follow a location (is the located step the one that matters; is the changed system repaired), and evidence grades.", body)
 
 
 # ---------------------------------------------------------------- loop
-def readout_rows():
-    out = []
-    for ds, zh, en, *_ in DS:
-        ros = [r for r in ("PDL1", "PDL2", "HLAE", "MHC1") if r in A[f"pooled_{ds}_as_trained"]["readouts"]]
-        for ro in ros:
-            cells = "".join(f'<td class="n">{f2(u_out(ds, arm, ro))}<br>{stat(po(ds, arm, ro)["status"])}</td>' for arm in ARM_OF_ROUND)
-            out.append(f'<tr><td>{bi(zh, en)}</td><td class="k">{RO[ro]}</td><td class="n">{f2(po(ds, "as_trained", ro)["delta"])}</td><td class="n">{f2(po(ds, "as_trained", ro)["stages"]["Z"]["u"])}</td>{cells}</tr>')
-    return "".join(out)
+def hla_note():
+    """HLA-E on melanoma: the head's own output against the measured protein, on held-out and on fitted genes."""
+    if "HLAE" not in R["rule"]["frangieh2021"]["located_in_the_head"]:
+        return "", ""
+    v = [OS["frangieh2021"][g]["HLAE"] for g in GENES["frangieh2021"]]; lo = lambda k, sub=None: min((x[sub][k] if sub else x[k]) for x in v); hi = lambda k, sub=None: max((x[sub][k] if sub else x[k]) for x in v)
+    assert lo("repaired") > 0 and lo("repaired", "fitted_genes") > 0 and hi("measured") < 0
+    sd = lambda a, b: f"{a:+.2f} 到 {b:+.2f}".replace("-", "−"); se = lambda a, b: f"{a:+.2f} to {b:+.2f}".replace("-", "−")
+    return (f"头自己的 HLA-E 输出在这些敲除上是升的（修复后 {sd(lo('repaired'), hi('repaired'))} 个对照标准差），实测蛋白略降（{sd(lo('measured'), hi('measured'))}）；在拟合用过的基因上也一样是升的（{sd(lo('repaired', 'fitted_genes'), hi('repaired', 'fitted_genes'))}）。也就是说，这次拟合在 400 步之内连训练过的基因上都没有学到 HLA-E 的响应，所以它说明的是这次拟合修不好，不是 MLP 一定带不动；原因没有查。",
+            f"The head's own HLA-E output rises on these knockouts ({se(lo('repaired'), hi('repaired'))} control standard deviations after the repair) while the measured protein falls slightly ({se(lo('measured'), hi('measured'))}); it rises just as much on the genes the fit was trained on ({se(lo('repaired', 'fitted_genes'), hi('repaired', 'fitted_genes'))}). So within its 400 steps this fit did not learn the HLA-E response even where it was trained on it: the round shows that this fit does not repair HLA-E, not that the MLP cannot; the reason was not examined. ")
+
+
+def round3_text():
+    """Round 3 in words, in both languages: {"intro", "rule", "hla", "use"} -> (zh, en)."""
+    m, t = "frangieh2021", "papalexi2021"
+    rule, rep = R["rule"], R["replication"]
+    assert not PASSED3 and rule[m]["outcome"] == "regressed" and rule[t]["outcome"] != "regressed" and rule[m]["located_in_the_head"] == ["HLAE"]
+    assert all(v["outcome"] == "regressed" for v in rep[m].values()) and all(v["outcome"] != "regressed" for v in rep[t].values()) and len(rep[m]) == 2
+    g = po(m, "joint_s0"); gt = po(t, "joint_s0"); a12 = [A[f"pooled_{m}_joint_s{s}"]["readouts"]["PDL1"]["added_by_head"] for s in (1, 2)]
+    intro = ("第 2 轮之后审计还指出两处，都在头里、都指向同一步：黑色素瘤上的 HLA-E，以及换一种细胞就失效。所以这一轮还是修 MLP，但把缺的补进拟合：两种细胞放在一起修成一个头，凡是实测了、头又有对应输出的蛋白都训（黑色素瘤上 PD-L1、MHC-I、HLA-E，THP-1 上 PD-L1）。六个靶基因轮流留出，在两套数据里同时留出。",
+             "After round 2 the audit still located two things, both in the head and both at the same step: HLA-E on melanoma, and the failure on the other cell type. So this round repairs the MLP again and adds what the fit lacked: both cell types in one fit, giving one head, and every measured protein the head has an output for is trained (PD-L1, MHC-I and HLA-E on melanoma; PD-L1 on THP-1). The six target genes are held out in turn, in both data sets at once.")
+    rule_ = (f"<b>按这一轮事先写的规则，没有通过。</b>黑色素瘤：PD-L1 在头的输出上是 {f2(g['stages']['HEAD_OUT']['u'])}，Z 处 {f2(g['stages']['Z']['u'])}，头多丢 {g['added_by_head']:.3f}，过了 0.10 的界限，记为退步（第 2 轮是 {f2(u_out(m, 'mlp_guarded'))}）。换两次对照细胞的划分重做，也都没过（{a12[0]:.3f} 和 {a12[1]:.3f}）。THP-1：三次划分都通过（{f2(gt['stages']['HEAD_OUT']['u'])}，Z 处 {f2(gt['stages']['Z']['u'])}）。六个头在骨髓上是 {rng3(*bm_range('joint_s0'))}，在界限内。所以保留第 2 轮的修法，每种细胞一个头；“一个头管两种细胞”没有成立。",
+             f"<b>By the rule written for this round, it did not pass.</b> On melanoma PD-L1 is {f2(g['stages']['HEAD_OUT']['u'])} at the head output against {f2(g['stages']['Z']['u'])} at Z: the head adds {g['added_by_head']:.3f}, over the margin of 0.10, which counts as regressed (round 2: {f2(u_out(m, 'mlp_guarded'))}). Repeated on two fresh splits of the control cells it does not pass either ({a12[0]:.3f} and {a12[1]:.3f}). THP-1 passes on all three splits ({f2(gt['stages']['HEAD_OUT']['u'])}, with {f2(gt['stages']['Z']['u'])} at Z). The six heads score {rng3(*bm_range('joint_s0'))} on bone marrow, within the guard. So the repair of round 2 stands, with one head per cell type; one head for both cell types is not established.")
+    hz, he = hla_note(); am = LR["admission"][m]; assert am["HLAE"]["diagnostic"] == "not ready" and am["MHC1"]["diagnostic"] == "not ready"
+    hla = (f"<b>HLA-E 没有修好，而且本来就不该当目标。</b>黑色素瘤上的 HLA-E 仍被指出在头里丢（输出 {f2(u_out(m, 'joint_s0', 'HLAE'))}，第 2 轮 {f2(u_out(m, 'mlp_guarded', 'HLAE'))}）。{hz}按后来写进协议的准入检查，HLA-E 和 MHC-I 在这批细胞上的响应相对自己的区间太小（{am['HLAE']['response']['snr']:.1f} 和 {am['MHC1']['response']['snr']:.1f}，要求 3），跟不住。按停止规则，不再换别的拟合去试。",
+           f"<b>HLA-E is not repaired, and should not have been a target.</b> HLA-E on melanoma is still located in the head (output {f2(u_out(m, 'joint_s0', 'HLAE'))}; round 2: {f2(u_out(m, 'mlp_guarded', 'HLAE'))}). {he}By the admission check written into the protocol afterwards, the response of HLA-E and of MHC-I on these cells is small against its own interval ({am['HLAE']['response']['snr']:.1f} and {am['MHC1']['response']['snr']:.1f}, where 3 is wanted): they could not be followed. By the stopping rule no further variant of the fit is tried.")
+    r2 = TC["round_2_recipe"]; diff = max(r2[d[0]]["perturbation_cells"]["outputs_rms_difference_numpy_torch"] for d in DS); ch = [r2[d[0]]["perturbation_cells"]["outputs_rms_change_from_as_trained"] for d in DS]
+    assert diff < 1e-3 and all(r2[d[0]]["decoder_identical_to_as_trained"] for d in DS)
+    a, b, c, j0 = FE["as_trained"]["mean_pearson_mlp"], FE["melanoma_pdl1"]["mean_pearson_mlp"], FE["thp1_pdl1"]["mean_pearson_mlp"], FE["joint"]["mean_pearson_mlp"]
+    use = ((f"第 2 轮的修法：每种细胞一个头，只训 PD-L1。它通过了当时的规则，直接比较也不比第 3 轮差。<span class='mono'>scripts/07_repair_head.py</span> 用 teddy_mm 自己的模型代码做同样的修复；它做出的头和这里审计过的头对过，输出相差不到 0.001（修复本身带来的变化是 {f2(min(ch))} 和 {f2(max(ch))}）。"
+            f"用它在全部基因上各修一个头，在完整的骨髓测试集（{FE['as_trained']['n_test']:,} 个细胞）上，teddy_mm 自己的评估是 {b:.3f}（黑色素瘤的头）和 {c:.3f}（THP-1 的头），原来 {a:.3f}。这两个头本身没有审计过，因为它们就是在这些敲除细胞上修的；证据是留出基因的那些头。"
+            f"一个头只对修它时用的那种细胞有依据。第 3 轮的联合头（{j0:.3f}）不建议用。这些都是微调副本，离“修好”还差上面第 2 节说的那些。"),
+           (f"The repair of round 2: one head per cell type, trained on PD-L1 only. It passed the rule of its time and is no worse than round 3 in the direct comparison. <span class='mono'>scripts/07_repair_head.py</span> makes the same repair with teddy_mm's own model code; its heads were compared with the ones audited here and their outputs differ by less than 0.001 (the repair itself moves them by {f2(min(ch))} and {f2(max(ch))}). "
+            f"Fitted with it on all genes, one head per cell type, they score {b:.3f} (the melanoma head) and {c:.3f} (the THP-1 head) in teddy_mm's own evaluation on the full bone-marrow test split ({FE['as_trained']['n_test']:,} cells), against {a:.3f} as trained. These two heads are not audited themselves, because they were repaired on these knockout cells; the evidence is the heads with a gene held out. "
+            f"A head is supported only for the cell type it was repaired on. The joint head of round 3 ({j0:.3f}) is not recommended. All of these are fine-tuned copies, and what section 2 lists still stands between them and “repaired”."))
+    return {"intro": intro, "rule": rule_, "hla": hla, "use": use}
 
 
 def gene_rows():
+    """One held-out gene at a time: gate 0, and the share of the head's loss each repair removes."""
     out = []
     for ds, _, _, zh, en in DS:
-        for g in GENES[ds]:
-            def c(arm):
-                r = A[f"target_{ds}_{g}_{arm}"]["readouts"]["PDL1"]
-                return f'<td class="n">{f2(r["stages"]["HEAD_OUT"]["u"])}<br>{stat(r["status"])}</td>'
-            r0 = A[f"target_{ds}_{g}_as_trained"]
-            out.append(f'<tr><td>{bi(zh, en)} <b>{g}</b></td><td class="n">{r0["n_treated"]:,}</td><td class="n">{f2(r0["readouts"]["PDL1"]["stages"]["Z"]["u"])}</td>' + "".join(c(a) for a in ["as_trained", "decoder_only", "mlp_only", "mlp_guarded"] + (["joint_s0"] if HAVE3 else [])) + '</tr>')
+        for g, v in LR["diagnosis"]["single_gene"][ds].items():
+            a, d = v["admission"], v["diagnosis"]
+            n = A[f"target_{ds}_{g}_as_trained"]["n_treated"]
+            if a["diagnostic"] != "ready":
+                snr = a["response"]["snr"]
+                why = bi(f"没过准入：响应相对它自己的区间太小（{snr:.1f}，要求 3）", f"not admitted: the response is small against its own interval ({snr:.1f}, wanted 3)")
+                out.append(f'<tr><td>{bi(zh, en)} <b>{g}</b></td><td class="n">{n:,}</td><td class="n">{a["clusters"]["n"]}</td><td colspan="3">{why}</td></tr>')
+                continue
+            L_, C_ = d["located"]["share_removed"], d["control"]["share_removed"]
+            ok = d["outcome"] == "located step confirmed"
+            out.append(f'<tr><td>{bi(zh, en)} <b>{g}</b></td><td class="n">{n:,}</td><td class="n">{a["clusters"]["n"]}</td><td class="n">{pct(L_["point"])} [{pct(L_["ci"][0])}, {pct(L_["ci"][1])}]</td>'
+                       f'<td class="n">{pct(C_["point"])} [{pct(C_["ci"][0])}, {pct(C_["ci"][1])}]</td><td><span class="st {"ok" if ok else "un"}">{bi("定位得到确认" if ok else "没定清", d["outcome"])}</span></td></tr>')
     return "".join(out)
+
+
+def closure_rows():
+    cols = [("frangieh2021", "PDL1"), ("papalexi2021", "PDL1"), ("papalexi2021", "PDL2")]
+    out = [f'<tr><td class="k">0</td><td>{bi("原来的头", "head as trained")}</td>' + "".join(span_cell(ds, "as_trained", ro) for ds, ro in cols) + '</tr>']
+    names = {"decoder_only": ("只修解码器", "decoder repaired"), "mlp_only": ("只修 MLP", "MLP repaired"), "mlp_guarded": ("修 MLP，按住骨髓输出", "MLP repaired, bone-marrow outputs held"), "joint_s0": ("一个头，两种细胞", "one head, both cell types")}
+    for arm, rzh, ren in ROUND_ARMS:
+        out.append(f'<tr><td class="k">{bi(rzh, ren)}</td><td>{bi(*names[arm])}</td>' + "".join(span_cell(ds, arm, ro) for ds, ro in cols) + '</tr>')
+    return "".join(out)
+
+
+def census_text():
+    co = CEN["frangieh2021"]["conditions"]["Co-culture"]; five = ["IFNGR1", "IFNGR2", "JAK1", "JAK2", "STAT1"]
+    cop = {x["target"]: x for x in co["clear_responses"] if x["antibody"] == "CD274"}; coh = {x["target"]: x for x in co["clear_responses"] if x["antibody"] == "HLA_A"}
+    th = {x["target"]: x for x in CEN["papalexi2021"]["conditions"]["all"]["clear_responses"] if x["antibody"] == "PDL1"}
+    new = [g for g in th if g not in GENES["papalexi2021"]]; nm = sum(1 for x in CEN["frangieh2021"]["conditions"]["IFNγ"]["clear_responses"] if x["antibody"] == "CD274")
+    assert all(g in cop and g in coh for g in five) and len(new) == 3
+    lo, hi = max(cop[g]["shift_sd"] for g in five), min(cop[g]["shift_sd"] for g in five)
+    return [
+        (f"<b>黑色素瘤的共培养条件。</b>同样五个基因在那里让 PD-L1 降 {abs(lo):.2f} 到 {abs(hi):.2f} 个标准差，有 {sum(cop[g]['cells'] for g in five):,} 个单向导的敲除细胞和 {co['control_guide_cells']:,} 个对照向导细胞。闭环的任何一次拟合和审计都没用过它们，可以作黑色素瘤那个头的终审数据（新的条件，同一种细胞）。IFN-γ 条件下弱得跟不住的 MHC-I，在那里降 {abs(max(coh[g]['shift_sd'] for g in five)):.1f} 到 {abs(min(coh[g]['shift_sd'] for g in five)):.1f} 个标准差。",
+         f"<b>Melanoma, the co-culture condition.</b> The same five genes lower PD-L1 there by {abs(lo):.2f} to {abs(hi):.2f} standard deviations, on {sum(cop[g]['cells'] for g in five):,} single-guide knockout cells, with {co['control_guide_cells']:,} control-guide cells. No fit and no audit of the loop used them: they can serve as final data for the melanoma head (a new condition, the same cell type). MHC-I, too weak to follow under IFN-γ, falls by {abs(max(coh[g]['shift_sd'] for g in five)):.1f} to {abs(min(coh[g]['shift_sd'] for g in five)):.1f} standard deviations there."),
+        (f"<b>THP-1 的另外三个基因。</b>{'、'.join(new)} 明显改变 PD-L1（{'、'.join(f2(th[g]['shift_sd']) for g in new)} 个标准差），没进过任何拟合和审计，可以作新的源基因。它们的细胞还要先算 TEDDY 的嵌入。",
+         f"<b>THP-1, three more genes.</b> {', '.join(new)} change PD-L1 clearly ({', '.join(f2(th[g]['shift_sd']) for g in new)} standard deviations) and were in no fit or audit: new source genes. TEDDY's embedding has to be computed for their cells first."),
+        (f"<b>聚类数。</b>对 PD-L1，没有哪套数据有十个源基因（黑色素瘤 {nm} 个，THP-1 {len(th)} 个），按基因重抽样的区间始终是近似的；按向导（每个基因三四条）单位更多。",
+         f"<b>Clusters.</b> For PD-L1 no data set has ten source genes ({nm} in melanoma, {len(th)} in THP-1), so intervals resampled by gene stay approximate; guides, three or four per gene, give more units."),
+    ]
 
 
 def loop():
     m, t = "frangieh2021", "papalexi2021"
     n = {ds: (A[f"pooled_{ds}_as_trained"]["n_treated"], A[f"pooled_{ds}_as_trained"]["n_cells"] - A[f"pooled_{ds}_as_trained"]["n_treated"]) for ds, *_ in DS}
-    assert cnt("as_trained", "located in the head") == 10 and cnt("decoder_only", "located in the head") == 10 and cnt("mlp_only", "located in the head") == 0 and cnt("mlp_guarded", "located in the head") == 0
+    dm, dt, d2 = dg(m), dg(t), dg(t, "PDL2")
+    assert all(x["outcome"] == "located step confirmed" and x["paired"] for x in (dm, dt, d2)) and dm["selective"] and dt["selective"]
+    sg = [v for ds, *_ in DS for v in LR["diagnosis"]["single_gene"][ds].values()]; adm = [v for v in sg if v["admission"]["diagnostic"] == "ready"]
+    n_conf = sum(v["diagnosis"]["outcome"] == "located step confirmed" for v in adm)
     om, oa = own(m, "decoder_only"), own(m, "as_trained")
-    round3 = ""
-    if HAVE3:
-        rule = R["rule"]; rep = R["replication"]; f0 = R["bone_marrow"]["by_seed"]["0"]; fin = R["bone_marrow"]["final_head"]
-        ok = all(rule[ds]["outcome"] != "regressed" for ds, *_ in DS)
-        still = [(d, rule[d[0]]["located_in_the_head"]) for d in DS if rule[d[0]]["located_in_the_head"]]
-        nrep = sum(1 for ds, *_ in DS for s in rep[ds].values() if s["outcome"] != "regressed"); tot = sum(len(rep[ds]) for ds, *_ in DS)
-        left = [(d, x) for d in DS for x in rule[d[0]]["left_outside_the_head"]]
-        zh = (f"<b>第 3 轮。</b>第 2 轮之后审计还指出两处，都在头里、都指向同一步：黑色素瘤上的 HLA-E，以及换一种细胞就失效。所以这一轮还是修 MLP，但把缺的补进拟合：两种细胞放在一起修成一个头，凡是实测了、头又有对应输出的蛋白都训（黑色素瘤上 PD-L1、MHC-I、HLA-E，THP-1 上 PD-L1）。六个靶基因轮流留出，在两套数据里同时留出。"
-              + (f"按事先写定的规则：一个头同时守住了两种细胞。PD-L1 在头的输出上是 {f2(u_out(m, 'joint_s0'))}（黑色素瘤）和 {f2(u_out(t, 'joint_s0'))}（THP-1），工具不指出头里的任何一步；六个头在骨髓上是 {rng3(*bm_range('joint_s0'))}。" if ok else f"按事先写定的规则，这一轮退步了：{'；'.join(d[3] + '：' + rule[d[0]]['outcome'] for d in DS)}。")
-              + (("还被指出在头里丢的：" + "；".join(f"{d[3]}的 {'、'.join(RO[x] for x in v)}" for d, v in still) + "。按停止规则，这算作“改 MLP、用这些细胞修不好”，不再换别的拟合去试。") if still else "审计不再指出头里有任何丢失。")
-              + f"在两次重新划分的对照细胞上重复，{tot} 个读数里 {nrep} 个没有退步。")
-        en = (f"<b>Round 3.</b> After round 2 the audit still located two things, both in the head and both at the same step: HLA-E on melanoma, and the failure on the other cell type. So this round repairs the MLP again and adds what the fit lacked: both cell types in one fit, giving one head, and every measured protein the head has an output for is trained (PD-L1, MHC-I and HLA-E on melanoma; PD-L1 on THP-1). The six target genes are held out in turn, in both data sets at once. "
-              + (f"By the rule written in advance, one head holds for both cell types. PD-L1 at the head output is {f2(u_out(m, 'joint_s0'))} (melanoma) and {f2(u_out(t, 'joint_s0'))} (THP-1) and the tool names no step in the head; the six heads score {rng3(*bm_range('joint_s0'))} on bone marrow. " if ok else f"By the rule written in advance this round regressed: {'; '.join(d[4] + ': ' + rule[d[0]]['outcome'] for d in DS)}. ")
-              + (("Still located in the head: " + "; ".join(f"{', '.join(RO[x] for x in v)} on {d[4]}" for d, v in still) + ". By the stopping rule this counts as not repaired by changing the MLP with these cells, and no further variant of the fit is tried. ") if still else "The audit no longer locates any loss in the head. ")
-              + f"Repeated on two fresh splits of the control cells, {nrep} of {tot} readings did not regress.")
-        lzh = "；".join(f"{d[3]} {x['target']}（输出 {f2(x['u_output'])}，Z 处 {f2(x['u_Z'])}，{ST[x['status']][1]}）" for d, x in left); len_ = "; ".join(f"{d[4]} {x['target']} (output {f2(x['u_output'])}, {f2(x['u_Z'])} at Z, {ST[x['status']][2]})" for d, x in left)
-        round3 = f"""<section id="round3">
-  {sh(3, "第 3 轮：一个头，两种细胞", "Round 3: one head for both cell types")}
-  <p class="col">{bi(zh, en)}</p>
-  <div class="tw"><table><thead><tr><th>{bi("细胞", "Cells")}</th><th>{bi("读出", "Readout")}</th><th>{bi("实测变化", "Measured change")}</th><th>Z</th>{"".join(f"<th>{bi('第 ' + str(i) + ' 轮', 'Round ' + str(i))}</th>" for i in range(len(ARM_OF_ROUND)))}</tr></thead><tbody>{readout_rows()}</tbody></table></div>
-  <p class="src col">{bi(f"每格是头的输出上的 {U} 和读法。PD-L2 没有对应的头输出，从没进过损失。MHC-I 和 HLA-E 的实测变化很小，区间很宽。", f"Each cell gives {U} at the head output and the reading. PD-L2 has no output in the head and was never in a loss. MHC-I and HLA-E change little and their intervals are wide.")}</p>
-  <p class="col">{bi("<b>逐个基因看，还没解决的：</b>" + (lzh or "没有") + "。工具在这些审计里没有指出头里的哪一步；其中 Z 处本身就高的，问题在头之前。", "<b>Gene by gene, what is not settled:</b> " + (len_ or "nothing") + ". In these audits the tool names no step in the head; where the value at Z is itself high, the problem lies before the head.")}</p>
-  <h3>{bi("可以拿去用的头", "The head to use")}</h3>
-  <p class="col">{bi(f"留出基因的那些头是证据。真正拿去用的头在全部六个基因上拟合，骨髓测试得分 {fin['mean_pearson']:.3f}（原来 {BASE:.3f}）。它没有在这些敲除细胞上再审计，因为它就是在这些细胞上修的。同样的修法用 teddy_mm 自己的模型代码写成了 <span class='mono'>scripts/07_repair_head.py</span>。", f"The heads with a gene held out are the evidence. The head to use is fitted on all six genes; it scores {fin['mean_pearson']:.3f} on the bone-marrow test cells ({BASE:.3f} as trained). It is not audited on these knockout cells, because it was repaired on them. The same repair is written with teddy_mm's own model code as <span class='mono'>scripts/07_repair_head.py</span>.") if fin else ""}</p>
-</section>"""
+    share_rows = [(f"{d[3]} · {RO[ro]}", f"{d[4]} · {RO[ro]}", {"mlp_only": (x["located"]["share_removed"]["point"], *x["located"]["share_removed"]["ci"]), "decoder_only": (x["control"]["share_removed"]["point"], *x["control"]["share_removed"]["ci"])})
+                  for d, ro, x in ((DS[0], "PDL1", dm), (DS[1], "PDL1", dt), (DS[1], "PDL2", d2))]
+    L = lambda x: x["located"]["share_removed"]; C = lambda x: x["control"]["share_removed"]
+    grades = {(ds, arm): clo(ds, arm)["grade"] for ds in (m, t) for arm, *_ in ROUND_ARMS}
+    assert all(grades[(t, a)] == "relative" for a in ("mlp_only", "mlp_guarded", "joint_s0")) and all(grades[(m, a)] == "loss no longer resolved" for a in ("mlp_only", "mlp_guarded", "joint_s0")) and all(grades[(ds, "decoder_only")] == "not closed" for ds in (m, t))
+    assert clo(m, "mlp_guarded", span=S1)["grade"] == "relative" and clo(m, "mlp_guarded", span=S2)["grade"] == "relative"
+    ends = {clo(ds, a, ro)["arm_end"]["verdict"] for ds, ro in ((m, "PDL1"), (t, "PDL1"), (t, "PDL2")) for a in ("mlp_only", "mlp_guarded", "joint_s0")}; assert ends == {"unresolved"}
+    zs = LR["reference_in_the_sealed_runs"][m]["stages"]["PDL1"]["Z"]; zl = LR["admission"][m]["PDL1"]["reference"]; assert zs["verdict"] == "support" and zl["verdict"] == "unresolved"
+    c32m, c32t = LR["round3_against_round2"][m]["PDL1"], LR["round3_against_round2"][t]["PDL1"]; assert c32m["reading"] == "adds to the loss" and c32m["paired"]
+    sp3 = [LR["round3_splits"][m][s]["PDL1"][SP]["added"] for s in ("0", "1", "2")]
+    am = LR["admission"][m]; assert am["HLAE"]["diagnostic"] == "not ready" and am["MHC1"]["diagnostic"] == "not ready"
+    r3 = round3_text()
+    gates = [("0 准入", "0 admission", "响应够大；起点没被否定；这一段确实多丢；区间够窄，修好了能认出来", "the response is large enough; the starting stage is not rejected; the span does add a loss; the intervals are narrow enough to recognize a repaired system"),
+             ("1 定位", "1 location", "封存，只跑一次", "sealed, run once"),
+             ("2 开方子", "2 prescription", "一轮只改一处；配一个只差这一处的对照；先写下规则", "one change per round; a control that differs only by it; the rule written first"),
+             ("3 修复准入", "3 admission of the change", "收敛了；在训练过的数据上达到了自己的目标；审计细胞没进拟合", "it converged; it reached its own objective where it was trained; no audit cell entered the fit"),
+             ("4 开发审计", "4 development audit", "两种修法的对比和闭环等级，都按区间读；可以反复，全是探索性", "the comparison of repairs and the closure grade, read by intervals; may repeat; all exploratory"),
+             ("5 终审", "5 final audit", "配方冻结，至少三个训练种子，封存，在没碰过的数据上只跑一次", "recipe frozen, at least three training seeds, sealed, run once on data nothing has touched"),
+             ("6 用途", "6 use", "原任务的护栏看均值和最差的一项；和不用这个头的基线比", "the guard on the original task, mean and worst item; a comparison with a baseline that does not use the head")]
     body = f"""<section>
   <p class="eyebrow">{bi("闭环", "The loop")} · teddy_mm phase-1 head · {bi(UPDATED[0], UPDATED[1])}</p>
-  <h1>{bi("照审计的定位去修，丢失就没了", "Repair where the audit points, and the loss goes")}</h1>
-  <p class="lede col">{bi("审计说 PD-L1 的响应丢在头的第一段网络（MLP）。这一页是对这句话的检验：照它去修，再审；按它的说法不该有用的修法，也做一遍；然后看修复有没有弄坏头原来的任务。", "The audit says the PD-L1 response is lost in the first network of the head (its MLP). This page is the test of that statement: repair there and audit again; make the repair that should not help as well; then check whether the repair damaged the head's original task.")}</p>
+  <h1>{bi("照审计的定位去修，头多丢的部分去掉八到九成", "Repair where the audit points, and most of the loss goes")}</h1>
+  <p class="lede col">{bi("审计说 PD-L1 的响应丢在头的第一段网络（MLP）。这一页分开回答两个问题。定位对不对：照它去修，也照它排除的地方去修，比较两种修法各去掉多少。修好了没有：修过的头还多不多丢，原来的任务有没有弄坏。第一个问题有明确的答案，第二个还没有。", "The audit says the PD-L1 response is lost in the first network of the head (its MLP). This page answers two questions separately. Is the location right: repair there, repair where it rules out, and compare how much each removes. Is the head repaired: does a changed head still add a loss, and is its original task intact. The first has a clear answer. The second does not yet.")}</p>
   {rounds_table()}
 </section>
 
-<section id="rounds12">
-  {sh(1, "第 1、2 轮：修审计指到的那一步", "Rounds 1 and 2: repair the step the audit names")}
-  <p class="col">{bi(f"每套数据 5 个靶基因轮流留出一个：头在另外 4 个基因的敲除细胞上修，在留出基因的敲除细胞上审计；一半对照细胞不参加任何拟合，只用来审计（黑色素瘤 {n[m][0]:,} 个敲除细胞、{n[m][1]:,} 个对照；THP-1 {n[t][0]:,} 个、{n[t][1]:,} 个）。修法是在现有的头上微调：只动 MLP 的三层，解码器逐位不变；目标是实测的 PD-L1。", f"Each data set's 5 target genes are held out in turn: the head is repaired on knockout cells of the other 4 and audited on those of the held-out gene; half of the control cells take part in no fit and are used only for the audit (melanoma {n[m][0]:,} knockout cells and {n[m][1]:,} controls; THP-1 {n[t][0]:,} and {n[t][1]:,}). The repair fine-tunes the existing head: only the three MLP layers move, the decoder stays bit for bit; the target is measured PD-L1.")}</p>
-  <figure><div class="scroll">{loop_chart()}</div>
-  <figcaption>{bi(f"PD-L1，合并留出基因的审计。每条线是一个头在三环上的 {U}，竖线是区间。只修解码器的头在前两环就是原来的头，到输出仍在高处；修了 MLP 的头从中间层起落回 Z 的高度。", f"PD-L1, the audit pooled over the held-out genes. Each line is one head's {U} at the three stages; bars are intervals. The head with only the decoder repaired is the head as trained at the first two stages and stays high at the output; the heads with the MLP repaired are back at the level of Z from the latent on.")}</figcaption></figure>
+<section id="diagnose">
+  {sh(1, "定位对不对：两种修法的对比", "Is the location right: two repairs compared")}
+  <p class="col">{bi(f"每套数据 5 个靶基因轮流留出一个：头在另外 4 个基因的敲除细胞上修，在留出基因的敲除细胞上审计；一半对照细胞不参加任何拟合，只用来审计（黑色素瘤 {n[m][0]:,} 个敲除细胞、{n[m][1]:,} 个对照；THP-1 {n[t][0]:,} 个、{n[t][1]:,} 个）。修法是在现有的头上微调，目标是实测的 PD-L1。一种只动 MLP（审计指到的那一步），解码器逐位不变；另一种只动解码器，用同样的细胞、损失和步数。", f"Each data set's 5 target genes are held out in turn: the head is repaired on knockout cells of the other 4 and audited on those of the held-out gene; half of the control cells take part in no fit and are used only for the audit (melanoma {n[m][0]:,} knockout cells and {n[m][1]:,} controls; THP-1 {n[t][0]:,} and {n[t][1]:,}). A repair fine-tunes the existing head towards measured PD-L1. One moves only the MLP, the step the audit names, with the decoder bit for bit unchanged. The other moves only the decoder, with the same cells, loss and budget.")}</p>
+  <figure><div class="scroll">{SC.share(tx, share_rows)}</div>
+  <figcaption>{bi("原来的头在 Z 到输出之间多丢的那部分响应，被每种修法去掉的比例；横线是区间。两种修法的审计用同一批细胞和同一套重抽样，所以区间是配对算的。超过 100% 表示修过的头在输出上的读数落到了 Z 以下。", "The share of the loss the head as trained adds between Z and its output that each repair removes; bars are intervals. Both repairs are audited on the same cells with the same resamples, so the intervals are paired. Above 100% means the repaired head read lower at its output than at Z.")}</figcaption></figure>
   <ul class="pts">
-    <li>{bi(f"<b>按规则，两种细胞上都在定位到的那一步闭环。</b>输出上的 {U}：黑色素瘤 {f2(u_out(m, 'as_trained'))} → {f2(u_out(m, 'mlp_only'))}，只修解码器是 {f2(u_out(m, 'decoder_only'))}；THP-1 {f2(u_out(t, 'as_trained'))} → {f2(u_out(t, 'mlp_only'))}，只修解码器是 {f2(u_out(t, 'decoder_only'))}。", f"<b>By the rule, the loop closes at the located step on both cell types.</b> {U} at the output: melanoma {f2(u_out(m, 'as_trained'))} → {f2(u_out(m, 'mlp_only'))}, against {f2(u_out(m, 'decoder_only'))} with only the decoder repaired; THP-1 {f2(u_out(t, 'as_trained'))} → {f2(u_out(t, 'mlp_only'))}, against {f2(u_out(t, 'decoder_only'))}.")}</li>
-    <li>{bi(f"<b>逐个基因。</b>原来的头，10 个留出基因都被指出在头里丢；只修解码器后还是 10 个；修 MLP 后 0 个（{cnt('mlp_only', 'no loss in the head')} 个头不再丢，{cnt('mlp_only', 'not resolved')} 个没定清）。", f"<b>Gene by gene.</b> As trained, the tool names a head step for all 10 held-out genes; with only the decoder repaired, still 10; with the MLP repaired, 0 ({cnt('mlp_only', 'no loss in the head')} read “no loss in the head” and {cnt('mlp_only', 'not resolved')} “not resolved”).")}</li>
+    <li>{bi(f"<b>定位到的那一步是要害。</b>黑色素瘤上，原来的头在 Z 到输出之间多丢 {f2(dm['baseline']['added'])}（{U}）。修 MLP 去掉其中 {pct(L(dm)['point'])}（{pci(L(dm)['ci'])}），修解码器去掉 {pct(C(dm)['point'])}（{pci(C(dm)['ci'])}）。THP-1 上是 {pct(L(dt)['point'])}（{pci(L(dt)['ci'])}）对 {pct(C(dt)['point'])}（{pci(C(dt)['ci'])}）。两种修法之差的区间都在零以上。", f"<b>The located step is the one that matters.</b> On melanoma the head as trained adds {f2(dm['baseline']['added'])} to {U} between Z and its output. Repairing the MLP removes {pct(L(dm)['point'])} of it ({pci(L(dm)['ci'], True)}); repairing the decoder removes {pct(C(dm)['point'])} ({pci(C(dm)['ci'], True)}). On THP-1: {pct(L(dt)['point'])} ({pci(L(dt)['ci'], True)}) against {pct(C(dt)['point'])} ({pci(C(dt)['ci'], True)}). The interval of the difference between the two repairs lies above zero on both.")}</li>
+    <li>{bi(f"<b>逐个基因。</b>10 个留出基因里 {len(adm)} 个过了准入（THP-1 的 IRF1 响应太小），{n_conf} 个都读作“定位得到确认”。", f"<b>Gene by gene.</b> Of the 10 held-out genes {len(adm)} pass admission (the response of IRF1 on THP-1 is too small), and all {n_conf} read “located step confirmed”.")}</li>
+    <li>{bi(f"<b>丢失出现的地方，和能把它去掉的地方，不是同一处。</b>黑色素瘤上原来的头在两步都多丢：Z 到中间层 {f2(added(m, 'as_trained', span=S1)['added'])}，中间层到输出 {f2(added(m, 'as_trained', span=S2)['added'])}。只修 MLP、解码器不动，第二步就只多丢 {f2(added(m, 'mlp_only', span=S2)['added'])}；只修解码器、MLP 不动，第二步照样多丢 {f2(added(m, 'decoder_only', span=S2)['added'])}。", f"<b>Where the loss shows and where it can be removed are not the same place.</b> On melanoma the head as trained adds a loss at both of its steps: {f2(added(m, 'as_trained', span=S1)['added'])} from Z to the latent and {f2(added(m, 'as_trained', span=S2)['added'])} from the latent to the output. With only the MLP repaired and the decoder untouched, the second step adds {f2(added(m, 'mlp_only', span=S2)['added'])}. With only the decoder repaired and the MLP untouched, it still adds {f2(added(m, 'decoder_only', span=S2)['added'])}.")}</li>
     <li>{bi(f"<b>只看终点的平均值会选错。</b>只修解码器后，头自己的 PD-L1 输出在没见过的敲除上平均下降了实测的 {om[0]:.2f} 到 {om[1]:.2f} 倍（黑色素瘤；原来只有 {oa[0]:.2f} 到 {oa[1]:.2f}），看上去修好了。审计仍然否定它，因为它读的中间层没有变。", f"<b>The average at the endpoint would pick the wrong repair.</b> With only the decoder repaired, the head's own PD-L1 output falls for unseen knockouts by {om[0]:.2f} to {om[1]:.2f} times the measured fall (melanoma; {oa[0]:.2f} to {oa[1]:.2f} as trained), which looks repaired. The audit still rejects it, because the latent it reads from has not changed.")}</li>
+    <li>{bi(f"<b>没训练的读出。</b>THP-1 上的 PD-L2 没有对应的头输出，从没进过损失；为 PD-L1 做的 MLP 修复把它多丢的部分也去掉了（{pct(L(d2)['point'])}，{pci(L(d2)['ci'])}），解码器修复去掉 {pct(C(d2)['point'])}。", f"<b>A readout that was not trained.</b> PD-L2 on THP-1 has no output in the head and was in no loss; the MLP repair made for PD-L1 removes its added loss as well ({pct(L(d2)['point'])}, {pci(L(d2)['ci'], True)}), and the decoder repair removes {pct(C(d2)['point'])}.")}</li>
   </ul>
-  <details class="more wide"><summary>{bi("逐个留出基因的结果", "Held-out genes one by one")}</summary><div class="db"><div class="tw"><table><thead><tr><th>{bi("留出的基因", "Held-out gene")}</th><th>{bi("敲除细胞", "Knockout cells")}</th><th>Z</th><th>{bi("第 0 轮", "Round 0")}</th><th>{bi("只修解码器", "Decoder only")}</th><th>{bi("第 1 轮", "Round 1")}</th><th>{bi("第 2 轮", "Round 2")}</th>{("<th>" + bi("第 3 轮", "Round 3") + "</th>") if HAVE3 else ""}</tr></thead><tbody>{gene_rows()}</tbody></table></div>
-  <p class="src col">{bi(f"每格是头的输出上的 {U} 和读法。“没定清”：工具没有指出头里的哪一步，但输出比 Z 高出 0.10 以上。“头不再丢”是和 Z 比：THP-1 的 JAK2 单看输出仍被否定，因为 Z 处已经是 0.15。", f"Each cell gives {U} at the head output and the reading. “Not resolved”: the tool names no step in the head, but the output is more than 0.10 above Z. “No loss in the head” compares with Z: for JAK2 on THP-1 the output alone is still rejected, with Z already at 0.15.")}</p></div></details>
+  <details class="more wide"><summary>{bi("逐个留出基因的结果", "Held-out genes one by one")}</summary><div class="db"><div class="tw"><table><thead><tr><th>{bi("留出的基因", "Held-out gene")}</th><th>{bi("敲除细胞", "Knockout cells")}</th><th>{bi("聚类", "Clusters")}</th><th>{bi("修 MLP 去掉", "MLP repair removes")}</th><th>{bi("修解码器去掉", "Decoder repair removes")}</th><th>{bi("读法", "Reading")}</th></tr></thead><tbody>{gene_rows()}</tbody></table></div>
+  <p class="src col">{bi("PD-L1，头在没有这个基因的情况下修，在它的敲除细胞上审计。一个基因约 200 个敲除细胞时，比例的区间很宽。THP-1 每个基因只有 4 条向导作重抽样单位。", "PD-L1; the head is repaired without the gene and audited on its knockout cells. With about 200 knockout cells per gene the interval of a share is wide. On THP-1 each gene has only 4 guides as resampling units.")}</p></div></details>
+</section>
+
+<section id="closure">
+  {sh(2, "修好了没有：修过的头还多不多丢", "Is it repaired: does a changed head still add a loss")}
+  <p class="col">{bi("这是另一个问题，要的证据也不同。上一节只要“这种修法比那种去掉得多”；这一节要“丢失不在了”。读法分三档，从强到弱：头的输出被判“支持”，这是论文里的闭环；确认没有多丢，即头多丢的部分连同区间整个在 0.10 以下；丢失不再定得清，即区间跨过 0.10。", "This is a different question and it needs different evidence. The section above needs only “this repair removes more than that one”. This one needs “the loss is gone”. Three grades, strongest first: the head's output is supported, which is the closing of a loop in the paper's sense; no added loss shown, where what the head adds lies wholly below 0.10, interval included; the loss is no longer resolved, where the interval crosses 0.10.")}</p>
+  <figure><div class="scroll">{loop_chart()}</div>
+  <figcaption>{bi(f"PD-L1，合并留出基因的审计。每条线是一个头在三环上的 {U}，竖线是区间。只修解码器的头在前两环就是原来的头，到输出仍在高处；修了 MLP 的头落回 Z 附近。", f"PD-L1, the audit pooled over the held-out genes. Each line is one head's {U} at the three stages; bars are intervals. The head with only the decoder repaired is the head as trained at the first two stages and stays high at the output; the heads with the MLP repaired come back near Z.")}</figcaption></figure>
+  <div class="tw"><table><thead><tr><th>{bi("轮", "Round")}</th><th>{bi("头", "Head")}</th><th>{bi("黑色素瘤 PD-L1", "Melanoma, PD-L1")}</th><th>{bi("THP-1 PD-L1", "THP-1, PD-L1")}</th><th>{bi("THP-1 PD-L2", "THP-1, PD-L2")}</th></tr></thead><tbody>{closure_rows()}</tbody></table></div>
+  <p class="src col">{bi(f"每格是头在 Z 到输出之间多丢的 {U}、它的区间和读法。对照是同一批细胞上原来的头。", f"Each cell gives what the head adds to {U} between Z and its output, its interval, and the reading. The control is the head as trained on the same cells.")}</p>
+  <ul class="pts">
+    <li>{bi(f"<b>没有一个头得到“支持”。</b>修过的头的输出全是“没定清”。一个原因在设计：修复用掉了一半对照细胞，审计只剩 {n[m][1]:,} 个对照，起点 Z 自己就没定清（{f2(zl['u'])}，区间 {ivs(zl['ci'])}）。封存的检验用全部对照，Z 是“支持”（{f2(zs['u'])}，{ivs(zs['ci'])}）。起点没定清，后面的环就不可能被判“支持”。", f"<b>No head is supported.</b> The output of every changed head is unresolved. One reason is the design: the repairs used half of the control cells, the audit kept {n[m][1]:,} controls, and the starting stage Z is itself unresolved there ({f2(zl['u'])}, interval {ivs(zl['ci'])}). The sealed test used every control and Z is supported ({f2(zs['u'])}, {ivs(zs['ci'])}). With an unresolved start no later stage can be supported.")}</li>
+    <li>{bi(f"<b>THP-1：三轮都确认没有多丢。</b>头多丢的部分是 {f2(clo(t, 'mlp_only')['arm_span']['added'])}、{f2(clo(t, 'mlp_guarded')['arm_span']['added'])}、{f2(clo(t, 'joint_s0')['arm_span']['added'])}，区间的上界都在 0.10 以下。", f"<b>THP-1: no added loss shown, in all three rounds.</b> The head adds {f2(clo(t, 'mlp_only')['arm_span']['added'])}, {f2(clo(t, 'mlp_guarded')['arm_span']['added'])} and {f2(clo(t, 'joint_s0')['arm_span']['added'])}, and each interval ends below 0.10.")}</li>
+    <li>{bi(f"<b>黑色素瘤：三轮都是“丢失不再定得清”。</b>第 1、2 轮的上界是 {clo(m, 'mlp_only')['arm_span']['ci'][1]:.3f} 和 {clo(m, 'mlp_guarded')['arm_span']['ci'][1]:.3f}，差一点到 0.10 以下。一步一步看，第 2 轮的两步都确认没有多丢。", f"<b>Melanoma: the loss is no longer resolved, in all three rounds.</b> The upper bounds of rounds 1 and 2 are {clo(m, 'mlp_only')['arm_span']['ci'][1]:.3f} and {clo(m, 'mlp_guarded')['arm_span']['ci'][1]:.3f}, just short of falling below 0.10. Read one step at a time, round 2 shows no added loss at either step.")}</li>
+    <li>{bi("<b>只修解码器：两种细胞上都仍然丢。</b>", "<b>The decoder repair: still lost, on both cell types.</b>")}</li>
+  </ul>
 </section>
 
 <section id="cost">
-  {sh(2, "代价：头原来的任务", "The cost: the head's original task")}
-  <p class="col">{bi(f"头原来的任务是在骨髓细胞上从 RNA 预测 134 个蛋白。第 1 轮的修复把这项得分从 {BASE:.3f} 拉到 {rng3(*bm_range('mlp_only'))}，超过事先定的 0.02。第 2 轮在损失里加一项，把头在 3,000 个骨髓训练细胞上的输出按在原处；这一项的权重只在骨髓验证细胞上选。丢失照样去掉，得分是 {rng3(*bm_range('mlp_guarded'))}。", f"The head's original task is predicting 134 proteins from RNA on bone-marrow cells. The repair of round 1 pulled that score from {BASE:.3f} to {rng3(*bm_range('mlp_only'))}, beyond the 0.02 set in advance. Round 2 adds one term to the loss that holds the head's outputs on 3,000 bone-marrow training cells where they are; its weight is chosen on bone-marrow validation cells only. The loss still goes, and the score is {rng3(*bm_range('mlp_guarded'))}.")}</p>
+  {sh(3, "代价：头原来的任务", "The cost: the head's original task")}
+  <p class="col">{bi(f"头原来的任务是在骨髓细胞上从 RNA 预测 134 个蛋白。第 1 轮的修复把这项得分从 {BASE:.3f} 拉到 {rng3(*bm_range('mlp_only'))}，超过事先定的 0.02。第 2 轮在损失里加一项，把头在 3,000 个骨髓训练细胞上的输出按在原处；这一项的权重只在骨髓验证细胞上选。头多丢的部分照样去掉，得分是 {rng3(*bm_range('mlp_guarded'))}。", f"The head's original task is predicting 134 proteins from RNA on bone-marrow cells. The repair of round 1 pulled that score from {BASE:.3f} to {rng3(*bm_range('mlp_only'))}, beyond the 0.02 set in advance. Round 2 adds one term to the loss that holds the head's outputs on 3,000 bone-marrow training cells where they are; its weight is chosen on bone-marrow validation cells only. The added loss still goes, and the score is {rng3(*bm_range('mlp_guarded'))}.")}</p>
   <figure><div class="scroll">{SC.cost(tx, cost_rows(), BASE)}</div>
   <figcaption>{bi("每个蛋白的预测和实测的相关，再取平均；5,000 个骨髓测试细胞。浅色带是事先定的界限。", "The correlation between predicted and measured, per protein, averaged; 5,000 bone-marrow test cells. The pale band is the guard set in advance.")}</figcaption></figure>
 </section>
 
-{round3}
+<section id="round3">
+  {sh(4, "第 3 轮：一个头，两种细胞", "Round 3: one head for both cell types")}
+  <p class="col">{bi(*r3["intro"])}</p>
+  <ul class="pts">
+    <li>{bi(*r3["rule"])}</li>
+    <li>{bi(f"<b>和第 2 轮的头直接比。</b>两个头在同一批细胞上审计，可以配对比较。黑色素瘤上第 3 轮的头比第 2 轮多丢 {-c32m['removed']:.3f}（区间 {ivs([-c32m['removed_ci'][1], -c32m['removed_ci'][0]], 3)}），区间刚好不含零。THP-1 上没有定得清的差别（{f2(-c32t['removed'])}，{ivs([-c32t['removed_ci'][1], -c32t['removed_ci'][0]], 3)}）。三次划分上黑色素瘤多丢的部分是 {'、'.join(f'{x:.3f}' for x in sp3)}。", f"<b>Compared directly with the head of round 2.</b> The two heads are audited on the same cells, so the comparison is paired. On melanoma the head of round 3 adds {-c32m['removed']:.3f} more than that of round 2 (interval {ivs([-c32m['removed_ci'][1], -c32m['removed_ci'][0]], 3)}), an interval that just excludes zero. On THP-1 no difference is resolved ({f2(-c32t['removed'])}, {ivs([-c32t['removed_ci'][1], -c32t['removed_ci'][0]], 3)}). On the three splits the added loss on melanoma is {', '.join(f'{x:.3f}' for x in sp3)}.")}</li>
+    <li>{bi(*r3["hla"])}</li>
+  </ul>
+  <h3>{bi("现在该用哪个头", "Which head to use now")}</h3>
+  <p class="col">{bi(*r3["use"])}</p>
+</section>
+
+<section id="next">
+  {sh(5, "接下来怎么做才不白做：协议和没用过的数据", "What to do next without wasting it: the protocol and unused data")}
+  <p class="col">{bi(f"这三轮都是用一个点值去比 0.10 来判定的，每一轮都在看过上一轮之后设计，同一批审计细胞用了三次。<a href='{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md'>闭环协议</a>把这些补上：每一步花钱之前先过一道便宜的关。", f"All three rounds were decided by comparing a point value with 0.10, each was designed after the previous one was read, and the same audit cells served three times. The <a href='{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md'>loop protocol</a> closes these gaps: a cheap gate stands before every step that costs something.")}</p>
+  <div class="tw"><table><thead><tr><th>{bi("关", "Gate")}</th><th>{bi("查什么", "What is checked")}</th></tr></thead><tbody>{"".join(f'<tr><td class="k" style="white-space:nowrap">{bi(a, b)}</td><td>{bi(c, d)}</td></tr>' for a, b, c, d in gates)}</tbody></table></div>
+  <p class="col">{bi("要做第 5 关，得有闭环没碰过的数据。只读蛋白文件清查了一遍，哪些敲除明显改变哪些蛋白：", "Gate 5 needs data the loop has not touched. A census of the protein files alone lists which knockouts clearly change which proteins:")}</p>
+  <ul class="pts">{"".join(f"<li>{bi(a, b)}</li>" for a, b in census_text())}</ul>
+</section>
 
 <section id="limits">
-  {sh(4 if HAVE3 else 3, "这些结果没有说明什么", "What these results do not show")}
+  {sh(6, "这些结果没有说明什么", "What these results do not show")}
   <ul class="pts">
-    <li>{bi(f"<b>修好的头没有被判“支持”。</b>它只是不比 Z 多丢：这批细胞上 Z 自己就没定清（{f2(po(m, 'as_trained')['stages']['Z']['u'])} 和 {f2(po(t, 'as_trained')['stages']['Z']['u'])}）。", f"<b>The repaired head is not given “support”.</b> It only adds no loss beyond Z: on these cells Z itself is unresolved ({f2(po(m, 'as_trained')['stages']['Z']['u'])} and {f2(po(t, 'as_trained')['stages']['Z']['u'])}).")}</li>
-    <li>{bi(f"<b>修复不会自己带到别的细胞类型。</b>第 1 轮里，在一种细胞上修的头到另一种细胞上仍被指出在头里丢（{f2(A['transfer_papalexi2021_mlp_only']['readouts']['PDL1']['stages']['HEAD_OUT']['u'])} 和 {f2(A['transfer_frangieh2021_mlp_only']['readouts']['PDL1']['stages']['HEAD_OUT']['u'])}）。没有审计过第三种细胞。", f"<b>A repair does not carry to another cell type by itself.</b> In round 1 a head repaired on one cell type is still located in the head on the other ({f2(A['transfer_papalexi2021_mlp_only']['readouts']['PDL1']['stages']['HEAD_OUT']['u'])} and {f2(A['transfer_frangieh2021_mlp_only']['readouts']['PDL1']['stages']['HEAD_OUT']['u'])}). No third cell type has been audited.")}</li>
-    <li>{bi("<b>这还不是封存的第 4 步。</b>那条规则要三个训练种子、一组只差这处改动的对照重训，并要求头的中间层得到“支持”。这里是在现有的头上微调，比的是原来的头。", "<b>This is not yet the sealed step 4.</b> That rule asks for three training seeds, a control retrain that differs only by the change, and “support” at the head latent. Here the existing head is fine-tuned and compared with the head as trained.")}</li>
-    <li>{bi("<b>证据等级：探索性。</b>每套数据 5 个基因作重抽样单位，区间只能看方向。每一轮都是看过上一轮的结果之后才设计的；设计和规则在各自运行之前提交。", "<b>Evidence grade: exploratory.</b> Five genes per data set are the resampling units, so intervals show direction only. Each round was designed after the previous one was read; its design and rule were committed before it ran.")}</li>
+    <li>{bi("<b>头修好了。</b>没有一个修过的头得到“支持”；黑色素瘤上连“没有多丢”都没有确认。", "<b>That the head is repaired.</b> No changed head is supported, and on melanoma not even the absence of an added loss is shown.")}</li>
+    <li>{bi(f"<b>修复能带到别的细胞类型。</b>第 1 轮里，在一种细胞上修的头到另一种细胞上仍然丢（多丢 {f2(LR['transfer'][m]['mlp_only']['PDL1'][SP]['added'])} 和 {f2(LR['transfer'][t]['mlp_only']['PDL1'][SP]['added'])}）。把两种细胞放进同一个拟合的第 3 轮，在黑色素瘤上比分开修略差。没有审计过第三种细胞。", f"<b>That a repair carries to another cell type.</b> In round 1 a head repaired on one cell type still loses the response on the other (it adds {f2(LR['transfer'][m]['mlp_only']['PDL1'][SP]['added'])} and {f2(LR['transfer'][t]['mlp_only']['PDL1'][SP]['added'])}). Round 3, with both cell types in one fit, is slightly worse on melanoma than the separate repair. No third cell type has been audited.")}</li>
+    <li>{bi("<b>这是封存的第 4 步。</b>那条规则要三个训练种子、一组只差这处改动的对照重训，并要求头的中间层得到“支持”。这里是在现有的头上微调，一个训练种子，比的是原来的头。", "<b>That this is the sealed step 4.</b> That rule asks for three training seeds, a control retrain that differs only by the change, and “support” at the head latent. Here the existing head is fine-tuned, with one training seed, and compared with the head as trained.")}</li>
+    <li>{bi("<b>证据等级：探索性。</b>每套数据 5 个基因作重抽样单位，区间是近似的。按区间的读法是事后做的，每一轮当时按自己的规则得到的结论原样保留在各自的记录里。", "<b>Evidence grade: exploratory.</b> Five genes per data set are the resampling units, so intervals are approximate. The reading by intervals was made afterwards; what each round concluded under its own rule stays as recorded in its folder.")}</li>
   </ul>
 </section>
 
 <section id="records">
-  {sh(5 if HAVE3 else 4, "记录", "Records")}
+  {sh(7, "记录", "Records")}
   <ul class="pts">
-    <li>{gh("anm_diag/runs/loop_20261112")} · {gh("anm_diag/runs/loop_guard_20261112")}{(" · " + gh("anm_diag/runs/repair_20261112")) if HAVE3 else ""}{bi("：每一轮的设计（DESIGN.md）、每次审计的声明和记录、结果和脚本。", ": for each round the design (DESIGN.md), the declaration and record of every audit, the results and the scripts.")}</li>
+    <li>{gh("anm_diag/runs/loop_20261112")} · {gh("anm_diag/runs/loop_guard_20261112")} · {gh("anm_diag/runs/repair_20261112")}{bi("：每一轮的设计（DESIGN.md）、每次审计的声明和记录、结果和脚本。", ": for each round the design (DESIGN.md), the declaration and record of every audit, the results and the scripts.")}</li>
+    <li>{gh("anm_diag/runs/loop_reading_20261112")}{bi("：三轮按协议重读的全部数字、台账和数据清查。", ": every number of the re-reading under the protocol, the ledger, and the census of the data.")} {gh("anm_diag/LOOP_PROTOCOL.md")} · {gh("anm_diag/anm_diag/loop.py")}{bi("：协议和读法的代码。", ": the protocol and the code that makes the readings.")}</li>
     <li>{bi("细胞特征、头的权重和骨髓细胞不在仓库里，脚本通过环境变量读取。", "Cell features, head weights and bone-marrow cells are not in the repository; the scripts read them through environment variables.")}</li>
   </ul>
 </section>"""
     page("anm-loop.html", "The loop on the teddy_mm head — TEDDY × ANM",
-         "Closing the loop on the teddy_mm protein head: the ANM audit locates the loss of the PD-L1 response in the head's MLP; repairing that step removes it on held-out genes, repairing the decoder does not, and with the bone-marrow outputs held the original task is kept.", body)
+         "The loop on the teddy_mm protein head, read by intervals: repairing the head's MLP, the step the ANM audit names, removes 84% and 91% of the loss the head adds for PD-L1 on held-out genes, and repairing the decoder removes 5% and 15%. No changed head is yet shown to be free of the loss.", body)
 
 
 if __name__ == "__main__":

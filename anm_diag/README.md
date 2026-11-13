@@ -177,6 +177,26 @@ deal can put every treated cluster into the same fold; the models for all other 
 order and the one used is written to the record as `fold_seed`, with a `K1` warning. A split that was usable is left exactly
 as it was, so finished records are unaffected. The resampling keeps the declared seed.
 
+## After a location: the loop
+
+A location says where a response stops being readable. Changing the system there and auditing again is a loop, and
+[`LOOP_PROTOCOL.md`](LOOP_PROTOCOL.md) says what it has to do to count. `python -m anm_diag loop` reads finished runs
+(their records and bootstrap draws) and makes no fits:
+
+```bash
+python -m anm_diag loop admit runs/<baseline> --span Z:HEAD_OUT           # before any change: can these data decide anything?
+python -m anm_diag loop diagnose --baseline runs/<baseline> --located runs/<changed at the located step> \
+    --control runs/<changed elsewhere> --span Z:HEAD_OUT                   # is the located step the one that matters?
+python -m anm_diag loop closure --arm runs/<changed> --control runs/<baseline> --span Z:HEAD_OUT   # is the changed system free of the loss?
+```
+
+`diagnose` compares two changes against one baseline: the share of the baseline's loss over the span that each removes,
+and the difference, with paired intervals when the runs share their resamples. `closure` grades a changed system:
+"absolute" (its end stage is supported and the control's is rejected), "relative" (it adds no loss over the span, by its
+interval), "loss no longer resolved", "not closed". The first question can be answered when the baseline loss is large.
+The second needs narrow intervals and data no design decision has seen. First use:
+[`runs/loop_reading_20261112/`](runs/loop_reading_20261112/).
+
 ## Typed source events
 
 `python -m anm_diag events <declaration> [--record anm_record.json] [--forward-record forward_record.json --dataset <name>] [--out events.jsonl]`

@@ -36,10 +36,15 @@ Run with [`anm_diag/`](anm_diag/), a declaration-driven runner that rejects ille
 seals the design with data and code hashes. Full write-up: [`docs/ANM_DIAGNOSIS.md`](docs/ANM_DIAGNOSIS.md).
 
 **Where this stands (12 Nov 2026).** TEDDY's own stages keep the PD-L1 response to IFN-γ-pathway knockouts; the teddy_mm
-phase-1 head loses about half of it, starting at its first network (the MLP). Repairing that step removes the loss on
-knockouts of genes the repair never saw, on two cell types, and with the head's outputs held on bone-marrow cells the
-repair stays within 0.02 on the head's original task. The head that `scripts/04_train.py` trains is still the unrepaired
-one: the repair has been shown on fine-tuned copies and is not yet part of the training recipe.
+phase-1 head loses about half of it, starting at its first network (the MLP). On knockouts of genes a repair never saw,
+repairing that step removes 84% and 91% of what the head loses (melanoma and THP-1), and repairing the decoder
+removes 5% and 15%: the located step is the one that matters. No repaired head is yet shown to be free of the loss.
+On THP-1 the repaired heads add no loss, by their intervals; on melanoma the loss is no longer resolved; none has a
+supported output. With the head's outputs held on bone-marrow cells a repair stays within 0.02 on the head's original
+task. The head that `scripts/04_train.py` trains is still the unrepaired one. The repair is a fine-tune
+([`scripts/07_repair_head.py`](scripts/07_repair_head.py): one head per cell type, one training seed) and is not part of
+the training recipe. What a loop has to do to count is written down in
+[`anm_diag/LOOP_PROTOCOL.md`](anm_diag/LOOP_PROTOCOL.md).
 
 - **Sealed, run once (Perturb-CITE-seq, Frangieh 2021; ECCITE-seq, Papalexi 2021):** no TEDDY stage was rejected for
   any of five protein readouts. For PD-L1 under IFN-γ-pathway knockouts in melanoma, TEDDY-G 70M's pooled embedding
@@ -64,7 +69,20 @@ one: the repair has been shown on fine-tuned copies and is not yet part of the t
   Repeated with the head's outputs held on bone-marrow training cells it gives 0.12 and 0.18, with a score of 0.603 to
   0.604 and 0.594 to 0.595 against 0.602. One seed, a fine-tune on one protein; a repair made on one cell type does not
   carry to the other ([`anm_diag/runs/loop_20261112/`](anm_diag/runs/loop_20261112/),
-  [`loop_guard_20261112/`](anm_diag/runs/loop_guard_20261112/)).
+  [`loop_guard_20261112/`](anm_diag/runs/loop_guard_20261112/)). A third round put both cell types and every measured
+  protein into one repair, to get one head for both. By its rule it did not pass: melanoma regressed on all three splits
+  of the controls (the head adds 0.109, 0.111 and 0.140 beyond Z, margin 0.10) and THP-1 passed on all three
+  ([`repair_20261112/`](anm_diag/runs/repair_20261112/)).
+- **The three rounds re-read by intervals (post hoc, exploratory, no new fit or audit;**
+  [`loop_reading_20261112/`](anm_diag/runs/loop_reading_20261112/)**):** the rounds decided by comparing a point value
+  with 0.10. Read with the intervals the records already hold, and with heads compared pairwise on the same cells: over
+  Z → output the head as trained adds 0.39 (melanoma) and 0.42 (THP-1) to *u* for PD-L1. Repairing the MLP removes
+  84% [74%, 98%] and 91% [85%, 99%] of that; repairing the decoder 5% [-4%, 13%] and 15% [8%, 21%]. Whether a repaired head is
+  free of the loss is a different question. No repaired head has a supported output; on THP-1 the repaired heads add no
+  loss (upper bound below 0.10 in all three rounds); on melanoma the loss is no longer resolved in any round. On
+  melanoma the joint head of round 3 adds 0.044 [0.002, 0.090] more than the head of round 2. HLA-E and MHC-I, made
+  targets in round 3, do not pass the protocol's admission check on these cells. The melanoma co-culture condition holds
+  1,846 knockout cells of the same five genes that no fit or audit of the loop has used.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
