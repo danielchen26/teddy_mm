@@ -4,13 +4,16 @@ Code and records: [`anm_diag/`](../anm_diag/) (how-to in its [README](../anm_dia
 `anm_diag/runs/*/anm_record.json`). Method: Active Neural Matter (arXiv 2610.14549), §2.2–§2.3 and Table 2.
 
 > [!IMPORTANT]
-> **Status (9 Nov 2026).** The sealed tests are complete. TEDDY's own stages (RAW → TOKENS → Z) are never rejected.
+> **Status (12 Nov 2026).** The sealed tests are complete. TEDDY's own stages (RAW → TOKENS → Z) are never rejected.
 > After the head-input fix, the sealed rerun puts a loss between TEDDY's embedding and the teddy_mm head's latent layer
 > (Z → HEAD_LAT): absolute for Frangieh PD-L1, relative for the other readouts. Two exploratory follow-ups, each sealed
 > and run once, have also run: splitting the head places the loss in its later layers and decoder (the normalization
 > and the first layer lose nothing), and a forward test of typed source events shows how the head responds to the
 > knockout direction. A rule written before the head split selects the next intervention (retrain the head with
-> IFN-γ-varied cells); that step has not run. Details: [Corrections](#corrections-and-deviations).
+> IFN-γ-varied cells); no run of that step is recorded in this repository. Exploratory work since: the pooled source
+> separated by target and batch (11 Nov), and two closed-loop runs (12 Nov) in which repairing the step the audit names
+> removes the loss on held-out genes, within the 0.02 guard on the head's original task once its bone-marrow outputs are
+> held. The head that teddy_mm trains is still the unrepaired one. Details: [Corrections](#corrections-and-deviations).
 
 ## The question
 
@@ -218,7 +221,8 @@ training data that contains IFN-γ variation. Applied to the head-split record, 
 step both fall in the last group, so the rule selects **retraining with IFN-γ-varied cells**. The criterion: the change
 against a control with the same recipe minus the change, at least 3 seeds each; it counts only if every treated seed
 brings HEAD_LAT to bounded support and the control does not, with a guardrail of no more than 0.02 drop in mean
-per-protein Pearson on teddy_mm's site4 test. This step has not run.
+per-protein Pearson on teddy_mm's site4 test. No run of this step is recorded in this repository. The closed-loop runs of
+12 November (below) repair the existing head in a different way and are not this step.
 
 ### The pooled source, separated (exploratory, 11 November)
 
@@ -337,9 +341,14 @@ embedding and its latent layer (*u* from +0.04 to +0.20 [+0.13, +0.26]).
 with the input view not within tolerance (the MHC-I claim does not survive the two-sided reread; HLA-E's step moves to
 HEAD_LAT → HEAD_OUT).
 
-**Exploratory:** the KS-2 pooling result; the two-sided reread; the head split (losses in the later layers and decoder, none at the normalization or the first layer); the forward test.
+**Exploratory:** the KS-2 pooling result; the two-sided reread; the head split (losses in the later layers and decoder, none at the normalization or the first layer); the forward test; the pooled source separated by target and batch; the
+exposure test; the two closed-loop runs (repairing the head's MLP, the step the audit names, removes the PD-L1 loss on
+knockouts of held-out genes on both cell types while repairing its decoder does not, and the repair stays within the 0.02
+guard once the head's bone-marrow outputs are held).
 
-**Cannot claim:** why the head loses the response (the head split locates, it does not explain; the step-4 intervention has not run); that the head loses it on bone-marrow cells;
+**Cannot claim:** why the head loses the response (the head split locates, it does not explain; no run of the step-4
+intervention is recorded here); that the head teddy_mm trains is repaired (the repairs are fine-tuned copies: one seed, one
+trained protein); that a repair carries from one cell type to another (it did not); that the head loses it on bone-marrow cells;
 that TEDDY is sufficient for perturbation responses in general; that a rejected stage is "broken" (a reject names a
 step of the map under declared readout classes).
 
