@@ -6,6 +6,8 @@
   python -m anm_diag inspect --paths PATHS.yaml [--show col1,col2]       metadata only, before sealing
   python -m anm_diag seal DECLARATION --paths PATHS.yaml --out SEALED.yaml
   python -m anm_diag loop admit|diagnose|closure ...                     finished runs read as a loop (loop.py, LOOP_PROTOCOL.md)
+  python -m anm_diag loop test --hypothesis H.json --arms ARMS.json      a hypothesis against the arms of an intervention
+  python -m anm_diag scope SPEC.yaml --out DIR                           at each stage: readable by whom (scope.py)
 """
 import argparse
 import json
@@ -30,6 +32,9 @@ def main(argv=None):
     if argv and argv[0] == "loop":                      # reads records only; has its own arguments
         from .loop import main as loop_main
         return loop_main(argv[1:])
+    if argv and argv[0] == "scope":                     # fits readouts on arrays; has its own arguments
+        from .scope import main as scope_main
+        return scope_main(argv[1:])
     ap = argparse.ArgumentParser(prog="anm_diag")
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("check"); c.add_argument("declaration")
