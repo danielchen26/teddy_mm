@@ -1,8 +1,9 @@
-# Round 1: a head for donors it has not seen — design (draft)
+# Round 1: a head for donors it has not seen — design
 
-Draft of 16 November 2026. **Not frozen.** No script of this round exists and no model has been trained. The draft
-becomes the design when the owner of the repository approves it; the commit that freezes it will be named here, and
-nothing below is changed after that commit except under "Amendments", dated.
+Written 16 November 2026 and approved by the owner of the repository the same day, after a second check against the
+training code, the data and the protocol (what that check changed is listed at the end). **Frozen** by the commit
+that put this paragraph here: no script of this round existed then and no model had been trained. Nothing below is
+changed after that commit except under "Amendments", dated.
 
 This is the first round of the loop of `LOOP_PROTOCOL.md` (version 2) that trains anything for the aim stated in the
 root README: a head that works on donors and diseases it has not seen.
@@ -39,7 +40,7 @@ The hypothesis carried a three-line note for the experiment. Checked against the
 | 10 | Nothing told a head that learned the PBMC proteins' levels from one that learned how they vary with RNA. | A control with the proteins shuffled among a donor's cells. | Arms |
 | 11 | Nothing said whether donors or cells are what is missing. | Arms with one donor or four at the same number of cells. | Arms |
 | 12 | `anm_diag scope` takes one output of the system per run. | Several heads on the same cells, compared pairwise with shared resamples. | Tools |
-| 13 | A head takes about 4 minutes in the shell this work is run from, whose calls end after 3. | A trainer that stops and resumes. | Tools |
+| 13 | A head takes about 12 minutes of fitting on the machine the fits run on (2 cores, 137 ms a step), 45 heads about 11 hours; one run of that machine lasts at most 2 hours. | A trainer that stops and resumes with the same result. | Tools |
 | 14 | No guard, no admission criteria, no statement of what each outcome leads to. | Written below. | Gate 3; Outcomes |
 
 ## Data and roles
@@ -61,12 +62,13 @@ Three sets of data, as rule 4 asks. Without F the round stops at gate 4 and stay
 be fitted on, that E6 is unchanged, and that the study can no longer confirm anything.
 
 **0b. The final study.** Criteria, checked without reading a protein value: open; raw RNA counts per cell; raw protein
-counts; a donor and a disease label per cell; at least 20 donors with at least 8 healthy and 8 patients; at least 80
+counts; a donor and a disease label per cell (patients are the donors with the disease the study is about; other
+groups are not drawn); at least 20 donors with at least 8 healthy and 8 patients; at least 80
 proteins among the 112 the PBMC study shares with the head, by the name-matching rule already used for that study;
 never used in this repository. Candidates in order, from `runs/generalization_20261112/results/public_data_census.json`:
 Stephenson et al. 2021 (E-MTAB-10026), COMBAT 2022 (Zenodo 5139561), Liu et al. 2021 (GSE161918). From the first
 that meets the criteria: 20 healthy donors and 20 patients (all, where fewer), balanced over centres where the study
-has several; 1,000 cells per donor, drawn without labels, seed 0. These donors are listed under `roles.final`. The
+has several; 1,000 cells per donor from one sample of the donor (the first by the study's own sample name), drawn without labels, seed 0. These donors are listed under `roles.final`. The
 study's other donors stay unopened as a reserve for one later test. The 40,000 cells are embedded with
 `scripts/03_embed_rna.py` as the PBMC study was (about 2 hours on the owner's machine; the PBMC study took 7,610 s).
 
@@ -95,9 +97,13 @@ Fixed before any fit:
   values, for PBMC the per-cell centred log ratio of `scripts/prepare_external_cite.py`. No rescaling between studies.
 - **Loss.** The registered loss, averaged over the proteins measured in the cell. Every cell has weight 1.
 - **Size factor.** The recipe's definition applied inside each study: the cell's total over its measured proteins,
-  divided by the median of that total over the study's fit cells. The scores below do not depend on it.
-- **Total.** Every arm trains on 67,405 cells.
-- **Seeds.** 0, 1, 2 for every arm. Subsamples are drawn with the training seed, without labels.
+  divided by a median of that total. Bone-marrow cells keep the values stored in their pack (the registered ones);
+  for PBMC cells the median is taken over the arm's PBMC fit cells. The scores below do not depend on it.
+- **Total.** Every arm trains on 67,405 cells, except `amount`, which is `coverage` without its PBMC cells (47,405).
+- **Seeds.** 0, 1, 2 for every arm. Subsamples are drawn with the training seed, without labels. The bone-marrow
+  cells of an arm are the first cells of one random order per seed, so the arms' bone-marrow cells are nested.
+  In `labels` a cell's whole protein row, with its size factor, goes to another cell of the same donor.
+- **Machine.** All arms of a seed are fitted on one machine. The machine is recorded with every head.
 - **What is audited.** The head's MLP and decoder with the training-median size factor, as in every audit so far.
 
 ## Arms
@@ -131,10 +137,14 @@ and once with its batch not seen.
 
 ## Gate 3: admission of an arm
 
-1. Converged: over the last 5 epochs the validation score changes by less than 0.005.
+1. Ran its budget without the validation score falling: on donor 18303, the audited path's score (`val_mlp_pearson`)
+   averaged over the last 5 epochs is not more than 0.005 below its average over the 5 before. This is weaker than
+   the protocol's "converged". The registered recipe stops at 40 epochs while that score still rises (the head in
+   use: +0.005 between the two averages, training loss still falling). Every arm but `function` keeps the registered
+   budget; `function` is the arm that says what a longer fit of a wider map gives.
 2. Reached its own objective: on its own PBMC fit cells `coverage` scores at least 0.035 above `as_is` (mean over
-   proteins of the correlation within a donor; half of the smallest gain gate 0 read there). `function` scores no
-   lower than `as_is` on donor 18303. The other arms: criterion 1 only.
+   proteins of the correlation within a donor; half of the smallest gain gate 0 read there). `function` ends with a
+   lower training loss than `as_is` of the same seed. The other arms: criterion 1 only.
 3. No scored cell in the fit, checked by donor and barcode. No cell of F in any file a fit reads.
 4. The guard on donor 18303: the mean over 134 proteins of the correlation between measured and predicted is no more
    than 0.02 below `as_is` of the same seed.
@@ -182,7 +192,8 @@ The recipe is frozen by a commit. Then, in this order:
    112).
 4. The heads are run on F. `anm_diag loop test` reads `donors_hao_coverage` as it stands in the ledger: the event is
    "a donor the head was not trained on, external PBMC"; the units are new. The outcome has to hold in every seed.
-5. Also read, declared here: the gain among healthy donors, among patients, and their difference.
+5. Also read, declared here: the gain among healthy donors, among patients, and their difference; and, from the
+   grid of step 6, the share of F's own ceiling that was delivered. Neither changes the outcome.
 6. Only then the grid on F (donor and disease as contrast events, checked by `events.check_contrast`), for round 2.
 
 ## Outcomes
@@ -201,6 +212,9 @@ The recipe is frozen by a commit. Then, in this order:
 - TEDDY's pretraining data probably held the RNA of both PBMC studies (addendum E6). "Not seen" is a statement about
   the head. It is the same for every arm.
 - PBMC and bone marrow only; the proteins both panels share; one head recipe.
+- The candidate final studies were made with the 5′ assay; both fit studies with the 3′ assay. On F a study, an assay
+  and, among patients, a disease are new at once. Its healthy donors separate the disease from the other two; nothing
+  here separates study from assay.
 - Eight development donors: every development interval is approximate.
 - The normalized targets of two studies are not on one scale. If the plain recipe cannot hold both, the round says so
   and the remedy is a change of its own.
@@ -212,9 +226,24 @@ The recipe is frozen by a commit. Then, in this order:
 | tools and tests (0d) | anywhere; no data | about a day | no |
 | forecasts (0c) | existing arrays | 1 to 2 hours | no |
 | addendum (0a) | repository | minutes | approval |
-| final study: check, download, embed (0b) | the owner's machine | about 3 hours, mostly unattended | one command |
-| 45 heads, gate 3, development | the owner's machine | about 4 hours through the restricted shell, about 1 hour run directly | the machine awake |
-| gate 5 | the owner's machine | under 1 hour | approval to open F |
+| final study: check, download, tables (0b) | the owner's machine | hours, mostly unattended | no, if the files can be reached from the restricted shell |
+| final study: embedding (0b) | the owner's machine, run directly (the restricted shell is far too slow) | about 2 hours | one command |
+| 45 heads, gate 3, development | this work's cloud machine (2 cores), in runs of at most 2 hours | about 11 hours | no |
+| gate 5 | the same machine | under 2 hours | approval to open F |
+
+## What the second check changed (before freezing)
+
+| | in the draft | now |
+|---|---|---|
+| 1 | "Every arm trains on 67,405 cells" | false for `amount` (47,405); said so |
+| 2 | a head takes about 4 minutes | measured with a simplified step; the registered step takes 137 ms on the cloud machine (12 minutes a head) and 498 ms in the restricted shell of the owner's machine (44 minutes), so the fits run on the cloud machine |
+| 3 | gate 3, converged: the validation score changes by less than 0.005 in 5 epochs | the score meant there is drawn at random each epoch and moves by up to 0.015 between epochs; and the registered recipe is still improving when it stops. Replaced by a criterion on the audited path, and the deviation from the protocol is stated |
+| 4 | gate 3, `function` scores no lower than `as_is` on donor 18303 | a difference of seed noise would have excluded the arm; replaced by its training loss |
+| 5 | size factor "over the study's fit cells" | bone-marrow cells keep their registered stored values |
+| 6 | subsamples "drawn with the training seed" | nested, and what moves in `labels`, written out |
+| 7 | patients, samples per donor in F: not said | said |
+| 8 | assay of F: not said | a limit: study and assay cannot be separated on F |
+| 9 | where each seed is fitted: not said | one machine per seed, recorded |
 
 ## Amendments
 
