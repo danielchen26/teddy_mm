@@ -254,6 +254,114 @@ def decision_event(kind, result, runs):
     return {"type": "decision", "kind": kind, "readout": result["readout"], "span": result["span"], "runs": list(runs), "outcome": result[key], "result": result}
 
 
+# ------------------------------------------------------------------ hypotheses and their tests
+CLAIMS = ("function", "coverage", "unit", "upstream", "unreadable", "location")
+
+
+def hypothesis_event(hid, about, claim, forecast, rule, basis, rivals=(), retrospective=False, note=None):
+    """A diagnosis written as something an intervention can refute.
+
+    about      {"event", "readout", "target", "quantity"}: what is measured on every arm, as a gain (positive = better)
+    claim      what is said to be missing (CLAIMS)
+    forecast   {arm: [lo, hi]}: the gain each arm is expected to show
+    rule       {"own": arm, "at_least": x, "controls": {arm: at_most}}: confirmed if the own arm's gain lies above x and
+               every control arm's gain lies below its bound; refuted if the own arm's gain lies below x or a control's
+               lies above its bound
+    basis      the runs the forecast was read from; a test may not use them
+    retrospective  True when the outcome was already known when the forecast was written: such a test is a check of
+               consistency, not a confirmation
+    """
+    assert claim in CLAIMS, claim
+    assert rule["own"] in forecast, "the rule's own arm needs a forecast"
+    return {"type": "hypothesis", "id": hid, "about": dict(about), "claim": claim, "rivals": list(rivals),
+            "forecast": {k: [float(v[0]), float(v[1])] for k, v in forecast.items()},
+            "rule": {"own": rule["own"], "at_least": float(rule["at_least"]), "controls": {k: float(v) for k, v in (rule.get("controls") or {}).items()}},
+            "basis": list(basis), "retrospective": bool(retrospective), "note": note}
+
+
+def test(hypothesis, arms):
+    """Read the arms of an intervention against a hypothesis. arms: {arm: {"gain": x, "ci": [lo, hi], "runs": [...],
+    "admitted": bool}}. Returns a test event: confirmed, refuted, unresolved or not testable, and for every arm whether
+    the measured gain fell inside its forecast."""
+    rule, fc = hypothesis["rule"], hypothesis["forecast"]
+    own, ctl = rule["own"], rule["controls"]
+    res = {"type": "test", "hypothesis": hypothesis["id"], "claim": hypothesis["claim"], "retrospective": hypothesis["retrospective"],
+           "arms": {}, "runs": sorted({r for a in arms.values() for r in a.get("runs", [])})}
+    for k, a in arms.items():
+        f = fc.get(k)
+        res["arms"][k] = {"gain": float(a["gain"]), "ci": [float(a["ci"][0]), float(a["ci"][1])], "admitted": bool(a.get("admitted", True)),
+                          "forecast": f, "inside_forecast": None if f is None else bool(f[0] <= a["gain"] <= f[1]),
+                          "forecast_error": None if f is None else float(a["gain"] - (f[0] + f[1]) / 2)}
+    present = [c for c in ctl if c in arms]
+    if own not in arms or not present:
+        res.update(outcome="not testable", why="the own arm is missing" if own not in arms else "no control arm was run")
+        return res
+    bad = [k for k in [own] + present if not res["arms"][k]["admitted"]]
+    if bad:
+        res.update(outcome="not testable", why=f"arm not admitted: {', '.join(bad)} (a change that did not reach its own objective was not tested)")
+        return res
+    o = res["arms"][own]["ci"]
+    own_ok, own_fail = o[0] >= rule["at_least"], o[1] < rule["at_least"]
+    c_ok = all(res["arms"][c]["ci"][1] <= ctl[c] for c in present)
+    c_fail = [c for c in present if res["arms"][c]["ci"][0] > ctl[c]]
+    if own_fail or c_fail:
+        why = (f"the {own} arm's gain lies below {rule['at_least']}" if own_fail else "") + \
+              ("; " if own_fail and c_fail else "") + (f"a control arm gains more than allowed: {', '.join(c_fail)}" if c_fail else "")
+        res.update(outcome="refuted", why=why)
+    elif own_ok and c_ok:
+        res.update(outcome="confirmed", why=f"the {own} arm's gain lies above {rule['at_least']} and every control arm's below its bound")
+    else:
+        res.update(outcome="unresolved", why="an interval crosses its bound")
+    if len(present) < len(ctl):
+        res["why"] += f"; control arms not run: {', '.join(c for c in ctl if c not in arms)}"
+    return res
+
+
+def ledger_check(events):
+    """Rules on the hypotheses and tests of a ledger.
+
+    H1  a test names a hypothesis that is in the ledger (error)
+    H2  a test uses no run its hypothesis was read from (error); a retrospective hypothesis is marked as such on the
+        test (warning: the outcome was known when the forecast was written)
+    H3  a test has the rule's own arm and at least one control arm (error)
+    H4  an arm that was run has a forecast (warning)
+    H5  a hypothesis has a test (note: open)
+    """
+    hyp = {e["id"]: e for e in events if e.get("type") == "hypothesis"}
+    tests = [e for e in events if e.get("type") == "test"]
+    out = []
+    add = lambda code, sev, msg: out.append({"code": code, "severity": sev, "message": msg})
+    for t in tests:
+        h = hyp.get(t["hypothesis"])
+        if h is None:
+            add("H1", "error", f"test of '{t['hypothesis']}': no such hypothesis in the ledger")
+            continue
+        shared = sorted(set(h["basis"]) & set(t.get("runs", [])))
+        if shared:
+            add("H2", "error", f"test of '{h['id']}' uses runs the hypothesis was read from: {', '.join(shared)}")
+        if h["retrospective"]:
+            add("H2", "warning", f"'{h['id']}' is retrospective: its forecast was written after the outcome was known")
+        if h["rule"]["own"] not in t["arms"] or not any(c in t["arms"] for c in h["rule"]["controls"]):
+            add("H3", "error", f"test of '{h['id']}' lacks the own arm or every control arm")
+        for a in t["arms"]:
+            if a not in h["forecast"]:
+                add("H4", "warning", f"test of '{h['id']}': arm '{a}' was run without a forecast")
+    tested = {t["hypothesis"] for t in tests}
+    for hid in hyp:
+        if hid not in tested:
+            add("H5", "note", f"'{hid}' has no test yet")
+    return out
+
+
+def forecast_record(tests):
+    """How the forecasts of finished tests held up: per arm, the measured gain against the forecast."""
+    rows = [dict(hypothesis=t["hypothesis"], arm=k, **{f: a[f] for f in ("gain", "forecast", "inside_forecast", "forecast_error")},
+                 retrospective=t["retrospective"]) for t in tests for k, a in t["arms"].items() if a["forecast"] is not None]
+    inside = [r["inside_forecast"] for r in rows]
+    return {"n": len(rows), "inside": int(sum(inside)), "mean_abs_error": float(np.mean([abs(r["forecast_error"]) for r in rows])) if rows else None,
+            "rows": rows}
+
+
 def write_ledger(events, path):
     with open(path, "w") as f:
         for e in events:
@@ -262,6 +370,19 @@ def write_ledger(events, path):
 
 
 def main(argv=None):
+    import sys
+    argv = sys.argv[1:] if argv is None else list(argv)
+    if argv and argv[0] == "test":
+        tp = argparse.ArgumentParser(prog="anm_diag loop test")
+        tp.add_argument("--hypothesis", required=True, help="a hypothesis event (JSON)")
+        tp.add_argument("--arms", required=True, help='{arm: {"gain", "ci", "runs", "admitted"}} (JSON)')
+        tp.add_argument("--out")
+        t = tp.parse_args(argv[1:])
+        res = test(json.loads(Path(t.hypothesis).read_text()), json.loads(Path(t.arms).read_text()))
+        print(f"{res['hypothesis']}: {res['outcome']} ({res['why']})")
+        if t.out:
+            Path(t.out).write_text(json.dumps(res, indent=1, default=float))
+        return 0
     ap = argparse.ArgumentParser(prog="anm_diag loop", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     for name in ("admit", "diagnose", "closure"):

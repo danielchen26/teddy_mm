@@ -197,6 +197,32 @@ interval), "loss no longer resolved", "not closed". The first question can be an
 The second needs narrow intervals and data no design decision has seen. First use:
 [`runs/loop_reading_20261112/`](runs/loop_reading_20261112/).
 
+## Readable by whom: scope, hypotheses and tests (version 2)
+
+An audit says at which stage a response is lost. `anm_diag scope` asks a second question at every stage: by what kind
+of readout is it readable. The same response is read by readouts learned from the system's own output (`frozen`), from
+its training cells (`train`), from another study (`other`), from the other units of the audited study (`units`) and
+with the audited unit's own cells (`own`). Where the scopes part says what is missing, and what to do about it:
+
+| reading | meaning | action |
+|---|---|---|
+| function | the system's training cells allow it, its map does not deliver it | change the map |
+| coverage | it takes cells of this kind | add them to the training |
+| unit | it takes the unit's own cells | calibrate at use |
+| upstream | readable at the input view, not at the stage the system reads | change what comes before |
+| unreadable | no scope reads it | change the measurement |
+
+The events can be perturbations or contrasts nobody assigned (a donor, a batch, a study, a disease); the file format
+and the code are the same. A reading becomes a hypothesis with a forecast for every arm of an intervention, and
+`anm_diag loop test` reads the arms against it. The protocol is [`LOOP_PROTOCOL.md`](LOOP_PROTOCOL.md), version 2.
+
+```
+python -m anm_diag scope SPEC.yaml --out DIR
+python -m anm_diag loop test --hypothesis H.json --arms ARMS.json
+```
+
+The reading is tested on six planted situations (`tests/test_scope.py`).
+
 ## Typed source events
 
 `python -m anm_diag events <declaration> [--record anm_record.json] [--forward-record forward_record.json --dataset <name>] [--out events.jsonl]`

@@ -117,3 +117,156 @@ None of these is derived. Each is reported with every reading.
 | audit data kept for the audit | half the controls went to the fits, and the reference stage fell from supported to unresolved | rule 3 |
 | final data | the same audit cells served every round | rule 4 |
 | the sealed design of 9 November | three seeds, a matched control retrain and an interval rule were already written there | gate 5 |
+
+---
+
+# Version 2: scope, hypotheses and tests
+
+Added 16 November 2026. Version 1 above stays as it is: it locates the stage where a response is lost, for a
+perturbation, and reads a finished loop after the fact. Three things were missing for a loop whose aim is a system that
+works on units it has not seen (donors, batches, studies, diseases):
+
+| missing in version 1 | added | where |
+|---|---|---|
+| events other than a perturbation | contrasts between groups nobody assigned, with their own rules | `events.contrast_events`, `events.check_contrast` |
+| what is missing, not only where | a second axis at every stage: the scope of the readout | `scope.py`, `anm_diag scope` |
+| a forecast written before a change, and a rule to read it | hypothesis and test events | `loop.hypothesis_event`, `loop.test`, `loop.ledger_check` |
+
+Everything is added to the same package and the same ledger. No model is trained by any of it.
+
+## One quantity
+
+*u*(event, readout, target, stage, scope): the share of a response that a prediction leaves unexplained.
+
+- **event**: a treated unit against control cells. A knockout against unassigned cells; a donor against the other donors
+  of a study; a batch; a study; patients against healthy donors.
+- **target**: `shift`, the difference between the two sides (what version 1 audits), or `variation`, the differences
+  among the cells of the treated unit (what a system's ordinary score measures).
+- **stage**: a view of the cell along the chain, as in version 1.
+- **scope**: the cells the readout was learned from.
+
+| scope | learned from | a response read only from here on means |
+|---|---|---|
+| `frozen` | nothing: the system's own output | — |
+| `train` | the system's training cells | the map is at fault, not its data: **function** |
+| `other` | another study of the same kind of event | (reported beside the others: does one study teach another) |
+| `units` | the other units of the audited study, never the unit that is scored | cells of this kind are needed: **coverage** |
+| `own` | the audited unit's own cells too, cross-fitted by cell | it is specific to the unit: **unit** |
+
+If the unit's own cells do not read it at the stage the system reads, and they do at the input view, the loss is
+**upstream**. If they do not there either, it is **unreadable** by the declared views and classes. Version 1's
+cross-fit by cluster is the `units` scope; its verdicts carry that scope in the ledger.
+
+One statistic serves every scope. With *P* the scope's out-of-sample prediction of the readout *O*:
+θ = Δ(*O*) − *a*·Δ(*P*), with *a* the slope of *O* on *P* among the control cells, and *u* = θ / Δ(*O*). The slope
+puts a prediction made on another scale (a head trained on another study's protein scale) on the scale of the
+measurement. For several readouts, *u* is the norm of the unexplained differences over the norm of the differences,
+each in units of the control spread; for one readout that is |*u*|. The same margin (0.10) applies to every scope.
+
+## From a reading to an action
+
+| reading | what to do | what not to do |
+|---|---|---|
+| no deficit | nothing | — |
+| function | change the map (architecture, objective), same data | add data |
+| coverage | put cells of this kind in the training | change the map |
+| unit | calibrate at use, with a few labelled cells of the unit | train for it |
+| upstream | change what comes before the stage (the encoder, the pooling) | change the head |
+| unreadable | change the measurement, or drop the readout from the score | train |
+
+The gaps between consecutive scopes are reported with paired intervals whether or not a verdict is reached. They are
+what a forecast is made of: `scope.forecast` gives, per kind of change, how much of |*u*| at the system's output it
+could remove. A forecast is made with readouts. What a changed system delivers has to be audited.
+
+## Events that nobody assigned
+
+A knockout is assigned by the experiment. A donor, a batch, a study or a disease is not, so a contrast must say what
+else differs between its two sides (`events.check_contrast`):
+
+- C1 the kind is one of `donor`, `batch`, `study`, `disease`, `condition`
+- C2 the labels come from the design, not from the measured response
+- C3 `confounded_with` is declared, even if empty
+- C4 both sides come from one study, unless the kind is `study`
+- C5 pooled units are declared as pooled
+- C6 fewer than 10 units on a side: an interval over units is marked approximate
+
+## Hypotheses and tests
+
+A diagnosis is written as a hypothesis before any change is made:
+
+- what is measured on every arm, as a gain;
+- the claim (function, coverage, unit, upstream, unreadable, or a location);
+- a forecast interval for every arm;
+- a rule: the own arm's gain lies above a stated value and every control arm's gain lies below its bound;
+- the runs the forecast was read from.
+
+A test reads the arms against the rule: **confirmed**, **refuted**, **unresolved**, or **not testable** (an arm is
+missing, or a change did not pass gate 3). Every arm is also scored against its forecast, and `loop.forecast_record`
+keeps the record of how the forecasts held up: the auditor is audited by its own ledger.
+
+At least two arms. The usual three for a coverage claim: cells of the missing kind added (own); the same number of
+cells of a kind already covered (amount control); another map on the same cells (the rival, function). This is the
+shape of the knockout loop, where a repair at the located step was compared with a repair elsewhere.
+
+Ledger rules (`loop.ledger_check`): H1 a test names a hypothesis in the ledger; H2 a test uses no run its hypothesis
+was read from, and a hypothesis written after its outcome was known is marked retrospective; H3 a test has the own arm
+and a control arm; H4 an arm that was run has a forecast; H5 a hypothesis without a test is listed as open.
+
+## Intervals and units
+
+- An event is resampled by its clusters where it has several, otherwise by cell; controls by block where they come in
+  blocks (donors), otherwise by cell. The same resamples serve every stage and scope of an event, so gaps are paired.
+- A statement about donors or studies rests on the events of a family (`scope.family`): the mean over events with an
+  interval from resampling the events, and how each event was read. Below 10 events it is marked approximate.
+- A forecast and its test use different units. One primary hypothesis per round.
+- Units set aside as final are named under `roles.final`. A run that touches them is refused unless it is a final audit
+  that names the hypotheses it tests.
+
+## The loop in five actions
+
+1. **Observe.** The grid over stages and scopes, for every event of a kind. No training.
+2. **Hypothesize.** Rival readings, each with a forecast for every arm.
+3. **Intervene.** One arm per reading, and an amount control. Gate 3 for every arm.
+4. **Test.** Which reading survives; how far each forecast was off.
+5. **Update.** The grid again on the changed system; the next round, or the final audit of version 1 (gate 5).
+
+Version 1's two loops are still two claims. The diagnostic loop is steps 1 to 4: a test of what the audit said. The
+repair loop is a claim about the changed system and needs final data.
+
+## The tool is tested on planted problems
+
+`tests/test_scope.py` builds six situations in which the answer is known (no deficit, function, coverage, unit,
+upstream, unreadable) and requires the reading to name each. `tests/test_hypothesis.py` writes one study twice, as a
+perturbation audit and as donors of a study, and requires the same file format and the same code to read both.
+
+## What version 2 does not do
+
+- It does not make a system general. It can also find that every study needs its own cells.
+- With few studies, a statement about studies in general is descriptive. Ten is the number chosen for an interval.
+- A forecast comes from ridge or boosting readouts. A trained system can do better or worse than its forecast; that is
+  what the forecast record is for.
+- A contrast nobody assigned is confounded. The tool asks for the confounders to be named. It cannot remove them.
+
+## After the first use (runs/scope_20261116)
+
+Two finished pieces of work were read again with this version: the knockout loop and the donors. Four things changed in
+how it is to be used.
+
+1. **A forecast is a ceiling.** It is what a readout of a scope reads at the stage the system reads. The repairs that
+   had been made delivered about two thirds of it. A rule asks for less than the ceiling, and the forecast record
+   keeps the share that was delivered.
+2. **A forecast and its test are about one quantity.** For the system's own answer that is the `frozen` scope before
+   and after the change. The loss at a stage in the `units` scope (version 1) is another quantity and has its own
+   forecast.
+3. **A margin is declared per target.** 0.10 is defined for *u* of one response. For the variation among a unit's
+   cells, and for a shift over many readouts, no scope came within it, and every donor event was read `unreadable`.
+   Where no scope is supported the reading is in the gaps, and a round states the margin it will use on that scale.
+4. **A readout is named in the events.** `readout_name` in a SPEC; without it verdicts of different readouts share a
+   key in the ledger.
+
+## Commands
+
+```
+python -m anm_diag scope SPEC.yaml --out DIR                        the grid, the readings, the typed events
+python -m anm_diag loop test --hypothesis H.json --arms ARMS.json   a hypothesis against the arms of an intervention
+```

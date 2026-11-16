@@ -399,20 +399,107 @@ def verdict_events(record, run, site="pool", context=None):
 
 
 def ledger_conflicts(events):
-    """Pairs of runs with opposite resolved verdicts (support against reject) at the same readout and stage,
+    """Pairs of runs with opposite resolved verdicts (support against reject) at the same readout, stage, scope and target,
     with the fields in which the two runs differ: a difference in source_site or context is a dependence to
     report, not a contradiction; identical fields on both sides would be one."""
     out = []
-    key = lambda e: (e["readout"], e["site"])
+    key = lambda e: (e["readout"], e["site"], e.get("scope", "units"), e.get("target", "shift"))
     by = {}
     for e in events:
         by.setdefault(key(e), []).append(e)
-    for (rid, st), evs in sorted(by.items()):
+    for (rid, st, _scope, _target), evs in sorted(by.items()):
         for i, a in enumerate(evs):
             for b in evs[i + 1:]:
                 if a["sign"] * b["sign"] == -1:
-                    out.append(dict(readout=rid, stage=st, runs=[a["run"], b["run"]], verdicts=[a["verdict"], b["verdict"]], u=[a["amplitude"], b["amplitude"]],
+                    out.append(dict(readout=rid, stage=st, scope=_scope, target=_target, runs=[a["run"], b["run"]],
+                                    verdicts=[a["verdict"], b["verdict"]], u=[a["amplitude"], b["amplitude"]],
                                     differ_in=[f for f in ("source_site", "context") if a.get(f) != b.get(f)]))
+    return out
+
+
+# ------------------------------------------------------------------ contrasts: events nobody assigned
+CONTRAST_KINDS = ("donor", "batch", "study", "disease", "condition")
+MIN_UNITS = 10      # as loop.DEFAULTS["min_clusters"]: below it an interval over units is marked approximate
+
+
+def contrast_events(spec):
+    """Events of a contrast between groups of cells that the experiment did not assign: a donor against the other
+    donors of a study, a batch, a study, patients against healthy donors. Same record as a perturbation event, so
+    that the same checks and the same ledger apply.
+
+    spec: name, kind (one of CONTRAST_KINDS), treated (unit labels), control (unit labels, or "others"), study,
+          control_study (if another), label_basis (design | response), confounded_with (list), pooling (dict),
+          n (optional {unit: cells}).
+    """
+    name, kind = spec.get("name", "contrast"), spec.get("kind")
+    n = spec.get("n") or {}
+    base = dict(origin=f"contrast:{name}", time=0, site_is_pattern=False, channel=kind, provenance="dataset label",
+                confounded_with=spec.get("confounded_with"), label_basis=spec.get("label_basis"))
+    out = [dict(base, event_id=f"{name}:{kind}:{u}", site=str(u), sign=0, amplitude=1.0, role="treated", stratum=spec.get("study"),
+                pool=f"{name}:A=1", admission=dict(status="admitted", n_admitted=n.get(u), n_attempted=n.get(u), reason=""))
+           for u in _as_list(spec.get("treated"))]
+    ctl = spec.get("control", "others")
+    for u in (["others"] if ctl == "others" else _as_list(ctl)):
+        out.append(dict(base, event_id=f"{name}:control:{u}", site=None if u == "others" else str(u), sign=0, amplitude=0.0, role="control",
+                        stratum=spec.get("control_study") or spec.get("study"), pool=f"{name}:A=0",
+                        admission=dict(status="admitted", n_admitted=n.get(u), n_attempted=n.get(u), reason="")))
+    return out
+
+
+def check_contrast(spec):
+    """Rules for a contrast. A perturbation is assigned; a donor, a batch, a study or a disease is not, so a contrast
+    has to say what else differs between its two sides.
+
+    C1  the kind is one of CONTRAST_KINDS (error)
+    C2  the labels come from the design, not from the measured response (error if response, warning if not said)
+    C3  confounded_with is declared, even if empty (warning): what differs between the sides besides the kind
+    C4  treated and control cells come from one study, unless the kind is "study" (error): levels of a measurement
+        are not comparable between studies
+    C5  several treated units pooled into one event say so under pooling (warning), as rule S2
+    C6  fewer than MIN_UNITS units on a side: an interval over units is approximate (warning)
+    """
+    out = []
+    add = lambda code, sev, msg: out.append({"code": code, "severity": sev, "message": msg})
+    kind = spec.get("kind")
+    if kind not in CONTRAST_KINDS:
+        add("C1", "error", f"unknown kind of contrast '{kind}': one of {', '.join(CONTRAST_KINDS)}")
+    lb = spec.get("label_basis")
+    if lb == "response":
+        add("C2", "error", "the contrast is assigned from the measured response (label_basis: response): cells chosen by their "
+                           "outcome make every later verdict depend on that outcome")
+    elif lb != "design":
+        add("C2", "warning", "the origin of the labels is not declared: say label_basis: design (fixed before the measurement) or response")
+    if spec.get("confounded_with") is None:
+        add("C3", "warning", f"a {kind} contrast was not assigned by the experiment: declare confounded_with (what else differs between "
+                             f"the two sides, e.g. site, sample, run, tissue; an empty list if nothing is known to)")
+    cs = spec.get("control_study")
+    if cs and cs != spec.get("study") and kind != "study":
+        add("C4", "error", f"treated cells come from '{spec.get('study')}' and control cells from '{cs}': the level of a measurement "
+                           f"is not comparable between studies; only a contrast of kind 'study' may cross them")
+    treated = _as_list(spec.get("treated"))
+    if len(treated) > 1 and "site" not in (spec.get("pooling") or {}):
+        add("C5", "warning", f"the contrast pools {len(treated)} units ({', '.join(map(str, treated[:6]))}{', ...' if len(treated) > 6 else ''}) "
+                             f"without declaring it under pooling: the verdicts hold for the pooled contrast, not for each unit")
+    ctl = spec.get("control", "others")
+    n_ctl = spec.get("n_control_units") if ctl == "others" else len(_as_list(ctl))
+    for side, k in (("treated", len(treated)), ("control", n_ctl)):
+        if k is not None and 1 < k < MIN_UNITS:
+            add("C6", "warning", f"{k} {side} units: an interval over units is approximate below {MIN_UNITS}")
+    return out
+
+
+def scope_events(result, run, readout="pool", context=None):
+    """The verdicts of a scope grid (scope.scope_grid) as typed events: one per target, stage and scope. They carry the
+    two fields a v1 verdict leaves implicit: scope (v1's cross-fit by cluster is "units") and target (v1's is "shift")."""
+    out = []
+    src = ",".join(result["event"].get("treated_blocks", [])) or "pool"
+    for target, T in result["targets"].items():
+        for st, by in T["stages"].items():
+            for scope, v in by.items():
+                out.append(dict(event_id=f"verdict:{run}:{target}:{st}:{scope}", origin=f"scope:{run}", run=run, readout=readout, site=st,
+                                scope=scope, target=target, source_site=src, context=context, channel=v["class"],
+                                sign={"support": 1, "reject": -1}.get(v["verdict"], 0), amplitude=v["u"], ci=list(v["ci"]),
+                                verdict=v["verdict"]))
     return out
 
 

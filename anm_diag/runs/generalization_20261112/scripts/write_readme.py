@@ -156,6 +156,7 @@ def main():
     a("The first run was killed for lack of memory during the fits, before any result was written. The script was changed to "
       "hold less in memory (fits, folds and seeds unchanged; identical output on synthetic data) and run again; the results "
       "below are from that run.\n")
+    a("**Correction, 16 November 2026.** The section \"The donor's shift\" below reports a share of squared differences and, for the external donors, subtracts the head's prediction from a measurement on another scale. Both are fixed in [`runs/scope_20261116`](../scope_20261116/). On the scale the 0.10 margin is defined for, on the external donors: the head leaves 0.78 to 0.93 of a donor's shift unexplained; the state read by the other donors 0.30 to 0.52 (below the margin in 0 of 8, not 1 of 8); by a readout of the head's training cells 0.79 to 0.95; with the donor's own cells 0.20 to 0.34. What stands: the state carries much more than the head delivers and it takes cells of the same study to read it. What does not: that the shift \"is in the state\"; about half of it is. Everything in this folder that rests on correlation within a donor is unaffected.\n")
     a("![scores by group](results/gate0_scores.svg)\n")
     a("Each row is one donor (bone marrow: one donor at one site). The score is the repository's: the Pearson correlation "
       "between predicted and measured protein within the group, averaged over the 112 proteins measured in both studies. "
