@@ -121,6 +121,31 @@ for ct, ds in CT.items():
               "forecast": {a: {"point": pt[a], "ci": fc[a]} for a in fc}, "arms": te["arms"], "outcome": te["outcome"], "why": te["why"]}
     g3[ct]["grid_says_coverage"] = bool(rd["missing"] == "coverage")
     g3[ct]["coverage_gap_resolved"] = bool("train->units" in rd["resolved_gaps"])
+# ---- an added check, not in DESIGN.md: the same hypothesis on the head's own output (frozen), measured by frozen_arms.py
+added = {}
+FA = json.loads((RES / "frozen_arms.json").read_text()) if (RES / "frozen_arms.json").exists() else {}
+for ct in FA:
+    name = f"ko_{ct}_pooled"
+    fz = np.abs(D[name]["pool|shift|system|frozen|system"].astype(np.float64))
+    fc = {arm: iv(fz - draws(name, "pool", "shift", "Z", sc_)) for arm, sc_ in (("coverage", "units"), ("other study", "other"), ("function", "train"))}
+    pt = {arm: float((fz - draws(name, "pool", "shift", "Z", sc_))[0]) for arm, sc_ in (("coverage", "units"), ("other study", "other"), ("function", "train"))}
+    hyp = loop.hypothesis_event(
+        f"ko_{ct}_coverage_own_output", claim="coverage", rivals=["function", "other study"], retrospective=True, basis=[f"scope_20261116/{name}"],
+        about={"event": f"knockouts of the IFN-gamma pathway, {ct}, pooled", "readout": "PDL1", "target": "shift",
+               "quantity": "fall of |u| of the head's own PD-L1 output (frozen scope), from the saved outputs of the repaired heads"},
+        forecast=fc, rule={"own": "coverage", "at_least": 0.20, "controls": {"other study": 0.20}},
+        note="added after the design: scope.forecast is about the system's own output, which the design's quantity was not")
+    loopc, full = FA[ct]["cells of the loop (half of the controls)"], FA[ct]["all cells of the sealed audit"]
+    arms = {"coverage": {"gain": loopc["arms"]["coverage"]["fall"], "ci": loopc["arms"]["coverage"]["fall_ci"], "runs": [loopc["arms"]["coverage"]["run"]], "admitted": True}}
+    if "other study" in full["arms"]:
+        arms["other study"] = {"gain": full["arms"]["other study"]["fall"], "ci": full["arms"]["other study"]["fall_ci"],
+                               "runs": [full["arms"]["other study"]["run"]], "admitted": True}
+    te = loop.test(hyp, arms)
+    ledger += [hyp, te]
+    tests.append(te)
+    added[ct] = {"as_trained": loopc["as_trained"], "forecast": {a_: {"point": pt[a_], "ci": fc[a_]} for a_ in fc}, "arms": te["arms"], "outcome": te["outcome"],
+                 "elsewhere": loopc["arms"].get("elsewhere"), "share_of_forecast_delivered": float(arms["coverage"]["gain"] / pt["coverage"])}
+out["G3_added"] = added
 out["G3"] = {**g3, "holds": bool(all(v["outcome"] == "confirmed" and v["grid_says_coverage"] for v in g3.values())),
              "holds_by_gap": bool(all(v["outcome"] == "confirmed" and (v["grid_says_coverage"] or v["coverage_gap_resolved"]) for v in g3.values()))}
 
