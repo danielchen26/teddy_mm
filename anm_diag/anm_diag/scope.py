@@ -367,6 +367,74 @@ def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None,
     return out
 
 
+# ------------------------------------------------------------------ several outputs of the system on the same cells
+
+
+def arms(Y, outputs, *, base, cluster=None, decision=None):
+    """Several outputs of a system (the same head fitted in different ways) on the cells of one unit.
+
+    Y (n, R): the measurements of the unit's cells. outputs: {name: (n, R)}, each the system's own output for those
+    cells. For every output: u of the `variation` target in the `frozen` scope (1 minus the mean over readouts of r2
+    among the unit's cells), and its gain over `base` (u of base minus u of the output). One set of resamples of the
+    unit's cells (or of `cluster`) serves every output, so gains are paired. The resamples are those `scope_grid`
+    draws for the same unit and seed.
+    """
+    d = {**DEFAULT_DECISION, **(decision or {})}
+    if base not in outputs:
+        raise ScopeError(f"base output {base!r} is not among the outputs")
+    Y = np.asarray(Y, np.float64).reshape(len(Y), -1)
+    if len(Y) < 20:
+        raise ScopeError(f"too few cells: {len(Y)}")
+    cl = None if cluster is None else np.asarray(cluster).astype(str)
+    by_cluster = cl is not None and len(np.unique(cl)) >= 2
+    t = _Side(Y, cl if by_cluster else None)
+    Ct = _counts(t.E, d["bootstrap"], np.random.default_rng(d["seed"] + 1))
+    u, per = {}, {}
+    for name, P in outputs.items():
+        P = np.asarray(P, np.float64).reshape(len(Y), -1)
+        if P.shape != Y.shape:
+            raise ScopeError(f"output {name!r} has shape {P.shape}, the measurements {Y.shape}")
+        u[name], per[name] = _u_variation(t, P, Ct)
+    out = {"n": int(len(Y)), "readouts": int(Y.shape[1]), "base": base, "target": "variation", "scope": "frozen",
+           "resampled": f"{t.E} clusters" if by_cluster else "cells",
+           "approximate": bool(by_cluster and t.E < d["min_clusters"]), "decision": d, "arms": {}}
+    for name in outputs:
+        g = u[base] - u[name]
+        out["arms"][name] = {"u": float(u[name][0]), "ci": ci(u[name][1:], d["alpha"]),
+                             "gain": float(g[0]), "gain_ci": ci(g[1:], d["alpha"]),
+                             "per_readout": [float(x) for x in np.atleast_1d(per[name])]}
+    return out
+
+
+def arms_family(u, *, base, bootstrap=1000, seed=0, alpha=0.05, min_units=10):
+    """Gains over units and fits. u: {arm: (units, fits)}, u of every unit under every fit (seed) of the arm.
+
+    The gain of an arm in a unit is the mean over fits of u of `base` minus the mean over fits of u of the arm; over
+    units, the mean. The interval resamples the units, and the fits inside each arm. Also, for every fit of an arm
+    that `base` has too, the gain against the base of the same fit with an interval from resampling the units alone.
+    """
+    U = {k: np.asarray(v, np.float64) for k, v in u.items()}
+    if base not in U:
+        raise ScopeError(f"base {base!r} is not among the arms")
+    n = U[base].shape[0]
+    if any(v.ndim != 2 or v.shape[0] != n for v in U.values()):
+        raise ScopeError("every arm needs an array (units, fits) over the same units")
+    rng = np.random.default_rng(seed + 2)
+    iu = rng.integers(0, n, size=(bootstrap, n))
+    fits = {k: rng.integers(0, v.shape[1], size=(bootstrap, v.shape[1])) for k, v in U.items()}
+    drawn = {k: np.stack([U[k][iu[b]][:, fits[k][b]].mean() for b in range(bootstrap)]) for k in U}
+    out = {"units": int(n), "base": base, "approximate": bool(n < min_units), "bootstrap": int(bootstrap), "arms": {}}
+    for k, v in U.items():
+        g = drawn[base] - drawn[k]
+        per_fit = []
+        for j in range(min(v.shape[1], U[base].shape[1])):
+            gj = U[base][:, j] - v[:, j]
+            per_fit.append({"gain": float(gj.mean()), "ci": ci(gj[iu].mean(axis=1), alpha)})
+        out["arms"][k] = {"u": float(v.mean()), "gain": float(U[base].mean() - v.mean()), "ci": ci(g, alpha), "fits": int(v.shape[1]),
+                          "per_unit": [float(x) for x in (U[base].mean(axis=1) - v.mean(axis=1))], "per_fit": per_fit}
+    return out
+
+
 # ------------------------------------------------------------------ readings
 def read(T, reads, input_view=None, testable=True):
     """What is missing, from the verdicts of one target. Returns {"missing", "detail", "resolved_gaps"}."""
