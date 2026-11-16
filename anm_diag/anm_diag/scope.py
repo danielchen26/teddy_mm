@@ -189,17 +189,18 @@ class _Side:
     def __init__(self, Y, cluster):
         self.Y = Y
         if cluster is None:
-            self.el = self.inv = np.arange(len(Y))
+            self.E, self.M = len(Y), None                  # every cell is its own element
         else:
-            self.el, self.inv = np.unique(cluster, return_inverse=True)
-        self.E = len(self.el)
+            from scipy.sparse import csr_matrix
+            el, inv = np.unique(cluster, return_inverse=True)
+            self.E = len(el)
+            self.M = csr_matrix((np.ones(len(Y)), (inv, np.arange(len(Y)))), shape=(self.E, len(Y)))
         self.n = self._sum(np.ones((len(Y), 1)))
         self.sy, self.syy = self._sum(Y), self._sum(Y * Y)
 
     def _sum(self, X):
-        out = np.zeros((self.E, X.shape[1]))
-        np.add.at(out, self.inv, X)
-        return out
+        X = np.asarray(X, np.float64)
+        return X if self.M is None else np.asarray(self.M @ X)
 
     def moments(self, P, counts):
         """Per draw: mean of Y, mean of P, var of P, cov(P, Y), var of Y. counts: (B, E)."""
