@@ -348,6 +348,18 @@ def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None,
             g = np.abs(draws[(tg, reads, "other", T["stages"][reads]["other"]["class"])]) - np.abs(draws[(tg, reads, "units", T["stages"][reads]["units"]["class"])])
             gaps["other->units"] = {"value": float(g[0]), "ci": ci(g[1:], d["alpha"])}
         T["gaps"] = gaps
+        # the loss a scope sees added from one stage to the next, paired (version 1's span, for every scope)
+        T["spans"] = {}
+        for scope in scopes:
+            if scope == "frozen":
+                continue
+            st = [s_ for s_ in stages if scope in T["stages"].get(s_, {})]
+            for a_, b_ in list(zip(st[:-1], st[1:])) + ([(st[0], st[-1])] if len(st) > 2 else []):
+                g = (np.abs(draws[(tg, b_, scope, T["stages"][b_][scope]["class"])]) - np.abs(draws[(tg, a_, scope, T["stages"][a_][scope]["class"])]))
+                iv = ci(g[1:], d["alpha"])
+                T["spans"].setdefault(scope, {})[f"{a_}->{b_}"] = {
+                    "added": float(g[0]), "ci": iv,
+                    "reading": "loss" if iv[0] > d["step_margin"] else ("no added loss" if iv[1] < d["step_margin"] else "unresolved")}
         T["reading"] = read(T, reads, input_view, resolved or tg == "variation")
     if keep_draws:
         out["_draws"] = {"|".join(k): v for k, v in draws.items()}
@@ -493,7 +505,8 @@ def run_spec(spec, base="."):
         c = is_ctl if is_ctl.any() else ~np.isin(block, tb)
         e = {"id": f"{spec.get('name', 'run')}:{kind}:{u}", "kind": kind, "study": spec.get("study"), "unit": u}
         results.append(scope_grid(study, t, c, event=e, reads=spec.get("reads"), input_view=spec.get("input_view"), decision=spec.get("decision"),
-                                  treated_cluster=cluster if (cluster is not None and u == "pool") else None, variation=bool(spec.get("variation"))))
+                                  treated_cluster=cluster if (cluster is not None and u == "pool") else None, variation=bool(spec.get("variation")),
+                                  keep_draws=bool(spec.get("keep_draws"))))
         if kind in CONTRAST_KINDS:
             cs = dict(name=spec.get("name", "run"), kind=kind, treated=[u] if u != "pool" else wanted, control="others", study=spec.get("study"),
                       label_basis=spec.get("label_basis"), confounded_with=spec.get("confounded_with"), pooling=spec.get("pooling"),
@@ -532,6 +545,9 @@ def main(argv=None):
     if any(c["severity"] == "error" for c in res["checks"]):
         raise SystemExit("the declaration has errors; nothing was written")
     events = list(res["typed_events"])
+    kept = {f"{r['event']['unit']}|{k}": v for r in res["results"] for k, v in (r.pop("_draws", None) or {}).items()}
+    if kept:                                                 # row 0 of every array is the value on the data
+        np.savez_compressed(out / "scope_draws.npz", **{k: v.astype(np.float32) for k, v in kept.items()})
     for r in res["results"]:
         events += scope_events(r, f"{res['name']}:{r['event']['unit']}", context=res.get("study"))
         print(f"{r['event']['id']}: " + "; ".join(f"{tg}: {T['reading']['missing']}" for tg, T in r["targets"].items()))

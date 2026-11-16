@@ -108,10 +108,10 @@ def main():
     # ---- SPEC files: one format for all four
     ko = dict(kind="perturbation", keys=dict(readouts=["y"], stages={"Z": "Z", "HEAD_LAT": "HEAD_LAT", "HEAD_OUT": "HEAD_OUT"}, unit="unit",
                                              control={"key": "A", "equals": 0}, cluster="unit", frozen={"array": "frozen"}),
-              units_exclude=["control"], reads="Z", control_folds=5, decision=DECISION, label_basis="design")
+              units_exclude=["control"], reads="Z", control_folds=5, decision=DECISION, label_basis="design", keep_draws=True)
     dn = dict(kind="donor", keys=dict(readouts="Y", stages={"RNA512": "RNA512", "Z": "Z", "HEAD_LAT": "HEAD_LAT", "HEAD_OUT": "HEAD_OUT"},
                                       unit="unit", block="donor", frozen={"array": "frozen"}),
-              events="each", reads="Z", input_view="RNA512", variation=True, max_fit=30000, decision=DECISION, label_basis="design",
+              events="each", reads="Z", input_view="RNA512", variation=True, max_fit=30000, decision=DECISION, label_basis="design", keep_draws=True,
               readout_classes={"ridge": {"regressor": "RidgeCV", "alphas": ALPHAS}})
     specs = {}
     for ct, other, study in (("melanoma", "thp1", "frangieh2021"), ("thp1", "melanoma", "papalexi2021")):
