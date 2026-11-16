@@ -247,6 +247,23 @@ perturbation audit and as donors of a study, and requires the same file format a
   what the forecast record is for.
 - A contrast nobody assigned is confounded. The tool asks for the confounders to be named. It cannot remove them.
 
+## After the first use (runs/scope_20261116)
+
+Two finished pieces of work were read again with this version: the knockout loop and the donors. Four things changed in
+how it is to be used.
+
+1. **A forecast is a ceiling.** It is what a readout of a scope reads at the stage the system reads. The repairs that
+   had been made delivered about two thirds of it. A rule asks for less than the ceiling, and the forecast record
+   keeps the share that was delivered.
+2. **A forecast and its test are about one quantity.** For the system's own answer that is the `frozen` scope before
+   and after the change. The loss at a stage in the `units` scope (version 1) is another quantity and has its own
+   forecast.
+3. **A margin is declared per target.** 0.10 is defined for *u* of one response. For the variation among a unit's
+   cells, and for a shift over many readouts, no scope came within it, and every donor event was read `unreadable`.
+   Where no scope is supported the reading is in the gaps, and a round states the margin it will use on that scale.
+4. **A readout is named in the events.** `readout_name` in a SPEC; without it verdicts of different readouts share a
+   key in the ledger.
+
 ## Commands
 
 ```

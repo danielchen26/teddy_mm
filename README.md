@@ -46,6 +46,21 @@ task. The head that `scripts/04_train.py` trains is still the unrepaired one. Th
 the training recipe. What a loop has to do to count is written down in
 [`anm_diag/LOOP_PROTOCOL.md`](anm_diag/LOOP_PROTOCOL.md).
 
+**Added 16 Nov 2026: the aim is a head that works on donors and diseases it has not seen.** Two exploratory steps, no
+model trained. On donors the head was not trained on (4 groups in bone marrow, 8 donors of an external PBMC study) it
+delivers 80% to 95% of what a readout of the donor's own cells delivers; a readout fitted on the head's own training
+cells does not beat it by more than 0.03; on the external donors the other donors of the same study add 0.07 to 0.10.
+What is missing there is coverage of the study, not another head
+([`anm_diag/runs/generalization_20261112`](anm_diag/runs/generalization_20261112/)). The audit tool now asks this at
+every stage, for a perturbation or for a contrast nobody assigned: by what kind of readout a response is readable (the
+system's own output, its training cells, another study, the other units of the study, the unit's own cells), and it
+writes a diagnosis as a hypothesis with a forecast that an intervention can refute
+([`anm_diag/LOOP_PROTOCOL.md`](anm_diag/LOOP_PROTOCOL.md), version 2). Read again with it, the knockout loop gives back
+its location with a different estimator, and says what was missing: a readout learned from bone-marrow cells reads
+almost none of the PD-L1 response from TEDDY's state, one learned from the other genes of the same cell type reads it
+([`anm_diag/runs/scope_20261116`](anm_diag/runs/scope_20261116/)). Forecasts made from that grid are ceilings: the
+repairs that were made delivered about two thirds. Disease is untested: every donor so far is healthy.
+
 - **Sealed, run once (Perturb-CITE-seq, Frangieh 2021; ECCITE-seq, Papalexi 2021):** no TEDDY stage was rejected for
   any of five protein readouts. For PD-L1 under IFN-γ-pathway knockouts in melanoma, TEDDY-G 70M's pooled embedding
   retains the protein response (*u* = +0.04 [−0.01, +0.09], margin 0.10), while the PD-L1 transcript alone explains

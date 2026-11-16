@@ -46,10 +46,30 @@ out = {}
 
 # ------------------------------------------------------------------ G1: one code, one format
 fns = [scope.Study, scope.scope_grid, scope.read, scope.forecast, scope.family, scope._u_shift, scope._u_variation, scope._Side]
+
+
+def reads_the_kind(fn):
+    """True if the code of fn (not its docstring) uses a name or a key called 'kind', or the list of contrast kinds."""
+    import ast
+    import textwrap
+    for node in ast.walk(ast.parse(textwrap.dedent(inspect.getsource(fn)))):
+        if isinstance(node, ast.Name) and node.id in ("kind", "CONTRAST_KINDS"):
+            return True
+        if isinstance(node, ast.Attribute) and node.attr in ("kind", "CONTRAST_KINDS"):
+            return True
+        if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant) and node.slice.value == "kind":
+            return True
+        if isinstance(node, ast.Call) and getattr(node.func, "attr", "") == "get" and node.args and isinstance(node.args[0], ast.Constant) \
+                and node.args[0].value == "kind":
+            return True
+    return False
+
+
 out["G1"] = {
     "specs_run": {n: bool((RES / n / "SPEC.yaml").exists() and (RES / n / "scope.json").exists()) for n in SPECS},
     "kinds": {n: R[n]["kind"] for n in SPECS},
-    "functions_that_compute_without_reading_the_kind": {f.__name__: "kind" not in inspect.getsource(f) for f in fns},
+    "functions_that_compute_without_reading_the_kind": {f.__name__: not reads_the_kind(f) for f in fns},
+    "note": "a first version of this check matched the word 'kind' in docstrings ('cells of this kind'); it now parses the code",
     "checks": {n: [f"{c['code']} {c['severity']}" for c in R[n]["checks"]] for n in SPECS},
 }
 out["G1"]["holds"] = bool(all(out["G1"]["specs_run"].values()) and all(out["G1"]["functions_that_compute_without_reading_the_kind"].values()))
@@ -85,8 +105,14 @@ out["G2"] = g2
 
 # ------------------------------------------------------------------ G3: the grid against interventions already made
 ledger, tests, g3 = [], [], {}
+READOUT = {n: ("PDL1" if n.startswith("ko_") else "112 proteins") for n in SPECS}
 for n in SPECS:
-    ledger += [json.loads(line) for line in (RES / n / "scope_events.jsonl").read_text().splitlines() if line.strip()]
+    typed = [json.loads(line) for line in (RES / n / "scope_events.jsonl").read_text().splitlines() if line.strip()]
+    typed = [e for e in typed if "verdict" not in e]                 # the contrasts as the tool wrote them
+    for r in R[n]["results"]:                                         # the verdicts again, with the readout named
+        typed += ev.scope_events(r, f"{n}:{r['event']['unit']}", readout=READOUT[n], context=R[n].get("study"))
+    ev.write_jsonl(typed, RES / n / "scope_events.jsonl")
+    ledger += typed
 A_RUNS = RUNS / "loop_20261112"
 for ct, ds in CT.items():
     name = f"ko_{ct}_pooled"
@@ -186,10 +212,25 @@ out["map"] = {name: {tg: table(name, tg) for tg in R[name]["family"]} for name i
 unseen_bm = [r for r in R["donors_bm"]["results"] if r["event"]["unit"] in ("13272:site4", "19593:site4", "15078:site4", "18303:site1")]
 out["map"]["donors_bm_unseen"] = {tg: scope.family(unseen_bm, tg) for tg in ("shift", "variation")}
 
+# ------------------------------------------------------------------ where along the head, for the donors (not a criterion; reported)
+loc = {}
+for name in ("donors_hao", "donors_bm"):
+    for tg in ("shift", "variation"):
+        rows = []
+        for r in R[name]["results"]:
+            u = r["event"]["unit"]
+            g = draws(name, u, tg, "HEAD_OUT", "units") - draws(name, u, tg, "Z", "units")
+            c_ = iv(g)
+            rows.append({"unit": u, "added": float(g[0]), "ci": c_, "reading": "loss" if c_[0] > STEP else ("no added loss" if c_[1] < STEP else "unresolved")})
+        v = np.array([x["added"] for x in rows])
+        loc[f"{name}:{tg}"] = {"rows": rows, "mean": float(v.mean()), "min": float(v.min()), "max": float(v.max()),
+                               "readings": {k: sum(x["reading"] == k for x in rows) for k in ("loss", "unresolved", "no added loss")}}
+out["head_stages_for_donors"] = loc
+
 # ------------------------------------------------------------------ the correction to runs/generalization_20261112
 old = {g["id"]: g for g in json.loads((RUNS / "generalization_20261112" / "results" / "gate0.json").read_text())["groups"]}
 corr = []
-for name, pre in (("donors_hao", "ext:hao2021_"), ("donors_bm", "bm:")):
+for name, pre in (("donors_hao", "ext:"), ("donors_bm", "bm:")):
     for r in R[name]["results"]:
         u = r["event"]["unit"]
         o = old[pre + u]["shift"]["by"]
@@ -206,9 +247,10 @@ for name, pre in (("donors_hao", "ext:hao2021_"), ("donors_bm", "bm:")):
 out["correction"] = corr
 
 # ------------------------------------------------------------------ the ledger
+conf = ev.ledger_conflicts([e for e in ledger if "verdict" in e and "run" in e])
 out["ledger"] = {"events": len(ledger), "by_type": {}, "checks": loop.ledger_check(ledger),
-                 "conflicts": len(ev.ledger_conflicts([e for e in ledger if "verdict" in e and "run" in e])),
-                 "forecast_record": loop.forecast_record(tests)}
+                 "opposite_verdicts": len(conf), "of_which_between_different_events_or_studies": int(sum(bool(c["differ_in"]) for c in conf)),
+                 "contradictions": int(sum(not c["differ_in"] for c in conf)), "forecast_record": loop.forecast_record(tests)}
 for e in ledger:
     k = e.get("type") or ("verdict" if "verdict" in e else "source")
     out["ledger"]["by_type"][k] = out["ledger"]["by_type"].get(k, 0) + 1

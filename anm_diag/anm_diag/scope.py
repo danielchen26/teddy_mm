@@ -404,14 +404,16 @@ def read(T, reads, input_view=None, testable=True):
 
 
 def forecast(result, target="shift"):
-    """What each kind of change could remove of |u| at the system's output, read from the gaps. These are forecasts made
-    with readouts: a system changed in that way has to be audited to learn what it delivers."""
+    """What each kind of change could at most remove of |u| at the system's own output, read from the gaps. A ceiling,
+    not a prediction: it is what a readout of that scope reads at the stage the system reads. In the first record of
+    such forecasts (runs/scope_20261116) the repairs that were made delivered about two thirds of it. A system changed
+    in that way has to be audited to learn what it delivers, on the same quantity: the frozen scope."""
     g = result["targets"][target].get("gaps", {}).get("from_frozen")
     if not g:
         return {}
     arm = {"train": ("function", "another map, the same training cells"), "units": ("coverage", "cells of this kind in the training"),
            "own": ("calibration", "the unit's own labelled cells")}
-    return {arm[k][0]: {"removes": v["value"], "ci": v["ci"], "what": arm[k][1]} for k, v in g.items() if k in arm}
+    return {arm[k][0]: {"removes": v["value"], "ci": v["ci"], "what": arm[k][1], "is": "a ceiling"} for k, v in g.items() if k in arm}
 
 
 def family(results, target="shift", min_clusters=10, alpha=0.05, seed=0, B=2000):
@@ -550,7 +552,7 @@ def main(argv=None):
     if kept:                                                 # row 0 of every array is the value on the data
         np.savez_compressed(out / "scope_draws.npz", **{k: v.astype(np.float32) for k, v in kept.items()})
     for r in res["results"]:
-        events += scope_events(r, f"{res['name']}:{r['event']['unit']}", context=res.get("study"))
+        events += scope_events(r, f"{res['name']}:{r['event']['unit']}", readout=str(spec.get("readout_name", "pool")), context=res.get("study"))
         print(f"{r['event']['id']}: " + "; ".join(f"{tg}: {T['reading']['missing']}" for tg, T in r["targets"].items()))
     (out / "scope.json").write_text(json.dumps({k: v for k, v in res.items() if k != "typed_events"}, indent=1, default=float))
     write_jsonl(events, out / "scope_events.jsonl")

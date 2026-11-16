@@ -1,0 +1,49 @@
+kind: donor
+keys:
+  readouts: Y
+  stages:
+    RNA512: RNA512
+    Z: Z
+    HEAD_LAT: HEAD_LAT
+    HEAD_OUT: HEAD_OUT
+  unit: unit
+  block: donor
+  frozen:
+    array: frozen
+events: each
+reads: Z
+input_view: RNA512
+variation: true
+max_fit: 30000
+decision:
+  margin_u: 0.1
+  step_margin: 0.1
+  alpha: 0.05
+  bootstrap: 1000
+  seed: 0
+  min_clusters: 10
+label_basis: design
+readout_classes:
+  ridge:
+    regressor: RidgeCV
+    alphas:
+    - 0.1
+    - 0.31622776601683794
+    - 1.0
+    - 3.1622776601683795
+    - 10.0
+    - 31.622776601683793
+    - 100.0
+    - 316.2277660168379
+    - 1000.0
+    - 3162.2776601683795
+    - 10000.0
+    - 31622.776601683792
+    - 100000.0
+name: donors_hao
+study: hao2021
+arrays:
+  audit: hao_donors.npz
+  train: bm_train.npz
+confounded_with: []
+keep_draws: true
