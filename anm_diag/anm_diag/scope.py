@@ -346,7 +346,8 @@ def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None,
                 gaps.setdefault("from_frozen", {})[b_] = {"value": float(g[0]), "ci": ci(g[1:], d["alpha"])}
         if "other" in T["stages"].get(reads, {}) and "units" in T["stages"][reads]:
             g = np.abs(draws[(tg, reads, "other", T["stages"][reads]["other"]["class"])]) - np.abs(draws[(tg, reads, "units", T["stages"][reads]["units"]["class"])])
-            gaps["other->units"] = {"value": float(g[0]), "ci": ci(g[1:], d["alpha"])}
+            iv = ci(g[1:], d["alpha"])
+            gaps["other->units"] = {"value": float(g[0]), "ci": iv, "resolved": bool(iv[0] > d["step_margin"]), "absent": bool(iv[1] < d["step_margin"])}
         T["gaps"] = gaps
         # the loss a scope sees added from one stage to the next, paired (version 1's span, for every scope)
         T["spans"] = {}
@@ -434,7 +435,7 @@ def family(results, target="shift", min_clusters=10, alpha=0.05, seed=0, B=2000)
             continue
         g = np.array([r["targets"][target]["gaps"][k]["value"] for r in results])
         out["gaps"][k] = {"mean": float(g.mean()), "ci": ci(g[idx].mean(axis=1), alpha) if n >= 3 else None, "min": float(g.min()),
-                          "max": float(g.max()), "resolved_in": int(sum(r["targets"][target]["gaps"][k]["resolved"] for r in results))}
+                          "max": float(g.max()), "resolved_in": int(sum(bool(r["targets"][target]["gaps"][k].get("resolved")) for r in results))}
     for r in results:
         m = r["targets"][target]["reading"]["missing"]
         out["missing"][m] = out["missing"].get(m, 0) + 1

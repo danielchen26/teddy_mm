@@ -128,3 +128,18 @@ def test_family_counts_events():
     fam = sc.family(rs)
     assert fam["n_events"] == 4 and fam["approximate"] and fam["missing"] == {"coverage": 4}
     assert fam["gaps"]["train->units"]["resolved_in"] == 4
+
+
+def test_a_second_study_is_read_as_its_own_scope_and_families_include_it():
+    """The `other` scope: a readout learned in another study of the same kind of event. Here that study shows the
+    dependence the training cells lack, so it reads the response; a family of such events can be summarized."""
+    rs = []
+    for seed in range(3):
+        study, t, c = make("coverage", seed=seed)
+        o, to, co = make("coverage", seed=seed + 50)
+        study.other = {"stages": o.stages, "Y": o.Y}
+        r = sc.scope_grid(study, t, c, reads="Z", decision=DEC)
+        assert r["targets"]["shift"]["stages"]["Z"]["other"]["verdict"] == "support"
+        assert "resolved" in r["targets"]["shift"]["gaps"]["other->units"]
+        rs.append(r)
+    assert sc.family(rs)["gaps"]["other->units"]["resolved_in"] == 0
