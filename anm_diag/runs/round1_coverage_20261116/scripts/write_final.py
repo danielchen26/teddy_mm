@@ -157,14 +157,36 @@ def guard_text(F):
     return s
 
 
-def headline(F, dev):
+def post_hoc_contrasts(F):
+    """Contrasts read after the test from the per-donor values of results/final.json, with the function the reading
+    script uses (`scope.arms_family`). Written to results/final_contrasts.json; they change no outcome."""
+    import sys
+    sys.path.insert(0, str(RUN.parents[1]))
+    from anm_diag import scope
+    donors = list(F["status_of_donor"])
+    seeds = sorted(F["per_donor"][donors[0]])
+    U = {k: np.array([[F["per_donor"][d][s][k]["u"] for s in seeds] for d in donors]) for k in ("as_is", "coverage", "amount", "labels", "function")}
+    g = lambda base, arm: {x: scope.arms_family({"base": U[base], "arm": U[arm]}, base="base", bootstrap=F["decision"]["bootstrap"], seed=F["decision"]["seed"],
+                                                alpha=F["decision"]["alpha"])["arms"]["arm"][x] for x in ("gain", "ci")}
+    out = {"what": "contrasts computed after the test by scripts/write_final.py with scope.arms_family, from the per-donor values of final.json; not in read_final.py",
+           "coverage_against_amount": g("amount", "coverage"), "labels_against_coverage": g("coverage", "labels")}
+    (RES / "final_contrasts.json").write_text(json.dumps(out, indent=1) + "\n")
+    return out
+
+
+def headline(F, dev, left=None):
     """One sentence for the top of the README, from the numbers."""
     c, d = F["gains_over_as_is"]["coverage"], dev["gains_over_as_is"]["coverage_not_seen"]
     o = F["outcome"]["donors_hao_coverage"]
     if o == "unresolved" and reading_of_seeds(F, "donors_hao_coverage") == ["refuted"]:
-        return (f"**The test did not bear the round out.** The gain read in development ({f(d['gain'], 3, True)}) is not there on the study of the test "
-                f"({f(c['gain'], 3, True)} {iv(c['ci'])}). By the rule written first the outcome is *unresolved*, because one of the three heads of the claim is not admitted; "
-                "the two seeds that can be read are each *refuted*.")
+        s = (f"**The test did not bear the round out.** The gain read in development ({f(d['gain'], 3, True)}) is not there on the study of the test "
+             f"({f(c['gain'], 3, True)} {iv(c['ci'])}). By the rule written first the outcome is *unresolved*, because one of the three heads of the claim is not admitted; "
+             "the two seeds that can be read are each *refuted*.")
+        if left:
+            ce = left["variation"]["ceiling_as_is"]["all"]
+            s += (f" **The grid read afterwards shows that the bound could not have been met on this study**: a readout fitted on its own donors reads only {f(ce['gain'])} {iv(ce['ci'])} "
+                  f"more than the head, against {f(dev['D1_batch_seen']['of_the_ceiling']['ceiling'])} on the development study. On this study the head is not short of coverage.")
+        return s
     return f"**The test: {o}.** The gain of the claim's arm is {f(c['gain'], 3, True)} {iv(c['ci'])}; in development it was {f(d['gain'], 3, True)}."
 
 
@@ -224,8 +246,9 @@ def lines(F, decl, sel, dev, left):
     row = row_of_design(F)
     if row == "unresolved" and rs == ["refuted"]:
         a("- **In the table of outcomes of [`DESIGN.md`](DESIGN.md)** the rule gives the row *unresolved*. The table wrote that row for intervals that do not decide; here the intervals decide in every "
-          "seed that can be read, and they read the row *own arm below the bound, development had delivered*: what was learned belongs to the study. "
-          "The step the table names after *unresolved*, the reserve donors read once, has not been taken: more donors do not change the admission of a head, and opening them is the owner's decision.\n")
+          "seed that can be read, and they read the row *own arm below the bound, development had delivered*. The table gives that row the meaning that what was learned belongs to the study. "
+          + ("The grid, read after the test, does not support putting it that way: on this study there was next to nothing of that kind to gain (below). " if left else "")
+          + "The step the table names after *unresolved*, the reserve donors read once, has not been taken: more donors do not change the admission of a head, and opening them is the owner's decision.\n")
     else:
         a(f"- In the table of outcomes of [`DESIGN.md`](DESIGN.md) this is the row: **{row}**.\n")
     a("### The arms on the final study\n")
@@ -285,8 +308,9 @@ def lines(F, decl, sel, dev, left):
         v = left["variation"]
         ce, lf = v["ceiling_as_is"], v["left_after_the_change"]
         a("### What is left on the final study (the grid, read after the test)\n")
-        a(f"Each donor against the other donors of the final study, for `as_is` and `coverage` of seed {left['seeds'][0]} "
-          "([`results/what_is_left_final.json`](results/what_is_left_final.json)). This is for a next round and changes no outcome.\n")
+        a(f"For each of the {left['donors']} donors, *u* under readouts that were not fitted on the donor, for `as_is` and `coverage` of seed {left['seeds'][0]} "
+          "([`results/what_is_left_final.json`](results/what_is_left_final.json); what was read and what was not is in [`GATE5.md`](GATE5.md), part 5). "
+          "This is for a next round and changes no outcome. The readouts fitted on cells of the final study do not depend on the head.\n")
         a("| *u* of `variation`, mean over the donors | `as_is` | `coverage` |")
         a("|---|---|---|")
         for key, name in (("frozen", "the head's own output"), ("train@Z", "a readout of the head's training cells, at the state"),
@@ -294,33 +318,52 @@ def lines(F, decl, sel, dev, left):
                           ("units@Z", "a readout of the other donors of the final study, at the state"), ("own@Z", "with the donor's own cells, at the state")):
             a(f"| {name} | {f(v['u']['as_is'][key])} | {f(v['u']['coverage'][key])} |")
         a("")
-        a(f"- **The ceiling of the final study**: a readout of its other donors reads {f(ce['all']['gain'])} {iv(ce['all']['ci'])} more than `as_is` "
-          f"(healthy donors {f(ce['healthy']['gain'])}, patients {f(ce['patients']['gain'])}). The shortfall has the same shape as on the development study: "
-          "cells of the same study read what the head does not." if ce["all"]["ci"][0] > 0 else
-          f"- **The ceiling of the final study**: a readout of its other donors reads {f(ce['all']['gain'])} {iv(ce['all']['ci'])} more than `as_is`.")
-        a(f"- **Left after the change**: {f(lf['all']['gain'])} {iv(lf['all']['ci'])} between the head with PBMC cells and that readout "
+        dc = dev["D1_batch_seen"]["of_the_ceiling"]["ceiling"]
+        a(f"- **On this study the head is not short of coverage.** A readout fitted on the other donors of the final study leaves {f(v['u']['as_is']['units@Z'])} unexplained and "
+          f"`as_is` {f(v['u']['as_is']['frozen'])}: {f(ce['all']['gain'])} {iv(ce['all']['ci'])} between them (healthy donors {f(ce['healthy']['gain'])}, patients {f(ce['patients']['gain'])}), "
+          f"against {f(dc)} on the development study. A readout of the head's own training cells, which are bone marrow, reads as much ({f(v['u']['as_is']['train@Z'])}).")
+        own_gain = v["u"]["as_is"]["frozen"] - v["u"]["as_is"]["own@Z"]
+        a(f"- **The bound was out of reach here.** The bound of the rule, {f(bound)}, was set from the development study. On the final study no readout of the state leaves {f(bound)} "
+          f"less unexplained than `as_is`: the readout of the other donors gains {f(ce['all']['gain'])}" + (f" (its interval ends at {f(ce['all']['ci'][1])})" if ce["all"]["ci"][1] < bound else "")
+          + f", and {f(own_gain)} with the donor's own cells in the fit. The test could show that the gain was absent. It could not have shown it present, and so it does not say "
+          "whether coverage is what donors of other PBMC studies lack.")
+        gf = RES / "grid_final" / f"s{left['seeds'][0]}_donors_variation.json"
+        dead = ""
+        if gf.exists():
+            pd_ = json.loads(gf.read_text())["heads"]["as_is"]["donors"]
+            n_dead = sum(x["frozen"]["u"] > 0.99 and x["own@Z"]["u"] > 0.99 for x in pd_.values())
+            dead = f" In {n_dead} of the {len(pd_)} donors nothing is read at all (*u* above 0.99 under every readout)." if n_dead else ""
+        a(f"- **Most of the variation is beyond every readout**: {f(v['u']['as_is']['own@Z'])} is left even with the donor's own cells in the fit." + dead
+          + " Whether that is noise of the protein measurements of this study or signal that a linear readout of the state does not reach, these data do not say.")
+        a(f"- **Left after the change**: {f(lf['all']['gain'])} {iv(lf['all']['ci'])} between the head with PBMC cells and the readout of the other donors "
           f"(healthy donors {f(lf['healthy']['gain'])}, patients {f(lf['patients']['gain'])}).")
         tr = v["fall_from_as_is_to_coverage"]["train@Z"]
-        a(f"- **A readout of the head's training cells** (bone marrow for `as_is`; bone marrow and the PBMC cells of the development study for `coverage`) leaves "
-          f"{f(v['u']['as_is']['train@Z'])} and {f(v['u']['coverage']['train@Z'])}: a difference of {f(tr['gain'], 3, True)} {iv(tr['ci'])}. "
-          "It says whether a linear readout gains from the added cells where the head does not.")
+        a(f"- **Adding the PBMC cells to a linear readout changes nothing here**: a readout of the head's training cells leaves {f(v['u']['as_is']['train@Z'])} for `as_is` (bone marrow) and "
+          f"{f(v['u']['coverage']['train@Z'])} for `coverage` (bone marrow and the PBMC cells of the development study), a difference of {f(tr['gain'], 3, True)} {iv(tr['ci'])}.")
+        hr = v["head_against_readout_of_its_training_cells"]
+        a(f"- **The heads against a linear readout of their own training cells**: `as_is` {f(hr['as_is']['gain'], 3, True)} {iv(hr['as_is']['ci'])}, "
+          f"`coverage` {f(hr['coverage']['gain'], 3, True)} {iv(hr['coverage']['ci'])} (negative: the head is the worse of the two). On the development study the head with PBMC cells was the better of the two.")
+        if gf.exists():
+            G_ = json.loads(gf.read_text())["heads"]
+            grp = {}
+            for d_ in decl["donors"]:
+                grp.setdefault((d_["status"], d_["centre"]), []).append(d_["donor"])
+            a("")
+            a("| donors | n | `as_is`, own output | `coverage`, own output | readout of the other donors, at the state | with the donor's own cells |")
+            a("|---|---|---|---|---|---|")
+            for (st_, ce_), ds in sorted(grp.items()):
+                m = lambda h, k: float(np.mean([G_[h]["donors"][x][k]["u"] for x in ds]))
+                a(f"| {st_}, centre {ce_} | {len(ds)} | {f(m('as_is', 'frozen'))} | {f(m('coverage', 'frozen'))} | {f(m('as_is', 'units@Z'))} | {f(m('as_is', 'own@Z'))} |")
+            a("")
+            a("By status and centre (seed 0, means over donors; no interval is given for these groups). The loss of `coverage` sits where the table shows it; the grid does not say why.\n")
         sr = v["state_against_rna"]["as_is"]
         a(f"- **The state against the RNA**: at the state the readout of the other donors leaves {f(-sr['gain'], 3, True)} {iv([-sr['ci'][1], -sr['ci'][0]])} "
           "more unexplained than on 512 RNA components (negative: the state carries more).")
         oc = v["own_cells_after_other_donors"]
         a(f"- **The donor's own cells** add {f(oc['gain'])} {iv(oc['ci'])} after the other donors.")
-        if left.get("disease"):
-            d = left["disease"]
-            parts = []
-            for h in ("as_is", "coverage"):
-                if h in d and "shift" in d[h]:
-                    u = d[h]["shift"]["u"]
-                    parts.append(f"`{h}`: the head's own output leaves {f(u['frozen'], 2)} of it unexplained, a readout of its training cells {f(u.get('train@Z', float('nan')), 2)}, "
-                                 f"a readout crossed over donors {f(u.get('units@Z', float('nan')), 2)}")
-            if parts:
-                a("- **The disease as an event** (patients against healthy donors, the shift in protein level): " + "; ".join(parts) + ". The two groups differ in centre and "
-                  "sampling as well, and the reading is of one seed.")
+        a(f"- **Not read on the final study**: " + "; ".join(left["not_read"]) + ".")
         a("")
+        a("This grid was read after the test, on one seed, and is exploratory. It was not available when the bound was set: the final study was not to be opened before the test.\n")
     chk = RES / "final_pack_check.json"
     if chk.exists():
         k = json.loads(chk.read_text())
@@ -333,12 +376,21 @@ def lines(F, decl, sel, dev, left):
           + f". Rows and names are matched. Over the {len(both)} pairs measured in both studies the mean is {f(np.mean([fs['pairs'][x] for x in both]), 2)} on the final study and "
           f"{f(np.mean([ds['pairs'][x] for x in both]), 2)} on the development study, with the same code: protein and RNA agree less, pair by pair, in the final study.")
         a("- **Is it the matched names?** No: on the proteins with the same name in both panels the gain of `coverage` is the same (above).")
+        pc = post_hoc_contrasts(F)
+        ca, lc = pc["coverage_against_amount"], pc["labels_against_coverage"]
+        a(f"- **How much of the loss is the bone-marrow cells that `coverage` gives up?** `coverage` is fitted with 20,000 fewer bone-marrow cells, as `amount` is. Against `amount`, "
+          f"`coverage` gains {f(ca['gain'], 3, True)} {iv(ca['ci'])}: " + ("the added PBMC cells neither help nor cost beyond that. " if ca["ci"][0] < 0 < ca["ci"][1] else
+                                                                           ("the added PBMC cells cost beyond that. " if ca["ci"][1] < 0 else "the added PBMC cells help beyond that. "))
+          + f"Against `coverage`, shuffling the proteins of the added cells costs {f(-lc['gain'])} {iv([-lc['ci'][1], -lc['ci'][0]])} "
+          "([`results/final_contrasts.json`](results/final_contrasts.json)).")
         a("- **Was the fit of the head that is not admitted disturbed?** It finished before any other process ran on the machine; see GATE5.md, part 4.\n")
     a("### What the test does not show\n")
     for t in ("One study. From the development study to this one the laboratory, the chemistry of the assay (3′ to 5′), the antibody panel, the processing and the disease "
-              "change together; the test does not say which of them the gain fails to cross.",
-              "It does not show that added cells cannot help on this study: no cell of this study was added. " + ("What cells of the study itself can read is in the grid above." if left else
-                                                                                                                 "What cells of the study itself can read is for the grid on the final study, which was not finished when this was written."),
+              "change together; nothing here separates them.",
+              ("It could not have borne the round out on this study: the grid above finds almost no shortfall of coverage there. It is a test of whether the gain is there, "
+               "not of whether coverage is what donors of other PBMC studies lack." if left else
+               "It does not show that added cells cannot help on this study: no cell of this study was added. What cells of the study itself can read is for the grid on the "
+               "final study, which was not finished when this was written."),
               f"By the rule the outcome is unresolved, not refuted: one of the three `coverage` heads is not admitted. A further seed is not in the design and was not fitted.",
               f"{F['proteins']} of the head's proteins, {F['proteins'] - F['exact_name_proteins_only']['proteins']} of them matched under another name of the same target; clones were not compared.",
               f"{F['donors']} donors taken by a rule fixed before the file was opened, from donors with one status, one centre and at least 1,000 cells in their first sample. "
