@@ -92,3 +92,72 @@ def test_the_arms_of_the_test_are_heads_of_the_plan():
     names = {c["name"] for c in plan.heads()} | {c["name"] for c in plan.heads(final=True)}
     assert {f"s{s}_{read_final.HEAD_OF[k]}" for s in plan.SEEDS for k in read_final.ARMS} <= names
     assert {c["arm"] for c in plan.heads(final=True)} == {"coverage", "labels"}
+
+
+# ------------------------------------------------------------------ gate 0b: the choice of donors and cells (scripts/final_study.py)
+import final_study  # noqa: E402
+
+
+def _obs(seed=0):
+    """A study with three centres: 30 healthy donors and 50 patients, some with two samples, one with too few cells,
+    one whose status changes between samples, and a group that is not drawn."""
+    g = np.random.default_rng(seed)
+    donor, sample, status, centre = [], [], [], []
+
+    def add(d, s, st, c, n):
+        donor.extend([d] * n); sample.extend([s] * n); status.extend([st] * n); centre.extend([c] * n)
+
+    for i in range(30):
+        add(f"H{i:02d}", f"H{i:02d}_a", "Healthy", ["A", "B", "C"][i % 3], int(g.integers(1100, 1500)))
+    for i in range(50):
+        c = "A" if i < 35 else ("B" if i < 45 else "C")
+        add(f"P{i:02d}", f"P{i:02d}_s1", "Covid", c, int(g.integers(1100, 1500)))
+        if i % 7 == 0:
+            add(f"P{i:02d}", f"P{i:02d}_s2", "Covid", c, 1200)
+    add("SMALL", "SMALL_a", "Covid", "A", 400)
+    add("MIXED", "MIXED_a", "Covid", "B", 1200); add("MIXED", "MIXED_b", "Healthy", "B", 1200)
+    for i in range(5):
+        add(f"L{i}", f"L{i}_a", "LPS", "A", 1200)
+    order = g.permutation(len(donor))                              # rows of a sample are not contiguous
+    return {"patient_id": np.array(donor)[order], "sample_id": np.array(sample)[order], "Status": np.array(status)[order], "Site": np.array(centre)[order]}
+
+
+def test_donors_and_cells_are_chosen_by_the_rule():
+    obs, cfg = _obs(), final_study.STUDIES["stephenson2021"]
+    rows, chosen, cells = final_study.choose(obs, cfg)
+    by = {r["donor"]: r for r in rows}
+    assert len(chosen["healthy"]) == 20 and len(chosen["patient"]) == 20
+    assert not {"SMALL", "MIXED"} & set(chosen["patient"]) and not any(d.startswith("L") for d in chosen["healthy"] + chosen["patient"])
+    assert not by["SMALL"]["eligible"] and by["MIXED"]["group"] is None and by["L0"]["group"] is None
+    # balanced over centres: taken in turn, so no centre is more than one ahead while all still have donors
+    n = {c: sum(by[d]["centres"][0] == c for d in chosen["healthy"]) for c in "ABC"}
+    assert max(n.values()) - min(n.values()) <= 1
+    n = {c: sum(by[d]["centres"][0] == c for d in chosen["patient"]) for c in "ABC"}
+    assert n == {"A": 8, "B": 7, "C": 5}                           # C has only 5 patients; A and B share the rest in turn
+    for d, idx in cells.items():
+        assert len(idx) == 1000 == len(set(idx.tolist())) and np.all(np.diff(idx) > 0)
+        assert set(obs["patient_id"][idx]) == {d} and set(obs["sample_id"][idx]) == {by[d]["first_sample"]}
+    rows2, chosen2, cells2 = final_study.choose(obs, cfg)          # the same file gives the same choice
+    assert chosen2 == chosen and final_study.rows_digest(cells2) == final_study.rows_digest(cells)
+    assert by["P00"]["samples"] == 2 and by["P00"]["first_sample"] == "P00_s1"
+
+
+def test_the_choice_does_not_depend_on_other_columns():
+    obs, cfg = _obs(), final_study.STUDIES["stephenson2021"]
+    a = final_study.choose(obs, cfg)
+    b = final_study.choose({**obs, "cell_type": np.random.default_rng(5).choice(["T", "B"], len(obs["Status"]))}, cfg)
+    assert a[1] == b[1] and final_study.rows_digest(a[2]) == final_study.rows_digest(b[2])
+
+
+def test_proteins_are_matched_by_name():
+    ours = ["CD3", "CD4", "CD11a", "TCR"]
+    m = final_study.protein_mapping(ours, ["CD3", "CD4", "CD8", "TCR_ab"], "stephenson2021")
+    assert [bool(r["source"]) for r in m] == [True, True, False, False]
+    final_study.ALIASES["stephenson2021"]["TCR"] = ["TCR_ab"]
+    try:
+        m = final_study.protein_mapping(ours, ["CD3", "CD4", "CD8", "TCR_ab"], "stephenson2021")
+        assert m[3]["source"] == ["TCR_ab"] and m[3]["rule"].startswith("alias")
+        with pytest.raises(SystemExit):
+            final_study.protein_mapping(ours, ["CD3", "CD4"], "stephenson2021")
+    finally:
+        del final_study.ALIASES["stephenson2021"]["TCR"]
