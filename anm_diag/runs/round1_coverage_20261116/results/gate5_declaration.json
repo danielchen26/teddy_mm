@@ -1,0 +1,539 @@
+{
+ "what": "round 1, gate 5: what is read on the final study, fixed before any protein value of it is read",
+ "study": "Stephenson et al. 2021, Nat Med 27:904, COVID-19 PBMC CITE-seq (ArrayExpress E-MTAB-10026; haniffa21.processed.h5ad)",
+ "run": "round1_coverage_20261116/final",
+ "hypotheses": [
+  {
+   "type": "hypothesis",
+   "id": "donors_hao_coverage",
+   "about": {
+    "event": "a donor the head was not trained on, external PBMC",
+    "readout": "112 proteins",
+    "target": "variation",
+    "quantity": "fall of u (variation) at the head's own output, mean over held-out donors"
+   },
+   "claim": "coverage",
+   "rivals": [
+    "function",
+    "amount"
+   ],
+   "forecast": {
+    "coverage": [
+     0.06838271005386996,
+     0.08230978343798974
+    ],
+    "function": [
+     -0.004249689072508167,
+     0.0009967150949923927
+    ],
+    "amount": [
+     -0.05,
+     0.05
+    ]
+   },
+   "rule": {
+    "own": "coverage",
+    "at_least": 0.03419135502693498,
+    "controls": {
+     "function": 0.03419135502693498,
+     "amount": 0.03419135502693498
+    }
+   },
+   "basis": [
+    "scope_20261116/donors_hao",
+    "generalization_20261112"
+   ],
+   "retrospective": false,
+   "note": "arms of a training experiment that has not been run: PBMC cells of other donors added to the head's training; the same number of bone-marrow cells instead; another map on the same bone-marrow cells. The amount forecast is a chosen band, not read from the grid."
+  },
+  {
+   "type": "hypothesis",
+   "id": "coverage_not_levels",
+   "about": {
+    "event": "a donor the head was not trained on, PBMC of a study the head has not seen",
+    "readout": "95 proteins",
+    "target": "variation",
+    "quantity": "fall of u (variation) at the head's own output, mean over the donors of the final study"
+   },
+   "claim": "coverage",
+   "rivals": [
+    "levels"
+   ],
+   "forecast": {
+    "coverage": [
+     0.043879860512073335,
+     0.061707723827255374
+    ],
+    "labels": [
+     -0.35307462787681154,
+     -0.32746777791086595
+    ]
+   },
+   "rule": {
+    "own": "coverage",
+    "at_least": 0.03419135502693498,
+    "controls": {
+     "labels": 0.03419135502693498
+    }
+   },
+   "basis": [
+    "round1_coverage_20261116/development"
+   ],
+   "retrospective": false,
+   "note": "what the added PBMC cells teach is the relation between RNA and protein, not the protein levels of their study. Control: the same cells with the proteins shuffled among the cells of each donor. The forecasts are the intervals read in development on the 8 PBMC donors (coverage: the donor's batch not in the fit), other units than those of the final study."
+  }
+ ],
+ "arms": {
+  "as_is": [
+   "s0_as_is",
+   "s1_as_is",
+   "s2_as_is"
+  ],
+  "coverage": [
+   "s0_coverage_all",
+   "s1_coverage_all",
+   "s2_coverage_all"
+  ],
+  "labels": [
+   "s0_labels_all",
+   "s1_labels_all",
+   "s2_labels_all"
+  ],
+  "amount": [
+   "s0_amount",
+   "s1_amount",
+   "s2_amount"
+  ],
+  "function": [
+   "s0_function",
+   "s1_function",
+   "s2_function"
+  ]
+ },
+ "donors": [
+  {
+   "donor": "stephenson2021_CV0902",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV01_CV0902"
+  },
+  {
+   "donor": "stephenson2021_CV0904",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV01_CV0904"
+  },
+  {
+   "donor": "stephenson2021_CV0911",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV04_CV0911"
+  },
+  {
+   "donor": "stephenson2021_CV0915",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV08_CV0915"
+  },
+  {
+   "donor": "stephenson2021_CV0917",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV09_CV0917"
+  },
+  {
+   "donor": "stephenson2021_CV0926",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV12_CV0926"
+  },
+  {
+   "donor": "stephenson2021_CV0929",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV05_CV0929"
+  },
+  {
+   "donor": "stephenson2021_CV0934",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV13_CV0934"
+  },
+  {
+   "donor": "stephenson2021_CV0939",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV10_CV0939"
+  },
+  {
+   "donor": "stephenson2021_CV0940",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV14_CV0940"
+  },
+  {
+   "donor": "stephenson2021_MH8919177",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919177"
+  },
+  {
+   "donor": "stephenson2021_MH8919179",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919179"
+  },
+  {
+   "donor": "stephenson2021_MH8919226",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919226"
+  },
+  {
+   "donor": "stephenson2021_MH8919227",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919227"
+  },
+  {
+   "donor": "stephenson2021_MH8919282",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919282"
+  },
+  {
+   "donor": "stephenson2021_MH8919283",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919283"
+  },
+  {
+   "donor": "stephenson2021_MH8919332",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919332"
+  },
+  {
+   "donor": "stephenson2021_MH8919333",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919333"
+  },
+  {
+   "donor": "stephenson2021_newcastle65",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "newcastle65"
+  },
+  {
+   "donor": "stephenson2021_newcastle74",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "newcastle74"
+  },
+  {
+   "donor": "stephenson2021_AP10",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP10"
+  },
+  {
+   "donor": "stephenson2021_AP2",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP2"
+  },
+  {
+   "donor": "stephenson2021_AP3",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP3"
+  },
+  {
+   "donor": "stephenson2021_AP5",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP5"
+  },
+  {
+   "donor": "stephenson2021_AP6",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP6"
+  },
+  {
+   "donor": "stephenson2021_AP9",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP9"
+  },
+  {
+   "donor": "stephenson2021_CV0037",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV06_CV0037"
+  },
+  {
+   "donor": "stephenson2021_CV0100",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV04_CV0100"
+  },
+  {
+   "donor": "stephenson2021_CV0134",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV07_CV0134"
+  },
+  {
+   "donor": "stephenson2021_CV0137",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV07_CV0137"
+  },
+  {
+   "donor": "stephenson2021_CV0178",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV06_CV0178"
+  },
+  {
+   "donor": "stephenson2021_CV0231",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV10_CV0231"
+  },
+  {
+   "donor": "stephenson2021_CV0284",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV05_CV0284"
+  },
+  {
+   "donor": "stephenson2021_MH8919330",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH8919330"
+  },
+  {
+   "donor": "stephenson2021_MH9143273",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143273"
+  },
+  {
+   "donor": "stephenson2021_MH9143276",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143276"
+  },
+  {
+   "donor": "stephenson2021_MH9143321",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143321"
+  },
+  {
+   "donor": "stephenson2021_MH9143420",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143420"
+  },
+  {
+   "donor": "stephenson2021_MH9143421",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143421"
+  },
+  {
+   "donor": "stephenson2021_MH9179821",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9179821"
+  }
+ ],
+ "cells": {
+  "per_donor": 1000,
+  "n": 40000,
+  "sha256_of_rows": "0ae3c64abb9cecf2ced0301789f65d3ac942a97ed6c62b0193cabecda363fcfb"
+ },
+ "proteins": [
+  "CD86",
+  "CD274",
+  "CD155",
+  "CD112",
+  "CD47",
+  "CD40",
+  "CD154",
+  "CD52",
+  "CD3",
+  "CD8",
+  "CD56",
+  "CD19",
+  "CD11c",
+  "CD45RA",
+  "CD123",
+  "CD194",
+  "CD4",
+  "CD44",
+  "CD14",
+  "CD16",
+  "CD25",
+  "CD45RO",
+  "CD279",
+  "TIGIT",
+  "CD20",
+  "CD335",
+  "CD31",
+  "Podoplanin",
+  "CD146",
+  "IgM",
+  "CD195",
+  "CD196",
+  "CD185",
+  "CD103",
+  "CD69",
+  "CD161",
+  "CD152",
+  "CD223",
+  "CD27",
+  "CD107a",
+  "CD95",
+  "HLA-DR",
+  "CD1c",
+  "CD11b",
+  "CD64",
+  "CD141",
+  "CD1d",
+  "CD314",
+  "CD35",
+  "CD57",
+  "CD272",
+  "CD278",
+  "CD39",
+  "CX3CR1",
+  "CD24",
+  "CD21",
+  "CD79b",
+  "CD244",
+  "CD169",
+  "integrinB7",
+  "CD268",
+  "CD54",
+  "CD62P",
+  "TCR",
+  "CD122",
+  "CD41",
+  "CD137",
+  "CD163",
+  "CD83",
+  "CD124",
+  "CD2",
+  "CD226",
+  "CD29",
+  "CD303",
+  "CD49b",
+  "CD81",
+  "IgD",
+  "CD18",
+  "CD28",
+  "CD38",
+  "CD127",
+  "CD45",
+  "CD22",
+  "CD71",
+  "CD26",
+  "CD304",
+  "CD36",
+  "CD158",
+  "CD49d",
+  "CD73",
+  "TCRVa7.2",
+  "LOX-1",
+  "CD158b",
+  "CD158e1",
+  "CD319"
+ ],
+ "proteins_by_exact_name": [
+  "CD86",
+  "CD274",
+  "CD47",
+  "CD40",
+  "CD52",
+  "CD3",
+  "CD8",
+  "CD56",
+  "CD19",
+  "CD45RA",
+  "CD123",
+  "CD4",
+  "CD44",
+  "CD14",
+  "CD16",
+  "CD25",
+  "CD45RO",
+  "TIGIT",
+  "CD20",
+  "IgM",
+  "CD69",
+  "CD161",
+  "CD27",
+  "HLA-DR",
+  "CD64",
+  "CD141",
+  "CD1d",
+  "CX3CR1",
+  "CD24",
+  "CD21",
+  "CD79b",
+  "CD244",
+  "TCR",
+  "CD163",
+  "CD83",
+  "CD2",
+  "CD226",
+  "CD303",
+  "CD81",
+  "IgD",
+  "CD28",
+  "CD38",
+  "CD45",
+  "CD22",
+  "CD71",
+  "CD304",
+  "CD36",
+  "CD158",
+  "CD158b"
+ ],
+ "decision": {
+  "bootstrap": 1000,
+  "seed": 0,
+  "alpha": 0.05
+ },
+ "outcome": "the outcome over the three seeds together, stated only if each seed alone reads the same; otherwise unresolved (GATE5.md, part 1)",
+ "sha256": {
+  "final_arrays": "4dfa51afd9684f4df36fa67ec2b8db3d84308f12309a13c8f0e60218b3d3bdb3",
+  "final_z": "d09e043c33aed7304e2381ff95471821e1882a8fccee91a1fdea1afe04e307d6",
+  "head:s0_as_is": "74b57ee62cf27e908a796bc3ed1ad480a83c4f168d4fc44c1ed82fb9449e49a5",
+  "head:s0_coverage_all": "4067f97ef364bfc840a43c90f6d4f6ef984d09eeec3cdcf772e539fba8099528",
+  "head:s0_labels_all": "18d52b4bd52708881f04df425c43180a68a51050970b36d92fa7281394b107f6",
+  "head:s0_amount": "ba8805c1616e21d3f01b8c6be7572fb15b9ff8a82c8b61f2b64b86554eafdf1e",
+  "head:s0_function": "1cfa129cb6568c685a7c704c793da6f2f5e09a34cabbc3f3d694dbf8b0c226f9",
+  "head:s1_as_is": "a210ffd57ec0d68ba5f70fdb5d27f95ad26eda6d31683fc95cebeaa71977ac34",
+  "head:s1_coverage_all": "9acbff581069954f612983eaef1d43a6dff2c26cf123974d8dc18dc5178bb4dc",
+  "head:s1_labels_all": "aad8fa6b6c762bae07cc2dfa188cc81081a101eecc715c53fa616c453de71695",
+  "head:s1_amount": "e5e892276cac6033493010206ea324cb9bb57607de935fa3f8716062de216463",
+  "head:s1_function": "d10d7bf7237f6c938787af6e9c0a24ec7b4fc59432721d22d7ecaf663dac5468",
+  "head:s2_as_is": "34dbbfae1241dfe351f0544d7cf95185a3b61f5a17ad2d4ddb6b057e32512129",
+  "head:s2_coverage_all": "63744bf78063b6bd76b9bee896049ddbf627033e3967dc033b8931423197b1bd",
+  "head:s2_labels_all": "28a530d84df386b963cea7c621d73290c6093056e5a9f281c13707353d8de967",
+  "head:s2_amount": "bc744c93107028bfddedcd4b857d3f7cfc8c05ea3dac2d9a676a8f4567f2dac9",
+  "head:s2_function": "1e334ec5efd59e5e45dbf3819bc97c9d9e9205cc1fce48a975687ae82baaf991",
+  "script:read_final.py": "7196c503c60a61a6bc9be3d394e01dc3fe21f8b95f70a7c16e50c3d946acc651",
+  "script:read.py": "cbfacb05e32f9c7eb4aa39635827f549f0ef6d171a314dab4a9cdd4558d3aa63",
+  "script:common.py": "c47f9c8c048974c3b2031821edc7ac07205b56b7e560ed3a9e4c0af699f41c4a",
+  "script:plan.py": "867f7592ba5585a764bbc0dbf89629c49ae4bb2005ae737ceff8edf4eb1b0007",
+  "script:train_arm.py": "ee25191a8d5f75eea16e85a9bb1b7c5483a51fcf089e227e0f76a6ca391ed028"
+ },
+ "digest": "79e1188fd91938664e2ee9861eb68d2971125e51627aca32cf803ede1f45950a"
+}

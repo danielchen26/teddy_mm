@@ -110,3 +110,64 @@ Chosen by the rule: 20 healthy donors (Cambridge 10, Ncl 10; the third centre ha
 | patients | AP10, AP2, AP3, AP5, AP6, AP9, CV0037, CV0100, CV0134, CV0137, CV0178, CV0231, CV0284, MH8919330, MH9143273, MH9143276, MH9143321, MH9143420, MH9143421, MH9179821 |
 
 These 40 donors are the units under `roles.final`.
+
+## Part 3. The pack, the embedding, the second hypothesis and the declaration
+
+Committed 17 November 2026, after the pack and the embedding of the final study were written and before any protein
+value of it was scored, summarised or looked at. `scripts/read_final.py` is run after this commit is pushed.
+
+**The pack.** `scripts/final_study.py pack` read the raw counts of the 40,000 chosen rows and wrote them in the layout of
+the repository's other packs: 12,052 gene columns of the head's universe, of which 11,747 are in the study (the others
+are zero), and 134 protein columns, of which 114 are measured in the study; 95 of those are among the 112 proteins the
+head's two panels share. The counts are integers. A protein value is the per-cell CLR over the 192 protein features of the
+study, as in the other packs. The script printed the numbers of cells, genes and proteins and no value. One check was
+made on the protein values afterwards, and nothing else: none is missing in a measured column and none is present in a
+column that is not measured. The names of its genes and proteins are those of the head's packs, in the same order.
+
+**The embedding.** `scripts/03_embed_rna.py` with the settings of part 1b; its configuration hash is `1ac673a8a4ad5204`,
+the one in the manifest of the development study's embedding. It ran on the owner's machine (Apple GPU), in 955 seconds.
+
+**Departures from what was written.**
+
+1. Part 2 says it was committed "before any count of the file was read". The pack was started in the same minutes as that
+   commit, so the script was reading counts while the commit was made. Nothing of them had been printed or looked at.
+2. The embedding ran under Python 3.11.15 with numpy 2.4.6. The manifest of the development study's embedding names
+   Python 3.12.9 with numpy 2.5.3. torch is 2.14.0 in both. To measure what that
+   changes, the first 1,000 cells of the development study were embedded again in the environment used here: the
+   largest difference from the stored embedding is 1e-6 in a coordinate (values are near 1), at most 7e-8 of a
+   cell's length. The two environments give the same embedding to that precision.
+3. The criterion "at least 80 of the 112 proteins, by name" is met only with the alias list of part 2 (49 by exact name).
+   The reading on the 49 alone is in `scripts/read_final.py` and does not change the outcome.
+4. [`DESIGN.md`](DESIGN.md) enters the second hypothesis in the ledger before F is opened. Part 1 fixed its own arm, its
+   control and its bound before the file was looked at; the ledger entry itself is written here, after the pack and the
+   embedding. Its forecasts are numbers of development, and no value of the final study enters it.
+
+**The second hypothesis.** `coverage_not_levels`, entered in [`results/ledger_final.jsonl`](results/ledger_final.jsonl)
+by `scripts/declare_final.py`: what the added PBMC cells teach the head is the relation between RNA and protein, not the
+protein levels of their study. Its rule: on the donors of the final study the fall of *u* with `coverage` has its interval
+at or above 0.0342, and with `labels` (the same cells, the proteins shuffled among the cells of each donor) below it. Its
+forecasts are the intervals read in development: `coverage` 0.044 to 0.062, `labels` −0.353 to −0.328. The first
+hypothesis, `donors_hao_coverage`, is taken unchanged from `runs/scope_20261116/results/ledger.jsonl`.
+
+**The declaration.** [`results/gate5_declaration.json`](results/gate5_declaration.json), digest `79e1188fd91938664e2ee9861eb68d2971125e51627aca32cf803ede1f45950a`: the two
+hypotheses, the five arms and their fifteen heads, the 40 donors, the 95 proteins (and the 49 by exact name), how the
+outcome is stated (part 1), and the sha256 of the pack, of the embedding, of every head and of the five scripts the
+reading runs. `scripts/read_final.py` stops if any of them differs.
+
+**The six heads fitted for the test** (`coverage_all` and `labels_all`, three seeds) were fitted from the commit of
+part 1 and finished on 17 November 2026. Their admission (gate 3) and the guard (gate 6) are read by
+`scripts/read_final.py` in the same run as the test, with the code of development (`scripts/read.py`).
+
+**If the reading script stops with an error.** It prints nothing and writes nothing about the final study before it
+writes `results/final.json`. If it stops before that for a reason of code, the error is recorded in a part 4, the fix is
+committed with a new declaration, and the script is run again. Once `results/final.json` exists it is not run again.
+
+**After the test.** `scripts/grid_final.py` reads the grid on the final study for `as_is` and `coverage`: each donor
+against the other donors of the study, and the disease as an event. Seed 0 only, for its cost. The design had not fixed
+the number of seeds. It is read after `results/final.json` exists, is for a next round and changes no outcome. Its RNA view
+is the projection on the 512 components of `runs/scope_20261116`, refitted on bone marrow and the development study and
+checked against the stored projection before it is used.
+
+**What writes the README.** `scripts/write_final.py` (the section about the test and its figure) is committed here,
+before the reading. It reads `results/final.json` and decides nothing.
+
