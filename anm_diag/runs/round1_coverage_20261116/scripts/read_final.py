@@ -114,6 +114,8 @@ def main():
     if [str(bm["names"][j]) for j in cols] != decl["proteins"]:
         raise SystemExit("the proteins F measures among the 112 are not those of the declaration")
     Y = F["adt"][:, cols].astype(np.float64)
+    exact = set(decl["proteins_by_exact_name"])                  # a second reading, not part of the outcome: without the proteins matched by an alias
+    sub = np.array([i for i, n in enumerate(decl["proteins"]) if n in exact])
     if np.isnan(Y).any():
         raise SystemExit("a protein of the declaration is not measured in every cell of F")
     donors = [d["donor"] for d in decl["donors"]]
@@ -143,6 +145,7 @@ def main():
     official = run(dict(np.load(a.head_weights, allow_pickle=False)), on_fit_side=False)
     U = {k: np.full((len(donors), len(plan.SEEDS)), np.nan) for k in ARMS + ("head_in_use",)}
     S = {k: np.full((len(donors), len(plan.SEEDS)), np.nan) for k in ARMS + ("head_in_use",)}
+    U2 = {k: np.full((len(donors), len(plan.SEEDS)), np.nan) for k in ARMS}
     table, events, admitted, per_donor = {}, [], {k: [] for k in ARMS}, {}
     for j, s in enumerate(plan.SEEDS):
         P = {}
@@ -177,8 +180,12 @@ def main():
             for k in U:
                 U[k][i, j] = r["arms"][k]["u"]
                 S[k][i, j] = common.score(Y[me], (official["final"] if k == "head_in_use" else P[k]["final"])[me])
+            r2 = scope.arms(Y[me][:, sub], {k: P[k]["final"][me][:, sub] for k in ARMS}, base="as_is", decision=DECISION)
+            for k in ARMS:
+                U2[k][i, j] = r2["arms"][k]["u"]
 
     fam = scope.arms_family({k: U[k] for k in ARMS}, base="as_is", bootstrap=DECISION["bootstrap"], seed=DECISION["seed"], alpha=DECISION["alpha"])
+    fam2 = scope.arms_family({k: U2[k] for k in ARMS}, base="as_is", bootstrap=DECISION["bootstrap"], seed=DECISION["seed"], alpha=DECISION["alpha"])
     hyp = {h["id"]: h for h in decl["hypotheses"]}
     T = {"donors_hao_coverage": tests_of(hyp["donors_hao_coverage"], fam, admitted, ("coverage", "function", "amount")),
          "coverage_not_levels": tests_of(hyp["coverage_not_levels"], fam, admitted, ("coverage", "labels"))}
@@ -197,6 +204,8 @@ def main():
         "gains_over_as_is": {k: {x: fam["arms"][k][x] for x in ("gain", "ci", "per_fit", "per_unit")} for k in ARMS if k != "as_is"},
         "tests": T, "outcome": {k: v["outcome_of_the_round"] for k, v in T.items()},
         "guard_holds": guard_ok, "admission": {k: dict(zip([f"seed{s}" for s in plan.SEEDS], v)) for k, v in admitted.items()},
+        "exact_name_proteins_only": {"proteins": int(len(sub)), "u": {k: float(np.nanmean(v)) for k, v in U2.items()},
+                                     "gains_over_as_is": {k: {x: fam2["arms"][k][x] for x in ("gain", "ci", "per_fit")} for k in ARMS if k != "as_is"}},
         "healthy_and_patients": groups, "forecasts": loop.forecast_record([T[k]["together"] for k in T]),
         "ledger_checks": checks, "heads": table, "per_donor": per_donor, "status_of_donor": {d["donor"]: d["status"] for d in decl["donors"]},
     }

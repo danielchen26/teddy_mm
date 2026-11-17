@@ -109,9 +109,29 @@ STUDIES = {
         feature_type="feature_types", protein_type="Antibody Capture", gene_type="Gene Expression", prefix="AB_", counts="layers/raw",
         cell_type="initial_clustering"),
 }
-# names of the head's proteins that the study lists under another name; filled from the feature names only (see GATE5.md, part 2)
-ALIASES: dict[str, dict[str, list[str]]] = {"stephenson2021": {}}
-NOT_MATCHED_NOTE: dict[str, dict[str, str]] = {"stephenson2021": {}}
+# Names of the head's proteins that the study lists under another name. Written on 17 November 2026 from the 192 feature
+# names of the study and nothing else. The study names many antibodies by the gene symbol of their target; the head's
+# panel uses CD numbers. An entry is made only where the two names are the same target in the standard nomenclature.
+ALIASES: dict[str, dict[str, list[str]]] = {"stephenson2021": {
+    # among the 112 proteins of the test
+    "CD155": ["PVR"], "CD112": ["NECTIN2"], "CD154": ["CD40LG"], "CD11c": ["ITGAX"], "CD194": ["CCR4"], "CD279": ["PD1"], "CD335": ["NCR1"],
+    "CD31": ["PECAM1"], "Podoplanin": ["podoplanin"], "CD146": ["MCAM"], "CD195": ["CCR5"], "CD196": ["CCR6"], "CD185": ["CXCR5"], "CD103": ["ITGAE"],
+    "CD152": ["CTLA4"], "CD223": ["LAG3"], "CD107a": ["LAMP1"], "CD95": ["FAS"], "CD1c": ["CD1C"], "CD11b": ["ITGAM"], "CD314": ["KLRK1"], "CD35": ["CR1"],
+    "CD57": ["B3GAT1"], "CD272": ["BTLA"], "CD278": ["ICOS"], "CD39": ["ENTPD1"], "CD169": ["SIGLEC1"], "integrinB7": ["ITGB7"], "CD268": ["BAFFR"],
+    "CD54": ["ICAM1"], "CD62P": ["SELP"], "CD122": ["IL2RB"], "CD41": ["ITGA2B"], "CD137": ["TNFRSF9"], "CD124": ["IL4R"], "CD29": ["ITGB1"],
+    "CD49b": ["ITGA2"], "CD18": ["ITGB2"], "CD127": ["IL7R"], "CD26": ["DPP4"], "CD49d": ["ITGA4"], "CD73": ["NT5E"], "TCRVa7.2": ["TCR_Va7.2"],
+    "LOX-1": ["OLR1"], "CD158e1": ["KIR3DL1"], "CD319": ["SLAMF7"],
+    # of the head's 134, not among the 112: written to the pack, not part of the test
+    "HLA-A-B-C": ["HLA-ABC"], "CD49f": ["ITGA6"], "CD11a": ["ITGAL"], "FceRIa": ["FcERIa"], "CD94": ["KLRD1"], "CD85j": ["LILRB1"], "CD23": ["FCER2"],
+    "CD328": ["SIGLEC7"], "CD88": ["C5AR1"], "CD224": ["GGT1"], "CD32": ["FCGR2A"],
+}}
+NOT_MATCHED_NOTE: dict[str, dict[str, str]] = {"stephenson2021": {
+    "TCRVd2": "the study has TCR_Vg2 and TCR_Vg9; from the name alone TCR_Vg2 is not TCR V-delta-2, so it is not used",
+    "CD134": "the study has OX40L, the ligand, not OX40",
+    "CD270": "the study has LIGHT, a ligand of CD270, not CD270",
+    "CD48": "", "CD105": "", "CD42b": "", "CD119": "", "CD192": "the study has CCR3 to CCR7, not CCR2", "CD13": "", "CD115": "", "CD63": "",
+    "CD172a": "", "CD72": "", "CD93": "", "CD49a": "", "CD9": "", "CD142": "",
+}}
 
 
 def protein_mapping(ours, source, study):
@@ -124,7 +144,7 @@ def protein_mapping(ours, source, study):
         elif p in src:
             feats, rule = [p], "exact name"
         else:
-            feats, rule = [], "not measured" + (": " + NOT_MATCHED_NOTE[study][p] if p in NOT_MATCHED_NOTE[study] else "")
+            feats, rule = [], "not measured" + (": " + NOT_MATCHED_NOTE[study][p] if NOT_MATCHED_NOTE[study].get(p) else "")
         for f in feats:
             if f not in src:
                 raise SystemExit(f"mapping for {p} names {f}, which is not a feature of the study")
@@ -257,18 +277,14 @@ def gene_columns(var, cfg, reference, our_genes):
                  "genes_of_the_head": int(len(our_genes)), "of_them_in_the_study": int(len(used))}
 
 
-def read_rows(g, rows, n_features):
-    """Rows of a CSR matrix stored in an h5ad group, as (data, indices, indptr). rows: sorted row numbers."""
-    enc = g.attrs.get("encoding-type", g.attrs.get("h5sparse_format", ""))
-    enc = enc.decode() if isinstance(enc, bytes) else enc
-    if "csr" not in str(enc):
-        raise SystemExit(f"the counts are stored as {enc!r}; this script reads rows of a CSR matrix")
-    ip = g["indptr"]
+def read_rows(g, ip, rows, n_features):
+    """Rows of a CSR matrix stored in an h5ad group, as (data, indices, indptr). ip: the matrix's row pointer;
+    rows: sorted row numbers. One slab from the first to the last of the rows is read."""
     lo, hi = int(rows[0]), int(rows[-1]) + 1
-    ptr = np.asarray(ip[lo:hi + 1], np.int64)
+    ptr = ip[lo:hi + 1]
     data, idx = np.asarray(g["data"][ptr[0]:ptr[-1]]), np.asarray(g["indices"][ptr[0]:ptr[-1]], np.int64)
     ptr = ptr - ptr[0]
-    keep = np.concatenate([np.arange(ptr[r - lo], ptr[r - lo + 1]) for r in rows]) if len(rows) else np.zeros(0, np.int64)
+    keep = np.concatenate([np.arange(ptr[r - lo], ptr[r - lo + 1]) for r in rows])
     counts = np.array([ptr[r - lo + 1] - ptr[r - lo] for r in rows], np.int64)
     if idx.size and idx.max() >= n_features:
         raise SystemExit("a column index of the counts is beyond the feature table")
@@ -294,33 +310,44 @@ def size_factors(tot):
     return sf.astype(np.float32)
 
 
-def pack_donor(path, study, sel, rows, donor, col, prot_idx, cache):
-    """The counts of one donor's chosen cells, written to the cache. Reads the counts of those cells only."""
+def pack_blocks(path, study, rows, col, gene_features, n_genes_out, prot_idx, cache, block=20000, seconds=0):
+    """The counts of the chosen cells, read in blocks of rows of the file and written to the cache, one file a block.
+    rows: all chosen rows, sorted. Returns the number of blocks still to read (0: all there)."""
+    import time
     import h5py
     from scipy import sparse
-    cfg = STUDIES[study]
-    out = Path(cache) / f"{donor}.npz"
-    if out.exists():
-        return False
+    cfg, t0 = STUDIES[study], time.time()
+    starts = sorted({int(r) // block * block for r in rows})
+    left = [b for b in starts if not (Path(cache) / f"block_{b:07d}.npz").exists()]
+    if not left:
+        return 0
     with h5py.File(path, "r") as f:
-        data, idx, ptr = read_rows(f[cfg["counts"]], rows, len(col))
-    if not np.all(data == np.round(data)) or (data.size and data.min() < 0):
-        raise SystemExit(f"{donor}: the counts are not non-negative integers")
-    n = len(rows)
-    X = sparse.csr_matrix((data.astype(np.float32), idx, ptr), shape=(n, len(col)))
-    genes = np.flatnonzero(col >= 0)
-    Xg = X[:, genes].tocoo()
-    R = sparse.csr_matrix((Xg.data, (Xg.row, col[genes][Xg.col])), shape=(n, sel["n_genes_out"]), dtype=np.float32)
-    R.sort_indices()
-    A = np.asarray(X[:, prot_idx].todense(), np.float32)
-    is_gene = np.zeros(len(col), bool)
-    is_gene[sel["gene_features"]] = True
-    tot_genes = np.asarray(X[:, np.flatnonzero(is_gene)].sum(axis=1)).ravel()
-    tmp = out.with_suffix(".tmp.npz")
-    np.savez(tmp, rna_data=R.data, rna_indices=R.indices.astype(np.int32), rna_indptr=R.indptr.astype(np.int64), adt_source_counts=A,
-             n_count_rna_all_genes=tot_genes.astype(np.float64), rows=np.asarray(rows, np.int64))
-    tmp.replace(out)
-    return True
+        g = f[cfg["counts"]]
+        enc = g.attrs.get("encoding-type", g.attrs.get("h5sparse_format", ""))
+        enc = enc.decode() if isinstance(enc, bytes) else enc
+        if "csr" not in str(enc):
+            raise SystemExit(f"the counts are stored as {enc!r}; this script reads rows of a CSR matrix")
+        ip = np.asarray(g["indptr"][()], np.int64)
+        for k, b in enumerate(left):
+            if seconds and time.time() - t0 > seconds:
+                return len(left) - k
+            r = rows[(rows >= b) & (rows < b + block)]
+            data, idx, ptr = read_rows(g, ip, r, len(col))
+            if not np.all(data == np.round(data)) or (data.size and data.min() < 0):
+                raise SystemExit(f"rows {b} to {b + block}: the counts are not non-negative integers")
+            X = sparse.csr_matrix((data.astype(np.float32), idx, ptr), shape=(len(r), len(col)))
+            genes = np.flatnonzero(col >= 0)
+            Xg = X[:, genes].tocoo()
+            R = sparse.csr_matrix((Xg.data, (Xg.row, col[genes][Xg.col])), shape=(len(r), n_genes_out), dtype=np.float32)
+            R.sort_indices()
+            out = Path(cache) / f"block_{b:07d}.npz"
+            tmp = out.with_suffix(".tmp.npz")
+            np.savez(tmp, rna_data=R.data, rna_indices=R.indices.astype(np.int32), rna_indptr=R.indptr.astype(np.int64),
+                     adt_source_counts=np.asarray(X[:, prot_idx].todense(), np.float32),
+                     n_count_rna_all_genes=np.asarray(X[:, gene_features].sum(axis=1)).ravel().astype(np.float64), rows=r.astype(np.int64))
+            tmp.replace(out)
+            print(f"rows {b} to {b + block}: {len(r)} cells ({time.time() - t0:.0f} s)", flush=True)
+    return 0
 
 
 def assemble(study, selection, rows_by_donor, obs, var, train_pack, cache, out_dir, gene_info, compress=True):
@@ -336,18 +363,24 @@ def assemble(study, selection, rows_by_donor, obs, var, train_pack, cache, out_d
     if [r["ours"] for r in mapping] != ours:
         raise SystemExit("the mapping of the selection is not in the head's protein order")
     pos = {n: j for j, n in enumerate(src_names)}
-    blocks, A, tot_all, row_all, donors, status, centre, sample = [], [], [], [], [], [], [], []
-    for d in selection["donors"]:
-        key = d["donor"][len(study) + 1:]
-        z = np.load(Path(cache) / f"{key}.npz")
-        if not np.array_equal(z["rows"], rows_by_donor[key]):
-            raise SystemExit(f"{key}: the cached cells are not the chosen cells")
-        n = len(z["rows"])
-        blocks.append(sparse.csr_matrix((z["rna_data"], z["rna_indices"], z["rna_indptr"]), shape=(n, len(our_genes))))
+    files = sorted(Path(cache).glob("block_*.npz"))
+    blocks, A, tot_all, row_all = [], [], [], []
+    for p in files:
+        z = np.load(p)
+        blocks.append(sparse.csr_matrix((z["rna_data"], z["rna_indices"], z["rna_indptr"]), shape=(len(z["rows"]), len(our_genes))))
         A.append(z["adt_source_counts"]); tot_all.append(z["n_count_rna_all_genes"]); row_all.append(z["rows"])
-        donors += [d["donor"]] * n; status += [d["status"]] * n; centre += [f"{study}_{d['centre']}"] * n; sample += [d["sample"]] * n
-    X = sparse.vstack(blocks).tocsr()
-    A, rows = np.vstack(A), np.concatenate(row_all)
+    have = np.concatenate(row_all)
+    donors, status, centre, sample, want = [], [], [], [], []
+    for d in selection["donors"]:
+        r = rows_by_donor[d["donor"][len(study) + 1:]]
+        want.append(r)
+        donors += [d["donor"]] * len(r); status += [d["status"]] * len(r); centre += [f"{study}_{d['centre']}"] * len(r); sample += [d["sample"]] * len(r)
+    rows = np.concatenate(want)
+    if not (np.all(np.diff(have) > 0) and np.array_equal(np.sort(rows), have)):
+        raise SystemExit("the cached cells are not the chosen cells")
+    order = np.searchsorted(have, rows)
+    X = sparse.vstack(blocks).tocsr()[order]
+    A, tot_all = np.vstack(A)[order], [np.concatenate(tot_all)[order]]
     counts = np.full((len(rows), len(ours)), np.nan, np.float32)
     present = np.zeros(len(ours), bool)
     for k, r in enumerate(mapping):
@@ -402,13 +435,12 @@ def main(argv=None):
     q.add_argument("--reference", type=Path, required=True, help="feature table of the 10x GRCh38-3.0.0 reference (tsv.gz: Ensembl id, symbol)")
     q.add_argument("--cache", type=Path, required=True)
     q.add_argument("--out", type=Path, required=True)
-    q.add_argument("--seconds", type=float, default=0, help="stop reading donors after this long; run again to go on")
+    q.add_argument("--seconds", type=float, default=0, help="stop reading after this long; run again to go on")
+    q.add_argument("--block", type=int, default=20000, help="rows of the file read at a time")
     q.add_argument("--no-compress", action="store_true")
     a = p.parse_args(argv)
     if a.cmd == "pack":
-        import time
         import h5py
-        t0 = time.time()
         cfg = STUDIES[a.study]
         sel = json.loads(a.selection.read_text())
         rows = dict(np.load(a.rows))
@@ -420,16 +452,13 @@ def main(argv=None):
             our_genes = [str(x) for x in z["rna_names"]]
         col, gene_info = gene_columns(var, cfg, a.reference, our_genes)
         ft = np.asarray(var[cfg["feature_type"]]).astype(str)
-        sel["n_genes_out"], sel["gene_features"] = len(our_genes), np.flatnonzero(ft == cfg["gene_type"])
         prot_idx = np.flatnonzero(ft == cfg["protein_type"])
         a.cache.mkdir(parents=True, exist_ok=True)
-        left = [d for d in sorted(rows) if not (a.cache / f"{d}.npz").exists()]
-        for d in left:
-            if a.seconds and time.time() - t0 > a.seconds:
-                print(f"{len(left) - left.index(d)} donors left; run again")
-                return 75
-            pack_donor(a.h5ad, a.study, sel, rows[d], d, col, prot_idx, a.cache)
-            print(f"{d}: read ({time.time() - t0:.0f} s)", flush=True)
+        left = pack_blocks(a.h5ad, a.study, np.sort(np.concatenate(list(rows.values()))), col, np.flatnonzero(ft == cfg["gene_type"]), len(our_genes), prot_idx,
+                           a.cache, block=a.block, seconds=a.seconds)
+        if left:
+            print(f"{left} blocks left; run again")
+            return 75
         info = assemble(a.study, sel, rows, obs, var, a.train_pack, a.cache, a.out, gene_info, compress=not a.no_compress)
         print(json.dumps({**info, "genes_info": gene_info}, indent=1))
         return 0

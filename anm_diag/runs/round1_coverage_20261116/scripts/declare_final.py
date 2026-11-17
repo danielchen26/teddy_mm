@@ -83,7 +83,9 @@ def main():
         "arms": {k: [n for n, kk in heads.items() if kk == k] for k in read_final.ARMS},
         "donors": [{k: d[k] for k in ("donor", "status", "centre", "sample")} for d in sel["donors"]],
         "cells": {"per_donor": sel["rule"]["cells_per_donor"], "n": int(len(donors)), "sha256_of_rows": sel["cells"]["sha256_of_rows"]},
-        "proteins": proteins, "decision": read_final.DECISION,
+        "proteins": proteins,
+        "proteins_by_exact_name": [r["ours"] for r in sel["proteins"]["mapping"] if r["rule"] == "exact name" and r["ours"] in proteins],
+        "decision": read_final.DECISION,
         "outcome": "the outcome over the three seeds together, stated only if each seed alone reads the same; otherwise unresolved (GATE5.md, part 1)",
         "sha256": sha,
     }

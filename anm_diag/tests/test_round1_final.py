@@ -151,16 +151,25 @@ def test_the_choice_does_not_depend_on_other_columns():
 
 def test_proteins_are_matched_by_name():
     ours = ["CD3", "CD4", "CD11a", "TCR"]
-    m = final_study.protein_mapping(ours, ["CD3", "CD4", "CD8", "TCR_ab"], "stephenson2021")
-    assert [bool(r["source"]) for r in m] == [True, True, False, False]
-    final_study.ALIASES["stephenson2021"]["TCR"] = ["TCR_ab"]
+    real = final_study.ALIASES["stephenson2021"]
+    final_study.ALIASES["stephenson2021"] = {}
     try:
+        m = final_study.protein_mapping(ours, ["CD3", "CD4", "CD8", "TCR_ab"], "stephenson2021")
+        assert [bool(r["source"]) for r in m] == [True, True, False, False]
+        final_study.ALIASES["stephenson2021"] = {"TCR": ["TCR_ab"]}
         m = final_study.protein_mapping(ours, ["CD3", "CD4", "CD8", "TCR_ab"], "stephenson2021")
         assert m[3]["source"] == ["TCR_ab"] and m[3]["rule"].startswith("alias")
         with pytest.raises(SystemExit):
             final_study.protein_mapping(ours, ["CD3", "CD4"], "stephenson2021")
     finally:
-        del final_study.ALIASES["stephenson2021"]["TCR"]
+        final_study.ALIASES["stephenson2021"] = real
+
+
+def test_the_aliases_name_features_of_the_study_once():
+    al = final_study.ALIASES["stephenson2021"]
+    used = [f for v in al.values() for f in v]
+    assert len(used) == len(set(used)) and not set(al) & set(used)
+    assert not set(al) & {k for k, v in final_study.NOT_MATCHED_NOTE["stephenson2021"].items()}
 
 
 def test_the_pack_holds_the_counts_of_the_chosen_cells(tmp_path):
@@ -204,7 +213,8 @@ def test_the_pack_holds_the_counts_of_the_chosen_cells(tmp_path):
         (tmp_path / d).mkdir()
     np.savez(tmp_path / "train" / "cite_arrays.npz", adt_names=np.array(ours), rna_names=np.array(our_genes), token_ids=np.arange(5))
     np.savez(tmp_path / "pbmc" / "cite_arrays.npz", adt_present=np.array([True, True, True, True, False]))
-    final_study.ALIASES[study]["TCR"] = ["TCR_ab"]
+    real = final_study.ALIASES[study]
+    final_study.ALIASES[study] = {"TCR": ["TCR_ab"]}
     old = final_study.N_PER_GROUP, final_study.N_CELLS
     final_study.N_PER_GROUP, final_study.N_CELLS = 2, 200
     try:
@@ -214,10 +224,10 @@ def test_the_pack_holds_the_counts_of_the_chosen_cells(tmp_path):
         (tmp_path / "sel.json").write_text(__import__("json").dumps(sel))
         np.savez(tmp_path / "rows.npz", **cells)
         rc = final_study.main(["pack", str(path), "--selection", str(tmp_path / "sel.json"), "--rows", str(tmp_path / "rows.npz"), "--train-pack", str(tmp_path / "train"),
-                               "--reference", str(ref), "--cache", str(tmp_path / "cache"), "--out", str(tmp_path / "pack")])
-        assert rc == 0
+                               "--reference", str(ref), "--cache", str(tmp_path / "cache"), "--out", str(tmp_path / "pack"), "--block", "700"])
+        assert rc == 0 and len(list((tmp_path / "cache").glob("block_*.npz"))) == 8                # 5,000 rows in blocks of 700
     finally:
-        del final_study.ALIASES[study]["TCR"]
+        final_study.ALIASES[study] = real
         final_study.N_PER_GROUP, final_study.N_CELLS = old
     z = np.load(tmp_path / "pack" / "cite_arrays.npz")
     rows = z["source_row"]

@@ -70,3 +70,43 @@ before it was opened.
   it by hash.
 - The cells are embedded with `scripts/03_embed_rna.py` and the settings of the PBMC study's manifest (official
   preprocessing, sequence length 2,048, length buckets, batch 32, fp16, gene-mean pooling).
+
+## Part 2. The final study: criteria, donors, cells and proteins
+
+Committed 17 November 2026, before any count of the file was read. What follows was read from the cell table and the
+feature table of the file ([`results/final_selection.json`](results/final_selection.json), written by
+`scripts/final_study.py select`).
+
+**The study.** Stephenson et al. 2021, Nat Med 27:904, COVID-19 PBMC CITE-seq (ArrayExpress E-MTAB-10026; haniffa21.processed.h5ad): the first candidate of gate 0b. 647,366 cells, 24,929 features. The file was
+downloaded on 17 November 2026 from the study's public data portal (7,187,322,881 bytes; its md5 is the one the server
+states, add2501947c585ea6b6ef7429e4bd9f2).
+
+**Criteria.**
+
+| criterion | holds | |
+|---|---|---|
+| open | yes | public file of the study's data portal; no access request |
+| raw RNA and protein counts per cell | yes | a layer of raw counts over genes and protein features; that it holds integers is checked when the pack is written |
+| a donor and a disease label per cell | yes | `patient_id`, `Status` |
+| at least 20 donors, 8 healthy, 8 patients | yes | 23 healthy donors, 90 patients (COVID-19); 17 donors of other groups are not drawn |
+| at least 80 of the 112 proteins, by name | yes, **with aliases** | 95 of the 112: 49 by exact name and 46 under another name of the same target (below) |
+| never used in this repository | yes | |
+
+**The proteins.** The study names many antibodies by the gene symbol of their target; the head's panel uses CD numbers. By exact name 49 of the 112
+match, which is below the 80 the criterion asks. With the names of the same target in the standard nomenclature, written from the study's 192 feature
+names and nothing else (`ALIASES` in `scripts/final_study.py`), 95 match. The criterion is taken as met on that basis, and the reading on the
+49 exact-name proteins alone is added to `scripts/read_final.py` as a second reading that does not change the outcome. Clones were not compared.
+
+Matched under another name: CD155 = PVR, CD112 = NECTIN2, CD154 = CD40LG, CD11c = ITGAX, CD194 = CCR4, CD279 = PD1, CD335 = NCR1, CD31 = PECAM1, Podoplanin = podoplanin, CD146 = MCAM, CD195 = CCR5, CD196 = CCR6, CD185 = CXCR5, CD103 = ITGAE, CD152 = CTLA4, CD223 = LAG3, CD107a = LAMP1, CD95 = FAS, CD1c = CD1C, CD11b = ITGAM, CD314 = KLRK1, CD35 = CR1, CD57 = B3GAT1, CD272 = BTLA, CD278 = ICOS, CD39 = ENTPD1, CD169 = SIGLEC1, integrinB7 = ITGB7, CD268 = BAFFR, CD54 = ICAM1, CD62P = SELP, CD122 = IL2RB, CD41 = ITGA2B, CD137 = TNFRSF9, CD124 = IL4R, CD29 = ITGB1, CD49b = ITGA2, CD18 = ITGB2, CD127 = IL7R, CD26 = DPP4, CD49d = ITGA4, CD73 = NT5E, TCRVa7.2 = TCR_Va7.2, LOX-1 = OLR1, CD158e1 = KIR3DL1, CD319 = SLAMF7.
+
+Of the 112 not measured: CD270, CD48, CD105, CD134, CD42b, CD119, CD192, CD13, CD115, CD63, CD172a, CD72, CD93, CD49a, CD9, TCRVd2, CD142. `TCRVd2` is left out because the study's `TCR_Vg2` cannot be told from its name to be the same target.
+
+**Donors and cells.** Eligible (one status, one centre, at least 1,000 cells in the donor's first sample): 22 healthy donors and 86 patients.
+Chosen by the rule: 20 healthy donors (Cambridge 10, Ncl 10; the third centre has no healthy donor) and 20 patients (Sanger 6, Cambridge 7, Ncl 7); 1,000 cells each, 40,000 cells. The other 73 healthy donors and patients stay unopened as the reserve.
+
+| group | donors (the study's ids) |
+|---|---|
+| healthy | CV0902, CV0904, CV0911, CV0915, CV0917, CV0926, CV0929, CV0934, CV0939, CV0940, MH8919177, MH8919179, MH8919226, MH8919227, MH8919282, MH8919283, MH8919332, MH8919333, newcastle65, newcastle74 |
+| patients | AP10, AP2, AP3, AP5, AP6, AP9, CV0037, CV0100, CV0134, CV0137, CV0178, CV0231, CV0284, MH8919330, MH9143273, MH9143276, MH9143321, MH9143420, MH9143421, MH9179821 |
+
+These 40 donors are the units under `roles.final`.
