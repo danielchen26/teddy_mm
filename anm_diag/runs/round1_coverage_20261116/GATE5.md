@@ -223,3 +223,40 @@ was added or dropped.
 5. The grid on the final study was still running when this part was committed. After the two stops of item 1 it was
    stopped a third time, during its first run and before it had written anything, by the time limit of the job runner,
    and started again. Its reading goes into the README in a later commit, as read after the test.
+
+## Part 5. The grid on the final study (step 6), as it was read
+
+Written 17 November 2026, after the test and after part 4. It is for a next round and changes no outcome.
+
+**What was read.** For each of the 40 donors, *u* of the variation among its cells at the head's own output and under
+readouts that were not fitted on the donor: one fitted on the head's training cells, one fitted on the other 39 donors
+of the study, and one with the donor's own cells, cross-fitted. Two views of a cell: 512 RNA components, and TEDDY's
+state. Two heads of seed 0: `as_is` and `coverage` (`s0_coverage_all`). The donor-by-donor values are in
+[`results/grid_final/s0_donors_variation.json`](results/grid_final/s0_donors_variation.json), the means and contrasts in
+[`results/what_is_left_final.json`](results/what_is_left_final.json), both written by `scripts/grid_final.py`
+(`donors_variation`). The readouts and the resamples are those of a `scope` run of kind `donor` (`scope.Study`,
+`scope._u_variation`); the readouts fitted on cells of the final study do not depend on the head and were fitted once.
+
+**Departures from parts 1 and 3 and from the design.**
+
+1. *Not the scope runs that part 3 names.* A scope run with the donors as events also reads the `shift` target, the
+   level of a donor against the other donors. That needs a readout for every pair of donors: 780 pairs at each of four
+   stages, for each head. Two such runs were stopped by hand after an hour each, with nothing written; a run would have
+   taken about ten hours. Only the `variation` target was read, which is the target of the round.
+2. *The stages inside the head were not read* on the final study (the head's latent and its output as views for a
+   readout). The two views that were read do not depend on the head.
+3. *The disease as an event was not read.* The run the script would have made resamples the patients' cells one by one
+   and not by donor, which would understate its intervals. The comparison of healthy donors and patients that was
+   declared for the test is in `results/final.json`.
+4. *Typed events.* Because no scope run was made, the grid on the final study wrote no source or verdict events, and
+   `events.check_contrast` was not applied to it. The 40 donors are named under `roles.final` only in the declaration.
+5. *How it was run.* Six starts. Two stopped at the script's own check (part 4, item 1). One was stopped by the time
+   limit of the job runner. One was killed for memory when the arrays of other runs were prepared beside it. One, as
+   two processes side by side, was stopped by hand (item 1 above). The sixth is the reading kept. None of the first
+   five wrote a number.
+6. *One seed*, as part 3 says: the intervals of this part resample donors only.
+
+**What it read**, in one line: on the final study a readout fitted on the study's own donors leaves 0.006 [0.002, 0.011]
+less unexplained than `as_is`, against 0.073 on the development study. The bound of the rule, 0.034, could not have been
+met there. The reading is in [`README.md`](README.md); the bound had been set without it, because the final study was
+not to be opened before the test.

@@ -263,7 +263,7 @@ def main():
         a("# Round 1: a head for donors it has not seen — development (16 November 2026) and the test (17 November 2026)\n")
         a("**One test, read once; everything else is exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. "
           "The test (gate 5) comes first below; the development it rests on (gates 3, 4 and 6) follows unchanged.\n")
-        a(write_final.headline(fin[0], fin[3]) + "\n")
+        a(write_final.headline(fin[0], fin[3], fin[4]) + "\n")
         L.extend(write_final.lines(*fin))
         a("## Development (gates 3, 4 and 6), 16 November 2026\n")
         a("The forecasts ([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), "
@@ -466,7 +466,8 @@ def main():
         a("The test has been read and is not read again. A next round is not designed here. For what the admitted seeds read, the design names two candidates: a second study "
           "in the fit, or scales of the loss that are specific to a study. For the outcome the rule states, it names the reserve donors, read once; that is left to the owner "
           f"of the repository (the {len(fin[2].get('reserve', []))} donors that were not drawn stay unopened). "
-          + ("What the grid on the final study leaves open is under \"What is left on the final study\" above.\n" if fin[4] else
+          + ("The grid on the final study adds a point for any next design: a bound for a study has to come from that study's own ceiling, read on donors of it that are "
+             "then not used for the test (\"What is left on the final study\", above).\n" if fin[4] else
              "The grid on the final study (step 6 of gate 5) was running when this was written; its reading is added when it ends.\n"))
     else:
         a("Gate 5, once: the final study is prepared (criteria checked without reading a protein value, donors listed, cells embedded), the recipe is frozen by a commit, "
@@ -485,7 +486,11 @@ def main():
         a("- [`scripts/final_study.py`](scripts/final_study.py) → [`results/final_selection.json`](results/final_selection.json): the criteria, the donors, the cells and the pack of the final study")
         a("- [`scripts/declare_final.py`](scripts/declare_final.py) → [`results/gate5_declaration.json`](results/gate5_declaration.json) and [`results/ledger_final.jsonl`](results/ledger_final.jsonl)")
         a("- [`scripts/read_final.py`](scripts/read_final.py) → [`results/final.json`](results/final.json) (every head, donor and seed)")
-        a("- [`scripts/grid_final.py`](scripts/grid_final.py) → [`results/what_is_left_final.json`](results/what_is_left_final.json) and `results/grid_final/<run>/`")
+        a("- [`scripts/grid_final.py`](scripts/grid_final.py) → [`results/what_is_left_final.json`](results/what_is_left_final.json) and "
+          "[`results/grid_final/s0_donors_variation.json`](results/grid_final/s0_donors_variation.json) (every donor)")
+        a("- Post hoc: [`scripts/check_final_pack.py`](scripts/check_final_pack.py) → [`results/final_pack_check.json`](results/final_pack_check.json); "
+          "[`scripts/fit_histories.py`](scripts/fit_histories.py) → [`results/gate5_fit_histories.json`](results/gate5_fit_histories.json); "
+          "[`results/final_contrasts.json`](results/final_contrasts.json), written by `scripts/write_final.py`")
         a("- [`scripts/write_final.py`](scripts/write_final.py): the part of this file about the test and its figure")
         a("- [`results/gate5_heads.json`](results/gate5_heads.json): the sha256 of the heads of development that the test reuses")
     a(f"- The heads' weights are not in the repository ({48 if fin else 42} files of 5.6 MB and three of 15 MB).")
