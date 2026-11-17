@@ -106,7 +106,8 @@ STUDIES = {
     "stephenson2021": dict(
         name="Stephenson et al. 2021, Nat Med 27:904, COVID-19 PBMC CITE-seq (ArrayExpress E-MTAB-10026; haniffa21.processed.h5ad)",
         donor="patient_id", sample="sample_id", status="Status", healthy="Healthy", patient="Covid", centre="Site",
-        feature_type="feature_types", protein_type="Antibody Capture", gene_type="Gene Expression", prefix="AB_", counts="layers/raw"),
+        feature_type="feature_types", protein_type="Antibody Capture", gene_type="Gene Expression", prefix="AB_", counts="layers/raw",
+        cell_type="initial_clustering"),
 }
 # names of the head's proteins that the study lists under another name; filled from the feature names only (see GATE5.md, part 2)
 ALIASES: dict[str, dict[str, list[str]]] = {"stephenson2021": {}}
@@ -220,6 +221,165 @@ def select(path, study, train_pack, pbmc_pack):
     return out, cells, obs, var
 
 
+# ------------------------------------------------------------------ the pack
+def make_unique(names):
+    """Names made unique as anndata does for var_names: a repeated name keeps its first use and gets -1, -2 after."""
+    dup, seen, out = {n for n, c in Counter(names).items() if c > 1}, Counter(), []
+    for n in names:
+        out.append(n if n not in dup or seen[n] == 0 else f"{n}-{seen[n]}")
+        seen[n] += 1
+    return out
+
+
+def gene_columns(var, cfg, reference, our_genes):
+    """For every feature of the study, its column among the head's genes (-1: none). The study names genes by symbol;
+    the symbols are those of the 10x GRCh38-3.0.0 reference, whose table gives the Ensembl id of each."""
+    import gzip
+    names, ft = np.asarray(var["_index"]).astype(str), np.asarray(var[cfg["feature_type"]]).astype(str)
+    with gzip.open(reference, "rt") as f:
+        ref = [l.rstrip("\n").split("\t") for l in f]
+    ref = [r for r in ref if len(r) < 3 or r[2] == "Gene Expression"]
+    ens_of = dict(zip(make_unique([r[1] for r in ref]), [r[0] for r in ref]))
+    pos = {g: j for j, g in enumerate(our_genes)}
+    col = np.full(len(names), -1, np.int64)
+    known = 0
+    for i, (n, t) in enumerate(zip(names, ft)):
+        if t != cfg["gene_type"]:
+            continue
+        e = ens_of.get(n)
+        known += e is not None
+        if e in pos:
+            col[i] = pos[e]
+    used = col[col >= 0]
+    if len(set(used.tolist())) != len(used):
+        raise SystemExit("two features of the study map to one gene of the head")
+    return col, {"genes_in_the_study": int((ft == cfg["gene_type"]).sum()), "with_an_ensembl_id_in_the_reference": int(known),
+                 "genes_of_the_head": int(len(our_genes)), "of_them_in_the_study": int(len(used))}
+
+
+def read_rows(g, rows, n_features):
+    """Rows of a CSR matrix stored in an h5ad group, as (data, indices, indptr). rows: sorted row numbers."""
+    enc = g.attrs.get("encoding-type", g.attrs.get("h5sparse_format", ""))
+    enc = enc.decode() if isinstance(enc, bytes) else enc
+    if "csr" not in str(enc):
+        raise SystemExit(f"the counts are stored as {enc!r}; this script reads rows of a CSR matrix")
+    ip = g["indptr"]
+    lo, hi = int(rows[0]), int(rows[-1]) + 1
+    ptr = np.asarray(ip[lo:hi + 1], np.int64)
+    data, idx = np.asarray(g["data"][ptr[0]:ptr[-1]]), np.asarray(g["indices"][ptr[0]:ptr[-1]], np.int64)
+    ptr = ptr - ptr[0]
+    keep = np.concatenate([np.arange(ptr[r - lo], ptr[r - lo + 1]) for r in rows]) if len(rows) else np.zeros(0, np.int64)
+    counts = np.array([ptr[r - lo + 1] - ptr[r - lo] for r in rows], np.int64)
+    if idx.size and idx.max() >= n_features:
+        raise SystemExit("a column index of the counts is beyond the feature table")
+    return data[keep], idx[keep], np.concatenate([[0], np.cumsum(counts)])
+
+
+def clr(src_counts, counts, present):
+    """Per-cell centred log ratio over the whole measured panel, as scripts/prepare_external_cite.py: g = exp(mean over all
+    the study's protein features of log1p(count)); value = log1p(count / g)."""
+    g = np.exp(np.log1p(src_counts.astype(np.float64)).mean(axis=1))
+    g[g <= 0] = 1.0
+    out = np.full(counts.shape, np.nan, np.float32)
+    out[:, present] = np.log1p(counts[:, present].astype(np.float64) / g[:, None]).astype(np.float32)
+    return out, g.astype(np.float32)
+
+
+def size_factors(tot):
+    """teddy_mm.data.size_factors on per-cell totals: the total over its median among cells with a total above 0."""
+    tot = np.asarray(tot, np.float64)
+    med = np.median(tot[tot > 0]) if np.any(tot > 0) else 1.0
+    sf = tot / max(med, 1e-6)
+    sf[sf <= 0] = 1.0
+    return sf.astype(np.float32)
+
+
+def pack_donor(path, study, sel, rows, donor, col, prot_idx, cache):
+    """The counts of one donor's chosen cells, written to the cache. Reads the counts of those cells only."""
+    import h5py
+    from scipy import sparse
+    cfg = STUDIES[study]
+    out = Path(cache) / f"{donor}.npz"
+    if out.exists():
+        return False
+    with h5py.File(path, "r") as f:
+        data, idx, ptr = read_rows(f[cfg["counts"]], rows, len(col))
+    if not np.all(data == np.round(data)) or (data.size and data.min() < 0):
+        raise SystemExit(f"{donor}: the counts are not non-negative integers")
+    n = len(rows)
+    X = sparse.csr_matrix((data.astype(np.float32), idx, ptr), shape=(n, len(col)))
+    genes = np.flatnonzero(col >= 0)
+    Xg = X[:, genes].tocoo()
+    R = sparse.csr_matrix((Xg.data, (Xg.row, col[genes][Xg.col])), shape=(n, sel["n_genes_out"]), dtype=np.float32)
+    R.sort_indices()
+    A = np.asarray(X[:, prot_idx].todense(), np.float32)
+    is_gene = np.zeros(len(col), bool)
+    is_gene[sel["gene_features"]] = True
+    tot_genes = np.asarray(X[:, np.flatnonzero(is_gene)].sum(axis=1)).ravel()
+    tmp = out.with_suffix(".tmp.npz")
+    np.savez(tmp, rna_data=R.data, rna_indices=R.indices.astype(np.int32), rna_indptr=R.indptr.astype(np.int64), adt_source_counts=A,
+             n_count_rna_all_genes=tot_genes.astype(np.float64), rows=np.asarray(rows, np.int64))
+    tmp.replace(out)
+    return True
+
+
+def assemble(study, selection, rows_by_donor, obs, var, train_pack, cache, out_dir, gene_info, compress=True):
+    from scipy import sparse
+    cfg = STUDIES[study]
+    with np.load(Path(train_pack) / "cite_arrays.npz", allow_pickle=False) as z:
+        ours = [str(x) for x in z["adt_names"]]
+        our_genes = np.array([str(x) for x in z["rna_names"]])
+        tokens = np.asarray(z["token_ids"], np.int64)
+    names, ft = np.asarray(var["_index"]).astype(str), np.asarray(var[cfg["feature_type"]]).astype(str)
+    src_names = [n[len(cfg["prefix"]):] if n.startswith(cfg["prefix"]) else n for n in names[ft == cfg["protein_type"]]]
+    mapping = selection["proteins"]["mapping"]
+    if [r["ours"] for r in mapping] != ours:
+        raise SystemExit("the mapping of the selection is not in the head's protein order")
+    pos = {n: j for j, n in enumerate(src_names)}
+    blocks, A, tot_all, row_all, donors, status, centre, sample = [], [], [], [], [], [], [], []
+    for d in selection["donors"]:
+        key = d["donor"][len(study) + 1:]
+        z = np.load(Path(cache) / f"{key}.npz")
+        if not np.array_equal(z["rows"], rows_by_donor[key]):
+            raise SystemExit(f"{key}: the cached cells are not the chosen cells")
+        n = len(z["rows"])
+        blocks.append(sparse.csr_matrix((z["rna_data"], z["rna_indices"], z["rna_indptr"]), shape=(n, len(our_genes))))
+        A.append(z["adt_source_counts"]); tot_all.append(z["n_count_rna_all_genes"]); row_all.append(z["rows"])
+        donors += [d["donor"]] * n; status += [d["status"]] * n; centre += [f"{study}_{d['centre']}"] * n; sample += [d["sample"]] * n
+    X = sparse.vstack(blocks).tocsr()
+    A, rows = np.vstack(A), np.concatenate(row_all)
+    counts = np.full((len(rows), len(ours)), np.nan, np.float32)
+    present = np.zeros(len(ours), bool)
+    for k, r in enumerate(mapping):
+        if r["source"]:
+            counts[:, k] = A[:, [pos[f] for f in r["source"]]].astype(np.float64).mean(axis=1)
+            present[k] = True
+    adt, g = clr(A, counts, present)
+    lab = np.asarray(obs[cfg["cell_type"]]).astype(str)[rows] if cfg.get("cell_type") in obs else np.full(len(rows), "", "U1")
+    arrays = dict(
+        rna_data=X.data.astype(np.float32), rna_indices=X.indices.astype(np.int32), rna_indptr=X.indptr, rna_shape=np.array(X.shape),
+        adt=adt, adt_counts=counts, adt_present=present, adt_clr_scale=g, adt_source_counts=A, adt_source_names=np.array(src_names, dtype="U32"),
+        token_ids=tokens, split=np.full(len(rows), "test", dtype="U8"), donors=np.array(donors, dtype="U48"), sites=np.array(centre, dtype="U48"),
+        status=np.array(status, dtype="U8"), samples=np.array(sample, dtype="U48"), cell_types=lab.astype("U64"),
+        barcodes=np.asarray(obs["_index"]).astype(str)[rows].astype("U64"), source_row=rows.astype(np.int64),
+        n_count_rna=np.concatenate(tot_all).astype(np.int64), rna_size_factor=size_factors(np.asarray(X.sum(axis=1)).ravel()),
+        adt_size_factor=size_factors(np.nan_to_num(counts[:, present]).sum(axis=1)), adt_names=np.array(ours, dtype="U64"), rna_names=our_genes.astype("U32"))
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    tmp = out_dir / "cite_arrays.tmp.npz"
+    (np.savez_compressed if compress else np.savez)(tmp, **arrays)
+    tmp.replace(out_dir / "cite_arrays.npz")
+    meta = {"dataset": cfg["name"], "external": True, "role": "final (round1_coverage_20261116, gate 5): read once", "n_cells": int(len(rows)),
+            "n_rna_mapped": int(len(our_genes)), "n_adt": len(ours), "n_adt_present": int(present.sum()), "n_train": 0, "n_val": 0, "n_test": int(len(rows)),
+            "test_sites": sorted(set(centre)), "split_definition": "every cell is evaluation-only ('test'); nothing may be fit on it",
+            "gene_universe": "train", "cell_selection": f"{N_CELLS} cells per donor from the donor's first sample, without labels, seed {SEED}; "
+            f"{len(selection['donors'])} donors chosen by scripts/final_study.py", "rna_values": "raw integer UMI counts (float32)",
+            "adt_values": f"per-cell CLR log1p(c/g_i), g_i over all {len(src_names)} measured protein features; NaN = not measured", "genes": gene_info}
+    (out_dir / "meta.json").write_text(json.dumps(meta, indent=2))
+    return {"cells": int(len(rows)), "genes": int(X.shape[1]), "stored_counts": int(X.nnz), "proteins_measured": int(present.sum()),
+            "protein_features": int(len(src_names)), "donors": len(selection["donors"])}
+
+
 def main(argv=None):
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -233,7 +393,46 @@ def main(argv=None):
     q.add_argument("--pbmc-pack", type=Path, required=True)
     q.add_argument("--out", type=Path, required=True)
     q.add_argument("--rows-out", type=Path, help="the chosen rows of the cell table, by donor (npz), for the pack stage")
+    q = sub.add_parser("pack")
+    q.add_argument("h5ad", type=Path)
+    q.add_argument("--study", default="stephenson2021", choices=sorted(STUDIES))
+    q.add_argument("--selection", type=Path, required=True)
+    q.add_argument("--rows", type=Path, required=True, help="the npz `select --rows-out` wrote")
+    q.add_argument("--train-pack", type=Path, required=True)
+    q.add_argument("--reference", type=Path, required=True, help="feature table of the 10x GRCh38-3.0.0 reference (tsv.gz: Ensembl id, symbol)")
+    q.add_argument("--cache", type=Path, required=True)
+    q.add_argument("--out", type=Path, required=True)
+    q.add_argument("--seconds", type=float, default=0, help="stop reading donors after this long; run again to go on")
+    q.add_argument("--no-compress", action="store_true")
     a = p.parse_args(argv)
+    if a.cmd == "pack":
+        import time
+        import h5py
+        t0 = time.time()
+        cfg = STUDIES[a.study]
+        sel = json.loads(a.selection.read_text())
+        rows = dict(np.load(a.rows))
+        if rows_digest(rows) != sel["cells"]["sha256_of_rows"]:
+            raise SystemExit("the rows file is not that of the selection")
+        with h5py.File(a.h5ad, "r") as f:
+            obs, var = table(f, "obs"), table(f, "var")
+        with np.load(a.train_pack / "cite_arrays.npz", allow_pickle=False) as z:
+            our_genes = [str(x) for x in z["rna_names"]]
+        col, gene_info = gene_columns(var, cfg, a.reference, our_genes)
+        ft = np.asarray(var[cfg["feature_type"]]).astype(str)
+        sel["n_genes_out"], sel["gene_features"] = len(our_genes), np.flatnonzero(ft == cfg["gene_type"])
+        prot_idx = np.flatnonzero(ft == cfg["protein_type"])
+        a.cache.mkdir(parents=True, exist_ok=True)
+        left = [d for d in sorted(rows) if not (a.cache / f"{d}.npz").exists()]
+        for d in left:
+            if a.seconds and time.time() - t0 > a.seconds:
+                print(f"{len(left) - left.index(d)} donors left; run again")
+                return 75
+            pack_donor(a.h5ad, a.study, sel, rows[d], d, col, prot_idx, a.cache)
+            print(f"{d}: read ({time.time() - t0:.0f} s)", flush=True)
+        info = assemble(a.study, sel, rows, obs, var, a.train_pack, a.cache, a.out, gene_info, compress=not a.no_compress)
+        print(json.dumps({**info, "genes_info": gene_info}, indent=1))
+        return 0
     if a.cmd == "inspect":
         out, obs, var = inspect(a.h5ad)
         text = json.dumps(out, indent=1)

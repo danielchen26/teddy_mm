@@ -161,3 +161,75 @@ def test_proteins_are_matched_by_name():
             final_study.protein_mapping(ours, ["CD3", "CD4"], "stephenson2021")
     finally:
         del final_study.ALIASES["stephenson2021"]["TCR"]
+
+
+def test_the_pack_holds_the_counts_of_the_chosen_cells(tmp_path):
+    h5py = pytest.importorskip("h5py")
+    import gzip
+    from scipy import sparse
+    g = np.random.default_rng(3)
+    study, cfg = "stephenson2021", final_study.STUDIES["stephenson2021"]
+    n, n_gene, n_prot = 5000, 30, 6
+    symbols = [f"G{i}" for i in range(n_gene)]
+    symbols[7] = symbols[3] = "DUP"                                # a repeated symbol: anndata names the second DUP-1
+    in_file = final_study.make_unique(symbols)
+    assert in_file[3] == "DUP" and in_file[7] == "DUP-1"
+    feats = in_file + ["AB_CD3", "AB_CD4", "AB_CD19", "AB_Isotype", "AB_TCR_ab", "AB_CD8"]
+    C = sparse.random(n, n_gene + n_prot, density=0.3, random_state=4, format="csr", data_rvs=lambda k: g.integers(1, 9, k)).astype(np.float32)
+    donors = np.repeat(["D1", "D2", "D3", "D4"], n // 4)
+    order = g.permutation(n)
+    obs = {"patient_id": donors[order], "sample_id": np.char.add(donors[order], "_s1"), "Status": np.where(np.isin(donors[order], ["D1", "D2"]), "Healthy", "Covid"),
+           "Site": np.full(n, "A"), "initial_clustering": g.choice(["T", "B"], n)}
+    path = tmp_path / "study.h5ad"
+    with h5py.File(path, "w") as f:
+        f.create_dataset("X", data=np.zeros((2, 2)))
+        L = f.create_group("layers").create_group("raw")
+        L.attrs["encoding-type"] = "csr_matrix"; L.attrs["shape"] = C.shape
+        L.create_dataset("data", data=C.data); L.create_dataset("indices", data=C.indices); L.create_dataset("indptr", data=C.indptr)
+        o = f.create_group("obs"); o.attrs["_index"] = "index"
+        o.create_dataset("index", data=np.array([f"cell{i}" for i in range(n)], dtype="S"))
+        for k, v in obs.items():
+            cats, codes = np.unique(v, return_inverse=True)
+            c = o.create_group(k); c.create_dataset("categories", data=cats.astype("S")); c.create_dataset("codes", data=codes.astype(np.int8))
+        v = f.create_group("var"); v.attrs["_index"] = "index"
+        v.create_dataset("index", data=np.array(feats, dtype="S"))
+        v.create_dataset("feature_types", data=np.array(["Gene Expression"] * n_gene + ["Antibody Capture"] * n_prot, dtype="S"))
+    ref = tmp_path / "features.tsv.gz"
+    with gzip.open(ref, "wt") as f:
+        for i, sname in enumerate(symbols):
+            f.write(f"ENSG{i:04d}\t{sname}\tGene Expression\n")
+    our_genes = ["ENSG0003", "ENSG0007", "ENSG9999", "ENSG0000", "ENSG0029"]          # one gene the study does not have
+    ours = ["CD3", "CD4", "CD11a", "TCR", "CD8"]
+    for d in ("train", "pbmc"):
+        (tmp_path / d).mkdir()
+    np.savez(tmp_path / "train" / "cite_arrays.npz", adt_names=np.array(ours), rna_names=np.array(our_genes), token_ids=np.arange(5))
+    np.savez(tmp_path / "pbmc" / "cite_arrays.npz", adt_present=np.array([True, True, True, True, False]))
+    final_study.ALIASES[study]["TCR"] = ["TCR_ab"]
+    old = final_study.N_PER_GROUP, final_study.N_CELLS
+    final_study.N_PER_GROUP, final_study.N_CELLS = 2, 200
+    try:
+        sel, cells, _, _ = final_study.select(path, study, tmp_path / "train", tmp_path / "pbmc")
+        assert sel["proteins"]["among_the_112"] == ["CD3", "CD4", "TCR"] and sel["proteins"]["of_the_112_not_measured"] == ["CD11a"]
+        assert [d["donor"] for d in sel["donors"]] == [f"{study}_D1", f"{study}_D2", f"{study}_D3", f"{study}_D4"]
+        (tmp_path / "sel.json").write_text(__import__("json").dumps(sel))
+        np.savez(tmp_path / "rows.npz", **cells)
+        rc = final_study.main(["pack", str(path), "--selection", str(tmp_path / "sel.json"), "--rows", str(tmp_path / "rows.npz"), "--train-pack", str(tmp_path / "train"),
+                               "--reference", str(ref), "--cache", str(tmp_path / "cache"), "--out", str(tmp_path / "pack")])
+        assert rc == 0
+    finally:
+        del final_study.ALIASES[study]["TCR"]
+        final_study.N_PER_GROUP, final_study.N_CELLS = old
+    z = np.load(tmp_path / "pack" / "cite_arrays.npz")
+    rows = z["source_row"]
+    assert len(rows) == 800 and list(z["donors"][:200]) == [f"{study}_D1"] * 200 and set(z["status"][:400]) == {"healthy"} and set(z["status"][400:]) == {"patient"}
+    assert np.array_equal(np.concatenate([cells[k] for k in ("D1", "D2", "D3", "D4")]), rows)
+    X = sparse.csr_matrix((z["rna_data"], z["rna_indices"], z["rna_indptr"]), shape=tuple(z["rna_shape"])).toarray()
+    D = C.toarray()
+    assert np.array_equal(X[:, 0], D[rows, 3]) and np.array_equal(X[:, 1], D[rows, 7]) and not X[:, 2].any()
+    assert np.array_equal(X[:, 3], D[rows, 0]) and np.array_equal(X[:, 4], D[rows, 29])
+    P = D[rows, n_gene:]                                                               # CD3 CD4 CD19 Isotype TCR_ab CD8
+    assert np.array_equal(z["adt_source_counts"], P) and list(z["adt_present"]) == [True, True, False, True, True]
+    gm = np.exp(np.log1p(P).mean(axis=1))
+    assert np.allclose(z["adt"][:, 0], np.log1p(P[:, 0] / gm), atol=1e-5) and np.allclose(z["adt"][:, 3], np.log1p(P[:, 4] / gm), atol=1e-5)
+    assert np.isnan(z["adt"][:, 2]).all() and np.array_equal(z["n_count_rna"], D[rows, :n_gene].sum(axis=1))
+    assert list(z["barcodes"][:3]) == [f"cell{r}" for r in rows[:3]] and set(z["split"]) == {"test"}
