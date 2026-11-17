@@ -1,0 +1,50 @@
+{
+ "what": "contrasts computed by scripts/write_readme.py with scope.arms_family; not in read.py or grid_changed.py",
+ "four_minus_one": {
+  "gain": 0.0036464137596485813,
+  "ci": [
+   -0.0033891281942953987,
+   0.010409129215882369
+  ]
+ },
+ "more_cells": {
+  "gain": 0.01796881987510801,
+  "ci": [
+   0.013173530272436196,
+   0.023324075421371947
+  ]
+ },
+ "own_minus_other_batch": {
+  "gain": 0.022432111924938658,
+  "ci": [
+   0.013260185181719938,
+   0.033569605130045296
+  ]
+ },
+ "one_donor_other_batch_by_scored_batch": {
+  "scored donors of batch 1 (fit donor of batch 2)": [
+   -0.020910053469585965,
+   0.006383758360508085
+  ],
+  "scored donors of batch 2 (fit donor of batch 1)": [
+   0.020088939937814132,
+   0.0374604216163652
+  ]
+ },
+ "D6_head_output_minus_readout_of_other_scored_donors": {
+  "as_is": {
+   "gain": 0.06173670277658372,
+   "ci": [
+    0.05472752699042491,
+    0.06906867809994471
+   ]
+  },
+  "coverage": {
+   "gain": 0.00759730834785044,
+   "ci": [
+    0.003167676547148146,
+    0.012807165586062704
+   ]
+  }
+ }
+}
