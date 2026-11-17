@@ -1,0 +1,1497 @@
+{
+ "study": "stephenson2021",
+ "name": "Stephenson et al. 2021, Nat Med 27:904, COVID-19 PBMC CITE-seq (ArrayExpress E-MTAB-10026; haniffa21.processed.h5ad)",
+ "file": "haniffa21.processed.h5ad",
+ "n_cells_in_file": 647366,
+ "n_features_in_file": 24929,
+ "layout": {
+  "X": {
+   "encoding": "csr_matrix",
+   "shape": [
+    647366,
+    24929
+   ],
+   "dtype": "float32",
+   "stored": 968620608
+  },
+  "counts": {
+   "encoding": "csr_matrix",
+   "shape": [
+    647366,
+    24929
+   ],
+   "dtype": "float32",
+   "stored": 965744336
+  }
+ },
+ "criteria": {
+  "open": {
+   "pass": true,
+   "how": "public file of the study's data portal; no access request"
+  },
+  "raw_rna_and_protein_counts_per_cell": {
+   "pass": true,
+   "how": "layers/raw of the file: {'encoding': 'csr_matrix', 'shape': [647366, 24929], 'dtype': 'float32', 'stored': 965744336}; that it holds integers is checked when the pack is written"
+  },
+  "donor_and_disease_label_per_cell": {
+   "pass": true,
+   "how": "obs columns patient_id and Status"
+  },
+  "at_least_20_donors_8_healthy_8_patients": {
+   "pass": true,
+   "healthy": 23,
+   "patients": 90,
+   "other_or_mixed": 17
+  },
+  "at_least_80_of_the_112_proteins": {
+   "pass": true,
+   "n": 95
+  },
+  "never_used_in_this_repository": {
+   "pass": true,
+   "how": "no file, script or result of the repository names it before 17 November 2026"
+  }
+ },
+ "meets_the_criteria": true,
+ "rule": {
+  "per_group": 20,
+  "cells_per_donor": 1000,
+  "seed": 0
+ },
+ "eligible": {
+  "healthy": 22,
+  "patient": 86
+ },
+ "centres": {
+  "healthy": {
+   "Cambridge": 10,
+   "Ncl": 10
+  },
+  "patient": {
+   "Sanger": 6,
+   "Cambridge": 7,
+   "Ncl": 7
+  }
+ },
+ "donors": [
+  {
+   "donor": "stephenson2021_CV0902",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV01_CV0902",
+   "cells_in_sample": 1285,
+   "samples_of_the_donor": 2
+  },
+  {
+   "donor": "stephenson2021_CV0904",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV01_CV0904",
+   "cells_in_sample": 6853,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0911",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV04_CV0911",
+   "cells_in_sample": 1905,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0915",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV08_CV0915",
+   "cells_in_sample": 1940,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0917",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV09_CV0917",
+   "cells_in_sample": 2924,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0926",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV12_CV0926",
+   "cells_in_sample": 2622,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0929",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV05_CV0929",
+   "cells_in_sample": 1466,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0934",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV13_CV0934",
+   "cells_in_sample": 3408,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0939",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV10_CV0939",
+   "cells_in_sample": 1719,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0940",
+   "status": "healthy",
+   "centre": "Cambridge",
+   "sample": "BGCV14_CV0940",
+   "cells_in_sample": 2958,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919177",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919177",
+   "cells_in_sample": 2223,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919179",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919179",
+   "cells_in_sample": 4316,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919226",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919226",
+   "cells_in_sample": 1190,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919227",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919227",
+   "cells_in_sample": 2096,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919282",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919282",
+   "cells_in_sample": 6896,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919283",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919283",
+   "cells_in_sample": 7100,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919332",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919332",
+   "cells_in_sample": 8004,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH8919333",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "MH8919333",
+   "cells_in_sample": 12081,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_newcastle65",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "newcastle65",
+   "cells_in_sample": 5655,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_newcastle74",
+   "status": "healthy",
+   "centre": "Ncl",
+   "sample": "newcastle74",
+   "cells_in_sample": 6932,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_AP10",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP10",
+   "cells_in_sample": 3616,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_AP2",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP2",
+   "cells_in_sample": 4760,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_AP3",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP3",
+   "cells_in_sample": 3101,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_AP5",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP5",
+   "cells_in_sample": 8511,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_AP6",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP6",
+   "cells_in_sample": 14086,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_AP9",
+   "status": "patient",
+   "centre": "Sanger",
+   "sample": "AP9",
+   "cells_in_sample": 3815,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0037",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV06_CV0037",
+   "cells_in_sample": 2576,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0100",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV04_CV0100",
+   "cells_in_sample": 3431,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0134",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV07_CV0134",
+   "cells_in_sample": 1431,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_CV0137",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV07_CV0137",
+   "cells_in_sample": 1552,
+   "samples_of_the_donor": 2
+  },
+  {
+   "donor": "stephenson2021_CV0178",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV06_CV0178",
+   "cells_in_sample": 1155,
+   "samples_of_the_donor": 2
+  },
+  {
+   "donor": "stephenson2021_CV0231",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV10_CV0231",
+   "cells_in_sample": 2089,
+   "samples_of_the_donor": 2
+  },
+  {
+   "donor": "stephenson2021_CV0284",
+   "status": "patient",
+   "centre": "Cambridge",
+   "sample": "BGCV05_CV0284",
+   "cells_in_sample": 1082,
+   "samples_of_the_donor": 2
+  },
+  {
+   "donor": "stephenson2021_MH8919330",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH8919330",
+   "cells_in_sample": 7605,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH9143273",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143273",
+   "cells_in_sample": 7987,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH9143276",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143276",
+   "cells_in_sample": 10207,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH9143321",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143321",
+   "cells_in_sample": 8639,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH9143420",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143420",
+   "cells_in_sample": 7985,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH9143421",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9143421",
+   "cells_in_sample": 8111,
+   "samples_of_the_donor": 1
+  },
+  {
+   "donor": "stephenson2021_MH9179821",
+   "status": "patient",
+   "centre": "Ncl",
+   "sample": "MH9179821",
+   "cells_in_sample": 6149,
+   "samples_of_the_donor": 1
+  }
+ ],
+ "reserve": [
+  "stephenson2021_AP1",
+  "stephenson2021_AP11",
+  "stephenson2021_AP12",
+  "stephenson2021_AP4",
+  "stephenson2021_AP8",
+  "stephenson2021_CV0025",
+  "stephenson2021_CV0050",
+  "stephenson2021_CV0052",
+  "stephenson2021_CV0058",
+  "stephenson2021_CV0059",
+  "stephenson2021_CV0062",
+  "stephenson2021_CV0068",
+  "stephenson2021_CV0073",
+  "stephenson2021_CV0074",
+  "stephenson2021_CV0084",
+  "stephenson2021_CV0094",
+  "stephenson2021_CV0104",
+  "stephenson2021_CV0120",
+  "stephenson2021_CV0128",
+  "stephenson2021_CV0144",
+  "stephenson2021_CV0155",
+  "stephenson2021_CV0160",
+  "stephenson2021_CV0164",
+  "stephenson2021_CV0171",
+  "stephenson2021_CV0176",
+  "stephenson2021_CV0180",
+  "stephenson2021_CV0198",
+  "stephenson2021_CV0200",
+  "stephenson2021_CV0201",
+  "stephenson2021_CV0234",
+  "stephenson2021_CV0257",
+  "stephenson2021_CV0262",
+  "stephenson2021_CV0279",
+  "stephenson2021_CV0326",
+  "stephenson2021_CV0944",
+  "stephenson2021_MH8919176",
+  "stephenson2021_MH8919178",
+  "stephenson2021_MH8919326",
+  "stephenson2021_MH8919327",
+  "stephenson2021_MH8919328",
+  "stephenson2021_MH8919329",
+  "stephenson2021_MH8919331",
+  "stephenson2021_MH9143270",
+  "stephenson2021_MH9143271",
+  "stephenson2021_MH9143272",
+  "stephenson2021_MH9143274",
+  "stephenson2021_MH9143275",
+  "stephenson2021_MH9143277",
+  "stephenson2021_MH9143320",
+  "stephenson2021_MH9143322",
+  "stephenson2021_MH9143323",
+  "stephenson2021_MH9143324",
+  "stephenson2021_MH9143325",
+  "stephenson2021_MH9143326",
+  "stephenson2021_MH9143327",
+  "stephenson2021_MH9143371",
+  "stephenson2021_MH9143422",
+  "stephenson2021_MH9143423",
+  "stephenson2021_MH9143424",
+  "stephenson2021_MH9143425",
+  "stephenson2021_MH9143426",
+  "stephenson2021_MH9143427",
+  "stephenson2021_MH9179822",
+  "stephenson2021_MH9179823",
+  "stephenson2021_MH9179824",
+  "stephenson2021_MH9179825",
+  "stephenson2021_MH9179826",
+  "stephenson2021_newcastle004v2",
+  "stephenson2021_newcastle20",
+  "stephenson2021_newcastle21",
+  "stephenson2021_newcastle21v2",
+  "stephenson2021_newcastle49",
+  "stephenson2021_newcastle59"
+ ],
+ "cells": {
+  "n": 40000,
+  "sha256_of_rows": "0ae3c64abb9cecf2ced0301789f65d3ac942a97ed6c62b0193cabecda363fcfb"
+ },
+ "proteins": {
+  "features_of_the_study": 192,
+  "mapping": [
+   {
+    "ours": "CD86",
+    "source": [
+     "CD86"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD274",
+    "source": [
+     "CD274"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD270",
+    "source": [],
+    "rule": "not measured: the study has LIGHT, a ligand of CD270, not CD270"
+   },
+   {
+    "ours": "CD155",
+    "source": [
+     "PVR"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD112",
+    "source": [
+     "NECTIN2"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD47",
+    "source": [
+     "CD47"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD48",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD40",
+    "source": [
+     "CD40"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD154",
+    "source": [
+     "CD40LG"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD52",
+    "source": [
+     "CD52"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD3",
+    "source": [
+     "CD3"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD8",
+    "source": [
+     "CD8"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD56",
+    "source": [
+     "CD56"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD19",
+    "source": [
+     "CD19"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD33",
+    "source": [
+     "CD33"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD11c",
+    "source": [
+     "ITGAX"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "HLA-A-B-C",
+    "source": [
+     "HLA-ABC"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD45RA",
+    "source": [
+     "CD45RA"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD123",
+    "source": [
+     "CD123"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD7",
+    "source": [
+     "CD7"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD105",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD49f",
+    "source": [
+     "ITGA6"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD194",
+    "source": [
+     "CCR4"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD4",
+    "source": [
+     "CD4"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD44",
+    "source": [
+     "CD44"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD14",
+    "source": [
+     "CD14"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD16",
+    "source": [
+     "CD16"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD25",
+    "source": [
+     "CD25"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD45RO",
+    "source": [
+     "CD45RO"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD279",
+    "source": [
+     "PD1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "TIGIT",
+    "source": [
+     "TIGIT"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD20",
+    "source": [
+     "CD20"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD335",
+    "source": [
+     "NCR1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD31",
+    "source": [
+     "PECAM1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "Podoplanin",
+    "source": [
+     "podoplanin"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD146",
+    "source": [
+     "MCAM"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "IgM",
+    "source": [
+     "IgM"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD5",
+    "source": [
+     "CD5"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD195",
+    "source": [
+     "CCR5"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD32",
+    "source": [
+     "FCGR2A"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD196",
+    "source": [
+     "CCR6"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD185",
+    "source": [
+     "CXCR5"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD103",
+    "source": [
+     "ITGAE"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD69",
+    "source": [
+     "CD69"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD62L",
+    "source": [
+     "CD62L"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD161",
+    "source": [
+     "CD161"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD152",
+    "source": [
+     "CTLA4"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD223",
+    "source": [
+     "LAG3"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "KLRG1",
+    "source": [
+     "KLRG1"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD27",
+    "source": [
+     "CD27"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD107a",
+    "source": [
+     "LAMP1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD95",
+    "source": [
+     "FAS"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD134",
+    "source": [],
+    "rule": "not measured: the study has OX40L, the ligand, not OX40"
+   },
+   {
+    "ours": "HLA-DR",
+    "source": [
+     "HLA-DR"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD1c",
+    "source": [
+     "CD1C"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD11b",
+    "source": [
+     "ITGAM"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD64",
+    "source": [
+     "CD64"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD141",
+    "source": [
+     "CD141"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD1d",
+    "source": [
+     "CD1d"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD314",
+    "source": [
+     "KLRK1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD35",
+    "source": [
+     "CR1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD57",
+    "source": [
+     "B3GAT1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD272",
+    "source": [
+     "BTLA"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD278",
+    "source": [
+     "ICOS"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD58",
+    "source": [
+     "CD58"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD39",
+    "source": [
+     "ENTPD1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CX3CR1",
+    "source": [
+     "CX3CR1"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD24",
+    "source": [
+     "CD24"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD21",
+    "source": [
+     "CD21"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD11a",
+    "source": [
+     "ITGAL"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD79b",
+    "source": [
+     "CD79b"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD244",
+    "source": [
+     "CD244"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD169",
+    "source": [
+     "SIGLEC1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "integrinB7",
+    "source": [
+     "ITGB7"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD268",
+    "source": [
+     "BAFFR"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD42b",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD54",
+    "source": [
+     "ICAM1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD62P",
+    "source": [
+     "SELP"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD119",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "TCR",
+    "source": [
+     "TCR"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD192",
+    "source": [],
+    "rule": "not measured: the study has CCR3 to CCR7, not CCR2"
+   },
+   {
+    "ours": "CD122",
+    "source": [
+     "IL2RB"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "FceRIa",
+    "source": [
+     "FcERIa"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD41",
+    "source": [
+     "ITGA2B"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD137",
+    "source": [
+     "TNFRSF9"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD163",
+    "source": [
+     "CD163"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD83",
+    "source": [
+     "CD83"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD124",
+    "source": [
+     "IL4R"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD13",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD2",
+    "source": [
+     "CD2"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD226",
+    "source": [
+     "CD226"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD29",
+    "source": [
+     "ITGB1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD303",
+    "source": [
+     "CD303"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD49b",
+    "source": [
+     "ITGA2"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD81",
+    "source": [
+     "CD81"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "IgD",
+    "source": [
+     "IgD"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD18",
+    "source": [
+     "ITGB2"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD28",
+    "source": [
+     "CD28"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD38",
+    "source": [
+     "CD38"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD127",
+    "source": [
+     "IL7R"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD45",
+    "source": [
+     "CD45"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD22",
+    "source": [
+     "CD22"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD71",
+    "source": [
+     "CD71"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD26",
+    "source": [
+     "DPP4"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD115",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD63",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD304",
+    "source": [
+     "CD304"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD36",
+    "source": [
+     "CD36"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD172a",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD72",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD158",
+    "source": [
+     "CD158"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD93",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD49a",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD49d",
+    "source": [
+     "ITGA4"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD73",
+    "source": [
+     "NT5E"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD9",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "TCRVa7.2",
+    "source": [
+     "TCR_Va7.2"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "TCRVd2",
+    "source": [],
+    "rule": "not measured: the study has TCR_Vg2 and TCR_Vg9; from the name alone TCR_Vg2 is not TCR V-delta-2, so it is not used"
+   },
+   {
+    "ours": "LOX-1",
+    "source": [
+     "OLR1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD158b",
+    "source": [
+     "CD158b"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD158e1",
+    "source": [
+     "KIR3DL1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD142",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD319",
+    "source": [
+     "SLAMF7"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD352",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD94",
+    "source": [
+     "KLRD1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD162",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD85j",
+    "source": [
+     "LILRB1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD23",
+    "source": [
+     "FCER2"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD328",
+    "source": [
+     "SIGLEC7"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "HLA-E",
+    "source": [],
+    "rule": "not measured"
+   },
+   {
+    "ours": "CD82",
+    "source": [
+     "CD82"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD101",
+    "source": [
+     "CD101"
+    ],
+    "rule": "exact name"
+   },
+   {
+    "ours": "CD88",
+    "source": [
+     "C5AR1"
+    ],
+    "rule": "alias (same target under another name)"
+   },
+   {
+    "ours": "CD224",
+    "source": [
+     "GGT1"
+    ],
+    "rule": "alias (same target under another name)"
+   }
+  ],
+  "measured_of_134": 114,
+  "among_the_112": [
+   "CD86",
+   "CD274",
+   "CD155",
+   "CD112",
+   "CD47",
+   "CD40",
+   "CD154",
+   "CD52",
+   "CD3",
+   "CD8",
+   "CD56",
+   "CD19",
+   "CD11c",
+   "CD45RA",
+   "CD123",
+   "CD194",
+   "CD4",
+   "CD44",
+   "CD14",
+   "CD16",
+   "CD25",
+   "CD45RO",
+   "CD279",
+   "TIGIT",
+   "CD20",
+   "CD335",
+   "CD31",
+   "Podoplanin",
+   "CD146",
+   "IgM",
+   "CD195",
+   "CD196",
+   "CD185",
+   "CD103",
+   "CD69",
+   "CD161",
+   "CD152",
+   "CD223",
+   "CD27",
+   "CD107a",
+   "CD95",
+   "HLA-DR",
+   "CD1c",
+   "CD11b",
+   "CD64",
+   "CD141",
+   "CD1d",
+   "CD314",
+   "CD35",
+   "CD57",
+   "CD272",
+   "CD278",
+   "CD39",
+   "CX3CR1",
+   "CD24",
+   "CD21",
+   "CD79b",
+   "CD244",
+   "CD169",
+   "integrinB7",
+   "CD268",
+   "CD54",
+   "CD62P",
+   "TCR",
+   "CD122",
+   "CD41",
+   "CD137",
+   "CD163",
+   "CD83",
+   "CD124",
+   "CD2",
+   "CD226",
+   "CD29",
+   "CD303",
+   "CD49b",
+   "CD81",
+   "IgD",
+   "CD18",
+   "CD28",
+   "CD38",
+   "CD127",
+   "CD45",
+   "CD22",
+   "CD71",
+   "CD26",
+   "CD304",
+   "CD36",
+   "CD158",
+   "CD49d",
+   "CD73",
+   "TCRVa7.2",
+   "LOX-1",
+   "CD158b",
+   "CD158e1",
+   "CD319"
+  ],
+  "of_the_112_not_measured": [
+   "CD270",
+   "CD48",
+   "CD105",
+   "CD134",
+   "CD42b",
+   "CD119",
+   "CD192",
+   "CD13",
+   "CD115",
+   "CD63",
+   "CD172a",
+   "CD72",
+   "CD93",
+   "CD49a",
+   "CD9",
+   "TCRVd2",
+   "CD142"
+  ]
+ }
+}

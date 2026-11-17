@@ -1,19 +1,114 @@
-# Round 1: a head for donors it has not seen — development (gates 3, 4 and 6) — 16 November 2026
+# Round 1: a head for donors it has not seen — development (16 November 2026) and the test (17 November 2026)
 
-**Exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. The forecasts ([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), [`scripts/grid_changed.py`](scripts/grid_changed.py)) were committed before any fitted head was scored on a PBMC cell. The eight PBMC donors below are the donors the forecast was read on, so **this is development, not the test**. The final study F has not been opened and gate 5 has not been run.
+**One test, read once; everything else is exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. The test (gate 5) comes first below; the development it rests on (gates 3, 4 and 6) follows unchanged.
+
+**The test did not bear the round out.** The gain read in development (+0.053) is not there on the study of the test (−0.013 [−0.022, −0.004]). By the rule written first the outcome is *unresolved*, because one of the three heads of the claim is not admitted; the two seeds that can be read are each *refuted*.
+
+## The test (gate 5), 17 November 2026
+
+Read once, on a study nobody in this repository had looked at: Stephenson et al. 2021, Nat Med 27:904, COVID-19 PBMC CITE-seq (ArrayExpress E-MTAB-10026; haniffa21.processed.h5ad). 40 donors chosen by the rule of gate 0b (20 healthy, 20 patients), 1,000 cells each, 95 proteins. Every step is recorded in [`GATE5.md`](GATE5.md), each part committed before the step it governs; the declaration ([`results/gate5_declaration.json`](results/gate5_declaration.json)) names every input by hash, and [`scripts/read_final.py`](scripts/read_final.py) refuses any other.
+
+![the test](results/final.svg)
+
+*u* is the share of the variation among a donor's cells that the head's output leaves unexplained: 1 minus the mean over the 95 proteins of r² within the donor. A gain is the fall of *u* from the head fitted as registered (`as_is`) with the same seed, on the same cells. No head was fitted on a cell of this study.
+
+### Outcome
+
+- **The gain of development is not there on this study.** With the PBMC cells of the development study in its training, the head's *u* on the 40 donors goes from 0.808 to 0.821: a gain of −0.013 [−0.022, −0.004], below 0; by seed −0.007, −0.022, −0.009. The bound of the rule is 0.034; in development the same arm gained +0.053 [0.044, 0.062] on donors of the study it was fitted on. The head with PBMC cells is the worse of the two in 31 of the 40 donors. In the head's ordinary score, the mean correlation within a donor: 0.341 against 0.329.
+- **`donors_hao_coverage`: unresolved, by the rule written first.** The rule: `coverage` at or above the bound; `function` and `amount` below it (0.034); the outcome over the three seeds together counts only if each seed alone reads the same. Over the three seeds together: not testable (an arm of the rule is not admitted in one seed, below). Each seed alone: refuted, not testable, refuted.
+- **`coverage_not_levels`: unresolved, by the rule written first.** The rule: `coverage` at or above the bound; `labels` below it (0.034); the outcome over the three seeds together counts only if each seed alone reads the same. Over the three seeds together: not testable (an arm of the rule is not admitted in one seed, below). Each seed alone: refuted, not testable, refuted.
+- **Admission: `s1_coverage_all` is not admitted** (gate 3): its validation score falls at the end of training (last 5 epochs 0.729, the 5 before 0.744; the limit is a fall of 0.005). The fall is in the last epoch alone: 0.664 after 0.746 over the five epochs before it ([`results/gate5_fit_histories.json`](results/gate5_fit_histories.json)). The head that is scored is the checkpoint of epoch 39. The rule of admission is applied as written. The other fourteen heads are admitted. A head that is not admitted was not tested, so the three seeds together are not testable and the round's outcome is not stated as refuted.
+- **The guard, stated over every head of the test, does not hold**: on bone marrow, site 4, `s2_labels_all` (a control) scores 0.022 below `as_is` of its seed, against a limit of 0.02. The three `coverage` heads are within it (+0.004, +0.002, −0.014).
+- **In the table of outcomes of [`DESIGN.md`](DESIGN.md)** the rule gives the row *unresolved*. The table wrote that row for intervals that do not decide; here the intervals decide in every seed that can be read, and they read the row *own arm below the bound, development had delivered*: what was learned belongs to the study. The step the table names after *unresolved*, the reserve donors read once, has not been taken: more donors do not change the admission of a head, and opening them is the owner's decision.
+
+### The arms on the final study
+
+| arm | *u* | fall of *u* from `as_is` | by seed | read against 0.034, by seed | forecast | ordinary score |
+|---|---|---|---|---|---|---|
+| `as_is` | 0.808 | | | | | 0.341 |
+| `coverage`: 20,000 PBMC cells of the 8 development donors added | 0.821 | −0.013 [−0.022, −0.004] | −0.007, −0.022, −0.009 | below, below, below | 0.068 to 0.082; from development 0.044 to 0.062 | 0.329 |
+| `amount`: 20,000 fewer bone-marrow cells, nothing added | 0.814 | −0.006 [−0.013, 0.000] | −0.003, −0.014, −0.002 | below, below, below | −0.050 to 0.050 | 0.334 |
+| `function`: a wider head, twice the epochs | 0.805 | +0.003 [−0.007, 0.014] | +0.001, +0.006, +0.002 | below, below, below | −0.004 to 0.001 | 0.344 |
+| `labels`: the PBMC proteins shuffled within the donor | 0.851 | −0.043 [−0.069, −0.024] | −0.032, −0.038, −0.059 | below, below, below | −0.353 to −0.327 | 0.292 |
+
+The head in use has *u* = 0.814 on these cells. Every head leaves about four fifths of the variation unexplained here, against 0.636 for `as_is` on the development study. With 40 donors the intervals over donors are not marked approximate (10 donors or more).
+
+### Healthy donors and patients
+
+| arm | healthy donors | patients | patients minus healthy |
+|---|---|---|---|
+| `coverage` | −0.020 [−0.031, −0.011] | −0.006 [−0.017, 0.005] | +0.014 [0.001, 0.026] |
+| `amount` | −0.007 [−0.013, −0.003] | −0.005 [−0.015, 0.005] | +0.002 [−0.007, 0.011] |
+| `function` | −0.002 [−0.009, 0.006] | +0.008 [−0.005, 0.021] | +0.010 [0.003, 0.020] |
+| `labels` | −0.055 [−0.089, −0.030] | −0.031 [−0.057, −0.009] | +0.024 [−0.005, 0.050] |
+
+Donors are resampled inside each group. This reading was declared and does not change the outcome. Healthy donors and patients differ in more than the disease (centre, age, time of sampling); the difference is not an effect of the disease alone.
+
+### Without the proteins matched under another name
+
+Of the 95 proteins, 49 carry the same name in the study and in the head's panel; the others were matched as the same target under another name (GATE5.md, part 2). On those 49 alone *u* of `as_is` is 0.766, and the gains are: `coverage` −0.013 [−0.023, −0.002], `amount` −0.007 [−0.015, 0.001], `function` +0.003 [−0.010, 0.017], `labels` −0.049 [−0.080, −0.026]. Declared before the reading; not part of the outcome. The reading is the same without the matched names.
+
+### How the forecasts held
+
+1 of 5 measured gains falls inside its forecast.
+
+| hypothesis | arm | forecast | measured | inside |
+|---|---|---|---|---|
+| `donors_hao_coverage` | `coverage` | 0.068 to 0.082 | −0.013 | no |
+| `donors_hao_coverage` | `function` | −0.004 to 0.001 | +0.003 | no |
+| `donors_hao_coverage` | `amount` | −0.050 to 0.050 | −0.006 | yes |
+| `coverage_not_levels` | `coverage` | 0.044 to 0.062 | −0.013 | no |
+| `coverage_not_levels` | `labels` | −0.353 to −0.327 | −0.043 | no |
+
+### The two arms fitted for the test
+
+| head | checkpoint epoch | validation score, last 5 epochs minus the 5 before | own objective | validation donor against `as_is` | bone marrow, site 4, against `as_is` | admitted |
+|---|---|---|---|---|---|---|
+| `s0_coverage_all` | 37 | +0.0071 | 0.077 above `as_is` on its PBMC fit cells | +0.0037 | +0.0039 | yes |
+| `s0_labels_all` | 36 | −0.0013 | — | −0.0034 | +0.0032 | yes |
+| `s1_coverage_all` | 39 | −0.0154 | 0.080 above `as_is` on its PBMC fit cells | −0.0003 | +0.0018 | **no** |
+| `s1_labels_all` | 38 | +0.0077 | — | +0.0010 | +0.0101 | yes |
+| `s2_coverage_all` | 39 | +0.0042 | 0.077 above `as_is` on its PBMC fit cells | −0.0078 | −0.0137 | yes |
+| `s2_labels_all` | 39 | +0.0043 | — | −0.0163 | −0.0216 | yes |
+
+No cell of the final study is in a file a fit reads: the fits read the bone-marrow pack and the pack of the development study, and the reading script checks that neither is a file of the final study.
+
+### Checks made after the reading (post hoc)
+
+- **Is the pack of the final study sound?** For 30 proteins whose coding gene is plain, the correlation within a donor between the protein and the RNA of its own gene ([`results/final_pack_check.json`](results/final_pack_check.json), `scripts/check_final_pack.py`): CD3 0.63, CD8 0.73, CD20 0.74, HLA-DR 0.70, CD19 0.56, CD16 0.63. Rows and names are matched. Over the 26 pairs measured in both studies the mean is 0.38 on the final study and 0.54 on the development study, with the same code: protein and RNA agree less, pair by pair, in the final study.
+- **Is it the matched names?** No: on the proteins with the same name in both panels the gain of `coverage` is the same (above).
+- **Was the fit of the head that is not admitted disturbed?** It finished before any other process ran on the machine; see GATE5.md, part 4.
+
+### What the test does not show
+
+- One study. From the development study to this one the laboratory, the chemistry of the assay (3′ to 5′), the antibody panel, the processing and the disease change together; the test does not say which of them the gain fails to cross.
+- It does not show that added cells cannot help on this study: no cell of this study was added. What cells of the study itself can read is for the grid on the final study, which was not finished when this was written.
+- By the rule the outcome is unresolved, not refuted: one of the three `coverage` heads is not admitted. A further seed is not in the design and was not fitted.
+- 95 of the head's proteins, 46 of them matched under another name of the same target; clones were not compared.
+- 40 donors taken by a rule fixed before the file was opened, from donors with one status, one centre and at least 1,000 cells in their first sample. They are not a random sample of the study; the 73 others stay unopened.
+- Healthy donors against patients is not the effect of the disease: the two groups differ in centre and sampling.
+- TEDDY's pretraining data may have held the RNA of this study (not checked). "Not seen" is a statement about the head, the same for every arm.
+- The gain is in the variation among a donor's cells. A donor's shift in level against other donors is not part of the outcome.
+- The grid on the final study is of one seed, is read after the test and decides nothing.
+
+Departures from what was written before each step are listed in [`GATE5.md`](GATE5.md), parts 3 and 4.
+
+## Development (gates 3, 4 and 6), 16 November 2026
+
+The forecasts ([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), [`scripts/grid_changed.py`](scripts/grid_changed.py)) were committed before any fitted head was scored on a PBMC cell. The eight PBMC donors below are the donors the forecast was read on, so **this part is development, not the test**.
 
 ![development](results/development.svg)
 
 *u* is the share of the variation among a donor's cells that the head's output leaves unexplained: 1 minus the mean over 112 proteins of r² within the donor. Every donor is scored only by heads that were not fitted on it. A gain is the fall of *u* from the head fitted as registered (`as_is`) with the same seed, on the same cells.
 
-## Outcome
+## Outcome of development
 
 - **45 of 45 heads are admitted** (gate 3).
 - **Adding PBMC cells to the head's training lowers *u* on donors it was not fitted on by 0.054 [0.046, 0.062]**, from 0.636 to 0.582; in every seed (0.058, 0.053, 0.052). In the head's ordinary score, the mean correlation within a donor, that is 0.521 to 0.583.
 - **It does so as much when the donor's batch was not in the fit**: 0.053 [0.044, 0.062]; the difference between the two is +0.001 [−0.005, 0.006].
 - **No control does**: 20,000 fewer bone-marrow cells −0.004 [−0.009, −0.001]; a wider head trained twice as long −0.001 [−0.009, 0.005]; the PBMC proteins shuffled within the donor −0.341 [−0.353, −0.327].
 - **The head's own task is not paid for it**: on bone marrow, site 4, the score of the heads with PBMC cells changes by +0.0005 on average; every head of the round stays within the guard of 0.02.
-- **The go rule of gate 4 holds**: `coverage` is admitted in every seed (yes); its gain with the batch not seen has its interval above 0 (yes); the guard holds (yes). Gate 5, the one test on a study nobody has looked at, may be run once F is prepared and the owner of the repository approves opening it.
+- **The go rule of gate 4 holds**: `coverage` is admitted in every seed (yes); its gain with the batch not seen has its interval above 0 (yes); the guard holds (yes). Gate 5 was run on that basis on 17 November (above).
 
 With eight donors every interval here is approximate.
 
@@ -132,7 +227,7 @@ Means over the three seeds. The fall is positive in every donor.
 - The design asks that all arms of a seed are fitted on one machine. Every head records the same device, thread count and library version. Whether the hardware under it stayed the same across the two restarts is not known.
 - Nothing in `scripts/train_arm.py`, `scripts/plan.py` or `scripts/run_all.py` changed after the first fit started.
 
-## What this does not show
+## What development does not show
 
 - It is not the test. The eight donors are the donors the forecast was read on, and the rule is decided on F only.
 - Eight donors of one study, all healthy, two batches. Nothing here is about disease, another laboratory or another assay.
@@ -144,7 +239,7 @@ Means over the three seeds. The fall is positive in every donor.
 
 ## Next
 
-Gate 5, once: the final study is prepared (criteria checked without reading a protein value, donors listed, cells embedded), the recipe is frozen by a commit, `coverage` and `labels` are refitted on all eight donors, the second hypothesis and the sealed declaration are written, and then the heads are run on F. Opening F needs the owner's approval.
+The test has been read and is not read again. A next round is not designed here. For what the admitted seeds read, the design names two candidates: a second study in the fit, or scales of the loss that are specific to a study. For the outcome the rule states, it names the reserve donors, read once; that is left to the owner of the repository (the 73 donors that were not drawn stay unopened). The grid on the final study (step 6 of gate 5) was running when this was written; its reading is added when it ends.
 
 ## Files
 
@@ -154,4 +249,11 @@ Gate 5, once: the final study is prepared (criteria checked without reading a pr
 - [`scripts/read.py`](scripts/read.py) → [`results/development.json`](results/development.json) (every head, donor and seed) and [`results/ledger.jsonl`](results/ledger.jsonl) (one intervention event per head)
 - [`scripts/grid_changed.py`](scripts/grid_changed.py) → [`results/what_is_left.json`](results/what_is_left.json) and `results/grid_changed/<run>/`
 - [`scripts/write_readme.py`](scripts/write_readme.py): this file, the figure and [`results/readme_contrasts.json`](results/readme_contrasts.json)
-- The heads' weights are not in the repository (42 files of 5.6 MB and three of 15 MB).
+- [`GATE5.md`](GATE5.md): the record of gate 5, written in parts, each committed before the step it governs
+- [`scripts/final_study.py`](scripts/final_study.py) → [`results/final_selection.json`](results/final_selection.json): the criteria, the donors, the cells and the pack of the final study
+- [`scripts/declare_final.py`](scripts/declare_final.py) → [`results/gate5_declaration.json`](results/gate5_declaration.json) and [`results/ledger_final.jsonl`](results/ledger_final.jsonl)
+- [`scripts/read_final.py`](scripts/read_final.py) → [`results/final.json`](results/final.json) (every head, donor and seed)
+- [`scripts/grid_final.py`](scripts/grid_final.py) → [`results/what_is_left_final.json`](results/what_is_left_final.json) and `results/grid_final/<run>/`
+- [`scripts/write_final.py`](scripts/write_final.py): the part of this file about the test and its figure
+- [`results/gate5_heads.json`](results/gate5_heads.json): the sha256 of the heads of development that the test reuses
+- The heads' weights are not in the repository (48 files of 5.6 MB and three of 15 MB).

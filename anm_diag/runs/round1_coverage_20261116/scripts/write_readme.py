@@ -24,6 +24,7 @@ import numpy as np
 import common
 import grid_changed
 import plan
+import write_final
 from anm_diag import scope
 
 RUN = Path(__file__).resolve().parents[1]
@@ -256,17 +257,31 @@ def main():
     d1, d2, d4, d5 = D["D1_batch_seen"], D["D2_batch_not_seen"], D["D4_levels_or_relation"], D["D5_cost"]
     go = D["go_to_gate_5"]
     n_adm = sum(t["gate3"]["admitted"] for t in HEADS.values())
-    a("# Round 1: a head for donors it has not seen — development (gates 3, 4 and 6) — 16 November 2026\n")
-    a("**Exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. The forecasts "
-      "([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), "
-      "[`scripts/grid_changed.py`](scripts/grid_changed.py)) were committed before any fitted head was scored on a PBMC cell. "
-      "The eight PBMC donors below are the donors the forecast was read on, so **this is development, not the test**. "
-      "The final study F has not been opened and gate 5 has not been run.\n")
+    fin = write_final.load() if write_final.have() else None
+    if fin:
+        write_final.figure(RES / "final.svg", fin[0], fin[1], fin[3])
+        a("# Round 1: a head for donors it has not seen — development (16 November 2026) and the test (17 November 2026)\n")
+        a("**One test, read once; everything else is exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. "
+          "The test (gate 5) comes first below; the development it rests on (gates 3, 4 and 6) follows unchanged.\n")
+        a(write_final.headline(fin[0], fin[3]) + "\n")
+        L.extend(write_final.lines(*fin))
+        a("## Development (gates 3, 4 and 6), 16 November 2026\n")
+        a("The forecasts ([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), "
+          "[`scripts/grid_changed.py`](scripts/grid_changed.py)) were committed before any fitted head was scored on a PBMC cell. "
+          "The eight PBMC donors below are the donors the forecast was read on, so **this part is development, not the test**.\n")
+    else:
+        a("# Round 1: a head for donors it has not seen — development (gates 3, 4 and 6) — 16 November 2026\n")
+    if not fin:
+        a("**Exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. The forecasts "
+          "([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), "
+          "[`scripts/grid_changed.py`](scripts/grid_changed.py)) were committed before any fitted head was scored on a PBMC cell. "
+          "The eight PBMC donors below are the donors the forecast was read on, so **this is development, not the test**. "
+          "The final study F has not been opened and gate 5 has not been run.\n")
     a("![development](results/development.svg)\n")
     a(f"*u* is the share of the variation among a donor's cells that the head's output leaves unexplained: 1 minus the mean over "
       f"{D['proteins']} proteins of r² within the donor. Every donor is scored only by heads that were not fitted on it. "
       "A gain is the fall of *u* from the head fitted as registered (`as_is`) with the same seed, on the same cells.\n")
-    a("## Outcome\n")
+    a("## Outcome of development\n" if fin else "## Outcome\n")
     a(f"- **{n_adm} of {len(HEADS)} heads are admitted** (gate 3).")
     a(f"- **Adding PBMC cells to the head's training lowers *u* on donors it was not fitted on by {f(cs['gain'])} {iv(cs['ci'])}**, "
       f"from {f(D['u']['as_is']['mean'])} to {f(D['u']['coverage_seen']['mean'])}; in every seed "
@@ -282,7 +297,8 @@ def main():
     cond = [("`coverage` is admitted in every seed", go["coverage_admitted_in_every_seed"]), ("its gain with the batch not seen has its interval above 0",
             go["gain_with_batch_not_seen_above_0"]), ("the guard holds", go["guard_holds"])]
     a(f"- **The go rule of gate 4 {'holds' if go['go'] else 'does not hold'}**: " + "; ".join(f"{t} ({'yes' if ok else 'no'})" for t, ok in cond) + ". "
-      "Gate 5, the one test on a study nobody has looked at, may be run once F is prepared and the owner of the repository approves opening it.\n")
+      + ("Gate 5 was run on that basis on 17 November (above).\n" if fin else
+         "Gate 5, the one test on a study nobody has looked at, may be run once F is prepared and the owner of the repository approves opening it.\n"))
     a("With eight donors every interval here is approximate.\n")
     a("## The arms\n")
     a(f"| arm | PBMC cells in the fit | *u* | fall of *u* from `as_is` | by seed | ordinary score | against the rule's bound {f(BOUND)} |")
@@ -435,7 +451,7 @@ def main():
     a("- The design asks that all arms of a seed are fitted on one machine. Every head records the same device, thread count and library version. "
       "Whether the hardware under it stayed the same across the two restarts is not known.")
     a("- Nothing in `scripts/train_arm.py`, `scripts/plan.py` or `scripts/run_all.py` changed after the first fit started.\n")
-    a("## What this does not show\n")
+    a("## What development does not show\n" if fin else "## What this does not show\n")
     for s in ("It is not the test. The eight donors are the donors the forecast was read on, and the rule is decided on F only.",
               "Eight donors of one study, all healthy, two batches. Nothing here is about disease, another laboratory or another assay.",
               "TEDDY's pretraining data probably held the RNA of this study. \"Not seen\" is a statement about the head, the same for every arm.",
@@ -446,9 +462,16 @@ def main():
         a(f"- {s}")
     a("")
     a("## Next\n")
-    a("Gate 5, once: the final study is prepared (criteria checked without reading a protein value, donors listed, cells embedded), the recipe is frozen by a commit, "
-      "`coverage` and `labels` are refitted on all eight donors, the second hypothesis and the sealed declaration are written, and then the heads are run on F. "
-      "Opening F needs the owner's approval.\n")
+    if fin:
+        a("The test has been read and is not read again. A next round is not designed here. For what the admitted seeds read, the design names two candidates: a second study "
+          "in the fit, or scales of the loss that are specific to a study. For the outcome the rule states, it names the reserve donors, read once; that is left to the owner "
+          f"of the repository (the {len(fin[2].get('reserve', []))} donors that were not drawn stay unopened). "
+          + ("What the grid on the final study leaves open is under \"What is left on the final study\" above.\n" if fin[4] else
+             "The grid on the final study (step 6 of gate 5) was running when this was written; its reading is added when it ends.\n"))
+    else:
+        a("Gate 5, once: the final study is prepared (criteria checked without reading a protein value, donors listed, cells embedded), the recipe is frozen by a commit, "
+          "`coverage` and `labels` are refitted on all eight donors, the second hypothesis and the sealed declaration are written, and then the heads are run on F. "
+          "Opening F needs the owner's approval.\n")
     a("## Files\n")
     a("- [`DESIGN.md`](DESIGN.md)")
     a("- [`scripts/plan.py`](scripts/plan.py), [`scripts/train_arm.py`](scripts/train_arm.py), [`scripts/run_all.py`](scripts/run_all.py): the heads and their fits")
@@ -457,7 +480,15 @@ def main():
       "[`results/ledger.jsonl`](results/ledger.jsonl) (one intervention event per head)")
     a("- [`scripts/grid_changed.py`](scripts/grid_changed.py) → [`results/what_is_left.json`](results/what_is_left.json) and `results/grid_changed/<run>/`")
     a("- [`scripts/write_readme.py`](scripts/write_readme.py): this file, the figure and [`results/readme_contrasts.json`](results/readme_contrasts.json)")
-    a("- The heads' weights are not in the repository (42 files of 5.6 MB and three of 15 MB).")
+    if fin:
+        a("- [`GATE5.md`](GATE5.md): the record of gate 5, written in parts, each committed before the step it governs")
+        a("- [`scripts/final_study.py`](scripts/final_study.py) → [`results/final_selection.json`](results/final_selection.json): the criteria, the donors, the cells and the pack of the final study")
+        a("- [`scripts/declare_final.py`](scripts/declare_final.py) → [`results/gate5_declaration.json`](results/gate5_declaration.json) and [`results/ledger_final.jsonl`](results/ledger_final.jsonl)")
+        a("- [`scripts/read_final.py`](scripts/read_final.py) → [`results/final.json`](results/final.json) (every head, donor and seed)")
+        a("- [`scripts/grid_final.py`](scripts/grid_final.py) → [`results/what_is_left_final.json`](results/what_is_left_final.json) and `results/grid_final/<run>/`")
+        a("- [`scripts/write_final.py`](scripts/write_final.py): the part of this file about the test and its figure")
+        a("- [`results/gate5_heads.json`](results/gate5_heads.json): the sha256 of the heads of development that the test reuses")
+    a(f"- The heads' weights are not in the repository ({48 if fin else 42} files of 5.6 MB and three of 15 MB).")
     (RUN / "README.md").write_text("\n".join(L) + "\n")
     print("wrote README.md and the figure; D6", "included" if LEFT else "not yet there")
     (RES / "readme_contrasts.json").write_text(json.dumps({"what": "contrasts computed by scripts/write_readme.py with scope.arms_family; not in read.py or grid_changed.py",
