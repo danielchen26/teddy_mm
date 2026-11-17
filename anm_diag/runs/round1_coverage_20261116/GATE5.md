@@ -55,3 +55,18 @@ no more than 0.02 below `as_is` of the seed. An arm that fails was not tested.
 **Order.** (1) The new fits. (2) The final study is checked against the criteria of gate 0b from its cell and feature
 tables only, its donors and cells are chosen, the pack is written and the cells are embedded (part 2). (3) The second
 hypothesis and the declaration with the hashes of every input (part 3). (4) The heads are run on F. (5) The grid on F.
+
+## Part 1b. The rule of gate 0b as it is applied, and the reading script
+
+Committed 17 November 2026, while the file of the first candidate (Stephenson et al. 2021) was being downloaded and
+before it was opened.
+
+- [`scripts/final_study.py`](scripts/final_study.py) states the rule of gate 0b in the detail the design left open:
+  which sample of a donor, when a donor is eligible, the order in which donors are taken over centres, how cells are
+  drawn, and how a protein of the head is matched to a feature of the study. Its first stage reads the cell table and
+  the feature table of the file and nothing else.
+- [`scripts/read_final.py`](scripts/read_final.py) is the script that reads F, with its tests
+  (`tests/test_round1_final.py`). It refuses to run unless the declaration of part 3 is there and every input matches
+  it by hash.
+- The cells are embedded with `scripts/03_embed_rna.py` and the settings of the PBMC study's manifest (official
+  preprocessing, sequence length 2,048, length buckets, batch 32, fp16, gene-mean pooling).
