@@ -171,3 +171,55 @@ checked against the stored projection before it is used.
 **What writes the README.** `scripts/write_final.py` (the section about the test and its figure) is committed here,
 before the reading. It reads `results/final.json` and decides nothing.
 
+## Part 4. After the reading
+
+Written 17 November 2026, after `results/final.json` existed. Nothing in parts 1 to 3 is changed.
+
+**The reading.** `scripts/read_final.py` was run once, from the commit of part 3 (`4dbca69`), with the inputs of the
+declaration. It ran without error and wrote [`results/final.json`](results/final.json) and, to
+[`results/ledger_final.jsonl`](results/ledger_final.jsonl), six intervention events (the heads fitted for the test) and
+eight test events (two hypotheses; the three seeds together and each seed). It has not been run again.
+
+**The outcome, as part 1 states it.** Both hypotheses: *unresolved*. Over the three seeds together the rule is not
+testable, because `s1_coverage_all` is not admitted (gate 3: its validation score over the last 5 epochs is 0.015 below
+the 5 before; the limit is 0.005). Seeds 0 and 2, taken alone, read *refuted*: the gain of `coverage` is −0.007 and
+−0.009, with intervals below the bound of 0.0342 and below 0. Over the three seeds the gain is −0.013 [−0.022, −0.004].
+The guard of part 1 is stated over every head of the test and does not hold: `s2_labels_all`, a control, is 0.022 below
+`as_is` of its seed on bone marrow, site 4. The three `coverage` heads are within 0.02. The numbers and their reading
+are in [`README.md`](README.md).
+
+**What was not done after the reading.** No head was fitted again and no further seed was fitted. The 73 donors of the
+reserve were not opened: the design names them as the step after *unresolved*, but the outcome is unresolved for the
+admission of a head, which more donors do not change, and opening them is the owner's decision. No arm, protein or donor
+was added or dropped.
+
+**Checks made after the reading (post hoc).**
+
+- *The pack.* `scripts/check_final_pack.py` → [`results/final_pack_check.json`](results/final_pack_check.json): within a
+  donor, the correlation between a protein and the RNA of its own gene, for 30 proteins of the final study and, with the
+  same code, for the same proteins of the development study. The gene ids were written by hand; the development study
+  is the reference for each pair. The pack is sound (CD3 0.63, CD8 0.73, CD20 0.74); over the 26 pairs in both studies
+  the mean is 0.38 against 0.54.
+- *The matched names.* The reading on the 49 proteins with the same name in both panels was declared in part 2 and is in
+  `results/final.json`; it is the same.
+
+**Departures after part 3.**
+
+1. `scripts/grid_final.py` stopped twice at its own check before it ran. The constant it used for the seed of the RNA
+   decomposition was 0; the seed of `runs/scope_20261116/scripts/build.py` is 20261116. With the seed corrected the
+   decomposition returns the stored view exactly, and the projection of a cell on its components equals the stored view of
+   that cell. Between the two attempts the script was also changed to take the RNA view of the training cells from the
+   same projection as the cells of the final study; with the right seed this is the stored view. No number had been
+   written by the script before it ran to the end.
+2. `scripts/write_final.py` was changed after the reading: the axis ranges of the figure are taken from the data, and
+   the text, which had been written for a gain, was rewritten for what was read (the admission and the guard are stated
+   head by head; the row of the design's table is given both as the rule states it and as the admitted seeds read). No
+   number of `results/final.json` is changed by it.
+3. While `s2_coverage_all` was being fitted, a trial of the grid script on other data was started on the same machine
+   and stopped after two minutes. One epoch of that fit took 135 seconds instead of 19. A fit reads the clock only between
+   epochs, for a time budget that was not reached, and that head is admitted. `s1_coverage_all`, the head that is not admitted, had finished a quarter of
+   an hour before the trial started.
+4. The grid on the final study is of seed 0 only (part 3).
+5. The grid on the final study was still running when this part was committed. After the two stops of item 1 it was
+   stopped a third time, during its first run and before it had written anything, by the time limit of the job runner,
+   and started again. Its reading goes into the README in a later commit, as read after the test.

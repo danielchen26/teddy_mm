@@ -18,7 +18,7 @@ import site_charts as SC  # noqa: E402
 
 RUNS, DOCS, SRC = ROOT / "anm_diag" / "runs", ROOT / "docs", ROOT / "docs" / "_src"
 GH = "https://github.com/danielchen26/teddy_mm"
-UPDATED = ("2026 年 11 月 12 日", "12 November 2026")
+UPDATED = ("2026 年 11 月 17 日", "17 November 2026")
 U = '<span class="m">u</span>'
 DS = [("frangieh2021", "黑色素瘤细胞（IFN-γ）", "Melanoma cells (IFN-γ)", "黑色素瘤", "melanoma"), ("papalexi2021", "THP-1 细胞", "THP-1 cells", "THP-1", "THP-1")]
 GENES = {"frangieh2021": ["IFNGR1", "IFNGR2", "JAK1", "JAK2", "STAT1"], "papalexi2021": ["IFNGR1", "IFNGR2", "JAK2", "STAT1", "IRF1"]}
@@ -58,6 +58,12 @@ OS = J("repair_20261112", "results", "own_shift.json") if HAVE3 else None
 LR = J("loop_reading_20261112", "results", "loop_reading.json")          # the rounds re-read under LOOP_PROTOCOL.md (anm_diag/loop.py)
 CEN = J("loop_reading_20261112", "results", "data_census.json")          # which knockouts change which measured proteins
 SP, S1, S2 = "Z->HEAD_OUT", "Z->HEAD_LAT", "HEAD_LAT->HEAD_OUT"
+R1 = RUNS / "round1_coverage_20261116" / "results"
+DEV = json.load(open(R1 / "development.json"))                           # round 1: the development reading (scripts/read.py)
+FIN = json.load(open(R1 / "final.json")) if (R1 / "final.json").exists() else None      # round 1: the test (scripts/read_final.py)
+FSEL = json.load(open(R1 / "final_selection.json")) if (R1 / "final_selection.json").exists() else None
+WLF = json.load(open(R1 / "what_is_left_final.json")) if (R1 / "what_is_left_final.json").exists() else None      # the grid on the final study, after the test
+WLD = json.load(open(R1 / "readme_contrasts.json"))["D6_head_output_minus_readout_of_other_scored_donors"]
 GRADE = {"absolute": ("ok", "头得到“支持”", "head supported"), "relative": ("ok", "确认没有多丢", "no added loss shown"), "loss no longer resolved": ("un", "丢失不再定得清", "loss no longer resolved"),
          "not closed": ("no", "仍然丢", "still lost"), "not testable": ("un", "无法检验", "not testable")}
 ROUND_ARMS = [("decoder_only", "对照", "control"), ("mlp_only", "第 1 轮", "round 1"), ("mlp_guarded", "第 2 轮", "round 2"), ("joint_s0", "第 3 轮", "round 3")]
@@ -336,6 +342,72 @@ def cost_rows():
 
 
 # ---------------------------------------------------------------- index
+def f3(v, sign=False):
+    s_ = f"{v:+.3f}" if sign else f"{v:.3f}"
+    return s_.replace("-", "−")
+
+
+def ci3(c):
+    return f"[{f3(c[0])}, {f3(c[1])}]"
+
+
+OUTCOME = {"confirmed": ("确认", "confirmed"), "refuted": ("否定", "refuted"), "unresolved": ("未决", "unresolved"), "not testable": ("无法检验", "not testable")}
+
+
+def donors_section(n):
+    """Round 1: PBMC cells added to the head's training, for donors the head has not seen. Development, and the test when it is read."""
+    g, bound = DEV["gains_over_as_is"], DEV["numbers"]["bound_of_the_rule"]
+    rows = [("coverage_seen", "加 2 万个 PBMC 细胞（4 位供体），被打分供体的批次在训练里", "20,000 PBMC cells of 4 donors added; the scored donor's batch in the fit", "coverage"),
+            ("coverage_not_seen", "同上，批次不在训练里", "the same; the batch not in the fit", None),
+            ("amount", "对照：只少 2 万个骨髓细胞", "control: 20,000 fewer bone-marrow cells, nothing added", "amount"),
+            ("function", "对照：更宽、训练更久的头", "control: a wider head trained twice as long", "function"),
+            ("labels", "对照：PBMC 的蛋白在供体内打乱", "control: the PBMC proteins shuffled within the donor", "labels")]
+    head = f'<th>{bi("做法", "Arm")}</th><th>{bi("开发：8 位 PBMC 供体", "Development: 8 PBMC donors")}</th>' + (f'<th>{bi("检验：另一项研究的 " + str(FIN["donors"]) + " 位供体", "Test: " + str(FIN["donors"]) + " donors of another study")}</th>' if FIN else "")
+    body = ""
+    for k, zh, en, fk in rows:
+        fin = ""
+        if FIN:
+            fin = f'<td class="n">{f3(FIN["gains_over_as_is"][fk]["gain"], True)} {ci3(FIN["gains_over_as_is"][fk]["ci"])}</td>' if fk else '<td class="n">—</td>'
+        body += f'<tr><td>{bi(zh, en)}</td><td class="n">{f3(g[k]["gain"], True)} {ci3(g[k]["ci"])}</td>{fin}</tr>'
+    cs = g["coverage_seen"]
+    lead = bi(f"修复只对它见过的那类细胞有效，所以接着问：头没训练过的供体怎么办。审计的读法是“覆盖”：头的训练数据里没有这类细胞。第 1 轮照这个读法改训练：往头的训练里加 PBMC 细胞，配三个对照，7 种做法各 3 个种子，共 45 个头。设计、预测和读数脚本都在读结果之前提交。下表是头没拟合过的供体上 {U} 的下降（越大越好），通过线 {f3(bound)}。",
+              f"A repair works only for the kind of cells it was fitted on, so the next question is what to do for donors the head was not trained on. The audit reads the shortfall as coverage: the head's training data hold no cells of this kind. Round 1 changes the training accordingly: PBMC cells are added to it, against three controls, 7 arms with 3 seeds each, 45 heads. The design, the forecasts and the reading scripts were committed before any result was read. The table gives the fall of {U} on donors the head was not fitted on (higher is better); the pass line is {f3(bound)}.")
+    pts = [bi(f"<b>开发读数（探索性）。</b>加 PBMC 细胞后 {U} 从 {f3(DEV['u']['as_is']['mean'])} 降到 {f3(DEV['u']['coverage_seen']['mean'])}，三个种子一致；三个对照都没有这个下降。45 个头全部通过准入，骨髓第 4 站点的得分没有变（{f3(DEV['D5_cost']['coverage']['site4_change'], True)}）。头自己的输出和“其他供体学的读出”之间的差距从 {f3(WLD['as_is']['gain'])} 缩到 {f3(WLD['coverage']['gain'])}。这 8 位供体就是写预测时用的，所以这不算检验。",
+               f"<b>Development (exploratory).</b> With PBMC cells added, {U} goes from {f3(DEV['u']['as_is']['mean'])} to {f3(DEV['u']['coverage_seen']['mean'])}, in every seed; none of the three controls shows this fall. All 45 heads are admitted and the score on bone marrow, site 4, is unchanged ({f3(DEV['D5_cost']['coverage']['site4_change'], True)}). The gap between the head's own output and a readout learned from the other donors shrinks from {f3(WLD['as_is']['gain'])} to {f3(WLD['coverage']['gain'])}. These 8 donors are the ones the forecast was read on, so this is not the test.")]
+    if FIN:
+        o1, o2 = FIN["outcome"]["donors_hao_coverage"], FIN["outcome"]["coverage_not_levels"]
+        fc, hp, fl = FIN["gains_over_as_is"]["coverage"], FIN["healthy_and_patients"]["coverage"], FIN["gains_over_as_is"]["labels"]
+        assert o1 == o2 == "unresolved" and fc["ci"][1] < 0 and not FIN["admission"]["coverage"]["seed1"], "the text below is written for this outcome"
+        g6 = {n: t["gate6"]["change"] for n, t in FIN["heads"].items()}
+        assert [n for n, t in FIN["heads"].items() if not t["gate6"]["pass"]] == ["s2_labels_all"]
+        seeds_zh, seeds_en = "、".join(f3(q["gain"], True) for q in fc["per_fit"]), ", ".join(f3(q["gain"], True) for q in fc["per_fit"])
+        pts.append(bi(f"<b>检验（只读一次）：这个增益没有带到另一项研究上。</b>换到这个仓库从没用过的一项研究（Stephenson 2021 的 COVID-19 PBMC；{FIN['healthy']} 位健康人和 {FIN['patients']} 位病人，每人 1,000 个细胞，{FIN['proteins']} 个蛋白），加 PBMC 细胞的头比原样的头略差：{U} 从 {f3(FIN['u']['as_is']['mean'])} 升到 {f3(FIN['u']['coverage']['mean'])}，增益 {f3(fc['gain'], True)} {ci3(fc['ci'])}，三个种子 {seeds_zh}。通过线是 0.034。健康人 {f3(hp['healthy']['gain'], True)}，病人 {f3(hp['patients']['gain'], True)}。",
+                      f"<b>The test (read once): the gain does not carry to another study.</b> On a study this repository had never used (the COVID-19 PBMC of Stephenson 2021; {FIN['healthy']} healthy donors and {FIN['patients']} patients, 1,000 cells each, {FIN['proteins']} proteins) the head with PBMC cells added is slightly worse than the head as registered: {U} goes from {f3(FIN['u']['as_is']['mean'])} up to {f3(FIN['u']['coverage']['mean'])}, a gain of {f3(fc['gain'], True)} {ci3(fc['ci'])}; the three seeds give {seeds_en}. The pass line is 0.034. Healthy donors {f3(hp['healthy']['gain'], True)}, patients {f3(hp['patients']['gain'], True)}."))
+        pts.append(bi(f"<b>按事先写的规则，结论是“未决”，不是“否定”。</b>规则要求三个种子合读成立、每个种子单独读也一样。三个“加 PBMC”的头里有一个没过准入（训练最后一轮的验证分数下降），这个头不能读，三个种子合读就不算数；另外两个种子各自都判“否定”。护栏是对检验用到的每个头写的，没有全部守住：一个对照头（打乱蛋白）在骨髓第 4 站点比原样的头低 {f3(-g6['s2_labels_all'])}，界限是 0.02；三个“加 PBMC”的头都在界限内。",
+                      f"<b>By the rule written first the outcome is “unresolved”, not “refuted”.</b> The rule asks the three seeds together and each seed alone to read the same. One of the three heads with PBMC cells is not admitted (its validation score falls in the last epoch of training), so it may not be read and the three seeds together do not count; the other two seeds each read “refuted”. The guard is written over every head of the test and does not hold for all: one control head (proteins shuffled) scores {f3(-g6['s2_labels_all'])} below the head as registered on bone marrow, site 4, against a limit of 0.02; the three heads with PBMC cells are within it."))
+        left = ""
+        if WLF:
+            ce, lf = WLF["variation"]["ceiling_as_is"]["all"], WLF["variation"]["left_after_the_change"]["all"]
+            left = (f"在这项研究上重读网格（一个种子，检验之后）：用它自己的其他供体学的读出，比原样的头多读出 {f3(ce['gain'])} {ci3(ce['ci'])}。差距的样子和开发研究上一样，是同一项研究的细胞读得出、头读不出。",
+                    f" The grid read again on this study (one seed, after the test): a readout learned from its own other donors reads {f3(ce['gain'])} {ci3(ce['ci'])} more than the head as registered. The shortfall has the same shape as on the development study: cells of the same study read what the head does not.")
+        pts.append(bi(f"<b>怎么读。</b>加进去的细胞帮到了同一项研究里的新供体，没有帮到另一项研究的供体。开发时把差距读成“覆盖”；补上的是那一项研究（它的测序方法、抗体、处理流程），不是“PBMC 这类细胞”。打乱蛋白的对照是同一个样子：在开发研究上让 {U} 变差 {f3(-g['labels']['gain'])}，在这里只有 {f3(-fl['gain'])}。" + (left[0] if left else ""),
+                      f"<b>How to read it.</b> The cells that were added helped new donors of the same study and did not help donors of another study. Development read the shortfall as coverage; what was covered is that one study (its assay, antibodies and processing), not PBMC as a kind of cell. The control with shuffled proteins shows the same: it costs {f3(-g['labels']['gain'])} of {U} on the development study and {f3(-fl['gain'])} here." + (left[1] if left else "")))
+        pts.append(bi(f"<b>它没有说明什么。</b>只有一项检验研究，实验室、测序方法（3′ 换成 5′）、抗体、处理流程和疾病是一起换的，分不出是哪一样；没有往训练里加这项研究自己的细胞；两项研究的蛋白名字不同，112 个里对上 {FIN['proteins']} 个，其中 {FIN['proteins'] - FIN['exact_name_proteins_only']['proteins']} 个是按同一靶点的别名对上的（只用同名的 {FIN['exact_name_proteins_only']['proteins']} 个，结果一样）；留存的 {len(FSEL['reserve'])} 位供体没有打开；TEDDY 的预训练数据里可能有这些细胞的 RNA。",
+                      f"<b>What it does not show.</b> There is one test study, in which the laboratory, the assay (3′ to 5′), the antibodies, the processing and the disease change together, so it cannot say which of them matters. No cell of this study was added to the training. The two studies name proteins differently: {FIN['proteins']} of the 112 are matched, {FIN['proteins'] - FIN['exact_name_proteins_only']['proteins']} of them as the same target under another name (on the {FIN['exact_name_proteins_only']['proteins']} with the same name the reading is the same). The {len(FSEL['reserve'])} reserve donors are unopened. TEDDY's pretraining data may hold the RNA of these cells."))
+    else:
+        pts.append(bi("<b>检验还没有做。</b>它要在这个仓库没用过的一项研究上只读一次。", "<b>The test has not been run.</b> It is read once, on a study this repository has not used."))
+    note = ('<p class="src col">' + bi("方括号里是区间：供体重抽样 1,000 次，种子在每种做法内重抽。检验那一列里，“加 PBMC”和“打乱蛋白”的头是用全部 8 位 PBMC 供体的 2 万个细胞重训的，另外两个对照用开发时的头。",
+                                       "Square brackets hold intervals: 1,000 resamples of donors, seeds resampled inside each arm. In the test column the heads of “PBMC added” and “proteins shuffled” were refitted on 20,000 cells of all 8 PBMC donors; the other two controls are the heads of development.") + '</p>') if FIN else ""
+    return f"""<section id="donors">
+  {sh(n, "第二个问题：头没见过的供体", "A second problem: donors the head has not seen")}
+  <p class="col">{lead}</p>
+  <div class="tw"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>
+  {note}
+  <ul class="pts">{"".join(f"<li>{x}</li>" for x in pts)}</ul>
+  <a class="next" href="{GH}/tree/main/anm_diag/runs/round1_coverage_20261116"><span class="t">{bi("这一轮的设计、每一步的记录和全部数字", "The design of the round, the record of every step and every number")}</span><span class="go" aria-hidden="true">→</span></a>
+</section>"""
+
+
 def index():
     m, t = "frangieh2021", "papalexi2021"
     z, lat, out = sealed(m, "PDL1", "Z"), sealed(m, "PDL1", "HEAD_LAT"), sealed(m, "PDL1", "HEAD_OUT")
@@ -363,6 +435,9 @@ def index():
         ("split_20261111", "exposure_20261111", ("探索性", "exploratory"), ("合并的源按靶基因和批次拆开，源写成类型化事件；对 IRF1 的一个解释做了直接检验，按规则没有回答", "the pooled source separated by target gene and batch, with the source written as typed events; a direct test of one explanation for IRF1, not answered by its rule")),
         ("loop_20261112", "loop_guard_20261112", ("探索性，规则先提交", "exploratory, rule committed first"), ("闭环第 1、2 轮：修 MLP 有效，修解码器无效；按住骨髓输出后在界限内", "rounds 1 and 2 of the loop: repairing the MLP works and the decoder does not; within the guard once the bone-marrow outputs are held")),
         ("repair_20261112", None, ("探索性，规则先提交", "exploratory, rule committed first"), ("闭环第 3 轮：一个头同时修两种细胞和全部实测蛋白，另在两次重新划分上重复；按它自己的规则没有通过", "round 3 of the loop: one head repaired for both cell types and every measured protein, repeated on two fresh splits; it did not pass its own rule")),
+        ("generalization_20261112", "scope_20261116", ("探索性，设计先提交", "exploratory, design committed first"), ("头对没训练过的供体交付了多少；敲除和供体用同一套网格重读，差的那部分读成“覆盖”", "what the head delivers for donors it was not trained on; knockouts and donors re-read with one grid, the shortfall read as coverage")),
+        ("round1_coverage_20261116", None, (("开发：探索性；检验：只读一次" if FIN else "开发：探索性；检验还没做"), ("development: exploratory; the test: read once" if FIN else "development: exploratory; the test is not run")), (("闭环第 1 轮：往头的训练里加 PBMC 细胞，带三个对照，45 个头，另为检验训 6 个；同一项研究的新供体上有增益，换一项研究没有，按规则检验未决" if FIN else "闭环第 1 轮：往头的训练里加 PBMC 细胞，带三个对照，45 个头"),
+          ("round 1 of the loop for donors: PBMC cells added to the head's training, with three controls; 45 heads and 6 more for the test; a gain on new donors of the same study, none on another study, and the test unresolved by its rule" if FIN else "round 1 of the loop for donors: PBMC cells added to the head's training, with three controls, 45 heads"))),
         ("loop_reading_20261112", None, ("事后重读，探索性", "post hoc re-reading, exploratory"), ("三轮按闭环协议重读，不做新的拟合和审计：两种修法的对比、修过的头的等级、台账，以及数据清查", "the three rounds re-read under the loop protocol, with no new fit or audit: the two repairs compared, the grade of each changed head, the ledger, and a census of the data")),
     ]
     repo_rows = "".join(f'<tr><td>{gh("anm_diag/runs/" + a, a)}' + (f'<br>{gh("anm_diag/runs/" + b, b)}' if b else "") + f'</td><td>{bi(*g)}</td><td>{bi(*w)}</td></tr>' for a, b, g, w in repo)
@@ -393,8 +468,10 @@ def index():
   <a class="next" href="anm-loop.html"><span class="t">{bi("两种修法的对比、修过的头、代价和限制", "The two repairs compared, the changed heads, the cost and the limits")}</span><span class="go" aria-hidden="true">→</span></a>
 </section>
 
+{donors_section(3)}
+
 <section id="repo">
-  {sh(3, "仓库里有什么", "What the repository holds")}
+  {sh(4, "仓库里有什么", "What the repository holds")}
   <div class="tw"><table><thead><tr><th>{bi("运行记录", "Run records")}</th><th>{bi("证据等级", "Evidence grade")}</th><th>{bi("内容", "What it is")}</th></tr></thead><tbody>{repo_rows}</tbody></table></div>
   <ul class="pts">
     <li>{bi(f"审计的代码和测试在 {gh('anm_diag')}；写法和全部修正记录在 <a href='{GH}/blob/main/docs/ANM_DIAGNOSIS.md'>诊断全文</a>。闭环怎么做才算数，写在 <a href='{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md'>闭环协议</a> 里，读法的代码是 <span class='mono'>anm_diag/loop.py</span>。", f"The audit's code and tests are in {gh('anm_diag')}; the write-up with every correction is the <a href='{GH}/blob/main/docs/ANM_DIAGNOSIS.md'>full diagnosis</a>. What a loop must do to count is in the <a href='{GH}/blob/main/anm_diag/LOOP_PROTOCOL.md'>loop protocol</a>, and the readings are made by <span class='mono'>anm_diag/loop.py</span>.")}</li>
@@ -403,7 +480,7 @@ def index():
 </section>
 
 <section id="claims">
-  {sh(4, "能说什么，不能说什么", "What can and cannot be claimed")}
+  {sh(5, "能说什么，不能说什么", "What can and cannot be claimed")}
   <ul class="pts">
     <li>{bi("<b>能说（封存的检验）。</b>在 Frangieh 2021 的 IFN-γ 通路敲除上，TEDDY-G 70M 的嵌入保留了解释 PD-L1 蛋白响应所需的信息（容差 0.10 以内）；五个蛋白读出上 TEDDY 没有一环被否定；teddy_mm 的头在嵌入和它的中间层之间丢掉了 PD-L1 的响应。", "<b>Can claim (sealed tests).</b> For the IFN-γ-pathway knockouts of Frangieh 2021, TEDDY-G 70M's embedding keeps the information that explains the PD-L1 protein response, within a 0.10 margin; no TEDDY stage is rejected for any of five protein readouts; the teddy_mm head loses the PD-L1 response between the embedding and its latent layer.")}</li>
     <li>{bi("<b>探索性。</b>把头拆开、把源拆开、类型化事件，以及闭环的各轮和对它们的重读：在留出的基因上，修头的 MLP 去掉头多丢的八到九成，修解码器去掉一成左右；按住骨髓输出后代价在 0.02 以内；THP-1 上修过的头确认没有多丢。", "<b>Exploratory.</b> The head split, the source separated, typed events, the rounds of the loop and their re-reading: on held-out genes, repairing the head's MLP removes 84% and 91% of what the head loses and repairing its decoder removes 5% and 15%; with the bone-marrow outputs held the cost stays within 0.02; on THP-1 the changed heads are shown to add no loss.")}</li>
@@ -412,7 +489,7 @@ def index():
 </section>
 
 <section id="earlier">
-  {sh(5, "这个站点以前的内容", "Earlier work on this site")}
+  {sh(6, "这个站点以前的内容", "Earlier work on this site")}
   <p class="col">{bi("2026 年 10 月的页面问的是另一个问题：把 ANM 当作 TEDDY 之上的决策层，有没有增益。注册的 v3 检验的结论是没有：ANM 的引擎算出的正好是一条声明的规则。那些页面原样存档：", "The pages of October 2026 asked a different question: does ANM add anything as a decision layer on top of TEDDY. The registered v3 tests found that it does not: ANM's engine computes exactly a declared rule. Those pages are kept as they were:")} <a href="v3.html">{bi("注册的决策层检验", "registered decision-layer tests")}</a> · <a href="v3-anm-framework.html">{bi("当时的框架页", "the framework page of that time")}</a> · <a href="v3-anm-loop.html">{bi("决策回路的首次记录", "the first decision-loop record")}</a>.</p>
 </section>"""
     page("index.html", "TEDDY × ANM: where a knockout response is lost, and the loop that tests it",

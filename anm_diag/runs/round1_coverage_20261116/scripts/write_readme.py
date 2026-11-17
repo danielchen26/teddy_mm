@@ -263,6 +263,7 @@ def main():
         a("# Round 1: a head for donors it has not seen — development (16 November 2026) and the test (17 November 2026)\n")
         a("**One test, read once; everything else is exploratory.** The design is [`DESIGN.md`](DESIGN.md), frozen before any script of the round existed. "
           "The test (gate 5) comes first below; the development it rests on (gates 3, 4 and 6) follows unchanged.\n")
+        a(write_final.headline(fin[0], fin[3]) + "\n")
         L.extend(write_final.lines(*fin))
         a("## Development (gates 3, 4 and 6), 16 November 2026\n")
         a("The forecasts ([`results/forecasts.json`](results/forecasts.json)) and the two scripts that read the heads ([`scripts/read.py`](scripts/read.py), "
@@ -280,7 +281,7 @@ def main():
     a(f"*u* is the share of the variation among a donor's cells that the head's output leaves unexplained: 1 minus the mean over "
       f"{D['proteins']} proteins of r² within the donor. Every donor is scored only by heads that were not fitted on it. "
       "A gain is the fall of *u* from the head fitted as registered (`as_is`) with the same seed, on the same cells.\n")
-    a("## Outcome\n")
+    a("## Outcome of development\n" if fin else "## Outcome\n")
     a(f"- **{n_adm} of {len(HEADS)} heads are admitted** (gate 3).")
     a(f"- **Adding PBMC cells to the head's training lowers *u* on donors it was not fitted on by {f(cs['gain'])} {iv(cs['ci'])}**, "
       f"from {f(D['u']['as_is']['mean'])} to {f(D['u']['coverage_seen']['mean'])}; in every seed "
@@ -462,8 +463,11 @@ def main():
     a("")
     a("## Next\n")
     if fin:
-        a("The round is closed: its one test has been read and is not read again. A next round is not designed here. What the grid on the final study leaves open "
-          f"is under \"What is left on the final study\" above; the {len(fin[2].get('reserve', []))} donors of the final study that were not drawn stay unopened.\n")
+        a("The test has been read and is not read again. A next round is not designed here. For what the admitted seeds read, the design names two candidates: a second study "
+          "in the fit, or scales of the loss that are specific to a study. For the outcome the rule states, it names the reserve donors, read once; that is left to the owner "
+          f"of the repository (the {len(fin[2].get('reserve', []))} donors that were not drawn stay unopened). "
+          + ("What the grid on the final study leaves open is under \"What is left on the final study\" above.\n" if fin[4] else
+             "The grid on the final study (step 6 of gate 5) was running when this was written; its reading is added when it ends.\n"))
     else:
         a("Gate 5, once: the final study is prepared (criteria checked without reading a protein value, donors listed, cells embedded), the recipe is frozen by a commit, "
           "`coverage` and `labels` are refitted on all eight donors, the second hypothesis and the sealed declaration are written, and then the heads are run on F. "

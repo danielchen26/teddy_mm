@@ -6,9 +6,10 @@
 
 Refuses to run before ../results/final.json exists: the grid is read only after the test.
 
-WORK: the arrays runs/scope_20261116/scripts/build.py wrote (bm_train.npz, hao_donors.npz). The RNA view of F is its
-log-normalised counts projected on the 512 components of that build: the components are fitted again on the same cells
-(bone marrow and the PBMC study) with the same seed, checked against the stored view, and F is projected on them.
+WORK: the arrays runs/scope_20261116/scripts/build.py wrote (bm_train.npz, hao_donors.npz). The RNA view is the
+log-normalised counts projected on the 512 components of that build: the decomposition is fitted again on the same cells
+(bone marrow and the PBMC study) with the same seed, has to return the stored view, and then the cells of F and the
+training cells alike are projected on its components (see `rna_view`).
 
 For every seed asked for, two runs with the donors of F as events (each donor against the other donors of F): the
 `coverage` head of the test and `as_is` of the same seed. The training cells of a run are the cells its head was fitted
@@ -35,7 +36,7 @@ from anm_diag import scope
 HEADS = {"as_is": "as_is", "coverage": "coverage_all"}
 STAGES = grid_changed.STAGES
 DECISION = grid_changed.DECISION
-SEED_SVD = 0                                             # runs/scope_20261116/scripts/build.py
+SEED_SVD = 20261116                                      # SEED of runs/scope_20261116/scripts/build.py
 
 
 def lognorm(a):
@@ -49,30 +50,38 @@ def lognorm(a):
 
 
 def rna_view(bm_arrays, pbmc_arrays, final_arrays, stored, out):
-    """The 512 RNA components of F in the basis of the stored views. stored: RNA512 of the PBMC study (hao_donors.npz)."""
+    """The cells of F, of bone marrow and of the PBMC study projected on the 512 RNA components of the stored views.
+
+    The stored views (runs/scope_20261116/scripts/build.py) are the left singular vectors times the singular values of a
+    randomized decomposition, which a cell outside the fit does not have. The decomposition is fitted again on the same
+    cells with the same seed and has to return the stored view; then every cell, of the fit and of F alike, is projected
+    on its components, so that a readout fitted on training cells and applied to F reads one and the same view.
+    stored: RNA512 of the PBMC study (hao_donors.npz). Returns (F, bone marrow, PBMC study)."""
     import scipy.sparse as sp
     from sklearn.decomposition import TruncatedSVD
     if Path(out).exists():
-        return np.load(out)
+        d = np.load(out)
+        return d["final"], d["bm"], d["pbmc"]
     bm, ex, fi = (np.load(p, allow_pickle=False) for p in (bm_arrays, pbmc_arrays, final_arrays))
     if not (np.array_equal(bm["rna_names"], ex["rna_names"]) and np.array_equal(bm["rna_names"], fi["rna_names"])):
         raise SystemExit("the three packs do not list the same genes in the same order")
-    R = sp.vstack([lognorm(bm), lognorm(ex)]).tocsr()
-    svd = TruncatedSVD(n_components=512, algorithm="randomized", n_iter=2, random_state=SEED_SVD).fit(R)
-    again = svd.transform(lognorm(ex)[:2000]).astype(np.float32)
+    Rb, Re = lognorm(bm), lognorm(ex)
+    svd = TruncatedSVD(n_components=512, algorithm="randomized", n_iter=2, random_state=SEED_SVD)
+    again = svd.fit_transform(sp.vstack([Rb, Re]).tocsr())[Rb.shape[0]:Rb.shape[0] + 2000].astype(np.float32)
     err = float(np.abs(again - stored[:2000]).max() / np.abs(stored[:2000]).max())
     if err > 1e-3:
-        raise SystemExit(f"the components do not reproduce the stored RNA view (relative difference {err:.2e})")
-    del R
-    V = svd.transform(lognorm(fi)).astype(np.float32)
-    np.save(out, V)
-    print(f"RNA view of F: {V.shape}; the stored view is reproduced to {err:.1e}", flush=True)
-    return V
+        raise SystemExit(f"the decomposition does not return the stored RNA view (relative difference {err:.2e})")
+    Vb, Ve, Vf = (svd.transform(R).astype(np.float32) for R in (Rb, Re, lognorm(fi)))
+    gap = float(np.abs(Ve[:2000] - stored[:2000]).max() / np.abs(stored[:2000]).max())
+    np.savez(out, final=Vf, bm=Vb, pbmc=Ve)
+    print(f"RNA view of F: {Vf.shape}; the stored view is returned to {err:.1e}; projection against the stored view of the same cells: {gap:.2e}", flush=True)
+    return Vf, Vb, Ve
 
 
-def arrays_of_run(W, cells, F, rna_f, cols112, wb, wh, bm_split):
+def arrays_of_run(W, cells, F, rna, cols112, wb, wh, bm_split):
     """Audit: the cells of F. Train: the cells the head was fitted on, proteins restricted to those F measures."""
     lat, out, mu = grid_changed.head_stages(W, F["z_raw"])
+    rna_f, rna_b, rna_p = rna
     audit = dict(RNA512=rna_f, Z=F["z_raw"], HEAD_LAT=lat, HEAD_OUT=out, Y=F["Y"].astype(np.float32), unit=F["donors"], donor=F["donors"],
                  status=F["status"], frozen=mu[:, F["cols"]])
     tr = np.where(np.asarray(bm_split).astype(str) == "train")[0]
@@ -82,7 +91,7 @@ def arrays_of_run(W, cells, F, rna_f, cols112, wb, wh, bm_split):
     pi = np.asarray(cells["pbmc_index"], np.int64)
     latb, outb, _ = grid_changed.head_stages(W, wb["Z"][pos])
     latp, outp, _ = grid_changed.head_stages(W, wh["Z"][pi]) if len(pi) else (np.zeros((0, lat.shape[1]), np.float32), np.zeros((0, out.shape[1]), np.float32), None)
-    train = dict(RNA512=np.vstack([wb["RNA512"][pos], wh["RNA512"][pi]]), Z=np.vstack([wb["Z"][pos], wh["Z"][pi]]), HEAD_LAT=np.vstack([latb, latp]),
+    train = dict(RNA512=np.vstack([rna_b[tr[pos]], rna_p[pi]]), Z=np.vstack([wb["Z"][pos], wh["Z"][pi]]), HEAD_LAT=np.vstack([latb, latp]),
                  HEAD_OUT=np.vstack([outb, outp]), Y=np.vstack([wb["Y"][pos][:, cols112], wh["Y"][pi][:, cols112]]),
                  donor=np.concatenate([np.asarray(wb["donor"]).astype(str)[pos], np.asarray(wh["donor"]).astype(str)[pi]]))
     return audit, train
@@ -195,12 +204,12 @@ def main():
         if np.isnan(Y).any():
             raise SystemExit("a protein of the declaration is not measured in every cell of F")
         F = {"z_raw": np.load(a.final_z).astype(np.float32), "Y": Y, "donors": fi["donors"].astype(str), "status": fi["status"].astype(str), "cols": cols}
-        rna_f = rna_view(a.bm_arrays, a.pbmc_arrays, a.final_arrays, wh["RNA512"], a.tmp / "final_rna512.npy")
+        rna = rna_view(a.bm_arrays, a.pbmc_arrays, a.final_arrays, wh["RNA512"], a.tmp / "rna512.npz")
         for name, s, kind, h in left:
             t0 = time.time()
             print(f"== {name}", flush=True)
             d = a.heads / f"s{s}_{HEADS[h]}"
-            audit, train = arrays_of_run(dict(np.load(d / "head.npz")), dict(np.load(d / "fit_cells.npz")), F, rna_f, cols112, wb, wh, bm["split"])
+            audit, train = arrays_of_run(dict(np.load(d / "head.npz")), dict(np.load(d / "fit_cells.npz")), F, rna, cols112, wb, wh, bm["split"])
             one_run(name, "donor" if kind == "donors" else "disease", audit, train, sorted(status_of), a.tmp, res)
             print(f"   done in {time.time() - t0:.0f} s", flush=True)
     if any(not (res / f"s{s}_donors_{h}" / "scope.json").exists() for s in a.seeds for h in HEADS):
