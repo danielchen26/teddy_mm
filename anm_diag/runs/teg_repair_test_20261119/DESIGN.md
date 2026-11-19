@@ -1,5 +1,10 @@
 # A repair computed from the rows of the table, read once on cells not read before. Design, written before the reading
 
+> **Note added after the reading (19 November).** The text below is as committed before the reading. Its statements that
+> the co-culture cells had not been read, and that CD274 had not been used anywhere, are true of the run folders of this
+> repository and too narrow: earlier work of this project in another workspace read the same cells for other heads.
+> None of them entered this repair or its development. See the correction in [`README.md`](README.md).
+
 Status: **a test.** The cells read here (melanoma, co-culture condition) have not been read by any run of this repository.
 The repair, the reading, the rule and the forecast below are committed before the reading, and the reading is made once
 (`scripts/test.py` refuses to run when its result file exists).
