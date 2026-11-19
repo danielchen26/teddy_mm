@@ -98,6 +98,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   melanoma the joint head of round 3 adds 0.044 [0.002, 0.090] more than the head of round 2. HLA-E and MHC-I, made
   targets in round 3, do not pass the protocol's admission check on these cells. The melanoma co-culture condition holds
   1,846 knockout cells of the same five genes that no fit or audit of the loop has used.
+- **Training the head by the TEG, beside four other kinds of knowledge (exploratory, 19 Nov; design, forecast and rule
+  committed before the fits;** [`teg_training_20261119/`](anm_diag/runs/teg_training_20261119/)**):** the earlier repairs
+  fitted the measured protein cell by cell. Here the loss on the knockout cells was the audit's statistic *u* on the events
+  of the fit, beside four stand-ins (the class of a cell, a signed edge, the edge with the geometry of a graph, the
+  probabilities of a judgment model). Read at the head's own PD-L1 output on genes held out of the fit, no arm brings the
+  head within the margin. Melanoma: 0.24 [0.15, 0.32] for the TEG arm, 0.30 for the repair already made, 0.32 to 0.48 for
+  the stand-ins. THP-1: the TEG arm met the statistic the wrong way round (a negative slope among the controls), and the
+  lowest arm with a positive slope leaves 0.32 [0.20, 0.46]. By the run's rule the example did not show what it set out
+  to show, and the forecast for the TEG arm was wrong. Only the head was trained.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
