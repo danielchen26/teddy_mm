@@ -158,6 +158,21 @@ same. Between 0.1 and 10 the picture holds: `rows` within about 0.06 of `cells`,
 reading is worse and on melanoma the rows no longer help. The numbers of this gate depend on this choice more than a test
 should.
 
+### Both cell types in one output
+
+`scripts/together.py` (post hoc): one gate with three ways (bone marrow, melanoma, THP-1), fitted on embeddings alone, and
+the `rows` readout of each cell type behind its own way: p_bm(x) · head(x) + p_mel(x) · readout_mel(x) + p_thp(x) · readout_thp(x).
+With both repairs in the same output, read as above (log scale, pooled, the gate's ridge weight):
+
+| | `rows`, both repairs present | `rows`, one repair alone (table above) |
+|---|---|---|
+| melanoma | 0.14 [0.07, 0.21] unresolved | 0.13 |
+| THP-1 | 0.23 [0.08, 0.40] unresolved | 0.19 |
+
+The gate puts 0.99 of a melanoma knockout cell on the melanoma way and 0.004 on the THP-1 way; PD-L1 on the bone-marrow
+test cells goes from 0.408 to 0.410. Repairs of two cell types can sit in one output without undoing each other; each
+needs the rows of its own cell type.
+
 ## What this shows, and what it does not
 
 For these two data sets, five genes of one pathway each, as development:
@@ -179,6 +194,8 @@ It does not show:
 
 ## What a test would need
 
+(The test was then designed and read: [`runs/teg_repair_test_20261119`](../teg_repair_test_20261119/).)
+
 Cells not yet read (the rest of the THP-1 screen, which also has genes that do not move PD-L1 and genes that raise it;
 or the melanoma co-culture cells), the own output read on the scale of the measurement, the ridge weight fixed by a rule
 that the design states, the scoped replacement as the repair, and one reading.
@@ -188,4 +205,5 @@ that the design states, the scoped replacement as the repair, and one reading.
 - [`DESIGN.md`](DESIGN.md): the design, the decision rule and the forecast, committed before the computation.
 - `scripts/gate.py`: the gate (`results/gate.json`). `scripts/scale.py`, `posthoc.py`, `sensitivity.py`: the three post hoc
   checks (`results/scale.json`, `posthoc.json`, `sensitivity.json`). `scripts/tables.py` prints the tables above.
+- `scripts/together.py`: both cell types in one output (`results/together.json`).
 - `scale.py` reads the heads of `runs/teg_training_20261119`, which are not in git.
