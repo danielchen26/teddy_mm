@@ -1,5 +1,10 @@
 # Training the head by the TEG, against four other kinds of knowledge — 19 November 2026
 
+> Read again on the scale of the measurement in [`runs/teg_repair_gate_20261119`](../teg_repair_gate_20261119/) (post hoc):
+> the rule of this run reads the head's predicted mean against a protein measured on a log scale. The outcome by this
+> run's rule stands as recorded and does not change on the log scale. The statement that `rows` is lower than every other
+> single kind of knowledge on melanoma holds on the scale of the rule and not on the log scale (0.21 against 0.20 for `data`).
+
 Exploratory. The design, a forecast for every arm and the rule are in [`DESIGN.md`](DESIGN.md), committed before any head
 of this run was fitted and before any audit cell was read for it (commit `5001ecb`). This file reports what came out.
 
