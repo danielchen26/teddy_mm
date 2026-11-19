@@ -1,0 +1,3181 @@
+{
+ "note": "development: the code of the test on cells already read; nothing here is a test",
+ "margin": 0.1,
+ "grid": [
+  0.001,
+  0.0031622776601683794,
+  0.01,
+  0.03162277660168379,
+  0.1,
+  0.31622776601683794,
+  1.0,
+  3.1622776601683795,
+  10.0,
+  31.622776601683793,
+  100.0
+ ],
+ "data_sets": {
+  "frangieh2021": {
+   "same_events": {
+    "controls": {
+     "u": 0.11564926704966705,
+     "ci": [
+      0.05173169848019987,
+      0.1749057363128998
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      0.05912231555158579,
+      0.16869575128839306
+     ],
+     "reading_by_cell": "unresolved",
+     "slope": 3.2691705025856908,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.10413083374568477,
+       "ci": [
+        -0.0009535743007149013,
+        0.19620474022882886
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.11344525421530471,
+       "ci": [
+        0.009041056277809503,
+        0.19879374333248728
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": 0.028277530224223302,
+       "ci": [
+        -0.10538834818947974,
+        0.13824295664476283
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.20097015210351576,
+       "ci": [
+        0.10503376651009166,
+        0.2817257211354976
+       ],
+       "reading": "rejected",
+       "slope": 3.2691705025856908,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.10882588686074135,
+       "ci": [
+        0.0073417012781898825,
+        0.1940280355288767
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     }
+    },
+    "rows": {
+     "u": 0.03565392813088275,
+     "ci": [
+      -0.035174967541891033,
+      0.100127808009689
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      -0.024681511178330916,
+      0.09369083447459962
+     ],
+     "reading_by_cell": "supported",
+     "slope": 3.1797039411058647,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.026926031561721464,
+       "ci": [
+        -0.08645419512831312,
+        0.12618654839467258
+       ],
+       "reading": "unresolved",
+       "slope": 3.1797039411058647,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.034963842588153105,
+       "ci": [
+        -0.0783933766630873,
+        0.1272881573883777
+       ],
+       "reading": "unresolved",
+       "slope": 3.1797039411058647,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": -0.0670682129573732,
+       "ci": [
+        -0.21626787617865897,
+        0.052729261419689755
+       ],
+       "reading": "unresolved",
+       "slope": 3.1797039411058647,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.12667511363487327,
+       "ci": [
+        0.022177877259513087,
+        0.21351302551965648
+       ],
+       "reading": "unresolved",
+       "slope": 3.1797039411058647,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.03157015329165802,
+       "ci": [
+        -0.07410141003000374,
+        0.1209262300823756
+       ],
+       "reading": "unresolved",
+       "slope": 3.1797039411058647,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     },
+     "abs_u_minus_controls": {
+      "difference": -0.0799953389187843,
+      "ci": [
+       -0.08486043208580216,
+       -0.01651940615960919
+      ]
+     },
+     "abs_u_minus_cells": {
+      "difference": 0.033870435943542,
+      "ci": [
+       -0.04219047916167973,
+       0.04007043506695996
+      ]
+     },
+     "abs_u_minus_as_trained": {
+      "difference": -0.8697371952517627,
+      "ci": [
+       -0.9091079073344042,
+       -0.8052173250784463
+      ]
+     }
+    },
+    "cells": {
+     "u": 0.0017834921873407517,
+     "ci": [
+      -0.07282646416556676,
+      0.06881289293479409
+     ],
+     "reading": "supported",
+     "ci_by_cell": [
+      -0.05726246122938099,
+      0.0594783945799252
+     ],
+     "reading_by_cell": "supported",
+     "slope": 3.2783406008433245,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": -0.00494740442182362,
+       "ci": [
+        -0.12066523911745117,
+        0.09643008882086972
+       ],
+       "reading": "unresolved",
+       "slope": 3.2783406008433245,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.0036929313779429096,
+       "ci": [
+        -0.11681149478180919,
+        0.0989912497776674
+       ],
+       "reading": "unresolved",
+       "slope": 3.2783406008433245,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": -0.11628681139412667,
+       "ci": [
+        -0.27340385074876705,
+        0.007605080608917156
+       ],
+       "reading": "unresolved",
+       "slope": 3.2783406008433245,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.09313262172168602,
+       "ci": [
+        -0.013027886297931479,
+        0.18132437984665886
+       ],
+       "reading": "unresolved",
+       "slope": 3.2783406008433245,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.006016302344070135,
+       "ci": [
+        -0.09659593176843367,
+        0.09306259506818625
+       ],
+       "reading": "supported",
+       "slope": 3.2783406008433245,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.9053911233826455,
+     "ci": [
+      0.8891919776189265,
+      0.9217987268704608
+     ],
+     "reading": "rejected",
+     "ci_by_cell": [
+      0.8857683098240708,
+      0.923297126686448
+     ],
+     "reading_by_cell": "rejected",
+     "slope": 0.6523474866243205,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.9091692705687136,
+       "ci": [
+        0.8807651402557656,
+        0.9336861967274703
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.9042314936202669,
+       "ci": [
+        0.8761895994874555,
+        0.9282993064157287
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": 0.9066233038717901,
+       "ci": [
+        0.8738549574160563,
+        0.9335118916954358
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.9057701696263651,
+       "ci": [
+        0.8797714524011643,
+        0.9292690663896689
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.9017657016039906,
+       "ci": [
+        0.8721409535315443,
+        0.9271310111330566
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     }
+    },
+    "bone_marrow": {
+     "controls": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4080329458752411,
+      "mean_fall": -2.7070627537928438e-06,
+      "pdl1_fall_largest": -0.0002187430215347952,
+      "ok": true
+     },
+     "rows": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4080686477003336,
+      "mean_fall": -2.9734942843528955e-06,
+      "pdl1_fall_largest": -0.000276088145860498,
+      "ok": true
+     },
+     "cells": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.40795355094204666,
+      "mean_fall": -2.114563252442192e-06,
+      "pdl1_fall_largest": -0.00010949753914973881,
+      "ok": true
+     },
+     "gate_on_bone_marrow_test_cells": {
+      "mean": 0.008677689243073647,
+      "highest": 0.20604719376453112
+     }
+    },
+    "outcome": "undecided",
+    "fits": [
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03533345151433047,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -0.7737906953824203,
+        "standard_error": 0.08411504103805896,
+        "share_of_the_residual_closed": 0.14631389057486233
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.764254753131467,
+        "standard_error": 0.07505935818942958,
+        "share_of_the_residual_closed": 0.6939602746281404
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.6277937894181409,
+        "standard_error": 0.08101767150148538,
+        "share_of_the_residual_closed": 0.37059808821258744
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.8829387254526013,
+        "standard_error": 0.07221147877435025,
+        "share_of_the_residual_closed": 0.35010354260782495
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 102,
+        "measured_change": -1.0072831831701972,
+        "standard_error": 0.07672177790336489,
+        "share_of_the_residual_closed": 0.5925697784721022
+       }
+      ]
+     },
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035424565193628146,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -1.0267503883566125,
+        "standard_error": 0.07673143860917266,
+        "share_of_the_residual_closed": 0.47913455920741554
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.8823712364152763,
+        "standard_error": 0.07374694431473684,
+        "share_of_the_residual_closed": 0.6372227549631017
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.7583726993737123,
+        "standard_error": 0.07921901940968859,
+        "share_of_the_residual_closed": 0.7858479477338582
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.9327865896236159,
+        "standard_error": 0.07984098489399856,
+        "share_of_the_residual_closed": 0.6290794642464159
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 101,
+        "measured_change": -0.9048765486945907,
+        "standard_error": 0.07653535230516939,
+        "share_of_the_residual_closed": 0.6022174170387471
+       }
+      ]
+     }
+    ]
+   },
+   "new_gene": {
+    "controls": {
+     "u": 0.11564926704966705,
+     "ci": [
+      0.05173169848019987,
+      0.1749057363128998
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      0.05912231555158579,
+      0.16869575128839306
+     ],
+     "reading_by_cell": "unresolved",
+     "slope": 3.2691705025856908,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.10413083374568477,
+       "ci": [
+        -0.0009535743007149013,
+        0.19620474022882886
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.11344525421530471,
+       "ci": [
+        0.009041056277809503,
+        0.19879374333248728
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": 0.028277530224223302,
+       "ci": [
+        -0.10538834818947974,
+        0.13824295664476283
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.20097015210351576,
+       "ci": [
+        0.10503376651009166,
+        0.2817257211354976
+       ],
+       "reading": "rejected",
+       "slope": 3.2691705025856908,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.10882588686074135,
+       "ci": [
+        0.0073417012781898825,
+        0.1940280355288767
+       ],
+       "reading": "unresolved",
+       "slope": 3.2691705025856908,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     }
+    },
+    "rows": {
+     "u": 0.042249490739811324,
+     "ci": [
+      -0.03251460311916908,
+      0.11078250198700385
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      -0.01859724426259634,
+      0.09983722699353328
+     ],
+     "reading_by_cell": "supported",
+     "slope": 3.188058301269388,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.03208741197115672,
+       "ci": [
+        -0.08123025301142717,
+        0.1311268803693155
+       ],
+       "reading": "unresolved",
+       "slope": 3.189141155320524,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.04065682791128644,
+       "ci": [
+        -0.07204110558273473,
+        0.13225446002674532
+       ],
+       "reading": "unresolved",
+       "slope": 3.187399710559048,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": -0.07045540792418348,
+       "ci": [
+        -0.2201566386889705,
+        0.04964289228111776
+       ],
+       "reading": "unresolved",
+       "slope": 3.177217141734068,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.14084584726373328,
+       "ci": [
+        0.036315220055879296,
+        0.22722790248737235
+       ],
+       "reading": "unresolved",
+       "slope": 3.19549475822609,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.04069598622827575,
+       "ci": [
+        -0.06436475688114686,
+        0.12976959179722145
+       ],
+       "reading": "unresolved",
+       "slope": 3.1906094759442496,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     },
+     "abs_u_minus_controls": {
+      "difference": -0.07339977630985572,
+      "ci": [
+       -0.08248629286420414,
+       -0.018905546739340483
+      ]
+     },
+     "abs_u_minus_cells": {
+      "difference": 0.030163889894023743,
+      "ci": [
+       -0.040457662931494,
+       0.03747431864669582
+      ]
+     },
+     "abs_u_minus_as_trained": {
+      "difference": -0.8631416326428342,
+      "ci": [
+       -0.9069315960361383,
+       -0.7923878260376823
+      ]
+     }
+    },
+    "cells": {
+     "u": 0.01208560084578758,
+     "ci": [
+      -0.06825148187787253,
+      0.08450272961089811
+     ],
+     "reading": "supported",
+     "ci_by_cell": [
+      -0.04831061125521825,
+      0.0712020843447976
+     ],
+     "reading_by_cell": "supported",
+     "slope": 3.25107913419043,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.01902271180778048,
+       "ci": [
+        -0.0931051997161684,
+        0.11431787408193413
+       ],
+       "reading": "unresolved",
+       "slope": 3.1548221049824985,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.014270178429040659,
+       "ci": [
+        -0.10271973343177228,
+        0.10878121354618779
+       ],
+       "reading": "unresolved",
+       "slope": 3.2714652555525396,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": -0.12343583521364176,
+       "ci": [
+        -0.2859645650186273,
+        0.00048323225799747126
+       ],
+       "reading": "unresolved",
+       "slope": 3.261796575320562,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.1111876075987086,
+       "ci": [
+        0.00789959607009137,
+        0.19792831916972567
+       ],
+       "reading": "unresolved",
+       "slope": 3.2696666351973738,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.013874007654541165,
+       "ci": [
+        -0.0902909410587922,
+        0.10043346880522065
+       ],
+       "reading": "unresolved",
+       "slope": 3.265375419440427,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.9053911233826455,
+     "ci": [
+      0.8891919776189265,
+      0.9217987268704608
+     ],
+     "reading": "rejected",
+     "ci_by_cell": [
+      0.8857683098240708,
+      0.923297126686448
+     ],
+     "reading_by_cell": "rejected",
+     "slope": 0.6523474866243205,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.9091692705687136,
+       "ci": [
+        0.8807651402557656,
+        0.9336861967274703
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 198,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9002705418695165
+      },
+      "IFNGR2": {
+       "u": 0.9042314936202669,
+       "ci": [
+        0.8761895994874555,
+        0.9282993064157287
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 278,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.8233129947733717
+      },
+      "JAK1": {
+       "u": 0.9066233038717901,
+       "ci": [
+        0.8738549574160563,
+        0.9335118916954358
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 248,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.6930832443959267
+      },
+      "JAK2": {
+       "u": 0.9057701696263651,
+       "ci": [
+        0.8797714524011643,
+        0.9292690663896689
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 244,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9078626575381088
+      },
+      "STAT1": {
+       "u": 0.9017657016039906,
+       "ci": [
+        0.8721409535315443,
+        0.9271310111330566
+       ],
+       "reading": "rejected",
+       "slope": 0.6523474866243205,
+       "n_knockout": 203,
+       "n_control": 4000,
+       "valid": true,
+       "measured_change": -0.9563142588803366
+      }
+     }
+    },
+    "bone_marrow": {
+     "controls": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4080329458752411,
+      "mean_fall": -2.7070627537928438e-06,
+      "pdl1_fall_largest": -0.0002187430215347952,
+      "ok": true
+     },
+     "rows": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4080656290598137,
+      "mean_fall": -2.9509671163330253e-06,
+      "pdl1_fall_largest": -0.0002642570735171823,
+      "ok": true
+     },
+     "cells": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4079910820098803,
+      "mean_fall": -2.3946458481693966e-06,
+      "pdl1_fall_largest": -0.00010245771851596919,
+      "ok": true
+     },
+     "gate_on_bone_marrow_test_cells": {
+      "mean": 0.008677689243073645,
+      "highest": 0.20604719376453112
+     }
+    },
+    "outcome": "undecided",
+    "fits": [
+     {
+      "held_out": "IFNGR1",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03533345151433047,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.764254753131467,
+        "standard_error": 0.07505935818942958,
+        "share_of_the_residual_closed": 0.7319763915411734
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.6277937894181409,
+        "standard_error": 0.08101767150148538,
+        "share_of_the_residual_closed": 0.28030030976412734
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.8829387254526013,
+        "standard_error": 0.07221147877435025,
+        "share_of_the_residual_closed": 0.3675280446786352
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 102,
+        "measured_change": -1.0072831831701972,
+        "standard_error": 0.07672177790336489,
+        "share_of_the_residual_closed": 0.6232302591823773
+       }
+      ]
+     },
+     {
+      "held_out": "IFNGR2",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03533345151433047,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -0.7737906953824203,
+        "standard_error": 0.08411504103805896,
+        "share_of_the_residual_closed": 0.25947680707573717
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.6277937894181409,
+        "standard_error": 0.08101767150148538,
+        "share_of_the_residual_closed": 0.46617010265912706
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.8829387254526013,
+        "standard_error": 0.07221147877435025,
+        "share_of_the_residual_closed": 0.3315051801405011
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 102,
+        "measured_change": -1.0072831831701972,
+        "standard_error": 0.07672177790336489,
+        "share_of_the_residual_closed": 0.5588466829688659
+       }
+      ]
+     },
+     {
+      "held_out": "JAK1",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03533345151433047,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -0.7737906953824203,
+        "standard_error": 0.08411504103805896,
+        "share_of_the_residual_closed": 0.06283920197738635
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.764254753131467,
+        "standard_error": 0.07505935818942958,
+        "share_of_the_residual_closed": 0.7236408355809922
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.8829387254526013,
+        "standard_error": 0.07221147877435025,
+        "share_of_the_residual_closed": 0.364297127255341
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 102,
+        "measured_change": -1.0072831831701972,
+        "standard_error": 0.07672177790336489,
+        "share_of_the_residual_closed": 0.61709796450569
+       }
+      ]
+     },
+     {
+      "held_out": "JAK2",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03533345151433047,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -0.7737906953824203,
+        "standard_error": 0.08411504103805896,
+        "share_of_the_residual_closed": 0.7934436565302604
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.764254753131467,
+        "standard_error": 0.07505935818942958,
+        "share_of_the_residual_closed": 0.46191681582866684
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.6277937894181409,
+        "standard_error": 0.08101767150148538,
+        "share_of_the_residual_closed": 0.940821901902388
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 102,
+        "measured_change": -1.0072831831701972,
+        "standard_error": 0.07672177790336489,
+        "share_of_the_residual_closed": 0.3966446765866335
+       }
+      ]
+     },
+     {
+      "held_out": "STAT1",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03533345151433047,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -0.7737906953824203,
+        "standard_error": 0.08411504103805896,
+        "share_of_the_residual_closed": 0.3824603326707333
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.764254753131467,
+        "standard_error": 0.07505935818942958,
+        "share_of_the_residual_closed": 0.6067046358556536
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.6277937894181409,
+        "standard_error": 0.08101767150148538,
+        "share_of_the_residual_closed": 0.5749553790176942
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.8829387254526013,
+        "standard_error": 0.07221147877435025,
+        "share_of_the_residual_closed": 0.3094721667916489
+       }
+      ]
+     },
+     {
+      "held_out": "IFNGR1",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035424565193628146,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.8823712364152763,
+        "standard_error": 0.07374694431473684,
+        "share_of_the_residual_closed": 0.5236194746224814
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.7583726993737123,
+        "standard_error": 0.07921901940968859,
+        "share_of_the_residual_closed": 0.9963278791150024
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.9327865896236159,
+        "standard_error": 0.07984098489399856,
+        "share_of_the_residual_closed": 0.5193589657483182
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 101,
+        "measured_change": -0.9048765486945907,
+        "standard_error": 0.07653535230516939,
+        "share_of_the_residual_closed": 0.5012341118071555
+       }
+      ]
+     },
+     {
+      "held_out": "IFNGR2",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035424565193628146,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -1.0267503883566125,
+        "standard_error": 0.07673143860917266,
+        "share_of_the_residual_closed": 0.43980391432287547
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.7583726993737123,
+        "standard_error": 0.07921901940968859,
+        "share_of_the_residual_closed": 0.8895879392769459
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.9327865896236159,
+        "standard_error": 0.07984098489399856,
+        "share_of_the_residual_closed": 0.5767947705627625
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 101,
+        "measured_change": -0.9048765486945907,
+        "standard_error": 0.07653535230516939,
+        "share_of_the_residual_closed": 0.5539018068675243
+       }
+      ]
+     },
+     {
+      "held_out": "JAK1",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035424565193628146,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -1.0267503883566125,
+        "standard_error": 0.07673143860917266,
+        "share_of_the_residual_closed": 0.48817534548713926
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.8823712364152763,
+        "standard_error": 0.07374694431473684,
+        "share_of_the_residual_closed": 0.6500934358373291
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.9327865896236159,
+        "standard_error": 0.07984098489399856,
+        "share_of_the_residual_closed": 0.6418440495534705
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 101,
+        "measured_change": -0.9048765486945907,
+        "standard_error": 0.07653535230516939,
+        "share_of_the_residual_closed": 0.6143348173931087
+       }
+      ]
+     },
+     {
+      "held_out": "JAK2",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035424565193628146,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -1.0267503883566125,
+        "standard_error": 0.07673143860917266,
+        "share_of_the_residual_closed": 0.44607961191392176
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.8823712364152763,
+        "standard_error": 0.07374694431473684,
+        "share_of_the_residual_closed": 0.5917257226321784
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.7583726993737123,
+        "standard_error": 0.07921901940968859,
+        "share_of_the_residual_closed": 0.8753761569642875
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 101,
+        "measured_change": -0.9048765486945907,
+        "standard_error": 0.07653535230516939,
+        "share_of_the_residual_closed": 0.5607777152407007
+       }
+      ]
+     },
+     {
+      "held_out": "STAT1",
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035424565193628146,
+      "ridge_weight_cells": 0.31622776601683794,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -1.0267503883566125,
+        "standard_error": 0.07673143860917266,
+        "share_of_the_residual_closed": 0.42923955124555113
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.8823712364152763,
+        "standard_error": 0.07374694431473684,
+        "share_of_the_residual_closed": 0.568269497435729
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.7583726993737123,
+        "standard_error": 0.07921901940968859,
+        "share_of_the_residual_closed": 0.9252346883317765
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.9327865896236159,
+        "standard_error": 0.07984098489399856,
+        "share_of_the_residual_closed": 0.5611160106526627
+       }
+      ]
+     }
+    ]
+   },
+   "gate": [
+    {
+     "controls_read": 0.9867800047207673,
+     "knockout_read": 0.9852024167673696,
+     "knockout_read_lowest": 0.85590984501775
+    },
+    {
+     "controls_read": 0.9876967126225671,
+     "knockout_read": 0.9848668683242451,
+     "knockout_read_lowest": 0.8409657656782461
+    }
+   ],
+   "n": {
+    "knockout": 1171,
+    "control": 4000,
+    "by_gene": {
+     "IFNGR1": 198,
+     "IFNGR2": 278,
+     "JAK1": 248,
+     "JAK2": 244,
+     "STAT1": 203
+    }
+   },
+   "other_splits": {
+    "1": {
+     "same_events": {
+      "controls": {
+       "u": 0.1190322070293669,
+       "ci": [
+        0.06158987945977688,
+        0.17189518668244225
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.06534011010280828,
+        0.1704982585405334
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.04823456258801584,
+       "ci": [
+        -0.015725651235272448,
+        0.1056490949905122
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        -0.009223877408416936,
+        0.10639844053335529
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.01786494799583882,
+       "ci": [
+        -0.05029330046146082,
+        0.07729122401235701
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.039944492071682304,
+        0.07543576735863075
+       ],
+       "reading_by_cell": "supported"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.1190322070293669,
+       "ci": [
+        0.06158987945977688,
+        0.17189518668244225
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.06534011010280828,
+        0.1704982585405334
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.054059519025085545,
+       "ci": [
+        -0.014336681337809775,
+        0.11516506645984477
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        -0.0026072165630955766,
+        0.1115016948889795
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.02649266798275951,
+       "ci": [
+        -0.04858713404789959,
+        0.09198144864129086
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.032660676457317336,
+        0.08506173146711378
+       ],
+       "reading_by_cell": "supported"
+      }
+     }
+    },
+    "2": {
+     "same_events": {
+      "controls": {
+       "u": 0.1148724509589315,
+       "ci": [
+        0.05133368801763438,
+        0.1727308238749976
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.06198761784840792,
+        0.1679233546246542
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.035762391498871726,
+       "ci": [
+        -0.03320087815812935,
+        0.09946990883579997
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.02095226523926755,
+        0.09223217204241249
+       ],
+       "reading_by_cell": "supported"
+      },
+      "cells": {
+       "u": -0.009637452550508518,
+       "ci": [
+        -0.08345226995578123,
+        0.05542153004759378
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.0692489975577176,
+        0.04823315327906568
+       ],
+       "reading_by_cell": "supported"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.1148724509589315,
+       "ci": [
+        0.05133368801763438,
+        0.1727308238749976
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.06198761784840792,
+        0.1679233546246542
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.042457398361957055,
+       "ci": [
+        -0.030164330618206645,
+        0.11056162984627352
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        -0.01395948220005975,
+        0.09897848979843846
+       ],
+       "reading_by_cell": "supported"
+      },
+      "cells": {
+       "u": 0.0009657196413910274,
+       "ci": [
+        -0.08046867258324171,
+        0.07247722882152227
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.05777389898566437,
+        0.059364995043098466
+       ],
+       "reading_by_cell": "supported"
+      }
+     }
+    },
+    "3": {
+     "same_events": {
+      "controls": {
+       "u": 0.13426076930812425,
+       "ci": [
+        0.07408239328479056,
+        0.19149863696070418
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.0811157032836648,
+        0.18819791715686537
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.05839021030460301,
+       "ci": [
+        -0.008047790760223373,
+        0.12010442651848975
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.0012451899596821118,
+        0.11494289698354335
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.01652239616590523,
+       "ci": [
+        -0.05313604533645737,
+        0.07913317452904957
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.043541063723887434,
+        0.07443260236868204
+       ],
+       "reading_by_cell": "supported"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.13426076930812425,
+       "ci": [
+        0.07408239328479056,
+        0.19149863696070418
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.0811157032836648,
+        0.18819791715686537
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.06455633308279785,
+       "ci": [
+        -0.005789229451625987,
+        0.12952908736167032
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.007258637495435225,
+        0.12094136550460406
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.023725648219930284,
+       "ci": [
+        -0.055088695202443,
+        0.09047847917629122
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.03468957143453623,
+        0.08119062638363625
+       ],
+       "reading_by_cell": "supported"
+      }
+     }
+    },
+    "4": {
+     "same_events": {
+      "controls": {
+       "u": 0.12634254723962257,
+       "ci": [
+        0.0710179186095801,
+        0.17898436027826853
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.07316843758796776,
+        0.17838778282460455
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.04416397659507443,
+       "ci": [
+        -0.01729584924014215,
+        0.10246034801354685
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        -0.014231335609391204,
+        0.10021691230421084
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.0006382540873773879,
+       "ci": [
+        -0.06998374571117705,
+        0.06428668245054328
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.05869527231323818,
+        0.059743369415182414
+       ],
+       "reading_by_cell": "supported"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.12634254723962257,
+       "ci": [
+        0.0710179186095801,
+        0.17898436027826853
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.07316843758796776,
+        0.17838778282460455
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "rows": {
+       "u": 0.05114037508356373,
+       "ci": [
+        -0.015748551218657352,
+        0.11246609162317558
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        -0.006702856291703739,
+        0.10688675386398015
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.013377197778530303,
+       "ci": [
+        -0.0637875950184665,
+        0.08201487174996057
+       ],
+       "reading": "supported",
+       "ci_by_cell": [
+        -0.045117829399933446,
+        0.07010317792448431
+       ],
+       "reading_by_cell": "supported"
+      }
+     }
+    }
+   }
+  },
+  "papalexi2021": {
+   "same_events": {
+    "controls": {
+     "u": 0.5119721271292423,
+     "ci": [
+      0.4400879917675007,
+      0.635190327778476
+     ],
+     "reading": "rejected",
+     "ci_by_cell": [
+      0.4768037880793119,
+      0.5496785716444896
+     ],
+     "reading_by_cell": "rejected",
+     "slope": 1.5238790094276333,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.47869043767358976,
+       "ci": [
+        0.4304624038369241,
+        0.5244203986645045
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.48511328477838567,
+       "ci": [
+        0.43867094602328466,
+        0.5290077629350571
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.5025923831865652,
+       "ci": [
+        0.4552956795173558,
+        0.5445087223733839
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": 0.35075175749813126,
+       "ci": [
+        0.2686348948548222,
+        0.4256733051379037
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.8971081986293954,
+       "ci": [
+        0.7754887144586127,
+        1.0548107201465726
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.28365060416799537
+      }
+     }
+    },
+    "rows": {
+     "u": 0.12660538922013798,
+     "ci": [
+      0.008705460263642353,
+      0.26038046365912804
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      0.07329444683483091,
+      0.1821508199204362
+     ],
+     "reading_by_cell": "unresolved",
+     "slope": 1.4453439122840717,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.08841749646940555,
+       "ci": [
+        0.02079707600566275,
+        0.1497421827150055
+       ],
+       "reading": "unresolved",
+       "slope": 1.4453439122840717,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.1228452557680918,
+       "ci": [
+        0.059658839275436554,
+        0.18382751301099434
+       ],
+       "reading": "unresolved",
+       "slope": 1.4453439122840717,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.14217046257361743,
+       "ci": [
+        0.07933512200213279,
+        0.20111155521978094
+       ],
+       "reading": "unresolved",
+       "slope": 1.4453439122840717,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": -0.18805302335517649,
+       "ci": [
+        -0.31367158417206414,
+        -0.07617557922487683
+       ],
+       "reading": "unresolved",
+       "slope": 1.4453439122840717,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.5259848321874239,
+       "ci": [
+        0.41793476559625636,
+        0.632253553948419
+       ],
+       "reading": "rejected",
+       "slope": 1.4453439122840717,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.28365060416799537
+      }
+     },
+     "abs_u_minus_controls": {
+      "difference": -0.38536673790910436,
+      "ci": [
+       -0.4372516594826485,
+       -0.3493321217651158
+      ]
+     },
+     "abs_u_minus_cells": {
+      "difference": 0.009273599441658176,
+      "ci": [
+       -0.03127698954715306,
+       0.05470276936155751
+      ]
+     },
+     "abs_u_minus_as_trained": {
+      "difference": -0.839508516027102,
+      "ci": [
+       -0.9376413501830497,
+       -0.7024311073319791
+      ]
+     }
+    },
+    "cells": {
+     "u": 0.1173317897784798,
+     "ci": [
+      0.03166761522779169,
+      0.22590750224507056
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      0.05943025362141438,
+      0.17582150221029091
+     ],
+     "reading_by_cell": "unresolved",
+     "slope": 1.4837344952794789,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.09360835239649057,
+       "ci": [
+        0.03345735156664181,
+        0.15517470201821554
+       ],
+       "reading": "unresolved",
+       "slope": 1.4837344952794789,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.11253213110585658,
+       "ci": [
+        0.04867295061762117,
+        0.17152728325639857
+       ],
+       "reading": "unresolved",
+       "slope": 1.4837344952794789,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.11461602044803809,
+       "ci": [
+        0.05038553026364317,
+        0.17040453065428027
+       ],
+       "reading": "unresolved",
+       "slope": 1.4837344952794789,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": -0.09131904648685962,
+       "ci": [
+        -0.19524628075824782,
+        0.0023402885805325897
+       ],
+       "reading": "unresolved",
+       "slope": 1.4837344952794789,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.42425381934820994,
+       "ci": [
+        0.30483271151866154,
+        0.5323799137566532
+       ],
+       "reading": "rejected",
+       "slope": 1.4837344952794789,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.28365060416799537
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.96611390524724,
+     "ci": [
+      0.946880991026801,
+      0.9779632101955016
+     ],
+     "reading": "rejected",
+     "ci_by_cell": [
+      0.9521840926906986,
+      0.9780994345737164
+     ],
+     "reading_by_cell": "rejected",
+     "slope": -0.2613953714940782,
+     "valid": false,
+     "events": {
+      "IFNGR1": {
+       "u": 0.9638473101083587,
+       "ci": [
+        0.9481667727616885,
+        0.9778581974332208
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.9743450827511655,
+       "ci": [
+        0.9609699482521634,
+        0.9864035542120196
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.9754263443694465,
+       "ci": [
+        0.96113355740086,
+        0.9873949635913236
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": 0.9335090803243439,
+       "ci": [
+        0.9034634611307771,
+        0.9570954994562092
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.9498528239674958,
+       "ci": [
+        0.9081328676770928,
+        0.9826919587882544
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.28365060416799537
+      }
+     }
+    },
+    "bone_marrow": {
+     "controls": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.40981040849392897,
+      "mean_fall": -1.5971709162010406e-05,
+      "pdl1_fall_largest": -0.0014379428001832228,
+      "ok": true
+     },
+     "rows": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.41062779708287434,
+      "mean_fall": -2.207162400486018e-05,
+      "pdl1_fall_largest": -0.0025299403716942392,
+      "ok": true
+     },
+     "cells": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4108722943031684,
+      "mean_fall": -2.3896230126441154e-05,
+      "pdl1_fall_largest": -0.0030074311676223653,
+      "ok": true
+     },
+     "gate_on_bone_marrow_test_cells": {
+      "mean": 0.010157382562134727,
+      "highest": 0.3122744380460603
+     }
+    },
+    "outcome": "undecided",
+    "fits": [
+     {
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1486577953939518,
+      "ridge_weight_cells": 0.03162277660168379,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 670,
+        "measured_change": -0.7345162747785929,
+        "standard_error": 0.040311878959883696,
+        "share_of_the_residual_closed": 0.9028863489043125
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 606,
+        "measured_change": -0.8086812098107581,
+        "standard_error": 0.04051611034501108,
+        "share_of_the_residual_closed": 0.7886670391960265
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.9240767346287004,
+        "standard_error": 0.04255191346222938,
+        "share_of_the_residual_closed": 0.7789394538506524
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6543146675228941,
+        "standard_error": 0.05804864409471367,
+        "share_of_the_residual_closed": 0.14375360490134126
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.31905404862255793,
+        "standard_error": 0.04325177876696013,
+        "share_of_the_residual_closed": 0.4189240978542095
+       }
+      ]
+     },
+     {
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.15242971512854275,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 669,
+        "measured_change": -0.7432026050435931,
+        "standard_error": 0.04033508564142317,
+        "share_of_the_residual_closed": 0.8984385364640523
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 607,
+        "measured_change": -0.8636140934365226,
+        "standard_error": 0.03921376418447299,
+        "share_of_the_residual_closed": 0.8500143749253024
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.8799698686316679,
+        "standard_error": 0.04124965587532244,
+        "share_of_the_residual_closed": 0.772255264424433
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6945512607366622,
+        "standard_error": 0.060536600344752105,
+        "share_of_the_residual_closed": 0.5655756975406294
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.2482471597134328,
+        "standard_error": 0.04402604349929825,
+        "share_of_the_residual_closed": 0.5021764770882374
+       }
+      ]
+     }
+    ]
+   },
+   "new_gene": {
+    "controls": {
+     "u": 0.5119721271292423,
+     "ci": [
+      0.4400879917675007,
+      0.635190327778476
+     ],
+     "reading": "rejected",
+     "ci_by_cell": [
+      0.4768037880793119,
+      0.5496785716444896
+     ],
+     "reading_by_cell": "rejected",
+     "slope": 1.5238790094276333,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.47869043767358976,
+       "ci": [
+        0.4304624038369241,
+        0.5244203986645045
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.48511328477838567,
+       "ci": [
+        0.43867094602328466,
+        0.5290077629350571
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.5025923831865652,
+       "ci": [
+        0.4552956795173558,
+        0.5445087223733839
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": 0.35075175749813126,
+       "ci": [
+        0.2686348948548222,
+        0.4256733051379037
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.8971081986293954,
+       "ci": [
+        0.7754887144586127,
+        1.0548107201465726
+       ],
+       "reading": "rejected",
+       "slope": 1.5238790094276333,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.28365060416799537
+      }
+     }
+    },
+    "rows": {
+     "u": 0.14599432312321226,
+     "ci": [
+      -0.018332268446670935,
+      0.3091078383142
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      0.0924652128811042,
+      0.20119153832416634
+     ],
+     "reading_by_cell": "unresolved",
+     "slope": 1.4474302238191983,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.100761660657682,
+       "ci": [
+        0.033640197747399604,
+        0.16116258847562678
+       ],
+       "reading": "unresolved",
+       "slope": 1.4490334464782937,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.14735555776495657,
+       "ci": [
+        0.08555676045644534,
+        0.2067339420735937
+       ],
+       "reading": "unresolved",
+       "slope": 1.4549974160101424,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.17553715009042192,
+       "ci": [
+        0.11423829042316891,
+        0.2331744559224342
+       ],
+       "reading": "rejected",
+       "slope": 1.4589189522535646,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": -0.32503851277344276,
+       "ci": [
+        -0.4629798369154007,
+        -0.20132026051675275
+       ],
+       "reading": "rejected",
+       "slope": 1.4377448568486408,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.6406563275461132,
+       "ci": [
+        0.5356996647671324,
+        0.7566925199543671
+       ],
+       "reading": "rejected",
+       "slope": 1.4410630594052178,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.28365060416799537
+      }
+     },
+     "abs_u_minus_controls": {
+      "difference": -0.3659778040060301,
+      "ci": [
+       -0.44913434652723516,
+       -0.3076920017991775
+      ]
+     },
+     "abs_u_minus_cells": {
+      "difference": 0.014731503364817766,
+      "ci": [
+       -0.040081462009278784,
+       0.05165406494665742
+      ]
+     },
+     "abs_u_minus_as_trained": {
+      "difference": -0.8201195821240277,
+      "ci": [
+       -0.9365525782347651,
+       -0.6558012005578795
+      ]
+     }
+    },
+    "cells": {
+     "u": 0.1312628197583945,
+     "ci": [
+      0.017554370867624288,
+      0.29394938788917857
+     ],
+     "reading": "unresolved",
+     "ci_by_cell": [
+      0.07696695686280536,
+      0.18837839125115374
+     ],
+     "reading_by_cell": "unresolved",
+     "slope": 1.4835204282237244,
+     "valid": true,
+     "events": {
+      "IFNGR1": {
+       "u": 0.07625135738595235,
+       "ci": [
+        0.013730141248699741,
+        0.13576463550012466
+       ],
+       "reading": "unresolved",
+       "slope": 1.5236215139072127,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.12310626007965098,
+       "ci": [
+        0.06040180541289397,
+        0.18199486749782467
+       ],
+       "reading": "unresolved",
+       "slope": 1.4652999780693492,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.1149919231016896,
+       "ci": [
+        0.051133390225857306,
+        0.16982067657014313
+       ],
+       "reading": "unresolved",
+       "slope": 1.5206143574912743,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": -0.15307712290987996,
+       "ci": [
+        -0.2630733474348979,
+        -0.05587103932053284
+       ],
+       "reading": "unresolved",
+       "slope": 1.4634166996778244,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.6094147885072385,
+       "ci": [
+        0.5016990843523681,
+        0.7207826669736902
+       ],
+       "reading": "rejected",
+       "slope": 1.4476516004694255,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": true,
+       "measured_change": -0.28365060416799537
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.96611390524724,
+     "ci": [
+      0.946880991026801,
+      0.9779632101955016
+     ],
+     "reading": "rejected",
+     "ci_by_cell": [
+      0.9521840926906986,
+      0.9780994345737164
+     ],
+     "reading_by_cell": "rejected",
+     "slope": -0.2613953714940782,
+     "valid": false,
+     "events": {
+      "IFNGR1": {
+       "u": 0.9638473101083587,
+       "ci": [
+        0.9481667727616885,
+        0.9778581974332208
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1339,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.7388479846433116
+      },
+      "IFNGR2": {
+       "u": 0.9743450827511655,
+       "ci": [
+        0.9609699482521634,
+        0.9864035542120196
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1213,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.8361793596864926
+      },
+      "JAK2": {
+       "u": 0.9754263443694465,
+       "ci": [
+        0.96113355740086,
+        0.9873949635913236
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1024,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.9020233016301837
+      },
+      "STAT1": {
+       "u": 0.9335090803243439,
+       "ci": [
+        0.9034634611307771,
+        0.9570954994562092
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 444,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.6744329641297782
+      },
+      "IRF1": {
+       "u": 0.9498528239674958,
+       "ci": [
+        0.9081328676770928,
+        0.9826919587882544
+       ],
+       "reading": "rejected",
+       "slope": -0.2613953714940782,
+       "n_knockout": 1072,
+       "n_control": 2386,
+       "valid": false,
+       "measured_change": -0.28365060416799537
+      }
+     }
+    },
+    "bone_marrow": {
+     "controls": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.40981040849392897,
+      "mean_fall": -1.5971709162010406e-05,
+      "pdl1_fall_largest": -0.0014379428001832228,
+      "ok": true
+     },
+     "rows": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.4106467235267929,
+      "mean_fall": -2.2212866123627605e-05,
+      "pdl1_fall_largest": -0.002425867703494622,
+      "ok": true
+     },
+     "cells": {
+      "pdl1_as_trained": 0.4076701994662261,
+      "pdl1_now": 0.41092389901033766,
+      "mean_fall": -2.428133988138237e-05,
+      "pdl1_fall_largest": -0.002602485142683575,
+      "ok": true
+     },
+     "gate_on_bone_marrow_test_cells": {
+      "mean": 0.010157382562134725,
+      "highest": 0.3122744380460603
+     }
+    },
+    "outcome": "undecided",
+    "fits": [
+     {
+      "held_out": "IFNGR1",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1486577953939518,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR2",
+        "n_cells": 606,
+        "measured_change": -0.8086812098107581,
+        "standard_error": 0.04051611034501108,
+        "share_of_the_residual_closed": 0.7641608192142343
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.9240767346287004,
+        "standard_error": 0.04255191346222938,
+        "share_of_the_residual_closed": 0.754669140781749
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6543146675228941,
+        "standard_error": 0.05804864409471367,
+        "share_of_the_residual_closed": 0.18721357891932444
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.31905404862255793,
+        "standard_error": 0.04325177876696013,
+        "share_of_the_residual_closed": 0.41197695613790664
+       }
+      ]
+     },
+     {
+      "held_out": "IFNGR2",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1486577953939518,
+      "ridge_weight_cells": 0.03162277660168379,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 670,
+        "measured_change": -0.7345162747785929,
+        "standard_error": 0.040311878959883696,
+        "share_of_the_residual_closed": 0.8281740882339301
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.9240767346287004,
+        "standard_error": 0.04255191346222938,
+        "share_of_the_residual_closed": 0.7165613578297184
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6543146675228941,
+        "standard_error": 0.05804864409471367,
+        "share_of_the_residual_closed": 0.28837941460662475
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.31905404862255793,
+        "standard_error": 0.04325177876696013,
+        "share_of_the_residual_closed": 0.39787245361477275
+       }
+      ]
+     },
+     {
+      "held_out": "JAK2",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1486577953939518,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 670,
+        "measured_change": -0.7345162747785929,
+        "standard_error": 0.040311878959883696,
+        "share_of_the_residual_closed": 0.8076522653978802
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 606,
+        "measured_change": -0.8086812098107581,
+        "standard_error": 0.04051611034501108,
+        "share_of_the_residual_closed": 0.7083821905771086
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6543146675228941,
+        "standard_error": 0.05804864409471367,
+        "share_of_the_residual_closed": 0.3200894088472249
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.31905404862255793,
+        "standard_error": 0.04325177876696013,
+        "share_of_the_residual_closed": 0.39539607415648836
+       }
+      ]
+     },
+     {
+      "held_out": "STAT1",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1486577953939518,
+      "ridge_weight_cells": 0.03162277660168379,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 670,
+        "measured_change": -0.7345162747785929,
+        "standard_error": 0.040311878959883696,
+        "share_of_the_residual_closed": 0.973971285581266
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 606,
+        "measured_change": -0.8086812098107581,
+        "standard_error": 0.04051611034501108,
+        "share_of_the_residual_closed": 0.8662592939063751
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.9240767346287004,
+        "standard_error": 0.04255191346222938,
+        "share_of_the_residual_closed": 0.8524435586112258
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.31905404862255793,
+        "standard_error": 0.04325177876696013,
+        "share_of_the_residual_closed": 0.4300770541047283
+       }
+      ]
+     },
+     {
+      "held_out": "IRF1",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1486577953939518,
+      "ridge_weight_cells": 0.03162277660168379,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 670,
+        "measured_change": -0.7345162747785929,
+        "standard_error": 0.040311878959883696,
+        "share_of_the_residual_closed": 0.8788910920309739
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 606,
+        "measured_change": -0.8086812098107581,
+        "standard_error": 0.04051611034501108,
+        "share_of_the_residual_closed": 0.7648169659380277
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.9240767346287004,
+        "standard_error": 0.04255191346222938,
+        "share_of_the_residual_closed": 0.7582290930010553
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6543146675228941,
+        "standard_error": 0.05804864409471367,
+        "share_of_the_residual_closed": 0.1673052433314587
+       }
+      ]
+     },
+     {
+      "held_out": "IFNGR1",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.15242971512854275,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR2",
+        "n_cells": 607,
+        "measured_change": -0.8636140934365226,
+        "standard_error": 0.03921376418447299,
+        "share_of_the_residual_closed": 0.8235135231436284
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.8799698686316679,
+        "standard_error": 0.04124965587532244,
+        "share_of_the_residual_closed": 0.7473670567700765
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6945512607366622,
+        "standard_error": 0.060536600344752105,
+        "share_of_the_residual_closed": 0.5995602274510339
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.2482471597134328,
+        "standard_error": 0.04402604349929825,
+        "share_of_the_residual_closed": 0.4917333828146767
+       }
+      ]
+     },
+     {
+      "held_out": "IFNGR2",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.15242971512854275,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 669,
+        "measured_change": -0.7432026050435931,
+        "standard_error": 0.04033508564142317,
+        "share_of_the_residual_closed": 0.8406289871840663
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.8799698686316679,
+        "standard_error": 0.04124965587532244,
+        "share_of_the_residual_closed": 0.7228028727593205
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6945512607366622,
+        "standard_error": 0.060536600344752105,
+        "share_of_the_residual_closed": 0.6498465957380131
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.2482471597134328,
+        "standard_error": 0.04402604349929825,
+        "share_of_the_residual_closed": 0.4836939838160105
+       }
+      ]
+     },
+     {
+      "held_out": "JAK2",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.15242971512854275,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 669,
+        "measured_change": -0.7432026050435931,
+        "standard_error": 0.04033508564142317,
+        "share_of_the_residual_closed": 0.810512403090095
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 607,
+        "measured_change": -0.8636140934365226,
+        "standard_error": 0.03921376418447299,
+        "share_of_the_residual_closed": 0.769925553362936
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6945512607366622,
+        "standard_error": 0.060536600344752105,
+        "share_of_the_residual_closed": 0.6741663137240266
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.2482471597134328,
+        "standard_error": 0.04402604349929825,
+        "share_of_the_residual_closed": 0.4788549210646411
+       }
+      ]
+     },
+     {
+      "held_out": "STAT1",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.15242971512854275,
+      "ridge_weight_cells": 0.03162277660168379,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 669,
+        "measured_change": -0.7432026050435931,
+        "standard_error": 0.04033508564142317,
+        "share_of_the_residual_closed": 0.9508105774860707
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 607,
+        "measured_change": -0.8636140934365226,
+        "standard_error": 0.03921376418447299,
+        "share_of_the_residual_closed": 0.909547146946597
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.8799698686316679,
+        "standard_error": 0.04124965587532244,
+        "share_of_the_residual_closed": 0.8196233874960462
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.2482471597134328,
+        "standard_error": 0.04402604349929825,
+        "share_of_the_residual_closed": 0.5238539272981886
+       }
+      ]
+     },
+     {
+      "held_out": "IRF1",
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.15242971512854275,
+      "ridge_weight_cells": 0.1,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 669,
+        "measured_change": -0.7432026050435931,
+        "standard_error": 0.04033508564142317,
+        "share_of_the_residual_closed": 0.8822930251913671
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 607,
+        "measured_change": -0.8636140934365226,
+        "standard_error": 0.03921376418447299,
+        "share_of_the_residual_closed": 0.8369152160323605
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.8799698686316679,
+        "standard_error": 0.04124965587532244,
+        "share_of_the_residual_closed": 0.7620492595006761
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6945512607366622,
+        "standard_error": 0.060536600344752105,
+        "share_of_the_residual_closed": 0.5873233592375813
+       }
+      ]
+     }
+    ]
+   },
+   "gate": [
+    {
+     "controls_read": 0.9776831595351684,
+     "knockout_read": 0.9568560717332908,
+     "knockout_read_lowest": 0.5559730513926623
+    },
+    {
+     "controls_read": 0.9767992260104112,
+     "knockout_read": 0.9548460274126673,
+     "knockout_read_lowest": 0.12650298901859883
+    }
+   ],
+   "n": {
+    "knockout": 5092,
+    "control": 2386,
+    "by_gene": {
+     "IFNGR1": 1339,
+     "IFNGR2": 1213,
+     "JAK2": 1024,
+     "STAT1": 444,
+     "IRF1": 1072
+    }
+   },
+   "other_splits": {
+    "1": {
+     "same_events": {
+      "controls": {
+       "u": 0.4837854914712807,
+       "ci": [
+        0.40579528166948975,
+        0.6218631882078546
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.4447444818231412,
+        0.5268377749641401
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.13433637045940972,
+       "ci": [
+        0.024094597320440683,
+        0.26942195854755074
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.07612560182933342,
+        0.19355804181290978
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.11863770059440948,
+       "ci": [
+        0.03278904301929825,
+        0.22763517835391972
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.0566422087153044,
+        0.17680744720090882
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.4837854914712807,
+       "ci": [
+        0.40579528166948975,
+        0.6218631882078546
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.4447444818231412,
+        0.5268377749641401
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.15070423562990598,
+       "ci": [
+        -0.008411989446247325,
+        0.3212845814716378
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.09428797541435574,
+        0.21025158214996265
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.13042370657692415,
+       "ci": [
+        0.010261535847725751,
+        0.29728500269005254
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.06975368640882851,
+        0.18871595640736044
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     }
+    },
+    "2": {
+     "same_events": {
+      "controls": {
+       "u": 0.5027694630011106,
+       "ci": [
+        0.4282091125530253,
+        0.6356057928174417
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.4666533905270863,
+        0.5419916062590868
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.1621003524382404,
+       "ci": [
+        0.055833675798382255,
+        0.2915477229731879
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.10902720257332417,
+        0.21948467012482395
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "cells": {
+       "u": 0.14829824126628055,
+       "ci": [
+        0.057480702042921515,
+        0.26261840200256653
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.09181965096753979,
+        0.2043919384287844
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.5027694630011106,
+       "ci": [
+        0.4282091125530253,
+        0.6356057928174417
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.4666533905270863,
+        0.5419916062590868
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.17947861131095721,
+       "ci": [
+        0.03350798276523237,
+        0.34491102977950333
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.12741989074620338,
+        0.23496032020768537
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "cells": {
+       "u": 0.1603354272504215,
+       "ci": [
+        0.04508398874737253,
+        0.32940111985909293
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.10642873070178543,
+        0.2137072099474499
+       ],
+       "reading_by_cell": "rejected"
+      }
+     }
+    },
+    "3": {
+     "same_events": {
+      "controls": {
+       "u": 0.4974394192623167,
+       "ci": [
+        0.4222951916733407,
+        0.6280519742373922
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.45945816686572266,
+        0.5354889936028342
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.15123932488767722,
+       "ci": [
+        0.04488793622954903,
+        0.2801318389775707
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.09697280133104663,
+        0.20525432553081346
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.1365760029233951,
+       "ci": [
+        0.05455587182922531,
+        0.2357869216785976
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.07968758302982808,
+        0.19162253056034728
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.4974394192623167,
+       "ci": [
+        0.4222951916733407,
+        0.6280519742373922
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.45945816686572266,
+        0.5354889936028342
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.1674223912598941,
+       "ci": [
+        0.007630401696147403,
+        0.33328785812111655
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.11328003609330946,
+        0.22113198560892214
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "cells": {
+       "u": 0.13057549402790813,
+       "ci": [
+        0.011631282934577977,
+        0.30572268833337357
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.07275640047594495,
+        0.1860755578339719
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     }
+    },
+    "4": {
+     "same_events": {
+      "controls": {
+       "u": 0.5017780680389579,
+       "ci": [
+        0.42290129569387674,
+        0.6259515683240992
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.4631189438860161,
+        0.540588610797018
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.13927091486084675,
+       "ci": [
+        0.02224478841160308,
+        0.2664261408699395
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.08173839315555037,
+        0.1959479566538755
+       ],
+       "reading_by_cell": "unresolved"
+      },
+      "cells": {
+       "u": 0.12150937145443663,
+       "ci": [
+        0.03997270717684026,
+        0.2204569781179065
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.06447804216084109,
+        0.17771312973891454
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     },
+     "new_gene": {
+      "controls": {
+       "u": 0.5017780680389579,
+       "ci": [
+        0.42290129569387674,
+        0.6259515683240992
+       ],
+       "reading": "rejected",
+       "ci_by_cell": [
+        0.4631189438860161,
+        0.540588610797018
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "rows": {
+       "u": 0.15663188238584447,
+       "ci": [
+        -0.005540518879411276,
+        0.31642927521496617
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.10034708695233469,
+        0.21227954736669097
+       ],
+       "reading_by_cell": "rejected"
+      },
+      "cells": {
+       "u": 0.13040866027928888,
+       "ci": [
+        0.014573172892152866,
+        0.29754141167064824
+       ],
+       "reading": "unresolved",
+       "ci_by_cell": [
+        0.07358288110681321,
+        0.18600934332810604
+       ],
+       "reading_by_cell": "unresolved"
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -115,6 +115,14 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   had been read as its predicted mean against a measurement on a log scale. On one scale the repair already made leaves
   0.20 and 0.24, not 0.30 and 0.44, and the statement of the run above that the TEG arm is lowest on melanoma does not
   hold. A readout that replaces the output only in the cell type of its rows leaves bone marrow untouched.
+- **The repair computed from rows, tested on cells not read before (19 November; a test, design committed first, one
+  reading;** [`teg_repair_test_20261119/`](anm_diag/runs/teg_repair_test_20261119/)**):** on 2,000 melanoma knockout cells
+  of the co-culture condition the head as trained accounts for nothing of the change of PD-L1 (*u* 1.00). A repair
+  computed from five rows of the table and the control cells leaves 0.11 [0.01, 0.17], the same as a repair that sees
+  the measured protein of every knockout cell (0.11), with bone marrow unchanged. By the rule this is undecided: the
+  interval is not inside the margin. Computed in the IFN-γ condition and read in the co-culture condition the repair is
+  rejected (0.43): a row belongs to its condition. The knockout of CD274, the gene of PD-L1 itself, is reached by no
+  output built on the embedding (0.92).
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
