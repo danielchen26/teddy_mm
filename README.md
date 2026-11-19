@@ -107,6 +107,14 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   the stand-ins. THP-1: the TEG arm met the statistic the wrong way round (a negative slope among the controls), and the
   lowest arm with a positive slope leaves 0.32 [0.20, 0.46]. By the run's rule the example did not show what it set out
   to show, and the forecast for the TEG arm was wrong. Only the head was trained.
+- **A repair computed from the rows of the TEG: a gate (development on cells already read, 19 Nov; design and decision
+  rule committed first;** [`teg_repair_gate_20261119/`](anm_diag/runs/teg_repair_gate_20261119/)**):** a linear readout of
+  the embedding, given the control cells and one row per event, carries to an unseen gene almost as far as one given every
+  knockout cell on THP-1 (0.20 against 0.15; control cells alone 0.45) and adds little on melanoma (0.14 against 0.07;
+  control cells alone 0.15). By its rule the gate is undecided, and nothing in it is a test. Post hoc: the head's own output
+  had been read as its predicted mean against a measurement on a log scale. On one scale the repair already made leaves
+  0.20 and 0.24, not 0.30 and 0.44, and the statement of the run above that the TEG arm is lowest on melanoma does not
+  hold. A readout that replaces the output only in the cell type of its rows leaves bone marrow untouched.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
