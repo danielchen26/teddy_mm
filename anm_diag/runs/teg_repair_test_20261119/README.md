@@ -1,9 +1,31 @@
-# A repair computed from the rows of the table, read once on cells not read before
+# A repair computed from the rows of the table, read once on cells that were not used to make it
 
 Status: **a test, read once.** The design, the rule and the forecast are in [`DESIGN.md`](DESIGN.md), committed before the
 reading (commit `17038be`). The cells of the reading are 2,000 knockout cells and 4,000 control cells of the melanoma
-screen in the co-culture condition, which no run of this repository had read. One cell type, five genes of one pathway,
-one output (PD-L1). THP-1 is not part of it.
+screen in the co-culture condition. No cell of the reading was used to make or to develop the repair, and the repaired
+outputs were read on them once. One cell type, five genes of one pathway, one output (PD-L1). THP-1 is not part of it.
+
+## Correction, added after the reading: these cells had been read before, for other heads
+
+The design says that no run of this repository had read the co-culture cells and that CD274 had not been used anywhere.
+That is true of the run folders of this repository and too narrow. Earlier work of this project, made in another
+workspace and recorded on the results page and in the ledger of the app (runs 5 to 9 there), read the same cells:
+
+- the same 6,000 co-culture cells for the head as trained (a sealed audit, run 5), for retrained heads (run 6), for the
+  head split into stages (run 7) and for another model (run 8);
+- the IFN-γ library of 206 targets, CD274 among them, for the head as trained (run 9).
+
+What stays true: none of these cells entered the repair or its development, and this run is the first and only reading
+of the repaired outputs on them. What changes:
+
+- "Cells not read before" has to be read as "cells not used to make the repair". The title of this page is changed; the
+  design is left as committed, with a note at its top.
+- Two results here were already on record for other outputs, and the forecast should have used them. Run 5 found
+  that on co-culture cells the embedding itself does not carry all of the change of PD-L1 (*u* 0.19 [0.13, 0.26] at Z,
+  rejected; unresolved under the later interval rule). A readout of the embedding was therefore unlikely to come inside
+  the margin there, and the 40% given to "holds" in setting 1 was too high. Run 9 found that the knockout of a
+  protein's own gene cannot be read from RNA (mean unreadable share 0.92 over 8 such pairs); the probe on CD274 repeats
+  that for the repaired output and adds nothing new.
 
 ## The question
 
@@ -98,7 +120,8 @@ is open on co-culture cells, where the repair it guards does not hold.
 | 1.00 [0.99, 1.01] rejected | 0.92 [0.88, 0.96] rejected | 0.92 [0.88, 0.96] rejected | 0.92 [0.88, 0.96] rejected |
 
 CD274 is the gene of PD-L1 itself. Its knockout removes more protein than any pathway gene, and no output built on the
-embedding sees it. This event is outside what a readout of the embedding can repair.
+embedding sees it. This event is outside what a readout of the embedding can repair. (The same had been found for the
+head as trained in earlier work; see the correction above.)
 
 **The 200 other genes** (44,771 knockout cells; measured change: median size 0.044, largest 0.35)
 
@@ -128,7 +151,8 @@ tried as rows in development; no output had been read on them.)
 | probe CD274 | rejected, above 0.5 | 0.92, rejected |
 | the 200 other genes | median predicted change below 0.05; none beyond 0.5 | 0.026; largest 0.16 |
 
-The forecast inside the condition was right. The forecast across conditions was too hopeful.
+The forecast inside the condition was right in its range. The forecast across conditions was too hopeful. The 40% for
+"holds" in setting 1 did not use what an earlier audit of these cells had found at the embedding (the correction above).
 
 ## After the reading (post hoc)
 
@@ -142,8 +166,9 @@ The co-culture cells had been read when these were computed. Nothing below is ev
 | on the other half (the reading) | 0.27 | 0.11 | 0.11 |
 
 On the cells it was fitted on, the repair by rows leaves nothing. The 0.11 appears when the readout is carried to cells it
-has not seen, and it appears for `cells` in the same size. It is a cost of fitting a readout of 512 coordinates on a few
-thousand cells, not something the rows lack.
+has not seen, and it appears for `cells` in the same size. It is not something the rows lack. Part of it is a cost of
+fitting a readout of 512 coordinates on a few thousand cells; part of it may be the embedding itself, which an earlier
+audit found short on these cells (the correction above). This computation cannot separate the two.
 
 **Post hoc 2: by ridge weight** (setting 1, pooled point values; the rule chose 0.32 and 0.1 in the two halves)
 
@@ -214,7 +239,8 @@ It does not show:
 ## What a next test would need
 
 - For passing: a rule for the ridge weight aimed at the change (stated first), and cells not read before. The melanoma
-  cells with embeddings are now all read; the rest of the THP-1 screen needs embeddings first.
+  cells with embeddings are now all read; the rest of the THP-1 screen needs embeddings first. If the embedding is what
+  falls short in this condition, no readout of it will pass, and the repair has to move below the head.
 - For the condition: the condition as part of the type of a row and of the gate, and the control cells of the new
   condition as the baseline.
 - For CD274: another input than the embedding. This row goes to the part of the loop that asks what to measure.
