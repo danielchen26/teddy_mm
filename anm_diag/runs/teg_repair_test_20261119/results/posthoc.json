@@ -1,0 +1,388 @@
+{
+ "note": "post hoc: the co-culture cells had been read when this was computed; nothing here is a test",
+ "fit_half_against_read_half": {
+  "controls": {
+   "read_half": 0.2710592422839422,
+   "fit_half": 0.16705791848209306
+  },
+  "rows": {
+   "read_half": 0.10623576483129615,
+   "fit_half": -0.026490312047957598
+  },
+  "cells": {
+   "read_half": 0.10753464118408995,
+   "fit_half": 0.007631827709344674
+  }
+ },
+ "by_ridge_weight": {
+  "0.001": {
+   "controls": 0.4196855908697784,
+   "rows": 0.2935304446979434,
+   "cells": 0.26418103758995326
+  },
+  "0.00316": {
+   "controls": 0.3987908205837658,
+   "rows": 0.2715004357964558,
+   "cells": 0.24935080073183113
+  },
+  "0.01": {
+   "controls": 0.36229688292699935,
+   "rows": 0.2312877636338605,
+   "cells": 0.21983965970135233
+  },
+  "0.0316": {
+   "controls": 0.318411928013142,
+   "rows": 0.1793220538503827,
+   "cells": 0.17655697407144844
+  },
+  "0.1": {
+   "controls": 0.27993221265375456,
+   "rows": 0.12668835963052238,
+   "cells": 0.12730331356724056
+  },
+  "0.316": {
+   "controls": 0.26485155396485116,
+   "rows": 0.08060579281655555,
+   "cells": 0.08071936810488134
+  },
+  "1": {
+   "controls": 0.30688468488554443,
+   "rows": 0.05388112787483479,
+   "cells": 0.05140756238623878
+  },
+  "3.16": {
+   "controls": 0.43701561214225704,
+   "rows": 0.07675720008465203,
+   "cells": 0.0712161933418739
+  },
+  "10": {
+   "controls": 0.6336494359621625,
+   "rows": 0.1818177639356634,
+   "cells": 0.18345547836442422
+  },
+  "31.6": {
+   "controls": 0.8085187848245093,
+   "rows": 0.3379543910141487,
+   "cells": 0.3714304734744235
+  },
+  "100": {
+   "controls": 0.9049702937194181,
+   "rows": 0.4890704628466723,
+   "cells": 0.5644946506028414
+  }
+ },
+ "five_folds": {
+  "controls": {
+   "u": 0.251760083442644,
+   "ci": [
+    0.16805934322344393,
+    0.3152759771250874
+   ],
+   "reading": "rejected",
+   "ci_by_cell": [
+    0.2091337071483335,
+    0.291267799877877
+   ],
+   "reading_by_cell": "rejected",
+   "events": {
+    "IFNGR1": {
+     "u": 0.25516354192366875,
+     "ci": [
+      0.18316926282768498,
+      0.32153281027362873
+     ],
+     "reading": "rejected",
+     "slope": 2.6568612866168495,
+     "n_knockout": 321,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8813268472901459
+    },
+    "IFNGR2": {
+     "u": 0.24900697320932108,
+     "ci": [
+      0.17681999873112392,
+      0.31320530901473465
+     ],
+     "reading": "rejected",
+     "slope": 2.6568612866168495,
+     "n_knockout": 475,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8406062641607213
+    },
+    "JAK1": {
+     "u": 0.09905810175512741,
+     "ci": [
+      -0.020025638559567373,
+      0.18991036207258763
+     ],
+     "reading": "unresolved",
+     "slope": 2.6568612866168495,
+     "n_knockout": 390,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.6901099726917828
+    },
+    "JAK2": {
+     "u": 0.28177839136099414,
+     "ci": [
+      0.21541054378297972,
+      0.33808522761169124
+     ],
+     "reading": "rejected",
+     "slope": 2.6568612866168495,
+     "n_knockout": 418,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8898233801878983
+    },
+    "STAT1": {
+     "u": 0.330553566186092,
+     "ci": [
+      0.26723842707851947,
+      0.3838922505946659
+     ],
+     "reading": "rejected",
+     "slope": 2.6568612866168495,
+     "n_knockout": 396,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.9637097578917688
+    }
+   }
+  },
+  "rows": {
+   "u": 0.09204995280641026,
+   "ci": [
+    -0.010574868925007546,
+    0.16705550237177944
+   ],
+   "reading": "unresolved",
+   "ci_by_cell": [
+    0.04129815130984514,
+    0.141447208313188
+   ],
+   "reading_by_cell": "unresolved",
+   "events": {
+    "IFNGR1": {
+     "u": 0.09858440880662322,
+     "ci": [
+      0.011112305968736752,
+      0.17694241895195248
+     ],
+     "reading": "unresolved",
+     "slope": 2.5689727862949083,
+     "n_knockout": 321,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8813268472901459
+    },
+    "IFNGR2": {
+     "u": 0.09501849063157264,
+     "ci": [
+      0.009706553010105177,
+      0.1708019787560982
+     ],
+     "reading": "unresolved",
+     "slope": 2.5689727862949083,
+     "n_knockout": 475,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8406062641607213
+    },
+    "JAK1": {
+     "u": -0.0978604427474361,
+     "ci": [
+      -0.24431858766925296,
+      0.012817325607234744
+     ],
+     "reading": "unresolved",
+     "slope": 2.5689727862949083,
+     "n_knockout": 390,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.6901099726917828
+    },
+    "JAK2": {
+     "u": 0.12688711275746056,
+     "ci": [
+      0.04667547308748365,
+      0.19450180282819132
+     ],
+     "reading": "unresolved",
+     "slope": 2.5689727862949083,
+     "n_knockout": 418,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8898233801878983
+    },
+    "STAT1": {
+     "u": 0.18408053912120925,
+     "ci": [
+      0.1098004076333625,
+      0.24889007999779142
+     ],
+     "reading": "rejected",
+     "slope": 2.5689727862949083,
+     "n_knockout": 396,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.9637097578917688
+    }
+   }
+  },
+  "cells": {
+   "u": 0.09008211520958198,
+   "ci": [
+    -0.0037060062025067826,
+    0.15852873724162045
+   ],
+   "reading": "unresolved",
+   "ci_by_cell": [
+    0.039026161416665324,
+    0.13882367180645103
+   ],
+   "reading_by_cell": "unresolved",
+   "events": {
+    "IFNGR1": {
+     "u": 0.08322922778317587,
+     "ci": [
+      -0.005350963967887729,
+      0.16360563270670397
+     ],
+     "reading": "unresolved",
+     "slope": 2.6232187518675447,
+     "n_knockout": 321,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8813268472901459
+    },
+    "IFNGR2": {
+     "u": 0.09434476763590616,
+     "ci": [
+      0.006396059583537065,
+      0.16793918237675612
+     ],
+     "reading": "unresolved",
+     "slope": 2.6232187518675447,
+     "n_knockout": 475,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8406062641607213
+    },
+    "JAK1": {
+     "u": -0.07784821706885081,
+     "ci": [
+      -0.21648558131064696,
+      0.02838777567336568
+     ],
+     "reading": "unresolved",
+     "slope": 2.6232187518675447,
+     "n_knockout": 390,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.6901099726917828
+    },
+    "JAK2": {
+     "u": 0.12613119808789486,
+     "ci": [
+      0.050342834130741,
+      0.19629134517044589
+     ],
+     "reading": "unresolved",
+     "slope": 2.6232187518675447,
+     "n_knockout": 418,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.8898233801878983
+    },
+    "STAT1": {
+     "u": 0.17400033839106,
+     "ci": [
+      0.1031320413295389,
+      0.23539719670171724
+     ],
+     "reading": "rejected",
+     "slope": 2.6232187518675447,
+     "n_knockout": 396,
+     "n_control": 4000,
+     "valid": true,
+     "measured_change": -0.9637097578917688
+    }
+   }
+  }
+ },
+ "two_conditions": {
+  "by_gene": {
+   "IFNGR1": {
+    "cosine_of_the_displacements": 0.8168306776271929,
+    "length_ifn": 0.11897430623747411,
+    "length_coculture": 0.11349663682270392,
+    "measured_change_ifn": -0.9002705418695165,
+    "measured_change_coculture": -0.8813268472901459
+   },
+   "IFNGR2": {
+    "cosine_of_the_displacements": 0.8490560340433518,
+    "length_ifn": 0.11595131082276673,
+    "length_coculture": 0.10784605165867533,
+    "measured_change_ifn": -0.8233129947733717,
+    "measured_change_coculture": -0.8406062641607213
+   },
+   "JAK1": {
+    "cosine_of_the_displacements": 0.8398364511397789,
+    "length_ifn": 0.11616788594119036,
+    "length_coculture": 0.11594267019165658,
+    "measured_change_ifn": -0.6930832443959267,
+    "measured_change_coculture": -0.6901099726917828
+   },
+   "JAK2": {
+    "cosine_of_the_displacements": 0.797596634506936,
+    "length_ifn": 0.11531631744510724,
+    "length_coculture": 0.1119346164669187,
+    "measured_change_ifn": -0.9078626575381088,
+    "measured_change_coculture": -0.8898233801878983
+   },
+   "STAT1": {
+    "cosine_of_the_displacements": 0.8286113830976375,
+    "length_ifn": 0.1260803366463918,
+    "length_coculture": 0.11491348399233116,
+    "measured_change_ifn": -0.9563142588803366,
+    "measured_change_coculture": -0.9637097578917688
+   }
+  },
+  "distance_between_the_control_means": 0.24782128679011653,
+  "mean_length_of_a_displacement": 0.11282669182645715,
+  "control_sd_of_pdl1": {
+   "ifn": 0.7470299870540591,
+   "coculture": 0.7580869201369902
+  },
+  "cosine_of_the_readouts": {
+   "controls": 0.35794020331586585,
+   "rows": 0.3764509117655262,
+   "cells": 0.4262981629840158
+  }
+ },
+ "mixed_repair": {
+  "what": "control cells of the co-culture condition, rows of the IFN-gamma condition",
+  "u": 0.1630768825139619,
+  "ci": [
+   0.0669786745650134,
+   0.22831083952835546
+  ],
+  "reading": "unresolved",
+  "ci_by_cell": [
+   0.1157242145828372,
+   0.21075613950330033
+  ],
+  "reading_by_cell": "rejected",
+  "valid": true,
+  "events": {
+   "IFNGR1": 0.16519163658344382,
+   "IFNGR2": 0.1812218956567958,
+   "JAK1": -0.016670258952822037,
+   "JAK2": 0.193750090034025,
+   "STAT1": 0.23939580995508658
+  }
+ }
+}
