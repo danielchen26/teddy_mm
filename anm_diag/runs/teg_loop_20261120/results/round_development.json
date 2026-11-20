@@ -1,0 +1,4359 @@
+{
+ "PDL1": {
+  "readout": "PDL1",
+  "output_of_the_head": "CD274",
+  "tag": "development",
+  "margin": 0.1,
+  "step_margin": 0.1,
+  "groups": {
+   "mel_ifn": {
+    "admission": {
+     "group": "mel_ifn",
+     "readout": "PDL1",
+     "cell_type": "melanoma",
+     "stratum": "IFN-gamma",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "ready",
+     "attainable": "absolute",
+     "A1": true,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": 0.03184469321496752,
+      "ci": [
+       -0.04408298448470633,
+       0.09970407456066423
+      ],
+      "verdict": "support",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": 0.02628645209321001,
+      "ci": [
+       -0.047366714824759355,
+       0.0921867912085871
+      ],
+      "verdict": "support",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 0.8735464339738638,
+      "ci": [
+       0.8030140687487342,
+       0.9103967708692007
+      ]
+     },
+     "reasons": [],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": null,
+     "input_view": {
+      "IFNGR1": {
+       "units": {
+        "u": 0.061025803373448095,
+        "ci": [
+         -0.0360177218961607,
+         0.15313256327558766
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.07332278965598493,
+        "ci": [
+         -0.02493850538069963,
+         0.15943748403416225
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.06581577053293586,
+        "ci": [
+         -0.10656818393617869,
+         0.08060155706480145
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "IFNGR2": {
+       "units": {
+        "u": 0.11035992820373985,
+        "ci": [
+         0.015399689292087826,
+         0.19264235574597174
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.11299013429158844,
+        "ci": [
+         0.017552303104244524,
+         0.19699625238947532
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.08230755105614662,
+        "ci": [
+         -0.12684876900166273,
+         0.04499790738336738
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "JAK1": {
+       "units": {
+        "u": -0.052863826226261956,
+        "ci": [
+         -0.19497032305034837,
+         0.06291507411621056
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": -0.030709945684495477,
+        "ci": [
+         -0.17151366328485362,
+         0.08452450884751934
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.014335757121443748,
+        "ci": [
+         -0.059398516244255004,
+         0.0903500037267804
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "JAK2": {
+       "units": {
+        "u": 0.1639363598609641,
+        "ci": [
+         0.07570389697622316,
+         0.25095902083649546
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.1479457413256342,
+        "ci": [
+         0.05921468590347762,
+         0.23298464341709832
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.03470657765865326,
+        "ci": [
+         -0.09119422154035418,
+         0.024730705842375755
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "STAT1": {
+       "units": {
+        "u": 0.0969825906655788,
+        "ci": [
+         0.010547321213195671,
+         0.17420256826258573
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.10569505363667675,
+        "ci": [
+         0.021646257087133112,
+         0.18283180828226966
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.06696468219161034,
+        "ci": [
+         -0.11385654071345926,
+         0.020755075290799133
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "pool": {
+       "units": {
+        "u": 0.07781304646257303,
+        "ci": [
+         -3.114261129184505e-05,
+         0.14130611673454943
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.08741020393345822,
+        "ci": [
+         0.02020673379290505,
+         0.14270014389005004
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.06112375110387802,
+        "ci": [
+         -0.0911343974294141,
+         0.021550832921639076
+        ],
+        "reading": "no added loss"
+       }
+      }
+     }
+    },
+    "events": [
+     {
+      "event_id": "mel_ifn_PDL1:knockout:IFNGR1:IFN-gamma",
+      "origin": "inverse:mel_ifn_PDL1",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.205283740137973,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 198
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_PDL1:knockout:IFNGR2:IFN-gamma",
+      "origin": "inverse:mel_ifn_PDL1",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.1022528445548878,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 278
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_PDL1:knockout:JAK1:IFN-gamma",
+      "origin": "inverse:mel_ifn_PDL1",
+      "time": 2,
+      "site": "JAK1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.9279010321694596,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 248
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_PDL1:knockout:JAK2:IFN-gamma",
+      "origin": "inverse:mel_ifn_PDL1",
+      "time": 3,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.215448077571028,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 244
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_PDL1:knockout:STAT1:IFN-gamma",
+      "origin": "inverse:mel_ifn_PDL1",
+      "time": 4,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.2803151642582857,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 203
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 1171,
+     "n_control": 4000,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -1.1372034471249926,
+      "ci": [
+       -1.2437548862714034,
+       -1.0246630232671072
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 10.381065106947338
+     },
+     "scopes": {
+      "frozen": {
+       "u": 0.9053911271888313,
+       "ci": [
+        0.8891919814762588,
+        0.9217987287569303
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.9948578824255029,
+       "ci": [
+        0.9881071173438315,
+        0.9993724555026215
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "other": {
+       "u": 0.3170919838435614,
+       "ci": [
+        0.24414443443907097,
+        0.3832866199532796
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "units": {
+       "u": 0.03184469321496752,
+       "ci": [
+        -0.04408298448470633,
+        0.09970407456066423
+       ],
+       "verdict": "support",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.02628645209321001,
+       "ci": [
+        -0.047366714824759355,
+        0.0921867912085871
+       ],
+       "verdict": "support",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": -0.08946675523667158,
+       "ci": [
+        -0.10600723895902013,
+        -0.07074630126147043
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "train->units": {
+       "value": 0.9630131892105354,
+       "ci": [
+        0.894061624737935,
+        0.9934259434113536
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "units->own": {
+       "value": 0.005558241121757512,
+       "ci": [
+        -0.0076456007869948545,
+        0.015427403127820599
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "from_frozen": {
+       "train": {
+        "value": -0.08946675523667158,
+        "ci": [
+         -0.10600723895902013,
+         -0.07074630126147043
+        ]
+       },
+       "units": {
+        "value": 0.8735464339738638,
+        "ci": [
+         0.8030140687487342,
+         0.9103967708692007
+        ]
+       },
+       "own": {
+        "value": 0.8791046750956213,
+        "ci": [
+         0.8112056114366286,
+         0.9105354724109278
+        ]
+       }
+      },
+      "other->units": {
+       "value": 0.2852472906285939,
+       "ci": [
+        0.20709637481108334,
+        0.3236388097397097
+       ],
+       "resolved": true,
+       "absent": false
+      }
+     },
+     "reading": "coverage",
+     "detail": "a readout of the other units of this study carries it; no readout of the system's training cells does",
+     "ceiling": {
+      "function": {
+       "removes": -0.08946675523667158,
+       "ci": [
+        -0.10600723895902013,
+        -0.07074630126147043
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 0.8735464339738638,
+       "ci": [
+        0.8030140687487342,
+        0.9103967708692007
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 0.8791046750956213,
+       "ci": [
+        0.8112056114366286,
+        0.9105354724109278
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.9053911271888313,
+     "ci": [
+      0.8891919814762588,
+      0.9217987287569303
+     ],
+     "verdict": "reject",
+     "slope": 0.652347471599274,
+     "beyond_units_at_Z": {
+      "added": 0.8735464330214557,
+      "ci": [
+       0.8030140694257578,
+       0.9103967707696178
+      ]
+     }
+    },
+    "arms": {
+     "other": {
+      "u": 0.2767777681827597,
+      "ci": [
+       0.20380019173696456,
+       0.34230887865550896
+      ],
+      "verdict": "reject",
+      "slope": 2.4218819070275033,
+      "valid": true,
+      "gain": 0.6286133590060716,
+      "gain_ci": [
+       0.5601774149709517,
+       0.703185953257232
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.2449330740153841,
+       "ci": [
+        0.16399384966203737,
+        0.2847513274479472
+       ],
+       "reading": "loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.2834961824398491,
+        "ci": [
+         0.18794797501630583,
+         0.3617737667488155
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.26636572930030555,
+         "ci": [
+          0.10930084015094887,
+          0.3132111451155012
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.2473820561428135,
+        "ci": [
+         0.1475128956181443,
+         0.32199435517562497
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.20251162367654496,
+         "ci": [
+          0.08850291183288286,
+          0.24872517480548295
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "JAK1": {
+        "u": 0.16049598906142304,
+        "ci": [
+         0.02463438567803712,
+         0.2658299024810489
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.09732839468819687,
+         "ci": [
+          -0.17144396269003265,
+          0.2346179730827386
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "JAK2": {
+        "u": 0.3571299486830085,
+        "ci": [
+         0.2714431130572274,
+         0.4246002459548224
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.2394454502537101,
+         "ci": [
+          0.17323625022550912,
+          0.3061088196214422
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.31653476810058145,
+        "ci": [
+         0.22925826764797638,
+         0.3865877023067917
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.27554967557986765,
+         "ci": [
+          0.183600937005068,
+          0.32738904256395573
+         ],
+         "reading": "loss"
+        }
+       }
+      }
+     },
+     "controls": {
+      "u": 0.12667819848372552,
+      "ci": [
+       0.0706671786854433,
+       0.18258420965409067
+      ],
+      "verdict": "unresolved",
+      "slope": 3.2650687697787353,
+      "valid": true,
+      "gain": 0.7787129287051058,
+      "gain_ci": [
+       0.7226465663630823,
+       0.8358934490891768
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.09483350431634996,
+       "ci": [
+        0.027106602020572062,
+        0.11663298867079239
+       ],
+       "reading": "unresolved"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.09763210485019103,
+        "ci": [
+         -0.008985818998489674,
+         0.19003596547288587
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.08050165171064749,
+         "ci": [
+          -0.0777955507972406,
+          0.10545373440310188
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.11880896694050924,
+        "ci": [
+         0.015291178034848994,
+         0.20373411053207022
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.0739385344742407,
+         "ci": [
+          -0.047397412134568204,
+          0.09982635875882864
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": 0.06628580352217239,
+        "ci": [
+         -0.06562803529761103,
+         0.1760586703448767
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.003118209148946227,
+         "ci": [
+          -0.1752001973973026,
+          0.13594848394443812
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "JAK2": {
+        "u": 0.20549453844663923,
+        "ci": [
+         0.10901617056068232,
+         0.2862235864973405
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.08781004001734083,
+         "ci": [
+          0.04090628198035303,
+          0.13659386104478857
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "STAT1": {
+        "u": 0.12616275659843823,
+        "ci": [
+         0.02652108883280776,
+         0.20955978615089463
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.08517766407772442,
+         "ci": [
+          -0.02288269439603371,
+          0.12233212177060741
+         ],
+         "reading": "unresolved"
+        }
+       }
+      }
+     },
+     "rows_other": {
+      "u": 0.025297307249069756,
+      "ci": [
+       -0.04088276002387245,
+       0.09115941274654217
+      ],
+      "verdict": "support",
+      "slope": 3.141507127950191,
+      "valid": true,
+      "gain": 0.8800938199397615,
+      "gain_ci": [
+       0.8126418130775074,
+       0.9103657990843782
+      ],
+      "beyond_units_at_Z": {
+       "added": -0.006547386918305809,
+       "ci": [
+        -0.025833388461552267,
+        0.016485640765108382
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.000533395628985911,
+        "ci": [
+         -0.11159767270252517,
+         0.10239749511562911
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.016597057510557622,
+         "ci": [
+          -0.0362712155462406,
+          0.04351926760320701
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.01914361151118793,
+        "ci": [
+         -0.09525786693450508,
+         0.11289939548772447
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.02572682095508061,
+         "ci": [
+          -0.04889158579706619,
+          0.04685561537480662
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": -0.06300460519891948,
+        "ci": [
+         -0.2131680466480765,
+         0.058157091854541015
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.00016298917430668247,
+         "ci": [
+          -0.05825922370962503,
+          0.05054557031599212
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.11480783566960473,
+        "ci": [
+         0.012334034968713697,
+         0.20377100773062531
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.002876662759693671,
+         "ci": [
+          -0.04882154312516631,
+          0.044152369613459905
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.03133560501906785,
+        "ci": [
+         -0.07418070770956366,
+         0.12160073694546518
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.00964948750164596,
+         "ci": [
+          -0.05230908314805276,
+          0.04097605743644902
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     },
+     "rows": {
+      "u": 0.04288296486905607,
+      "ci": [
+       -0.02130800320567869,
+       0.10530269813019512
+      ],
+      "verdict": "unresolved",
+      "slope": 3.178624036495943,
+      "valid": true,
+      "gain": 0.8625081623197752,
+      "gain_ci": [
+       0.7998946751180394,
+       0.905401858766299
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.011038270701680508,
+       "ci": [
+        -0.02719415706485407,
+        0.031620447345198206
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.01786874367232072,
+        "ci": [
+         -0.09760382694622809,
+         0.11702172035847026
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.000738290532777186,
+         "ci": [
+          -0.025271406304743692,
+          0.03227650473797752
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.037903315998192855,
+        "ci": [
+         -0.07586579242223565,
+         0.12909866771097828
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.006967116468075685,
+         "ci": [
+          -0.03375787384852687,
+          0.026820799208254375
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": -0.036258906953920755,
+        "ci": [
+         -0.18361034147053953,
+         0.08464642800677732
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.02690868741930541,
+         "ci": [
+          -0.08310025566251258,
+          0.044906318440794554
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.1281894007492892,
+        "ci": [
+         0.027391097361847645,
+         0.21560063471089277
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.010504902319990794,
+         "ci": [
+          -0.03527158138200722,
+          0.05821263651811751
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.04445375866634005,
+        "ci": [
+         -0.05860723524616246,
+         0.13313116115876905
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.0034686661456262424,
+         "ci": [
+          -0.043038978083224426,
+          0.04371954633353411
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     },
+     "cells": {
+      "u": 0.0057508005740893875,
+      "ci": [
+       -0.06311685659220839,
+       0.06943097966991713
+      ],
+      "verdict": "support",
+      "slope": 3.2805927989676618,
+      "valid": true,
+      "gain": 0.8996403266147419,
+      "gain_ci": [
+       0.8255369491066827,
+       0.9111854939158032
+      ],
+      "beyond_units_at_Z": {
+       "added": -0.026093893593286177,
+       "ci": [
+        -0.04209531266376118,
+        0.031060101313962456
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": -0.01307648813316109,
+        "ci": [
+         -0.13038353168027586,
+         0.08824007058239387
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.004053965006382443,
+         "ci": [
+          -0.05027812858920011,
+          0.058410198543125375
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.0036020490455286325,
+        "ci": [
+         -0.11637090267321974,
+         0.09856283205996073
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.04126838342073991,
+         "ci": [
+          -0.05927543347259213,
+          0.06081999361255906
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": -0.09187197765886412,
+        "ci": [
+         -0.24319481161926434,
+         0.03352371842063387
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.028704383285637958,
+         "ci": [
+          -0.04629289459098091,
+          0.07849095731022726
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.08921712889653577,
+        "ci": [
+         -0.010087485899034153,
+         0.1782922603686665
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.028467369532762632,
+         "ci": [
+          -0.07376244318358093,
+          0.01994374280062889
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.016765799234296885,
+        "ci": [
+         -0.08855783449676824,
+         0.10492543078067834
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.02421929328641692,
+         "ci": [
+          -0.06391427320284812,
+          0.05076932286906857
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     }
+    },
+    "fits": [
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.035348807680319935,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -0.7737906953824203,
+        "standard_error": 0.08411504103805896,
+        "share_of_the_residual_closed": 0.13505279354329347
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.764254753131467,
+        "standard_error": 0.07505935818942958,
+        "share_of_the_residual_closed": 0.6986976409210439
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.6277937894181409,
+        "standard_error": 0.08101767150148538,
+        "share_of_the_residual_closed": 0.316763222188694
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.8829387254526013,
+        "standard_error": 0.07221147877435025,
+        "share_of_the_residual_closed": 0.35109495271106583
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 102,
+        "measured_change": -1.0072831831701972,
+        "standard_error": 0.07672177790336489,
+        "share_of_the_residual_closed": 0.5920149935477517
+       }
+      ],
+      "ridge_weight_cells": 0.31622776601683794
+     },
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.03543260193638209,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 99,
+        "measured_change": -1.0267503883566125,
+        "standard_error": 0.07673143860917266,
+        "share_of_the_residual_closed": 0.4831197346828212
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 139,
+        "measured_change": -0.8823712364152763,
+        "standard_error": 0.07374694431473684,
+        "share_of_the_residual_closed": 0.6395754364209201
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 124,
+        "measured_change": -0.7583726993737123,
+        "standard_error": 0.07921901940968859,
+        "share_of_the_residual_closed": 0.7642707415638547
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 122,
+        "measured_change": -0.9327865896236159,
+        "standard_error": 0.07984098489399856,
+        "share_of_the_residual_closed": 0.6322908209025766
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 101,
+        "measured_change": -0.9048765486945907,
+        "standard_error": 0.07653535230516939,
+        "share_of_the_residual_closed": 0.5955254646025308
+       }
+      ],
+      "ridge_weight_cells": 0.31622776601683794
+     }
+    ],
+    "gate3": {
+     "closed_form": true,
+     "on_the_cells_it_was_fitted_on": -0.04839880464946522,
+     "objective_reached": true,
+     "no_audit_cell_in_a_fit": true,
+     "guard_on_validation_cells": {
+      "readout_as_trained": 0.19796341351930516,
+      "readout_now": 0.19796341351930516,
+      "fall": 0.0,
+      "mean_fall": 0.0,
+      "worst_item_fall": 0.0,
+      "kept": true
+     }
+    },
+    "gate6": {
+     "guard_on_test_cells": {
+      "readout_as_trained": 0.4076701994662261,
+      "readout_now": 0.4073793033801377,
+      "fall": 0.0002908960860884269,
+      "mean_fall": 2.1708663141550844e-06,
+      "worst_item_fall": 0.0002908960860884269,
+      "kept": true
+     }
+    },
+    "closure": {
+     "readout": "PDL1",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "grade": "relative",
+     "attainable": "absolute",
+     "reached_what_was_attainable": false,
+     "guard_kept": true
+    },
+    "hypothesis": {
+     "type": "hypothesis",
+     "id": "coverage:mel_ifn:PDL1:development",
+     "about": {
+      "event": "mel_ifn: the admitted knockouts, pooled",
+      "readout": "PDL1",
+      "target": "shift",
+      "quantity": "fall of |u| of the head's own output (frozen scope)"
+     },
+     "claim": "coverage",
+     "rivals": [
+      "function",
+      "upstream"
+     ],
+     "forecast": {
+      "rows": [
+       0.8030140687487342,
+       0.9103967708692007
+      ],
+      "other": [
+       0.5198030576109887,
+       0.6642394442111254
+      ]
+     },
+     "rule": {
+      "own": "rows",
+      "at_least": 0.774,
+      "controls": {
+       "other": 0.774
+      }
+     },
+     "basis": [
+      "scope:mel_ifn_PDL1"
+     ],
+     "retrospective": true,
+     "note": "the forecast is the grid's ceiling; the rule asks the repair by rows to come within the step margin of it, and the repair of another group not to"
+    },
+    "test": {
+     "type": "test",
+     "hypothesis": "coverage:mel_ifn:PDL1:development",
+     "claim": "coverage",
+     "retrospective": true,
+     "arms": {
+      "other": {
+       "gain": 0.6286133590060716,
+       "ci": [
+        0.5601774149709517,
+        0.703185953257232
+       ],
+       "admitted": true,
+       "forecast": [
+        0.5198030576109887,
+        0.6642394442111254
+       ],
+       "inside_forecast": true,
+       "forecast_error": 0.036592108095014675
+      },
+      "rows": {
+       "gain": 0.8625081623197752,
+       "ci": [
+        0.7998946751180394,
+        0.905401858766299
+       ],
+       "admitted": true,
+       "forecast": [
+        0.8030140687487342,
+        0.9103967708692007
+       ],
+       "inside_forecast": true,
+       "forecast_error": 0.005802742510807812
+      }
+     },
+     "runs": [
+      "round:mel_ifn_PDL1:development"
+     ],
+     "outcome": "confirmed",
+     "why": "the rows arm's gain lies above 0.774 and every control arm's below its bound"
+    }
+   },
+   "mel_co": {
+    "admission": {
+     "group": "mel_co",
+     "readout": "PDL1",
+     "cell_type": "melanoma",
+     "stratum": "co-culture",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "ready",
+     "attainable": "relative",
+     "A1": true,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": 0.11677268036455746,
+      "ci": [
+       0.007410474150858327,
+       0.19343890731415647
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": 0.10238204675850493,
+      "ci": [
+       0.011841103586386783,
+       0.16591039199322016
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 0.878655173949432,
+      "ci": [
+       0.802377705269294,
+       0.9794878772503479
+      ]
+     },
+     "reasons": [],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": "the `units` scope at Z is unresolved. From RNA, a readout with the gene's own cells is reject; from RNA to Z: no added loss. Read as not readable from RNA by these readouts.",
+     "input_view": {
+      "IFNGR1": {
+       "units": {
+        "u": 0.18093192644074885,
+        "ci": [
+         0.10403665099581078,
+         0.2543204628021591
+        ],
+        "verdict": "reject"
+       },
+       "own": {
+        "u": 0.18803144936761362,
+        "ci": [
+         0.1091517344430509,
+         0.26416960720886334
+        ],
+        "verdict": "reject"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.08717470616102219,
+        "ci": [
+         -0.14639845779165625,
+         -0.0353274155408144
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "IFNGR2": {
+       "units": {
+        "u": 0.21615333178110308,
+        "ci": [
+         0.14621409651901732,
+         0.27496943074149227
+        ],
+        "verdict": "reject"
+       },
+       "own": {
+        "u": 0.20867778251280056,
+        "ci": [
+         0.13392830834180544,
+         0.26975546035088527
+        ],
+        "verdict": "reject"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.10311054438352585,
+        "ci": [
+         -0.1535728383809328,
+         -0.051023841835558414
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "JAK1": {
+       "units": {
+        "u": -0.02975474913185927,
+        "ci": [
+         -0.14860145186457097,
+         0.07112811890652602
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.039068710453529776,
+        "ci": [
+         -0.06988827777880639,
+         0.1353325378977687
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.018332883715629578,
+        "ci": [
+         -0.1093988006003201,
+         0.1459153628442436
+        ],
+        "reading": "unresolved"
+       }
+      },
+      "JAK2": {
+       "units": {
+        "u": 0.2270836228324844,
+        "ci": [
+         0.15772327536334751,
+         0.2898626439010675
+        ],
+        "verdict": "reject"
+       },
+       "own": {
+        "u": 0.22963154336999014,
+        "ci": [
+         0.15905206967828225,
+         0.2961251550113269
+        ],
+        "verdict": "reject"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.088840052485466,
+        "ci": [
+         -0.1369323180988431,
+         -0.04342769533395768
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "STAT1": {
+       "units": {
+        "u": 0.2556617636909383,
+        "ci": [
+         0.19378452868417761,
+         0.31441043205172947
+        ],
+        "verdict": "reject"
+       },
+       "own": {
+        "u": 0.23136297117077886,
+        "ci": [
+         0.1651124072818427,
+         0.29678217584085353
+        ],
+        "verdict": "reject"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.055930688977241516,
+        "ci": [
+         -0.10403595529496669,
+         -0.00807837545871735
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "pool": {
+       "units": {
+        "u": 0.18463637368675778,
+        "ci": [
+         0.07538335542730683,
+         0.253989056309883
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.188125961268507,
+        "ci": [
+         0.10699424837679188,
+         0.2468367577880702
+        ],
+        "verdict": "reject"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.08574391901493073,
+        "ci": [
+         -0.12676419699564576,
+         -0.04399715587496758
+        ],
+        "reading": "no added loss"
+       }
+      }
+     }
+    },
+    "events": [
+     {
+      "event_id": "mel_co_PDL1:knockout:IFNGR1:co-culture",
+      "origin": "inverse:mel_co_PDL1",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.1627123623860696,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 321
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_PDL1:knockout:IFNGR2:co-culture",
+      "origin": "inverse:mel_co_PDL1",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.1089907203485787,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 475
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_PDL1:knockout:JAK1:co-culture",
+      "origin": "inverse:mel_co_PDL1",
+      "time": 2,
+      "site": "JAK1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.9104447449000573,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 390
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_PDL1:knockout:JAK2:co-culture",
+      "origin": "inverse:mel_co_PDL1",
+      "time": 3,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.1739216247250215,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 418
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_PDL1:knockout:STAT1:co-culture",
+      "origin": "inverse:mel_co_PDL1",
+      "time": 4,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.2713980661069715,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 396
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 2000,
+     "n_control": 4000,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -1.1246237921579727,
+      "ci": [
+       -1.2256293482104756,
+       -1.0114437675002805
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 10.501395924309682
+     },
+     "scopes": {
+      "frozen": {
+       "u": 0.9954278543139895,
+       "ci": [
+        0.9901308895152134,
+        0.9997293032520929
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.9911995614926921,
+       "ci": [
+        0.9845378259304433,
+        0.9968928146777535
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "other": {
+       "u": 0.2867491807308362,
+       "ci": [
+        0.20159843407503827,
+        0.3485081955352148
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "units": {
+       "u": 0.11677268036455746,
+       "ci": [
+        0.007410474150858327,
+        0.19343890731415647
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.10238204675850493,
+       "ci": [
+        0.011841103586386783,
+        0.16591039199322016
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": 0.004228292821297441,
+       "ci": [
+        -0.003861524314306647,
+        0.012283709650406474
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "train->units": {
+       "value": 0.8744268811281346,
+       "ci": [
+        0.8000792454227706,
+        0.9735295263299881
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "units->own": {
+       "value": 0.014390633606052528,
+       "ci": [
+        -0.005291245140905338,
+        0.030869511066524576
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "from_frozen": {
+       "train": {
+        "value": 0.004228292821297441,
+        "ci": [
+         -0.003861524314306647,
+         0.012283709650406474
+        ]
+       },
+       "units": {
+        "value": 0.878655173949432,
+        "ci": [
+         0.802377705269294,
+         0.9794878772503479
+        ]
+       },
+       "own": {
+        "value": 0.8930458075554846,
+        "ci": [
+         0.8294016278876369,
+         0.9791433379591149
+        ]
+       }
+      },
+      "other->units": {
+       "value": 0.16997650036627876,
+       "ci": [
+        0.1303981663864543,
+        0.21350330559231806
+       ],
+       "resolved": true,
+       "absent": false
+      }
+     },
+     "reading": "unresolved",
+     "detail": "no scope reaches a verdict at the stage the system reads",
+     "ceiling": {
+      "function": {
+       "removes": 0.004228292821297441,
+       "ci": [
+        -0.003861524314306647,
+        0.012283709650406474
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 0.878655173949432,
+       "ci": [
+        0.802377705269294,
+        0.9794878772503479
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 0.8930458075554846,
+       "ci": [
+        0.8294016278876369,
+        0.9791433379591149
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.9954278543139895,
+     "ci": [
+      0.9901308895152134,
+      0.9997293032520929
+     ],
+     "verdict": "reject",
+     "slope": 0.20337323450228476,
+     "beyond_units_at_Z": {
+      "added": 0.8786551728393038,
+      "ci": [
+       0.80237770436486,
+       0.979487877299923
+      ]
+     }
+    },
+    "arms": {
+     "other": {
+      "u": 0.34966599922720965,
+      "ci": [
+       0.2639109660770935,
+       0.41046644606381266
+      ],
+      "verdict": "reject",
+      "slope": 2.5578444228433903,
+      "valid": true,
+      "gain": 0.6457618550867799,
+      "gain_ci": [
+       0.5835434001584096,
+       0.7290249847310039
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.23289331775252398,
+       "ci": [
+        0.19242994032066688,
+        0.2781654066503378
+       ],
+       "reading": "loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.37043361808721353,
+        "ci": [
+         0.2938375599827667,
+         0.43955813308001634
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.2588708519524746,
+         "ci": [
+          0.2122065068094022,
+          0.30345754975410455
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.3783090349795696,
+        "ci": [
+         0.30564263353299287,
+         0.43860275097255785
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.2638377484443065,
+         "ci": [
+          0.22058682500027943,
+          0.3108894838051089
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK1": {
+        "u": 0.18010282523344467,
+        "ci": [
+         0.06301648239830418,
+         0.27637044477058975
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.08561439073990296,
+         "ci": [
+          -0.16834287412535626,
+          0.2650300511190381
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "JAK2": {
+        "u": 0.3623857232985891,
+        "ci": [
+         0.29300931511925876,
+         0.4278294560942498
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.20867269069532524,
+         "ci": [
+          0.16302563834504383,
+          0.25466280059177404
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.4114892985250571,
+        "ci": [
+         0.3489837839783311,
+         0.46448293140144403
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.19837794262429265,
+         "ci": [
+          0.15195107579149766,
+          0.24493482685927956
+         ],
+         "reading": "loss"
+        }
+       }
+      }
+     },
+     "controls": {
+      "u": 0.28074465918178504,
+      "ci": [
+       0.2032615795244938,
+       0.3366275028028134
+      ],
+      "verdict": "reject",
+      "slope": 2.626279264512379,
+      "valid": true,
+      "gain": 0.7146831951322045,
+      "gain_ci": [
+       0.6590103306156538,
+       0.7903852646676606
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.16397197770709937,
+       "ci": [
+        0.13658849635677078,
+        0.19526868034859235
+       ],
+       "reading": "loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.281238481869756,
+        "ci": [
+         0.21041700550846604,
+         0.34493193597659355
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.16967571573501705,
+         "ci": [
+          0.14024840014651763,
+          0.19959456504737288
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.29245287359058236,
+        "ci": [
+         0.22371514132657594,
+         0.355445631828495
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.1779815870553193,
+         "ci": [
+          0.15029483308871688,
+          0.20805894733887612
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK1": {
+        "u": 0.1418699240315221,
+        "ci": [
+         0.02745843091096107,
+         0.23261166099569208
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.04738148953798038,
+         "ci": [
+          -0.2059992850292005,
+          0.21694751260429637
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "JAK2": {
+        "u": 0.3002569214309364,
+        "ci": [
+         0.2368687546221063,
+         0.358303041892821
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.14654388882767255,
+         "ci": [
+          0.11830777036736735,
+          0.17347961095053244
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.3470524538380776,
+        "ci": [
+         0.28641115217291896,
+         0.4016717379144004
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.13394109793731312,
+         "ci": [
+          0.109221756521544,
+          0.1586966074370344
+         ],
+         "reading": "loss"
+        }
+       }
+      }
+     },
+     "rows_other": {
+      "u": 0.16702500263119435,
+      "ci": [
+       0.07139632609280235,
+       0.23280419299023522
+      ],
+      "verdict": "unresolved",
+      "slope": 2.50382099520025,
+      "valid": true,
+      "gain": 0.8284028516827951,
+      "gain_ci": [
+       0.7628831588515249,
+       0.9224362026958903
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.050252321156508684,
+       "ci": [
+        0.029571153914935786,
+        0.07143001566172962
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.17330724686721144,
+        "ci": [
+         0.09508784793358373,
+         0.2467831256487608
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.06174448073247252,
+         "ci": [
+          0.035495953931787484,
+          0.08791663483695233
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.18306735083018444,
+        "ci": [
+         0.10449782528037513,
+         0.25100070955986997
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.06859606429492138,
+         "ci": [
+          0.04416872086094168,
+          0.09222216652441823
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": -0.00890265982616345,
+        "ci": [
+         -0.14344505520445366,
+         0.09791150849014175
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.08558577466737827,
+         "ci": [
+          -0.11556041065838632,
+          0.08167110768338894
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.19192907307476392,
+        "ci": [
+         0.11922762139634813,
+         0.2560863443324921
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.03821604047150007,
+         "ci": [
+          0.014474257719573025,
+          0.06186636255561554
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.24538356518060545,
+        "ci": [
+         0.1765343515341497,
+         0.3066630638638778
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.03227220927984098,
+         "ci": [
+          0.008131566570226647,
+          0.05437328200735986
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     },
+     "rows": {
+      "u": 0.11772273195813454,
+      "ci": [
+       0.019584492565677285,
+       0.1865743224723721
+      ],
+      "verdict": "unresolved",
+      "slope": 2.5233213426495404,
+      "valid": true,
+      "gain": 0.877705122355855,
+      "gain_ci": [
+       0.8103693687785892,
+       0.9704026456273007
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.0009500504834488721,
+       "ci": [
+        -0.01906219110612961,
+        0.020014028393700655
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.12135539992683875,
+        "ci": [
+         0.0363132658128382,
+         0.19855707532239159
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.009792633792099825,
+         "ci": [
+          -0.0156917721770028,
+          0.033308305809851724
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.1339455246444181,
+        "ci": [
+         0.051998833705972886,
+         0.20638298474534936
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.01947423810915505,
+         "ci": [
+          -0.00504335485820615,
+          0.0429471016455683
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": -0.05963272458241864,
+        "ci": [
+         -0.20038576575782627,
+         0.05025792128531965
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.03485570991112308,
+         "ci": [
+          -0.06489450006360209,
+          0.037413933256370116
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.14316785865809767,
+        "ci": [
+         0.06551625037224107,
+         0.21225321363856817
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.010545173945166186,
+         "ci": [
+          -0.03351890392519754,
+          0.012351507659567183
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.19833628081254928,
+        "ci": [
+         0.1249472005924064,
+         0.26204561375241414
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": -0.014775075088215184,
+         "ci": [
+          -0.03833572247193804,
+          0.0061597477855048445
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     },
+     "cells": {
+      "u": 0.11736335913028917,
+      "ci": [
+       0.02531676592156729,
+       0.18411018729302164
+      ],
+      "verdict": "unresolved",
+      "slope": 2.574973246167552,
+      "valid": true,
+      "gain": 0.8780644951837003,
+      "gain_ci": [
+       0.812497403376186,
+       0.9676240775270402
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.0005906776556034998,
+       "ci": [
+        -0.020917220328114584,
+        0.02106554700917205
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.11464128999761236,
+        "ci": [
+         0.02467021232852484,
+         0.19094064274412093
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.003078523862873439,
+         "ci": [
+          -0.01811932495814886,
+          0.02257793992779065
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.13176845280867655,
+        "ci": [
+         0.04994889487832671,
+         0.2037480886931
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.01729716627341349,
+         "ci": [
+          -0.004710425249641248,
+          0.03722545407960514
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": -0.04848519965476461,
+        "ci": [
+         -0.18296316227305814,
+         0.05919796415367854
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.04600323483877711,
+         "ci": [
+          -0.07271919809526026,
+          0.04603973617178466
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.14746692334891742,
+        "ci": [
+         0.07204649495777489,
+         0.21776541684162096
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.0062461092543464325,
+         "ci": [
+          -0.02684740337134458,
+          0.013038761445025396
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.19193410400847466,
+        "ci": [
+         0.1189551509851221,
+         0.2546323389560297
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": -0.021177251892289806,
+         "ci": [
+          -0.04278699011307032,
+          -0.004467825111619723
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     }
+    },
+    "fits": [
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.048149456355486675,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 160,
+        "measured_change": -0.8872444192342773,
+        "standard_error": 0.06323234421075787,
+        "share_of_the_residual_closed": 0.7362396131885621
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 238,
+        "measured_change": -0.8306422906879709,
+        "standard_error": 0.05531907978230737,
+        "share_of_the_residual_closed": 0.726337779646897
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 195,
+        "measured_change": -0.7180622832718953,
+        "standard_error": 0.061249710503736475,
+        "share_of_the_residual_closed": 0.3115702132819309
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 209,
+        "measured_change": -0.8663619321658582,
+        "standard_error": 0.05906136922416438,
+        "share_of_the_residual_closed": 0.6214873671191212
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 198,
+        "measured_change": -0.9232714986238797,
+        "standard_error": 0.06163312271690227,
+        "share_of_the_residual_closed": 0.5924251818822756
+       }
+      ],
+      "ridge_weight_cells": 0.31622776601683794
+     },
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.1,
+      "cv_error": 0.0464921260146395,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 161,
+        "measured_change": -0.8755473917378933,
+        "standard_error": 0.06640867884536919,
+        "share_of_the_residual_closed": 0.7322262366239485
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 237,
+        "measured_change": -0.8505434224702838,
+        "standard_error": 0.05424353149842022,
+        "share_of_the_residual_closed": 0.8290711147017966
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 195,
+        "measured_change": -0.6621576621116706,
+        "standard_error": 0.06235324160258759,
+        "share_of_the_residual_closed": -1.1208145526416007
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 209,
+        "measured_change": -0.9132848282099387,
+        "standard_error": 0.050170405433601156,
+        "share_of_the_residual_closed": 0.7714648154210324
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 198,
+        "measured_change": -1.0041480171596584,
+        "standard_error": 0.05758715843093234,
+        "share_of_the_residual_closed": 0.5458706628028243
+       }
+      ],
+      "ridge_weight_cells": 0.1
+     }
+    ],
+    "gate3": {
+     "closed_form": true,
+     "on_the_cells_it_was_fitted_on": -0.01136725632337754,
+     "objective_reached": true,
+     "no_audit_cell_in_a_fit": true,
+     "guard_on_validation_cells": {
+      "readout_as_trained": 0.19796341351930516,
+      "readout_now": 0.19796341351930516,
+      "fall": 0.0,
+      "mean_fall": 0.0,
+      "worst_item_fall": 0.0,
+      "kept": true
+     }
+    },
+    "gate6": {
+     "guard_on_test_cells": {
+      "readout_as_trained": 0.4076701994662261,
+      "readout_now": 0.4073793033801377,
+      "fall": 0.0002908960860884269,
+      "mean_fall": 2.1708663141550844e-06,
+      "worst_item_fall": 0.0002908960860884269,
+      "kept": true
+     }
+    },
+    "closure": {
+     "readout": "PDL1",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "grade": "relative",
+     "attainable": "relative",
+     "reached_what_was_attainable": true,
+     "guard_kept": true
+    },
+    "hypothesis": {
+     "type": "hypothesis",
+     "id": "coverage:mel_co:PDL1:development",
+     "about": {
+      "event": "mel_co: the admitted knockouts, pooled",
+      "readout": "PDL1",
+      "target": "shift",
+      "quantity": "fall of |u| of the head's own output (frozen scope)"
+     },
+     "claim": "coverage",
+     "rivals": [
+      "function",
+      "upstream"
+     ],
+     "forecast": {
+      "rows": [
+       0.802377705269294,
+       0.9794878772503479
+      ],
+      "other": [
+       0.6474632285535336,
+       0.7929098349064588
+      ]
+     },
+     "rule": {
+      "own": "rows",
+      "at_least": 0.779,
+      "controls": {
+       "other": 0.779
+      }
+     },
+     "basis": [
+      "scope:mel_co_PDL1"
+     ],
+     "retrospective": true,
+     "note": "the forecast is the grid's ceiling; the rule asks the repair by rows to come within the step margin of it, and the repair of another group not to"
+    },
+    "test": {
+     "type": "test",
+     "hypothesis": "coverage:mel_co:PDL1:development",
+     "claim": "coverage",
+     "retrospective": true,
+     "arms": {
+      "other": {
+       "gain": 0.6457618550867799,
+       "ci": [
+        0.5835434001584096,
+        0.7290249847310039
+       ],
+       "admitted": true,
+       "forecast": [
+        0.6474632285535336,
+        0.7929098349064588
+       ],
+       "inside_forecast": false,
+       "forecast_error": -0.07442467664321639
+      },
+      "rows": {
+       "gain": 0.877705122355855,
+       "ci": [
+        0.8103693687785892,
+        0.9704026456273007
+       ],
+       "admitted": true,
+       "forecast": [
+        0.802377705269294,
+        0.9794878772503479
+       ],
+       "inside_forecast": true,
+       "forecast_error": -0.013227668903965983
+      }
+     },
+     "runs": [
+      "round:mel_co_PDL1:development"
+     ],
+     "outcome": "confirmed",
+     "why": "the rows arm's gain lies above 0.779 and every control arm's below its bound"
+    }
+   },
+   "thp1": {
+    "admission": {
+     "group": "thp1",
+     "readout": "PDL1",
+     "cell_type": "THP-1",
+     "stratum": "stimulated",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "ready",
+     "attainable": "relative",
+     "A1": true,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": 0.1317957301242345,
+      "ci": [
+       0.01616688892396743,
+       0.31153306426523014
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": 0.10591281577604772,
+      "ci": [
+       0.023809103032508074,
+       0.20499633666062841
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 0.8343181738256031,
+      "ci": [
+       0.6501154782947717,
+       0.9363766600844319
+      ]
+     },
+     "reasons": [],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": "the `units` scope at Z is unresolved. From RNA, a readout with the gene's own cells is unresolved; from RNA to Z: unresolved. Not placed: neither view reaches a verdict.",
+     "input_view": {
+      "IFNGR1": {
+       "units": {
+        "u": 0.04408704412424691,
+        "ci": [
+         -0.014825805226166599,
+         0.10171811482277453
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.05120290373205627,
+        "ci": [
+         -0.008768490255535976,
+         0.10757899613815723
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.028807487338781357,
+        "ci": [
+         -0.018975517153739928,
+         0.07591041484847665
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "IFNGR2": {
+       "units": {
+        "u": 0.11887474996738767,
+        "ci": [
+         0.06218241026809822,
+         0.16971879370407256
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.10757254648745962,
+        "ci": [
+         0.05214888504035745,
+         0.15859350904452518
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": -0.003313109278678894,
+        "ci": [
+         -0.046670283563435076,
+         0.0434796130284667
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "JAK2": {
+       "units": {
+        "u": 0.10905745128902455,
+        "ci": [
+         0.0487587175716104,
+         0.16052436752639299
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.09208583646122026,
+        "ci": [
+         0.03202675621244421,
+         0.14440839025171767
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.014230839908123016,
+        "ci": [
+         -0.030372165143489838,
+         0.06014862534357233
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "STAT1": {
+       "units": {
+        "u": -0.005866388624924834,
+        "ci": [
+         -0.09241010509283647,
+         0.07508927013151402
+        ],
+        "verdict": "support"
+       },
+       "own": {
+        "u": 0.0060997125451169865,
+        "ci": [
+         -0.0786915574344419,
+         0.08704750321640527
+        ],
+        "verdict": "support"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.09243249474093318,
+        "ci": [
+         -0.06210648687556386,
+         0.16231888363836328
+        ],
+        "reading": "unresolved"
+       }
+      },
+      "IRF1": {
+       "units": {
+        "u": 0.7748428614238442,
+        "ci": [
+         0.6673515408953458,
+         0.9039578732717526
+        ],
+        "verdict": "reject"
+       },
+       "own": {
+        "u": 0.18370169645910994,
+        "ci": [
+         0.03929972722281346,
+         0.2992836326100218
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.21210941672325134,
+        "ci": [
+         0.11642118543386461,
+         0.3171974940225482
+        ],
+        "reading": "loss"
+       }
+      },
+      "pool": {
+       "units": {
+        "u": 0.14282333880309195,
+        "ci": [
+         0.03326363383991701,
+         0.35036529351357704
+        ],
+        "verdict": "unresolved"
+       },
+       "own": {
+        "u": 0.08567688744511215,
+        "ci": [
+         0.02393896950397127,
+         0.14166379079121588
+        ],
+        "verdict": "unresolved"
+       },
+       "added_from_RNA_to_Z_own_scope": {
+        "added": 0.020235925912857056,
+        "ci": [
+         -0.03528811815194786,
+         0.1000249549280852
+        ],
+        "reading": "unresolved"
+       }
+      }
+     }
+    },
+    "events": [
+     {
+      "event_id": "thp1_PDL1:knockout:IFNGR1:stimulated",
+      "origin": "inverse:thp1_PDL1",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.9273868045531541,
+      "role": "treated",
+      "stratum": "stimulated",
+      "provenance": "guide assignment",
+      "pool": "thp1_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 1339
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "THP-1",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "thp1_PDL1:knockout:IFNGR2:stimulated",
+      "origin": "inverse:thp1_PDL1",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.049555146025502,
+      "role": "treated",
+      "stratum": "stimulated",
+      "provenance": "guide assignment",
+      "pool": "thp1_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 1213
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "THP-1",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "thp1_PDL1:knockout:JAK2:stimulated",
+      "origin": "inverse:thp1_PDL1",
+      "time": 2,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.1322011086423185,
+      "role": "treated",
+      "stratum": "stimulated",
+      "provenance": "guide assignment",
+      "pool": "thp1_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 1024
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "THP-1",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "thp1_PDL1:knockout:STAT1:stimulated",
+      "origin": "inverse:thp1_PDL1",
+      "time": 3,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.8465343947464029,
+      "role": "treated",
+      "stratum": "stimulated",
+      "provenance": "guide assignment",
+      "pool": "thp1_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 444
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "THP-1",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "thp1_PDL1:knockout:IRF1:stimulated",
+      "origin": "inverse:thp1_PDL1",
+      "time": 4,
+      "site": "IRF1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.35603240839307465,
+      "role": "treated",
+      "stratum": "stimulated",
+      "provenance": "guide assignment",
+      "pool": "thp1_PDL1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 1072
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "PDL1",
+      "cell_type": "THP-1",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 5092,
+     "n_control": 2386,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -0.8703423550157395,
+      "ci": [
+       -1.0737864595943187,
+       -0.5728983292992921
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 3.4751965653612182
+     },
+     "scopes": {
+      "frozen": {
+       "u": 0.9661139039498376,
+       "ci": [
+        0.9468809892944215,
+        0.977963209512382
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.9572161901123315,
+       "ci": [
+        0.9378224843725343,
+        0.9850709155363156
+       ],
+       "verdict": "reject",
+       "class": "hgb"
+      },
+      "other": {
+       "u": 0.7247740159988318,
+       "ci": [
+        0.6416723355354019,
+        0.79128280800059
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "units": {
+       "u": 0.1317957301242345,
+       "ci": [
+        0.01616688892396743,
+        0.31153306426523014
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.10591281577604772,
+       "ci": [
+        0.023809103032508074,
+        0.20499633666062841
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": 0.00889771383750615,
+       "ci": [
+        -0.027516671592203615,
+        0.030439671224042463
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "train->units": {
+       "value": 0.825420459988097,
+       "ci": [
+        0.668805089028792,
+        0.9189106663289522
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "units->own": {
+       "value": 0.025882914348186792,
+       "ci": [
+        -0.015455352812400406,
+        0.10958886295398658
+       ],
+       "resolved": false,
+       "absent": false
+      },
+      "from_frozen": {
+       "train": {
+        "value": 0.00889771383750615,
+        "ci": [
+         -0.027516671592203615,
+         0.030439671224042463
+        ]
+       },
+       "units": {
+        "value": 0.8343181738256031,
+        "ci": [
+         0.6501154782947717,
+         0.9363766600844319
+        ]
+       },
+       "own": {
+        "value": 0.8602010881737899,
+        "ci": [
+         0.7510644503006707,
+         0.9307286816514708
+        ]
+       }
+      },
+      "other->units": {
+       "value": 0.5929782858745973,
+       "ci": [
+        0.4474654935871585,
+        0.673428974792477
+       ],
+       "resolved": true,
+       "absent": false
+      }
+     },
+     "reading": "unresolved",
+     "detail": "no scope reaches a verdict at the stage the system reads",
+     "ceiling": {
+      "function": {
+       "removes": 0.00889771383750615,
+       "ci": [
+        -0.027516671592203615,
+        0.030439671224042463
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 0.8343181738256031,
+       "ci": [
+        0.6501154782947717,
+        0.9363766600844319
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 0.8602010881737899,
+       "ci": [
+        0.7510644503006707,
+        0.9307286816514708
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.9661139039498376,
+     "ci": [
+      0.9468809892944215,
+      0.977963209512382
+     ],
+     "verdict": "reject",
+     "slope": -0.26139537119769407,
+     "beyond_units_at_Z": {
+      "added": 0.8343181697827387,
+      "ci": [
+       0.6501154676458051,
+       0.9363766602692825
+      ]
+     }
+    },
+    "arms": {
+     "other": {
+      "u": 0.755582288027741,
+      "ci": [
+       0.6795222613823694,
+       0.818739427192837
+      ],
+      "verdict": "reject",
+      "slope": 0.8598086376291768,
+      "valid": true,
+      "gain": 0.21053161592209668,
+      "gain_ci": [
+       0.14482490433031597,
+       0.2802907590371466
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.623786553860642,
+       "ci": [
+        0.47847111937477804,
+        0.7057856715309493
+       ],
+       "reading": "loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.7543951498038926,
+        "ci": [
+         0.7016255129755254,
+         0.8019009144075752
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.6824005843765892,
+         "ci": [
+          0.6206897899629543,
+          0.7481202263081554
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.7709924681322157,
+        "ci": [
+         0.7216044280236444,
+         0.8161530544356247
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.6592483325140058,
+         "ci": [
+          0.5982018021014142,
+          0.719592658563407
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.7600786708135032,
+        "ci": [
+         0.7115958121395246,
+         0.8069314662305376
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.6413105375904464,
+         "ci": [
+          0.5762425906491067,
+          0.7076904492235484
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.544450783836725,
+        "ci": [
+         0.44601154099621465,
+         0.639604332141735
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.37454132150399944,
+         "ci": [
+          0.18100171320859754,
+          0.549117791975037
+         ],
+         "reading": "loss"
+        }
+       },
+       "IRF1": {
+        "u": 0.9023031146934831,
+        "ci": [
+         0.853735034832668,
+         0.9460650449832911
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.2650919707229936,
+         "ci": [
+          0.1405952937342269,
+          0.37141819816569016
+         ],
+         "reading": "loss"
+        }
+       }
+      }
+     },
+     "controls": {
+      "u": 0.5281655982197149,
+      "ci": [
+       0.46655877215029373,
+       0.656586841452132
+      ],
+      "verdict": "reject",
+      "slope": 1.5190791992548285,
+      "valid": true,
+      "gain": 0.4379483057301228,
+      "gain_ci": [
+       0.29970457608294543,
+       0.49870861549824635
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.3963698640526159,
+       "ci": [
+        0.32465412970644775,
+        0.47580912434440564
+       ],
+       "reading": "loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.47495386436310694,
+        "ci": [
+         0.42311454237962653,
+         0.5217557531315019
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.4029592989358036,
+         "ci": [
+          0.359658046299912,
+          0.44634815494104896
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.48774204599878856,
+        "ci": [
+         0.4400947863446794,
+         0.5336819158110043
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.3759979103805787,
+         "ci": [
+          0.33289658759842533,
+          0.41980395575874474
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.5171886098415632,
+        "ci": [
+         0.4684672262082632,
+         0.5629414870256066
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.39842047661850644,
+         "ci": [
+          0.3558289491135967,
+          0.44657805319542876
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.4954498285912021,
+        "ci": [
+         0.391753230950745,
+         0.592934266854249
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.3255403662584766,
+         "ci": [
+          0.1518244313387525,
+          0.5004760642313887
+         ],
+         "reading": "loss"
+        }
+       },
+       "IRF1": {
+        "u": 0.9016942243481505,
+        "ci": [
+         0.7773880175998432,
+         1.06419191943023
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.264483080377661,
+         "ci": [
+          0.18397500980778178,
+          0.3653310065424934
+         ],
+         "reading": "loss"
+        }
+       }
+      }
+     },
+     "rows_other": {
+      "u": 0.2739812506811953,
+      "ci": [
+       0.1613764512493533,
+       0.41039654538203985
+      ],
+      "verdict": "reject",
+      "slope": 1.443112078848964,
+      "valid": true,
+      "gain": 0.6921326532686424,
+      "gain_ci": [
+       0.5486440876596526,
+       0.7968182308878758
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.14218551651409628,
+       "ci": [
+        0.08613977595557487,
+        0.17771209152130046
+       ],
+       "reading": "unresolved"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.23966748451847175,
+        "ci": [
+         0.17606029689056635,
+         0.29547787597591346
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.16767291909116844,
+         "ci": [
+          0.12498297807280206,
+          0.20817461595179587
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.2591144273635144,
+        "ci": [
+         0.20021435384482153,
+         0.3144032700022121
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.14737029174530458,
+         "ci": [
+          0.1068046785095414,
+          0.18546103538019024
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.29140758159342817,
+        "ci": [
+         0.22665694779548262,
+         0.3472612677380166
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.17263944837037137,
+         "ci": [
+          0.1351881762726203,
+          0.21414919171059085
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": -0.04377964560042513,
+        "ci": [
+         -0.18151604439159133,
+         0.08727367345383442
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.1261298167323004,
+         "ci": [
+          -0.2051768141790671,
+          0.011961254161909006
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IRF1": {
+        "u": 0.6952056006456355,
+        "ci": [
+         0.5883593267041087,
+         0.8121265486529486
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.05799445667514602,
+         "ci": [
+          -0.011866837208608427,
+          0.13561462127485527
+         ],
+         "reading": "unresolved"
+        }
+       }
+      }
+     },
+     "rows": {
+      "u": 0.16258925676156755,
+      "ci": [
+       0.0790554816110704,
+       0.28976882080432115
+      ],
+      "verdict": "unresolved",
+      "slope": 1.4483604915810848,
+      "valid": true,
+      "gain": 0.8035246471882701,
+      "gain_ci": [
+       0.6697676908974806,
+       0.8838947888518264
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.030793522594468548,
+       "ci": [
+        -0.032693951196649404,
+        0.08423499829880468
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.09961105872607323,
+        "ci": [
+         0.029216682215680644,
+         0.16173758053251122
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.027616493298769917,
+         "ci": [
+          -0.010920921080174523,
+          0.0619594835751231
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.14238722588759567,
+        "ci": [
+         0.07892846215329706,
+         0.20363300679766227
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.03064309026938583,
+         "ci": [
+          -0.007909726031998217,
+          0.06638717916979445
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.17325792368948423,
+        "ci": [
+         0.10599422507650931,
+         0.23475241437044542
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.054489790466427435,
+         "ci": [
+          0.019761597631478268,
+          0.09012620569391765
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.023065306258984286,
+        "ci": [
+         -0.11097923782720054,
+         0.15193565784533233
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.14684415607374124,
+         "ci": [
+          -0.24327026745920538,
+          0.06560494413281188
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IRF1": {
+        "u": 0.5398728142536883,
+        "ci": [
+         0.43178693952825903,
+         0.6479843867037727
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": -0.09733832971680123,
+         "ci": [
+          -0.17071419415594485,
+          -0.032492584170143765
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     },
+     "cells": {
+      "u": 0.14319220031876045,
+      "ci": [
+       0.07711012374905728,
+       0.2527389089575711
+      ],
+      "verdict": "unresolved",
+      "slope": 1.5052796956866596,
+      "valid": true,
+      "gain": 0.8229217036310772,
+      "gain_ci": [
+       0.7054374261060384,
+       0.8872927936559812
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.011396466151661455,
+       "ci": [
+        -0.07459475173622532,
+        0.08840776237563605
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.0979555082645408,
+        "ci": [
+         0.03413334644062579,
+         0.1594066622502111
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.02596094283723749,
+         "ci": [
+          0.0014814212443835684,
+          0.04733063782804016
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.12368251119714557,
+        "ci": [
+         0.0591119560964628,
+         0.18181799390272993
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.011938375578935734,
+         "ci": [
+          -0.010426109349158896,
+          0.035852388257770526
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.13456481574611767,
+        "ci": [
+         0.0671766888266181,
+         0.1936202675929169
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": 0.01579668252306088,
+         "ci": [
+          -0.00847883507302973,
+          0.04095373896153975
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.0967217852444866,
+        "ci": [
+         -0.02023077699764903,
+         0.20889505879035788
+        ],
+        "verdict": "unresolved",
+        "beyond_units_at_Z": {
+         "added": -0.07318767708823892,
+         "ci": [
+          -0.2610533804240481,
+          0.12016986524344252
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "IRF1": {
+        "u": 0.427420243786817,
+        "ci": [
+         0.3047739915671308,
+         0.532537086246498
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": -0.20979090018367252,
+         "ci": [
+          -0.2844648930294321,
+          -0.1561458001580859
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     }
+    },
+    "fits": [
+     {
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.14903236358591004,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 670,
+        "measured_change": -0.7345162747785929,
+        "standard_error": 0.040311878959883696,
+        "share_of_the_residual_closed": 0.9114479453490582
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 606,
+        "measured_change": -0.8086812098107581,
+        "standard_error": 0.04051611034501108,
+        "share_of_the_residual_closed": 0.7729213186210336
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.9240767346287004,
+        "standard_error": 0.04255191346222938,
+        "share_of_the_residual_closed": 0.7826065708129689
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6543146675228941,
+        "standard_error": 0.05804864409471367,
+        "share_of_the_residual_closed": -0.13889153352663874
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.31905404862255793,
+        "standard_error": 0.04325177876696013,
+        "share_of_the_residual_closed": 0.41019995652649244
+       }
+      ],
+      "ridge_weight_cells": 0.03162277660168379
+     },
+     {
+      "n_controls": 1193,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.1532567463222631,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 669,
+        "measured_change": -0.7432026050435931,
+        "standard_error": 0.04033508564142317,
+        "share_of_the_residual_closed": 0.9092259097256699
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 607,
+        "measured_change": -0.8636140934365226,
+        "standard_error": 0.03921376418447299,
+        "share_of_the_residual_closed": 0.8670848605520458
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 512,
+        "measured_change": -0.8799698686316679,
+        "standard_error": 0.04124965587532244,
+        "share_of_the_residual_closed": 0.7577277951139731
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 222,
+        "measured_change": -0.6945512607366622,
+        "standard_error": 0.060536600344752105,
+        "share_of_the_residual_closed": 0.5025787735267724
+       },
+       {
+        "event": "IRF1",
+        "n_cells": 536,
+        "measured_change": -0.2482471597134328,
+        "standard_error": 0.04402604349929825,
+        "share_of_the_residual_closed": 0.48412087351914823
+       }
+      ],
+      "ridge_weight_cells": 0.1
+     }
+    ],
+    "gate3": {
+     "closed_form": true,
+     "on_the_cells_it_was_fitted_on": 0.06097311209015677,
+     "objective_reached": true,
+     "no_audit_cell_in_a_fit": true,
+     "guard_on_validation_cells": {
+      "readout_as_trained": 0.19796341351930516,
+      "readout_now": 0.19796341351930516,
+      "fall": 0.0,
+      "mean_fall": 0.0,
+      "worst_item_fall": 0.0,
+      "kept": true
+     }
+    },
+    "gate6": {
+     "guard_on_test_cells": {
+      "readout_as_trained": 0.4076701994662261,
+      "readout_now": 0.4073793033801377,
+      "fall": 0.0002908960860884269,
+      "mean_fall": 2.1708663141550844e-06,
+      "worst_item_fall": 0.0002908960860884269,
+      "kept": true
+     }
+    },
+    "closure": {
+     "readout": "PDL1",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "grade": "relative",
+     "attainable": "relative",
+     "reached_what_was_attainable": true,
+     "guard_kept": true
+    },
+    "hypothesis": {
+     "type": "hypothesis",
+     "id": "coverage:thp1:PDL1:development",
+     "about": {
+      "event": "thp1: the admitted knockouts, pooled",
+      "readout": "PDL1",
+      "target": "shift",
+      "quantity": "fall of |u| of the head's own output (frozen scope)"
+     },
+     "claim": "coverage",
+     "rivals": [
+      "function",
+      "upstream"
+     ],
+     "forecast": {
+      "rows": [
+       0.6501154782947717,
+       0.9363766600844319
+      ],
+      "other": [
+       0.17346826046705247,
+       0.31951058059930804
+      ]
+     },
+     "rule": {
+      "own": "rows",
+      "at_least": 0.734,
+      "controls": {
+       "other": 0.734
+      }
+     },
+     "basis": [
+      "scope:thp1_PDL1"
+     ],
+     "retrospective": true,
+     "note": "the forecast is the grid's ceiling; the rule asks the repair by rows to come within the step margin of it, and the repair of another group not to"
+    },
+    "test": {
+     "type": "test",
+     "hypothesis": "coverage:thp1:PDL1:development",
+     "claim": "coverage",
+     "retrospective": true,
+     "arms": {
+      "other": {
+       "gain": 0.21053161592209668,
+       "ci": [
+        0.14482490433031597,
+        0.2802907590371466
+       ],
+       "admitted": true,
+       "forecast": [
+        0.17346826046705247,
+        0.31951058059930804
+       ],
+       "inside_forecast": true,
+       "forecast_error": -0.035957804611083555
+      },
+      "rows": {
+       "gain": 0.8035246471882701,
+       "ci": [
+        0.6697676908974806,
+        0.8838947888518264
+       ],
+       "admitted": true,
+       "forecast": [
+        0.6501154782947717,
+        0.9363766600844319
+       ],
+       "inside_forecast": true,
+       "forecast_error": 0.010278577998668381
+      }
+     },
+     "runs": [
+      "round:thp1_PDL1:development"
+     ],
+     "outcome": "unresolved",
+     "why": "an interval crosses its bound"
+    }
+   }
+  },
+  "gate": [
+   {
+    "fold": 0,
+    "group": "mel_ifn",
+    "on_mel_ifn": 0.9887814313346228,
+    "on_mel_co": 0.011218568665377175,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.997,
+    "own_on_knockout_cells": 0.9606837606837607
+   },
+   {
+    "fold": 0,
+    "group": "mel_co",
+    "on_mel_ifn": 0.009,
+    "on_mel_co": 0.991,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.9895,
+    "own_on_knockout_cells": 0.994
+   },
+   {
+    "fold": 0,
+    "group": "thp1",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.00775608451457609,
+    "on_thp1": 0.9922439154854239,
+    "own_on_control_cells": 1.0,
+    "own_on_knockout_cells": 0.9886095836606441
+   },
+   {
+    "fold": 0,
+    "group": "bone marrow (test cells)",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.0002,
+    "on_thp1": 0.0,
+    "cells_given_to_a_group": 1
+   },
+   {
+    "fold": 1,
+    "group": "mel_ifn",
+    "on_mel_ifn": 0.98569218870843,
+    "on_mel_co": 0.014307811291569992,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.9945,
+    "own_on_knockout_cells": 0.9556313993174061
+   },
+   {
+    "fold": 1,
+    "group": "mel_co",
+    "on_mel_ifn": 0.010333333333333333,
+    "on_mel_co": 0.9896666666666667,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.988,
+    "own_on_knockout_cells": 0.993
+   },
+   {
+    "fold": 1,
+    "group": "thp1",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.010430596416154053,
+    "on_thp1": 0.9893019523936881,
+    "own_on_control_cells": 0.9991617770326907,
+    "own_on_knockout_cells": 0.9846818538884525
+   },
+   {
+    "fold": 1,
+    "group": "bone marrow (test cells)",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.0002,
+    "on_thp1": 0.0,
+    "cells_given_to_a_group": 1
+   }
+  ],
+  "probe": {
+   "site": "CD274",
+   "group": "mel_ifn",
+   "grid": {
+    "n_treated": 287,
+    "n_control": 4000,
+    "approximate": false,
+    "resampled": {
+     "treated": "cells",
+     "control": "cells"
+    },
+    "response": {
+     "value": -1.9947141341578833,
+     "ci": [
+      -2.1037778200333905,
+      -1.8849319086947272
+     ],
+     "resolved": true,
+     "unit": "control SD",
+     "snr": 18.229393658363296
+    },
+    "scopes": {
+     "frozen": {
+      "u": 0.9992205744651501,
+      "ci": [
+       0.986893680878494,
+       1.0124370565688607
+      ],
+      "verdict": "reject",
+      "class": "system"
+     },
+     "train": {
+      "u": 0.9996258489204252,
+      "ci": [
+       0.9977601847197566,
+       1.0008536759662068
+      ],
+      "verdict": "reject",
+      "class": "hgb"
+     },
+     "units": {
+      "u": 0.915688259950127,
+      "ci": [
+       0.8738077550226231,
+       0.9564059032283765
+      ],
+      "verdict": "reject",
+      "class": "ridge"
+     },
+     "own": {
+      "u": 0.9129340653850763,
+      "ci": [
+       0.87076897889742,
+       0.9515631422597034
+      ],
+      "verdict": "reject",
+      "class": "ridge"
+     }
+    },
+    "gaps": {
+     "frozen->train": {
+      "value": -0.0004052744552750509,
+      "ci": [
+       -0.012391532612413145,
+       0.012661459991818953
+      ],
+      "resolved": false,
+      "absent": true
+     },
+     "train->units": {
+      "value": 0.08393758897029813,
+      "ci": [
+       0.043353833310117496,
+       0.12618635274390466
+      ],
+      "resolved": false,
+      "absent": false
+     },
+     "units->own": {
+      "value": 0.0027541945650507715,
+      "ci": [
+       -0.005050041817481176,
+       0.011137863514709988
+      ],
+      "resolved": false,
+      "absent": true
+     },
+     "from_frozen": {
+      "train": {
+       "value": -0.0004052744552750509,
+       "ci": [
+        -0.012391532612413145,
+        0.012661459991818953
+       ]
+      },
+      "units": {
+       "value": 0.08353231451502308,
+       "ci": [
+        0.04606510369505245,
+        0.12307639803372261
+       ]
+      },
+      "own": {
+       "value": 0.08628650908007385,
+       "ci": [
+        0.050293560328321094,
+        0.12642861947516473
+       ]
+      }
+     }
+    },
+    "reading": "unreadable",
+    "detail": "no scope reads it",
+    "ceiling": {
+     "function": {
+      "removes": -0.0004052744552750509,
+      "ci": [
+       -0.012391532612413145,
+       0.012661459991818953
+      ],
+      "what": "another map, the same training cells",
+      "is": "a ceiling"
+     },
+     "coverage": {
+      "removes": 0.08353231451502308,
+      "ci": [
+       0.04606510369505245,
+       0.12307639803372261
+      ],
+      "what": "cells of this kind in the training",
+      "is": "a ceiling"
+     },
+     "calibration": {
+      "removes": 0.08628650908007385,
+      "ci": [
+       0.050293560328321094,
+       0.12642861947516473
+      ],
+      "what": "the unit's own labelled cells",
+      "is": "a ceiling"
+     }
+    }
+   },
+   "no_leakage": {
+    "status": "flag",
+    "routes": {
+     "assignment": {
+      "status": "pass",
+      "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+     },
+     "measurement": {
+      "status": "pass",
+      "reason": "no readout uses an input of the audited system"
+     },
+     "site": {
+      "status": "flag",
+      "reason": "the event acts on the own gene of readout PDL1 (rule S3)"
+     }
+    }
+   },
+   "admission": {
+    "status": "not admitted",
+    "reason": "A2: the event acts on the own gene of readout PDL1 (rule S3)"
+   },
+   "goes_to": "what to measure: no readout of Z or of RNA can be asked to carry a change made at the protein's own gene"
+  },
+  "ledger": {
+   "events": 34,
+   "checks": [
+    {
+     "code": "H2",
+     "severity": "warning",
+     "message": "'coverage:mel_ifn:PDL1:development' is retrospective: its forecast was written after the outcome was known"
+    },
+    {
+     "code": "H2",
+     "severity": "warning",
+     "message": "'coverage:mel_co:PDL1:development' is retrospective: its forecast was written after the outcome was known"
+    },
+    {
+     "code": "H2",
+     "severity": "warning",
+     "message": "'coverage:thp1:PDL1:development' is retrospective: its forecast was written after the outcome was known"
+    }
+   ],
+   "errors": [],
+   "forecast_record": {
+    "n": 6,
+    "inside": 5,
+    "mean_abs_error": 0.029380596460459468,
+    "rows": [
+     {
+      "hypothesis": "coverage:mel_ifn:PDL1:development",
+      "arm": "other",
+      "gain": 0.6286133590060716,
+      "forecast": [
+       0.5198030576109887,
+       0.6642394442111254
+      ],
+      "inside_forecast": true,
+      "forecast_error": 0.036592108095014675,
+      "retrospective": true
+     },
+     {
+      "hypothesis": "coverage:mel_ifn:PDL1:development",
+      "arm": "rows",
+      "gain": 0.8625081623197752,
+      "forecast": [
+       0.8030140687487342,
+       0.9103967708692007
+      ],
+      "inside_forecast": true,
+      "forecast_error": 0.005802742510807812,
+      "retrospective": true
+     },
+     {
+      "hypothesis": "coverage:mel_co:PDL1:development",
+      "arm": "other",
+      "gain": 0.6457618550867799,
+      "forecast": [
+       0.6474632285535336,
+       0.7929098349064588
+      ],
+      "inside_forecast": false,
+      "forecast_error": -0.07442467664321639,
+      "retrospective": true
+     },
+     {
+      "hypothesis": "coverage:mel_co:PDL1:development",
+      "arm": "rows",
+      "gain": 0.877705122355855,
+      "forecast": [
+       0.802377705269294,
+       0.9794878772503479
+      ],
+      "inside_forecast": true,
+      "forecast_error": -0.013227668903965983,
+      "retrospective": true
+     },
+     {
+      "hypothesis": "coverage:thp1:PDL1:development",
+      "arm": "other",
+      "gain": 0.21053161592209668,
+      "forecast": [
+       0.17346826046705247,
+       0.31951058059930804
+      ],
+      "inside_forecast": true,
+      "forecast_error": -0.035957804611083555,
+      "retrospective": true
+     },
+     {
+      "hypothesis": "coverage:thp1:PDL1:development",
+      "arm": "rows",
+      "gain": 0.8035246471882701,
+      "forecast": [
+       0.6501154782947717,
+       0.9363766600844319
+      ],
+      "inside_forecast": true,
+      "forecast_error": 0.010278577998668381,
+      "retrospective": true
+     }
+    ]
+   }
+  },
+  "cross_condition_pool": {
+   "melanoma, both conditions": [
+    "time",
+    "site",
+    "amplitude",
+    "stratum"
+   ]
+  },
+  "loop": {
+   "targets": [
+    "mel_ifn",
+    "mel_co",
+    "thp1"
+   ],
+   "not_targets": [],
+   "every_target_reached_its_attainable_grade": false,
+   "guard_kept": true,
+   "ledger_errors": 0,
+   "open": [
+    {
+     "group": "mel_co",
+     "what": "the `units` scope at Z is unresolved. From RNA, a readout with the gene's own cells is reject; from RNA to Z: no added loss. Read as not readable from RNA by these readouts."
+    },
+    {
+     "group": "thp1",
+     "what": "the `units` scope at Z is unresolved. From RNA, a readout with the gene's own cells is unresolved; from RNA to Z: unresolved. Not placed: neither view reaches a verdict."
+    }
+   ]
+  }
+ }
+}
