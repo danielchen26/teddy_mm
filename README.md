@@ -124,6 +124,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   interval is not inside the margin. Computed in the IFN-γ condition and read in the co-culture condition the repair is
   rejected (0.43): a row belongs to its condition. The knockout of CD274, the gene of PD-L1 itself, is reached by no
   output built on the embedding (0.92).
+- **The repair by rows as one round of the loop protocol (20 November; exploratory;**
+  [`teg_loop_20261120/`](anm_diag/runs/teg_loop_20261120/)**):** the repair runs of 19 November had bypassed the protocol
+  and the paper's source chain. Redone as one round (the grid of `anm_diag scope`, typed events through admission, a
+  gate that gives every cell one type, closure by the protocol's grades), the repair removes the head's loss in every
+  admitted case: for PD-L1 in three groups of cells and for MHC-I in co-culture the repaired output adds no loss beyond
+  what the embedding carries (0.01, 0.00, 0.03, 0.07). The whole chain does not close. Where an absolute pass was
+  attainable (melanoma, IFN-γ) the interval misses it by 0.005; elsewhere what remains lies before the head, and in
+  co-culture it is not readable from RNA either. A replication on MHC-I and HLA-E, designed first, did not close by
+  its rule.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
