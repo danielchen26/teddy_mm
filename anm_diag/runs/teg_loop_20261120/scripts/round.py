@@ -113,6 +113,9 @@ def admit(group, readout, grid):
                             "n_cells": r["n_treated"]})
         events.append(e)
     merged = EV.closure(events).get(f"{group}_{readout}:A=1", [])
+    if admitted and not any(e["admission"]["status"] == "admitted" for e in events):
+        admitted = False                                    # ready as a pool, but no single event passes A1: there is no row to repair with
+        reasons.append("no event of the group passes A1 on its own: there is no row to repair with")
     return {"group": group, "readout": readout, "cell_type": g["cell_type"], "stratum": g["stratum"], "span": ["Z", "own output"],
             "diagnostic": "ready" if admitted else "not ready", "attainable": ("absolute" if ref == "support" else "relative") if admitted else "none",
             "A1": A1, "A3": A3, "reference": {"scope": "units", "stage": "Z", **pool["scopes"]["units"]}, "own_cells": pool["scopes"]["own"],
@@ -169,10 +172,10 @@ class Readout:
             self.th["cells"] = np.linalg.solve(F[tr].T @ F[tr] / len(tr) + lam2 * np.diag(pen), F[tr].T @ t[tr] / len(tr))
             self.log["ridge_weight_cells"] = lam2
         if other is not None:                               # events of another group, in units of the control spread
-            xo, yo, Ao, to = other
+            xo, yo, Ao, to, sites = other
             Fo, Co = self.feat(xo), np.where(Ao == 0)[0]
             conv = y[C].std() / yo[Co].std()
-            ev = [(g, np.where((Ao == 1) & (to == g))[0]) for g in sorted(set(to[Ao == 1]))]
+            ev = [(g, np.where((Ao == 1) & (to == g))[0]) for g in sites]
             D = np.array([Fo[T].mean(0) - Fo[Co].mean(0) for _n, T in ev])
             dy = conv * np.array([yo[T].mean() - yo[Co].mean() for _n, T in ev])
             se2 = conv ** 2 * np.array([yo[T].var(ddof=1) / len(T) + yo[Co].var(ddof=1) / len(Co) for _n, T in ev])
@@ -282,7 +285,7 @@ def run_readout(readout, obs, work, tag, soft=False):
             c, og = cells[g], GROUPS[g]["other"]
             C = np.where(fit[g] & (c["A"] == 0))[0]
             ev = [(s, np.where(fit[g] & (c["A"] == 1) & (c["tg"] == s))[0]) for s in genes_of[g]]
-            oth = (cells[og]["x"], cells[og]["y"], cells[og]["A"], cells[og]["tg"]) if (og in groups and cells[og]["y"] is not None) else None
+            oth = (cells[og]["x"], cells[og]["y"], cells[og]["A"], cells[og]["tg"], genes_of[og]) if (og in groups and genes_of[og]) else None
             R[g] = Readout(c["x"], c["y"], c["o"], C, ev, oth)
             fits[g].append(R[g].log)
         sysm = System(xb, ctl, R, soft)
