@@ -1,0 +1,2518 @@
+{
+ "MHC1": {
+  "readout": "MHC1",
+  "output_of_the_head": "HLA-A-B-C",
+  "tag": "replication",
+  "margin": 0.1,
+  "step_margin": 0.1,
+  "groups": {
+   "mel_ifn": {
+    "admission": {
+     "group": "mel_ifn",
+     "readout": "MHC1",
+     "cell_type": "melanoma",
+     "stratum": "IFN-gamma",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "not ready",
+     "attainable": "none",
+     "A1": true,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": -0.1763890844213325,
+      "ci": [
+       -0.5782415830541514,
+       0.0755762565612328
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": -0.18672326965929975,
+      "ci": [
+       -0.5664010151424386,
+       0.0487582702241516
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 0.7033545671082834,
+      "ci": [
+       0.25964570042272306,
+       0.891796784861714
+      ]
+     },
+     "reasons": [
+      "no event of the group passes A1 on its own: there is no row to repair with"
+     ],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": "the `units` scope at Z is unresolved: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    },
+    "events": [
+     {
+      "event_id": "mel_ifn_MHC1:knockout:IFNGR1:IFN-gamma",
+      "origin": "inverse:mel_ifn_MHC1",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.314604094222798,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_MHC1:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 198
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_MHC1:knockout:IFNGR2:IFN-gamma",
+      "origin": "inverse:mel_ifn_MHC1",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.25202114702784917,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_MHC1:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 278
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_MHC1:knockout:JAK1:IFN-gamma",
+      "origin": "inverse:mel_ifn_MHC1",
+      "time": 2,
+      "site": "JAK1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.11751749991876177,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_MHC1:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 248
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_MHC1:knockout:JAK2:IFN-gamma",
+      "origin": "inverse:mel_ifn_MHC1",
+      "time": 3,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.3054489202068168,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_MHC1:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 244
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_MHC1:knockout:STAT1:IFN-gamma",
+      "origin": "inverse:mel_ifn_MHC1",
+      "time": 4,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.40265498021480095,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_MHC1:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 203
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 1171,
+     "n_control": 4000,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -0.2713632169289296,
+      "ci": [
+       -0.35618917816871376,
+       -0.18078811457849886
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 3.0942026390775905
+     },
+     "scopes": {
+      "frozen": {
+       "u": 0.8797436515296159,
+       "ci": [
+        0.788526932242084,
+        0.9302419800282263
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.42718462557415715,
+       "ci": [
+        0.19076301386781128,
+        0.5710091779361401
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "other": {
+       "u": -1.7253966370365745,
+       "ci": [
+        -2.9084291766229198,
+        -1.1243000017738953
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "units": {
+       "u": -0.1763890844213325,
+       "ci": [
+        -0.5782415830541514,
+        0.0755762565612328
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": -0.18672326965929975,
+       "ci": [
+        -0.5664010151424386,
+        0.0487582702241516
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": 0.4525590259554587,
+       "ci": [
+        0.32667708465149403,
+        0.6296510956157761
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "train->units": {
+       "value": 0.25079554115282465,
+       "ci": [
+        -0.3519475046106691,
+        0.5330617761441392
+       ],
+       "resolved": false,
+       "absent": false
+      },
+      "units->own": {
+       "value": -0.010334185237967253,
+       "ci": [
+        -0.039605708573779555,
+        0.044141586940749274
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "from_frozen": {
+       "train": {
+        "value": 0.4525590259554587,
+        "ci": [
+         0.32667708465149403,
+         0.6296510956157761
+        ]
+       },
+       "units": {
+        "value": 0.7033545671082834,
+        "ci": [
+         0.25964570042272306,
+         0.891796784861714
+        ]
+       },
+       "own": {
+        "value": 0.6930203818703161,
+        "ci": [
+         0.2767479198911816,
+         0.8935701892805917
+        ]
+       }
+      },
+      "other->units": {
+       "value": 1.549007552615242,
+       "ci": [
+        1.0754554785097528,
+        2.4157506567743217
+       ],
+       "resolved": true,
+       "absent": false
+      }
+     },
+     "reading": "unresolved",
+     "detail": "no scope reaches a verdict at the stage the system reads",
+     "ceiling": {
+      "function": {
+       "removes": 0.4525590259554587,
+       "ci": [
+        0.32667708465149403,
+        0.6296510956157761
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 0.7033545671082834,
+       "ci": [
+        0.25964570042272306,
+        0.891796784861714
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 0.6930203818703161,
+       "ci": [
+        0.2767479198911816,
+        0.8935701892805917
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.8797436515296159,
+     "ci": [
+      0.788526932242084,
+      0.9302419800282263
+     ],
+     "verdict": "reject",
+     "slope": 0.8126398033628859,
+     "beyond_units_at_Z": {
+      "added": 0.7033545682633576,
+      "ci": [
+       0.2596456883992859,
+       0.8917967845913994
+      ]
+     }
+    },
+    "arms": {},
+    "fits": [],
+    "closure": {
+     "grade": "not a target",
+     "why": "no event of the group passes A1 on its own: there is no row to repair with"
+    }
+   },
+   "mel_co": {
+    "admission": {
+     "group": "mel_co",
+     "readout": "MHC1",
+     "cell_type": "melanoma",
+     "stratum": "co-culture",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "ready",
+     "attainable": "relative",
+     "A1": true,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": 0.32136291813367845,
+      "ci": [
+       0.26519706389330655,
+       0.36871232789566666
+      ],
+      "verdict": "reject",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": 0.3126596955538914,
+      "ci": [
+       0.2640017672758181,
+       0.35722672485901147
+      ],
+      "verdict": "reject",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 0.6461420611914062,
+      "ci": [
+       0.6011400483318852,
+       0.697228852941669
+      ]
+     },
+     "reasons": [],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": "the `units` scope at Z is reject: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    },
+    "events": [
+     {
+      "event_id": "mel_co_MHC1:knockout:IFNGR1:co-culture",
+      "origin": "inverse:mel_co_MHC1",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.7472907338042842,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_MHC1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 321
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     },
+     {
+      "event_id": "mel_co_MHC1:knockout:IFNGR2:co-culture",
+      "origin": "inverse:mel_co_MHC1",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.8883469304136855,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_MHC1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 475
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     },
+     {
+      "event_id": "mel_co_MHC1:knockout:JAK1:co-culture",
+      "origin": "inverse:mel_co_MHC1",
+      "time": 2,
+      "site": "JAK1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -2.087560051706309,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_MHC1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 390
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     },
+     {
+      "event_id": "mel_co_MHC1:knockout:JAK2:co-culture",
+      "origin": "inverse:mel_co_MHC1",
+      "time": 3,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -1.9323284340167877,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_MHC1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 418
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     },
+     {
+      "event_id": "mel_co_MHC1:knockout:STAT1:co-culture",
+      "origin": "inverse:mel_co_MHC1",
+      "time": 4,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -2.1518385720841953,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_MHC1:A=1",
+      "admission": {
+       "status": "admitted",
+       "reason": "A1 to A4 hold",
+       "n_cells": 396
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "MHC1",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 2000,
+     "n_control": 4000,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -1.9659174488137472,
+      "ci": [
+       -2.0838262864956754,
+       -1.8454536581508338
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 16.494489845283365
+     },
+     "scopes": {
+      "frozen": {
+       "u": 0.9675049793250846,
+       "ci": [
+        0.9590536184940557,
+        0.975233000238722
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.8732755319652912,
+       "ci": [
+        0.8555716394033978,
+        0.8906514499455722
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "other": {
+       "u": 0.7557750186021913,
+       "ci": [
+        0.7373354126591437,
+        0.7740795135795687
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "units": {
+       "u": 0.32136291813367845,
+       "ci": [
+        0.26519706389330655,
+        0.36871232789566666
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.3126596955538914,
+       "ci": [
+        0.2640017672758181,
+        0.35722672485901147
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": 0.09422944735979344,
+       "ci": [
+        0.08051648599453866,
+        0.10837675133933435
+       ],
+       "resolved": false,
+       "absent": false
+      },
+      "train->units": {
+       "value": 0.5519126138316127,
+       "ci": [
+        0.511695307691855,
+        0.5974134945406424
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "units->own": {
+       "value": 0.008703222579787062,
+       "ci": [
+        -0.00023328684470736086,
+        0.01699859279190873
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "from_frozen": {
+       "train": {
+        "value": 0.09422944735979344,
+        "ci": [
+         0.08051648599453866,
+         0.10837675133933435
+        ]
+       },
+       "units": {
+        "value": 0.6461420611914062,
+        "ci": [
+         0.6011400483318852,
+         0.697228852941669
+        ]
+       },
+       "own": {
+        "value": 0.6548452837711932,
+        "ci": [
+         0.6117094612127908,
+         0.7016985854941163
+        ]
+       }
+      },
+      "other->units": {
+       "value": 0.43441210046851286,
+       "ci": [
+        0.3922713874852224,
+        0.4844862572827436
+       ],
+       "resolved": true,
+       "absent": false
+      }
+     },
+     "reading": "unreadable",
+     "detail": "no scope reads it",
+     "ceiling": {
+      "function": {
+       "removes": 0.09422944735979344,
+       "ci": [
+        0.08051648599453866,
+        0.10837675133933435
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 0.6461420611914062,
+       "ci": [
+        0.6011400483318852,
+        0.697228852941669
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 0.6548452837711932,
+       "ci": [
+        0.6117094612127908,
+        0.7016985854941163
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 0.9675049793250846,
+     "ci": [
+      0.9590536184940557,
+      0.975233000238722
+     ],
+     "verdict": "reject",
+     "slope": 0.7342550448664432,
+     "beyond_units_at_Z": {
+      "added": 0.6461420666702079,
+      "ci": [
+       0.6011400545788832,
+       0.6972288499591346
+      ]
+     }
+    },
+    "arms": {
+     "controls": {
+      "u": 0.6664293133644394,
+      "ci": [
+       0.6383717579155804,
+       0.6940115768417351
+      ],
+      "verdict": "reject",
+      "slope": 4.182914284395681,
+      "valid": true,
+      "gain": 0.30107566596064517,
+      "gain_ci": [
+       0.27609781002908346,
+       0.3277418157736448
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.34506640070956274,
+       "ci": [
+        0.3096923958714543,
+        0.38453620572900016
+       ],
+       "reading": "loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.6474940492980188,
+        "ci": [
+         0.6038036159857163,
+         0.6874389000143797
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.40730680667087493,
+         "ci": [
+          0.3639056908288016,
+          0.4521863058032639
+         ],
+         "reading": "loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.6753788014637824,
+        "ci": [
+         0.6425871764576538,
+         0.708073546363781
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.35414967143410403,
+         "ci": [
+          0.3197395720208487,
+          0.3880962227409118
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK1": {
+        "u": 0.6643378799848718,
+        "ci": [
+         0.6291316222435979,
+         0.6983075784732097
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.3331468170576257,
+         "ci": [
+          0.30139806263228563,
+          0.3680925667566519
+         ],
+         "reading": "loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.6546365071586202,
+        "ci": [
+         0.6190588374671468,
+         0.6875411666186517
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.36025730264697775,
+         "ci": [
+          0.32447542901909265,
+          0.3991266812826592
+         ],
+         "reading": "loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.682648688341565,
+        "ci": [
+         0.6498541499279179,
+         0.7160094177765663
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.32867059090275275,
+         "ci": [
+          0.29620201882235125,
+          0.36079719933674925
+         ],
+         "reading": "loss"
+        }
+       }
+      }
+     },
+     "rows": {
+      "u": 0.3912871175566761,
+      "ci": [
+       0.3424666740537639,
+       0.43886507811658265
+      ],
+      "verdict": "reject",
+      "slope": 3.453132344047301,
+      "valid": true,
+      "gain": 0.5762178617684085,
+      "gain_ci": [
+       0.530604402375933,
+       0.6218251571616151
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.0699242049017994,
+       "ci": [
+        0.045236086708503445,
+        0.09494203923928163
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.3309690041958415,
+        "ci": [
+         0.2633942625863738,
+         0.38778907927351797
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.09078176156869766,
+         "ci": [
+          0.06539759322870055,
+          0.11978635370928703
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.3985840171821188,
+        "ci": [
+         0.34720335781091544,
+         0.4453930618048735
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.07735488715244043,
+         "ci": [
+          0.0545046910433311,
+          0.10091007113190373
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "JAK1": {
+        "u": 0.40472114915163704,
+        "ci": [
+         0.35053176449019213,
+         0.4511646421496666
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.07353008622439094,
+         "ci": [
+          0.0504163448978373,
+          0.09719376192380999
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.3747991156410768,
+        "ci": [
+         0.3211328451329604,
+         0.42366419055409527
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.08041991112943436,
+         "ci": [
+          0.056809163197573474,
+          0.10454071004848543
+         ],
+         "reading": "unresolved"
+        }
+       },
+       "STAT1": {
+        "u": 0.42610167711411284,
+        "ci": [
+         0.3822029615053468,
+         0.4732011527749083
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.07212357967530059,
+         "ci": [
+          0.05005893263267562,
+          0.09461369590947767
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     },
+     "cells": {
+      "u": 0.3675170755461079,
+      "ci": [
+       0.3182451870949175,
+       0.416386524076631
+      ],
+      "verdict": "reject",
+      "slope": 3.2910440253855744,
+      "valid": true,
+      "gain": 0.5999879037789767,
+      "gain_ci": [
+       0.5532789849321731,
+       0.6455858961238407
+      ],
+      "beyond_units_at_Z": {
+       "added": 0.0461541628912312,
+       "ci": [
+        0.025029459155200183,
+        0.06985546609662485
+       ],
+       "reading": "no added loss"
+      },
+      "events": {
+       "IFNGR1": {
+        "u": 0.30813835289272906,
+        "ci": [
+         0.24062864248534432,
+         0.3647794255698678
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.0679511102655852,
+         "ci": [
+          0.04625270681907607,
+          0.09389315784604144
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "IFNGR2": {
+        "u": 0.3737401050347773,
+        "ci": [
+         0.32177515394284495,
+         0.4248274393876536
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.05251097500509894,
+         "ci": [
+          0.03233475278839852,
+          0.07343962871449825
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK1": {
+        "u": 0.38168553018479634,
+        "ci": [
+         0.3287244778630706,
+         0.42795323414224906
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.050494467257550246,
+         "ci": [
+          0.030265509306468142,
+          0.07110206816688704
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "JAK2": {
+        "u": 0.35081068969707396,
+        "ci": [
+         0.2995522719885375,
+         0.4004460043147148
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.05643148518543151,
+         "ci": [
+          0.03636621306889304,
+          0.08029927168235933
+         ],
+         "reading": "no added loss"
+        }
+       },
+       "STAT1": {
+        "u": 0.4023490035977949,
+        "ci": [
+         0.35603311147578476,
+         0.4499348194150979
+        ],
+        "verdict": "reject",
+        "beyond_units_at_Z": {
+         "added": 0.04837090615898265,
+         "ci": [
+          0.028901097693064964,
+          0.06950814696618615
+         ],
+         "reading": "no added loss"
+        }
+       }
+      }
+     }
+    },
+    "fits": [
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.009406356128145247,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 160,
+        "measured_change": -0.8937645284141424,
+        "standard_error": 0.051193818083544666,
+        "share_of_the_residual_closed": 0.8660237348460024
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 238,
+        "measured_change": -0.9401277760728091,
+        "standard_error": 0.04297562217875061,
+        "share_of_the_residual_closed": 0.7380676723937195
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 195,
+        "measured_change": -1.0762039526156186,
+        "standard_error": 0.049210265294675946,
+        "share_of_the_residual_closed": 0.683091199240265
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 209,
+        "measured_change": -0.9996196183208201,
+        "standard_error": 0.0458083165815748,
+        "share_of_the_residual_closed": 0.7049555276065159
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 198,
+        "measured_change": -1.0642801494116372,
+        "standard_error": 0.04543812593002945,
+        "share_of_the_residual_closed": 0.6743747027509062
+       }
+      ],
+      "ridge_weight_cells": 0.1
+     },
+     {
+      "n_controls": 2000,
+      "ridge_weight": 0.31622776601683794,
+      "cv_error": 0.008621613718717813,
+      "rows": [
+       {
+        "event": "IFNGR1",
+        "n_cells": 161,
+        "measured_change": -0.9303339559900898,
+        "standard_error": 0.05533841534591672,
+        "share_of_the_residual_closed": 0.8205343108116973
+       },
+       {
+        "event": "IFNGR2",
+        "n_cells": 237,
+        "measured_change": -1.031499255685235,
+        "standard_error": 0.04696203984548362,
+        "share_of_the_residual_closed": 0.6897034804943871
+       },
+       {
+        "event": "JAK1",
+        "n_cells": 195,
+        "measured_change": -1.1032278562531501,
+        "standard_error": 0.05162501086744588,
+        "share_of_the_residual_closed": 0.7002068990890116
+       },
+       {
+        "event": "JAK2",
+        "n_cells": 209,
+        "measured_change": -1.0177489602910899,
+        "standard_error": 0.046491018084155136,
+        "share_of_the_residual_closed": 0.8216842764044964
+       },
+       {
+        "event": "STAT1",
+        "n_cells": 198,
+        "measured_change": -1.1822590233023438,
+        "standard_error": 0.04405400749581246,
+        "share_of_the_residual_closed": 0.6578542598336077
+       }
+      ],
+      "ridge_weight_cells": 0.1
+     }
+    ],
+    "gate3": {
+     "closed_form": true,
+     "on_the_cells_it_was_fitted_on": 0.2829046338592528,
+     "objective_reached": false,
+     "no_audit_cell_in_a_fit": true,
+     "guard_on_validation_cells": {
+      "readout_as_trained": 0.8923870357182913,
+      "readout_now": 0.8923870357182913,
+      "fall": 0.0,
+      "mean_fall": 0.0,
+      "worst_item_fall": 0.0,
+      "kept": true
+     }
+    },
+    "gate6": {
+     "guard_on_test_cells": {
+      "readout_as_trained": 0.577758374388808,
+      "readout_now": 0.5776997766403082,
+      "fall": 5.859774849970023e-05,
+      "mean_fall": 4.3729663062874735e-07,
+      "worst_item_fall": 5.859774849970023e-05,
+      "kept": true
+     }
+    },
+    "closure": {
+     "readout": "MHC1",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "grade": "not tested (gate 3)",
+     "attainable": "relative",
+     "reached_what_was_attainable": false,
+     "guard_kept": true
+    },
+    "hypothesis": {
+     "type": "hypothesis",
+     "id": "coverage:mel_co:MHC1:replication",
+     "about": {
+      "event": "mel_co: the admitted knockouts, pooled",
+      "readout": "MHC1",
+      "target": "shift",
+      "quantity": "fall of |u| of the head's own output (frozen scope)"
+     },
+     "claim": "coverage",
+     "rivals": [
+      "function",
+      "upstream"
+     ],
+     "forecast": {
+      "rows": [
+       0.6011400483318852,
+       0.697228852941669
+      ]
+     },
+     "rule": {
+      "own": "rows",
+      "at_least": 0.546,
+      "controls": {}
+     },
+     "basis": [
+      "scope:mel_co_MHC1"
+     ],
+     "retrospective": false,
+     "note": "the forecast is the grid's ceiling; the rule asks the repair by rows to come within the step margin of it, and the repair of another group not to"
+    },
+    "test": {
+     "type": "test",
+     "hypothesis": "coverage:mel_co:MHC1:replication",
+     "claim": "coverage",
+     "retrospective": false,
+     "arms": {
+      "rows": {
+       "gain": 0.5762178617684085,
+       "ci": [
+        0.530604402375933,
+        0.6218251571616151
+       ],
+       "admitted": false,
+       "forecast": [
+        0.6011400483318852,
+        0.697228852941669
+       ],
+       "inside_forecast": false,
+       "forecast_error": -0.0729665888683686
+      }
+     },
+     "runs": [
+      "round:mel_co_MHC1:replication"
+     ],
+     "outcome": "not testable",
+     "why": "no control arm was run"
+    }
+   }
+  },
+  "gate": [
+   {
+    "fold": 0,
+    "group": "mel_ifn",
+    "on_mel_ifn": 0.9887814313346228,
+    "on_mel_co": 0.011218568665377175,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.997,
+    "own_on_knockout_cells": 0.9606837606837607
+   },
+   {
+    "fold": 0,
+    "group": "mel_co",
+    "on_mel_ifn": 0.009,
+    "on_mel_co": 0.991,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.9895,
+    "own_on_knockout_cells": 0.994
+   },
+   {
+    "fold": 0,
+    "group": "bone marrow (test cells)",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.0002,
+    "on_thp1": 0.0,
+    "cells_given_to_a_group": 1
+   },
+   {
+    "fold": 1,
+    "group": "mel_ifn",
+    "on_mel_ifn": 0.98569218870843,
+    "on_mel_co": 0.014307811291569992,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.9945,
+    "own_on_knockout_cells": 0.9556313993174061
+   },
+   {
+    "fold": 1,
+    "group": "mel_co",
+    "on_mel_ifn": 0.010333333333333333,
+    "on_mel_co": 0.9896666666666667,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.988,
+    "own_on_knockout_cells": 0.993
+   },
+   {
+    "fold": 1,
+    "group": "bone marrow (test cells)",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.0002,
+    "on_thp1": 0.0,
+    "cells_given_to_a_group": 1
+   }
+  ],
+  "ledger": {
+   "events": 17,
+   "checks": [
+    {
+     "code": "H3",
+     "severity": "error",
+     "message": "test of 'coverage:mel_co:MHC1:replication' lacks the own arm or every control arm"
+    }
+   ],
+   "errors": [
+    {
+     "code": "H3",
+     "severity": "error",
+     "message": "test of 'coverage:mel_co:MHC1:replication' lacks the own arm or every control arm"
+    }
+   ],
+   "forecast_record": {
+    "n": 1,
+    "inside": 0,
+    "mean_abs_error": 0.0729665888683686,
+    "rows": [
+     {
+      "hypothesis": "coverage:mel_co:MHC1:replication",
+      "arm": "rows",
+      "gain": 0.5762178617684085,
+      "forecast": [
+       0.6011400483318852,
+       0.697228852941669
+      ],
+      "inside_forecast": false,
+      "forecast_error": -0.0729665888683686,
+      "retrospective": false
+     }
+    ]
+   }
+  },
+  "cross_condition_pool": {
+   "melanoma, both conditions": [
+    "time",
+    "site",
+    "amplitude",
+    "stratum"
+   ]
+  },
+  "loop": {
+   "targets": [
+    "mel_co"
+   ],
+   "not_targets": [
+    "mel_ifn"
+   ],
+   "every_target_reached_its_attainable_grade": false,
+   "guard_kept": true,
+   "ledger_errors": 1,
+   "open": [
+    {
+     "group": "mel_ifn",
+     "what": "the `units` scope at Z is unresolved: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    },
+    {
+     "group": "mel_co",
+     "what": "the `units` scope at Z is reject: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    }
+   ]
+  }
+ },
+ "HLAE": {
+  "readout": "HLAE",
+  "output_of_the_head": "HLA-E",
+  "tag": "replication",
+  "margin": 0.1,
+  "step_margin": 0.1,
+  "groups": {
+   "mel_ifn": {
+    "admission": {
+     "group": "mel_ifn",
+     "readout": "HLAE",
+     "cell_type": "melanoma",
+     "stratum": "IFN-gamma",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "not ready",
+     "attainable": "none",
+     "A1": false,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": 0.24387704141022137,
+      "ci": [
+       -0.36096859889204347,
+       0.5171385235129717
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": 0.2064385786105205,
+      "ci": [
+       -0.3614636623222629,
+       0.4785815765166474
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 1.3709373607653645,
+      "ci": [
+       0.8724997011082422,
+       1.8831715083142588
+      ]
+     },
+     "reasons": [
+      "A1: the response is small against its interval (|change| / half-width = 2.2, wanted 3)"
+     ],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": "the `units` scope at Z is unresolved: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    },
+    "events": [
+     {
+      "event_id": "mel_ifn_HLAE:knockout:IFNGR1:IFN-gamma",
+      "origin": "inverse:mel_ifn_HLAE",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.08710700991761092,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "the group is not admitted; A1: its own response is not resolved or small against its interval",
+       "n_cells": 198
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_HLAE:knockout:IFNGR2:IFN-gamma",
+      "origin": "inverse:mel_ifn_HLAE",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.19828205834972637,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "the group is not admitted; A1: its own response is not resolved or small against its interval",
+       "n_cells": 278
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_HLAE:knockout:JAK1:IFN-gamma",
+      "origin": "inverse:mel_ifn_HLAE",
+      "time": 2,
+      "site": "JAK1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.11447281301160117,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "the group is not admitted; A1: its own response is not resolved or small against its interval",
+       "n_cells": 248
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_HLAE:knockout:JAK2:IFN-gamma",
+      "origin": "inverse:mel_ifn_HLAE",
+      "time": 3,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.06335208566165519,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "the group is not admitted; A1: its own response is not resolved or small against its interval",
+       "n_cells": 244
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_ifn_HLAE:knockout:STAT1:IFN-gamma",
+      "origin": "inverse:mel_ifn_HLAE",
+      "time": 4,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.23623632328297736,
+      "role": "treated",
+      "stratum": "IFN-gamma",
+      "provenance": "guide assignment",
+      "pool": "mel_ifn_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "the group is not admitted; A1: its own response is not resolved or small against its interval",
+       "n_cells": 203
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 1171,
+     "n_control": 4000,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -0.14019875349246555,
+      "ci": [
+       -0.20785460234430025,
+       -0.08070237985265359
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 2.2052112144823264
+     },
+     "scopes": {
+      "frozen": {
+       "u": 1.614814402175586,
+       "ci": [
+        1.3803128650776268,
+        2.1797260975136474
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.9354311577904294,
+       "ci": [
+        0.8913487505990968,
+        0.9780336959169125
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "other": {
+       "u": 0.48472437239344734,
+       "ci": [
+        0.06312281063720859,
+        0.660080805536928
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "units": {
+       "u": 0.24387704141022137,
+       "ci": [
+        -0.36096859889204347,
+        0.5171385235129717
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.2064385786105205,
+       "ci": [
+        -0.3614636623222629,
+        0.4785815765166474
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": 0.6793832443851565,
+       "ci": [
+        0.4392568379262115,
+        1.2445059486807524
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "train->units": {
+       "value": 0.691554116380208,
+       "ci": [
+        0.3711747342954331,
+        0.9370357324093371
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "units->own": {
+       "value": 0.03743846279970087,
+       "ci": [
+        -0.038060672039713646,
+        0.08411042701306393
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "from_frozen": {
+       "train": {
+        "value": 0.6793832443851565,
+        "ci": [
+         0.4392568379262115,
+         1.2445059486807524
+        ]
+       },
+       "units": {
+        "value": 1.3709373607653645,
+        "ci": [
+         0.8724997011082422,
+         1.8831715083142588
+        ]
+       },
+       "own": {
+        "value": 1.4083758235650654,
+        "ci": [
+         0.9214101644073349,
+         1.8808270460610907
+        ]
+       }
+      },
+      "other->units": {
+       "value": 0.24084733098322597,
+       "ci": [
+        -0.28697586016143034,
+        0.3703781356273527
+       ],
+       "resolved": false,
+       "absent": false
+      }
+     },
+     "reading": "unresolved",
+     "detail": "no scope reaches a verdict at the stage the system reads",
+     "ceiling": {
+      "function": {
+       "removes": 0.6793832443851565,
+       "ci": [
+        0.4392568379262115,
+        1.2445059486807524
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 1.3709373607653645,
+       "ci": [
+        0.8724997011082422,
+        1.8831715083142588
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 1.4083758235650654,
+       "ci": [
+        0.9214101644073349,
+        1.8808270460610907
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 1.614814402175586,
+     "ci": [
+      1.3803128650776268,
+      2.1797260975136474
+     ],
+     "verdict": "reject",
+     "slope": 0.7943888104898783,
+     "beyond_units_at_Z": {
+      "added": 1.3709373638159439,
+      "ci": [
+       0.8724997061102744,
+       1.8831715086695386
+      ]
+     }
+    },
+    "arms": {},
+    "fits": [],
+    "closure": {
+     "grade": "not a target",
+     "why": "A1: the response is small against its interval (|change| / half-width = 2.2, wanted 3)"
+    }
+   },
+   "mel_co": {
+    "admission": {
+     "group": "mel_co",
+     "readout": "HLAE",
+     "cell_type": "melanoma",
+     "stratum": "co-culture",
+     "span": [
+      "Z",
+      "own output"
+     ],
+     "diagnostic": "not ready",
+     "attainable": "none",
+     "A1": true,
+     "A3": true,
+     "reference": {
+      "scope": "units",
+      "stage": "Z",
+      "u": 0.4338378698182337,
+      "ci": [
+       0.03650717946742463,
+       0.6051967850754985
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "own_cells": {
+      "u": 0.4027063558672126,
+      "ci": [
+       0.026804758605568992,
+       0.5779985080610817
+      ],
+      "verdict": "unresolved",
+      "class": "ridge"
+     },
+     "gap_head_to_units": {
+      "value": 1.2512964806346092,
+      "ci": [
+       0.8894751978236631,
+       2.018310742668287
+      ]
+     },
+     "reasons": [
+      "no event of the group passes A1 on its own: there is no row to repair with"
+     ],
+     "fields_merged_by_the_pool": [
+      "time",
+      "site",
+      "amplitude"
+     ],
+     "rest": "the `units` scope at Z is unresolved: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    },
+    "events": [
+     {
+      "event_id": "mel_co_HLAE:knockout:IFNGR1:co-culture",
+      "origin": "inverse:mel_co_HLAE",
+      "time": 0,
+      "site": "IFNGR1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.06075496651235705,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 321
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_HLAE:knockout:IFNGR2:co-culture",
+      "origin": "inverse:mel_co_HLAE",
+      "time": 1,
+      "site": "IFNGR2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.13998931918059646,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 475
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_HLAE:knockout:JAK1:co-culture",
+      "origin": "inverse:mel_co_HLAE",
+      "time": 2,
+      "site": "JAK1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.17249315694749945,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 390
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "unresolved",
+       "own": "unresolved"
+      }
+     },
+     {
+      "event_id": "mel_co_HLAE:knockout:JAK2:co-culture",
+      "origin": "inverse:mel_co_HLAE",
+      "time": 3,
+      "site": "JAK2",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.20567656737038165,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 418
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     },
+     {
+      "event_id": "mel_co_HLAE:knockout:STAT1:co-culture",
+      "origin": "inverse:mel_co_HLAE",
+      "time": 4,
+      "site": "STAT1",
+      "site_is_pattern": false,
+      "channel": "knockout",
+      "sign": -1,
+      "amplitude": -0.2055865994396129,
+      "role": "treated",
+      "stratum": "co-culture",
+      "provenance": "guide assignment",
+      "pool": "mel_co_HLAE:A=1",
+      "admission": {
+       "status": "not admitted",
+       "reason": "A1: its own response is not resolved or small against its interval",
+       "n_cells": 396
+      },
+      "no_leakage": {
+       "status": "pass",
+       "routes": {
+        "assignment": {
+         "status": "pass",
+         "reason": "cells are assigned from their detected guides, a measurement that enters no readout"
+        },
+        "measurement": {
+         "status": "pass",
+         "reason": "no readout uses an input of the audited system"
+        },
+        "site": {
+         "status": "pass",
+         "reason": "the event does not act on a readout's own gene"
+        }
+       }
+      },
+      "amplitude_unit": "control SD",
+      "readout": "HLAE",
+      "cell_type": "melanoma",
+      "at_Z": {
+       "units": "reject",
+       "own": "reject"
+      }
+     }
+    ],
+    "grid": {
+     "n_treated": 2000,
+     "n_control": 4000,
+     "approximate": true,
+     "resampled": {
+      "treated": "5 clusters",
+      "control": "cells"
+     },
+     "response": {
+      "value": -0.1603273503048409,
+      "ci": [
+       -0.2068486060673805,
+       -0.10397852959473639
+      ],
+      "resolved": true,
+      "unit": "control SD",
+      "snr": 3.1170843028871706
+     },
+     "scopes": {
+      "frozen": {
+       "u": 1.6851343504528429,
+       "ci": [
+        1.4793290838078872,
+        2.0986610067198512
+       ],
+       "verdict": "reject",
+       "class": "system"
+      },
+      "train": {
+       "u": 0.7348258727527672,
+       "ci": [
+        0.5480802506361342,
+        0.8255735696915818
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "other": {
+       "u": 0.31754419081874885,
+       "ci": [
+        -0.09981075012415316,
+        0.5033325254606011
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "units": {
+       "u": 0.4338378698182337,
+       "ci": [
+        0.03650717946742463,
+        0.6051967850754985
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.4027063558672126,
+       "ci": [
+        0.026804758605568992,
+        0.5779985080610817
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "gaps": {
+      "frozen->train": {
+       "value": 0.9503084777000756,
+       "ci": [
+        0.6699988410791442,
+        1.5495081368619275
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "train->units": {
+       "value": 0.30098800293453354,
+       "ci": [
+        0.19356174792836206,
+        0.4883505928425822
+       ],
+       "resolved": true,
+       "absent": false
+      },
+      "units->own": {
+       "value": 0.031131513951021095,
+       "ci": [
+        -0.007293189315513203,
+        0.06636762865256997
+       ],
+       "resolved": false,
+       "absent": true
+      },
+      "from_frozen": {
+       "train": {
+        "value": 0.9503084777000756,
+        "ci": [
+         0.6699988410791442,
+         1.5495081368619275
+        ]
+       },
+       "units": {
+        "value": 1.2512964806346092,
+        "ci": [
+         0.8894751978236631,
+         2.018310742668287
+        ]
+       },
+       "own": {
+        "value": 1.2824279945856303,
+        "ci": [
+         0.9211437551739906,
+         2.02031326460132
+        ]
+       }
+      },
+      "other->units": {
+       "value": -0.11629367899948484,
+       "ci": [
+        -0.21913442825365367,
+        0.020786969809422316
+       ],
+       "resolved": false,
+       "absent": true
+      }
+     },
+     "reading": "unresolved",
+     "detail": "no scope reaches a verdict at the stage the system reads",
+     "ceiling": {
+      "function": {
+       "removes": 0.9503084777000756,
+       "ci": [
+        0.6699988410791442,
+        1.5495081368619275
+       ],
+       "what": "another map, the same training cells",
+       "is": "a ceiling"
+      },
+      "coverage": {
+       "removes": 1.2512964806346092,
+       "ci": [
+        0.8894751978236631,
+        2.018310742668287
+       ],
+       "what": "cells of this kind in the training",
+       "is": "a ceiling"
+      },
+      "calibration": {
+       "removes": 1.2824279945856303,
+       "ci": [
+        0.9211437551739906,
+        2.02031326460132
+       ],
+       "what": "the unit's own labelled cells",
+       "is": "a ceiling"
+      }
+     }
+    },
+    "as_trained": {
+     "u": 1.6851343504528429,
+     "ci": [
+      1.4793290838078872,
+      2.0986610067198512
+     ],
+     "verdict": "reject",
+     "slope": 0.7250026996027401,
+     "beyond_units_at_Z": {
+      "added": 1.2512964896301653,
+      "ci": [
+       0.8894751900198761,
+       2.01831074731171
+      ]
+     }
+    },
+    "arms": {},
+    "fits": [],
+    "closure": {
+     "grade": "not a target",
+     "why": "no event of the group passes A1 on its own: there is no row to repair with"
+    }
+   }
+  },
+  "gate": [
+   {
+    "fold": 0,
+    "group": "mel_ifn",
+    "on_mel_ifn": 0.9887814313346228,
+    "on_mel_co": 0.011218568665377175,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.997,
+    "own_on_knockout_cells": 0.9606837606837607
+   },
+   {
+    "fold": 0,
+    "group": "mel_co",
+    "on_mel_ifn": 0.009,
+    "on_mel_co": 0.991,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.9895,
+    "own_on_knockout_cells": 0.994
+   },
+   {
+    "fold": 0,
+    "group": "bone marrow (test cells)",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.0002,
+    "on_thp1": 0.0,
+    "cells_given_to_a_group": 1
+   },
+   {
+    "fold": 1,
+    "group": "mel_ifn",
+    "on_mel_ifn": 0.98569218870843,
+    "on_mel_co": 0.014307811291569992,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.9945,
+    "own_on_knockout_cells": 0.9556313993174061
+   },
+   {
+    "fold": 1,
+    "group": "mel_co",
+    "on_mel_ifn": 0.010333333333333333,
+    "on_mel_co": 0.9896666666666667,
+    "on_thp1": 0.0,
+    "own_on_control_cells": 0.988,
+    "own_on_knockout_cells": 0.993
+   },
+   {
+    "fold": 1,
+    "group": "bone marrow (test cells)",
+    "on_mel_ifn": 0.0,
+    "on_mel_co": 0.0002,
+    "on_thp1": 0.0,
+    "cells_given_to_a_group": 1
+   }
+  ],
+  "ledger": {
+   "events": 12,
+   "checks": [],
+   "errors": [],
+   "forecast_record": {
+    "n": 0,
+    "inside": 0,
+    "mean_abs_error": null,
+    "rows": []
+   }
+  },
+  "cross_condition_pool": {
+   "melanoma, both conditions": [
+    "time",
+    "site",
+    "amplitude",
+    "stratum"
+   ]
+  },
+  "loop": {
+   "targets": [],
+   "not_targets": [
+    "mel_ifn",
+    "mel_co"
+   ],
+   "every_target_reached_its_attainable_grade": false,
+   "guard_kept": true,
+   "ledger_errors": 0,
+   "open": [
+    {
+     "group": "mel_ifn",
+     "what": "the `units` scope at Z is unresolved: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    },
+    {
+     "group": "mel_co",
+     "what": "the `units` scope at Z is unresolved: what it leaves is before the head (upstream, or not readable from RNA; no input view was given)"
+    }
+   ]
+  }
+ }
+}
