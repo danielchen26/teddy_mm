@@ -277,6 +277,12 @@ that may carry provisional splits, with the coarser schema read beside it as the
 across the two culture conditions of one cell type, the rows carried and the baseline did not. A pooling declaration
 names the quantity it pools.
 
+**Relations: the edges.** A candidate field may be a relation taken from outside knowledge, such as a pathway graph:
+"acts on the readout's own gene", "one step before it", "in the same complex". Such a field is a proposal like any
+other and is tested in the same way. A knowledge graph is a source of candidates and never of verdicts. The edges of
+the table itself are the transfers that have been tested: rows of one type used for another, with the outcome. They
+change only as a merge or a split changes.
+
 **Ties.** With a tolerance, A may be indistinguishable from B and B from C while A and C differ. Then none of the three
 is merged.
 
