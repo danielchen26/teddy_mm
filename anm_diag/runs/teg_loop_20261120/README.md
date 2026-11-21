@@ -1,7 +1,7 @@
 # The repair by rows as one round of the loop protocol
 
 > **Correction, 20 November, after a check of the design that follows this round**
-> (proposed the same day, as the design of the outer loop). Below, this page says that in co-culture what
+> ([`outer_loop_design_20261120`](../outer_loop_design_20261120/)). Below, this page says that in co-culture what
 > remains "is not in RNA either" and is "not readable from RNA". For PD-L1 that does not stand. The RNA view used here
 > (512 components, a linear reader) leaves 0.19 where Z, which is computed from the same RNA, leaves 0.10 with the
 > event's own cells, and the gap is resolved below zero (−0.09 [−0.13, −0.04]): the RNA view is the weaker reader, and

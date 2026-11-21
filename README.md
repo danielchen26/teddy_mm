@@ -134,6 +134,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   A replication on MHC-I and HLA-E, designed first, did not close by its rule. (Corrected the same day: the first
   reading, "in co-culture it is not readable from RNA either", does not stand for PD-L1; see the note at the top of
   that run.)
+- **The outer loop: a design (20 November; proposed; nothing run;** [`OUTER_LOOP.md`](anm_diag/OUTER_LOOP.md)**,**
+  [`outer_loop_design_20261120/`](anm_diag/runs/outer_loop_design_20261120/)**):** what happens between rounds when
+  another change to the model has nothing left to remove. A round seals five things besides the model: the events
+  that are read, the views, the schema, the claim and the protocol. Everything a round leaves is written as a typed
+  open item, its reading is first checked for whether it can be used, and it is then sent to one of the five, with a
+  hypothesis, a rival and a control written before the next round. A dry run on the round above gives 20 open items:
+  none for the model, 7 that need no new data, 9 that need units of the pool, 3 at the margin, 1 for the owner. For
+  PD-L1 an absolute closure is not within reach of the present pool at a tolerance of 0.10. The check (the dry run,
+  a back-test on twelve earlier results, a second reading) changed the design in eleven places.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
