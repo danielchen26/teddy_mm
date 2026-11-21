@@ -74,8 +74,9 @@ and [`results/open_items.md`](results/open_items.md).
 - Seven items need no new data. They are the five amendments to the protocol, the type from the record, and a richer
   reader of RNA. They come first in the order of Section 9, with a bridge reading.
 - **For PD-L1 an absolute closure is not within reach of the present pool at a tolerance of 0.10.** In the IFN-γ
-  condition one more event of the kind would be needed if the estimate holds, and the library has none: its other 200
-  targets change PD-L1 by 0.35 control SD at most (median 0.04), against about −1.1 for the five pathway genes. In co-culture and in THP-1 the
+  condition one more event of the kind would be needed if the estimate holds, and the library has none: on the
+  readout's own scale its other 200 targets change PD-L1 by 0.35 at most (median 0.04), where the five pathway genes
+  change it by 0.69 to 0.96. In co-culture and in THP-1 the
   embedding's own estimate sits at 0.12 and 0.13, next to the tolerance, and tens to hundreds of events would be needed
   to decide on which side. By the design these three end as "at the margin": the estimate and its interval are the
   result. A wider tolerance would decide them, but the numbers have been seen; a tolerance chosen now can only be

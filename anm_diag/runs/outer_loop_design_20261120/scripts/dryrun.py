@@ -54,8 +54,8 @@ ROUTES = {
 
 # What the pool holds for each type, from the records of earlier runs (design labels and counts only; no response is read here).
 POOL = {
-    "melanoma|IFN-gamma": {"with_embeddings": "206 knockout targets. The other 200 genes change PD-L1 by 0.35 control SD at most, median 0.04 "
-                                               "(runs/teg_repair_test_20261119), against about -1.1 for the five pathway genes: none is an event of the same kind",
+    "melanoma|IFN-gamma": {"with_embeddings": "206 knockout targets. On the readout's own scale the other 200 genes change PD-L1 by 0.35 at most, median 0.04 "
+                                               "(runs/teg_repair_test_20261119), where the five pathway genes change it by 0.69 to 0.96: none is an event of the same kind",
                            "more_units_of_the_type": {"PDL1": 0}},
     "melanoma|co-culture": {"with_embeddings": "5 knockout targets (6,000 cells)", "more_units_of_the_type": {"PDL1": None, "MHC1": None, "HLAE": None},
                             "note": "the rest of the co-culture screen has no embeddings yet"},
