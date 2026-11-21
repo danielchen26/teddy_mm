@@ -1,5 +1,18 @@
 # The repair by rows as one round of the loop protocol
 
+> **Correction, 20 November, after a check of the design that follows this round**
+> (proposed the same day, as the design of the outer loop). Below, this page says that in co-culture what
+> remains "is not in RNA either" and is "not readable from RNA". For PD-L1 that does not stand. The RNA view used here
+> (512 components, a linear reader) leaves 0.19 where Z, which is computed from the same RNA, leaves 0.10 with the
+> event's own cells, and the gap is resolved below zero (−0.09 [−0.13, −0.04]): the RNA view is the weaker reader, and
+> its rejection says nothing about RNA. Run 5, sealed, on the same cells, had the opposite order (RNA 0.12, Z 0.19).
+> What stands for PD-L1 in co-culture: no reader of RNA or of Z that was tried comes inside the margin; the lowest
+> estimate is about 0.10 [0.01, 0.17]; whether anything is missing from RNA is not decided. For MHC-I in co-culture
+> the two views agree (0.31 at both, each rejected) but only a linear reader was used: a third of the change is read
+> by no linear reader of RNA or of Z, and a richer reader comes before any conclusion about the input. Also found by
+> that check: the response of an event (A1) was screened on the cells that were then audited. No number below depends
+> on it, since no event near the threshold was admitted. The numbers below are unchanged.
+
 Status: **exploratory**, as [`LOOP_PROTOCOL.md`](../../LOOP_PROTOCOL.md) grades every round without final data. The design
 is [`DESIGN.md`](DESIGN.md). Part A (PD-L1) was development on cells already read. Part B (MHC-I, HLA-E) was designed
 first (commit `e68603d`) and run once.
