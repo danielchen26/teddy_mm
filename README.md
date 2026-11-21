@@ -130,9 +130,10 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   gate that gives every cell one type, closure by the protocol's grades), the repair removes the head's loss in every
   admitted case: for PD-L1 in three groups of cells and for MHC-I in co-culture the repaired output adds no loss beyond
   what the embedding carries (0.01, 0.00, 0.03, 0.07). The whole chain does not close. Where an absolute pass was
-  attainable (melanoma, IFN-γ) the interval misses it by 0.005; elsewhere what remains lies before the head, and in
-  co-culture it is not readable from RNA either. A replication on MHC-I and HLA-E, designed first, did not close by
-  its rule.
+  attainable (melanoma, IFN-γ) the interval misses it by 0.005; elsewhere what remains is not removed by the head.
+  A replication on MHC-I and HLA-E, designed first, did not close by its rule. (Corrected the same day: the first
+  reading, "in co-culture it is not readable from RNA either", does not stand for PD-L1; see the note at the top of
+  that run.)
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
