@@ -1,0 +1,1358 @@
+{
+ "source": "runs/teg_loop_20261120/results",
+ "defaults": {
+  "margin": 0.1,
+  "step_margin": 0.1,
+  "min_snr": 3.0,
+  "min_units": 10,
+  "margin_factor": 4,
+  "typed_right": 0.99,
+  "reader_classes": 2
+ },
+ "levers": {
+  "M": "the model (inner loop)",
+  "E": "events: which units of the pool are read next, and in which role",
+  "V": "views: the readers of a stage, the input, the readouts",
+  "S": "schema: the fields of an event and what is pooled",
+  "C": "claim: the targets, the grade and the tolerance asked for",
+  "P": "protocol: the gates and the rules"
+ },
+ "routes": {
+  "invalid": {
+   "lever": "V",
+   "meaning": "the reading cannot be used (Section 6)",
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading"
+  },
+  "unresolved": {
+   "lever": "E",
+   "meaning": "the interval does not decide between support and rejection",
+   "actions": [
+    "if the units of the pool differ among themselves, the split comes first",
+    "more independent units of the same type from the pool",
+    "if the pool cannot supply them, report the estimate as it is: at the margin"
+   ],
+   "not": "change the model or the views"
+  },
+  "small response": {
+   "lever": "E",
+   "meaning": "the response is too small against its interval to be followed",
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target"
+  },
+  "unreadable": {
+   "lever": "V",
+   "meaning": "a resolved loss at the input view, with the event's own cells, in a view that is not dominated",
+   "actions": [
+    "a richer reader of the same input",
+    "another input already measured on the same cells, never the readout itself",
+    "a new measurement",
+    "a stated limit of the claim"
+   ],
+   "not": "train"
+  },
+  "upstream": {
+   "lever": "M",
+   "meaning": "the input view reads it and the stage the head reads does not",
+   "actions": [
+    "change what comes before the stage: an inner loop of another depth",
+    "if that part cannot be changed, the item stays open under its owner"
+   ],
+   "not": "change the head"
+  },
+  "no rows": {
+   "lever": "E",
+   "meaning": "cells of this kind are needed and the table has no admitted event of the type",
+   "actions": [
+    "events of the type from the pool"
+   ],
+   "not": "carry rows over from another type"
+  },
+  "pooled, and differs": {
+   "lever": "S",
+   "meaning": "a distinction the schema pools is visible in the readings",
+   "actions": [
+    "split along a field from the record, with rival fields, tested on new units"
+   ],
+   "not": "repair across the pool"
+  },
+  "pooled, may be the same": {
+   "lever": "S",
+   "meaning": "a distinction the schema keeps looks invisible to the readout",
+   "actions": [
+    "merge after bounded support on new units, twice"
+   ],
+   "not": "merge on development readings"
+  },
+  "mistyped": {
+   "lever": "S",
+   "meaning": "cells get a type from a reader of their state, and some get the wrong one",
+   "actions": [
+    "take the type from the record"
+   ],
+   "not": "tune the reader"
+  },
+  "self event": {
+   "lever": "C",
+   "meaning": "the event acts on the readout's own gene: an RNA-only system may have nothing to read (rule S3)",
+   "actions": [
+    "a stated limit for this type",
+    "or the assignment as an input, which is another system: the owner's decision"
+   ],
+   "not": "use it as a row"
+  },
+  "rule": {
+   "lever": "P",
+   "meaning": "a gate or a test could not be evaluated as written",
+   "actions": [
+    "amend the protocol before the next iteration"
+   ],
+   "not": "re-grade the finished run"
+  },
+  "selection": {
+   "lever": "P",
+   "meaning": "an event was selected by a measurement on the cells that were then audited",
+   "actions": [
+    "a selection split"
+   ],
+   "not": "keep selecting on audited cells"
+  },
+  "no final data": {
+   "lever": "E",
+   "meaning": "no unit of the claim is unread",
+   "actions": [
+    "a census of the pool; units set aside as final before anything else is read"
+   ],
+   "not": "call a development reading a confirmation"
+  },
+  "confounded": {
+   "lever": "E",
+   "meaning": "two fields vary together in the units that were read",
+   "actions": [
+    "units of the pool in which they vary apart",
+    "otherwise the claim names their product"
+   ],
+   "not": "attribute the difference to one of them"
+  },
+  "guard conflict": {
+   "lever": "C",
+   "meaning": "every change that removes the loss breaks the guard on the system's own task",
+   "actions": [
+    "a change that holds the guard: the inner loop again",
+    "if none does, the owner decides between the target and the guard"
+   ],
+   "not": "widen the guard after the result"
+  }
+ },
+ "pool_screen": {
+  "PDL1": {
+   "pass_A1": 6,
+   "admissible": [
+    "STAT1",
+    "JAK2",
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1"
+   ],
+   "admissible_not_in_the_round": [],
+   "largest_snr_not_admissible_by_A1": 2.064899450435643
+  },
+  "MHC1": {
+   "pass_A1": 7,
+   "admissible": [
+    "B2M",
+    "TAPBP",
+    "SSR2",
+    "STAT3",
+    "CD44"
+   ],
+   "admissible_not_in_the_round": [
+    "B2M",
+    "TAPBP",
+    "SSR2",
+    "STAT3",
+    "CD44"
+   ],
+   "largest_snr_not_admissible_by_A1": 2.840606070452354
+  },
+  "HLAE": {
+   "pass_A1": 0,
+   "admissible": [],
+   "admissible_not_in_the_round": [],
+   "largest_snr_not_admissible_by_A1": 1.870490799455589
+  }
+ },
+ "targets": [
+  {
+   "readout": "PDL1",
+   "group": "mel_ifn",
+   "part": "development",
+   "status": "the model's part closed (relative)",
+   "attainable": "absolute",
+   "own_output": {
+    "u": 0.04288296486905607,
+    "ci": [
+     -0.02130800320567869,
+     0.10530269813019512
+    ],
+    "verdict": "unresolved"
+   },
+   "added_beyond_Z": {
+    "added": 0.011038270701680508,
+    "ci": [
+     -0.02719415706485407,
+     0.031620447345198206
+    ],
+    "reading": "no added loss"
+   }
+  },
+  {
+   "readout": "PDL1",
+   "group": "mel_co",
+   "part": "development",
+   "status": "the model's part closed (relative)",
+   "attainable": "relative",
+   "own_output": {
+    "u": 0.11772273195813454,
+    "ci": [
+     0.019584492565677285,
+     0.1865743224723721
+    ],
+    "verdict": "unresolved"
+   },
+   "added_beyond_Z": {
+    "added": 0.0009500504834488721,
+    "ci": [
+     -0.01906219110612961,
+     0.020014028393700655
+    ],
+    "reading": "no added loss"
+   }
+  },
+  {
+   "readout": "PDL1",
+   "group": "thp1",
+   "part": "development",
+   "status": "the model's part closed (relative)",
+   "attainable": "relative",
+   "own_output": {
+    "u": 0.16258925676156755,
+    "ci": [
+     0.0790554816110704,
+     0.28976882080432115
+    ],
+    "verdict": "unresolved"
+   },
+   "added_beyond_Z": {
+    "added": 0.030793522594468548,
+    "ci": [
+     -0.032693951196649404,
+     0.08423499829880468
+    ],
+    "reading": "no added loss"
+   }
+  },
+  {
+   "readout": "MHC1",
+   "group": "mel_ifn",
+   "part": "replication",
+   "status": "not a target",
+   "attainable": null,
+   "own_output": null,
+   "added_beyond_Z": null
+  },
+  {
+   "readout": "MHC1",
+   "group": "mel_co",
+   "part": "replication",
+   "status": "not graded",
+   "attainable": "relative",
+   "own_output": {
+    "u": 0.3912871175566761,
+    "ci": [
+     0.3424666740537639,
+     0.43886507811658265
+    ],
+    "verdict": "reject"
+   },
+   "added_beyond_Z": {
+    "added": 0.0699242049017994,
+    "ci": [
+     0.045236086708503445,
+     0.09494203923928163
+    ],
+    "reading": "no added loss"
+   }
+  },
+  {
+   "readout": "HLAE",
+   "group": "mel_ifn",
+   "part": "replication",
+   "status": "not a target",
+   "attainable": null,
+   "own_output": null,
+   "added_beyond_Z": null
+  },
+  {
+   "readout": "HLAE",
+   "group": "mel_co",
+   "part": "replication",
+   "status": "not a target",
+   "attainable": null,
+   "own_output": null,
+   "added_beyond_Z": null
+  }
+ ],
+ "items": [
+  {
+   "id": "O01",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_ifn",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "IFN-gamma"
+   },
+   "event": "CD274",
+   "reading": "self event",
+   "lever": "C",
+   "question": "the knockout of the readout's own gene",
+   "value": 0.9129340653850763,
+   "ci": [
+    0.87076897889742,
+    0.9515631422597034
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": 0,
+   "next_step_needs": "the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a stated limit for this type",
+    "or the assignment as an input, which is another system: the owner's decision"
+   ],
+   "not": "use it as a row",
+   "evidence": "round_development.json:PDL1.probe",
+   "note": "not admitted (A2); no reader of Z reads it",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_ifn",
+     "event": "CD274",
+     "value": 0.9129340653850763,
+     "ci": [
+      0.87076897889742,
+      0.9515631422597034
+     ],
+     "evidence": "round_development.json:PDL1.probe",
+     "note": "not admitted (A2); no reader of Z reads it"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O02",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_ifn",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "IFN-gamma"
+   },
+   "event": "pool",
+   "reading": "unresolved",
+   "lever": "E",
+   "question": "is the output of the model inside the margin",
+   "value": 0.04288296486905607,
+   "ci": [
+    -0.02130800320567869,
+    0.10530269813019512
+   ],
+   "resampling_units": 5,
+   "units_needed": 6,
+   "more_units_in_pool": 0,
+   "next_step_needs": "no new data",
+   "after": [
+    "O18"
+   ],
+   "standing": null,
+   "actions": [
+    "if the units of the pool differ among themselves, the split comes first",
+    "more independent units of the same type from the pool",
+    "if the pool cannot supply them, report the estimate as it is: at the margin"
+   ],
+   "not": "change the model or the views",
+   "evidence": "round_development.json:PDL1.groups.mel_ifn.arms.rows",
+   "note": "the reference stage is supported: nothing is left before the model",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_ifn",
+     "event": "pool",
+     "value": 0.04288296486905607,
+     "ci": [
+      -0.02130800320567869,
+      0.10530269813019512
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_ifn.arms.rows",
+     "note": "the reference stage is supported: nothing is left before the model"
+    }
+   ],
+   "approximate": true,
+   "forecast": "first the bridge reading with the type from the record, which changes the cells this estimate is read on; then: at the margin: the pool has no further unit that passes admission"
+  },
+  {
+   "id": "O03",
+   "key": "repair across: melanoma IFN-gamma and melanoma co-culture",
+   "readout": "PDL1",
+   "group": "mel_ifn",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "IFN-gamma"
+   },
+   "event": "pool",
+   "reading": "pooled, and differs",
+   "lever": "S",
+   "question": "the whole repair across: melanoma IFN-gamma and melanoma co-culture",
+   "value": 0.2449330740153841,
+   "ci": [
+    0.16399384966203737,
+    0.2847513274479472
+   ],
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": 0,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": "the schema already keeps them apart; seen on development cells, to be confirmed on new units",
+   "actions": [
+    "split along a field from the record, with rival fields, tested on new units"
+   ],
+   "not": "repair across the pool",
+   "evidence": "round_development.json:PDL1.groups.mel_ifn.arms.other",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_ifn",
+     "event": "pool",
+     "value": 0.2449330740153841,
+     "ci": [
+      0.16399384966203737,
+      0.2847513274479472
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_ifn.arms.other",
+     "note": null
+    },
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 0.23289331775252398,
+     "ci": [
+      0.19242994032066688,
+      0.2781654066503378
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_co.arms.other",
+     "note": null
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O04",
+   "key": "rows across: melanoma IFN-gamma and melanoma co-culture",
+   "readout": "PDL1",
+   "group": "mel_ifn",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "IFN-gamma"
+   },
+   "event": "pool",
+   "reading": "pooled, may be the same",
+   "lever": "S",
+   "question": "the rows across: melanoma IFN-gamma and melanoma co-culture",
+   "value": -0.006547386918305809,
+   "ci": [
+    -0.025833388461552267,
+    0.016485640765108382
+   ],
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": 0,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "merge after bounded support on new units, twice"
+   ],
+   "not": "merge on development readings",
+   "evidence": "round_development.json:PDL1.groups.mel_ifn.arms.rows_other",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_ifn",
+     "event": "pool",
+     "value": -0.006547386918305809,
+     "ci": [
+      -0.025833388461552267,
+      0.016485640765108382
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_ifn.arms.rows_other",
+     "note": null
+    },
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 0.050252321156508684,
+     "ci": [
+      0.029571153914935786,
+      0.07143001566172962
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_co.arms.rows_other",
+     "note": null
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O05",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: dominated view",
+   "value": -0.08574391901493073,
+   "ci": [
+    -0.12676419699564576,
+    -0.04399715587496758
+   ],
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round_development.json:PDL1.groups.mel_co.admission.input_view",
+   "note": "the RNA view (512 components, ridge) leaves 0.19 and Z, which is computed from the same RNA, leaves 0.10",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": -0.08574391901493073,
+     "ci": [
+      -0.12676419699564576,
+      -0.04399715587496758
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_co.admission.input_view",
+     "note": "the RNA view (512 components, ridge) leaves 0.19 and Z, which is computed from the same RNA, leaves 0.10"
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O06",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round_development.json:PDL1.groups.mel_co.admission.input_view",
+   "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round_development.json:PDL1.groups.mel_co.admission.input_view",
+     "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself"
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O07",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "unresolved",
+   "lever": "E",
+   "question": "is anything lost before the model",
+   "value": 0.11677268036455746,
+   "ci": [
+    0.007410474150858327,
+    0.19343890731415647
+   ],
+   "resampling_units": 5,
+   "units_needed": 213,
+   "more_units_in_pool": null,
+   "next_step_needs": "at the margin",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "if the units of the pool differ among themselves, the split comes first",
+    "more independent units of the same type from the pool",
+    "if the pool cannot supply them, report the estimate as it is: at the margin"
+   ],
+   "not": "change the model or the views",
+   "evidence": "round_development.json:PDL1.groups.mel_co.grid.scopes",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 0.11677268036455746,
+     "ci": [
+      0.007410474150858327,
+      0.19343890731415647
+     ],
+     "evidence": "round_development.json:PDL1.groups.mel_co.grid.scopes",
+     "note": null
+    }
+   ],
+   "approximate": true,
+   "forecast": "at the margin: more than 4 times the units would be needed"
+  },
+  {
+   "id": "O08",
+   "key": null,
+   "readout": "PDL1",
+   "group": "thp1",
+   "type": {
+    "cell_type": "THP-1",
+    "stratum": "stimulated"
+   },
+   "event": "pool",
+   "reading": "unresolved",
+   "lever": "E",
+   "question": "is anything lost before the model",
+   "value": 0.1317957301242345,
+   "ci": [
+    0.01616688892396743,
+    0.31153306426523014
+   ],
+   "resampling_units": 5,
+   "units_needed": 67,
+   "more_units_in_pool": null,
+   "next_step_needs": "at the margin",
+   "after": [
+    "O09"
+   ],
+   "standing": null,
+   "actions": [
+    "if the units of the pool differ among themselves, the split comes first",
+    "more independent units of the same type from the pool",
+    "if the pool cannot supply them, report the estimate as it is: at the margin"
+   ],
+   "not": "change the model or the views",
+   "evidence": "round_development.json:PDL1.groups.thp1.grid.scopes",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "thp1",
+     "event": "pool",
+     "value": 0.1317957301242345,
+     "ci": [
+      0.01616688892396743,
+      0.31153306426523014
+     ],
+     "evidence": "round_development.json:PDL1.groups.thp1.grid.scopes",
+     "note": null
+    }
+   ],
+   "approximate": true,
+   "forecast": "at the margin: more than 4 times the units would be needed"
+  },
+  {
+   "id": "O09",
+   "key": null,
+   "readout": "PDL1",
+   "group": "thp1",
+   "type": {
+    "cell_type": "THP-1",
+    "stratum": "stimulated"
+   },
+   "event": "IRF1",
+   "reading": "pooled, and differs",
+   "lever": "S",
+   "question": "one event inside the pool: IRF1",
+   "value": 0.5398728142536883,
+   "ci": [
+    0.43178693952825903,
+    0.6479843867037727
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "split along a field from the record, with rival fields, tested on new units"
+   ],
+   "not": "repair across the pool",
+   "evidence": "round_development.json:PDL1.groups.thp1.arms.rows",
+   "note": "the pool reads 0.16 [0.08, 0.29]; this event's interval lies above it; for this event the loss is already at the reference stage",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "thp1",
+     "event": "IRF1",
+     "value": 0.5398728142536883,
+     "ci": [
+      0.43178693952825903,
+      0.6479843867037727
+     ],
+     "evidence": "round_development.json:PDL1.groups.thp1.arms.rows",
+     "note": "the pool reads 0.16 [0.08, 0.29]; this event's interval lies above it; for this event the loss is already at the reference stage"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O10",
+   "key": "repair across: THP-1 stimulated and melanoma IFN-gamma",
+   "readout": "PDL1",
+   "group": "thp1",
+   "type": {
+    "cell_type": "THP-1",
+    "stratum": "stimulated"
+   },
+   "event": "pool",
+   "reading": "pooled, and differs",
+   "lever": "S",
+   "question": "the whole repair across: THP-1 stimulated and melanoma IFN-gamma",
+   "value": 0.623786553860642,
+   "ci": [
+    0.47847111937477804,
+    0.7057856715309493
+   ],
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": "the schema already keeps them apart; seen on development cells, to be confirmed on new units",
+   "actions": [
+    "split along a field from the record, with rival fields, tested on new units"
+   ],
+   "not": "repair across the pool",
+   "evidence": "round_development.json:PDL1.groups.thp1.arms.other",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "thp1",
+     "event": "pool",
+     "value": 0.623786553860642,
+     "ci": [
+      0.47847111937477804,
+      0.7057856715309493
+     ],
+     "evidence": "round_development.json:PDL1.groups.thp1.arms.other",
+     "note": null
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O11",
+   "key": "rows across: THP-1 stimulated and melanoma IFN-gamma",
+   "readout": "PDL1",
+   "group": "thp1",
+   "type": {
+    "cell_type": "THP-1",
+    "stratum": "stimulated"
+   },
+   "event": "pool",
+   "reading": "unresolved",
+   "lever": "E",
+   "question": "can the rows be merged across: THP-1 stimulated and melanoma IFN-gamma",
+   "value": 0.14218551651409628,
+   "ci": [
+    0.08613977595557487,
+    0.17771209152130046
+   ],
+   "resampling_units": 5,
+   "units_needed": 9,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool",
+   "after": [
+    "O09"
+   ],
+   "standing": null,
+   "actions": [
+    "if the units of the pool differ among themselves, the split comes first",
+    "more independent units of the same type from the pool",
+    "if the pool cannot supply them, report the estimate as it is: at the margin"
+   ],
+   "not": "change the model or the views",
+   "evidence": "round_development.json:PDL1.groups.thp1.arms.rows_other",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "thp1",
+     "event": "pool",
+     "value": 0.14218551651409628,
+     "ci": [
+      0.08613977595557487,
+      0.17771209152130046
+     ],
+     "evidence": "round_development.json:PDL1.groups.thp1.arms.rows_other",
+     "note": null
+    }
+   ],
+   "approximate": true,
+   "forecast": "within reach if the pool holds units of the type: a census first"
+  },
+  {
+   "id": "O12",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_ifn",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "IFN-gamma"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 3.0942026390775905,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": 5,
+   "next_step_needs": "units at hand",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": "round_replication.json:MHC1.groups.mel_ifn.admission",
+   "note": "pooled 3.1 (wanted 3); events that pass on their own: 0 of 5",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_ifn",
+     "event": "pool",
+     "value": 3.0942026390775905,
+     "ci": null,
+     "evidence": "round_replication.json:MHC1.groups.mel_ifn.admission",
+     "note": "pooled 3.1 (wanted 3); events that pass on their own: 0 of 5"
+    }
+   ],
+   "forecast": "within reach now: events with states at hand pass the screen: B2M, TAPBP, SSR2, STAT3, CD44",
+   "approximate": true
+  },
+  {
+   "id": "O13",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round_replication.json:MHC1.groups.mel_co.admission.input_view",
+   "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round_replication.json:MHC1.groups.mel_co.admission.input_view",
+     "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself"
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O14",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "rule",
+   "lever": "P",
+   "question": "gate 3 is absolute: the change reaches its objective on the cells it was fitted on",
+   "value": 0.2829046338592528,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "amend the protocol before the next iteration"
+   ],
+   "not": "re-grade the finished run",
+   "evidence": "round_replication.json:MHC1.groups.mel_co.gate3",
+   "note": "the reference stage itself leaves 0.32, so no change of the head can pass it; state it against the reference stage",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 0.2829046338592528,
+     "ci": null,
+     "evidence": "round_replication.json:MHC1.groups.mel_co.gate3",
+     "note": "the reference stage itself leaves 0.32, so no change of the head can pass it; state it against the reference stage"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O15",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "rule",
+   "lever": "P",
+   "question": "the hypothesis had no control arm",
+   "value": null,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "amend the protocol before the next iteration"
+   ],
+   "not": "re-grade the finished run",
+   "evidence": "round_replication.json:MHC1.groups.mel_co.test",
+   "note": "no control arm was run: the other group has no admitted event",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round_replication.json:MHC1.groups.mel_co.test",
+     "note": "no control arm was run: the other group has no admitted event"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O16",
+   "key": null,
+   "readout": "HLAE",
+   "group": "mel_ifn",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "IFN-gamma"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 2.2052112144823264,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": 10,
+   "more_units_in_pool": 0,
+   "next_step_needs": "the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": "round_replication.json:HLAE.groups.mel_ifn.admission",
+   "note": "pooled 2.2 (wanted 3); events that pass on their own: 0 of 5",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "HLAE",
+     "group": "mel_ifn",
+     "event": "pool",
+     "value": 2.2052112144823264,
+     "ci": null,
+     "evidence": "round_replication.json:HLAE.groups.mel_ifn.admission",
+     "note": "pooled 2.2 (wanted 3); events that pass on their own: 0 of 5"
+    }
+   ],
+   "forecast": "the pool at hand has no event that moves this readout: not asked, or on the experiment list",
+   "approximate": true
+  },
+  {
+   "id": "O17",
+   "key": null,
+   "readout": "HLAE",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 3.1170843028871706,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool, or the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": "round_replication.json:HLAE.groups.mel_co.admission",
+   "note": "pooled 3.1 (wanted 3); events that pass on their own: 0 of 5",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "HLAE",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 3.1170843028871706,
+     "ci": null,
+     "evidence": "round_replication.json:HLAE.groups.mel_co.admission",
+     "note": "pooled 3.1 (wanted 3); events that pass on their own: 0 of 5"
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O18",
+   "key": null,
+   "readout": "all",
+   "group": "mel_ifn",
+   "type": null,
+   "event": "pool",
+   "reading": "mistyped",
+   "lever": "S",
+   "question": "how a cell gets its type",
+   "value": 0.9556313993174061,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "take the type from the record"
+   ],
+   "not": "tune the reader",
+   "evidence": "round_development.json:PDL1.gate",
+   "note": "the type is guessed from the state; the record has it",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "all",
+     "group": "mel_ifn",
+     "event": "pool",
+     "value": 0.9556313993174061,
+     "ci": null,
+     "evidence": "round_development.json:PDL1.gate",
+     "note": "the type is guessed from the state; the record has it"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O19",
+   "key": null,
+   "readout": "all",
+   "group": null,
+   "type": null,
+   "event": "pool",
+   "reading": "selection",
+   "lever": "P",
+   "question": "events were screened on the cells that were then audited",
+   "value": null,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a selection split"
+   ],
+   "not": "keep selecting on audited cells",
+   "evidence": null,
+   "note": "A1 (the response against its interval) was read on the cells that were then audited; negligible where the response is ten times its half-width (PD-L1), material near the threshold of three, where no event was admitted",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "all",
+     "group": null,
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": null,
+     "note": "A1 (the response against its interval) was read on the cells that were then audited; negligible where the response is ten times its half-width (PD-L1), material near the threshold of three, where no event was admitted"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O20",
+   "key": null,
+   "readout": "all",
+   "group": null,
+   "type": null,
+   "event": "pool",
+   "reading": "rule",
+   "lever": "P",
+   "question": "a group ready as a pool with no admitted event",
+   "value": null,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "amend the protocol before the next iteration"
+   ],
+   "not": "re-grade the finished run",
+   "evidence": null,
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "all",
+     "group": null,
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": null,
+     "note": null
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O21",
+   "key": null,
+   "readout": "all",
+   "group": null,
+   "type": null,
+   "event": "pool",
+   "reading": "no final data",
+   "lever": "E",
+   "question": "units of the claim that no run has read",
+   "value": 0,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a census of the pool; units set aside as final before anything else is read"
+   ],
+   "not": "call a development reading a confirmation",
+   "evidence": null,
+   "note": "every cell with an embedding has been read; the rest of the two screens has no embeddings yet",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "all",
+     "group": null,
+     "event": "pool",
+     "value": 0,
+     "ci": null,
+     "evidence": null,
+     "note": "every cell with an embedding has been read; the rest of the two screens has no embeddings yet"
+    }
+   ],
+   "approximate": false
+  }
+ ],
+ "count_by_lever": {
+  "M": 0,
+  "E": 8,
+  "V": 3,
+  "S": 5,
+  "C": 1,
+  "P": 4
+ },
+ "count_by_reading": {
+  "invalid": 3,
+  "unresolved": 4,
+  "small response": 3,
+  "unreadable": 0,
+  "upstream": 0,
+  "no rows": 0,
+  "pooled, and differs": 3,
+  "pooled, may be the same": 1,
+  "mistyped": 1,
+  "self event": 1,
+  "rule": 3,
+  "selection": 1,
+  "no final data": 1,
+  "confounded": 0,
+  "guard conflict": 0
+ },
+ "count_by_what_the_next_step_needs": {
+  "at the margin": 2,
+  "no new data": 7,
+  "no new data first; then the owner's decision": 2,
+  "the owner's decision": 2,
+  "units at hand": 1,
+  "units of the pool": 6,
+  "units of the pool, or the owner's decision": 1
+ },
+ "coverage": {
+  "targets": {
+   "closed (absolute)": 0,
+   "the model's part closed (relative)": 3,
+   "open in the model": 0,
+   "undecided in the model": 0,
+   "not graded": 1,
+   "not a target": 3
+  },
+  "items": {
+   "open": 21,
+   "decided on development units": 0,
+   "closed": 0,
+   "limit": 0,
+   "at the margin": 0,
+   "not asked": 0,
+   "on the experiment list": 0
+  },
+  "closed": false
+ },
+ "ledger_check": [
+  {
+   "rule": "O5",
+   "level": "warning",
+   "message": "no unit is set aside as final: every status is exploratory"
+  }
+ ],
+ "checks": {
+  "targets": 7,
+  "items": 21,
+  "readings_never_met_in_this_round": [
+   "unreadable",
+   "upstream",
+   "no rows",
+   "confounded",
+   "guard conflict"
+  ],
+  "items_whose_interval_is_approximate": [
+   "O02",
+   "O03",
+   "O04",
+   "O05",
+   "O06",
+   "O07",
+   "O08",
+   "O10",
+   "O11",
+   "O12",
+   "O13",
+   "O16",
+   "O17"
+  ],
+  "note": "an interval over fewer than 10 events is approximate (protocol v2); every pooled interval of this round rests on five"
+ }
+}

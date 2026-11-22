@@ -264,6 +264,21 @@ how it is to be used.
 4. **A readout is named in the events.** `readout_name` in a SPEC; without it verdicts of different readouts share a
    key in the ledger.
 
+# Version 3: five amendments (22 November 2026)
+
+The round of 20 November ([`runs/teg_loop_20261120`](runs/teg_loop_20261120/)) met five cases that versions 1 and 2
+could not evaluate as written. [`OUTER_LOOP.md`](OUTER_LOOP.md) (Section 8.5) proposed an amendment for each. They
+apply from the outer step of 22 November ([`runs/outer_step_20261122`](runs/outer_step_20261122/)) on. They change no
+outcome recorded under the rule a run was made with.
+
+| | the case | the rule from now on |
+|---|---|---|
+| 3a | Gate 3 asked a change to bring the output inside the margin on the cells it was fitted on. Where the reference stage itself leaves a third of the response, no change of the head can do that. | **Gate 3 is stated against the reference stage.** On the cells it was fitted on, the changed output adds no loss beyond the reference stage: the interval of \|*u* of the output\| − \|*u* of the reference\| lies below the step margin. The output as trained must fail the same gate, or there was nothing to change. The absolute value is still reported. |
+| 3b | A hypothesis about a repair by rows had one control, the repair of another group. Where the other group had no admitted event there was no control, and the test could not be made. | **Two controls.** The readout fitted on the group's control cells without rows always exists; it shows what the rows add. The repair of another group shows what the type adds, where there is one. The rule of the test is unchanged: the own arm above its bound, every control arm below. The difference between the rows arm and the controls arm, on paired resamples, is reported and read against the step margin. |
+| 3c | A group passed admission as a pool while no single event did. | **Not a target.** A repair by rows needs a row. The reason is recorded as an open item (a small response). |
+| 3d | The response of an event was screened on the cells that were then audited. | **A selection split.** One third of an event's cells, and of the control cells, drawn by cell before anything is read, serves admission (A1 of the round, the no-leakage rules). Those cells enter no reading of *u*. Events admitted before this version keep their admission, and how they fare on a third is reported. |
+| 3e | The type of a cell was assigned by a reader of its state, and four in a hundred knockout cells of one group got the wrong one. | **The type comes from the record** (the design labels). The reader of types is a component of the system only where no record exists at use, and is then audited like one. |
+
 ## Commands
 
 ```
