@@ -1,8 +1,11 @@
 # The outer loop: design
 
-Status: **proposed** on 20 November 2026. Nothing in this document has been run on cells. It was checked in two ways
-that read no cell: a dry run of its routing on the finished round of 20 November, and a back-test on earlier runs
-([`runs/outer_loop_design_20261120`](runs/outer_loop_design_20261120/)). What that check changed is listed there.
+Status: proposed on 20 November 2026, **adopted on 22 November** on the owner's go-ahead after a third check. Before
+any run it was checked three times ([`runs/outer_loop_design_20261120`](runs/outer_loop_design_20261120/)): a dry run
+of its routing on the finished round of 20 November, a back-test on earlier runs, and a check of its own claims
+against data, with planted cases for every reading. What each check changed is listed there. The code is
+[`anm_diag/outer.py`](anm_diag/outer.py) with [`tests/test_outer.py`](tests/test_outer.py). The first outer step is
+[`runs/outer_step_20261122`](runs/outer_step_20261122/).
 
 [`LOOP_PROTOCOL.md`](LOOP_PROTOCOL.md) describes one round: an audit, one change to the system, an audit again. That
 is the inner loop. This document describes what happens between rounds when the inner loop has done what it can and
@@ -137,6 +140,8 @@ At the end of an iteration every target (a type and a readout) has exactly one s
 |---|---|
 | closed (absolute) | the system's own output is supported, and the control's is rejected |
 | the model's part closed (relative) | the model adds no loss beyond the reference stage, and the control does; what the reference stage leaves is an open item |
+| open in the model | the model still adds a resolved loss: the inner loop goes on (function, coverage with rows, unit) |
+| undecided in the model | whether the model adds a loss is not resolved; that is an open item |
 | not graded | a gate could not be evaluated; the reason is an open item |
 | not a target | the response cannot be followed; the reason is an open item |
 
@@ -145,7 +150,8 @@ Everything else that was left is written as an open item, a typed event in the s
 `id · iteration · readout · type · event (pool or site) · quantity · value and interval · resampling units · reading ·
 lever · admissible actions · units needed · units in the pool · evidence (the runs it was read from) · state`
 
-An item ends in one of five terminal states:
+An item is `open`, then `decided on development units` once its quantity is decided on units that had been read, and
+that stays exploratory. It ends in one of five terminal states:
 
 | terminal state | reached when |
 |---|---|
@@ -169,6 +175,7 @@ to repair the reading.
 | one reader specification | two runs give opposite verdicts for the same event, readout and stage, with different reader settings | one specification, sealed in the package; a bridge reading (Section 9) |
 | resampling | fewer units than the chosen number, or draws that are not paired | the interval is marked approximate; a statement about the family waits for more units |
 | reader classes | `unreadable` rests on one class | at least two classes, one of them not linear |
+| the input view | a loss before the model is resolved and no input view was read | read the input view; until then the loss is not placed |
 | readout control | a readout that should not respond (an isotype control) responds | the readout is repaired or dropped before anything is read from it |
 
 ## 7. From a reading to a lever
@@ -207,7 +214,9 @@ The pool is finite and real. Selecting from it is the active part of the loop.
 
 0. **Census.** Before the first outer step, every unit of the pool is listed with its type (from the record), its
    cells, whether the system's states exist for it, its role and how often it has been read. A census reads no
-   response.
+   response of a unit that has not been read. For units that have been read it also lists, per readout, which events
+   pass the screen. This can change the picture: the round of 20 November asked MHC-I of five pathway genes and found
+   no event to follow, while the same library holds two knockouts that change MHC-I strongly.
 1. **Final units first.** A share of the units of the claim is drawn at random and named under `roles.final`. The
    draw is stratified by every field of the record, not only by the types the schema has today, so that a later split
    still has final units on both sides. A run that touches them is refused unless it is the final audit (protocol v2).
@@ -312,7 +321,7 @@ recorded under the rule a run was made with (protocol, "Evidence grades"). The r
 | case | amendment proposed |
 |---|---|
 | gate 3 asks a repair to come inside the margin on its own cells, which is impossible where the reference stage itself leaves a third | state gate 3 against the reference stage: no added loss on the cells it was fitted on |
-| the hypothesis had no control arm, because the other group had no admitted event | name a control that always exists: the same update with rows of events that do not move the readout |
+| the hypothesis had no control arm, because the other group had no admitted event | the control that always exists: the same readout fitted on the group's control cells without rows (already an arm of the round). The repair of another group stays a second control where there is one |
 | a group ready as a pool with no admitted event | not a target (as resolved in the round) |
 | the response of an event was screened on the cells that were then audited | the selection split of Section 8.1 |
 | the type of a cell was guessed from its state | the type comes from the record (Section 8.3) |
@@ -329,9 +338,12 @@ first and are separated from new data by a bridge reading.
    will be operated and the new reader specification. No new data, no change to the model. It shows what the change of
    rules alone does. It is exploratory.
 4. Richer readers (V, step 0), which need no new data.
-5. Select units (E) and, where the owner has decided it, add a view (V, steps 1 and 2).
-6. Write the hypotheses and seal package *t*+1.
-7. The inner loop runs under package *t*+1.
+5. Derive the open items again. Steps 2 to 4 can move a quantity that an item waits on (an estimate read on cells
+   whose type was guessed is read again once the type comes from the record), so what an item needs from the pool is
+   said only now.
+6. Select units (E) and, where the owner has decided it, add a view (V, steps 1 and 2).
+7. Write the hypotheses and seal package *t*+1.
+8. The inner loop runs under package *t*+1.
 
 ## 10. The next package
 
@@ -426,6 +438,7 @@ a program.
 | calibration sample | one third of a batch |
 | selection split | one third of a unit's cells, and of the control cells |
 | refuted hypotheses in a row before an item stops | two |
+| cells given their own type, below which typing is an open item | 0.99 |
 
 None of these is derived. Each is reported with every use, as in the protocol.
 
@@ -435,9 +448,10 @@ None of these is derived. Each is reported with every use, as in the protocol.
 - It does not remove confounding. Units of the pool differ in more than the field in question; the design asks for the
   confounded fields to be named and for crossed units where the pool has them.
 - It does not make a schema minimal, or unique.
-- It has no test yet for the outer rules O1 to O6, and no code beyond the dry run. `loop.hypothesis_event` does not yet
-  accept the outer claims.
+- Its hypotheses are written by `outer.hypothesis`, beside `loop.hypothesis_event`; the two ledgers are not yet checked
+  as one.
 - It has one observer per package. A range of observers is several claims, and their joint treatment is not designed.
 - Four of its fifteen readings (`upstream`, `no rows`, `confounded`, `guard conflict`) did not occur in the round it was
-  dry-run on. The last two are taken from earlier runs (22 and 16).
-- It has not been run. Whether it converges in a useful number of iterations on this pool is not known.
+  dry-run on. The last two are taken from earlier runs (22 and 16). All fifteen are produced by planted cases in
+  `tests/test_outer.py`, each by its own case only; that shows the rules are consistent, not that they are right.
+- Whether it converges in a useful number of iterations on this pool is not known. One outer step has been run.

@@ -1,29 +1,34 @@
-# The design of the outer loop, checked without reading a cell
+# The design of the outer loop, checked three times before it was run
 
-Status: a check of a **proposed** design, [`OUTER_LOOP.md`](../../OUTER_LOOP.md). No cell was read and nothing was
-fitted. Two things were done:
+Status: the checks of [`OUTER_LOOP.md`](../../OUTER_LOOP.md), which was proposed on 20 November and adopted on
+22 November. Three things were done:
 
-1. **A dry run.** The rules of the design were applied to the finished round of 20 November
+1. **A dry run** (20 November). The rules of the design were applied to the finished round of 20 November
    ([`teg_loop_20261120`](../teg_loop_20261120/)): does every target get one status, does every thing that was left
-   get one reading and one lever, and what would the next step need?
-2. **A back-test.** Twelve earlier results of this project were put to the routing table: would it have named the
-   action that was later found to be the right one?
+   get one reading and one lever, and what would the next step need? No cell was read.
+2. **A back-test** (20 November). Twelve earlier results of this project were put to the routing table: would it have
+   named the action that was later found to be the right one? No cell was read.
+3. **A check of the design's own claims** (22 November, Section 5). What the dry run had said about the pool was
+   checked against the library's knockouts (cells that earlier runs had read); the rules were written as code
+   ([`anm_diag/outer.py`](../../anm_diag/outer.py)) and every reading was produced from a planted case
+   ([`tests/test_outer.py`](../../tests/test_outer.py)); the text was read once more.
 
-The check changed the design in eleven places, and it corrects one statement of the round of 20 November. Both are
-listed below.
+The first two checks changed the design in eleven places. The third changed it in five more, and it withdrew one
+statement of the dry run. All are listed below, with a correction of the round of 20 November.
 
 ## 1. The dry run
 
-`scripts/dryrun.py` reads the three result files of the round and writes [`results/open_items.json`](results/open_items.json)
-and [`results/open_items.md`](results/open_items.md).
+`scripts/dryrun.py` turns the three result files of the round into the target format of `anm_diag.outer` and writes
+[`results/open_items.json`](results/open_items.json) and [`results/open_items.md`](results/open_items.md). The tables
+below are the dry run as it stands after the third check.
 
 **Targets**
 
 | readout | group | part | status | own output after the repair | added beyond Z |
 |---|---|---|---|---|---|
-| PD-L1 | melanoma, IFN-γ | development | the head's part closed (relative) | 0.04 [−0.02, 0.11] unresolved | 0.01 [−0.03, 0.03] no added loss |
-| PD-L1 | melanoma, co-culture | development | the head's part closed (relative) | 0.12 [0.02, 0.19] unresolved | 0.00 [−0.02, 0.02] no added loss |
-| PD-L1 | THP-1 | development | the head's part closed (relative) | 0.16 [0.08, 0.29] unresolved | 0.03 [−0.03, 0.08] no added loss |
+| PD-L1 | melanoma, IFN-γ | development | the model's part closed (relative) | 0.04 [−0.02, 0.11] unresolved | 0.01 [−0.03, 0.03] no added loss |
+| PD-L1 | melanoma, co-culture | development | the model's part closed (relative) | 0.12 [0.02, 0.19] unresolved | 0.00 [−0.02, 0.02] no added loss |
+| PD-L1 | THP-1 | development | the model's part closed (relative) | 0.16 [0.08, 0.29] unresolved | 0.03 [−0.03, 0.08] no added loss |
 | MHC-I | melanoma, IFN-γ | replication | not a target | | |
 | MHC-I | melanoma, co-culture | replication | not graded | 0.39 [0.34, 0.44] reject | 0.07 [0.05, 0.09] no added loss |
 | HLA-E | melanoma, IFN-γ | replication | not a target | | |
@@ -33,23 +38,23 @@ and [`results/open_items.md`](results/open_items.md).
 
 | id | readout | group | reading | lever | question | value | units now → needed | the next step needs |
 |---|---|---|---|---|---|---|---|---|
-| O01 | PD-L1 | melanoma, IFN-γ | unresolved | E | is the repaired output inside the margin | 0.04 [−0.02, 0.11] | 5 → 6 | at the margin: the pool has no further unit of the kind |
-| O02 | PD-L1 | melanoma, both conditions | pooled, and differs | S | does the whole repair carry across the two conditions | adds 0.24 and 0.23 beyond Z | | the schema already keeps them apart; new units to confirm |
-| O03 | PD-L1 | melanoma, both conditions | pooled, may be the same | S | can the rows of the two conditions be merged | adds −0.01 and 0.05 | | units of the pool, twice |
-| O04 | PD-L1 | melanoma, co-culture | unresolved | E | is anything lost before the head | Z: 0.12 [0.01, 0.19] | 5 → 213 | at the margin |
+| O01 | PD-L1 | melanoma, IFN-γ | self event | C | the knockout of CD274 itself | 0.91 [0.87, 0.95] at Z | | the owner's decision |
+| O02 | PD-L1 | melanoma, IFN-γ | unresolved | E | is the repaired output inside the margin | 0.04 [−0.02, 0.11] | 5 → 6 | no new data first: the bridge reading with the type from the record (O17) changes the cells this is read on. After that one more event would be needed, and the library has none that passes admission |
+| O03 | PD-L1 | melanoma, both conditions | pooled, and differs | S | does the whole repair carry across the two conditions | adds 0.24 and 0.23 beyond Z | | the schema already keeps them apart; new units to confirm |
+| O04 | PD-L1 | melanoma, both conditions | pooled, may be the same | S | can the rows of the two conditions be merged | adds −0.01 and 0.05 | | units of the pool, twice |
 | O05 | PD-L1 | melanoma, co-culture | invalid | V | the RNA view reads worse than Z | −0.09 [−0.13, −0.04] | | no new data: a richer reader of RNA |
-| O06 | PD-L1 | THP-1 | unresolved | E | is anything lost before the head | Z: 0.13 [0.02, 0.31] | 5 → 67 | at the margin; the split of O07 comes first |
-| O07 | PD-L1 | THP-1 | pooled, and differs | S | IRF1 reads differently from its pool | 0.54 [0.43, 0.65]; pool 0.16 | | units of the pool: events of IRF1's kind |
-| O08 | PD-L1 | THP-1 and melanoma | pooled, and differs | S | does the whole repair carry across the two cell types | adds 0.62 | | the schema already keeps them apart; new units to confirm |
-| O09 | PD-L1 | THP-1 and melanoma | unresolved | E | can the rows of the two cell types be merged | adds 0.14 [0.09, 0.18] | 5 → 9 | units of the pool, after a census |
-| O10 | PD-L1 | melanoma, IFN-γ | self event | C | the knockout of CD274 itself | 0.91 [0.87, 0.95] at Z | | the owner's decision |
-| O11 | all | melanoma, IFN-γ | mistyped | S | how a cell gets its type | 96% of knockout cells typed right | | no new data: the type from the record |
-| O12 | MHC-I | melanoma, IFN-γ | small response | E | no event passes on its own (pooled 3.1) | | | units of the pool, or the owner's decision |
-| O13 | MHC-I | melanoma, co-culture | rule | P | gate 3 is absolute | 0.28 on its own cells | | no new data: an amendment |
-| O14 | MHC-I | melanoma, co-culture | rule | P | the hypothesis had no control arm | | | no new data: an amendment |
-| O15 | MHC-I | melanoma, co-culture | unreadable | V | a third is read by no linear reader of RNA or of Z | 0.31 [0.26, 0.36] | | no new data first (a richer reader); then the owner's decision |
-| O16 | HLA-E | melanoma, IFN-γ | small response | E | pooled 2.2, wanted 3 | | 5 → 10 | units of the pool, or the owner's decision |
-| O17 | HLA-E | melanoma, co-culture | small response | E | no event passes on its own (pooled 3.1) | | | units of the pool, or the owner's decision |
+| O06 | PD-L1 | melanoma, co-culture | unresolved | E | is anything lost before the head | Z: 0.12 [0.01, 0.19] | 5 → 213 | at the margin |
+| O07 | PD-L1 | THP-1 | unresolved | E | is anything lost before the head | Z: 0.13 [0.02, 0.31] | 5 → 67 | at the margin; the split of O08 comes first |
+| O08 | PD-L1 | THP-1 | pooled, and differs | S | IRF1 reads differently from its pool | 0.54 [0.43, 0.65]; pool 0.16 | | units of the pool: events of IRF1's kind |
+| O09 | PD-L1 | THP-1 and melanoma | pooled, and differs | S | does the whole repair carry across the two cell types | adds 0.62 | | the schema already keeps them apart; new units to confirm |
+| O10 | PD-L1 | THP-1 and melanoma | unresolved | E | can the rows of the two cell types be merged | adds 0.14 [0.09, 0.18] | 5 → 9 | units of the pool, after a census; the split of O08 comes first |
+| O11 | MHC-I | melanoma, IFN-γ | small response | E | no event of the round passes on its own (pooled 3.1) | | | units at hand: B2M and TAPBP pass the screen, three more are near the threshold |
+| O12 | MHC-I | melanoma, co-culture | rule | P | gate 3 is absolute | 0.28 on its own cells | | no new data: an amendment |
+| O13 | MHC-I | melanoma, co-culture | rule | P | the hypothesis had no control arm | | | no new data: an amendment |
+| O14 | MHC-I | melanoma, co-culture | unreadable | V | a third is read by no linear reader of RNA or of Z | 0.31 [0.27, 0.36] | | no new data first (a richer reader); then the owner's decision |
+| O15 | HLA-E | melanoma, IFN-γ | small response | E | pooled 2.2, wanted 3 | | 5 → 10 | the owner's decision: the library has no event that moves HLA-E (largest 1.9) |
+| O16 | HLA-E | melanoma, co-culture | small response | E | no event passes on its own (pooled 3.1) | | | units of the pool, or the owner's decision |
+| O17 | all | melanoma, IFN-γ | mistyped | S | how a cell gets its type | 96% of knockout cells typed right | | no new data: the type from the record |
 | O18 | all | | selection | P | events were screened on the cells that were audited | | | no new data: an amendment |
 | O19 | all | | rule | P | a group ready as a pool with no admitted event | | | no new data: an amendment |
 | O20 | all | | no final data | E | no unit of the knockout claim is unread | 0 | | units of the pool: a census, final units first |
@@ -58,32 +63,32 @@ and [`results/open_items.md`](results/open_items.md).
 
 | by lever | | by what the next step needs | |
 |---|---|---|---|
-| the model (M) | 0 | no new data | 7 |
-| events (E) | 8 | units of the pool | 9 |
-| views (V) | 2 | at the margin | 3 |
-| schema (S) | 5 | the owner's decision alone | 1 |
-| claim (C) | 1 | | |
+| the model (M) | 0 | no new data | 8 |
+| events (E) | 8 | units at hand | 1 |
+| views (V) | 2 | units of the pool | 7 |
+| schema (S) | 5 | at the margin | 2 |
+| claim (C) | 1 | the owner's decision alone | 2 |
 | protocol (P) | 4 | | |
 
 **What the dry run shows**
 
 - Every target got one status and every item one reading with a lever. Four of the fifteen readings did not occur
-  (`upstream`, `no rows`, `confounded`, `guard conflict`): those branches are not exercised by this round.
+  (`upstream`, `no rows`, `confounded`, `guard conflict`): those branches are exercised only by planted cases.
 - No item is sent to the model. That agrees with the round's own result: after the repair the head adds nothing, so
   another change to the head has nothing to remove.
-- Seven items need no new data. They are the five amendments to the protocol, the type from the record, and a richer
-  reader of RNA. They come first in the order of Section 9, with a bridge reading.
-- **For PD-L1 an absolute closure is not within reach of the present pool at a tolerance of 0.10.** In the IFN-γ
-  condition one more event of the kind would be needed if the estimate holds, and the library has none: on the
-  readout's own scale its other 200 targets change PD-L1 by 0.35 at most (median 0.04), where the five pathway genes
-  change it by 0.69 to 0.96. In co-culture and in THP-1 the
-  embedding's own estimate sits at 0.12 and 0.13, next to the tolerance, and tens to hundreds of events would be needed
-  to decide on which side. By the design these three end as "at the margin": the estimate and its interval are the
-  result. A wider tolerance would decide them, but the numbers have been seen; a tolerance chosen now can only be
-  tested on new units.
-- What new units could decide: whether rows can be merged across conditions and across cell types (O03, O09), what
-  kind of event IRF1 is (O07), and whether the small responses of MHC-I and HLA-E can be followed (O12, O16, O17). All
-  of these need the system's states for the rest of the two screens, which do not exist yet.
+- Eight items need no new data: the amendments to the protocol, the type from the record, richer readers of RNA, and
+  the question whether PD-L1 in the IFN-γ condition is inside the margin, which waits for the bridge reading.
+- **For PD-L1 in co-culture and in THP-1 an absolute closure is not within reach at a tolerance of 0.10.** The
+  embedding's own estimate sits at 0.12 and 0.13, next to the tolerance, and tens to hundreds of events would be
+  needed to decide on which side. By the design these two end as "at the margin": the estimate and its interval are
+  the result. A wider tolerance would decide them, but the numbers have been seen; a tolerance chosen now can only be
+  tested on new units. **For PD-L1 in the IFN-γ condition it is open**: the estimate misses by 0.005, on cells of
+  which 4% were given the wrong type. (The first version of this page said "not within reach" for all three. That was
+  withdrawn in the third check.)
+- One target can be reached with states at hand: MHC-I in the IFN-γ condition, with events the round did not use.
+- What new units could decide: whether rows can be merged across conditions and across cell types (O04, O10), what
+  kind of event IRF1 is (O08), and whether the small response of HLA-E in co-culture can be followed (O16). These need
+  the system's states for the rest of the two screens, which do not exist yet.
 - There are no final units for the knockout claim (O20). Under the design nothing certified can be said about it until
   some are set aside, before anything else is read.
 
@@ -140,7 +145,51 @@ of a pool differ, so a split comes before more units (the first text said no cha
 unresolved item); a split may be operated provisionally and a merge may not, which settles which schema a package
 seals while a revision is still being tested; and the final units were described in two ways.
 
-## 5. A correction to the round of 20 November
+## 5. The third check (22 November)
+
+It was asked for before the design was allowed to run. Three things were done.
+
+**The dry run's statements about the pool were checked against data.** `scripts/pool_screen.py` screens every
+knockout of the library in the IFN-γ condition for each readout
+([`results/pool_screen.json`](results/pool_screen.json)); these are cells earlier runs had read, all cells of an event,
+with an analytic interval.
+
+| readout | events that pass A1 | of them not the readout's own gene | of them not used by the round |
+|---|---|---|---|
+| PD-L1 | 6 | the five pathway genes | none (the next is at 2.1) |
+| MHC-I | 7 | B2M (13.9), TAPBP (9.7), SSR2 (3.5), STAT3 (3.2), CD44 (3.1) | all five |
+| HLA-E | 0 | | none (the largest is 1.9, HLA-E's own gene) |
+
+**The rules were written as code and every reading was planted.** `anm_diag/outer.py` derives the open items from a
+plain description of the targets; `tests/test_outer.py` builds one target for each of the fifteen readings and checks
+that it gives that reading and no other, and that each of the rules O1 to O6 catches the fault it is written for. The
+dry run above is that code applied to the round.
+
+**The text was read once more.**
+
+What this changed:
+
+1. *A statement of the dry run was not established and was partly wrong.* It said the pool had no further event "of
+   the kind" for PD-L1, from numbers of another run and without the design's own screen. Screened, it holds for PD-L1.
+   It does not hold as a statement about the pool: for MHC-I in the IFN-γ condition the library has two strong events,
+   B2M and TAPBP. "Not a target" there was a consequence of the five events the round chose. A census now lists, for
+   units that have been read, which events pass the screen for each readout.
+2. *Forecasts were made as if the items were independent.* Whether PD-L1 in the IFN-γ condition is inside the margin
+   (0.04 [−0.02, 0.11]) was read on cells of which 4% had been given the wrong type, and the type from the record is
+   one of the changes that need no new data. The headline "an absolute closure is not within reach" was withdrawn for
+   that condition. The order of an outer step now derives the open items again after the bridge reading.
+3. *An amendment named a control that does not always exist.* "Rows of events that do not move the readout" exist
+   with states for one group of three. The control that always exists is the readout fitted on the group's control
+   cells without rows, which the round already had as an arm.
+4. *The statuses were incomplete.* A target whose model still adds a loss, and one for which that is undecided, had no
+   status; an item decided on cells that had been read had no state. Both are added.
+5. *A loss before the model with no input view read* had no reading. It is `invalid`: the loss is not placed until the
+   input view is read.
+
+What it did not change: the five levers, the checks of Section 6, the routing of the other readings, the tests of a
+split and of a merge, the final units.
+
+## 6. A correction to the round of 20 November
 
 The README of [`teg_loop_20261120`](../teg_loop_20261120/) says that in co-culture what remains "is not in RNA either".
 By the check of Section 6 that does not stand for PD-L1:
@@ -158,10 +207,11 @@ by no linear reader of RNA or of Z. A richer reader comes before any conclusion 
 
 A note with this correction is added to that README. Its numbers do not change.
 
-## 6. What was not checked
+## 7. What was not checked
 
-- Nothing was run. Whether the loop reaches terminal states in a useful number of iterations on this pool is not known.
-- The dry run exercises eleven of fifteen readings, on one round, of one head.
+- Whether the loop reaches terminal states in a useful number of iterations on this pool is not known.
+- The dry run exercises eleven of fifteen readings, on one round, of one head. The planted cases show that the rules
+  are consistent with each other, not that they are the right rules.
 - The same person wrote the design and the check. The back-test uses this project's own history, which the design was
   written with in mind.
 - The counts of units needed assume that the estimate holds and that new units are like the old ones. Every pooled
@@ -169,5 +219,6 @@ A note with this correction is added to that README. Its numbers do not change.
 
 ## Reproduce
 
+    python scripts/pool_screen.py --work WORK --out results        # WORK: the work folder of runs/teg_loop_20261120
     python scripts/dryrun.py --round ../teg_loop_20261120/results --out results
     python scripts/dryrun.py --routes        # the routing table; fails if OUTER_LOOP.md prints another one
