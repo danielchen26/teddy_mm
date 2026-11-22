@@ -142,6 +142,7 @@ At the end of an iteration every target (a type and a readout) has exactly one s
 | the model's part closed (relative) | the model adds no loss beyond the reference stage, and the control does; what the reference stage leaves is an open item |
 | open in the model | the model still adds a resolved loss: the inner loop goes on (function, coverage with rows, unit) |
 | undecided in the model | whether the model adds a loss is not resolved; that is an open item |
+| open before the model | the response can be followed, and neither the model nor its control adds a loss beyond the reference stage: nothing in the model can be closed, and what the reference stage leaves is an open item (added after the first outer step, which met this case) |
 | not graded | a gate could not be evaluated; the reason is an open item |
 | not a target | the response cannot be followed; the reason is an open item |
 
@@ -160,6 +161,10 @@ that stays exploratory. It ends in one of five terminal states:
 | at the margin | the estimate sits so close to the bound that the pool cannot decide it; the estimate and its interval are the result |
 | not asked | the readout or type is taken out of the claim by its owner, before a result or with the result shown |
 | on the experiment list | the pool has no unit that could decide it; the entry says what would have to be measured and how many units |
+
+An item about the rules themselves (`rule`, `selection`, `mistyped`) has no quantity to decide. It is closed when its
+amendment is in force, and the amendment is its evidence. `no final data` is closed when units are set aside. (Added
+after the first outer step, which had to give these items a state.)
 
 "The whole loop closed" is not one of them. The outcome of a campaign is the table of terminal states (Section 12).
 
@@ -250,6 +255,8 @@ The pool is finite and real. Selecting from it is the active part of the loop.
 - The reader specification is part of the package. Readings of two iterations are compared under one specification.
 - `unreadable` is drawn only at the input view, with the event's own cells, in a view that is not dominated, by at
   least two reader classes of which one is not linear, and where the positive control holds (Section 6).
+- Where a loss before the model is, is read for the pool of a type and, where a run has read an event on its own,
+  for that event with its own reference and input view (added after the first outer step: IRF1).
 - The ladder, cheapest first: (0) a richer reader of the same input, which needs no new data; (1) another input
   already measured on the same cells; (2) a new measurement; (3) a limit of the claim.
 - Independence: an added input is not the readout and is not computed from it. Where the added input is the

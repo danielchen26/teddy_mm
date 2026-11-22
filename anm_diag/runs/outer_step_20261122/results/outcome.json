@@ -1,0 +1,847 @@
+{
+ "rows": [
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 against the reference, PDL1 mel_ifn",
+   "forecast": [
+    -0.02,
+    0.04
+   ],
+   "observed": 0.025002648146512207,
+   "inside": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 passes, PDL1 mel_ifn",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "control: the output as trained fails the gate, PDL1 mel_ifn",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 against the reference, PDL1 mel_co",
+   "forecast": [
+    -0.13,
+    -0.07
+   ],
+   "observed": -0.0907120215887307,
+   "inside": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 passes, PDL1 mel_co",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "no",
+   "probability_given": 0.05,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "P1",
+   "what": "control: the output as trained fails the gate, PDL1 mel_co",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 against the reference, PDL1 thp1",
+   "forecast": [
+    -0.11,
+    -0.03
+   ],
+   "observed": -0.11739101775834304,
+   "inside": false
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 passes, PDL1 thp1",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "control: the output as trained fails the gate, PDL1 thp1",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 against the reference, MHC1 mel_co",
+   "forecast": [
+    -0.07,
+    -0.01
+   ],
+   "observed": -0.07929251581946084,
+   "inside": false
+  },
+  {
+   "hypothesis": "P1",
+   "what": "gate 3 passes, MHC1 mel_co",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P1",
+   "what": "control: the output as trained fails the gate, MHC1 mel_co",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "outcome of the test with two controls, PDL1 mel_ifn",
+   "forecast": {
+    "unresolved": 0.85,
+    "refuted": 0.1,
+    "confirmed": 0.05
+   },
+   "observed": "unresolved",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "gain of rows minus gain of controls-only, PDL1 mel_ifn",
+   "forecast": [
+    0.05,
+    0.1
+   ],
+   "observed": 0.07976620756636643,
+   "inside": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "that difference lies above the step margin, PDL1 mel_ifn",
+   "forecast": {
+    "yes": 0.05,
+    "no": 0.95
+   },
+   "observed": "no",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "outcome of the test with two controls, PDL1 mel_co",
+   "forecast": {
+    "unresolved": 0.65,
+    "confirmed": 0.35
+   },
+   "observed": "not testable",
+   "probability_given": 0.0,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "P2",
+   "what": "gain of rows minus gain of controls-only, PDL1 mel_co",
+   "forecast": [
+    0.13,
+    0.19
+   ],
+   "observed": 0.16525293418599107,
+   "inside": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "that difference lies above the step margin, PDL1 mel_co",
+   "forecast": {
+    "yes": 0.85,
+    "no": 0.15
+   },
+   "observed": "yes",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "outcome of the test with two controls, PDL1 thp1",
+   "forecast": {
+    "unresolved": 0.85,
+    "confirmed": 0.1,
+    "refuted": 0.05
+   },
+   "observed": "unresolved",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "gain of rows minus gain of controls-only, PDL1 thp1",
+   "forecast": [
+    0.3,
+    0.42
+   ],
+   "observed": 0.37223701417913146,
+   "inside": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "that difference lies above the step margin, PDL1 thp1",
+   "forecast": {
+    "yes": 0.97,
+    "no": 0.03
+   },
+   "observed": "yes",
+   "probability_given": 0.97,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "outcome of the test with two controls, MHC1 mel_co",
+   "forecast": {
+    "unresolved": 0.7,
+    "confirmed": 0.3
+   },
+   "observed": "confirmed",
+   "probability_given": 0.3,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "P2",
+   "what": "gain of rows minus gain of controls-only, MHC1 mel_co",
+   "forecast": [
+    0.24,
+    0.31
+   ],
+   "observed": 0.27628138922693346,
+   "inside": true
+  },
+  {
+   "hypothesis": "P2",
+   "what": "that difference lies above the step margin, MHC1 mel_co",
+   "forecast": {
+    "yes": 0.99,
+    "no": 0.01
+   },
+   "observed": "yes",
+   "probability_given": 0.99,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P4",
+   "what": "every event of PDL1 mel_ifn passes on a third",
+   "forecast": {
+    "yes": 0.8,
+    "no": 0.2
+   },
+   "observed": "yes",
+   "probability_given": 0.8,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P4",
+   "what": "every event of PDL1 mel_co passes on a third",
+   "forecast": {
+    "yes": 0.97,
+    "no": 0.03
+   },
+   "observed": "yes",
+   "probability_given": 0.97,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P4",
+   "what": "IRF1 in THP-1 passes on a third",
+   "forecast": {
+    "yes": 0.4,
+    "no": 0.6
+   },
+   "observed": "no",
+   "probability_given": 0.6,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P4",
+   "what": "the other four of THP-1 pass on a third",
+   "forecast": {
+    "yes": 0.97,
+    "no": 0.03
+   },
+   "observed": "yes",
+   "probability_given": 0.97,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "P4",
+   "what": "library knockouts that pass for PD-L1 on a third, beyond the readout's own gene and the five",
+   "forecast": [
+    0,
+    1
+   ],
+   "observed": 0.0,
+   "inside": true
+  },
+  {
+   "hypothesis": "S1",
+   "what": "PDL1 mel_ifn, repaired output, type from the record",
+   "forecast": [
+    -0.01,
+    0.05
+   ],
+   "observed": 0.0368933646894144,
+   "inside": true
+  },
+  {
+   "hypothesis": "S1",
+   "what": "PDL1 mel_ifn verdict",
+   "forecast": {
+    "support": 0.6,
+    "unresolved": 0.4
+   },
+   "observed": "unresolved",
+   "probability_given": 0.4,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "S1",
+   "what": "PDL1 mel_co, repaired output",
+   "forecast": [
+    0.1,
+    0.13
+   ],
+   "observed": 0.1082785999319189,
+   "inside": true
+  },
+  {
+   "hypothesis": "S1",
+   "what": "PDL1 thp1 (five events pooled), repaired output",
+   "forecast": [
+    0.14,
+    0.17
+   ],
+   "observed": 0.12174688557975899,
+   "inside": false
+  },
+  {
+   "hypothesis": "S1",
+   "what": "PDL1 mel_ifn closed (absolute) on development cells",
+   "forecast": {
+    "yes": 0.55,
+    "no": 0.45
+   },
+   "observed": "no",
+   "probability_given": 0.45,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type A reference",
+   "forecast": [
+    0.02,
+    0.12
+   ],
+   "observed": 0.08188053220510483,
+   "inside": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type A reference verdict",
+   "forecast": {
+    "unresolved": 0.65,
+    "support": 0.2,
+    "reject": 0.15
+   },
+   "observed": "unresolved",
+   "probability_given": 0.65,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type A repaired output",
+   "forecast": [
+    0.06,
+    0.15
+   ],
+   "observed": 0.09180227337318303,
+   "inside": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type A repaired output verdict",
+   "forecast": {
+    "unresolved": 0.7,
+    "support": 0.1,
+    "reject": 0.2
+   },
+   "observed": "unresolved",
+   "probability_given": 0.7,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type A adds no loss beyond its reference",
+   "forecast": {
+    "yes": 0.8,
+    "no": 0.2
+   },
+   "observed": "yes",
+   "probability_given": 0.8,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type B (IRF1, its own row) repaired output",
+   "forecast": [
+    0.35,
+    0.55
+   ],
+   "observed": 0.6782874816176389,
+   "inside": false
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type B verdict reject",
+   "forecast": {
+    "yes": 0.9,
+    "no": 0.1
+   },
+   "observed": "yes",
+   "probability_given": 0.9,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type B adds no loss beyond a reader of Z with its own cells",
+   "forecast": {
+    "yes": 0.6,
+    "no": 0.4
+   },
+   "observed": "no",
+   "probability_given": 0.4,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type B from the RNA view to Z, own cells",
+   "forecast": [
+    0.1,
+    0.35
+   ],
+   "observed": 0.21210941672325134,
+   "inside": true
+  },
+  {
+   "hypothesis": "S2",
+   "what": "type B reading upstream",
+   "forecast": {
+    "yes": 0.45,
+    "no": 0.55
+   },
+   "observed": "yes",
+   "probability_given": 0.45,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "V1",
+   "what": "PDL1 mel_co, 512 components, boosting, own cells",
+   "forecast": [
+    0.15,
+    0.3
+   ],
+   "observed": 0.10693704974520979,
+   "inside": false
+  },
+  {
+   "hypothesis": "V1",
+   "what": "PDL1 mel_co, 4,000 genes, ridge, own cells",
+   "forecast": [
+    0.08,
+    0.2
+   ],
+   "observed": 0.1322593355187326,
+   "inside": true
+  },
+  {
+   "hypothesis": "V1",
+   "what": "the input view is no longer dominated",
+   "forecast": {
+    "yes": 0.6,
+    "no": 0.4
+   },
+   "observed": "yes",
+   "probability_given": 0.6,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "V1",
+   "what": "positive control reached",
+   "forecast": {
+    "yes": 0.15,
+    "no": 0.85
+   },
+   "observed": "no",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "V1",
+   "what": "permuted view reads nothing",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "V2",
+   "what": "MHC1 mel_co, Z, boosting, own cells",
+   "forecast": [
+    0.2,
+    0.4
+   ],
+   "observed": 0.36506271575199856,
+   "inside": true
+  },
+  {
+   "hypothesis": "V2",
+   "what": "MHC1 mel_co, 512 components, boosting, own cells",
+   "forecast": [
+    0.22,
+    0.42
+   ],
+   "observed": 0.1941451309081358,
+   "inside": false
+  },
+  {
+   "hypothesis": "V2",
+   "what": "MHC1 mel_co, 4,000 genes, ridge, own cells",
+   "forecast": [
+    0.22,
+    0.36
+   ],
+   "observed": 0.32254269829400806,
+   "inside": true
+  },
+  {
+   "hypothesis": "V2",
+   "what": "every reader at every stage rejects (pool, own cells)",
+   "forecast": {
+    "yes": 0.8,
+    "no": 0.2
+   },
+   "observed": "yes",
+   "probability_given": 0.8,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "V2",
+   "what": "positive control reached",
+   "forecast": {
+    "yes": 0.1,
+    "no": 0.9
+   },
+   "observed": "no",
+   "probability_given": 0.9,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "V2",
+   "what": "boosting reads at least 0.10 better than ridge at a stage",
+   "forecast": {
+    "yes": 0.2,
+    "no": 0.8
+   },
+   "observed": "yes",
+   "probability_given": 0.2,
+   "most_likely_class_happened": false
+  },
+  {
+   "hypothesis": "E1",
+   "what": "B2M and TAPBP both admitted on a third",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E1",
+   "what": "exactly those two",
+   "forecast": {
+    "yes": 0.7,
+    "no": 0.3
+   },
+   "observed": "yes",
+   "probability_given": 0.7,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E1",
+   "what": "SSR2 admitted on a third",
+   "forecast": {
+    "yes": 0.15,
+    "no": 0.85
+   },
+   "observed": "no",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E1",
+   "what": "STAT3 admitted on a third",
+   "forecast": {
+    "yes": 0.15,
+    "no": 0.85
+   },
+   "observed": "no",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E1",
+   "what": "CD44 admitted on a third",
+   "forecast": {
+    "yes": 0.15,
+    "no": 0.85
+   },
+   "observed": "no",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "head as trained, B2M",
+   "forecast": [
+    0.85,
+    1.0
+   ],
+   "observed": 0.9977187195363115,
+   "inside": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "head as trained, TAPBP",
+   "forecast": [
+    0.85,
+    1.0
+   ],
+   "observed": 1.0017949539412443,
+   "inside": false
+  },
+  {
+   "hypothesis": "E2",
+   "what": "Z, own cells, B2M",
+   "forecast": [
+    0.3,
+    0.9
+   ],
+   "observed": 0.91313636302948,
+   "inside": false
+  },
+  {
+   "hypothesis": "E2",
+   "what": "Z, own cells, B2M rejected",
+   "forecast": {
+    "yes": 0.85,
+    "no": 0.15
+   },
+   "observed": "yes",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "Z, own cells, TAPBP",
+   "forecast": [
+    0.4,
+    0.95
+   ],
+   "observed": 0.9972805976867676,
+   "inside": false
+  },
+  {
+   "hypothesis": "E2",
+   "what": "Z, own cells, TAPBP rejected",
+   "forecast": {
+    "yes": 0.85,
+    "no": 0.15
+   },
+   "observed": "yes",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "the group passes A3",
+   "forecast": {
+    "yes": 0.45,
+    "no": 0.55
+   },
+   "observed": "no",
+   "probability_given": 0.55,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "input view, own cells, B2M (best reader)",
+   "forecast": [
+    0.2,
+    0.85
+   ],
+   "observed": 0.9862582583062778,
+   "inside": false
+  },
+  {
+   "hypothesis": "E2",
+   "what": "reading upstream, B2M",
+   "forecast": {
+    "yes": 0.3,
+    "no": 0.7
+   },
+   "observed": "no",
+   "probability_given": 0.7,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "reading upstream, TAPBP",
+   "forecast": {
+    "yes": 0.25,
+    "no": 0.75
+   },
+   "observed": "no",
+   "probability_given": 0.75,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E2",
+   "what": "positive control reached for the new target",
+   "forecast": {
+    "yes": 0.15,
+    "no": 0.85
+   },
+   "observed": "no",
+   "probability_given": 0.85,
+   "most_likely_class_happened": true
+  },
+  {
+   "hypothesis": "E3",
+   "what": "share of unread units set aside as final, frangieh2021 | Co-culture",
+   "forecast": [
+    0.3,
+    0.37
+   ],
+   "observed": 0.3333333333333333,
+   "inside": true
+  },
+  {
+   "hypothesis": "E3",
+   "what": "share of unread units set aside as final, frangieh2021 | Control",
+   "forecast": [
+    0.3,
+    0.37
+   ],
+   "observed": 0.3351063829787234,
+   "inside": true
+  },
+  {
+   "hypothesis": "E3",
+   "what": "share of unread units set aside as final, papalexi2021 | all",
+   "forecast": [
+    0.3,
+    0.37
+   ],
+   "observed": 0.3157894736842105,
+   "inside": true
+  }
+ ],
+ "intervals": {
+  "n": 29,
+  "inside": 19
+ },
+ "probabilities": {
+  "n": 45,
+  "most_likely_class_happened": 37,
+  "mean_probability_given_to_what_happened": 0.747,
+  "given_zero": [
+   "outcome of the test with two controls, PDL1 mel_co"
+  ]
+ },
+ "by_hypothesis": {
+  "E1": {
+   "intervals_inside": "0 of 0",
+   "most_likely_happened": "5 of 5"
+  },
+  "E2": {
+   "intervals_inside": "1 of 5",
+   "most_likely_happened": "6 of 6"
+  },
+  "E3": {
+   "intervals_inside": "3 of 3",
+   "most_likely_happened": "0 of 0"
+  },
+  "P1": {
+   "intervals_inside": "2 of 4",
+   "most_likely_happened": "7 of 8"
+  },
+  "P2": {
+   "intervals_inside": "4 of 4",
+   "most_likely_happened": "6 of 8"
+  },
+  "P4": {
+   "intervals_inside": "1 of 1",
+   "most_likely_happened": "4 of 4"
+  },
+  "S1": {
+   "intervals_inside": "2 of 3",
+   "most_likely_happened": "0 of 2"
+  },
+  "S2": {
+   "intervals_inside": "3 of 4",
+   "most_likely_happened": "4 of 6"
+  },
+  "V1": {
+   "intervals_inside": "1 of 2",
+   "most_likely_happened": "3 of 3"
+  },
+  "V2": {
+   "intervals_inside": "2 of 3",
+   "most_likely_happened": "2 of 3"
+  }
+ }
+}

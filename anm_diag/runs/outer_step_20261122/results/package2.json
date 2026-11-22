@@ -1,0 +1,241 @@
+{
+ "package": 2,
+ "sealed": "22 November 2026",
+ "against": "package 1: runs/teg_loop_20261120",
+ "E": {
+  "events": {
+   "PDL1": {
+    "mel_ifn": [
+     "IFNGR1",
+     "IFNGR2",
+     "JAK1",
+     "JAK2",
+     "STAT1"
+    ],
+    "mel_co": [
+     "IFNGR1",
+     "IFNGR2",
+     "JAK1",
+     "JAK2",
+     "STAT1"
+    ],
+    "thp1": [
+     "IFNGR1",
+     "IFNGR2",
+     "JAK2",
+     "STAT1",
+     "IRF1"
+    ]
+   },
+   "MHC1": {
+    "mel_co": [
+     "IFNGR1",
+     "IFNGR2",
+     "JAK1",
+     "JAK2",
+     "STAT1"
+    ],
+    "mel_ifn": [
+     "B2M",
+     "TAPBP"
+    ]
+   }
+  },
+  "admission": {
+   "MHC1 mel_ifn": "on the selection third (selection.json)",
+   "the others": "as admitted in the round of 20 November, on all their cells (kept; amendment 3d)"
+  },
+  "selection_third": "a cell is in the selection third if sha256('20261122|<cell name>') is divisible by 3",
+  "roles": {
+   "final": "133 units (census.json: roles.final)",
+   "development": "every unit the system has been read on",
+   "unread_not_final": "266 units without states",
+   "batch_1": [
+    "CD44@frangieh2021 | Co-culture",
+    "TAPBP@frangieh2021 | Co-culture",
+    "CDH19@frangieh2021 | Co-culture",
+    "B2M@frangieh2021 | Control",
+    "KLF4@frangieh2021 | Control",
+    "BRD4@papalexi2021 | all",
+    "CMTM6@papalexi2021 | all",
+    "POU2F2@papalexi2021 | all"
+   ]
+  }
+ },
+ "V": {
+  "stages": [
+   "input view: RNA as log1p of counts per 10,000 (512 components; 4,000 genes)",
+   "Z: the embedding the head reads",
+   "the system's own output"
+  ],
+  "readers": {
+   "Z": [
+    "ridge",
+    "boosting"
+   ],
+   "512 components": [
+    "ridge",
+    "boosting"
+   ],
+   "4,000 genes": [
+    "ridge"
+   ]
+  },
+  "controls": [
+   "the permuted view",
+   "the positive control"
+  ],
+  "readouts": [
+   "PDL1",
+   "MHC1",
+   "HLAE"
+  ]
+ },
+ "S": {
+  "type": "cell type x condition, taken from the record (amendment 3e)",
+  "pool": "the admitted events of a type",
+  "provisional": "the THP-1 pool as two types was operated once and is not kept: with its own row IRF1 reads worse than with the pooled rows",
+  "candidate_fields": [
+   "the place of the gene in the pathway",
+   "the relation of the gene to the readout (own gene; part of the measured complex; upstream of it)"
+  ]
+ },
+ "C": {
+  "margin": 0.1,
+  "step_margin": 0.1,
+  "guard": 0.02,
+  "targets": [
+   {
+    "readout": "PDL1",
+    "group": "mel_ifn",
+    "status": "the model's part closed (relative)"
+   },
+   {
+    "readout": "PDL1",
+    "group": "mel_co",
+    "status": "not graded"
+   },
+   {
+    "readout": "PDL1",
+    "group": "thp1",
+    "status": "the model's part closed (relative)"
+   },
+   {
+    "readout": "MHC1",
+    "group": "mel_co",
+    "status": "the model's part closed (relative)"
+   },
+   {
+    "readout": "MHC1",
+    "group": "mel_ifn",
+    "status": "open before the model"
+   },
+   {
+    "readout": "HLAE",
+    "group": "mel_ifn",
+    "status": "not a target"
+   },
+   {
+    "readout": "HLAE",
+    "group": "mel_co",
+    "status": "not a target"
+   }
+  ]
+ },
+ "P": "LOOP_PROTOCOL.md, version 3",
+ "M": "the head with the repaired outputs of the round of 20 November; not changed in this step",
+ "diff": [
+  {
+   "lever": "P",
+   "change": "3a gate 3 is stated against the reference stage",
+   "items_before": [
+    "O14"
+   ],
+   "hypothesis": "P1"
+  },
+  {
+   "lever": "P",
+   "change": "3b the test of a repair by rows has two controls",
+   "items_before": [
+    "O15"
+   ],
+   "hypothesis": "P2"
+  },
+  {
+   "lever": "P",
+   "change": "3c a group ready as a pool with no admitted event is not a target",
+   "items_before": [
+    "O20"
+   ],
+   "hypothesis": "P3"
+  },
+  {
+   "lever": "P",
+   "change": "3d a selection split for every new admission",
+   "items_before": [
+    "O19"
+   ],
+   "hypothesis": "P4"
+  },
+  {
+   "lever": "S",
+   "change": "3e the type of a cell comes from the record",
+   "items_before": [
+    "O18",
+    "O02"
+   ],
+   "hypothesis": "S1"
+  },
+  {
+   "lever": "S",
+   "change": "the THP-1 pool is read as two types, provisionally: four genes that signal to STAT1, and IRF1",
+   "items_before": [
+    "O09",
+    "O08",
+    "O11"
+   ],
+   "hypothesis": "S2"
+  },
+  {
+   "lever": "V",
+   "change": "reader specification: the input view is read by ridge and boosting on 512 components and by ridge on 4,000 genes; Z by ridge and boosting; a permuted view as control",
+   "items_before": [
+    "O05",
+    "O06"
+   ],
+   "hypothesis": "V1"
+  },
+  {
+   "lever": "V",
+   "change": "the same reader specification for MHC-I in co-culture, with the positive control evaluated",
+   "items_before": [
+    "O13"
+   ],
+   "hypothesis": "V2"
+  },
+  {
+   "lever": "E",
+   "change": "the events of MHC-I in melanoma under IFN-gamma are selected from the library on a selection third",
+   "items_before": [
+    "O12"
+   ],
+   "hypothesis": "E1"
+  },
+  {
+   "lever": "E",
+   "change": "a new target: MHC-I in melanoma under IFN-gamma with the admitted events",
+   "items_before": [
+    "O12"
+   ],
+   "hypothesis": "E2"
+  },
+  {
+   "lever": "E",
+   "change": "a census from the record, and a third of the unread units of each stratum set aside as final",
+   "items_before": [
+    "O21"
+   ],
+   "hypothesis": "E3"
+  }
+ ]
+}
