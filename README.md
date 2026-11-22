@@ -134,15 +134,24 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   A replication on MHC-I and HLA-E, designed first, did not close by its rule. (Corrected the same day: the first
   reading, "in co-culture it is not readable from RNA either", does not stand for PD-L1; see the note at the top of
   that run.)
-- **The outer loop: a design (20 November; proposed; nothing run;** [`OUTER_LOOP.md`](anm_diag/OUTER_LOOP.md)**,**
+- **The outer loop: a design (20 November; adopted 22 November;** [`OUTER_LOOP.md`](anm_diag/OUTER_LOOP.md)**,**
   [`outer_loop_design_20261120/`](anm_diag/runs/outer_loop_design_20261120/)**):** what happens between rounds when
   another change to the model has nothing left to remove. A round seals five things besides the model: the events
   that are read, the views, the schema, the claim and the protocol. Everything a round leaves is written as a typed
   open item, its reading is first checked for whether it can be used, and it is then sent to one of the five, with a
-  hypothesis, a rival and a control written before the next round. A dry run on the round above gives 20 open items:
-  none for the model, 7 that need no new data, 9 that need units of the pool, 3 at the margin, 1 for the owner. For
-  PD-L1 an absolute closure is not within reach of the present pool at a tolerance of 0.10. The check (the dry run,
-  a back-test on twelve earlier results, a second reading) changed the design in eleven places.
+  hypothesis, a rival and a control written before the next round. A dry run on the round above gives 21 open items,
+  none of them for the model. The design was checked three times before it was run, and the checks changed it in
+  eighteen places; one statement of the first dry run ("an absolute closure for PD-L1 is not within reach of the
+  pool") was withdrawn for the IFN-γ condition.
+- **The first outer step (22 November; exploratory; forecasts merged first;**
+  [`outer_step_20261122/`](anm_diag/runs/outer_step_20261122/)**):** the package was changed, not the model: protocol
+  version 3, the type of a cell from the record, richer readers, and events selected on a third of their cells.
+  Nothing closed absolutely. PD-L1 under IFN-γ reads 0.037 [−0.034, 0.101] and misses the margin by 0.001; the pool
+  has no further event, so it ends at the margin. Under IFN-γ a readout of the group's control cells alone removes
+  most of the loss, and the rows add less than the step margin. One of the five amendments (gate 3) does not work as
+  written. IRF1 in THP-1 is read upstream of the embedding (0.21 [0.12, 0.32]). MHC-I under IFN-γ became a target
+  with B2M and TAPBP, and nothing before or in the model reads them (*u* about 1): they act on the measured complex
+  itself. 133 units are set aside as final. Of the forecasts, 19 of 29 intervals held the value.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

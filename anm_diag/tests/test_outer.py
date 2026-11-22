@@ -82,6 +82,15 @@ def test_statuses():
     assert outer.target_status(target(model={"own": UNR, "added": A(0.08, 0.0, 0.16, "unresolved"), "events": {}})) == "undecided in the model"
 
 
+def test_a_target_lost_wholly_before_the_model():
+    before = {"reference": {"units": REJ}, "input_view": {"own": REJ, "gap_to_later": A(-0.07, -0.10, -0.04, "no added loss"), "classes": ["ridge", "hgb"], "nonlinear": True, "positive_control": False}}
+    ev = {"X": {**REJ, "added": NONE, "before": before}, "Y": {**REJ, "added": NONE, "before": {**before, "input_view": {**before["input_view"], "gap_to_later": A(0.0, -0.05, 0.03, "no added loss")}}}}
+    t = target(reference=None, control_adds_a_loss=False, model={"own": REJ, "added": NONE, "events": ev}, attainable="relative")
+    assert outer.target_status(t) == "open before the model"
+    items = outer.open_items([t])
+    assert sorted((i["reading"], i["event"], i["question"].split(": ")[-1]) for i in items) == [("invalid", "X", "dominated view"), ("invalid", "pool", "positive control")]
+
+
 def test_an_unreadable_verdict_on_one_linear_class_says_so():
     t = dict(CASES["unreadable"], input_view={"own": REJ, "gap_to_later": A(0.0, -0.03, 0.03, "no added loss"), "classes": ["ridge"], "nonlinear": False})
     it = outer.open_items([t])[0]
@@ -98,6 +107,15 @@ def test_without_a_positive_control_no_unreadable_reading_is_drawn():
     assert [i["reading"] for i in items] == ["invalid"] and "positive control" in items[0]["question"]
     assert items[0]["next_step_needs"].startswith("no new data first")
     assert readings(dict(t, input_view=dict(t["input_view"], positive_control=True))) == ["unreadable"]
+
+
+def test_an_event_read_on_its_own_can_be_placed_before_the_model():
+    before = {"reference": {"units": REJ, "own": REJ}, "input_view": {"own": UNR, "gap_to_later": A(0.21, 0.12, 0.32, "loss"), "classes": ["ridge"], "nonlinear": False}}
+    ev = {"X": {**V(0.50, 0.40, 0.60, "reject"), "added": NONE, "before": before}}
+    items = outer.open_items([target(model={"own": SUP, "added": NONE, "events": ev})])
+    assert sorted((i["reading"], i["event"]) for i in items) == [("pooled, and differs", "X"), ("upstream", "X")]
+    ev["X"]["before"]["input_view"]["positive_control"] = False          # a view that fails a check places nothing
+    assert sorted(readings(target(model={"own": SUP, "added": NONE, "events": ev}))) == ["invalid", "pooled, and differs"]
 
 
 def test_a_loss_before_the_model_without_an_input_view_cannot_be_placed():

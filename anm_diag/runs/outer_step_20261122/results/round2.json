@@ -1,0 +1,1095 @@
+{
+ "readout": "MHC1",
+ "group": "mel_ifn",
+ "type": {
+  "cell_type": "melanoma",
+  "stratum": "IFN-gamma"
+ },
+ "events_admitted_on_the_selection_third": [
+  "B2M",
+  "TAPBP"
+ ],
+ "cells": {
+  "B2M": 168,
+  "IFNGR1": 128,
+  "IFNGR2": 179,
+  "JAK1": 181,
+  "JAK2": 166,
+  "STAT1": 136,
+  "TAPBP": 153,
+  "control": 2685
+ },
+ "margin": 0.1,
+ "step_margin": 0.1,
+ "events": {
+  "B2M": {
+   "response": {
+    "value": -2.882371843894856,
+    "ci": [
+     -3.1356443398864133,
+     -2.617630655833496
+    ],
+    "resolved": true,
+    "unit": "control SD",
+    "snr": 11.128554834085849
+   },
+   "n_cells": 168,
+   "n_control": 2685,
+   "selection_third": {
+    "event": "B2M",
+    "cells": 109,
+    "change_in_control_sd": -2.863147728830018,
+    "snr": 8.578269205696317,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   "grid": {
+    "frozen": {
+     "u": 0.9977187195363115,
+     "ci": [
+      0.9908271172812316,
+      1.004571215771282
+     ],
+     "verdict": "reject",
+     "class": "system"
+    },
+    "train": {
+     "u": 0.9973891927564161,
+     "ci": [
+      0.9865716021241232,
+      1.006884417422234
+     ],
+     "verdict": "reject",
+     "class": "hgb"
+    },
+    "other": {
+     "u": 0.9657024221374073,
+     "ci": [
+      0.9425206703526776,
+      0.9872291121136058
+     ],
+     "verdict": "reject",
+     "class": "ridge"
+    },
+    "units": {
+     "u": 0.9978537738779143,
+     "ci": [
+      0.9737616710421307,
+      1.021197815532221
+     ],
+     "verdict": "reject",
+     "class": "ridge"
+    },
+    "own": {
+     "u": 0.9131363486918006,
+     "ci": [
+      0.8837170787935628,
+      0.9411097465573162
+     ],
+     "verdict": "reject",
+     "class": "ridge"
+    }
+   },
+   "admission": {
+    "A1_A2": "on the selection third",
+    "A3": false,
+    "gap_head_to_units": {
+     "value": -0.0001350543416027694,
+     "ci": [
+      -0.021175624250203754,
+      0.02234913359724496
+     ]
+    },
+    "attainable": "relative"
+   },
+   "reference": {
+    "units": {
+     "u": 0.9978537559509277,
+     "ci": [
+      0.9737616643309593,
+      1.0211978077888488
+     ],
+     "verdict": "reject"
+    },
+    "own": {
+     "u": 0.91313636302948,
+     "ci": [
+      0.8837171033024788,
+      0.9411097496747971
+     ],
+     "verdict": "reject"
+    },
+    "own_beyond_units": {
+     "added": -0.08471739292144775,
+     "ci": [
+      -0.10381517857313156,
+      -0.0666048526763916
+     ],
+     "reading": "no added loss"
+    }
+   },
+   "as_trained": {
+    "u": 0.9977187195363115,
+    "ci": [
+     0.9908271172812316,
+     1.004571215771282
+    ],
+    "verdict": "reject",
+    "slope": 0.7937745307485117,
+    "beyond_reference": {
+     "added": -0.00013503641461620752,
+     "ci": [
+      -0.02117566292888627,
+      0.02234911513581227
+     ],
+     "reading": "no added loss"
+    },
+    "beyond_own": {
+     "added": 0.08458235650683155,
+     "ci": [
+      0.05873471771804769,
+      0.11337064481320104
+     ],
+     "reading": "unresolved"
+    }
+   },
+   "arms": {
+    "controls": {
+     "u": 1.0116674517316848,
+     "ci": [
+      0.9903187789755837,
+      1.0346873923563018
+     ],
+     "verdict": "reject",
+     "slope": 5.782811611311179,
+     "valid": false,
+     "gain": -0.013948732195373292,
+     "gain_ci": [
+      -0.033273213529175505,
+      0.005859652708279763
+     ],
+     "beyond_reference": {
+      "added": 0.013813695780757085,
+      "ci": [
+       0.0021540554302804664,
+       0.025817806467500603
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.09853108870220484,
+      "ci": [
+       0.07516072380499245,
+       0.12314859775924986
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "rows": {
+     "u": 0.9932670104031,
+     "ci": [
+      0.9718641219648976,
+      1.0157622726788265
+     ],
+     "verdict": "reject",
+     "slope": 5.726436748139789,
+     "valid": true,
+     "gain": 0.004451709133211579,
+     "gain_ci": [
+      -0.015613555191680274,
+      0.023851981877162025
+     ],
+     "beyond_reference": {
+      "added": -0.004586745547827786,
+      "ci": [
+       -0.015188948012279893,
+       0.00718141623394764
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.08013064737361997,
+      "ci": [
+       0.060278339810472134,
+       0.10165052089205164
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "cells": {
+     "u": 0.9202790377893973,
+     "ci": [
+      0.8911995430221236,
+      0.9483806211547354
+     ],
+     "verdict": "reject",
+     "slope": 4.327363303681904,
+     "valid": true,
+     "gain": 0.07743968174691418,
+     "gain_ci": [
+      0.05079670519128678,
+      0.10523357350981195
+     ],
+     "beyond_reference": {
+      "added": -0.07757471816153039,
+      "ci": [
+       -0.09848675008490285,
+       -0.057095897286254756
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.007142674759917367,
+      "ci": [
+       -0.005435555189279181,
+       0.020452279142591113
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "rows_covered": {
+     "u": 1.0120091026944225,
+     "ci": [
+      0.9902555757378719,
+      1.0352225660564036
+     ],
+     "verdict": "reject",
+     "slope": 5.877142052289581,
+     "valid": false,
+     "gain": -0.01429038315811093,
+     "gain_ci": [
+      -0.034459359606972856,
+      0.005960579318389949
+     ],
+     "beyond_reference": {
+      "added": 0.014155346743494723,
+      "ci": [
+       0.0024821764092235357,
+       0.026233377981216575
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.09887273966494248,
+      "ci": [
+       0.07561577141818444,
+       0.12341334283835126
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "rows_other": {
+     "u": 0.9778067489491027,
+     "ci": [
+      0.9603786933289323,
+      0.9948349201566198
+     ],
+     "verdict": "reject",
+     "slope": 3.578632166262716,
+     "valid": true,
+     "gain": 0.019911970587208838,
+     "gain_ci": [
+      0.004240807888549092,
+      0.03603411540848018
+     ],
+     "beyond_reference": {
+      "added": -0.020047007001825046,
+      "ci": [
+       -0.036214170482938596,
+       -0.002444885982087383
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.06467038591962271,
+      "ci": [
+       0.04125261674395571,
+       0.08883525181024278
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "other": {
+     "u": 0.9721539494086396,
+     "ci": [
+      0.949672826757139,
+      0.9940924146519924
+     ],
+     "verdict": "reject",
+     "slope": 2.914639708290783,
+     "valid": true,
+     "gain": 0.025564770127671888,
+     "gain_ci": [
+      0.006192473655963599,
+      0.046727670402323083
+     ],
+     "beyond_reference": {
+      "added": -0.025699806542288095,
+      "ci": [
+       -0.044241519296799224,
+       -0.008017772217032341
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.05901758637915966,
+      "ci": [
+       0.03340351005307087,
+       0.08449257071571363
+      ],
+      "reading": "no added loss"
+     }
+    }
+   },
+   "rows_minus_controls": {
+    "gain_difference": 0.01840044132858487,
+    "ci": [
+     0.013344585819731244,
+     0.02349698408783555
+    ],
+    "reading": "no step"
+   },
+   "gate3": {
+    "on_the_cells_it_was_fitted_on": {
+     "u": 0.9543449504648949,
+     "ci": [
+      0.9274688457410738,
+      0.9811189957560119
+     ],
+     "verdict": "reject"
+    },
+    "against_the_reference": {
+     "added": -0.043508805486032864,
+     "ci": [
+      -0.05560086861266131,
+      -0.031302536418925934
+     ],
+     "reading": "no added loss"
+    },
+    "passes": true,
+    "control_the_output_as_trained": {
+     "added": -0.00013503641461620752,
+     "ci": [
+      -0.02117566292888627,
+      0.02234911513581227
+     ],
+     "reading": "no added loss",
+     "passes": true
+    },
+    "guard": {
+     "fall": 0.0,
+     "kept": true,
+     "why": "the type comes from the record: a bone-marrow cell keeps the head's own output"
+    }
+   },
+   "closure": {
+    "grade": "not a target for a repair of the head",
+    "why": "A3: the head does not lose what a readout of the other cells of this type reads; what is lost is lost before the head"
+   },
+   "hypothesis": {
+    "type": "hypothesis",
+    "id": "coverage:mel_ifn:MHC1:B2M:round2",
+    "about": {
+     "event": "B2M, melanoma under IFN-gamma",
+     "readout": "MHC1",
+     "target": "shift",
+     "quantity": "fall of |u| of the system's own output"
+    },
+    "claim": "coverage",
+    "rivals": [
+     "function",
+     "upstream",
+     "unreadable"
+    ],
+    "forecast": {
+     "rows": [
+      -0.021175624250203754,
+      0.02234913359724496
+     ]
+    },
+    "rule": {
+     "own": "rows",
+     "at_least": -0.1,
+     "controls": {
+      "controls": -0.1,
+      "rows_covered": -0.1,
+      "other": -0.1
+     }
+    },
+    "basis": [
+     "scope:mel_ifn_mhc_MHC1"
+    ],
+    "retrospective": false,
+    "note": "protocol version 3; the forecast is the grid's ceiling for this event; the bound is that ceiling minus the step margin"
+   },
+   "test": {
+    "type": "test",
+    "hypothesis": "coverage:mel_ifn:MHC1:B2M:round2",
+    "outcome": "not testable",
+    "arms": {
+     "controls": {
+      "gain": -0.013948732195373292,
+      "ci": [
+       -0.033273213529175505,
+       0.005859652708279763
+      ]
+     },
+     "rows": {
+      "gain": 0.004451709133211579,
+      "ci": [
+       -0.015613555191680274,
+       0.023851981877162025
+      ]
+     },
+     "rows_covered": {
+      "gain": -0.01429038315811093,
+      "ci": [
+       -0.034459359606972856,
+       0.005960579318389949
+      ]
+     },
+     "other": {
+      "gain": 0.025564770127671888,
+      "ci": [
+       0.006192473655963599,
+       0.046727670402323083
+      ]
+     }
+    },
+    "why": "nothing to remove: the grid's ceiling for a repair of the head is -0.00; the reference stage reads no more than the head (A3)"
+   }
+  },
+  "TAPBP": {
+   "response": {
+    "value": -1.5976933026162203,
+    "ci": [
+     -1.7791436569347172,
+     -1.4076998851605516
+    ],
+    "resolved": true,
+    "unit": "control SD",
+    "snr": 8.602611883812138
+   },
+   "n_cells": 153,
+   "n_control": 2685,
+   "selection_third": {
+    "event": "TAPBP",
+    "cells": 67,
+    "change_in_control_sd": -1.4874777020704835,
+    "snr": 5.4673688458041045,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   "grid": {
+    "frozen": {
+     "u": 1.0017949539412443,
+     "ci": [
+      0.9876404989099932,
+      1.016977749890464
+     ],
+     "verdict": "reject",
+     "class": "system"
+    },
+    "train": {
+     "u": 0.9892978923588608,
+     "ci": [
+      0.9713720065924596,
+      1.0065838651715322
+     ],
+     "verdict": "reject",
+     "class": "hgb"
+    },
+    "other": {
+     "u": 1.001929549966138,
+     "ci": [
+      0.9689603566120065,
+      1.0389777252778047
+     ],
+     "verdict": "reject",
+     "class": "hgb"
+    },
+    "units": {
+     "u": 1.0061800950683462,
+     "ci": [
+      0.9683096560271626,
+      1.0446804957704758
+     ],
+     "verdict": "reject",
+     "class": "hgb"
+    },
+    "own": {
+     "u": 0.997280591067062,
+     "ci": [
+      0.957363186752991,
+      1.036067200769778
+     ],
+     "verdict": "reject",
+     "class": "hgb"
+    }
+   },
+   "admission": {
+    "A1_A2": "on the selection third",
+    "A3": false,
+    "gap_head_to_units": {
+     "value": -0.004385141127101866,
+     "ci": [
+      -0.040247158309146866,
+      0.031651577349957646
+     ]
+    },
+    "attainable": "relative"
+   },
+   "reference": {
+    "units": {
+     "u": 1.0061800479888916,
+     "ci": [
+      0.9683096289634705,
+      1.0446804732084274
+     ],
+     "verdict": "reject"
+    },
+    "own": {
+     "u": 0.9972805976867676,
+     "ci": [
+      0.9573632046580315,
+      1.0360672563314437
+     ],
+     "verdict": "reject"
+    },
+    "own_beyond_units": {
+     "added": -0.008899450302124023,
+     "ci": [
+      -0.03249912261962891,
+      0.0144327774643898
+     ],
+     "reading": "no added loss"
+    }
+   },
+   "as_trained": {
+    "u": 1.0017949539412443,
+    "ci": [
+     0.9876404989099932,
+     1.016977749890464
+    ],
+    "verdict": "reject",
+    "slope": 0.7937745307485117,
+    "beyond_reference": {
+     "added": -0.004385094047647309,
+     "ci": [
+      -0.04024711692007235,
+      0.03165159050401732
+     ],
+     "reading": "no added loss"
+    },
+    "beyond_own": {
+     "added": 0.004514356254476715,
+     "ci": [
+      -0.03083485359320205,
+      0.04133067780961671
+     ],
+     "reading": "no added loss"
+    }
+   },
+   "arms": {
+    "controls": {
+     "u": 1.0148238920832624,
+     "ci": [
+      0.9710207570539389,
+      1.056054798662489
+     ],
+     "verdict": "reject",
+     "slope": 5.782811611311179,
+     "valid": false,
+     "gain": -0.01302893814201811,
+     "gain_ci": [
+      -0.051729149920585596,
+      0.027276279434790995
+     ],
+     "beyond_reference": {
+      "added": 0.0086438440943708,
+      "ci": [
+       -0.024039720950367487,
+       0.04306618677097304
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.017543294396494824,
+      "ci": [
+       -0.01550223630361346,
+       0.052010388225797705
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "rows": {
+     "u": 1.0142086973546787,
+     "ci": [
+      0.9702037828241986,
+      1.055621337975993
+     ],
+     "verdict": "reject",
+     "slope": 5.726436748139789,
+     "valid": false,
+     "gain": -0.012413743413434375,
+     "gain_ci": [
+      -0.05369336403630858,
+      0.028348919997157718
+     ],
+     "beyond_reference": {
+      "added": 0.008028649365787066,
+      "ci": [
+       -0.023444367952870828,
+       0.04232166768280297
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.01692809966791109,
+      "ci": [
+       -0.015453876486373547,
+       0.050742736712755046
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "cells": {
+     "u": 1.006124096055966,
+     "ci": [
+      0.9664970730014344,
+      1.0463335849202908
+     ],
+     "verdict": "reject",
+     "slope": 4.327363303681904,
+     "valid": false,
+     "gain": -0.004329142114721796,
+     "gain_ci": [
+      -0.04330859058626538,
+      0.036164580481797645
+     ],
+     "beyond_reference": {
+      "added": -5.595193292551315e-05,
+      "ci": [
+       -0.033696753582714754,
+       0.03678905697038679
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.00884349836919851,
+      "ci": [
+       -0.02364732835288869,
+       0.041299402350584304
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "rows_covered": {
+     "u": 1.013101641286063,
+     "ci": [
+      0.9691475273508235,
+      1.053583238091161
+     ],
+     "verdict": "reject",
+     "slope": 5.877142052289581,
+     "valid": false,
+     "gain": -0.011306687344818656,
+     "gain_ci": [
+      -0.05091890838468895,
+      0.029231151924665796
+     ],
+     "beyond_reference": {
+      "added": 0.006921593297171347,
+      "ci": [
+       -0.025227063894521926,
+       0.04225026063499577
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.01582104359929537,
+      "ci": [
+       -0.01617750123610456,
+       0.04922479717069511
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "rows_other": {
+     "u": 1.0121761148490038,
+     "ci": [
+      0.976053160522915,
+      1.0484060757571692
+     ],
+     "verdict": "reject",
+     "slope": 3.578632166262716,
+     "valid": false,
+     "gain": -0.010381160907759535,
+     "gain_ci": [
+      -0.04702294258959595,
+      0.023964286206077583
+     ],
+     "beyond_reference": {
+      "added": 0.005996066860112226,
+      "ci": [
+       -0.03138166053701896,
+       0.040106247212178724
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.01489551716223625,
+      "ci": [
+       -0.021385540508093173,
+       0.05055229337276446
+      ],
+      "reading": "no added loss"
+     }
+    },
+    "other": {
+     "u": 1.032012368039418,
+     "ci": [
+      0.9936647782635465,
+      1.0731315814023377
+     ],
+     "verdict": "reject",
+     "slope": 2.914639708290783,
+     "valid": false,
+     "gain": -0.03021741409817369,
+     "gain_ci": [
+      -0.0694674093398833,
+      0.006482318009724766
+     ],
+     "beyond_reference": {
+      "added": 0.02583232005052638,
+      "ci": [
+       -0.011005466492625415,
+       0.06297535741539097
+      ],
+      "reading": "no added loss"
+     },
+     "beyond_own": {
+      "added": 0.034731770352650404,
+      "ci": [
+       -0.0029663799874335476,
+       0.06996717345789942
+      ],
+      "reading": "no added loss"
+     }
+    }
+   },
+   "rows_minus_controls": {
+    "gain_difference": 0.0006151947285837345,
+    "ci": [
+     -0.005525693795359393,
+     0.006888517582209934
+    ],
+    "reading": "no step"
+   },
+   "gate3": {
+    "on_the_cells_it_was_fitted_on": {
+     "u": 0.9906799041784693,
+     "ci": [
+      0.9391008295632107,
+      1.0414185638421916
+     ],
+     "verdict": "reject"
+    },
+    "against_the_reference": {
+     "added": -0.015500143810422307,
+     "ci": [
+      -0.05332343084672464,
+      0.023001392298797788
+     ],
+     "reading": "no added loss"
+    },
+    "passes": true,
+    "control_the_output_as_trained": {
+     "added": -0.004385094047647309,
+     "ci": [
+      -0.04024711692007235,
+      0.03165159050401732
+     ],
+     "reading": "no added loss",
+     "passes": true
+    },
+    "guard": {
+     "fall": 0.0,
+     "kept": true,
+     "why": "the type comes from the record: a bone-marrow cell keeps the head's own output"
+    }
+   },
+   "closure": {
+    "grade": "not a target for a repair of the head",
+    "why": "A3: the head does not lose what a readout of the other cells of this type reads; what is lost is lost before the head"
+   },
+   "hypothesis": {
+    "type": "hypothesis",
+    "id": "coverage:mel_ifn:MHC1:TAPBP:round2",
+    "about": {
+     "event": "TAPBP, melanoma under IFN-gamma",
+     "readout": "MHC1",
+     "target": "shift",
+     "quantity": "fall of |u| of the system's own output"
+    },
+    "claim": "coverage",
+    "rivals": [
+     "function",
+     "upstream",
+     "unreadable"
+    ],
+    "forecast": {
+     "rows": [
+      -0.040247158309146866,
+      0.031651577349957646
+     ]
+    },
+    "rule": {
+     "own": "rows",
+     "at_least": -0.104,
+     "controls": {
+      "controls": -0.104,
+      "rows_covered": -0.104,
+      "other": -0.104
+     }
+    },
+    "basis": [
+     "scope:mel_ifn_mhc_MHC1"
+    ],
+    "retrospective": false,
+    "note": "protocol version 3; the forecast is the grid's ceiling for this event; the bound is that ceiling minus the step margin"
+   },
+   "test": {
+    "type": "test",
+    "hypothesis": "coverage:mel_ifn:MHC1:TAPBP:round2",
+    "outcome": "not testable",
+    "arms": {
+     "controls": {
+      "gain": -0.01302893814201811,
+      "ci": [
+       -0.051729149920585596,
+       0.027276279434790995
+      ]
+     },
+     "rows": {
+      "gain": -0.012413743413434375,
+      "ci": [
+       -0.05369336403630858,
+       0.028348919997157718
+      ]
+     },
+     "rows_covered": {
+      "gain": -0.011306687344818656,
+      "ci": [
+       -0.05091890838468895,
+       0.029231151924665796
+      ]
+     },
+     "other": {
+      "gain": -0.03021741409817369,
+      "ci": [
+       -0.0694674093398833,
+       0.006482318009724766
+      ]
+     }
+    },
+    "why": "nothing to remove: the grid's ceiling for a repair of the head is -0.00; the reference stage reads no more than the head (A3)"
+   }
+  }
+ },
+ "fits": [
+  {
+   "rows": {
+    "n_controls": 1342,
+    "ridge_weight": 1.0,
+    "cv_error": 0.006401514347745402,
+    "rows": [
+     {
+      "event": "B2M",
+      "n_cells": 84,
+      "measured_change": -1.4616142929443425,
+      "standard_error": 0.10127714820440739,
+      "share_of_the_residual_closed": 0.041851119606687304
+     },
+     {
+      "event": "TAPBP",
+      "n_cells": 76,
+      "measured_change": -0.8677053370448007,
+      "standard_error": 0.08028236241094393,
+      "share_of_the_residual_closed": 0.030563325884608195
+     }
+    ],
+    "ridge_weight_cells": 0.31622776601683794
+   },
+   "rows_covered": [
+    {
+     "event": "IFNGR1",
+     "n_cells": 64,
+     "measured_change": -0.1813202028444425,
+     "standard_error": 0.06556074820443157,
+     "share_of_the_residual_closed": -4.370197510541563
+    },
+    {
+     "event": "IFNGR2",
+     "n_cells": 90,
+     "measured_change": -0.07079746051436642,
+     "standard_error": 0.06277995283174163,
+     "share_of_the_residual_closed": 0.3853123043523774
+    },
+    {
+     "event": "JAK1",
+     "n_cells": 90,
+     "measured_change": -0.02334066465334228,
+     "standard_error": 0.0541131037667607,
+     "share_of_the_residual_closed": 0.3945527987521943
+    },
+    {
+     "event": "JAK2",
+     "n_cells": 83,
+     "measured_change": -0.14259569457056087,
+     "standard_error": 0.059857589335413804,
+     "share_of_the_residual_closed": 0.4048255626670557
+    },
+    {
+     "event": "STAT1",
+     "n_cells": 68,
+     "measured_change": -0.23483113711947023,
+     "standard_error": 0.058780602077813,
+     "share_of_the_residual_closed": -0.8159645907098412
+    }
+   ]
+  },
+  {
+   "rows": {
+    "n_controls": 1343,
+    "ridge_weight": 1.0,
+    "cv_error": 0.006458480714893893,
+    "rows": [
+     {
+      "event": "B2M",
+      "n_cells": 84,
+      "measured_change": -1.4620433804417994,
+      "standard_error": 0.09350189060754373,
+      "share_of_the_residual_closed": 0.03952931357353118
+     },
+     {
+      "event": "TAPBP",
+      "n_cells": 77,
+      "measured_change": -0.753506671073813,
+      "standard_error": 0.06565266691223084,
+      "share_of_the_residual_closed": 0.048514825869788614
+     }
+    ],
+    "ridge_weight_cells": 0.31622776601683794
+   },
+   "rows_covered": [
+    {
+     "event": "IFNGR1",
+     "n_cells": 64,
+     "measured_change": -0.1191756068083678,
+     "standard_error": 0.07495046900750725,
+     "share_of_the_residual_closed": 0.32402173025112646
+    },
+    {
+     "event": "IFNGR2",
+     "n_cells": 89,
+     "measured_change": -0.1396474414515072,
+     "standard_error": 0.057194768557718996,
+     "share_of_the_residual_closed": 0.4196737881679017
+    },
+    {
+     "event": "JAK1",
+     "n_cells": 91,
+     "measured_change": -0.06399072296283737,
+     "standard_error": 0.056652323878697265,
+     "share_of_the_residual_closed": 0.33882565028070344
+    },
+    {
+     "event": "JAK2",
+     "n_cells": 83,
+     "measured_change": -0.24343467647811057,
+     "standard_error": 0.058121356981304134,
+     "share_of_the_residual_closed": -0.2407108408314318
+    },
+    {
+     "event": "STAT1",
+     "n_cells": 68,
+     "measured_change": -0.10648095333221352,
+     "standard_error": 0.06746215380205171,
+     "share_of_the_residual_closed": 0.35772913670811823
+    }
+   ]
+  }
+ ],
+ "note": "per event, resampled by cell; two events give no statement about a family",
+ "pool_of_the_two_events": {
+  "grid": {
+   "frozen": {
+    "u": 0.9990861455615144,
+    "ci": [
+     0.9964851450865588,
+     1.004051005873679
+    ],
+    "verdict": "reject",
+    "class": "system"
+   },
+   "train": {
+    "u": 0.9946748604481557,
+    "ci": [
+     0.9858895065256894,
+     0.9987590929682966
+    ],
+    "verdict": "reject",
+    "class": "hgb"
+   },
+   "other": {
+    "u": 0.9865888002969772,
+    "ci": [
+     0.9614771965242743,
+     1.0347337628292543
+    ],
+    "verdict": "reject",
+    "class": "ridge"
+   },
+   "units": {
+    "u": 1.0538321880409085,
+    "ci": [
+     1.0418108165879183,
+     1.0762470587758026
+    ],
+    "verdict": "reject",
+    "class": "ridge"
+   },
+   "own": {
+    "u": 0.9427126006866346,
+    "ci": [
+     0.9076398903847623,
+     1.0072157344848218
+    ],
+    "verdict": "reject",
+    "class": "ridge"
+   }
+  },
+  "gap_head_to_units": {
+   "value": -0.054746042479394075,
+   "ci": [
+    -0.07454362011838737,
+    -0.04374823929089453
+   ]
+  },
+  "A3": false,
+  "note": "resampled over two genes: not an interval to rest anything on"
+ },
+ "ledger_check": [
+  {
+   "code": "H5",
+   "severity": "note",
+   "message": "'coverage:mel_ifn:MHC1:B2M:round2' has no test yet"
+  },
+  {
+   "code": "H5",
+   "severity": "note",
+   "message": "'coverage:mel_ifn:MHC1:TAPBP:round2' has no test yet"
+  }
+ ]
+}

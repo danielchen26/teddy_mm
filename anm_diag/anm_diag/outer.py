@@ -46,7 +46,7 @@ ROUTES = {
 # the readings the inner loop keeps for itself (LOOP_PROTOCOL.md, version 2); they are statuses of a target, not open items of the outer step
 INNER = ("function", "coverage", "unit")
 
-STATUSES = ("closed (absolute)", "the model's part closed (relative)", "open in the model", "undecided in the model", "not graded", "not a target")
+STATUSES = ("closed (absolute)", "the model's part closed (relative)", "open in the model", "undecided in the model", "open before the model", "not graded", "not a target")
 STATES = ("open", "decided on development units", "closed", "limit", "at the margin", "not asked", "on the experiment list")
 TERMINAL = STATES[2:]
 NEEDS = {"invalid": "no new data", "rule": "no new data", "selection": "no new data", "mistyped": "no new data", "unreadable": "no new data first; then the owner's decision",
@@ -92,6 +92,8 @@ def target_status(t):
     """Exactly one status for a target at the end of an iteration (Section 5)."""
     if not t.get("admitted", True):
         return "not a target"
+    if t.get("control_adds_a_loss") is False:                   # the response is followed, and neither the model nor its control adds a loss beyond the reference stage
+        return "open before the model"
     g = t.get("gates", {})
     if g.get("evaluable") is False:
         return "not graded"
@@ -120,6 +122,39 @@ def _item(items, t, reading, question, value=None, ci=None, n=None, needs=None, 
     return it
 
 
+def _failed(items, t, iv, bad, n, event="pool", key=None):
+    """An item for every check of Section 6 that the reading of an input view fails."""
+    for b in bad:
+        g = iv.get("gap_to_later", {}) if b == "dominated view" else {}
+        it = _item(items, t, "invalid", f"the reading of the input view fails the check: {b}", g.get("added"), g.get("ci"), n, event=event, evidence=iv.get("evidence"),
+                   note=iv.get("note") if b == "dominated view" else iv.get(b.replace(" ", "_") + "_note"), key=key)
+        if b == "positive control":                             # a richer reader may reach support; if none does, the tolerance for this target is the owner's to declare
+            it["next_step_needs"] = "no new data first; then the owner's decision"
+
+
+def _before(items, t, ref, iv, bad, n, d, event="pool"):
+    """Where a loss before the model is: at the input view (unreadable), between the input view and the stage the model reads
+    (upstream), not decided, or not placed because the view fails a check of Section 6 or was not read."""
+    r = ref["units"]
+    if r["verdict"] == "unresolved":
+        _item(items, t, "unresolved", "is anything lost before the model", r["u"], r["ci"], n, event=event, evidence=ref.get("evidence"), needs=needed_units(r["u"], r["ci"], n, d["margin"]) if n else None)
+    elif r["verdict"] == "reject":
+        if iv is None:
+            _item(items, t, "invalid", "a loss before the model, and the input view was not read", r["u"], r["ci"], n, event=event, evidence=ref.get("evidence"))
+        elif not bad:                                           # a view that fails a check of Section 6 gives no reading of where the loss is
+            o = iv["own"]
+            gap = iv.get("gap_to_later")
+            if o["verdict"] == "reject":
+                weak = len(iv.get("classes", [])) < d["reader_classes"] or not iv.get("nonlinear")
+                _item(items, t, "unreadable", "a loss at the input view, with the event's own cells", o["u"], o["ci"], n, event=event, evidence=iv.get("evidence"),
+                      note="rests on one reader class or on linear readers only: a richer reader comes before any conclusion about the input" if weak else iv.get("note"))
+            elif o["verdict"] == "support" or (gap and gap["ci"][0] > d["step_margin"]):
+                _item(items, t, "upstream", "the input view reads it and the reference stage does not", gap["added"] if gap else None, gap["ci"] if gap else None, n, event=event, evidence=iv.get("evidence"))
+            else:
+                _item(items, t, "unresolved", "is the loss before the model already at the input view", o["u"], o["ci"], n, event=event, evidence=iv.get("evidence"),
+                      needs=needed_units(o["u"], o["ci"], n, d["margin"]) if n else None)
+
+
 def open_items(targets, world=None, d=DEFAULTS):
     """The open items of an iteration. Every reading is derived by rule from what the round recorded.
 
@@ -141,12 +176,7 @@ def open_items(targets, world=None, d=DEFAULTS):
         n = t.get("events_n")
         iv = t.get("input_view")
         bad = reading_checks(iv, d) if iv else []
-        for b in bad:
-            g = iv.get("gap_to_later", {}) if b == "dominated view" else {}
-            it = _item(items, t, "invalid", f"the reading of the input view fails the check: {b}", g.get("added"), g.get("ci"), n, evidence=iv.get("evidence"),
-                       note=iv.get("note") if b == "dominated view" else iv.get(b.replace(" ", "_") + "_note"))
-            if b == "positive control":                         # a richer reader may reach support; if none does, the tolerance for this target is the owner's to declare
-                it["next_step_needs"] = "no new data first; then the owner's decision"
+        _failed(items, t, iv, bad, n)
         for e in t.get("self_events", []):
             _item(items, t, "self event", "the knockout of the readout's own gene", e.get("u"), e.get("ci"), None, event=e["site"], evidence=e.get("evidence"), note=e.get("note"))
         for pair in t.get("confounded", []):
@@ -166,7 +196,7 @@ def open_items(targets, world=None, d=DEFAULTS):
             _item(items, t, "rule", why["question"], why.get("value"), None, None, evidence=why.get("evidence"), note=why.get("note"))
         if g.get("guard_kept") is False and g.get("guard_holds_under_some_change") is False:
             _item(items, t, "guard conflict", "every change that removes the loss breaks the guard", evidence=g.get("evidence"))
-        m, ref = t["model"], t["reference"]
+        m, ref = t["model"], t.get("reference")
         added = m["added"]
         if added["reading"] == "loss":
             if m.get("reading") == "coverage" and not m.get("rows_of_type", 1):
@@ -178,25 +208,17 @@ def open_items(targets, world=None, d=DEFAULTS):
         elif t.get("attainable") == "absolute" and m["own"]["verdict"] != "support":
             _item(items, t, "unresolved", "is the output of the model inside the margin", m["own"]["u"], m["own"]["ci"], n, evidence=m.get("evidence"),
                   note="the reference stage is supported: nothing is left before the model", needs=needed_units(m["own"]["u"], m["own"]["ci"], n, d["margin"]) if n else None)
-        # what is left before the model
-        r = ref["units"]
-        if r["verdict"] == "unresolved":
-            _item(items, t, "unresolved", "is anything lost before the model", r["u"], r["ci"], n, evidence=ref.get("evidence"), needs=needed_units(r["u"], r["ci"], n, d["margin"]) if n else None)
-        elif r["verdict"] == "reject":
-            if iv is None:
-                _item(items, t, "invalid", "a loss before the model, and the input view was not read", r["u"], r["ci"], n, evidence=ref.get("evidence"))
-            elif not bad:                                       # a view that fails a check of Section 6 gives no reading of where the loss is
-                o = iv["own"]
-                gap = iv.get("gap_to_later")
-                if o["verdict"] == "reject":
-                    weak = len(iv.get("classes", [])) < d["reader_classes"] or not iv.get("nonlinear")
-                    _item(items, t, "unreadable", "a loss at the input view, with the event's own cells", o["u"], o["ci"], n, evidence=iv.get("evidence"),
-                          note="rests on one reader class or on linear readers only: a richer reader comes before any conclusion about the input" if weak else iv.get("note"))
-                elif o["verdict"] == "support" or (gap and gap["ci"][0] > d["step_margin"]):
-                    _item(items, t, "upstream", "the input view reads it and the reference stage does not", gap["added"] if gap else None, gap["ci"] if gap else None, n, evidence=iv.get("evidence"))
-                else:
-                    _item(items, t, "unresolved", "is the loss before the model already at the input view", o["u"], o["ci"], n, evidence=iv.get("evidence"),
-                          needs=needed_units(o["u"], o["ci"], n, d["margin"]) if n else None)
+        # what is left before the model: for the pool, and for an event that the run read on its own (its own reference and input view)
+        if ref:                                                 # a target read event by event has no reference of its pool
+            _before(items, t, ref, iv, bad, n, d)
+        for s, x in (m.get("events") or {}).items():
+            if x.get("before"):
+                b = x["before"]
+                bb = reading_checks(b["input_view"], d) if b.get("input_view") else []
+                _failed(items, t, b.get("input_view"), [c for c in bb if c != "positive control"], None, event=s)
+                if "positive control" in bb:                    # a check of the family: one item for the target, whichever event shows it
+                    _failed(items, t, b["input_view"], ["positive control"], None, key=f"positive control: {t.get('readout')} {t.get('group')}")
+                _before(items, t, b["reference"], b.get("input_view"), bb, None, d, event=s)
         # events that read differently from their pool
         for s, x in (m.get("events") or {}).items():
             if x["verdict"] == "reject" and x["ci"][0] > m["own"]["ci"][1]:

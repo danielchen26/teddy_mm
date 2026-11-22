@@ -1,0 +1,446 @@
+{
+ "rule": "a cell is in the selection third if sha256('20261122|<cell name>') is divisible by 3",
+ "min_snr": 3.0,
+ "library": {
+  "cells": 50229,
+  "in_the_third": 16689,
+  "control_cells_in_the_third": 1315,
+  "candidates": 206
+ },
+ "PDL1": {
+  "pass_A1": [
+   "CD274",
+   "IFNGR1",
+   "STAT1",
+   "IFNGR2",
+   "JAK2",
+   "JAK1"
+  ],
+  "refused_A2": [
+   "CD274"
+  ],
+  "admitted": [
+   "IFNGR1",
+   "STAT1",
+   "IFNGR2",
+   "JAK2",
+   "JAK1"
+  ],
+  "largest_not_passing": {
+   "event": "NSG1",
+   "cells": 73,
+   "change_in_control_sd": -0.3351539848065471,
+   "snr": 1.5140740061004774,
+   "A1": false,
+   "A2_own_gene": false
+  },
+  "top": [
+   {
+    "event": "CD274",
+    "cells": 98,
+    "change_in_control_sd": -1.8481803992254582,
+    "snr": 9.041381131785057,
+    "A1": true,
+    "A2_own_gene": true
+   },
+   {
+    "event": "IFNGR1",
+    "cells": 70,
+    "change_in_control_sd": -1.243937839230613,
+    "snr": 5.562511940820315,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "STAT1",
+    "cells": 67,
+    "change_in_control_sd": -1.2844481026235743,
+    "snr": 5.035324758518025,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "IFNGR2",
+    "cells": 99,
+    "change_in_control_sd": -1.0670542957469604,
+    "snr": 4.785362348748655,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "JAK2",
+    "cells": 78,
+    "change_in_control_sd": -1.167949115758671,
+    "snr": 4.644937799533916,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "JAK1",
+    "cells": 67,
+    "change_in_control_sd": -0.9522930398338697,
+    "snr": 3.0566750747522327,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "NSG1",
+    "cells": 73,
+    "change_in_control_sd": -0.3351539848065471,
+    "snr": 1.5140740061004774,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "SLC5A3",
+    "cells": 91,
+    "change_in_control_sd": 0.2619377709708649,
+    "snr": 1.4997961378992037,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "SLC25A13",
+    "cells": 94,
+    "change_in_control_sd": -0.24253652537593356,
+    "snr": 1.3689518635810993,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "B2M",
+    "cells": 109,
+    "change_in_control_sd": 0.2298847747909108,
+    "snr": 1.3625196708819038,
+    "A1": false,
+    "A2_own_gene": false
+   }
+  ]
+ },
+ "MHC1": {
+  "pass_A1": [
+   "B2M",
+   "TAPBP"
+  ],
+  "refused_A2": [],
+  "admitted": [
+   "B2M",
+   "TAPBP"
+  ],
+  "largest_not_passing": {
+   "event": "HLA-B",
+   "cells": 56,
+   "change_in_control_sd": -0.7176671608939504,
+   "snr": 2.3027528236507346,
+   "A1": false,
+   "A2_own_gene": true
+  },
+  "top": [
+   {
+    "event": "B2M",
+    "cells": 109,
+    "change_in_control_sd": -2.863147728830018,
+    "snr": 8.578269205696317,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "TAPBP",
+    "cells": 67,
+    "change_in_control_sd": -1.4874777020704835,
+    "snr": 5.4673688458041045,
+    "A1": true,
+    "A2_own_gene": false
+   },
+   {
+    "event": "HLA-B",
+    "cells": 56,
+    "change_in_control_sd": -0.7176671608939504,
+    "snr": 2.3027528236507346,
+    "A1": false,
+    "A2_own_gene": true
+   },
+   {
+    "event": "HLA-C",
+    "cells": 56,
+    "change_in_control_sd": -0.6532675795625461,
+    "snr": 2.1868153175786222,
+    "A1": false,
+    "A2_own_gene": true
+   },
+   {
+    "event": "STAT1",
+    "cells": 67,
+    "change_in_control_sd": -0.5360752170373931,
+    "snr": 2.1828897835726337,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "SSR2",
+    "cells": 78,
+    "change_in_control_sd": 0.4162267630634181,
+    "snr": 1.8235605630715492,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "ISYNA1",
+    "cells": 55,
+    "change_in_control_sd": 0.3916484051895681,
+    "snr": 1.7518633637982934,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "CD44",
+    "cells": 87,
+    "change_in_control_sd": 0.41036327028980674,
+    "snr": 1.7135907397442374,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "STAT3",
+    "cells": 66,
+    "change_in_control_sd": 0.5952264743933764,
+    "snr": 1.707262330871466,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "EIF3K",
+    "cells": 60,
+    "change_in_control_sd": 0.4148028939096519,
+    "snr": 1.5872944430652514,
+    "A1": false,
+    "A2_own_gene": false
+   }
+  ]
+ },
+ "HLAE": {
+  "pass_A1": [],
+  "refused_A2": [],
+  "admitted": [],
+  "largest_not_passing": {
+   "event": "STAT1",
+   "cells": 67,
+   "change_in_control_sd": -0.3394374623130159,
+   "snr": 1.5851545796155893,
+   "A1": false,
+   "A2_own_gene": false
+  },
+  "top": [
+   {
+    "event": "STAT1",
+    "cells": 67,
+    "change_in_control_sd": -0.3394374623130159,
+    "snr": 1.5851545796155893,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "HLA-E",
+    "cells": 71,
+    "change_in_control_sd": -0.3409792799458347,
+    "snr": 1.4691649511435245,
+    "A1": false,
+    "A2_own_gene": true
+   },
+   {
+    "event": "HLA-F",
+    "cells": 95,
+    "change_in_control_sd": -0.246630747290585,
+    "snr": 1.3464977861173206,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "TPP1",
+    "cells": 88,
+    "change_in_control_sd": -0.24138033451163246,
+    "snr": 1.319351815629462,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "HLA-A",
+    "cells": 104,
+    "change_in_control_sd": -0.2621008038044142,
+    "snr": 1.3107920691472685,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "SCARB2",
+    "cells": 68,
+    "change_in_control_sd": -0.31813240542672333,
+    "snr": 1.2891369593685533,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "SPESP1",
+    "cells": 75,
+    "change_in_control_sd": -0.26149299047393454,
+    "snr": 1.2392990335496616,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "KDR",
+    "cells": 96,
+    "change_in_control_sd": -0.2234111451789315,
+    "snr": 1.195962686013209,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "IRF3",
+    "cells": 68,
+    "change_in_control_sd": 0.2465603857322802,
+    "snr": 1.159260550445165,
+    "A1": false,
+    "A2_own_gene": false
+   },
+   {
+    "event": "FKBP4",
+    "cells": 60,
+    "change_in_control_sd": -0.2836702768798345,
+    "snr": 1.140130395599114,
+    "A1": false,
+    "A2_own_gene": false
+   }
+  ]
+ },
+ "events_of_the_round": {
+  "PDL1 mel_ifn": {
+   "IFNGR1": {
+    "cells": 70,
+    "change_in_control_sd": -1.243937839230613,
+    "snr": 5.562511940820315,
+    "A1": true
+   },
+   "IFNGR2": {
+    "cells": 99,
+    "change_in_control_sd": -1.0670542957469604,
+    "snr": 4.785362348748654,
+    "A1": true
+   },
+   "JAK1": {
+    "cells": 67,
+    "change_in_control_sd": -0.9522930398338696,
+    "snr": 3.056675074752232,
+    "A1": true
+   },
+   "JAK2": {
+    "cells": 78,
+    "change_in_control_sd": -1.167949115758671,
+    "snr": 4.644937799533915,
+    "A1": true
+   },
+   "STAT1": {
+    "cells": 67,
+    "change_in_control_sd": -1.2844481026235746,
+    "snr": 5.035324758518025,
+    "A1": true
+   }
+  },
+  "PDL1 mel_co": {
+   "IFNGR1": {
+    "cells": 98,
+    "change_in_control_sd": -1.2544867979693557,
+    "snr": 5.948060044676792,
+    "A1": true
+   },
+   "IFNGR2": {
+    "cells": 152,
+    "change_in_control_sd": -1.0514168153727494,
+    "snr": 5.472072542467489,
+    "A1": true
+   },
+   "JAK1": {
+    "cells": 129,
+    "change_in_control_sd": -0.9414928775230607,
+    "snr": 5.0408917112922325,
+    "A1": true
+   },
+   "JAK2": {
+    "cells": 123,
+    "change_in_control_sd": -1.0846466231016774,
+    "snr": 5.641521240442296,
+    "A1": true
+   },
+   "STAT1": {
+    "cells": 122,
+    "change_in_control_sd": -1.3007126503735336,
+    "snr": 6.860390402236842,
+    "A1": true
+   }
+  },
+  "MHC1 mel_co": {
+   "IFNGR1": {
+    "cells": 98,
+    "change_in_control_sd": -1.923404016301003,
+    "snr": 8.544085914462828,
+    "A1": true
+   },
+   "IFNGR2": {
+    "cells": 152,
+    "change_in_control_sd": -1.7588770970658691,
+    "snr": 7.6350073964318295,
+    "A1": true
+   },
+   "JAK1": {
+    "cells": 129,
+    "change_in_control_sd": -2.1706968272267457,
+    "snr": 9.443333678752204,
+    "A1": true
+   },
+   "JAK2": {
+    "cells": 123,
+    "change_in_control_sd": -1.8179448991405593,
+    "snr": 8.203212052935855,
+    "A1": true
+   },
+   "STAT1": {
+    "cells": 122,
+    "change_in_control_sd": -2.2729502005591877,
+    "snr": 10.936005324433687,
+    "A1": true
+   }
+  },
+  "PDL1 thp1": {
+   "IFNGR1": {
+    "cells": 428,
+    "change_in_control_sd": -0.9151180362754825,
+    "snr": 7.572178435179098,
+    "A1": true
+   },
+   "IFNGR2": {
+    "cells": 418,
+    "change_in_control_sd": -1.0277933315728425,
+    "snr": 8.59885045466071,
+    "A1": true
+   },
+   "IRF1": {
+    "cells": 368,
+    "change_in_control_sd": -0.32543227936272173,
+    "snr": 2.6309152105508535,
+    "A1": false
+   },
+   "JAK2": {
+    "cells": 308,
+    "change_in_control_sd": -1.0372529150009997,
+    "snr": 7.616156690173987,
+    "A1": true
+   },
+   "STAT1": {
+    "cells": 147,
+    "change_in_control_sd": -0.7501694046871101,
+    "snr": 4.331309980508397,
+    "A1": true
+   }
+  }
+ }
+}
