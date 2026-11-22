@@ -138,11 +138,12 @@ At the end of an iteration every target (a type and a readout) has exactly one s
 
 | status | meaning |
 |---|---|
-| closed (absolute) | the system's own output is supported, and the control's is rejected |
+| closed (absolute) | the system's own output is supported, and the control's is rejected. Where the output as trained is supported already, nothing was open and no repair is read |
 | the model's part closed (relative) | the model adds no loss beyond the reference stage, and the control does; what the reference stage leaves is an open item |
 | open in the model | the model still adds a resolved loss: the inner loop goes on (function, coverage with rows, unit) |
 | undecided in the model | whether the model adds a loss is not resolved; that is an open item |
-| open before the model | the response can be followed, and neither the model nor its control adds a loss beyond the reference stage: nothing in the model can be closed, and what the reference stage leaves is an open item (added after the first outer step, which met this case) |
+| open before the model | the response can be followed, neither the model nor its control adds a loss beyond the reference stage, and a stage before the model is rejected: nothing in the model can be closed, and what the reference stage leaves is an open item (added after the first outer step, which met this case) |
+| undecided before the model | the same, and no stage before the model is rejected: whether anything is lost there is not resolved; that is an open item (added on 22 November, Section 17) |
 | not graded | a gate could not be evaluated; the reason is an open item |
 | not a target | the response cannot be followed; the reason is an open item |
 
@@ -200,7 +201,7 @@ use). The outer step adds the rest. This table is `ROUTES` in
 | pooled, and differs | a distinction the schema pools is visible in the readings | S | split along a field from the record, with rival fields, tested on new units | repair across the pool |
 | pooled, may be the same | a distinction the schema keeps looks invisible to the readout | S | merge after bounded support on new units, twice | merge on development readings |
 | mistyped | cells get a type from a reader of their state, and some get the wrong one | S | take the type from the record | tune the reader |
-| self event | the event acts on the readout's own gene: an RNA-only system may have nothing to read (rule S3) | C | 1. a stated limit for this type; 2. or the assignment as an input, which is another system: the owner's decision | use it as a row |
+| self event | the event acts on the readout itself: a system that is not told the assignment may have nothing to read (rule S3) | C | 1. a stated limit for this type; 2. or the assignment as an input, which is another system: the owner's decision | use it as a row |
 | rule | a gate or a test could not be evaluated as written | P | amend the protocol before the next iteration | re-grade the finished run |
 | selection | an event was selected by a measurement on the cells that were then audited | P | a selection split | keep selecting on audited cells |
 | no final data | no unit of the claim is unread | E | a census of the pool; units set aside as final before anything else is read | call a development reading a confirmation |
@@ -469,3 +470,34 @@ None of these is derived. Each is reported with every use, as in the protocol.
   `tests/test_outer.py`, each by its own case only; that shows the rules are consistent, not that they are right.
 - Whether it converges in a useful number of iterations on this pool is not known. The first outer step is declared
   in [`runs/outer_step_20261122/DESIGN.md`](runs/outer_step_20261122/DESIGN.md); its results are in that folder.
+
+## 17. After the first step: six rules a planted system changed (22 November)
+
+After the first step the cycle was rewritten without any name of the first system
+([`GENERAL.md`](GENERAL.md), `anm_diag/cycle.py`) and run on a planted system with two modalities, two steps inside
+the model and two types of cell, in which the place of every loss is known (`anm_diag/toy.py`;
+[`runs/framework_generalization_20261122`](runs/framework_generalization_20261122/)). Six rules said something the
+plant did not support. They are changed in `outer.py` from this date. The items and the statuses of the first step were
+derived again with the changed rules and are the same, so no recorded outcome moves.
+
+| | the case | the rule from now on |
+|---|---|---|
+| 17a | A loss at the input view and a further loss between the input view and the stage the model reads were reported as one reading, `unreadable`. | **A loss can sit in two places.** `unreadable` is raised for a loss at the input view; `upstream` is raised as well when the gap from the input view to the stage the model reads has its interval above the step margin. |
+| 17b | The checks of Section 6 were applied to an input view, and could raise an item, where the reference stage carries the response. | **Where the reference stage is supported, the input view is not consulted.** Nothing is lost before the model, so there is nothing to place. |
+| 17c | An event read on its own was called `pooled, and differs`. And an event that does not belong in its pool went unflagged where no repair was read, because the outputs as trained all lose everything and do not differ. | **Only an event inside a pool can differ from it**, and it is flagged in either of two cases: its output is rejected with an interval above the pool's (as before), or it is rejected at the reference stage while other events of the pool are supported there. The pool's own unresolved items wait for that split. |
+| 17d | A reader of a stage that failed for an event raised an item although the system's own output reads that event. | **An output inside the margin has lost nothing on the way.** No earlier stage is consulted for that pool or event. |
+| 17e | The second step of the ladder for `unreadable` (another input already measured) asked for support at that input. | **It is also at hand when that input reads at least a step more than the model's own input**, on paired resamples. |
+| 17f | A system with nothing wrong, read on fewer cells, was given the status `open before the model`: its output and its reference stage were both undecided, and the output added nothing beyond the reference. | **A loss before the model is said only where a stage before it is rejected.** Where none is, the status is `undecided before the model` (Section 5). |
+
+Where a run records stages inside the model (the output of one modality's encoder, a fused state), an `upstream`
+item says between which two of them the response stops being readable.
+
+Two additions belong to the round and are in `cycle.py`: a repair is read only where the output as trained loses a step
+more than the reference stage (A3, which the first system's scripts applied before the round), and the reader of a
+view is chosen by the audit tool's own rule (supported if any declared reader supports, rejected only if all reject).
+The two places where an item is worded for a system (the event that acts on the readout itself; what comes before the
+stage the model reads) take their words from the run.
+
+Of the fifteen readings, `unreadable` has now been produced by a planted system as well as by a constructed target.
+Three have only been produced by constructed targets: `no rows`, `confounded`, `guard conflict`.
+

@@ -1,0 +1,4647 @@
+{
+ "sizes": {
+  "large": {
+   "n_control": 4000,
+   "n_event": 800
+  },
+  "medium": {
+   "n_control": 1500,
+   "n_event": 300
+  },
+  "small": {
+   "n_control": 500,
+   "n_event": 100
+  }
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "table": {
+  "large": {
+   "head of type one: closed by its repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "modb: unreadable, and the other input reads it": {
+    "right": 11,
+    "undecided": 1,
+    "wrong": 0
+   },
+   "post: unreadable, and no input reads it": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "weak: refused at selection": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "the repair of one type does not carry to the other": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: differs inside its pool": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: lost in the first step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "no other definite item": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "a system with nothing wrong: nothing is open": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   }
+  },
+  "medium": {
+   "head of type one: closed by its repair": {
+    "right": 11,
+    "undecided": 1,
+    "wrong": 0
+   },
+   "enc: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "modb: unreadable, and the other input reads it": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "post: unreadable, and no input reads it": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "weak: refused at selection": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "the repair of one type does not carry to the other": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: differs inside its pool": {
+    "right": 9,
+    "undecided": 3,
+    "wrong": 0
+   },
+   "odd: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: lost in the first step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "no other definite item": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "a system with nothing wrong: nothing is open": {
+    "right": 6,
+    "undecided": 6,
+    "wrong": 0
+   }
+  },
+  "small": {
+   "head of type one: closed by its repair": {
+    "right": 2,
+    "undecided": 10,
+    "wrong": 0
+   },
+   "enc: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "modb: unreadable, and the other input reads it": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "post: unreadable, and no input reads it": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "weak: refused at selection": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "the repair of one type does not carry to the other": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: differs inside its pool": {
+    "right": 7,
+    "undecided": 5,
+    "wrong": 0
+   },
+   "odd: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: lost in the first step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "odd: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "no other definite item": {
+    "right": 11,
+    "undecided": 0,
+    "wrong": 1
+   },
+   "a system with nothing wrong: nothing is open": {
+    "right": 0,
+    "undecided": 12,
+    "wrong": 0
+   }
+  }
+ },
+ "total": {
+  "right": 465,
+  "undecided": 38,
+  "wrong": 1
+ },
+ "runs": [
+  {
+   "size": "large",
+   "seed": 0,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "undecided",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "invalid"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 0,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 0,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 1,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 1,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 2,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 2,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 3,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 3,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 4,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 4,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 5,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 5,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "closed (absolute)"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 6,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 6,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 7,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 7,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 8,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 8,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 9,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 9,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 10,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 10,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "medium",
+   "seed": 11,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "medium",
+   "seed": 11,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "right"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "closed (absolute)"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "not graded",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "rule"
+    ],
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "wrong"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "unreadable"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [
+    [
+     "one",
+     "early",
+     "unreadable",
+     0.15972784733215195,
+     [
+      0.10019323922264609,
+      0.21918711619853873
+     ]
+    ]
+   ],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided in the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "undecided",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "undecided",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "the model's part closed (relative)",
+    "two": "undecided in the model"
+   },
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "undecided before the model",
+    "undecided in the model"
+   ],
+   "items": [
+    [
+     "one",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "sound": false,
+   "score": {
+    "head of type one: closed by its repair": "right",
+    "enc: upstream": "right",
+    "modb: unreadable, and the other input reads it": "right",
+    "post: unreadable, and no input reads it": "right",
+    "weak: refused at selection": "right",
+    "the repair of one type does not carry to the other": "right",
+    "odd: differs inside its pool": "right",
+    "odd: upstream": "right",
+    "early: upstream": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "odd: lost in the second step": "right",
+    "no other definite item": "right"
+   },
+   "statuses": {
+    "one": "closed (absolute)",
+    "two": "the model's part closed (relative)"
+   },
+   "items": [
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "one",
+     "early",
+     "upstream"
+    ],
+    [
+     "one",
+     "enc",
+     "upstream"
+    ],
+    [
+     "one",
+     "modb",
+     "unreadable"
+    ],
+    [
+     "one",
+     "post",
+     "unreadable"
+    ],
+    [
+     "one",
+     "pool",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "odd",
+     "upstream"
+    ],
+    [
+     "two",
+     "odd",
+     "pooled, and differs"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "not_admitted": {
+    "one": [
+     "weak"
+    ],
+    "two": []
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "sound": true,
+   "score": {
+    "a system with nothing wrong: nothing is open": "undecided"
+   },
+   "statuses": [
+    "closed (absolute)",
+    "undecided before the model"
+   ],
+   "items": [
+    [
+     "one",
+     "p1",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p2",
+     "unresolved"
+    ],
+    [
+     "one",
+     "p3",
+     "unresolved"
+    ],
+    [
+     "two",
+     "pool",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q1",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q2",
+     "unresolved"
+    ],
+    [
+     "two",
+     "q3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read_for": []
+  }
+ ]
+}

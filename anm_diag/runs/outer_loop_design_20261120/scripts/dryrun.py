@@ -33,7 +33,8 @@ def targets_of_round(R, screen=None):
     targets, world = [], {"final_units": 0, "final_note": "every cell with an embedding has been read; the rest of the two screens has no embeddings yet",
                            "selection_on_audited_cells": "A1 (the response against its interval) was read on the cells that were then audited; negligible where the response is ten times "
                                                          "its half-width (PD-L1), material near the threshold of three, where no event was admitted",
-                           "undeclared_cases": ["a group ready as a pool with no admitted event"]}
+                           "undeclared_cases": ["a group ready as a pool with no admitted event"],
+                           "words": {"self event": "the knockout of the readout's own gene", "upstream": "a change of the encoder"}}
     typed = []
     for fname, part in (("round_development.json", "development"), ("round_replication.json", "replication")):
         D = json.loads((R / fname).read_text())

@@ -152,6 +152,18 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   written. IRF1 in THP-1 is read upstream of the embedding (0.21 [0.12, 0.32]). MHC-I under IFN-γ became a target
   with B2M and TAPBP, and nothing before or in the model reads them (*u* about 1): they act on the measured complex
   itself. 133 units are set aside as final. Of the forecasts, 19 of 29 intervals held the value.
+- **The loop without its first system (22 November; code and checks, no new cell read;**
+  [`GENERAL.md`](anm_diag/GENERAL.md)**,**
+  [`framework_generalization_20261122/`](anm_diag/runs/framework_generalization_20261122/)**):** one round of the loop
+  was rewritten so that it names no model, modality, readout or stage, and was run on a planted system with two
+  modalities, two steps inside the model and two types of cell, in which the place of every loss is known. Over twelve
+  seeds and three sizes, 465 of 504 planted facts are read right, 38 undecided and 1 wrong; where a loss is was found
+  at every size, and with few cells the loop says "undecided" where it said "closed" with many. On the cells of the
+  first outer step the general code gives every one of 2,732 recorded values again, with the same statuses and the
+  same 17 open items. The planted system showed six rules saying something false or missing something; they were
+  changed, and no recorded outcome moves. Not general yet: events without control cells of their own (donor,
+  disease), any repair other than a linear readout, and a second real system. Retraining the encoder with the TEG as
+  a constraint in pre-training is in the plan as a later step.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

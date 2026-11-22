@@ -82,6 +82,56 @@ def test_statuses():
     assert outer.target_status(target(model={"own": UNR, "added": A(0.08, 0.0, 0.16, "unresolved"), "events": {}})) == "undecided in the model"
 
 
+def test_a_loss_in_two_places_is_reported_in_both():
+    iv = {"own": V(0.14, 0.11, 0.18, "reject"), "gap_to_later": A(0.88, 0.80, 0.95, "loss"), "classes": ["ridge", "hgb"], "nonlinear": True, "positive_control": True}
+    lost = {"own": REJ, "added": NONE, "events": {}}
+    assert sorted(readings(target(reference={"units": REJ, "own": REJ}, model=lost, attainable="relative", input_view=iv))) == ["unreadable", "upstream"]
+
+
+def test_an_input_view_is_not_checked_where_the_reference_stage_is_supported():
+    iv = {"own": UNR, "gap_to_later": A(-0.04, -0.07, -0.01, "no added loss"), "classes": ["ridge", "hgb"], "nonlinear": True, "positive_control": True}
+    assert readings(target(input_view=iv)) == []
+    assert readings(target(reference={"units": REJ, "own": REJ}, model={"own": REJ, "added": NONE, "events": {}}, attainable="relative", input_view=iv)) == ["invalid"]
+
+
+def test_another_measured_input_that_reads_it_is_the_next_step():
+    iv = {"own": REJ, "gap_to_later": NONE, "classes": ["ridge", "hgb"], "nonlinear": True, "positive_control": True, "other_inputs": {"view_b": SUP}}
+    lost = {"own": REJ, "added": NONE, "events": {}}
+    i = outer.open_items([target(reference={"units": REJ, "own": REJ}, model=lost, attainable="relative", input_view=iv)])[0]
+    assert i["reading"] == "unreadable" and i["next_step_needs"] == "no new data" and "view_b" in i["forecast"]
+    more = {"view_b": {**UNR, "reads_more_than_the_input": A(0.9, 0.8, 1.0, "loss")}}                 # not supported, and a step more than the model's input on paired resamples
+    i = outer.open_items([target(reference={"units": REJ, "own": REJ}, model=lost, attainable="relative", input_view={**iv, "other_inputs": more})])[0]
+    assert "view_b" in i["forecast"]
+
+
+def test_before_the_model_is_open_only_where_a_stage_is_rejected():
+    lost, unsure = {"own": REJ, "added": NONE, "events": {}}, {"own": UNR, "added": NONE, "events": {}}
+    assert outer.target_status(target(reference={"units": REJ}, control_adds_a_loss=False, model=lost, attainable="relative")) == "open before the model"
+    assert outer.target_status(target(reference={"units": UNR}, control_adds_a_loss=False, model=unsure, attainable="relative")) == "undecided before the model"
+    by_event = {"own": REJ, "added": NONE, "events": {"X": {**REJ, "added": NONE, "before": {"reference": {"units": REJ}}}, "Y": {**UNR, "added": NONE, "reference": UNR}}}
+    assert outer.target_status(target(reference=None, control_adds_a_loss=False, model=by_event, attainable="relative")) == "open before the model"
+    assert "undecided before the model" in outer.STATUSES and len(outer.STATUSES) == 8
+
+
+def test_an_output_inside_the_margin_has_lost_nothing_on_the_way():
+    """A reader of a stage that fails where the system's own output reads the response says something about that reader."""
+    iv = {"own": REJ, "gap_to_later": NONE, "classes": ["ridge", "hgb"], "nonlinear": True, "positive_control": True}
+    assert readings(target(reference={"units": REJ, "own": REJ}, input_view=iv)) == []
+    before = {"reference": {"units": UNR}, "input_view": iv}
+    assert readings(target(model={"own": SUP, "added": NONE, "events": {"X": {**SUP, "added": NONE, "before": before}}})) == []
+
+
+def test_an_event_that_differs_at_the_reference_stage_is_flagged_inside_its_pool_only():
+    ev = lambda **kw: {"X": {**REJ, "added": NONE, "reference": REJ, **kw}, "Y": {**REJ, "added": LOSS, "reference": SUP, **kw}, "Z": {**REJ, "added": LOSS, "reference": SUP, **kw}}
+    t = target(reference={"units": UNR, "own": UNR}, model={"own": V(0.9, 0.8, 1.0, "reject"), "added": A(0.5, 0.02, 0.9, "unresolved"), "events": ev()}, attainable="relative")
+    got = [(i["event"], i["reading"]) for i in outer.open_items([t])]
+    assert ("X", "pooled, and differs") in got and not [g for g in got if g[0] in "YZ"]
+    waiting = [i for i in outer.open_items([t]) if i["reading"] == "unresolved"]
+    assert waiting and all(i["after"] for i in waiting)                          # the pool waits for the split
+    t["model"]["events"] = ev(in_pool=False)                                     # read on their own: the schema keeps them apart already
+    assert "pooled, and differs" not in readings(t)
+
+
 def test_a_target_lost_wholly_before_the_model():
     before = {"reference": {"units": REJ}, "input_view": {"own": REJ, "gap_to_later": A(-0.07, -0.10, -0.04, "no added loss"), "classes": ["ridge", "hgb"], "nonlinear": True, "positive_control": False}}
     ev = {"X": {**REJ, "added": NONE, "before": before}, "Y": {**REJ, "added": NONE, "before": {**before, "input_view": {**before["input_view"], "gap_to_later": A(0.0, -0.05, 0.03, "no added loss")}}}}
