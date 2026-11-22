@@ -201,7 +201,8 @@ def main():
         targets.append({"readout": readout, "group": g, "type": TYPE[g], "events_n": 5, "admitted": False, "response": {"snr": snr}, "note": why,
                         "evidence": "runs/teg_loop_20261120 round_replication.json", "pool": {"more_units_of_the_type": None, "admissible_now": [] if g == "mel_ifn" else None}})
     final = census["roles"]["final"]
-    world = {"typed_right": None, "selection_on_audited_cells": None, "final_units": len(final), "undeclared_cases": []}
+    world = {"typed_right": None, "selection_on_audited_cells": None, "final_units": len(final), "undeclared_cases": [],
+             "words": {"self event": "the knockout of the readout's own gene", "upstream": "a change of the encoder"}}
     items = outer.open_items(targets, world)
     for i in items:                                          # an estimate that the pool cannot decide is reported as it is (a terminal state; read on development cells)
         if i["next_step_needs"] == "at the margin":

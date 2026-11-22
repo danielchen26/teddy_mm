@@ -1,0 +1,110 @@
+{
+ "note": "the numbers of runs/outer_step_20261122, computed again by anm_diag.cycle on the same cells, halves, seeds and grids",
+ "comparisons": [
+  {
+   "what": "bridge: PDL1 mel_ifn",
+   "values_compared": 304,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "bridge: PDL1 mel_co",
+   "values_compared": 304,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "bridge: PDL1 thp1",
+   "values_compared": 304,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "bridge: PDL1 thp1 type A",
+   "values_compared": 263,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "bridge: PDL1 thp1 type B",
+   "values_compared": 86,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "bridge: MHC1 mel_co",
+   "values_compared": 198,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "round2: B2M",
+   "values_compared": 110,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "round2: TAPBP",
+   "values_compared": 110,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "readers: MHC1 mel_ifn",
+   "values_compared": 213,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "readers: PDL1 mel_co",
+   "values_compared": 420,
+   "largest_difference": 0.0,
+   "unequal": 0
+  },
+  {
+   "what": "readers: MHC1 mel_co",
+   "values_compared": 420,
+   "largest_difference": 0.0,
+   "unequal": 0
+  }
+ ],
+ "values_compared": 2732,
+ "largest_difference": 0.0,
+ "unequal": [],
+ "reader_rule": {
+  "note": "where the tool's rule for choosing the reader of a view (union) gives another reader or verdict than the step's (smallest |u|)",
+  "differences": {
+   "MHC1 mel_ifn": [],
+   "PDL1 mel_co": [],
+   "MHC1 mel_co": []
+  }
+ },
+ "statuses": {
+  "general": {
+   "PDL1 mel_ifn": "the model's part closed (relative)",
+   "PDL1 mel_co": "not graded",
+   "PDL1 thp1": "the model's part closed (relative)",
+   "MHC1 mel_co": "the model's part closed (relative)",
+   "MHC1 mel_ifn": "open before the model",
+   "HLAE mel_ifn": "not a target",
+   "HLAE mel_co": "not a target"
+  },
+  "recorded": {
+   "PDL1 mel_ifn": "the model's part closed (relative)",
+   "PDL1 mel_co": "not graded",
+   "PDL1 thp1": "the model's part closed (relative)",
+   "MHC1 mel_co": "the model's part closed (relative)",
+   "MHC1 mel_ifn": "open before the model",
+   "HLAE mel_ifn": "not a target",
+   "HLAE mel_co": "not a target"
+  },
+  "equal": true
+ },
+ "items": {
+  "general": 17,
+  "recorded": 17,
+  "equal": true,
+  "only_general": [],
+  "only_recorded": []
+ }
+}

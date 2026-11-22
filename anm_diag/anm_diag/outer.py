@@ -33,7 +33,7 @@ ROUTES = {
                             ["split along a field from the record, with rival fields, tested on new units"], "repair across the pool"),
     "pooled, may be the same": ("S", "a distinction the schema keeps looks invisible to the readout", ["merge after bounded support on new units, twice"], "merge on development readings"),
     "mistyped": ("S", "cells get a type from a reader of their state, and some get the wrong one", ["take the type from the record"], "tune the reader"),
-    "self event": ("C", "the event acts on the readout's own gene: an RNA-only system may have nothing to read (rule S3)",
+    "self event": ("C", "the event acts on the readout itself: a system that is not told the assignment may have nothing to read (rule S3)",
                    ["a stated limit for this type", "or the assignment as an input, which is another system: the owner's decision"], "use it as a row"),
     "rule": ("P", "a gate or a test could not be evaluated as written", ["amend the protocol before the next iteration"], "re-grade the finished run"),
     "selection": ("P", "an event was selected by a measurement on the cells that were then audited", ["a selection split"], "keep selecting on audited cells"),
@@ -46,13 +46,16 @@ ROUTES = {
 # the readings the inner loop keeps for itself (LOOP_PROTOCOL.md, version 2); they are statuses of a target, not open items of the outer step
 INNER = ("function", "coverage", "unit")
 
-STATUSES = ("closed (absolute)", "the model's part closed (relative)", "open in the model", "undecided in the model", "open before the model", "not graded", "not a target")
+# the two places where an item is worded for a system; a run passes its own words in `world["words"]`
+WORDS = {"self event": "the event acts on the readout itself", "upstream": "a change of what comes before the stage the model reads"}
+STATUSES = ("closed (absolute)", "the model's part closed (relative)", "open in the model", "undecided in the model", "open before the model", "undecided before the model", "not graded",
+            "not a target")
 STATES = ("open", "decided on development units", "closed", "limit", "at the margin", "not asked", "on the experiment list")
 TERMINAL = STATES[2:]
 NEEDS = {"invalid": "no new data", "rule": "no new data", "selection": "no new data", "mistyped": "no new data", "unreadable": "no new data first; then the owner's decision",
          "self event": "the owner's decision", "guard conflict": "the owner's decision", "small response": "units of the pool, or the owner's decision", "no final data": "units of the pool",
          "confounded": "units of the pool", "pooled, and differs": "units of the pool", "pooled, may be the same": "units of the pool", "no rows": "units of the pool",
-         "upstream": "a change of the encoder"}
+         "upstream": WORDS["upstream"]}
 DEFAULTS = {"margin": 0.10, "step_margin": 0.10, "min_snr": 3.0, "min_units": 10, "margin_factor": 4, "typed_right": 0.99, "reader_classes": 2}
 
 
@@ -93,7 +96,10 @@ def target_status(t):
     if not t.get("admitted", True):
         return "not a target"
     if t.get("control_adds_a_loss") is False:                   # the response is followed, and neither the model nor its control adds a loss beyond the reference stage
-        return "open before the model"
+        ev = (t.get("model") or {}).get("events") or {}
+        at = [((t.get("reference") or {}).get("units") or {}).get("verdict")]
+        at += [(((x.get("before") or {}).get("reference") or {}).get("units") or x.get("reference") or {}).get("verdict") for x in ev.values()]
+        return "open before the model" if "reject" in at else "undecided before the model"       # a loss before the model is said only where a stage before it is rejected
     g = t.get("gates", {})
     if g.get("evaluable") is False:
         return "not graded"
@@ -146,11 +152,18 @@ def _before(items, t, ref, iv, bad, n, d, event="pool"):
             gap = iv.get("gap_to_later")
             if o["verdict"] == "reject":
                 weak = len(iv.get("classes", [])) < d["reader_classes"] or not iv.get("nonlinear")
-                _item(items, t, "unreadable", "a loss at the input view, with the event's own cells", o["u"], o["ci"], n, event=event, evidence=iv.get("evidence"),
-                      note="rests on one reader class or on linear readers only: a richer reader comes before any conclusion about the input" if weak else iv.get("note"))
-            elif o["verdict"] == "support" or (gap and gap["ci"][0] > d["step_margin"]):
-                _item(items, t, "upstream", "the input view reads it and the reference stage does not", gap["added"] if gap else None, gap["ci"] if gap else None, n, event=event, evidence=iv.get("evidence"))
-            else:
+                it = _item(items, t, "unreadable", "a loss at the input view, with the event's own cells", o["u"], o["ci"], n, event=event, evidence=iv.get("evidence"),
+                           note="rests on one reader class or on linear readers only: a richer reader comes before any conclusion about the input" if weak else iv.get("note"))
+                more = lambda x: (x.get("reads_more_than_the_input") or {}).get("ci", [0])[0] > d["step_margin"]      # on paired resamples, at least a step more than the model's input
+                reads = sorted(k for k, x in (iv.get("other_inputs") or {}).items() if x["verdict"] == "support" or more(x))
+                if reads and not weak:                          # the second step of the ladder is at hand: an input already measured that the model does not receive
+                    it["next_step_needs"] = "no new data"
+                    it["forecast"] = "another input already measured reads it: " + ", ".join(reads)
+            if o["verdict"] == "support" or (gap and gap["ci"][0] > d["step_margin"]):       # a loss can sit in two places: at the input, and between the input and this stage
+                where = "; and ".join(f"between {a} and {b}" for a, b in iv.get("lost_between") or [])      # where the run read stages inside the model
+                _item(items, t, "upstream", "the input view reads it and the reference stage does not", gap["added"] if gap else None, gap["ci"] if gap else None, n, event=event, evidence=iv.get("evidence"),
+                      note=("a step is lost " + where) if where else None)
+            elif o["verdict"] == "unresolved":
                 _item(items, t, "unresolved", "is the loss before the model already at the input view", o["u"], o["ci"], n, event=event, evidence=iv.get("evidence"),
                       needs=needed_units(o["u"], o["ci"], n, d["margin"]) if n else None)
 
@@ -169,16 +182,20 @@ def open_items(targets, world=None, d=DEFAULTS):
       gates {"evaluable": bool, "why": [..], "guard_kept": bool, "guard_holds_under_some_change": bool},
       arms {"other": {added, ci, reading, "pair": str}, "rows_other": {...}},
       self_events [{site, u, ci}], confounded [(field, field)]
-    world: {"typed_right": float, "typed_group": str, "selection_on_audited_cells": str or None, "final_units": int, "undeclared_cases": [str]}
+    world: {"typed_right": float, "typed_group": str, "selection_on_audited_cells": str or None, "final_units": int, "undeclared_cases": [str],
+            "words": {"self event": str, "upstream": str}  (how two items are worded for this system; default WORDS)}
     """
     items = []
+    words = {**WORDS, **((world or {}).get("words") or {})}
     for t in targets:
         n = t.get("events_n")
         iv = t.get("input_view")
         bad = reading_checks(iv, d) if iv else []
-        _failed(items, t, iv, bad, n)
+        r0 = t.get("reference")
+        if not (r0 and r0["units"]["verdict"] == "support"):     # where the reference stage is supported nothing is lost before the model, and the input view is not consulted
+            _failed(items, t, iv, bad, n)
         for e in t.get("self_events", []):
-            _item(items, t, "self event", "the knockout of the readout's own gene", e.get("u"), e.get("ci"), None, event=e["site"], evidence=e.get("evidence"), note=e.get("note"))
+            _item(items, t, "self event", words["self event"], e.get("u"), e.get("ci"), None, event=e["site"], evidence=e.get("evidence"), note=e.get("note"))
         for pair in t.get("confounded", []):
             _item(items, t, "confounded", "two fields vary together: " + " and ".join(pair), key="confounded: " + " and ".join(sorted(pair)))
         if not t.get("admitted", True):
@@ -209,22 +226,30 @@ def open_items(targets, world=None, d=DEFAULTS):
             _item(items, t, "unresolved", "is the output of the model inside the margin", m["own"]["u"], m["own"]["ci"], n, evidence=m.get("evidence"),
                   note="the reference stage is supported: nothing is left before the model", needs=needed_units(m["own"]["u"], m["own"]["ci"], n, d["margin"]) if n else None)
         # what is left before the model: for the pool, and for an event that the run read on its own (its own reference and input view)
-        if ref:                                                 # a target read event by event has no reference of its pool
+        # an output inside the margin has lost nothing on the way: no stage before it is consulted for that pool or event
+        if ref and m["own"]["verdict"] != "support":            # a target read event by event has no reference of its pool
             _before(items, t, ref, iv, bad, n, d)
         for s, x in (m.get("events") or {}).items():
-            if x.get("before"):
+            if x.get("before") and x["verdict"] != "support":
                 b = x["before"]
                 bb = reading_checks(b["input_view"], d) if b.get("input_view") else []
                 _failed(items, t, b.get("input_view"), [c for c in bb if c != "positive control"], None, event=s)
                 if "positive control" in bb:                    # a check of the family: one item for the target, whichever event shows it
                     _failed(items, t, b["input_view"], ["positive control"], None, key=f"positive control: {t.get('readout')} {t.get('group')}")
                 _before(items, t, b["reference"], b.get("input_view"), bb, None, d, event=s)
-        # events that read differently from their pool
-        for s, x in (m.get("events") or {}).items():
-            if x["verdict"] == "reject" and x["ci"][0] > m["own"]["ci"][1]:
-                _item(items, t, "pooled, and differs", f"one event inside the pool: {s}", x["u"], x["ci"], None, event=s, evidence=m.get("evidence"),
-                      note=f"the pool reads {m['own']['u']:.2f} [{m['own']['ci'][0]:.2f}, {m['own']['ci'][1]:.2f}]; this event's interval lies above it"
-                           + ("; for this event the loss is already at the reference stage" if (x.get("added") or {}).get("reading") == "no added loss" else ""))
+        # events that read differently from their pool: at the model's output, or already at the reference stage
+        inpool = {s: x for s, x in (m.get("events") or {}).items() if x.get("in_pool", True)}      # an event read on its own is not pooled: the schema keeps it apart already
+        held = [k for k, y in inpool.items() if (y.get("reference") or {}).get("verdict") == "support"]
+        for s, x in inpool.items():
+            at_output = x["verdict"] == "reject" and x["ci"][0] > m["own"]["ci"][1]
+            at_reference = bool(held) and (x.get("reference") or {}).get("verdict") == "reject"
+            if at_output or at_reference:
+                note = [f"the pool reads {m['own']['u']:.2f} [{m['own']['ci'][0]:.2f}, {m['own']['ci'][1]:.2f}]; this event's interval lies above it"] if at_output else []
+                if at_reference:
+                    note.append(f"at the reference stage this event is rejected ({x['reference']['u']:.2f}) and {len(held)} of the pool are supported: the pool mixes a loss before the model with none")
+                elif (x.get("added") or {}).get("reading") == "no added loss":
+                    note.append("for this event the loss is already at the reference stage")
+                _item(items, t, "pooled, and differs", f"one event inside the pool: {s}", x["u"], x["ci"], None, event=s, evidence=m.get("evidence"), note="; ".join(note))
         # what carries across types
         arms = t.get("arms") or {}
         o, ro = arms.get("other"), arms.get("rows_other")
@@ -237,6 +262,9 @@ def open_items(targets, world=None, d=DEFAULTS):
             _item(items, t, "unresolved", "can the rows be merged across: " + ro["pair"], ro["added"], ro["ci"], n, evidence=ro.get("evidence"), key="rows across: " + ro["pair"],
                   needs=needed_units(ro["added"], ro["ci"], n, d["step_margin"]) if n else None)
     w = world or {}
+    for it in items:
+        if it["reading"] == "upstream":
+            it["next_step_needs"] = words["upstream"]
     wt = {"readout": "all", "group": w.get("typed_group")}
     if w.get("typed_right") is not None and w["typed_right"] < d["typed_right"]:
         _item(items, wt, "mistyped", "how a cell gets its type", w["typed_right"], evidence=w.get("typed_evidence"), note="the type is guessed from the state; the record has it")
