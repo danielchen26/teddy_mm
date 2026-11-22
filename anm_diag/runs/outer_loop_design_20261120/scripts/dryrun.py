@@ -59,7 +59,13 @@ def targets_of_round(R, screen=None):
                 if iv:
                     own = iv["own"] if "own" in iv else iv["from_RNA"]["own"]
                     z_own = grid["scopes"]["own"]["u"]
+                    # the positive control of Section 6: does any reader of any stage reach support for any event of the family, or for the pool?
+                    views = adm.get("input_view") or after.get(f"{g}_{r}") or {}
+                    seen = [v["verdict"] for k, v in grid["scopes"].items() if k != "frozen"] + [v for x in e["events"] for v in x["at_Z"].values()]
+                    seen += [q[k]["verdict"] for q in views.values() for q in ([q["from_RNA"]] if "from_RNA" in q else [q]) for k in ("units", "own")]
                     t["input_view"] = {"own": own, "gap_to_later": iv["added_from_RNA_to_Z_own_scope"], "classes": ["ridge"], "nonlinear": False, "evidence": ev + ".admission.input_view",
+                                       "positive_control": "support" in seen,
+                                       "positive_control_note": f"of {len(seen)} readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself",
                                        "note": f"the RNA view (512 components, ridge) leaves {own['u']:.2f} and Z, which is computed from the same RNA, leaves {z_own:.2f}"}
                 why = []
                 if not e["gate3"]["objective_reached"] and rows["beyond_units_at_Z"]["reading"] == "no added loss":

@@ -92,6 +92,14 @@ def test_a_dominated_view_gives_no_unreadable_or_upstream():
     assert readings(CASES["invalid"]) == ["invalid"]
 
 
+def test_without_a_positive_control_no_unreadable_reading_is_drawn():
+    t = dict(CASES["unreadable"], input_view=dict(CASES["unreadable"]["input_view"], positive_control=False))
+    items = outer.open_items([t])
+    assert [i["reading"] for i in items] == ["invalid"] and "positive control" in items[0]["question"]
+    assert items[0]["next_step_needs"].startswith("no new data first")
+    assert readings(dict(t, input_view=dict(t["input_view"], positive_control=True))) == ["unreadable"]
+
+
 def test_a_loss_before_the_model_without_an_input_view_cannot_be_placed():
     t = target(reference={"units": REJ, "own": REJ}, model={"own": REJ, "added": NONE, "events": {}}, attainable="relative")
     assert readings(t) == ["invalid"]
@@ -222,8 +230,9 @@ def test_the_round_of_20_november():
     targets, world = dryrun.targets_of_round(ROUND, screen)
     items = outer.open_items(targets, world)
     c = outer.counts(items)
-    assert len(targets) == 7 and len(items) == 20
-    assert c["by_lever"] == {"M": 0, "E": 8, "V": 2, "S": 5, "C": 1, "P": 4}
+    assert len(targets) == 7 and len(items) == 21
+    assert c["by_lever"] == {"M": 0, "E": 8, "V": 3, "S": 5, "C": 1, "P": 4}
+    assert c["by_reading"]["unreadable"] == 0 and c["by_reading"]["invalid"] == 3     # no positive control in co-culture: no reading of where the loss is
     assert [outer.target_status(t) for t in targets].count("the model's part closed (relative)") == 3
     assert rules(outer.outer_check(targets, items, roles={"final": []})) == []
     assert not outer.coverage(targets, items)["closed"]

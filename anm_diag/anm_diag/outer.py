@@ -72,8 +72,9 @@ def needed_units(u, ci, n, bound=DEFAULTS["margin"]):
 def reading_checks(view, d=DEFAULTS):
     """Section 6: the checks a reading of a view passes before anything is drawn from it. Returns the names of the checks that fail.
 
-    view: {"gap_to_later": {"ci": [lo, hi]} (the later stage minus this one, same scope), "positive_control": bool,
-           "conflict": bool, "classes": [names], "nonlinear": bool, "readout_control": bool}; a missing key is not checked."""
+    view: {"gap_to_later": {"ci": [lo, hi]} (the later stage minus this one, same scope), "positive_control": bool (some
+           reader reaches support for some unit of the family on this scale), "conflict": bool, "classes": [names],
+           "nonlinear": bool, "readout_control": bool}; a missing key is not checked, so an adapter supplies every key it can."""
     bad = []
     g = view.get("gap_to_later")
     if g and g["ci"][1] < 0:
@@ -141,8 +142,11 @@ def open_items(targets, world=None, d=DEFAULTS):
         iv = t.get("input_view")
         bad = reading_checks(iv, d) if iv else []
         for b in bad:
-            g = iv.get("gap_to_later", {})
-            _item(items, t, "invalid", f"the reading of the input view fails the check: {b}", g.get("added"), g.get("ci"), n, evidence=iv.get("evidence"), note=iv.get("note"))
+            g = iv.get("gap_to_later", {}) if b == "dominated view" else {}
+            it = _item(items, t, "invalid", f"the reading of the input view fails the check: {b}", g.get("added"), g.get("ci"), n, evidence=iv.get("evidence"),
+                       note=iv.get("note") if b == "dominated view" else iv.get(b.replace(" ", "_") + "_note"))
+            if b == "positive control":                         # a richer reader may reach support; if none does, the tolerance for this target is the owner's to declare
+                it["next_step_needs"] = "no new data first; then the owner's decision"
         for e in t.get("self_events", []):
             _item(items, t, "self event", "the knockout of the readout's own gene", e.get("u"), e.get("ci"), None, event=e["site"], evidence=e.get("evidence"), note=e.get("note"))
         for pair in t.get("confounded", []):
@@ -181,7 +185,7 @@ def open_items(targets, world=None, d=DEFAULTS):
         elif r["verdict"] == "reject":
             if iv is None:
                 _item(items, t, "invalid", "a loss before the model, and the input view was not read", r["u"], r["ci"], n, evidence=ref.get("evidence"))
-            elif "dominated view" not in bad:
+            elif not bad:                                       # a view that fails a check of Section 6 gives no reading of where the loss is
                 o = iv["own"]
                 gap = iv.get("gap_to_later")
                 if o["verdict"] == "reject":

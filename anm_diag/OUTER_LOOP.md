@@ -171,7 +171,7 @@ to repair the reading.
 | check | fails when | repair |
 |---|---|---|
 | dominated view (P2) | the gap from an earlier stage to a later one is resolved below zero: the later stage reads better | a richer reader of the earlier stage; until then the earlier stage is bounded by the later one and no `upstream` or `unreadable` reading is drawn from it |
-| positive control | no reader reaches support for any unit of the family on this scale | the tolerance is declared for this target (protocol v2, "a margin is declared per target"); no `unreadable` reading before that |
+| positive control | no reader of any stage reaches support for any unit of the family, or for their pool, on this scale | a richer reader first; if none reaches support, the tolerance is declared for this target (protocol v2, "a margin is declared per target"); no `unreadable` or `upstream` reading before that |
 | one reader specification | two runs give opposite verdicts for the same event, readout and stage, with different reader settings | one specification, sealed in the package; a bridge reading (Section 9) |
 | resampling | fewer units than the chosen number, or draws that are not paired | the interval is marked approximate; a statement about the family waits for more units |
 | reader classes | `unreadable` rests on one class | at least two classes, one of them not linear |
@@ -217,6 +217,11 @@ The pool is finite and real. Selecting from it is the active part of the loop.
    response of a unit that has not been read. For units that have been read it also lists, per readout, which events
    pass the screen. This can change the picture: the round of 20 November asked MHC-I of five pathway genes and found
    no event to follow, while the same library holds two knockouts that change MHC-I strongly.
+   For this pool a census exists ([`runs/loop_reading_20261112`](runs/loop_reading_20261112/), `data_census.json`),
+   and it went further than this rule allows: it read the protein response of every target of both screens on all its
+   cells. The system was not read on them. For this pool, then, a unit counts as unread when no state of the system
+   was computed for its cells, and every admission from now on is made on a selection split (point 3), so that the
+   earlier screen decides nothing.
 1. **Final units first.** A share of the units of the claim is drawn at random and named under `roles.final`. The
    draw is stratified by every field of the record, not only by the types the schema has today, so that a later split
    still has final units on both sides. A run that touches them is refused unless it is the final audit (protocol v2).
@@ -439,6 +444,7 @@ a program.
 | selection split | one third of a unit's cells, and of the control cells |
 | refuted hypotheses in a row before an item stops | two |
 | cells given their own type, below which typing is an open item | 0.99 |
+| final units | one third of the units of each stratum of the record that the system has not been read on |
 
 None of these is derived. Each is reported with every use, as in the protocol.
 
@@ -451,7 +457,8 @@ None of these is derived. Each is reported with every use, as in the protocol.
 - Its hypotheses are written by `outer.hypothesis`, beside `loop.hypothesis_event`; the two ledgers are not yet checked
   as one.
 - It has one observer per package. A range of observers is several claims, and their joint treatment is not designed.
-- Four of its fifteen readings (`upstream`, `no rows`, `confounded`, `guard conflict`) did not occur in the round it was
-  dry-run on. The last two are taken from earlier runs (22 and 16). All fifteen are produced by planted cases in
+- Five of its fifteen readings (`unreadable`, `upstream`, `no rows`, `confounded`, `guard conflict`) did not occur in
+  the round it was dry-run on. The last two are taken from earlier runs (22 and 16). All fifteen are produced by planted cases in
   `tests/test_outer.py`, each by its own case only; that shows the rules are consistent, not that they are right.
-- Whether it converges in a useful number of iterations on this pool is not known. One outer step has been run.
+- Whether it converges in a useful number of iterations on this pool is not known. The first outer step is declared
+  in [`runs/outer_step_20261122/DESIGN.md`](runs/outer_step_20261122/DESIGN.md); its results are in that folder.

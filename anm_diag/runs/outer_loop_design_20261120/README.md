@@ -13,7 +13,7 @@ Status: the checks of [`OUTER_LOOP.md`](../../OUTER_LOOP.md), which was proposed
    ([`anm_diag/outer.py`](../../anm_diag/outer.py)) and every reading was produced from a planted case
    ([`tests/test_outer.py`](../../tests/test_outer.py)); the text was read once more.
 
-The first two checks changed the design in eleven places. The third changed it in five more, and it withdrew one
+The first two checks changed the design in eleven places. The third changed it in seven more, and it withdrew one
 statement of the dry run. All are listed below, with a correction of the round of 20 November.
 
 ## 1. The dry run
@@ -34,50 +34,56 @@ below are the dry run as it stands after the third check.
 | HLA-E | melanoma, IFN-γ | replication | not a target | | |
 | HLA-E | melanoma, co-culture | replication | not a target | | |
 
-**Open items: 20.** Observations that bear on one question are one item.
+**Open items: 21.** Observations that bear on one question are one item.
 
 | id | readout | group | reading | lever | question | value | units now → needed | the next step needs |
 |---|---|---|---|---|---|---|---|---|
 | O01 | PD-L1 | melanoma, IFN-γ | self event | C | the knockout of CD274 itself | 0.91 [0.87, 0.95] at Z | | the owner's decision |
-| O02 | PD-L1 | melanoma, IFN-γ | unresolved | E | is the repaired output inside the margin | 0.04 [−0.02, 0.11] | 5 → 6 | no new data first: the bridge reading with the type from the record (O17) changes the cells this is read on. After that one more event would be needed, and the library has none that passes admission |
+| O02 | PD-L1 | melanoma, IFN-γ | unresolved | E | is the repaired output inside the margin | 0.04 [−0.02, 0.11] | 5 → 6 | no new data first: the bridge reading with the type from the record (O18) changes the cells this is read on. After that one more event would be needed, and the library has none that passes admission |
 | O03 | PD-L1 | melanoma, both conditions | pooled, and differs | S | does the whole repair carry across the two conditions | adds 0.24 and 0.23 beyond Z | | the schema already keeps them apart; new units to confirm |
 | O04 | PD-L1 | melanoma, both conditions | pooled, may be the same | S | can the rows of the two conditions be merged | adds −0.01 and 0.05 | | units of the pool, twice |
-| O05 | PD-L1 | melanoma, co-culture | invalid | V | the RNA view reads worse than Z | −0.09 [−0.13, −0.04] | | no new data: a richer reader of RNA |
-| O06 | PD-L1 | melanoma, co-culture | unresolved | E | is anything lost before the head | Z: 0.12 [0.01, 0.19] | 5 → 213 | at the margin |
-| O07 | PD-L1 | THP-1 | unresolved | E | is anything lost before the head | Z: 0.13 [0.02, 0.31] | 5 → 67 | at the margin; the split of O08 comes first |
-| O08 | PD-L1 | THP-1 | pooled, and differs | S | IRF1 reads differently from its pool | 0.54 [0.43, 0.65]; pool 0.16 | | units of the pool: events of IRF1's kind |
-| O09 | PD-L1 | THP-1 and melanoma | pooled, and differs | S | does the whole repair carry across the two cell types | adds 0.62 | | the schema already keeps them apart; new units to confirm |
-| O10 | PD-L1 | THP-1 and melanoma | unresolved | E | can the rows of the two cell types be merged | adds 0.14 [0.09, 0.18] | 5 → 9 | units of the pool, after a census; the split of O08 comes first |
-| O11 | MHC-I | melanoma, IFN-γ | small response | E | no event of the round passes on its own (pooled 3.1) | | | units at hand: B2M and TAPBP pass the screen, three more are near the threshold |
-| O12 | MHC-I | melanoma, co-culture | rule | P | gate 3 is absolute | 0.28 on its own cells | | no new data: an amendment |
-| O13 | MHC-I | melanoma, co-culture | rule | P | the hypothesis had no control arm | | | no new data: an amendment |
-| O14 | MHC-I | melanoma, co-culture | unreadable | V | a third is read by no linear reader of RNA or of Z | 0.31 [0.27, 0.36] | | no new data first (a richer reader); then the owner's decision |
-| O15 | HLA-E | melanoma, IFN-γ | small response | E | pooled 2.2, wanted 3 | | 5 → 10 | the owner's decision: the library has no event that moves HLA-E (largest 1.9) |
-| O16 | HLA-E | melanoma, co-culture | small response | E | no event passes on its own (pooled 3.1) | | | units of the pool, or the owner's decision |
-| O17 | all | melanoma, IFN-γ | mistyped | S | how a cell gets its type | 96% of knockout cells typed right | | no new data: the type from the record |
-| O18 | all | | selection | P | events were screened on the cells that were audited | | | no new data: an amendment |
-| O19 | all | | rule | P | a group ready as a pool with no admitted event | | | no new data: an amendment |
-| O20 | all | | no final data | E | no unit of the knockout claim is unread | 0 | | units of the pool: a census, final units first |
+| O05 | PD-L1 | melanoma, co-culture | invalid | V | the RNA view reads worse than Z (dominated view) | −0.09 [−0.13, −0.04] | | no new data: a richer reader of RNA |
+| O06 | PD-L1 | melanoma, co-culture | invalid | V | no reader of any stage reaches support for any event (positive control) | | | no new data first (a richer reader may reach support); then the owner's decision: a tolerance for this target |
+| O07 | PD-L1 | melanoma, co-culture | unresolved | E | is anything lost before the head | Z: 0.12 [0.01, 0.19] | 5 → 213 | at the margin |
+| O08 | PD-L1 | THP-1 | unresolved | E | is anything lost before the head | Z: 0.13 [0.02, 0.31] | 5 → 67 | at the margin; the split of O09 comes first |
+| O09 | PD-L1 | THP-1 | pooled, and differs | S | IRF1 reads differently from its pool | 0.54 [0.43, 0.65]; pool 0.16 | | units of the pool: events of IRF1's kind |
+| O10 | PD-L1 | THP-1 and melanoma | pooled, and differs | S | does the whole repair carry across the two cell types | adds 0.62 | | the schema already keeps them apart; new units to confirm |
+| O11 | PD-L1 | THP-1 and melanoma | unresolved | E | can the rows of the two cell types be merged | adds 0.14 [0.09, 0.18] | 5 → 9 | units of the pool, after a census; the split of O09 comes first |
+| O12 | MHC-I | melanoma, IFN-γ | small response | E | no event of the round passes on its own (pooled 3.1) | | | units at hand: B2M and TAPBP pass the screen, three more are near the threshold |
+| O13 | MHC-I | melanoma, co-culture | invalid | V | no reader of any stage reaches support for any event (positive control) | every event 0.24 to 0.35, rejected, at Z and at the RNA view | | no new data first (a richer reader); then the owner's decision: a tolerance for this target |
+| O14 | MHC-I | melanoma, co-culture | rule | P | gate 3 is absolute | 0.28 on its own cells | | no new data: an amendment |
+| O15 | MHC-I | melanoma, co-culture | rule | P | the hypothesis had no control arm | | | no new data: an amendment |
+| O16 | HLA-E | melanoma, IFN-γ | small response | E | pooled 2.2, wanted 3 | | 5 → 10 | the owner's decision: the library has no event that moves HLA-E (largest 1.9) |
+| O17 | HLA-E | melanoma, co-culture | small response | E | no event passes on its own (pooled 3.1) | | | units of the pool, or the owner's decision |
+| O18 | all | melanoma, IFN-γ | mistyped | S | how a cell gets its type | 96% of knockout cells typed right | | no new data: the type from the record |
+| O19 | all | | selection | P | events were screened on the cells that were audited | | | no new data: an amendment |
+| O20 | all | | rule | P | a group ready as a pool with no admitted event | | | no new data: an amendment |
+| O21 | all | | no final data | E | no unit of the knockout claim is unread | 0 | | units of the pool: a census, final units first |
 
 **Counts**
 
 | by lever | | by what the next step needs | |
 |---|---|---|---|
-| the model (M) | 0 | no new data | 8 |
+| the model (M) | 0 | no new data | 9 |
 | events (E) | 8 | units at hand | 1 |
-| views (V) | 2 | units of the pool | 7 |
+| views (V) | 3 | units of the pool | 7 |
 | schema (S) | 5 | at the margin | 2 |
 | claim (C) | 1 | the owner's decision alone | 2 |
 | protocol (P) | 4 | | |
 
 **What the dry run shows**
 
-- Every target got one status and every item one reading with a lever. Four of the fifteen readings did not occur
-  (`upstream`, `no rows`, `confounded`, `guard conflict`): those branches are exercised only by planted cases.
+- Every target got one status and every item one reading with a lever. Five of the fifteen readings did not occur
+  (`unreadable`, `upstream`, `no rows`, `confounded`, `guard conflict`): those branches are exercised only by planted
+  cases.
 - No item is sent to the model. That agrees with the round's own result: after the repair the head adds nothing, so
   another change to the head has nothing to remove.
-- Eight items need no new data: the amendments to the protocol, the type from the record, richer readers of RNA, and
-  the question whether PD-L1 in the IFN-γ condition is inside the margin, which waits for the bridge reading.
+- Nine items need no new data: the amendments to the protocol, the type from the record, richer readers of RNA and
+  of Z, and the question whether PD-L1 in the IFN-γ condition is inside the margin, which waits for the bridge
+  reading.
+- **In co-culture nothing can be said yet about what RNA carries.** For neither readout does any reader of any stage
+  reach support for any event (O06, O13). By Section 6 of the design a rejection on such a scale is not read as
+  `unreadable`: first a richer reader, then a tolerance declared for the target.
 - **For PD-L1 in co-culture and in THP-1 an absolute closure is not within reach at a tolerance of 0.10.** The
   embedding's own estimate sits at 0.12 and 0.13, next to the tolerance, and tens to hundreds of events would be
   needed to decide on which side. By the design these two end as "at the margin": the estimate and its interval are
@@ -86,10 +92,10 @@ below are the dry run as it stands after the third check.
   which 4% were given the wrong type. (The first version of this page said "not within reach" for all three. That was
   withdrawn in the third check.)
 - One target can be reached with states at hand: MHC-I in the IFN-γ condition, with events the round did not use.
-- What new units could decide: whether rows can be merged across conditions and across cell types (O04, O10), what
-  kind of event IRF1 is (O08), and whether the small response of HLA-E in co-culture can be followed (O16). These need
+- What new units could decide: whether rows can be merged across conditions and across cell types (O04, O11), what
+  kind of event IRF1 is (O09), and whether the small response of HLA-E in co-culture can be followed (O17). These need
   the system's states for the rest of the two screens, which do not exist yet.
-- There are no final units for the knockout claim (O20). Under the design nothing certified can be said about it until
+- There are no final units for the knockout claim (O21). Under the design nothing certified can be said about it until
   some are set aside, before anything else is read.
 
 ## 2. The back-test
@@ -185,6 +191,26 @@ What this changed:
    status; an item decided on cells that had been read had no state. Both are added.
 5. *A loss before the model with no input view read* had no reading. It is `invalid`: the loss is not placed until the
    input view is read.
+6. *A census of this pool already existed, and the design and its dry run did not use it.*
+   [`runs/loop_reading_20261112`](../loop_reading_20261112/) (Section 6 there, `results/data_census.json`, written on
+   13 November) lists, for both screens and every condition, the knockouts that change a measured protein clearly. It
+   already names B2M and TAPBP for MHC-I in all three conditions of the melanoma screen, CMTM6 and BRD4 for PD-L1 in
+   THP-1, and NPC1 for PD-L1 in co-culture. Point 1 above was found again by a new screen when it was on file. Two
+   things follow. The census step of the design starts from that file. And the design's sentence "a census reads no
+   response of a unit that has not been read" cannot be kept for this pool: the census of 13 November read the protein
+   response of every target on all its cells. What has not been read for the units outside the audits is the system:
+   no state was computed for their cells and no *u*. So an event near the admission threshold was chosen by a
+   statistic of all its cells, and an audit on those cells would be biased towards a loss. Final units are final in
+   the sense that the system was never read on them, and a final audit admits its events on a selection split drawn
+   then (Section 8.1 of the design, changed accordingly).
+7. *One check of Section 6 was not applied by the dry run.* The positive control ("no reader reaches support for any
+   unit of the family on this scale") was in the design and in the code, but the dry run's adapter did not supply
+   it, and a check whose input is missing passes. Supplied, it fails for both readouts in co-culture: of the
+   readings of the five events and their pool, at Z and at the RNA view, none is supported (PD-L1: unresolved or
+   rejected, the nearest is JAK1 at −0.06 [−0.19, 0.05]; MHC-I: every one rejected, 0.24 to 0.35). So the item that
+   read `unreadable` for MHC-I in co-culture is `invalid` (O13), and PD-L1 in co-culture has a second invalid reading
+   (O06). The code now draws no reading of where a loss is from a view that fails any check, and a planted case
+   tests it. This was found on 22 November while the first outer step was being prepared, after the three checks.
 
 What it did not change: the five levers, the checks of Section 6, the routing of the other readings, the tests of a
 split and of a merge, the final units.
@@ -210,7 +236,7 @@ A note with this correction is added to that README. Its numbers do not change.
 ## 7. What was not checked
 
 - Whether the loop reaches terminal states in a useful number of iterations on this pool is not known.
-- The dry run exercises eleven of fifteen readings, on one round, of one head. The planted cases show that the rules
+- The dry run exercises ten of fifteen readings, on one round, of one head. The planted cases show that the rules
   are consistent with each other, not that they are the right rules.
 - The same person wrote the design and the check. The back-test uses this project's own history, which the design was
   written with in mind.

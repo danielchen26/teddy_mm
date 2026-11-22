@@ -380,7 +380,7 @@
    "more_units_in_pool": 0,
    "next_step_needs": "no new data",
    "after": [
-    "O17"
+    "O18"
    ],
    "standing": null,
    "actions": [
@@ -584,6 +584,47 @@
     "stratum": "co-culture"
    },
    "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round_development.json:PDL1.groups.mel_co.admission.input_view",
+   "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round_development.json:PDL1.groups.mel_co.admission.input_view",
+     "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself"
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O07",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
    "reading": "unresolved",
    "lever": "E",
    "question": "is anything lost before the model",
@@ -625,7 +666,7 @@
    "forecast": "at the margin: more than 4 times the units would be needed"
   },
   {
-   "id": "O07",
+   "id": "O08",
    "key": null,
    "readout": "PDL1",
    "group": "thp1",
@@ -647,7 +688,7 @@
    "more_units_in_pool": null,
    "next_step_needs": "at the margin",
    "after": [
-    "O08"
+    "O09"
    ],
    "standing": null,
    "actions": [
@@ -677,7 +718,7 @@
    "forecast": "at the margin: more than 4 times the units would be needed"
   },
   {
-   "id": "O08",
+   "id": "O09",
    "key": null,
    "readout": "PDL1",
    "group": "thp1",
@@ -724,7 +765,7 @@
    "approximate": false
   },
   {
-   "id": "O09",
+   "id": "O10",
    "key": "repair across: THP-1 stimulated and melanoma IFN-gamma",
    "readout": "PDL1",
    "group": "thp1",
@@ -771,7 +812,7 @@
    "approximate": true
   },
   {
-   "id": "O10",
+   "id": "O11",
    "key": "rows across: THP-1 stimulated and melanoma IFN-gamma",
    "readout": "PDL1",
    "group": "thp1",
@@ -793,7 +834,7 @@
    "more_units_in_pool": null,
    "next_step_needs": "units of the pool",
    "after": [
-    "O08"
+    "O09"
    ],
    "standing": null,
    "actions": [
@@ -823,7 +864,7 @@
    "forecast": "within reach if the pool holds units of the type: a census first"
   },
   {
-   "id": "O11",
+   "id": "O12",
    "key": null,
    "readout": "MHC1",
    "group": "mel_ifn",
@@ -866,7 +907,48 @@
    "approximate": true
   },
   {
-   "id": "O12",
+   "id": "O13",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": 5,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round_replication.json:MHC1.groups.mel_co.admission.input_view",
+   "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round_replication.json:MHC1.groups.mel_co.admission.input_view",
+     "note": "of 26 readings of the events and the pool at Z and at the RNA view, none is supported: on this scale a rejection cannot be told from the scale itself"
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O14",
    "key": null,
    "readout": "MHC1",
    "group": "mel_co",
@@ -907,7 +989,7 @@
    "approximate": false
   },
   {
-   "id": "O13",
+   "id": "O15",
    "key": null,
    "readout": "MHC1",
    "group": "mel_co",
@@ -948,57 +1030,7 @@
    "approximate": false
   },
   {
-   "id": "O14",
-   "key": null,
-   "readout": "MHC1",
-   "group": "mel_co",
-   "type": {
-    "cell_type": "melanoma",
-    "stratum": "co-culture"
-   },
-   "event": "pool",
-   "reading": "unreadable",
-   "lever": "V",
-   "question": "a loss at the input view, with the event's own cells",
-   "value": 0.3140206110798024,
-   "ci": [
-    0.2696270639671825,
-    0.3580969920925554
-   ],
-   "resampling_units": 5,
-   "units_needed": null,
-   "more_units_in_pool": null,
-   "next_step_needs": "no new data first; then the owner's decision",
-   "after": [],
-   "standing": null,
-   "actions": [
-    "a richer reader of the same input",
-    "another input already measured on the same cells, never the readout itself",
-    "a new measurement",
-    "a stated limit of the claim"
-   ],
-   "not": "train",
-   "evidence": "round_replication.json:MHC1.groups.mel_co.admission.input_view",
-   "note": "rests on one reader class or on linear readers only: a richer reader comes before any conclusion about the input",
-   "state": "open",
-   "observations": [
-    {
-     "readout": "MHC1",
-     "group": "mel_co",
-     "event": "pool",
-     "value": 0.3140206110798024,
-     "ci": [
-      0.2696270639671825,
-      0.3580969920925554
-     ],
-     "evidence": "round_replication.json:MHC1.groups.mel_co.admission.input_view",
-     "note": "rests on one reader class or on linear readers only: a richer reader comes before any conclusion about the input"
-    }
-   ],
-   "approximate": true
-  },
-  {
-   "id": "O15",
+   "id": "O16",
    "key": null,
    "readout": "HLAE",
    "group": "mel_ifn",
@@ -1041,7 +1073,7 @@
    "approximate": true
   },
   {
-   "id": "O16",
+   "id": "O17",
    "key": null,
    "readout": "HLAE",
    "group": "mel_co",
@@ -1083,7 +1115,7 @@
    "approximate": true
   },
   {
-   "id": "O17",
+   "id": "O18",
    "key": null,
    "readout": "all",
    "group": "mel_ifn",
@@ -1121,7 +1153,7 @@
    "approximate": false
   },
   {
-   "id": "O18",
+   "id": "O19",
    "key": null,
    "readout": "all",
    "group": null,
@@ -1159,7 +1191,7 @@
    "approximate": false
   },
   {
-   "id": "O19",
+   "id": "O20",
    "key": null,
    "readout": "all",
    "group": null,
@@ -1197,7 +1229,7 @@
    "approximate": false
   },
   {
-   "id": "O20",
+   "id": "O21",
    "key": null,
    "readout": "all",
    "group": null,
@@ -1238,16 +1270,16 @@
  "count_by_lever": {
   "M": 0,
   "E": 8,
-  "V": 2,
+  "V": 3,
   "S": 5,
   "C": 1,
   "P": 4
  },
  "count_by_reading": {
-  "invalid": 1,
+  "invalid": 3,
   "unresolved": 4,
   "small response": 3,
-  "unreadable": 1,
+  "unreadable": 0,
   "upstream": 0,
   "no rows": 0,
   "pooled, and differs": 3,
@@ -1263,7 +1295,7 @@
  "count_by_what_the_next_step_needs": {
   "at the margin": 2,
   "no new data": 7,
-  "no new data first; then the owner's decision": 1,
+  "no new data first; then the owner's decision": 2,
   "the owner's decision": 2,
   "units at hand": 1,
   "units of the pool": 6,
@@ -1279,7 +1311,7 @@
    "not a target": 3
   },
   "items": {
-   "open": 20,
+   "open": 21,
    "decided on development units": 0,
    "closed": 0,
    "limit": 0,
@@ -1298,8 +1330,9 @@
  ],
  "checks": {
   "targets": 7,
-  "items": 20,
+  "items": 21,
   "readings_never_met_in_this_round": [
+   "unreadable",
    "upstream",
    "no rows",
    "confounded",
@@ -1312,12 +1345,13 @@
    "O05",
    "O06",
    "O07",
-   "O09",
+   "O08",
    "O10",
    "O11",
-   "O14",
-   "O15",
-   "O16"
+   "O12",
+   "O13",
+   "O16",
+   "O17"
   ],
   "note": "an interval over fewer than 10 events is approximate (protocol v2); every pooled interval of this round rests on five"
  }
