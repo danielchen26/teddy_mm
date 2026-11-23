@@ -1,0 +1,286 @@
+{
+ "written": "2026-11-23, before the states were computed and before any protein value of these cells was read by this run",
+ "forecasts": [
+  {
+   "id": "A-BRD4",
+   "kind": "outcome",
+   "what": "BRD4 is admitted for PD-L1 (THP-1)",
+   "probabilities": {
+    "yes": 0.5,
+    "no": 0.5
+   },
+   "why": "on all cells the change was 5.2 half-widths; a third of the cells gives about 3"
+  },
+  {
+   "id": "A-CMTM6",
+   "kind": "outcome",
+   "what": "CMTM6 is admitted for PD-L1 (THP-1)",
+   "probabilities": {
+    "yes": 0.93,
+    "no": 0.07
+   }
+  },
+  {
+   "id": "A-TAPBP",
+   "kind": "outcome",
+   "what": "TAPBP is admitted for MHC-I (co-culture)",
+   "probabilities": {
+    "yes": 0.97,
+    "no": 0.03
+   }
+  },
+  {
+   "id": "A-CD44",
+   "kind": "outcome",
+   "what": "CD44 is admitted for MHC-I (co-culture)",
+   "probabilities": {
+    "yes": 0.1,
+    "no": 0.9
+   }
+  },
+  {
+   "id": "A-B2M",
+   "kind": "outcome",
+   "what": "B2M is admitted for MHC-I (control condition)",
+   "probabilities": {
+    "yes": 0.95,
+    "no": 0.05
+   }
+  },
+  {
+   "id": "A-CAL",
+   "kind": "outcome",
+   "what": "a calibration unit (POU2F2, CDH19, KLF4) is admitted for a readout of the claim",
+   "probabilities": {
+    "none": 0.85,
+    "one or more": 0.15
+   }
+  },
+  {
+   "id": "A-PDL1-MEL",
+   "kind": "outcome",
+   "what": "a unit of the batch is admitted for PD-L1 in co-culture or in the control condition",
+   "probabilities": {
+    "none": 0.9,
+    "one or more": 0.1
+   }
+  },
+  {
+   "id": "A-HLAE",
+   "kind": "outcome",
+   "what": "a unit of the batch is admitted for HLA-E",
+   "probabilities": {
+    "none": 0.93,
+    "one or more": 0.07
+   }
+  },
+  {
+   "id": "T-TAPBP",
+   "kind": "interval",
+   "what": "TAPBP, MHC-I, co-culture: u of the output as trained",
+   "interval": [
+    0.9,
+    1.05
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "T-B2M",
+   "kind": "interval",
+   "what": "B2M, MHC-I, control condition: u of the output as trained",
+   "interval": [
+    0.9,
+    1.05
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "T-CMTM6",
+   "kind": "interval",
+   "what": "CMTM6, PD-L1, THP-1: u of the output as trained",
+   "interval": [
+    0.8,
+    1.1
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "T-BRD4",
+   "kind": "interval",
+   "what": "BRD4, PD-L1, THP-1: u of the output as trained",
+   "interval": [
+    0.7,
+    1.2
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "Z-TAPBP",
+   "kind": "interval",
+   "what": "TAPBP: u at Z, own cells",
+   "interval": [
+    0.75,
+    1.05
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "Z-B2M",
+   "kind": "interval",
+   "what": "B2M: u at Z, own cells",
+   "interval": [
+    0.6,
+    1.0
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "Z-CMTM6",
+   "kind": "interval",
+   "what": "CMTM6: u at Z, own cells",
+   "interval": [
+    0.45,
+    1.0
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "Z-BRD4",
+   "kind": "interval",
+   "what": "BRD4: u at Z, own cells",
+   "interval": [
+    0.05,
+    0.6
+   ],
+   "given": "admitted"
+  },
+  {
+   "id": "A3-TAPBP",
+   "kind": "outcome",
+   "what": "TAPBP: A3 holds (the output as trained loses a step more than the reference)",
+   "probabilities": {
+    "yes": 0.12,
+    "no": 0.88
+   }
+  },
+  {
+   "id": "A3-B2M",
+   "kind": "outcome",
+   "what": "B2M: A3 holds",
+   "probabilities": {
+    "yes": 0.2,
+    "no": 0.8
+   }
+  },
+  {
+   "id": "A3-CMTM6",
+   "kind": "outcome",
+   "what": "CMTM6: A3 holds",
+   "probabilities": {
+    "yes": 0.3,
+    "no": 0.7
+   }
+  },
+  {
+   "id": "A3-BRD4",
+   "kind": "outcome",
+   "what": "BRD4: A3 holds",
+   "probabilities": {
+    "yes": 0.6,
+    "no": 0.4
+   }
+  },
+  {
+   "id": "R-BRD4",
+   "kind": "outcome",
+   "what": "BRD4: the model's part is closed by the event's own record (relative or absolute)",
+   "probabilities": {
+    "yes": 0.55,
+    "no": 0.45
+   },
+   "why": "given that it is admitted and A3 holds"
+  },
+  {
+   "id": "R-BRD4-u",
+   "kind": "interval",
+   "what": "BRD4: u of the arm `rows`",
+   "interval": [
+    0.05,
+    0.6
+   ],
+   "given": "admitted and A3 holds"
+  },
+  {
+   "id": "E-BRD4",
+   "kind": "outcome",
+   "what": "BRD4: the earlier repair (four pathway genes) adds no loss beyond the reference",
+   "probabilities": {
+    "yes": 0.2,
+    "no or unresolved": 0.8
+   },
+   "why": "given that it is admitted"
+  },
+  {
+   "id": "E-CMTM6",
+   "kind": "outcome",
+   "what": "CMTM6: the earlier repair adds no loss beyond the reference",
+   "probabilities": {
+    "yes": 0.45,
+    "no or unresolved": 0.55
+   },
+   "why": "where the reference itself reads little, nothing can be added"
+  },
+  {
+   "id": "S-MHC1-co",
+   "kind": "outcome",
+   "what": "MHC-I, co-culture, new events: status of the target",
+   "probabilities": {
+    "open before the model": 0.6,
+    "undecided before the model": 0.25,
+    "the model's part closed (relative)": 0.1,
+    "another": 0.05
+   }
+  },
+  {
+   "id": "S-MHC1-ctl",
+   "kind": "outcome",
+   "what": "MHC-I, control condition: status of the target",
+   "probabilities": {
+    "open before the model": 0.55,
+    "undecided before the model": 0.3,
+    "the model's part closed (relative)": 0.1,
+    "another": 0.05
+   }
+  },
+  {
+   "id": "S-PDL1-CMTM6",
+   "kind": "outcome",
+   "what": "PD-L1, THP-1, CMTM6 read on its own: what the reading says",
+   "probabilities": {
+    "open or undecided before the model": 0.6,
+    "the model's part closed": 0.25,
+    "not closed, not tested or another": 0.15
+   }
+  },
+  {
+   "id": "S-PDL1-BRD4",
+   "kind": "outcome",
+   "what": "PD-L1, THP-1, BRD4 read on its own: what the reading says",
+   "probabilities": {
+    "the model's part closed": 0.35,
+    "not admitted": 0.4,
+    "open or undecided before the model": 0.1,
+    "not closed, not tested or another": 0.15
+   }
+  },
+  {
+   "id": "C-STATES",
+   "kind": "interval",
+   "what": "largest difference between new and stored states on the cells that have states already",
+   "interval": [
+    0.0,
+    0.0001
+   ]
+  }
+ ]
+}

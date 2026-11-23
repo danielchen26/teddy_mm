@@ -153,7 +153,7 @@ an input that lacks the response. Both are in the run folder with a proposal.
 | 1 | events without control cells (donor, disease) in the round: design, planted donors, forecasts written first | CPU | |
 | 2 | a second system by swapping the encoder on the same cells: the loop is run unchanged, only the stage arrays differ | inference | the owner names the encoder |
 | 3 | a repair in front of the head at small scale: the head reads Z together with a view of the input. It tests whether a loss placed "upstream" (IRF1) closes without retraining | CPU | |
-| 4 | the states of batch 1 (6,759 cells) and the round on them | inference on the owner's machine | the owner |
+| done, 23 November | the states of batch 1 (6,759 cells) and the round on them: [`runs/batch1_round_20261123`](runs/batch1_round_20261123/). Three events admitted, none gives the model anything to repair; the repair itself is not tested by this batch | inference on the owner's machine | |
 | 5 | **retraining TEDDY with the TEG as a constraint in pre-training.** The rows of the TEG enter the training loss; the schema is sealed for an iteration; the retrained encoder is one more system for the same loop, judged by the same items | several GPUs, the pre-training data | the owner; after 1 to 3 |
 | 6 | the final audit on the 133 units set aside, once and with the hypotheses named | inference | the owner |
 

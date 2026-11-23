@@ -1,0 +1,3130 @@
+{
+ "margin": 0.1,
+ "step_margin": 0.1,
+ "note": "every event on its own, resampled by cell; its reference is a reader of Z with its own cells",
+ "targets": {
+  "PDL1 thp1": {
+   "readout": "PDL1",
+   "stratum": "thp1",
+   "type": {
+    "cell_type": "THP-1",
+    "stratum": "stimulated"
+   },
+   "events": {
+    "CMTM6": {
+     "events": [
+      "CMTM6"
+     ],
+     "resampled_by": "cell",
+     "resampling_units": null,
+     "approximate": false,
+     "reference": {
+      "u": 1.0459082126617432,
+      "ci": [
+       0.9268903195858001,
+       1.2186255395412444
+      ],
+      "verdict": "reject"
+     },
+     "as_trained": {
+      "u": 1.0037148036721377,
+      "ci": [
+       0.9700763283173618,
+       1.0375669481506367
+      ],
+      "verdict": "reject",
+      "slope": -0.2592880788159271,
+      "beyond_reference": {
+       "added": -0.04219340898960544,
+       "ci": [
+        -0.21050636581289958,
+        0.07783238490165492
+       ],
+       "reading": "no added loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 1.0531949296995053,
+       "ci": [
+        0.9355002757217155,
+        1.2149374794702736
+       ],
+       "verdict": "reject",
+       "slope": 1.510293134550272,
+       "valid": false,
+       "gain": -0.04948012602736762,
+       "gain_ci": [
+        -0.20794887947159912,
+        0.07026794335314085
+       ],
+       "beyond_reference": {
+        "added": 0.00728671703776218,
+        "ci": [
+         -0.04466948775143864,
+         0.05465201727818605
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "rows": {
+       "u": 1.0559452885307856,
+       "ci": [
+        0.9349571443040047,
+        1.2182694131766096
+       ],
+       "verdict": "reject",
+       "slope": 1.5037882980382025,
+       "valid": false,
+       "gain": -0.052230484858647896,
+       "gain_ci": [
+        -0.20818631659639952,
+        0.06924104811211886
+       ],
+       "beyond_reference": {
+        "added": 0.010037075869042456,
+        "ci": [
+         -0.044481828069965014,
+         0.056414982388066894
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "cells": {
+       "u": 1.0593065314654209,
+       "ci": [
+        0.9402868009180411,
+        1.2283914263453628
+       ],
+       "verdict": "reject",
+       "slope": 1.5520987387217728,
+       "valid": false,
+       "gain": -0.05559172779328314,
+       "gain_ci": [
+        -0.21347564581443948,
+        0.06335338985970627
+       ],
+       "beyond_reference": {
+        "added": 0.0133983188036777,
+        "ci": [
+         -0.033072994516808334,
+         0.05191226885933543
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "rows_other": {
+       "u": 1.045447397007818,
+       "ci": [
+        0.9303560829967551,
+        1.1988791724547978
+       ],
+       "verdict": "reject",
+       "slope": 1.4290055324737838,
+       "valid": false,
+       "gain": -0.041732593335680246,
+       "gain_ci": [
+        -0.1941681975356725,
+        0.07511561141872813
+       ],
+       "beyond_reference": {
+        "added": -0.0004608156539251951,
+        "ci": [
+         -0.06345799798535798,
+         0.050708337380830006
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "other": {
+       "u": 1.0195076971951351,
+       "ci": [
+        0.9827276577180283,
+        1.0574795817914353
+       ],
+       "verdict": "reject",
+       "slope": 0.798237275913421,
+       "valid": false,
+       "gain": -0.015792893522997398,
+       "gain_ci": [
+        -0.06299738356995571,
+        0.028023968824672767
+       ],
+       "beyond_reference": {
+        "added": -0.026400515466608043,
+        "ci": [
+         -0.19111271353887482,
+         0.08581227853441428
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "earlier": {
+       "u": 1.0621807212164405,
+       "ci": [
+        0.9421589579802875,
+        1.2265238035125439
+       ],
+       "verdict": "reject",
+       "slope": 1.413337577671343,
+       "valid": false,
+       "gain": -0.05846591754430275,
+       "gain_ci": [
+        -0.22138657134216344,
+        0.06201091379257795
+       ],
+       "beyond_reference": {
+        "added": 0.016272508554697307,
+        "ci": [
+         -0.03890933378964323,
+         0.06459482751411887
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "by_event": {},
+     "rows_minus_controls": {
+      "gain_difference": -0.002750358831280275,
+      "ci": [
+       -0.01293761064611178,
+       0.007758539727083935
+      ],
+      "reading": "no step"
+     },
+     "A3": {
+      "added": -0.04219340898960544,
+      "ci": [
+       -0.21050636581289958,
+       0.07783238490165492
+      ],
+      "reading": "no added loss",
+      "holds": false
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": 0.9298198573243464,
+       "ci": [
+        0.8089339768048439,
+        1.088940308511466
+       ],
+       "verdict": "reject"
+      },
+      "against_the_reference": {
+       "added": -0.11608835533739681,
+       "ci": [
+        -0.1740924757473872,
+        -0.0647402353951174
+       ],
+       "reading": "no added loss"
+      },
+      "passes": true,
+      "control_the_output_as_trained": {
+       "added": -0.04219340898960544,
+       "ci": [
+        -0.21050636581289958,
+        0.07783238490165492
+       ],
+       "reading": "no added loss",
+       "passes": true
+      }
+     },
+     "closure": {
+      "grade": "not a target for a repair",
+      "attainable": "relative",
+      "reached_what_was_attainable": false
+     },
+     "cells": {
+      "event": 557,
+      "control": 1614
+     },
+     "selection_third": {
+      "event": "CMTM6",
+      "cells": 260,
+      "change_in_control_sd": -0.5878104260103334,
+      "snr": 4.097228532214999,
+      "A1": true,
+      "A2_own": false
+     },
+     "grid": {
+      "system": {
+       "frozen": {
+        "u": 1.0037148036721377,
+        "ci": [
+         0.9700763283173618,
+         1.0375669481506367
+        ],
+        "verdict": "reject",
+        "class": "system"
+       }
+      },
+      "Z": {
+       "train": {
+        "u": 0.9746432062494007,
+        "ci": [
+         0.9358747443707923,
+         1.0158398773840958
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "other": {
+        "u": 1.017292932185354,
+        "ci": [
+         0.9795700583347464,
+         1.0600622499649466
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       },
+       "units": {
+        "u": 1.0396557297208335,
+        "ci": [
+         0.9313277331991319,
+         1.1833723509319916
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       },
+       "own": {
+        "u": 1.04590816785038,
+        "ci": [
+         0.9268902911919082,
+         1.218625544931454
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "RNA512": {
+       "units": {
+        "u": 1.0092778821114812,
+        "ci": [
+         0.8920654252911557,
+         1.1491242472542371
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.9884006897860022,
+        "ci": [
+         0.8808159012415764,
+         1.12744087487462
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "RNA4K": {
+       "units": {
+        "u": 1.0578613389598237,
+        "ci": [
+         0.9331723091920042,
+         1.2217611529318664
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.9945652540321788,
+        "ci": [
+         0.8794676848556497,
+         1.1381993595445625
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "PERM": {
+       "units": {
+        "u": 1.0923639251463422,
+        "ci": [
+         1.01702890763342,
+         1.179198846078513
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.9996184111141704,
+        "ci": [
+         0.9879094178007638,
+         1.010247708467968
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      }
+     },
+     "fits": [
+      {
+       "n_controls": 807,
+       "ridge_weight": 0.31622776601683794,
+       "cv_error": 0.17284219276307264,
+       "rows": [
+        {
+         "event": "CMTM6",
+         "n_cells": 278,
+         "measured_change": -0.5205973112404605,
+         "standard_error": 0.057195960987811205,
+         "share_of_the_residual_closed": 0.097192815036789
+        }
+       ],
+       "ridge_weight_cells": 0.31622776601683794
+      },
+      {
+       "n_controls": 807,
+       "ridge_weight": 0.31622776601683794,
+       "cv_error": 0.15962199327186277,
+       "rows": [
+        {
+         "event": "CMTM6",
+         "n_cells": 279,
+         "measured_change": -0.3034277667462906,
+         "standard_error": 0.056441132232252014,
+         "share_of_the_residual_closed": 0.10666905509531877
+        }
+       ],
+       "ridge_weight_cells": 0.31622776601683794
+      }
+     ]
+    }
+   },
+   "placed": {
+    "rule": "union",
+    "inputs": [
+     "RNA512",
+     "RNA4K"
+    ],
+    "between": [],
+    "linear": [
+     "ridge"
+    ],
+    "events": {
+     "CMTM6": {
+      "by_stage": {
+       "RNA512": {
+        "units": {
+         "ridge": {
+          "u": 1.0092778821114812,
+          "ci": [
+           0.8920654252911557,
+           1.1491242472542371
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0807459045875716,
+          "ci": [
+           0.9562595455526622,
+           1.2411528680715334
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9884006897860022,
+          "ci": [
+           0.8808159012415764,
+           1.12744087487462
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0163257858922659,
+          "ci": [
+           0.9024271236583282,
+           1.175756427169778
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "RNA4K": {
+        "units": {
+         "ridge": {
+          "u": 1.0578613389598237,
+          "ci": [
+           0.9331723091920042,
+           1.2217611529318664
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9945652540321788,
+          "ci": [
+           0.8794676848556497,
+           1.1381993595445625
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "Z": {
+        "units": {
+         "ridge": {
+          "u": 1.0477795252777609,
+          "ci": [
+           0.9239101207084989,
+           1.2294181167822194
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0396557297208335,
+          "ci": [
+           0.9313277331991319,
+           1.1833723509319916
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.04590816785038,
+          "ci": [
+           0.9268902911919082,
+           1.218625544931454
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0862359032755178,
+          "ci": [
+           0.9731508359078257,
+           1.2485955563564985
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "PERM": {
+        "units": {
+         "ridge": {
+          "u": 1.0923639251463422,
+          "ci": [
+           1.01702890763342,
+           1.179198846078513
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9996184111141704,
+          "ci": [
+           0.9879094178007638,
+           1.010247708467968
+          ],
+          "verdict": "reject"
+         }
+        }
+       }
+      },
+      "model_stage": {
+       "stage": "Z",
+       "reader": "ridge",
+       "u": 1.04590816785038,
+       "ci": [
+        0.9268902911919082,
+        1.218625544931454
+       ],
+       "verdict": "reject"
+      },
+      "input": {
+       "stage": "RNA512",
+       "reader": "ridge",
+       "u": 0.9884006897860022,
+       "ci": [
+        0.8808159012415764,
+        1.12744087487462
+       ],
+       "verdict": "reject"
+      },
+      "from_the_input_to_the_model_stage": {
+       "added": 0.05750751495361328,
+       "ci": [
+        -0.03310985267162323,
+        0.16668475121259688
+       ],
+       "reading": "unresolved",
+       "dominated": false
+      },
+      "along_the_model": [
+       {
+        "from": "the input",
+        "to": "Z",
+        "added": 0.05750751495361328,
+        "ci": [
+         -0.03310985267162323,
+         0.16668475121259688
+        ],
+        "reading": "unresolved"
+       }
+      ],
+      "lost_between": [],
+      "other_inputs": {},
+      "control": {
+       "u": 0.9996184111141704,
+       "ci": [
+        0.9879094178007638,
+        1.010247708467968
+       ],
+       "verdict": "reject"
+      }
+     },
+     "pool": {
+      "by_stage": {
+       "RNA512": {
+        "units": {
+         "ridge": {
+          "u": 1.0092778821114812,
+          "ci": [
+           0.8920654252911557,
+           1.1491242472542371
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0807459045875716,
+          "ci": [
+           0.9562595455526622,
+           1.2411528680715334
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9884006897860022,
+          "ci": [
+           0.8808159012415764,
+           1.12744087487462
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0163257858922659,
+          "ci": [
+           0.9024271236583282,
+           1.175756427169778
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "RNA4K": {
+        "units": {
+         "ridge": {
+          "u": 1.0578613389598237,
+          "ci": [
+           0.9331723091920042,
+           1.2217611529318664
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9945652540321788,
+          "ci": [
+           0.8794676848556497,
+           1.1381993595445625
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "Z": {
+        "units": {
+         "ridge": {
+          "u": 1.0477795252777609,
+          "ci": [
+           0.9239101207084989,
+           1.2294181167822194
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0396557297208335,
+          "ci": [
+           0.9313277331991319,
+           1.1833723509319916
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.04590816785038,
+          "ci": [
+           0.9268902911919082,
+           1.218625544931454
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0862359032755178,
+          "ci": [
+           0.9731508359078257,
+           1.2485955563564985
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "PERM": {
+        "units": {
+         "ridge": {
+          "u": 1.0923639251463422,
+          "ci": [
+           1.01702890763342,
+           1.179198846078513
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9996184111141704,
+          "ci": [
+           0.9879094178007638,
+           1.010247708467968
+          ],
+          "verdict": "reject"
+         }
+        }
+       }
+      },
+      "model_stage": {
+       "stage": "Z",
+       "reader": "ridge",
+       "u": 1.04590816785038,
+       "ci": [
+        0.9268902911919082,
+        1.218625544931454
+       ],
+       "verdict": "reject"
+      },
+      "input": {
+       "stage": "RNA512",
+       "reader": "ridge",
+       "u": 0.9884006897860022,
+       "ci": [
+        0.8808159012415764,
+        1.12744087487462
+       ],
+       "verdict": "reject"
+      },
+      "from_the_input_to_the_model_stage": {
+       "added": 0.05750751495361328,
+       "ci": [
+        -0.03310985267162323,
+        0.16668475121259688
+       ],
+       "reading": "unresolved",
+       "dominated": false
+      },
+      "along_the_model": [
+       {
+        "from": "the input",
+        "to": "Z",
+        "added": 0.05750751495361328,
+        "ci": [
+         -0.03310985267162323,
+         0.16668475121259688
+        ],
+        "reading": "unresolved"
+       }
+      ],
+      "lost_between": [],
+      "other_inputs": {},
+      "control": {
+       "u": 0.9996184111141704,
+       "ci": [
+        0.9879094178007638,
+        1.010247708467968
+       ],
+       "verdict": "reject"
+      }
+     }
+    },
+    "positive_control": {
+     "holds": false,
+     "readings": 20,
+     "supported": 0,
+     "unresolved": 0,
+     "rejected": 20
+    },
+    "control_view": {
+     "holds": true,
+     "values": {
+      "CMTM6": 0.9996184111141704,
+      "pool": 0.9996184111141704
+     }
+    }
+   },
+   "status": "open before the model",
+   "status_by_event": {
+    "CMTM6": "open before the model"
+   },
+   "target": {
+    "readout": "PDL1",
+    "group": "thp1",
+    "type": {
+     "cell_type": "THP-1",
+     "stratum": "stimulated"
+    },
+    "events_n": 1,
+    "admitted": true,
+    "response": {
+     "snr": null
+    },
+    "evidence": "round.json:PDL1 thp1",
+    "reference": null,
+    "attainable": "relative",
+    "repair": {
+     "CMTM6": "none"
+    },
+    "model": {
+     "own": {
+      "u": 1.0037148036721377,
+      "ci": [
+       0.9700763283173618,
+       1.0375669481506367
+      ],
+      "verdict": "reject"
+     },
+     "added": {
+      "added": -0.04219340898960544,
+      "ci": [
+       -0.21050636581289958,
+       0.07783238490165492
+      ],
+      "reading": "no added loss"
+     },
+     "reading": null,
+     "rows_of_type": 1,
+     "evidence": "round.json:PDL1 thp1",
+     "events": {
+      "CMTM6": {
+       "u": 1.0037148036721377,
+       "ci": [
+        0.9700763283173618,
+        1.0375669481506367
+       ],
+       "verdict": "reject",
+       "added": {
+        "added": -0.04219340898960544,
+        "ci": [
+         -0.21050636581289958,
+         0.07783238490165492
+        ],
+        "reading": "no added loss"
+       },
+       "in_pool": false,
+       "reference": {
+        "u": 1.0459082126617432,
+        "ci": [
+         0.9268903195858001,
+         1.2186255395412444
+        ],
+        "verdict": "reject"
+       },
+       "before": {
+        "reference": {
+         "units": {
+          "u": 1.04590816785038,
+          "ci": [
+           0.9268902911919082,
+           1.218625544931454
+          ],
+          "verdict": "reject"
+         },
+         "evidence": "round.json:PDL1 thp1"
+        },
+        "input_view": {
+         "own": {
+          "u": 0.9884006897860022,
+          "ci": [
+           0.8808159012415764,
+           1.12744087487462
+          ],
+          "verdict": "reject"
+         },
+         "gap_to_later": {
+          "added": 0.05750751495361328,
+          "ci": [
+           -0.03310985267162323,
+           0.16668475121259688
+          ],
+          "reading": "unresolved"
+         },
+         "classes": [
+          "hgb",
+          "ridge"
+         ],
+         "nonlinear": true,
+         "positive_control": false,
+         "readout_control": true,
+         "evidence": "round.json:PDL1 thp1",
+         "positive_control_note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected",
+         "note": "reader of the input: RNA512, ridge",
+         "along_the_model": [
+          {
+           "from": "the input",
+           "to": "Z",
+           "added": 0.05750751495361328,
+           "ci": [
+            -0.03310985267162323,
+            0.16668475121259688
+           ],
+           "reading": "unresolved"
+          }
+         ],
+         "lost_between": [],
+         "other_inputs": {}
+        }
+       }
+      }
+     }
+    },
+    "gates": {
+     "evaluable": true,
+     "why": [],
+     "guard_kept": true
+    },
+    "arms": {},
+    "pool": {
+     "more_units_of_the_type": null
+    },
+    "control_adds_a_loss": false
+   }
+  },
+  "MHC1 mel_co": {
+   "readout": "MHC1",
+   "stratum": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "events": {
+    "TAPBP": {
+     "events": [
+      "TAPBP"
+     ],
+     "resampled_by": "cell",
+     "resampling_units": null,
+     "approximate": false,
+     "reference": {
+      "u": 1.010361909866333,
+      "ci": [
+       0.9447646141052246,
+       1.0792962729930877
+      ],
+      "verdict": "reject"
+     },
+     "as_trained": {
+      "u": 1.0161094320020885,
+      "ci": [
+       0.991852699747365,
+       1.043668317093451
+      ],
+      "verdict": "reject",
+      "slope": 0.882723452609636,
+      "beyond_reference": {
+       "added": 0.005747522135755467,
+       "ci": [
+        -0.06419043233284637,
+        0.07184951203240138
+       ],
+       "reading": "no added loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 1.0212524642103076,
+       "ci": [
+        0.9612477768765632,
+        1.0839209673947852
+       ],
+       "verdict": "reject",
+       "slope": 4.307931669322792,
+       "valid": false,
+       "gain": -0.0051430322082191005,
+       "gain_ci": [
+        -0.06758483630245386,
+        0.05256514468873077
+       ],
+       "beyond_reference": {
+        "added": 0.010890554343974568,
+        "ci": [
+         -0.024728835980985884,
+         0.04520765349718172
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "rows": {
+       "u": 1.030945584865613,
+       "ci": [
+        0.9728486371425598,
+        1.0913407058623792
+       ],
+       "verdict": "reject",
+       "slope": 4.107739110625731,
+       "valid": false,
+       "gain": -0.014836152863524577,
+       "gain_ci": [
+        -0.07628474856215493,
+        0.04264043853704505
+       ],
+       "beyond_reference": {
+        "added": 0.020583674999280044,
+        "ci": [
+         -0.01695531410312056,
+         0.056172896263664895
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "cells": {
+       "u": 1.0338427767224543,
+       "ci": [
+        0.9762759218572906,
+        1.095635772653419
+       ],
+       "verdict": "reject",
+       "slope": 4.012814052213848,
+       "valid": false,
+       "gain": -0.017733344720365807,
+       "gain_ci": [
+        -0.08014281581951856,
+        0.039418181158998616
+       ],
+       "beyond_reference": {
+        "added": 0.023480866856121274,
+        "ci": [
+         -0.01430042619525706,
+         0.05982235550758111
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "rows_other": {
+       "u": 1.017332944082639,
+       "ci": [
+        0.9648466651937725,
+        1.0725944679621597
+       ],
+       "verdict": "reject",
+       "slope": 3.6271627577651584,
+       "valid": false,
+       "gain": -0.001223512080550604,
+       "gain_ci": [
+        -0.05692471078884415,
+        0.05075828612965578
+       ],
+       "beyond_reference": {
+        "added": 0.006971034216306071,
+        "ci": [
+         -0.033460253412275424,
+         0.046842927918766965
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "other": {
+       "u": 0.9975058865659894,
+       "ci": [
+        0.9290495160445134,
+        1.0653652255122172
+       ],
+       "verdict": "reject",
+       "slope": 6.765055788391387,
+       "valid": true,
+       "gain": 0.0186035454360991,
+       "gain_ci": [
+        -0.046944157218048385,
+        0.0860536172614648
+       ],
+       "beyond_reference": {
+        "added": -0.012856023300343633,
+        "ci": [
+         -0.059909041316029865,
+         0.035285801393642305
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "earlier": {
+       "u": 1.0095596620168727,
+       "ci": [
+        0.9538996207695308,
+        1.0695674863966145
+       ],
+       "verdict": "reject",
+       "slope": 3.015880716686785,
+       "valid": false,
+       "gain": 0.006549769985215725,
+       "gain_ci": [
+        -0.05435476746492617,
+        0.06395725744344476
+       ],
+       "beyond_reference": {
+        "added": -0.0008022478494602581,
+        "ci": [
+         -0.04849272075265381,
+         0.0421010062405602
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "by_event": {},
+     "rows_minus_controls": {
+      "gain_difference": -0.009693120655305476,
+      "ci": [
+       -0.022461333101583502,
+       0.0023459889866535772
+      ],
+      "reading": "no step"
+     },
+     "A3": {
+      "added": 0.005747522135755467,
+      "ci": [
+       -0.06419043233284637,
+       0.07184951203240138
+      ],
+      "reading": "no added loss",
+      "holds": false
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": 0.8146105644736465,
+       "ci": [
+        0.7284971506377779,
+        0.8973751049765615
+       ],
+       "verdict": "reject"
+      },
+      "against_the_reference": {
+       "added": -0.19575134539268646,
+       "ci": [
+        -0.24959362474789462,
+        -0.14588841549369014
+       ],
+       "reading": "no added loss"
+      },
+      "passes": true,
+      "control_the_output_as_trained": {
+       "added": 0.005747522135755467,
+       "ci": [
+        -0.06419043233284637,
+        0.07184951203240138
+       ],
+       "reading": "no added loss",
+       "passes": true
+      }
+     },
+     "closure": {
+      "grade": "not a target for a repair",
+      "attainable": "relative",
+      "reached_what_was_attainable": false
+     },
+     "cells": {
+      "event": 109,
+      "control": 879
+     },
+     "selection_third": {
+      "event": "TAPBP",
+      "cells": 61,
+      "change_in_control_sd": -1.9731696180392189,
+      "snr": 6.2966033217530795,
+      "A1": true,
+      "A2_own": false
+     },
+     "grid": {
+      "system": {
+       "frozen": {
+        "u": 1.0161094320020885,
+        "ci": [
+         0.991852699747365,
+         1.043668317093451
+        ],
+        "verdict": "reject",
+        "class": "system"
+       }
+      },
+      "Z": {
+       "train": {
+        "u": 0.9692715259582542,
+        "ci": [
+         0.9245659043214682,
+         1.0126159059438171
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       },
+       "other": {
+        "u": 0.9886878141595731,
+        "ci": [
+         0.9434987124988428,
+         1.0394565727745815
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       },
+       "units": {
+        "u": 0.99394792099599,
+        "ci": [
+         0.927563961051645,
+         1.0646614834340922
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 1.0103618702312933,
+        "ci": [
+         0.9447646124302336,
+         1.0792963044762114
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       }
+      },
+      "RNA512": {
+       "units": {
+        "u": 0.9617817368881424,
+        "ci": [
+         0.9072084708598218,
+         1.021891176840553
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.9853155134474505,
+        "ci": [
+         0.9356477981251902,
+         1.0426412652512145
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "RNA4K": {
+       "units": {
+        "u": 0.9908193655830067,
+        "ci": [
+         0.9186831133476866,
+         1.0689398219965731
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 1.0009434171484382,
+        "ci": [
+         0.9334797290586091,
+         1.0735443664215063
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "PERM": {
+       "units": {
+        "u": 1.0320620238529608,
+        "ci": [
+         1.0027567882304989,
+         1.0605660730917514
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 1.0002167400464976,
+        "ci": [
+         0.9962339519900493,
+         1.004917587903488
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      }
+     },
+     "fits": [
+      {
+       "n_controls": 440,
+       "ridge_weight": 1.0,
+       "cv_error": 0.011164933232950215,
+       "rows": [
+        {
+         "event": "TAPBP",
+         "n_cells": 54,
+         "measured_change": -0.7848015624761437,
+         "standard_error": 0.07852675640049181,
+         "share_of_the_residual_closed": 0.16243634285715414
+        }
+       ],
+       "ridge_weight_cells": 1.0
+      },
+      {
+       "n_controls": 439,
+       "ridge_weight": 1.0,
+       "cv_error": 0.008749921160155341,
+       "rows": [
+        {
+         "event": "TAPBP",
+         "n_cells": 55,
+         "measured_change": -0.9121991594586609,
+         "standard_error": 0.08064857259248584,
+         "share_of_the_residual_closed": 0.10835554336068687
+        }
+       ],
+       "ridge_weight_cells": 1.0
+      }
+     ]
+    }
+   },
+   "placed": {
+    "rule": "union",
+    "inputs": [
+     "RNA512",
+     "RNA4K"
+    ],
+    "between": [],
+    "linear": [
+     "ridge"
+    ],
+    "events": {
+     "TAPBP": {
+      "by_stage": {
+       "RNA512": {
+        "units": {
+         "ridge": {
+          "u": 0.9617817368881424,
+          "ci": [
+           0.9072084708598218,
+           1.021891176840553
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0238676143625685,
+          "ci": [
+           0.9574173218032077,
+           1.1025435273510762
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9853155134474505,
+          "ci": [
+           0.9356477981251902,
+           1.0426412652512145
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0330609970506899,
+          "ci": [
+           0.9769906568756201,
+           1.0946846614181125
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "RNA4K": {
+        "units": {
+         "ridge": {
+          "u": 0.9908193655830067,
+          "ci": [
+           0.9186831133476866,
+           1.0689398219965731
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.0009434171484382,
+          "ci": [
+           0.9334797290586091,
+           1.0735443664215063
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "Z": {
+        "units": {
+         "ridge": {
+          "u": 0.99394792099599,
+          "ci": [
+           0.927563961051645,
+           1.0646614834340922
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0111371631763237,
+          "ci": [
+           0.9463318020359122,
+           1.0801676408543157
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.0247351403522176,
+          "ci": [
+           0.9592603337612171,
+           1.0952143765882105
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0103618702312933,
+          "ci": [
+           0.9447646124302336,
+           1.0792963044762114
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "PERM": {
+        "units": {
+         "ridge": {
+          "u": 1.0320620238529608,
+          "ci": [
+           1.0027567882304989,
+           1.0605660730917514
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.0002167400464976,
+          "ci": [
+           0.9962339519900493,
+           1.004917587903488
+          ],
+          "verdict": "reject"
+         }
+        }
+       }
+      },
+      "model_stage": {
+       "stage": "Z",
+       "reader": "hgb",
+       "u": 1.0103618702312933,
+       "ci": [
+        0.9447646124302336,
+        1.0792963044762114
+       ],
+       "verdict": "reject"
+      },
+      "input": {
+       "stage": "RNA512",
+       "reader": "ridge",
+       "u": 0.9853155134474505,
+       "ci": [
+        0.9356477981251902,
+        1.0426412652512145
+       ],
+       "verdict": "reject"
+      },
+      "from_the_input_to_the_model_stage": {
+       "added": 0.02504640817642212,
+       "ci": [
+        -0.03155108392238617,
+        0.09062454998493194
+       ],
+       "reading": "no added loss",
+       "dominated": false
+      },
+      "along_the_model": [
+       {
+        "from": "the input",
+        "to": "Z",
+        "added": 0.02504640817642212,
+        "ci": [
+         -0.03155108392238617,
+         0.09062454998493194
+        ],
+        "reading": "no added loss"
+       }
+      ],
+      "lost_between": [],
+      "other_inputs": {},
+      "control": {
+       "u": 1.0002167400464976,
+       "ci": [
+        0.9962339519900493,
+        1.004917587903488
+       ],
+       "verdict": "reject"
+      }
+     },
+     "pool": {
+      "by_stage": {
+       "RNA512": {
+        "units": {
+         "ridge": {
+          "u": 0.9617817368881424,
+          "ci": [
+           0.9072084708598218,
+           1.021891176840553
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0238676143625685,
+          "ci": [
+           0.9574173218032077,
+           1.1025435273510762
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9853155134474505,
+          "ci": [
+           0.9356477981251902,
+           1.0426412652512145
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0330609970506899,
+          "ci": [
+           0.9769906568756201,
+           1.0946846614181125
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "RNA4K": {
+        "units": {
+         "ridge": {
+          "u": 0.9908193655830067,
+          "ci": [
+           0.9186831133476866,
+           1.0689398219965731
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.0009434171484382,
+          "ci": [
+           0.9334797290586091,
+           1.0735443664215063
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "Z": {
+        "units": {
+         "ridge": {
+          "u": 0.99394792099599,
+          "ci": [
+           0.927563961051645,
+           1.0646614834340922
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0111371631763237,
+          "ci": [
+           0.9463318020359122,
+           1.0801676408543157
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.0247351403522176,
+          "ci": [
+           0.9592603337612171,
+           1.0952143765882105
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 1.0103618702312933,
+          "ci": [
+           0.9447646124302336,
+           1.0792963044762114
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "PERM": {
+        "units": {
+         "ridge": {
+          "u": 1.0320620238529608,
+          "ci": [
+           1.0027567882304989,
+           1.0605660730917514
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 1.0002167400464976,
+          "ci": [
+           0.9962339519900493,
+           1.004917587903488
+          ],
+          "verdict": "reject"
+         }
+        }
+       }
+      },
+      "model_stage": {
+       "stage": "Z",
+       "reader": "hgb",
+       "u": 1.0103618702312933,
+       "ci": [
+        0.9447646124302336,
+        1.0792963044762114
+       ],
+       "verdict": "reject"
+      },
+      "input": {
+       "stage": "RNA512",
+       "reader": "ridge",
+       "u": 0.9853155134474505,
+       "ci": [
+        0.9356477981251902,
+        1.0426412652512145
+       ],
+       "verdict": "reject"
+      },
+      "from_the_input_to_the_model_stage": {
+       "added": 0.02504640817642212,
+       "ci": [
+        -0.03155108392238617,
+        0.09062454998493194
+       ],
+       "reading": "no added loss",
+       "dominated": false
+      },
+      "along_the_model": [
+       {
+        "from": "the input",
+        "to": "Z",
+        "added": 0.02504640817642212,
+        "ci": [
+         -0.03155108392238617,
+         0.09062454998493194
+        ],
+        "reading": "no added loss"
+       }
+      ],
+      "lost_between": [],
+      "other_inputs": {},
+      "control": {
+       "u": 1.0002167400464976,
+       "ci": [
+        0.9962339519900493,
+        1.004917587903488
+       ],
+       "verdict": "reject"
+      }
+     }
+    },
+    "positive_control": {
+     "holds": false,
+     "readings": 20,
+     "supported": 0,
+     "unresolved": 0,
+     "rejected": 20
+    },
+    "control_view": {
+     "holds": true,
+     "values": {
+      "TAPBP": 1.0002167400464976,
+      "pool": 1.0002167400464976
+     }
+    }
+   },
+   "status": "open before the model",
+   "status_by_event": {
+    "TAPBP": "open before the model"
+   },
+   "target": {
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": {
+     "cell_type": "melanoma",
+     "stratum": "co-culture"
+    },
+    "events_n": 1,
+    "admitted": true,
+    "response": {
+     "snr": null
+    },
+    "evidence": "round.json:MHC1 mel_co",
+    "reference": null,
+    "attainable": "relative",
+    "repair": {
+     "TAPBP": "none"
+    },
+    "model": {
+     "own": {
+      "u": 1.0161094320020885,
+      "ci": [
+       0.991852699747365,
+       1.043668317093451
+      ],
+      "verdict": "reject"
+     },
+     "added": {
+      "added": 0.005747522135755467,
+      "ci": [
+       -0.06419043233284637,
+       0.07184951203240138
+      ],
+      "reading": "no added loss"
+     },
+     "reading": null,
+     "rows_of_type": 1,
+     "evidence": "round.json:MHC1 mel_co",
+     "events": {
+      "TAPBP": {
+       "u": 1.0161094320020885,
+       "ci": [
+        0.991852699747365,
+        1.043668317093451
+       ],
+       "verdict": "reject",
+       "added": {
+        "added": 0.005747522135755467,
+        "ci": [
+         -0.06419043233284637,
+         0.07184951203240138
+        ],
+        "reading": "no added loss"
+       },
+       "in_pool": false,
+       "reference": {
+        "u": 1.010361909866333,
+        "ci": [
+         0.9447646141052246,
+         1.0792962729930877
+        ],
+        "verdict": "reject"
+       },
+       "before": {
+        "reference": {
+         "units": {
+          "u": 1.0103618702312933,
+          "ci": [
+           0.9447646124302336,
+           1.0792963044762114
+          ],
+          "verdict": "reject"
+         },
+         "evidence": "round.json:MHC1 mel_co"
+        },
+        "input_view": {
+         "own": {
+          "u": 0.9853155134474505,
+          "ci": [
+           0.9356477981251902,
+           1.0426412652512145
+          ],
+          "verdict": "reject"
+         },
+         "gap_to_later": {
+          "added": 0.02504640817642212,
+          "ci": [
+           -0.03155108392238617,
+           0.09062454998493194
+          ],
+          "reading": "no added loss"
+         },
+         "classes": [
+          "hgb",
+          "ridge"
+         ],
+         "nonlinear": true,
+         "positive_control": false,
+         "readout_control": true,
+         "evidence": "round.json:MHC1 mel_co",
+         "positive_control_note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected",
+         "note": "reader of the input: RNA512, ridge",
+         "along_the_model": [
+          {
+           "from": "the input",
+           "to": "Z",
+           "added": 0.02504640817642212,
+           "ci": [
+            -0.03155108392238617,
+            0.09062454998493194
+           ],
+           "reading": "no added loss"
+          }
+         ],
+         "lost_between": [],
+         "other_inputs": {}
+        }
+       }
+      }
+     }
+    },
+    "gates": {
+     "evaluable": true,
+     "why": [],
+     "guard_kept": true
+    },
+    "arms": {},
+    "pool": {
+     "more_units_of_the_type": null
+    },
+    "control_adds_a_loss": false
+   }
+  },
+  "MHC1 mel_ctl": {
+   "readout": "MHC1",
+   "stratum": "mel_ctl",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "control"
+   },
+   "events": {
+    "B2M": {
+     "events": [
+      "B2M"
+     ],
+     "resampled_by": "cell",
+     "resampling_units": null,
+     "approximate": false,
+     "reference": {
+      "u": 0.8911162614822388,
+      "ci": [
+       0.8563634499907493,
+       0.9278539687395095
+      ],
+      "verdict": "reject"
+     },
+     "as_trained": {
+      "u": 0.9968673161301359,
+      "ci": [
+       0.9887787280017194,
+       1.0023729376408985
+      ],
+      "verdict": "reject",
+      "slope": 0.3385526587300369,
+      "beyond_reference": {
+       "added": 0.10575105464789714,
+       "ci": [
+        0.0695295841161392,
+        0.14210739341457318
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.9328825540637992,
+       "ci": [
+        0.8980388428084994,
+        0.9714322357474436
+       ],
+       "verdict": "reject",
+       "slope": 5.7118457753411,
+       "valid": true,
+       "gain": 0.06398476206633674,
+       "gain_ci": [
+        0.023806535646466637,
+        0.10080515017818019
+       ],
+       "beyond_reference": {
+        "added": 0.041766292581560394,
+        "ci": [
+         0.0231183748108345,
+         0.06478404373962487
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "rows": {
+       "u": 0.9200153211208244,
+       "ci": [
+        0.8842596570996273,
+        0.9585497081635556
+       ],
+       "verdict": "reject",
+       "slope": 5.514233143695587,
+       "valid": true,
+       "gain": 0.0768519950093115,
+       "gain_ci": [
+        0.03693137511583798,
+        0.11389036978928571
+       ],
+       "beyond_reference": {
+        "added": 0.028899059638585634,
+        "ci": [
+         0.011529299158251103,
+         0.04960967156030817
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "cells": {
+       "u": 0.8968379532245234,
+       "ci": [
+        0.8609247940482493,
+        0.9367081410074126
+       ],
+       "verdict": "reject",
+       "slope": 4.894888397400175,
+       "valid": true,
+       "gain": 0.10002936290561248,
+       "gain_ci": [
+        0.06024189563352911,
+        0.1372590222941651
+       ],
+       "beyond_reference": {
+        "added": 0.005721691742284651,
+        "ci": [
+         -0.010237269096160559,
+         0.022588477566608655
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "rows_other": {
+       "u": 0.9029112774028507,
+       "ci": [
+        0.8690027354423638,
+        0.9389822349246723
+       ],
+       "verdict": "reject",
+       "slope": 5.1311000785388,
+       "valid": true,
+       "gain": 0.0939560387272852,
+       "gain_ci": [
+        0.05677859776792371,
+        0.1303288638804081
+       ],
+       "beyond_reference": {
+        "added": 0.01179501592061194,
+        "ci": [
+         -0.006856472921492001,
+         0.03204272158351272
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "other": {
+       "u": 0.8939980901798895,
+       "ci": [
+        0.8574236890656104,
+        0.931785207980133
+       ],
+       "verdict": "reject",
+       "slope": 5.756930353618446,
+       "valid": true,
+       "gain": 0.10286922595024639,
+       "gain_ci": [
+        0.06522859688863103,
+        0.14013909699269508
+       ],
+       "beyond_reference": {
+        "added": 0.0028818286976507457,
+        "ci": [
+         -0.021927700467357723,
+         0.02960798626483517
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "by_event": {},
+     "rows_minus_controls": {
+      "gain_difference": 0.01286723294297476,
+      "ci": [
+       0.0085378840652667,
+       0.017394190351132727
+      ],
+      "reading": "no step"
+     },
+     "A3": {
+      "added": 0.10575105464789714,
+      "ci": [
+       0.0695295841161392,
+       0.14210739341457318
+      ],
+      "reading": "unresolved",
+      "holds": false
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": 0.838779832202516,
+       "ci": [
+        0.7870462569610388,
+        0.8892386343442182
+       ],
+       "verdict": "reject"
+      },
+      "against_the_reference": {
+       "added": -0.05233642927972282,
+       "ci": [
+        -0.08162139856694546,
+        -0.02428049968643993
+       ],
+       "reading": "no added loss"
+      },
+      "passes": true,
+      "control_the_output_as_trained": {
+       "added": 0.10575105464789714,
+       "ci": [
+        0.0695295841161392,
+        0.14210739341457318
+       ],
+       "reading": "unresolved",
+       "passes": false
+      }
+     },
+     "closure": {
+      "grade": "not a target for a repair",
+      "attainable": "relative",
+      "reached_what_was_attainable": false
+     },
+     "cells": {
+      "event": 93,
+      "control": 1789
+     },
+     "selection_third": {
+      "event": "B2M",
+      "cells": 57,
+      "change_in_control_sd": -2.042191888890668,
+      "snr": 5.115005316133827,
+      "A1": true,
+      "A2_own": false
+     },
+     "grid": {
+      "system": {
+       "frozen": {
+        "u": 0.9968673161301359,
+        "ci": [
+         0.9887787280017194,
+         1.0023729376408985
+        ],
+        "verdict": "reject",
+        "class": "system"
+       }
+      },
+      "Z": {
+       "train": {
+        "u": 0.994607064784317,
+        "ci": [
+         0.9841561084229569,
+         1.0031661857758862
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       },
+       "other": {
+        "u": 0.8734407052753393,
+        "ci": [
+         0.8342636875015326,
+         0.9090206883002778
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "units": {
+        "u": 0.9174469934862926,
+        "ci": [
+         0.8754295523777498,
+         0.9591082866073168
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.8911162502511015,
+        "ci": [
+         0.8563634216896318,
+         0.9278539674954158
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "RNA512": {
+       "units": {
+        "u": 0.9737573586687004,
+        "ci": [
+         0.935702640921226,
+         1.014877535966728
+        ],
+        "verdict": "reject",
+        "class": "hgb"
+       },
+       "own": {
+        "u": 0.9538504439129111,
+        "ci": [
+         0.9235006974336231,
+         0.9850964345658011
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "RNA4K": {
+       "units": {
+        "u": 0.9748006237875623,
+        "ci": [
+         0.9314406394903094,
+         1.0209221458258368
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.9552755205829301,
+        "ci": [
+         0.9107563490816506,
+         0.9998886720544866
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      },
+      "PERM": {
+       "units": {
+        "u": 0.9959799366957445,
+        "ci": [
+         0.9917828920121186,
+         0.9993476367550795
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       },
+       "own": {
+        "u": 0.9992756534364989,
+        "ci": [
+         0.9950861547970828,
+         1.0038089848561653
+        ],
+        "verdict": "reject",
+        "class": "ridge"
+       }
+      }
+     },
+     "fits": [
+      {
+       "n_controls": 894,
+       "ridge_weight": 1.0,
+       "cv_error": 0.006534759654033114,
+       "rows": [
+        {
+         "event": "B2M",
+         "n_cells": 46,
+         "measured_change": -1.3632013831033463,
+         "standard_error": 0.1251801181440968,
+         "share_of_the_residual_closed": 0.07759391149816097
+        }
+       ],
+       "ridge_weight_cells": 1.0
+      },
+      {
+       "n_controls": 895,
+       "ridge_weight": 1.0,
+       "cv_error": 0.00859310279251415,
+       "rows": [
+        {
+         "event": "B2M",
+         "n_cells": 47,
+         "measured_change": -1.268836461613802,
+         "standard_error": 0.1400794428649542,
+         "share_of_the_residual_closed": 0.03203385878331155
+        }
+       ],
+       "ridge_weight_cells": 1.0
+      }
+     ]
+    }
+   },
+   "placed": {
+    "rule": "union",
+    "inputs": [
+     "RNA512",
+     "RNA4K"
+    ],
+    "between": [],
+    "linear": [
+     "ridge"
+    ],
+    "events": {
+     "B2M": {
+      "by_stage": {
+       "RNA512": {
+        "units": {
+         "ridge": {
+          "u": 0.986251785756571,
+          "ci": [
+           0.9497870454516688,
+           1.0239682863970343
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.9737573586687004,
+          "ci": [
+           0.935702640921226,
+           1.014877535966728
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9538504439129111,
+          "ci": [
+           0.9235006974336231,
+           0.9850964345658011
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.9697624282655651,
+          "ci": [
+           0.9357057143218965,
+           1.0083168900145498
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "RNA4K": {
+        "units": {
+         "ridge": {
+          "u": 0.9748006237875623,
+          "ci": [
+           0.9314406394903094,
+           1.0209221458258368
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9552755205829301,
+          "ci": [
+           0.9107563490816506,
+           0.9998886720544866
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "Z": {
+        "units": {
+         "ridge": {
+          "u": 0.9174469934862926,
+          "ci": [
+           0.8754295523777498,
+           0.9591082866073168
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.955952952508691,
+          "ci": [
+           0.9243433578170992,
+           0.9897333230965317
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.8911162502511015,
+          "ci": [
+           0.8563634216896318,
+           0.9278539674954158
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.9127493578279342,
+          "ci": [
+           0.8775123710506566,
+           0.949491269950226
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "PERM": {
+        "units": {
+         "ridge": {
+          "u": 0.9959799366957445,
+          "ci": [
+           0.9917828920121186,
+           0.9993476367550795
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9992756534364989,
+          "ci": [
+           0.9950861547970828,
+           1.0038089848561653
+          ],
+          "verdict": "reject"
+         }
+        }
+       }
+      },
+      "model_stage": {
+       "stage": "Z",
+       "reader": "ridge",
+       "u": 0.8911162502511015,
+       "ci": [
+        0.8563634216896318,
+        0.9278539674954158
+       ],
+       "verdict": "reject"
+      },
+      "input": {
+       "stage": "RNA512",
+       "reader": "ridge",
+       "u": 0.9538504439129111,
+       "ci": [
+        0.9235006974336231,
+        0.9850964345658011
+       ],
+       "verdict": "reject"
+      },
+      "from_the_input_to_the_model_stage": {
+       "added": -0.06273418664932251,
+       "ci": [
+        -0.0977968156337738,
+        -0.02888345569372177
+       ],
+       "reading": "no added loss",
+       "dominated": true
+      },
+      "along_the_model": [
+       {
+        "from": "the input",
+        "to": "Z",
+        "added": -0.06273418664932251,
+        "ci": [
+         -0.0977968156337738,
+         -0.02888345569372177
+        ],
+        "reading": "no added loss"
+       }
+      ],
+      "lost_between": [],
+      "other_inputs": {},
+      "control": {
+       "u": 0.9992756534364989,
+       "ci": [
+        0.9950861547970828,
+        1.0038089848561653
+       ],
+       "verdict": "reject"
+      }
+     },
+     "pool": {
+      "by_stage": {
+       "RNA512": {
+        "units": {
+         "ridge": {
+          "u": 0.986251785756571,
+          "ci": [
+           0.9497870454516688,
+           1.0239682863970343
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.9737573586687004,
+          "ci": [
+           0.935702640921226,
+           1.014877535966728
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9538504439129111,
+          "ci": [
+           0.9235006974336231,
+           0.9850964345658011
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.9697624282655651,
+          "ci": [
+           0.9357057143218965,
+           1.0083168900145498
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "RNA4K": {
+        "units": {
+         "ridge": {
+          "u": 0.9748006237875623,
+          "ci": [
+           0.9314406394903094,
+           1.0209221458258368
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9552755205829301,
+          "ci": [
+           0.9107563490816506,
+           0.9998886720544866
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "Z": {
+        "units": {
+         "ridge": {
+          "u": 0.9174469934862926,
+          "ci": [
+           0.8754295523777498,
+           0.9591082866073168
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.955952952508691,
+          "ci": [
+           0.9243433578170992,
+           0.9897333230965317
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.8911162502511015,
+          "ci": [
+           0.8563634216896318,
+           0.9278539674954158
+          ],
+          "verdict": "reject"
+         },
+         "hgb": {
+          "u": 0.9127493578279342,
+          "ci": [
+           0.8775123710506566,
+           0.949491269950226
+          ],
+          "verdict": "reject"
+         }
+        }
+       },
+       "PERM": {
+        "units": {
+         "ridge": {
+          "u": 0.9959799366957445,
+          "ci": [
+           0.9917828920121186,
+           0.9993476367550795
+          ],
+          "verdict": "reject"
+         }
+        },
+        "own": {
+         "ridge": {
+          "u": 0.9992756534364989,
+          "ci": [
+           0.9950861547970828,
+           1.0038089848561653
+          ],
+          "verdict": "reject"
+         }
+        }
+       }
+      },
+      "model_stage": {
+       "stage": "Z",
+       "reader": "ridge",
+       "u": 0.8911162502511015,
+       "ci": [
+        0.8563634216896318,
+        0.9278539674954158
+       ],
+       "verdict": "reject"
+      },
+      "input": {
+       "stage": "RNA512",
+       "reader": "ridge",
+       "u": 0.9538504439129111,
+       "ci": [
+        0.9235006974336231,
+        0.9850964345658011
+       ],
+       "verdict": "reject"
+      },
+      "from_the_input_to_the_model_stage": {
+       "added": -0.06273418664932251,
+       "ci": [
+        -0.0977968156337738,
+        -0.02888345569372177
+       ],
+       "reading": "no added loss",
+       "dominated": true
+      },
+      "along_the_model": [
+       {
+        "from": "the input",
+        "to": "Z",
+        "added": -0.06273418664932251,
+        "ci": [
+         -0.0977968156337738,
+         -0.02888345569372177
+        ],
+        "reading": "no added loss"
+       }
+      ],
+      "lost_between": [],
+      "other_inputs": {},
+      "control": {
+       "u": 0.9992756534364989,
+       "ci": [
+        0.9950861547970828,
+        1.0038089848561653
+       ],
+       "verdict": "reject"
+      }
+     }
+    },
+    "positive_control": {
+     "holds": false,
+     "readings": 20,
+     "supported": 0,
+     "unresolved": 0,
+     "rejected": 20
+    },
+    "control_view": {
+     "holds": true,
+     "values": {
+      "B2M": 0.9992756534364989,
+      "pool": 0.9992756534364989
+     }
+    }
+   },
+   "status": "undecided in the model",
+   "status_by_event": {
+    "B2M": "undecided in the model"
+   },
+   "target": {
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": {
+     "cell_type": "melanoma",
+     "stratum": "control"
+    },
+    "events_n": 1,
+    "admitted": true,
+    "response": {
+     "snr": null
+    },
+    "evidence": "round.json:MHC1 mel_ctl",
+    "reference": null,
+    "attainable": "relative",
+    "repair": {
+     "B2M": "none"
+    },
+    "model": {
+     "own": {
+      "u": 0.9968673161301359,
+      "ci": [
+       0.9887787280017194,
+       1.0023729376408985
+      ],
+      "verdict": "reject"
+     },
+     "added": {
+      "added": 0.10575105464789714,
+      "ci": [
+       0.0695295841161392,
+       0.14210739341457318
+      ],
+      "reading": "unresolved"
+     },
+     "reading": null,
+     "rows_of_type": 1,
+     "evidence": "round.json:MHC1 mel_ctl",
+     "events": {
+      "B2M": {
+       "u": 0.9968673161301359,
+       "ci": [
+        0.9887787280017194,
+        1.0023729376408985
+       ],
+       "verdict": "reject",
+       "added": {
+        "added": 0.10575105464789714,
+        "ci": [
+         0.0695295841161392,
+         0.14210739341457318
+        ],
+        "reading": "unresolved"
+       },
+       "in_pool": false,
+       "reference": {
+        "u": 0.8911162614822388,
+        "ci": [
+         0.8563634499907493,
+         0.9278539687395095
+        ],
+        "verdict": "reject"
+       },
+       "before": {
+        "reference": {
+         "units": {
+          "u": 0.8911162502511015,
+          "ci": [
+           0.8563634216896318,
+           0.9278539674954158
+          ],
+          "verdict": "reject"
+         },
+         "evidence": "round.json:MHC1 mel_ctl"
+        },
+        "input_view": {
+         "own": {
+          "u": 0.9538504439129111,
+          "ci": [
+           0.9235006974336231,
+           0.9850964345658011
+          ],
+          "verdict": "reject"
+         },
+         "gap_to_later": {
+          "added": -0.06273418664932251,
+          "ci": [
+           -0.0977968156337738,
+           -0.02888345569372177
+          ],
+          "reading": "no added loss"
+         },
+         "classes": [
+          "hgb",
+          "ridge"
+         ],
+         "nonlinear": true,
+         "positive_control": false,
+         "readout_control": true,
+         "evidence": "round.json:MHC1 mel_ctl",
+         "positive_control_note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected",
+         "note": "reader of the input: RNA512, ridge",
+         "along_the_model": [
+          {
+           "from": "the input",
+           "to": "Z",
+           "added": -0.06273418664932251,
+           "ci": [
+            -0.0977968156337738,
+            -0.02888345569372177
+           ],
+           "reading": "no added loss"
+          }
+         ],
+         "lost_between": [],
+         "other_inputs": {}
+        }
+       }
+      }
+     }
+    },
+    "gates": {
+     "evaluable": true,
+     "why": [],
+     "guard_kept": true
+    },
+    "arms": {},
+    "pool": {
+     "more_units_of_the_type": null
+    }
+   }
+  }
+ },
+ "not_targets": [
+  {
+   "stratum": "mel_co",
+   "readout": "PDL1",
+   "why": "no unit of the batch passes A1 and A2 on the selection third",
+   "largest": {
+    "event": "CD44",
+    "cells": 97,
+    "change_in_control_sd": 0.267051333978844,
+    "snr": 1.2482000611862096
+   }
+  },
+  {
+   "stratum": "mel_co",
+   "readout": "HLAE",
+   "why": "no unit of the batch passes A1 and A2 on the selection third",
+   "largest": {
+    "event": "TAPBP",
+    "cells": 61,
+    "change_in_control_sd": -0.23565979356639027,
+    "snr": 0.9830026305614035
+   }
+  },
+  {
+   "stratum": "mel_ctl",
+   "readout": "PDL1",
+   "why": "no unit of the batch passes A1 and A2 on the selection third",
+   "largest": {
+    "event": "KLF4",
+    "cells": 56,
+    "change_in_control_sd": 0.07727819889151996,
+    "snr": 0.266326817447551
+   }
+  },
+  {
+   "stratum": "mel_ctl",
+   "readout": "HLAE",
+   "why": "no unit of the batch passes A1 and A2 on the selection third",
+   "largest": {
+    "event": "KLF4",
+    "cells": 56,
+    "change_in_control_sd": 0.35138968013880534,
+    "snr": 1.22681605514544
+   }
+  }
+ ],
+ "open_items": [
+  {
+   "id": "O01",
+   "key": "positive control: PDL1 thp1",
+   "readout": "PDL1",
+   "group": "thp1",
+   "type": {
+    "cell_type": "THP-1",
+    "stratum": "stimulated"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round.json:PDL1 thp1",
+   "note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "thp1",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round.json:PDL1 thp1",
+     "note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O02",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 1.2482000611862096,
+   "ci": null,
+   "resampling_units": 3,
+   "units_needed": 18,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool, or the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": null,
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 1.2482000611862096,
+     "ci": null,
+     "evidence": null,
+     "note": null
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O03",
+   "key": "positive control: MHC1 mel_co",
+   "readout": "MHC1",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round.json:MHC1 mel_co",
+   "note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_co",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round.json:MHC1 mel_co",
+     "note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O04",
+   "key": null,
+   "readout": "HLAE",
+   "group": "mel_co",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "co-culture"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 0.9830026305614035,
+   "ci": null,
+   "resampling_units": 3,
+   "units_needed": 28,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool, or the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": null,
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "HLAE",
+     "group": "mel_co",
+     "event": "pool",
+     "value": 0.9830026305614035,
+     "ci": null,
+     "evidence": null,
+     "note": null
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O05",
+   "key": null,
+   "readout": "PDL1",
+   "group": "mel_ctl",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "control"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 0.266326817447551,
+   "ci": null,
+   "resampling_units": 2,
+   "units_needed": 254,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool, or the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": null,
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "PDL1",
+     "group": "mel_ctl",
+     "event": "pool",
+     "value": 0.266326817447551,
+     "ci": null,
+     "evidence": null,
+     "note": null
+    }
+   ],
+   "approximate": true
+  },
+  {
+   "id": "O06",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_ctl",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "control"
+   },
+   "event": "pool",
+   "reading": "unresolved",
+   "lever": "E",
+   "question": "does the model add a loss beyond the reference stage",
+   "value": 0.10575105464789714,
+   "ci": [
+    0.0695295841161392,
+    0.14210739341457318
+   ],
+   "resampling_units": 1,
+   "units_needed": 40,
+   "more_units_in_pool": null,
+   "next_step_needs": "at the margin",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "if the units of the pool differ among themselves, the split comes first",
+    "more independent units of the same type from the pool",
+    "if the pool cannot supply them, report the estimate as it is: at the margin"
+   ],
+   "not": "change the model or the views",
+   "evidence": "round.json:MHC1 mel_ctl",
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_ctl",
+     "event": "pool",
+     "value": 0.10575105464789714,
+     "ci": [
+      0.0695295841161392,
+      0.14210739341457318
+     ],
+     "evidence": "round.json:MHC1 mel_ctl",
+     "note": null
+    }
+   ],
+   "approximate": true,
+   "forecast": "at the margin: more than 4 times the units would be needed"
+  },
+  {
+   "id": "O07",
+   "key": null,
+   "readout": "MHC1",
+   "group": "mel_ctl",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "control"
+   },
+   "event": "B2M",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: dominated view",
+   "value": -0.06273418664932251,
+   "ci": [
+    -0.0977968156337738,
+    -0.02888345569372177
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round.json:MHC1 mel_ctl",
+   "note": "reader of the input: RNA512, ridge",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_ctl",
+     "event": "B2M",
+     "value": -0.06273418664932251,
+     "ci": [
+      -0.0977968156337738,
+      -0.02888345569372177
+     ],
+     "evidence": "round.json:MHC1 mel_ctl",
+     "note": "reader of the input: RNA512, ridge"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O08",
+   "key": "positive control: MHC1 mel_ctl",
+   "readout": "MHC1",
+   "group": "mel_ctl",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "control"
+   },
+   "event": "pool",
+   "reading": "invalid",
+   "lever": "V",
+   "question": "the reading of the input view fails the check: positive control",
+   "value": null,
+   "ci": null,
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "repair the reading before any action, as Section 6 says for the check that failed"
+   ],
+   "not": "act on the reading",
+   "evidence": "round.json:MHC1 mel_ctl",
+   "note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "MHC1",
+     "group": "mel_ctl",
+     "event": "pool",
+     "value": null,
+     "ci": null,
+     "evidence": "round.json:MHC1 mel_ctl",
+     "note": "of 20 readings of the family 0 are supported, 0 unresolved, 20 rejected"
+    }
+   ],
+   "approximate": false
+  },
+  {
+   "id": "O09",
+   "key": null,
+   "readout": "HLAE",
+   "group": "mel_ctl",
+   "type": {
+    "cell_type": "melanoma",
+    "stratum": "control"
+   },
+   "event": "pool",
+   "reading": "small response",
+   "lever": "E",
+   "question": "the change of the readout against the half-width of its interval",
+   "value": 1.22681605514544,
+   "ci": null,
+   "resampling_units": 2,
+   "units_needed": 12,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool, or the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more cells per event, or more events that move this readout",
+    "otherwise the readout is not asked for this type"
+   ],
+   "not": "make it a target",
+   "evidence": null,
+   "note": null,
+   "state": "open",
+   "observations": [
+    {
+     "readout": "HLAE",
+     "group": "mel_ctl",
+     "event": "pool",
+     "value": 1.22681605514544,
+     "ci": null,
+     "evidence": null,
+     "note": null
+    }
+   ],
+   "approximate": true
+  }
+ ],
+ "statuses": {
+  "PDL1 thp1": "open before the model",
+  "MHC1 mel_co": "open before the model",
+  "MHC1 mel_ctl": "undecided in the model"
+ }
+}

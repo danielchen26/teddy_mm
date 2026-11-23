@@ -1,0 +1,157 @@
+{
+ "written": "2026-11-23, before the states of these cells were computed",
+ "batch": "batch_1 of runs/outer_step_20261122/results/census.json",
+ "cells_list": {
+  "file": "batch1_cells.tsv (beside the screens' files, not in this repository)",
+  "sha256": "743ac6eec01ae4b22936da8011cbcb219886d1d65466189b89f38d44fce9443f",
+  "cells": 6759
+ },
+ "selection_share": {
+  "rule": "sha256('20261123|<cell name>') divisible by 3",
+  "applies_to": "the cells of every unit of the batch and the control cells read with them; those cells enter no reading of u"
+ },
+ "units": [
+  {
+   "unit": "BRD4",
+   "stratum": "thp1",
+   "study": "papalexi2021",
+   "cells": 341,
+   "role": "development",
+   "chosen": "for an open item"
+  },
+  {
+   "unit": "CMTM6",
+   "stratum": "thp1",
+   "study": "papalexi2021",
+   "cells": 817,
+   "role": "development",
+   "chosen": "for an open item"
+  },
+  {
+   "unit": "POU2F2",
+   "stratum": "thp1",
+   "study": "papalexi2021",
+   "cells": 662,
+   "role": "development",
+   "chosen": "calibration, drawn at random"
+  },
+  {
+   "unit": "CD44",
+   "stratum": "mel_co",
+   "study": "frangieh2021",
+   "cells": 289,
+   "role": "development",
+   "chosen": "for an open item"
+  },
+  {
+   "unit": "TAPBP",
+   "stratum": "mel_co",
+   "study": "frangieh2021",
+   "cells": 170,
+   "role": "development",
+   "chosen": "for an open item"
+  },
+  {
+   "unit": "CDH19",
+   "stratum": "mel_co",
+   "study": "frangieh2021",
+   "cells": 267,
+   "role": "development",
+   "chosen": "calibration, drawn at random"
+  },
+  {
+   "unit": "B2M",
+   "stratum": "mel_ctl",
+   "study": "frangieh2021",
+   "cells": 150,
+   "role": "development",
+   "chosen": "for an open item"
+  },
+  {
+   "unit": "KLF4",
+   "stratum": "mel_ctl",
+   "study": "frangieh2021",
+   "cells": 142,
+   "role": "development",
+   "chosen": "calibration, drawn at random"
+  }
+ ],
+ "control_cells": {
+  "thp1": {
+   "cells": 2386,
+   "note": "all have states and were read by earlier runs"
+  },
+  "mel_co": {
+   "cells": 1276,
+   "note": "new, not final"
+  },
+  "mel_ctl": {
+   "cells": 2645,
+   "note": "new, not final"
+  }
+ },
+ "fit_units": {
+  "thp1": [
+   "IFNGR1",
+   "IFNGR2",
+   "JAK2",
+   "STAT1"
+  ],
+  "mel_co": [
+   "IFNGR1",
+   "IFNGR2",
+   "JAK1",
+   "JAK2",
+   "STAT1"
+  ],
+  "mel_ctl": [],
+  "note": "events read by earlier rounds; their records make the arm `earlier`. No unit of the batch is used to fit what is read on another unit."
+ },
+ "final_units_not_touched": [
+  "B2M@mel_co",
+  "NPC1@mel_co",
+  "STAT3@mel_ctl",
+  "TAPBP@mel_ctl",
+  "CD86@thp1"
+ ],
+ "strata": {
+  "thp1": {
+   "cell_type": "THP-1",
+   "stratum": "stimulated",
+   "readouts": [
+    "PDL1"
+   ]
+  },
+  "mel_co": {
+   "cell_type": "melanoma",
+   "stratum": "co-culture",
+   "readouts": [
+    "PDL1",
+    "MHC1",
+    "HLAE"
+   ]
+  },
+  "mel_ctl": {
+   "cell_type": "melanoma",
+   "stratum": "control",
+   "readouts": [
+    "PDL1",
+    "MHC1",
+    "HLAE"
+   ]
+  }
+ },
+ "own_gene_of_the_readout": {
+  "PDL1": [
+   "CD274"
+  ],
+  "MHC1": [
+   "HLA-A",
+   "HLA-B",
+   "HLA-C"
+  ],
+  "HLAE": [
+   "HLA-E"
+  ]
+ }
+}

@@ -1,0 +1,275 @@
+{
+ "rule": "a cell is in the selection third if sha256('20261123|<cell name>') is divisible by 3",
+ "min_snr": 3.0,
+ "checks": {
+  "frangieh2021 PDL1": 4.440892098500626e-16,
+  "frangieh2021 MHC1": 8.881784197001252e-16,
+  "frangieh2021 HLAE": 4.440892098500626e-16,
+  "papalexi2021 PDL1": 0.0
+ },
+ "strata": {
+  "thp1": {
+   "cells": {
+    "BRD4": 341,
+    "CMTM6": 817,
+    "POU2F2": 662,
+    "control": 1614
+   },
+   "readouts": {
+    "PDL1": {
+     "pass_A1": [],
+     "refused_A2": [],
+     "admitted": [],
+     "table": [
+      {
+       "event": "BRD4",
+       "cells": 115,
+       "change_in_control_sd": NaN,
+       "snr": NaN,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "CMTM6",
+       "cells": 260,
+       "change_in_control_sd": NaN,
+       "snr": NaN,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "POU2F2",
+       "cells": 218,
+       "change_in_control_sd": NaN,
+       "snr": NaN,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    }
+   },
+   "cells_in_the_selection_third": {
+    "BRD4": 115,
+    "CMTM6": 260,
+    "POU2F2": 218
+   },
+   "cells_read": {
+    "BRD4": 226,
+    "CMTM6": 557,
+    "POU2F2": 444,
+    "control": 1614
+   }
+  },
+  "mel_co": {
+   "cells": {
+    "CD44": 289,
+    "CDH19": 267,
+    "TAPBP": 170,
+    "control": 1276
+   },
+   "readouts": {
+    "PDL1": {
+     "pass_A1": [],
+     "refused_A2": [],
+     "admitted": [],
+     "table": [
+      {
+       "event": "CD44",
+       "cells": 97,
+       "change_in_control_sd": 0.267051333978844,
+       "snr": 1.2482000611862096,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "TAPBP",
+       "cells": 61,
+       "change_in_control_sd": 0.16377152656816346,
+       "snr": 0.5372768352417852,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "CDH19",
+       "cells": 101,
+       "change_in_control_sd": 0.09923411039977646,
+       "snr": 0.45846103867014787,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    },
+    "MHC1": {
+     "pass_A1": [
+      "TAPBP"
+     ],
+     "refused_A2": [],
+     "admitted": [
+      "TAPBP"
+     ],
+     "table": [
+      {
+       "event": "TAPBP",
+       "cells": 61,
+       "change_in_control_sd": -1.9731696180392189,
+       "snr": 6.2966033217530795,
+       "A1": true,
+       "A2_own": false
+      },
+      {
+       "event": "CD44",
+       "cells": 97,
+       "change_in_control_sd": 0.3911110076126644,
+       "snr": 1.719352717006948,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "CDH19",
+       "cells": 101,
+       "change_in_control_sd": 0.06961035964895815,
+       "snr": 0.3114140519977451,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    },
+    "HLAE": {
+     "pass_A1": [],
+     "refused_A2": [],
+     "admitted": [],
+     "table": [
+      {
+       "event": "TAPBP",
+       "cells": 61,
+       "change_in_control_sd": -0.23565979356639027,
+       "snr": 0.9830026305614035,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "CD44",
+       "cells": 97,
+       "change_in_control_sd": -0.01040901330180728,
+       "snr": 0.04919615863969496,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "CDH19",
+       "cells": 101,
+       "change_in_control_sd": -0.009006697527907056,
+       "snr": 0.04136789945288526,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    }
+   },
+   "cells_in_the_selection_third": {
+    "CD44": 97,
+    "CDH19": 101,
+    "TAPBP": 61,
+    "control": 397
+   },
+   "cells_read": {
+    "CD44": 192,
+    "CDH19": 166,
+    "TAPBP": 109,
+    "control": 879
+   }
+  },
+  "mel_ctl": {
+   "cells": {
+    "B2M": 150,
+    "KLF4": 142,
+    "control": 2645
+   },
+   "readouts": {
+    "PDL1": {
+     "pass_A1": [],
+     "refused_A2": [],
+     "admitted": [],
+     "table": [
+      {
+       "event": "KLF4",
+       "cells": 56,
+       "change_in_control_sd": 0.07727819889151996,
+       "snr": 0.266326817447551,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "B2M",
+       "cells": 57,
+       "change_in_control_sd": -0.022376279800040713,
+       "snr": 0.08634716105826215,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    },
+    "MHC1": {
+     "pass_A1": [
+      "B2M"
+     ],
+     "refused_A2": [],
+     "admitted": [
+      "B2M"
+     ],
+     "table": [
+      {
+       "event": "B2M",
+       "cells": 57,
+       "change_in_control_sd": -2.042191888890668,
+       "snr": 5.115005316133827,
+       "A1": true,
+       "A2_own": false
+      },
+      {
+       "event": "KLF4",
+       "cells": 56,
+       "change_in_control_sd": -0.19443368494883506,
+       "snr": 0.6956915281055059,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    },
+    "HLAE": {
+     "pass_A1": [],
+     "refused_A2": [],
+     "admitted": [],
+     "table": [
+      {
+       "event": "KLF4",
+       "cells": 56,
+       "change_in_control_sd": 0.35138968013880534,
+       "snr": 1.22681605514544,
+       "A1": false,
+       "A2_own": false
+      },
+      {
+       "event": "B2M",
+       "cells": 57,
+       "change_in_control_sd": -0.04097704372510381,
+       "snr": 0.1653367806533088,
+       "A1": false,
+       "A2_own": false
+      }
+     ]
+    }
+   },
+   "cells_in_the_selection_third": {
+    "B2M": 57,
+    "KLF4": 56,
+    "control": 856
+   },
+   "cells_read": {
+    "B2M": 93,
+    "KLF4": 86,
+    "control": 1789
+   }
+  }
+ }
+}
