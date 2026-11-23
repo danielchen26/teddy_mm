@@ -4,8 +4,9 @@
   python build.py --states batch1_states.npz --pack batch1_pack.npz --counts-frangieh COUNTS.npz --counts-papalexi COUNTS.npz --work WORK
 
 Environment as runs/teg_loop_20261120 (ANM_LOOP_WORK, ANM_FEATURES, ANM_TEST_CELLS). Writes results/selection.json and, in WORK,
-for every stratum `<stratum>.npz` (the cells outside the selection third: record, Z, readouts, the head's own outputs) and
-`<stratum>_in.npz` (the same cells: three views of their RNA), and one SPEC per view for every readout with an admitted event.
+for every stratum `b1_<stratum>.npz` (the cells outside the selection third: record, Z, readouts, the head's own outputs) and
+`b1_<stratum>_in.npz` (the same cells: three views of their RNA), and one SPEC per view for every readout with an admitted event.
+The arrays of the earlier rounds (thp1.npz, mel_co.npz, ...) are linked into WORK under their own names and are only read.
 
 Strata: thp1 (the new units of the THP-1 screen with the control cells that have states), mel_co (the new units and the new
 control cells of co-culture), mel_ctl (those of the control condition). Admission (A1, A2) is `anm_diag.cycle.select` on the cells
@@ -82,6 +83,7 @@ def main():
         if g == "thp1":                                          # its control cells have states already
             T = np.load(src / "thp1.npz")
             ctl = T["unit"].astype(str) == "control"
+            assert ctl.sum() == ROLES["control_cells"]["thp1"]["cells"], "the control cells of the earlier rounds are not all here"
             K = dict(ids=np.r_[K["ids"], T["ids"].astype(str)[ctl]], unit=np.r_[K["unit"], T["unit"].astype(str)[ctl]], Z=np.vstack([K["Z"], T["Z"][ctl]]),
                      y_PDL1=np.r_[K["y_PDL1"], T["y_PDL1"][ctl].astype(np.float64)])
         K["A"] = (K["unit"] != "control").astype(int)
@@ -96,7 +98,8 @@ def main():
         keep = ~share
         A = {k: v[keep] for k, v in K.items()}
         e["cells_read"] = {k: int(v) for k, v in zip(*np.unique(A["unit"], return_counts=True))}
-        np.savez(a.work / f"{g}.npz", **A)
+        assert not (a.work / f"b1_{g}.npz").is_symlink()
+        np.savez(a.work / f"b1_{g}.npz", **A)
         # the input view of the cells that are read
         cn = counts[st]
         cp = {i: k for k, i in enumerate(cn["ids"].astype(str))}
@@ -114,15 +117,15 @@ def main():
         else:
             R = lognorm(X[np.array([cp[i] for i in A["ids"]])].tocsr(), ctl)
         V = views(R, ctl)
-        np.savez(a.work / f"{g}_in.npz", ids=A["ids"], A=A["A"], unit=A["unit"], **V, **{k: v for k, v in A.items() if k.startswith("y_")})
+        np.savez(a.work / f"b1_{g}_in.npz", ids=A["ids"], A=A["A"], unit=A["unit"], **V, **{k: v for k, v in A.items() if k.startswith("y_")})
         for r, x in e["readouts"].items():
             if not x["admitted"]:
                 continue
             ev = x["admitted"]
-            write(a.work, spec(f"{g}_{r}", st, r, ev, f"{g}.npz", ["Z"], BOTH, other=OTHER[r]))
-            write(a.work, spec(f"{g}_{r}_in512", st, r, ev, f"{g}_in.npz", ["RNA512"], BOTH, frozen=False, train=False))
-            write(a.work, spec(f"{g}_{r}_in4k", st, r, ev, f"{g}_in.npz", ["RNA4K"], RIDGE, frozen=False, train=False))
-            write(a.work, spec(f"{g}_{r}_perm", st, r, ev, f"{g}_in.npz", ["PERM"], RIDGE, frozen=False, train=False))
+            write(a.work, spec(f"b1_{g}_{r}", st, r, ev, f"b1_{g}.npz", ["Z"], BOTH, other=OTHER[r]))
+            write(a.work, spec(f"b1_{g}_{r}_in512", st, r, ev, f"b1_{g}_in.npz", ["RNA512"], BOTH, frozen=False, train=False))
+            write(a.work, spec(f"b1_{g}_{r}_in4k", st, r, ev, f"b1_{g}_in.npz", ["RNA4K"], RIDGE, frozen=False, train=False))
+            write(a.work, spec(f"b1_{g}_{r}_perm", st, r, ev, f"b1_{g}_in.npz", ["PERM"], RIDGE, frozen=False, train=False))
         res["strata"][g] = e
         print(g, e["cells_read"], {r: x["admitted"] for r, x in e["readouts"].items()})
     out_file.write_text(json.dumps(res, indent=1, default=float) + "\n")

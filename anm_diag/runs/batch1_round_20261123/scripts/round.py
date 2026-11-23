@@ -64,8 +64,8 @@ def main():
                 continue
             j = names.index(OUTPUT[r])
             head = lambda z, j=j: forward_np(P0, z)[1][:, j]
-            c = cells_of(a.work / f"{g}.npz", r, head)
-            by, draws = cycle.merge(cycle.load(a.observe / f"{g}_{r}"), *(cycle.load(a.observe / f"{g}_{r}_{v}") for v in ("in512", "in4k", "perm")))
+            c = cells_of(a.work / f"b1_{g}.npz", r, head)
+            by, draws = cycle.merge(cycle.load(a.observe / f"b1_{g}_{r}"), *(cycle.load(a.observe / f"b1_{g}_{r}_{v}") for v in ("in512", "in4k", "perm")))
             placed = cycle.place(by, draws, "Z", inputs=["RNA512", "RNA4K"], control="PERM")
             other = fixed = None
             if r in OTHER:
