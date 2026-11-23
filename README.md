@@ -164,6 +164,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   changed, and no recorded outcome moves. Not general yet: events without control cells of their own (donor,
   disease), any repair other than a linear readout, and a second real system. Retraining the encoder with the TEG as
   a constraint in pre-training is in the plan as a later step.
+- **The first round on units the system had never been read on (23 November;**
+  [`batch1_round_20261123/`](anm_diag/runs/batch1_round_20261123/)**):** states were computed for the 6,759 cells of
+  batch 1 and one round was run on them by the general code, with the design, the roles and 29 forecasts committed
+  first. Three of eight units pass admission (CMTM6 for PD-L1 in THP-1, TAPBP for MHC-I in co-culture, B2M for MHC-I
+  in the control condition). All three act on the measured protein itself, and neither the model nor any reader of
+  its embedding or its input reads them (*u* 0.89 to 1.05): nothing for the model to repair. This replicates, on
+  unread units and in two more conditions, what the first outer step found under IFN-γ. It does not test the repair:
+  the one unit that acts through transcription (BRD4) was not admitted on the selection third. Forecasts: 6 of 7
+  intervals, 13 of 16 outcomes. No final unit was touched.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
