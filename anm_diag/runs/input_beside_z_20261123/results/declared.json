@@ -1,0 +1,180 @@
+{
+ "written": "23 November 2026, before any reading of this run",
+ "forecasts": [
+  {
+   "id": "T1-ref-ZV",
+   "kind": "interval",
+   "what": "IRF1: u of the reference reader at ZV (own cells)",
+   "interval": [
+    0.15,
+    0.33
+   ],
+   "why": "a reader of Z left 0.40; a linear reader of the 512 components left 0.18 [0.04, 0.30]"
+  },
+  {
+   "id": "T1-rows-ZV",
+   "kind": "interval",
+   "what": "IRF1: u of the arm rows with the head reading ZV",
+   "interval": [
+    0.4,
+    0.7
+   ],
+   "why": "0.68 at Z; one record on twice the weights"
+  },
+  {
+   "id": "T1-cells-ZV",
+   "kind": "interval",
+   "what": "IRF1: u of the arm cells with the head reading ZV",
+   "interval": [
+    0.15,
+    0.4
+   ],
+   "why": "0.42 at Z"
+  },
+  {
+   "id": "T1-gain-rows",
+   "kind": "interval",
+   "what": "IRF1: gain of the arm rows (Z minus ZV)",
+   "interval": [
+    0.0,
+    0.25
+   ]
+  },
+  {
+   "id": "T1-gain-cells",
+   "kind": "interval",
+   "what": "IRF1: gain of the arm cells",
+   "interval": [
+    0.03,
+    0.27
+   ]
+  },
+  {
+   "id": "T1-gain-rows-reading",
+   "kind": "outcome",
+   "what": "IRF1: the gain of rows read against the step margin",
+   "probabilities": {
+    "a step": 0.2,
+    "no step": 0.25,
+    "unresolved": 0.55
+   }
+  },
+  {
+   "id": "T1-grade",
+   "kind": "outcome",
+   "what": "IRF1: grade of the round at ZV",
+   "probabilities": {
+    "relative or absolute": 0.1,
+    "loss no longer resolved": 0.2,
+    "not closed": 0.3,
+    "not tested (gate 3)": 0.38,
+    "not a target": 0.02
+   },
+   "why": "at Z gate 3 did not pass for IRF1 with its own record (bridge.json)"
+  },
+  {
+   "id": "H1",
+   "kind": "outcome",
+   "what": "H1: IRF1 closes without retraining",
+   "probabilities": {
+    "confirmed": 0.08,
+    "refuted": 0.25,
+    "unresolved": 0.67
+   }
+  },
+  {
+   "id": "T2-ref-ZV",
+   "kind": "interval",
+   "what": "MHC-I co-culture: u of the reference reader at ZV (pool, units)",
+   "interval": [
+    0.18,
+    0.33
+   ],
+   "why": "0.32 at Z; boosting on the 512 components left 0.19"
+  },
+  {
+   "id": "T2-rows-ZV",
+   "kind": "interval",
+   "what": "MHC-I co-culture: u of the arm rows at ZV",
+   "interval": [
+    0.25,
+    0.4
+   ],
+   "why": "0.36 at Z"
+  },
+  {
+   "id": "T2-gain-rows",
+   "kind": "interval",
+   "what": "MHC-I co-culture: gain of the arm rows",
+   "interval": [
+    -0.02,
+    0.1
+   ]
+  },
+  {
+   "id": "H2",
+   "kind": "outcome",
+   "what": "H2: MHC-I in co-culture closes without retraining",
+   "probabilities": {
+    "confirmed": 0.05,
+    "refuted": 0.6,
+    "unresolved": 0.35
+   }
+  },
+  {
+   "id": "C1",
+   "kind": "outcome",
+   "what": "C1: no harm for PD-L1 in THP-1 (four genes)",
+   "probabilities": {
+    "holds": 0.85,
+    "fails or unresolved": 0.15
+   }
+  },
+  {
+   "id": "C2",
+   "kind": "outcome",
+   "what": "C2: no harm for PD-L1 in co-culture",
+   "probabilities": {
+    "holds": 0.9,
+    "fails or unresolved": 0.1
+   }
+  },
+  {
+   "id": "C3",
+   "kind": "outcome",
+   "what": "C3: no harm for PD-L1 under IFN-gamma",
+   "probabilities": {
+    "holds": 0.9,
+    "fails or unresolved": 0.1
+   }
+  },
+  {
+   "id": "C3-rows-ZV",
+   "kind": "interval",
+   "what": "PD-L1 under IFN-gamma: u of the arm rows at ZV",
+   "interval": [
+    -0.02,
+    0.1
+   ],
+   "why": "0.037 [-0.034, 0.101] at Z"
+  },
+  {
+   "id": "C3-support",
+   "kind": "outcome",
+   "what": "PD-L1 under IFN-gamma: the arm rows at ZV is supported",
+   "probabilities": {
+    "yes": 0.35,
+    "no": 0.65
+   }
+  },
+  {
+   "id": "CHECK-Z",
+   "kind": "interval",
+   "what": "largest difference between the readings at Z of this run and bridge.json (arm rows, five targets)",
+   "interval": [
+    0.0,
+    0.002
+   ]
+  }
+ ]
+}
