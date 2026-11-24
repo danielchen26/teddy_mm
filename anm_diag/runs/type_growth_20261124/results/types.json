@@ -1,0 +1,2924 @@
+{
+ "margin": 0.1,
+ "step_margin": 0.1,
+ "note": "exploratory; development donors; cells outside the selection third; a type is a grouping of the eight donors into two groups of four",
+ "donors": [
+  "hao2021_P1",
+  "hao2021_P2",
+  "hao2021_P3",
+  "hao2021_P4",
+  "hao2021_P5",
+  "hao2021_P6",
+  "hao2021_P7",
+  "hao2021_P8"
+ ],
+ "batch_of_donor": {
+  "hao2021_P1": "hao2021_Batch1",
+  "hao2021_P2": "hao2021_Batch1",
+  "hao2021_P3": "hao2021_Batch1",
+  "hao2021_P4": "hao2021_Batch1",
+  "hao2021_P5": "hao2021_Batch2",
+  "hao2021_P6": "hao2021_Batch2",
+  "hao2021_P7": "hao2021_Batch2",
+  "hao2021_P8": "hao2021_Batch2"
+ },
+ "pairs": {
+  "own_row_needed": 10,
+  "a_step_to_remove": 16,
+  "admitted": 26
+ },
+ "candidates": {
+  "batch": "P1+P2+P3+P4|P5+P6+P7+P8",
+  "state": "P1+P2+P3+P4|P5+P6+P7+P8",
+  "the_same_grouping": true,
+  "separation_of_the_donors_mean_states": {
+   "batch": 8.593334492224676,
+   "state": 8.593334492224676,
+   "median_of_all_groupings": 0.49466011229792045
+  }
+ },
+ "part1_the_record_alone": {
+  "by_grouping": {
+   "P1+P2+P3+P4|P5+P6+P7+P8": {
+    "own_row_needed": 0.8207556210177556,
+    "a_step_to_remove": 0.7592414609308871,
+    "admitted": 0.8587150611740852
+   },
+   "P1+P2+P3+P5|P4+P6+P7+P8": {
+    "own_row_needed": 0.9503521381129127,
+    "a_step_to_remove": 0.9459715786994991,
+    "admitted": 0.9546085607728666
+   },
+   "P1+P2+P3+P6|P4+P5+P7+P8": {
+    "own_row_needed": 0.9578026693328017,
+    "a_step_to_remove": 0.9587753614276804,
+    "admitted": 1.0015265020197472
+   },
+   "P1+P2+P3+P7|P4+P5+P6+P8": {
+    "own_row_needed": 1.0208660057393653,
+    "a_step_to_remove": 1.0086640312309685,
+    "admitted": 1.0236116028111155
+   },
+   "P1+P2+P3+P8|P4+P5+P6+P7": {
+    "own_row_needed": 1.0167267544458216,
+    "a_step_to_remove": 0.9749433684500798,
+    "admitted": 0.9216017086542592
+   },
+   "P1+P2+P4+P5|P3+P6+P7+P8": {
+    "own_row_needed": 0.9873296606274617,
+    "a_step_to_remove": 0.9345147771913271,
+    "admitted": 0.948312696842813
+   },
+   "P1+P2+P4+P6|P3+P5+P7+P8": {
+    "own_row_needed": 0.9275065135127201,
+    "a_step_to_remove": 0.9038578711920925,
+    "admitted": 0.9485495878553771
+   },
+   "P1+P2+P4+P7|P3+P5+P6+P8": {
+    "own_row_needed": 1.0123545685811646,
+    "a_step_to_remove": 0.9688102428772607,
+    "admitted": 0.986340229374442
+   },
+   "P1+P2+P4+P8|P3+P5+P6+P7": {
+    "own_row_needed": 0.8411979538219385,
+    "a_step_to_remove": 0.8056115812248954,
+    "admitted": 0.8500480326513635
+   },
+   "P1+P2+P5+P6|P3+P4+P7+P8": {
+    "own_row_needed": 1.0734523176573076,
+    "a_step_to_remove": 1.1015148965454322,
+    "admitted": 1.064159403121686
+   },
+   "P1+P2+P5+P7|P3+P4+P6+P8": {
+    "own_row_needed": 1.0686752874906307,
+    "a_step_to_remove": 1.1141873238011724,
+    "admitted": 1.101919383640985
+   },
+   "P1+P2+P5+P8|P3+P4+P6+P7": {
+    "own_row_needed": 0.9975218331193578,
+    "a_step_to_remove": 1.0346119029882894,
+    "admitted": 0.9633187606603565
+   },
+   "P1+P2+P6+P7|P3+P4+P5+P8": {
+    "own_row_needed": 0.9998505559071784,
+    "a_step_to_remove": 0.9998505559071784,
+    "admitted": 0.9893203694086103
+   },
+   "P1+P2+P6+P8|P3+P4+P5+P7": {
+    "own_row_needed": 0.9982531525895257,
+    "a_step_to_remove": 1.0419173281440515,
+    "admitted": 1.0295245011651333
+   },
+   "P1+P2+P7+P8|P3+P4+P5+P6": {
+    "own_row_needed": 1.0218371735662923,
+    "a_step_to_remove": 1.0235194575642705,
+    "admitted": 1.0092864455065733
+   },
+   "P1+P3+P4+P5|P2+P6+P7+P8": {
+    "own_row_needed": 0.9727079078338177,
+    "a_step_to_remove": 0.9727079078338177,
+    "admitted": 0.9914389178462628
+   },
+   "P1+P3+P4+P6|P2+P5+P7+P8": {
+    "own_row_needed": 0.9731330856336264,
+    "a_step_to_remove": 0.9840399310771049,
+    "admitted": 1.0177587882591705
+   },
+   "P1+P3+P4+P7|P2+P5+P6+P8": {
+    "own_row_needed": 0.9569264677941487,
+    "a_step_to_remove": 0.9702523367621405,
+    "admitted": 0.9835514335510599
+   },
+   "P1+P3+P4+P8|P2+P5+P6+P7": {
+    "own_row_needed": 0.9355134204138962,
+    "a_step_to_remove": 0.968670010376115,
+    "admitted": 0.9231430204368547
+   },
+   "P1+P3+P5+P6|P2+P4+P7+P8": {
+    "own_row_needed": 0.9708653370534877,
+    "a_step_to_remove": 1.0143349324108528,
+    "admitted": 1.0600203555364063
+   },
+   "P1+P3+P5+P7|P2+P4+P6+P8": {
+    "own_row_needed": 0.9957441313983344,
+    "a_step_to_remove": 1.0307961699054284,
+    "admitted": 1.0456336848959533
+   },
+   "P1+P3+P5+P8|P2+P4+P6+P7": {
+    "own_row_needed": 1.0607217365677013,
+    "a_step_to_remove": 1.0117543239843294,
+    "admitted": 1.0012117588962828
+   },
+   "P1+P3+P6+P7|P2+P4+P5+P8": {
+    "own_row_needed": 0.9568626065605331,
+    "a_step_to_remove": 1.0144717612593257,
+    "admitted": 0.9967037289840438
+   },
+   "P1+P3+P6+P8|P2+P4+P5+P7": {
+    "own_row_needed": 1.1060029833149878,
+    "a_step_to_remove": 1.0781357255450668,
+    "admitted": 1.0690185336426643
+   },
+   "P1+P3+P7+P8|P2+P4+P5+P6": {
+    "own_row_needed": 1.0459747696186161,
+    "a_step_to_remove": 1.013149947722723,
+    "admitted": 0.9817699800495023
+   },
+   "P1+P4+P5+P6|P2+P3+P7+P8": {
+    "own_row_needed": 1.1130652232356666,
+    "a_step_to_remove": 1.0773349507272463,
+    "admitted": 1.0892624719735042
+   },
+   "P1+P4+P5+P7|P2+P3+P6+P8": {
+    "own_row_needed": 1.0616804386627614,
+    "a_step_to_remove": 1.0616804386627614,
+    "admitted": 1.0709836506576695
+   },
+   "P1+P4+P5+P8|P2+P3+P6+P7": {
+    "own_row_needed": 0.9652668475684681,
+    "a_step_to_remove": 0.9723906167275225,
+    "admitted": 0.9247822160606161
+   },
+   "P1+P4+P6+P7|P2+P3+P5+P8": {
+    "own_row_needed": 1.046629054006837,
+    "a_step_to_remove": 1.046629054006837,
+    "admitted": 1.0019869811650162
+   },
+   "P1+P4+P6+P8|P2+P3+P5+P7": {
+    "own_row_needed": 0.9917105502565533,
+    "a_step_to_remove": 1.0740643863632733,
+    "admitted": 1.0428803153462396
+   },
+   "P1+P4+P7+P8|P2+P3+P5+P6": {
+    "own_row_needed": 0.9490101008657957,
+    "a_step_to_remove": 0.9731780097384588,
+    "admitted": 0.9731780097384588
+   },
+   "P1+P5+P6+P7|P2+P3+P4+P8": {
+    "own_row_needed": 0.8794831490205877,
+    "a_step_to_remove": 0.8896640105145549,
+    "admitted": 0.8929738600015638
+   },
+   "P1+P5+P6+P8|P2+P3+P4+P7": {
+    "own_row_needed": 1.0308818791315681,
+    "a_step_to_remove": 0.979906304488831,
+    "admitted": 1.0007757165947802
+   },
+   "P1+P5+P7+P8|P2+P3+P4+P6": {
+    "own_row_needed": 0.9833122852714573,
+    "a_step_to_remove": 0.9455738882193748,
+    "admitted": 0.9465413345620018
+   },
+   "P1+P6+P7+P8|P2+P3+P4+P5": {
+    "own_row_needed": 0.9841975041686735,
+    "a_step_to_remove": 0.9736131236648564,
+    "admitted": 0.9893235280160555
+   }
+  },
+  "candidates": {
+   "batch": {
+    "grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+    "by_pair": {
+     "CD274|hao2021_P8": {
+      "u": 0.7843242123035994,
+      "ci": [
+       0.7423168262682203,
+       0.8238678546541135
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD47|hao2021_P6": {
+      "u": 0.7341587095581746,
+      "ci": [
+       0.7087130826586195,
+       0.7564297803225325
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD19|hao2021_P6": {
+      "u": 0.9363715200526534,
+      "ci": [
+       0.8715262269105152,
+       1.0073820763307622
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD11c|hao2021_P7": {
+      "u": 0.8475029074357788,
+      "ci": [
+       0.7654507021065847,
+       0.9146586726133706
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD16|hao2021_P4": {
+      "u": 0.6543322647131286,
+      "ci": [
+       0.6143454627667684,
+       0.6927257445026183
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P1",
+       "hao2021_P2",
+       "hao2021_P3"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD25|hao2021_P6": {
+      "u": 1.004687382232622,
+      "ci": [
+       0.9213938895861056,
+       1.083743612808242
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD20|hao2021_P8": {
+      "u": 0.8602430926162589,
+      "ci": [
+       0.7954817569697763,
+       0.918884955452334
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD196|hao2021_P6": {
+      "u": 0.6109022591650051,
+      "ci": [
+       0.5733638723007394,
+       0.6459963911575478
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD103|hao2021_P6": {
+      "u": 0.9460619584697881,
+      "ci": [
+       0.8624512448140795,
+       1.0241378145067193
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD69|hao2021_P8": {
+      "u": 1.1471197603699292,
+      "ci": [
+       1.0976312954233678,
+       1.1964676731675492
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD107a|hao2021_P8": {
+      "u": 0.9061718066394859,
+      "ci": [
+       0.8639703676074451,
+       0.9487002776753762
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD95|hao2021_P2": {
+      "u": 0.5857624939585904,
+      "ci": [
+       0.5444084924323731,
+       0.6210974965732224
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P1",
+       "hao2021_P3",
+       "hao2021_P4"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "HLA-DR|hao2021_P5": {
+      "u": 0.9162667106309883,
+      "ci": [
+       0.8580323692379339,
+       0.9673322530619116
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P6",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": false
+     },
+     "CD39|hao2021_P8": {
+      "u": 1.0655438455006851,
+      "ci": [
+       0.9968717399674805,
+       1.1361650073321523
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD21|hao2021_P6": {
+      "u": 0.7690140656347522,
+      "ci": [
+       0.7011214026375783,
+       0.831938305565595
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "integrinB7|hao2021_P7": {
+      "u": 0.7156124871096836,
+      "ci": [
+       0.6597745951554453,
+       0.7623470826687183
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD268|hao2021_P6": {
+      "u": 0.6211598956557551,
+      "ci": [
+       0.5661953293675661,
+       0.6767573663803166
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD163|hao2021_P8": {
+      "u": 1.0314961280087096,
+      "ci": [
+       0.9578022844845462,
+       1.1038283037113097
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": false
+     },
+     "IgD|hao2021_P6": {
+      "u": 0.9112459534560646,
+      "ci": [
+       0.8658598345895184,
+       0.9544783614276694
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD18|hao2021_P2": {
+      "u": 0.6925873306217539,
+      "ci": [
+       0.6666012576163071,
+       0.717847674969403
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P1",
+       "hao2021_P3",
+       "hao2021_P4"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD38|hao2021_P5": {
+      "u": 0.8571870297319116,
+      "ci": [
+       0.834685688240818,
+       0.8795982476507622
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P6",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD22|hao2021_P8": {
+      "u": 0.9440473211583168,
+      "ci": [
+       0.8964565220040233,
+       0.9889951168909473
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD71|hao2021_P8": {
+      "u": 0.9160677136167189,
+      "ci": [
+       0.8688754693104074,
+       0.9570505148910964
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": false
+     },
+     "CD63|hao2021_P7": {
+      "u": 0.6546136964163919,
+      "ci": [
+       0.6183816674336717,
+       0.6869681771728638
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD72|hao2021_P8": {
+      "u": 1.0552212874251183,
+      "ci": [
+       1.0015057873654996,
+       1.1108870450187136
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD49a|hao2021_P7": {
+      "u": 0.7178244622009813,
+      "ci": [
+       0.6944218729405334,
+       0.7382542942394379
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     }
+    },
+    "sets": {
+     "own_row_needed": {
+      "pairs": 10,
+      "median_abs_u": 0.8207556210177556,
+      "ci": [
+       0.7987791668268172,
+       0.8440897594450706
+      ],
+      "supported": 0,
+      "unresolved": 0,
+      "rejected": 10,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.8207556210177556,
+      "median_over_the_35_groupings": 0.9917105502565533
+     },
+     "a_step_to_remove": {
+      "pairs": 16,
+      "median_abs_u": 0.7592414609308871,
+      "ci": [
+       0.7393082263466388,
+       0.7841050319069492
+      ],
+      "supported": 0,
+      "unresolved": 0,
+      "rejected": 16,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.7592414609308871,
+      "median_over_the_35_groupings": 0.9840399310771049
+     },
+     "admitted": {
+      "pairs": 26,
+      "median_abs_u": 0.8587150611740852,
+      "ci": [
+       0.8360324747198977,
+       0.8871622796592763
+      ],
+      "supported": 0,
+      "unresolved": 0,
+      "rejected": 26,
+      "rank_among_the_35_groupings": 2,
+      "best_grouping": "P1+P2+P4+P8|P3+P5+P6+P7",
+      "median_abs_u_of_the_best": 0.8500480326513635,
+      "median_over_the_35_groupings": 0.9914389178462628
+     }
+    }
+   },
+   "state": {
+    "grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+    "by_pair": {
+     "CD274|hao2021_P8": {
+      "u": 0.7843242123035994,
+      "ci": [
+       0.7423168262682203,
+       0.8238678546541135
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD47|hao2021_P6": {
+      "u": 0.7341587095581746,
+      "ci": [
+       0.7087130826586195,
+       0.7564297803225325
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD19|hao2021_P6": {
+      "u": 0.9363715200526534,
+      "ci": [
+       0.8715262269105152,
+       1.0073820763307622
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD11c|hao2021_P7": {
+      "u": 0.8475029074357788,
+      "ci": [
+       0.7654507021065847,
+       0.9146586726133706
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD16|hao2021_P4": {
+      "u": 0.6543322647131286,
+      "ci": [
+       0.6143454627667684,
+       0.6927257445026183
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P1",
+       "hao2021_P2",
+       "hao2021_P3"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD25|hao2021_P6": {
+      "u": 1.004687382232622,
+      "ci": [
+       0.9213938895861056,
+       1.083743612808242
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD20|hao2021_P8": {
+      "u": 0.8602430926162589,
+      "ci": [
+       0.7954817569697763,
+       0.918884955452334
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD196|hao2021_P6": {
+      "u": 0.6109022591650051,
+      "ci": [
+       0.5733638723007394,
+       0.6459963911575478
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD103|hao2021_P6": {
+      "u": 0.9460619584697881,
+      "ci": [
+       0.8624512448140795,
+       1.0241378145067193
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD69|hao2021_P8": {
+      "u": 1.1471197603699292,
+      "ci": [
+       1.0976312954233678,
+       1.1964676731675492
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD107a|hao2021_P8": {
+      "u": 0.9061718066394859,
+      "ci": [
+       0.8639703676074451,
+       0.9487002776753762
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD95|hao2021_P2": {
+      "u": 0.5857624939585904,
+      "ci": [
+       0.5444084924323731,
+       0.6210974965732224
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P1",
+       "hao2021_P3",
+       "hao2021_P4"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "HLA-DR|hao2021_P5": {
+      "u": 0.9162667106309883,
+      "ci": [
+       0.8580323692379339,
+       0.9673322530619116
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P6",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": false
+     },
+     "CD39|hao2021_P8": {
+      "u": 1.0655438455006851,
+      "ci": [
+       0.9968717399674805,
+       1.1361650073321523
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD21|hao2021_P6": {
+      "u": 0.7690140656347522,
+      "ci": [
+       0.7011214026375783,
+       0.831938305565595
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "integrinB7|hao2021_P7": {
+      "u": 0.7156124871096836,
+      "ci": [
+       0.6597745951554453,
+       0.7623470826687183
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD268|hao2021_P6": {
+      "u": 0.6211598956557551,
+      "ci": [
+       0.5661953293675661,
+       0.6767573663803166
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD163|hao2021_P8": {
+      "u": 1.0314961280087096,
+      "ci": [
+       0.9578022844845462,
+       1.1038283037113097
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": false
+     },
+     "IgD|hao2021_P6": {
+      "u": 0.9112459534560646,
+      "ci": [
+       0.8658598345895184,
+       0.9544783614276694
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD18|hao2021_P2": {
+      "u": 0.6925873306217539,
+      "ci": [
+       0.6666012576163071,
+       0.717847674969403
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P1",
+       "hao2021_P3",
+       "hao2021_P4"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD38|hao2021_P5": {
+      "u": 0.8571870297319116,
+      "ci": [
+       0.834685688240818,
+       0.8795982476507622
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P6",
+       "hao2021_P7",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD22|hao2021_P8": {
+      "u": 0.9440473211583168,
+      "ci": [
+       0.8964565220040233,
+       0.9889951168909473
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": true
+     },
+     "CD71|hao2021_P8": {
+      "u": 0.9160677136167189,
+      "ci": [
+       0.8688754693104074,
+       0.9570505148910964
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": false
+     },
+     "CD63|hao2021_P7": {
+      "u": 0.6546136964163919,
+      "ci": [
+       0.6183816674336717,
+       0.6869681771728638
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     },
+     "CD72|hao2021_P8": {
+      "u": 1.0552212874251183,
+      "ci": [
+       1.0015057873654996,
+       1.1108870450187136
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P7"
+      ],
+      "own_row_needed": false,
+      "a_step_to_remove": false
+     },
+     "CD49a|hao2021_P7": {
+      "u": 0.7178244622009813,
+      "ci": [
+       0.6944218729405334,
+       0.7382542942394379
+      ],
+      "verdict": "reject",
+      "mates": [
+       "hao2021_P5",
+       "hao2021_P6",
+       "hao2021_P8"
+      ],
+      "own_row_needed": true,
+      "a_step_to_remove": true
+     }
+    },
+    "sets": {
+     "own_row_needed": {
+      "pairs": 10,
+      "median_abs_u": 0.8207556210177556,
+      "ci": [
+       0.7987791668268172,
+       0.8440897594450706
+      ],
+      "supported": 0,
+      "unresolved": 0,
+      "rejected": 10,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.8207556210177556,
+      "median_over_the_35_groupings": 0.9917105502565533
+     },
+     "a_step_to_remove": {
+      "pairs": 16,
+      "median_abs_u": 0.7592414609308871,
+      "ci": [
+       0.7393082263466388,
+       0.7841050319069492
+      ],
+      "supported": 0,
+      "unresolved": 0,
+      "rejected": 16,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.7592414609308871,
+      "median_over_the_35_groupings": 0.9840399310771049
+     },
+     "admitted": {
+      "pairs": 26,
+      "median_abs_u": 0.8587150611740852,
+      "ci": [
+       0.8360324747198977,
+       0.8871622796592763
+      ],
+      "supported": 0,
+      "unresolved": 0,
+      "rejected": 26,
+      "rank_among_the_35_groupings": 2,
+      "best_grouping": "P1+P2+P4+P8|P3+P5+P6+P7",
+      "median_abs_u_of_the_best": 0.8500480326513635,
+      "median_over_the_35_groupings": 0.9914389178462628
+     }
+    }
+   }
+  }
+ },
+ "checks": {
+  "rows_and_unseen_repeat_the_recorded_round": 0.0,
+  "limit": 0.005,
+  "hold": true
+ },
+ "part2_with_the_repair": {
+  "by_pair": {},
+  "candidates": {
+   "batch": {
+    "grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+    "by_pair": {
+     "CD274|hao2021_P8": {
+      "typed": {
+       "u": 0.8731055987153995,
+       "ci": [
+        0.818078490267445,
+        0.9665918950269897
+       ]
+      },
+      "unseen": 0.9307636242919641,
+      "rows": 0.5838816162211403,
+      "gain_over_unseen": {
+       "gain": 0.05765802557656463,
+       "ci": [
+        0.03842786116864591,
+        0.07198373902338373
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.2892239824942592,
+       "ci": [
+        0.18399221956730333,
+        0.37141788991462343
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD47|hao2021_P6": {
+      "typed": {
+       "u": 0.7728329180421647,
+       "ci": [
+        0.6865398524286237,
+        0.9806188092128779
+       ]
+      },
+      "unseen": 0.8027546332753137,
+      "rows": 0.5398265592430691,
+      "gain_over_unseen": {
+       "gain": 0.029921715233149015,
+       "ci": [
+        0.02049460890920993,
+        0.04425457541077066
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.2330063587990956,
+       "ci": [
+        0.15128060545920619,
+        0.34756615536550994
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD19|hao2021_P6": {
+      "typed": {
+       "u": 0.034134655342034304,
+       "ci": [
+        -0.06613124892004511,
+        0.11210501990547038
+       ]
+      },
+      "unseen": -0.07766249992632601,
+      "rows": -0.09557957134357187,
+      "gain_over_unseen": {
+       "gain": 0.04352784458429171,
+       "ci": [
+        -0.09719915124086603,
+        0.1575730933852157
+       ],
+       "reading": "unresolved"
+      },
+      "own_row_still_adds": {
+       "gain": -0.061444916001537564,
+       "ci": [
+        -0.1871531998033438,
+        0.09940005951402427
+       ],
+       "reading": "no step"
+      }
+     },
+     "CD11c|hao2021_P7": {
+      "typed": {
+       "u": 0.2614706935915969,
+       "ci": [
+        0.1543601251134347,
+        0.379759335921903
+       ]
+      },
+      "unseen": 0.025895256900154595,
+      "rows": -0.06561113804567276,
+      "gain_over_unseen": {
+       "gain": -0.23557543669144232,
+       "ci": [
+        -0.2929748360182583,
+        -0.06122251700078555
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.19585955554592416,
+       "ci": [
+        -0.04574366634931083,
+        0.3594687745739781
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD16|hao2021_P4": {
+      "typed": {
+       "u": 0.2778656570963045,
+       "ci": [
+        0.18283082823149738,
+        0.3779072610183589
+       ]
+      },
+      "unseen": 0.21060616456743764,
+      "rows": 0.17725542631756486,
+      "gain_over_unseen": {
+       "gain": -0.06725949252886687,
+       "ci": [
+        -0.08677488125268314,
+        -0.05034926558417054
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.10061023077873965,
+       "ci": [
+        0.07633794100195503,
+        0.1301669115369478
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD25|hao2021_P6": {
+      "typed": {
+       "u": 0.7910452051758323,
+       "ci": [
+        0.6078239369004447,
+        1.0251789107158424
+       ]
+      },
+      "unseen": 0.6494149569172195,
+      "rows": 0.45806208583399954,
+      "gain_over_unseen": {
+       "gain": -0.1416302482586128,
+       "ci": [
+        -0.19243821439121328,
+        -0.10713359806357371
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.3329831193418328,
+       "ci": [
+        0.2517857700458824,
+        0.4421924397602897
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD20|hao2021_P8": {
+      "typed": {
+       "u": 0.45035674249520263,
+       "ci": [
+        0.27011546388214946,
+        0.6132460749488242
+       ]
+      },
+      "unseen": 0.36594224802952746,
+      "rows": 0.2830707498346452,
+      "gain_over_unseen": {
+       "gain": -0.08441449446567517,
+       "ci": [
+        -0.1096657997964797,
+        -0.06531235893526792
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.16728599266055744,
+       "ci": [
+        0.13547856958785698,
+        0.21223791554861615
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD196|hao2021_P6": {
+      "typed": {
+       "u": 0.5027364664031171,
+       "ci": [
+        0.3669339731501511,
+        0.6595322011168313
+       ]
+      },
+      "unseen": 0.47637318850515986,
+      "rows": 0.365001465087047,
+      "gain_over_unseen": {
+       "gain": -0.026363277897957227,
+       "ci": [
+        -0.03320412746488424,
+        -0.02168732020844144
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.13773500131607008,
+       "ci": [
+        0.09991196563965392,
+        0.19228986958109157
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD103|hao2021_P6": {
+      "typed": {
+       "u": 1.0073728829714972,
+       "ci": [
+        0.9025522793128077,
+        1.1576877486112407
+       ]
+      },
+      "unseen": 1.0658785616467674,
+      "rows": 0.6599155408261179,
+      "gain_over_unseen": {
+       "gain": 0.058505678675270234,
+       "ci": [
+        0.03319987668812991,
+        0.1033726034344261
+       ],
+       "reading": "unresolved"
+      },
+      "own_row_still_adds": {
+       "gain": 0.34745734214537927,
+       "ci": [
+        0.19985803641609762,
+        0.6094406672682591
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD69|hao2021_P8": {
+      "typed": {
+       "u": 0.8788609912593699,
+       "ci": [
+        0.6585113986870809,
+        1.1508206559433676
+       ]
+      },
+      "unseen": 0.7533683772996492,
+      "rows": 0.4534652115639566,
+      "gain_over_unseen": {
+       "gain": -0.12549261395972067,
+       "ci": [
+        -0.17218788112057287,
+        -0.09551536344753318
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.4253957796954133,
+       "ci": [
+        0.32774219216297296,
+        0.5758430556593722
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD107a|hao2021_P8": {
+      "typed": {
+       "u": 0.6918108022511409,
+       "ci": [
+        0.5513418561300113,
+        0.8289153932027822
+       ]
+      },
+      "unseen": 0.6125506193427017,
+      "rows": 0.36397943589057713,
+      "gain_over_unseen": {
+       "gain": -0.07926018290843917,
+       "ci": [
+        -0.08897409271861663,
+        -0.06896831988508177
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.32783136636056376,
+       "ci": [
+        0.2810584031249614,
+        0.37367068622418853
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD95|hao2021_P2": {
+      "typed": {
+       "u": 0.36540600236224585,
+       "ci": [
+        0.29756279374582034,
+        0.4381707139697584
+       ]
+      },
+      "unseen": 0.29076456159028574,
+      "rows": 0.2308248318324969,
+      "gain_over_unseen": {
+       "gain": -0.07464144077196011,
+       "ci": [
+        -0.08501809487693625,
+        -0.06752663051232922
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.13458117052974894,
+       "ci": [
+        0.11965044744442165,
+        0.15760700800717095
+       ],
+       "reading": "a step"
+      }
+     },
+     "HLA-DR|hao2021_P5": {
+      "typed": {
+       "u": 0.7649274801764654,
+       "ci": [
+        0.5576550885511175,
+        1.1280159699598769
+       ]
+      },
+      "unseen": 0.6263807484178261,
+      "rows": 0.44154028905496245,
+      "gain_over_unseen": {
+       "gain": -0.1385467317586393,
+       "ci": [
+        -0.18871799752414284,
+        -0.1150617082658655
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.32338719112150294,
+       "ci": [
+        0.25877102107426797,
+        0.4552269464532377
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD39|hao2021_P8": {
+      "typed": {
+       "u": 0.47768663752126517,
+       "ci": [
+        0.15329677542137662,
+        0.8070651638801933
+       ]
+      },
+      "unseen": 0.3468052878685607,
+      "rows": 0.34035618201635653,
+      "gain_over_unseen": {
+       "gain": -0.13088134965270448,
+       "ci": [
+        -0.18719120881333892,
+        -0.08822803780516417
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.13733045550490863,
+       "ci": [
+        0.09638549425416544,
+        0.18783546088174838
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD21|hao2021_P6": {
+      "typed": {
+       "u": 0.19947830020084256,
+       "ci": [
+        0.09752469824541668,
+        0.31230740722967865
+       ]
+      },
+      "unseen": 0.10944744480591229,
+      "rows": 0.07729570253441809,
+      "gain_over_unseen": {
+       "gain": -0.09003085539493028,
+       "ci": [
+        -0.1175881915327443,
+        -0.07072055804216018
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.12218259766642448,
+       "ci": [
+        0.07976736653415081,
+        0.16073035405815314
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "integrinB7|hao2021_P7": {
+      "typed": {
+       "u": 0.7370600041579188,
+       "ci": [
+        0.591535789380468,
+        0.8860596791365625
+       ]
+      },
+      "unseen": 0.7501287030855649,
+      "rows": 0.41984295796828286,
+      "gain_over_unseen": {
+       "gain": 0.01306869892764606,
+       "ci": [
+        0.009213433839549043,
+        0.019646523731089834
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.317217046189636,
+       "ci": [
+        0.2521222943393644,
+        0.4142666457549575
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD268|hao2021_P6": {
+      "typed": {
+       "u": 0.364458150858319,
+       "ci": [
+        0.2947799370965972,
+        0.4568606628936105
+       ]
+      },
+      "unseen": 0.31903006317506954,
+      "rows": 0.2959034830268643,
+      "gain_over_unseen": {
+       "gain": -0.04542808768324946,
+       "ci": [
+        -0.0574367119518058,
+        -0.036690209306849166
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.0685546678314547,
+       "ci": [
+        0.05335947365646437,
+        0.0941986823607321
+       ],
+       "reading": "no step"
+      }
+     },
+     "CD163|hao2021_P8": {
+      "typed": {
+       "u": 0.8264806840154084,
+       "ci": [
+        0.6790531148867958,
+        0.9889207896035279
+       ]
+      },
+      "unseen": 0.7255649506341499,
+      "rows": 0.4556595283423345,
+      "gain_over_unseen": {
+       "gain": -0.10091573338125848,
+       "ci": [
+        -0.12685857913345414,
+        -0.08009559069128111
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.37082115567307394,
+       "ci": [
+        0.29814279617013695,
+        0.4667686916364216
+       ],
+       "reading": "a step"
+      }
+     },
+     "IgD|hao2021_P6": {
+      "typed": {
+       "u": 0.38362853267074204,
+       "ci": [
+        0.28106639756131824,
+        0.50379830442499
+       ]
+      },
+      "unseen": 0.24084668963490108,
+      "rows": 0.2024041078463399,
+      "gain_over_unseen": {
+       "gain": -0.14278184303584096,
+       "ci": [
+        -0.18237599287367873,
+        -0.11013356300203271
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.18122442482440215,
+       "ci": [
+        0.14156693440754523,
+        0.22738359928985707
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD18|hao2021_P2": {
+      "typed": {
+       "u": 0.5235772514499284,
+       "ci": [
+        0.4391716576828387,
+        0.65516184160154
+       ]
+      },
+      "unseen": 0.49706040184837663,
+      "rows": 0.4443217980463642,
+      "gain_over_unseen": {
+       "gain": -0.026516849601551762,
+       "ci": [
+        -0.029280243076273155,
+        -0.023195158072044596
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.07925545340356421,
+       "ci": [
+        0.06802511659888538,
+        0.08908646250840191
+       ],
+       "reading": "no step"
+      }
+     },
+     "CD38|hao2021_P5": {
+      "typed": {
+       "u": 0.7609839438758492,
+       "ci": [
+        0.7038113786775975,
+        0.8551893790107578
+       ]
+      },
+      "unseen": 0.701847330478411,
+      "rows": 0.4416546408371179,
+      "gain_over_unseen": {
+       "gain": -0.059136613397438254,
+       "ci": [
+        -0.07583492562525013,
+        -0.046131972464430106
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.3193293030387313,
+       "ci": [
+        0.24747963584286692,
+        0.4129051433871712
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD22|hao2021_P8": {
+      "typed": {
+       "u": 0.4386388676351115,
+       "ci": [
+        0.24614621116333607,
+        0.6285005214580112
+       ]
+      },
+      "unseen": 0.3826991222361388,
+      "rows": 0.31980029103547736,
+      "gain_over_unseen": {
+       "gain": -0.05593974539897273,
+       "ci": [
+        -0.07330679146684035,
+        -0.03949696863260818
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.11883857659963415,
+       "ci": [
+        0.09281413372816666,
+        0.15003767676537821
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD71|hao2021_P8": {
+      "typed": {
+       "u": 0.5422371930093608,
+       "ci": [
+        0.3801462211326403,
+        0.7030472340391686
+       ]
+      },
+      "unseen": 0.40571766868697245,
+      "rows": 0.25213116317900885,
+      "gain_over_unseen": {
+       "gain": -0.13651952432238834,
+       "ci": [
+        -0.16595335069514391,
+        -0.10842197456087041
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.29010602983035194,
+       "ci": [
+        0.22112130293621635,
+        0.3805525115916073
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD63|hao2021_P7": {
+      "typed": {
+       "u": 0.6394367178515928,
+       "ci": [
+        0.5366170870881217,
+        0.8279547897035489
+       ]
+      },
+      "unseen": 0.6682671376111062,
+      "rows": 0.306478812482991,
+      "gain_over_unseen": {
+       "gain": 0.028830419759513393,
+       "ci": [
+        0.01949057108758195,
+        0.04803742044115857
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.3329579053686018,
+       "ci": [
+        0.2118034975443818,
+        0.5567160219829393
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD72|hao2021_P8": {
+      "typed": {
+       "u": 0.32684618684090316,
+       "ci": [
+        0.0756292433256714,
+        0.5910088932572073
+       ]
+      },
+      "unseen": 0.23761112995893618,
+      "rows": 0.20171634693745288,
+      "gain_over_unseen": {
+       "gain": -0.08923505688196698,
+       "ci": [
+        -0.12335062678107345,
+        -0.05911637023748332
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.12512983990345028,
+       "ci": [
+        0.06077066139987204,
+        0.16756544797185435
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD49a|hao2021_P7": {
+      "typed": {
+       "u": 0.7469963318754862,
+       "ci": [
+        0.6616819996102176,
+        0.8905581796613821
+       ]
+      },
+      "unseen": 0.8001364120946884,
+      "rows": 0.3787646272127262,
+      "gain_over_unseen": {
+       "gain": 0.053140080219202246,
+       "ci": [
+        0.039231986165564885,
+        0.06715121586377308
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.36823170466276,
+       "ci": [
+        0.2697836939709224,
+        0.48732161811962715
+       ],
+       "reading": "a step"
+      }
+     }
+    },
+    "sets": {
+     "own_row_needed": {
+      "pairs": 10,
+      "median_abs_u": 0.766908430959007,
+      "ci": [
+       0.7198196043063391,
+       0.8514082667677575
+      ],
+      "gain_of_the_median_over_unseen": {
+       "gain": -0.015159890766399897,
+       "ci": [
+        -0.0699216104369424,
+        0.027545044287719724
+       ],
+       "reading": "no step"
+      },
+      "pairs_that_gain_a_step_over_unseen": 0,
+      "pairs_with_no_step": 9,
+      "pairs_unresolved": 1,
+      "pairs_where_the_own_row_still_adds_a_step": 10,
+      "pairs_where_it_adds_no_step": 0,
+      "rank_among_the_35_groupings": 2,
+      "best_grouping": "P1+P2+P4+P8|P3+P5+P6+P7",
+      "median_abs_u_of_the_best": 0.7570603795203995,
+      "median_over_the_35_groupings": 0.8660275766661694
+     },
+     "a_step_to_remove": {
+      "pairs": 16,
+      "median_abs_u": 0.7144354032045299,
+      "ci": [
+       0.6243951768757046,
+       0.7663730561527157
+      ],
+      "gain_of_the_median_over_unseen": {
+       "gain": -0.0555943559403671,
+       "ci": [
+        -0.09272036537800614,
+        0.007112117614064775
+       ],
+       "reading": "no step"
+      },
+      "pairs_that_gain_a_step_over_unseen": 0,
+      "pairs_with_no_step": 14,
+      "pairs_unresolved": 2,
+      "pairs_where_the_own_row_still_adds_a_step": 11,
+      "pairs_where_it_adds_no_step": 2,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.7144354032045299,
+      "median_over_the_35_groupings": 0.7711373321548041
+     },
+     "admitted": {
+      "pairs": 26,
+      "median_abs_u": 0.5329072222296446,
+      "ci": [
+       0.4766093668941798,
+       0.6786991532008312
+      ],
+      "gain_of_the_median_over_unseen": {
+       "gain": -0.04619042705287635,
+       "ci": [
+        -0.1323702954488443,
+        -0.024250867944113887
+       ],
+       "reading": "no step"
+      },
+      "pairs_that_gain_a_step_over_unseen": 0,
+      "pairs_with_no_step": 24,
+      "pairs_unresolved": 2,
+      "pairs_where_the_own_row_still_adds_a_step": 16,
+      "pairs_where_it_adds_no_step": 3,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.5329072222296446,
+      "median_over_the_35_groupings": 0.6061670046198437
+     }
+    }
+   },
+   "state": {
+    "grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+    "by_pair": {
+     "CD274|hao2021_P8": {
+      "typed": {
+       "u": 0.8731055987153995,
+       "ci": [
+        0.818078490267445,
+        0.9665918950269897
+       ]
+      },
+      "unseen": 0.9307636242919641,
+      "rows": 0.5838816162211403,
+      "gain_over_unseen": {
+       "gain": 0.05765802557656463,
+       "ci": [
+        0.03842786116864591,
+        0.07198373902338373
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.2892239824942592,
+       "ci": [
+        0.18399221956730333,
+        0.37141788991462343
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD47|hao2021_P6": {
+      "typed": {
+       "u": 0.7728329180421647,
+       "ci": [
+        0.6865398524286237,
+        0.9806188092128779
+       ]
+      },
+      "unseen": 0.8027546332753137,
+      "rows": 0.5398265592430691,
+      "gain_over_unseen": {
+       "gain": 0.029921715233149015,
+       "ci": [
+        0.02049460890920993,
+        0.04425457541077066
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.2330063587990956,
+       "ci": [
+        0.15128060545920619,
+        0.34756615536550994
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD19|hao2021_P6": {
+      "typed": {
+       "u": 0.034134655342034304,
+       "ci": [
+        -0.06613124892004511,
+        0.11210501990547038
+       ]
+      },
+      "unseen": -0.07766249992632601,
+      "rows": -0.09557957134357187,
+      "gain_over_unseen": {
+       "gain": 0.04352784458429171,
+       "ci": [
+        -0.09719915124086603,
+        0.1575730933852157
+       ],
+       "reading": "unresolved"
+      },
+      "own_row_still_adds": {
+       "gain": -0.061444916001537564,
+       "ci": [
+        -0.1871531998033438,
+        0.09940005951402427
+       ],
+       "reading": "no step"
+      }
+     },
+     "CD11c|hao2021_P7": {
+      "typed": {
+       "u": 0.2614706935915969,
+       "ci": [
+        0.1543601251134347,
+        0.379759335921903
+       ]
+      },
+      "unseen": 0.025895256900154595,
+      "rows": -0.06561113804567276,
+      "gain_over_unseen": {
+       "gain": -0.23557543669144232,
+       "ci": [
+        -0.2929748360182583,
+        -0.06122251700078555
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.19585955554592416,
+       "ci": [
+        -0.04574366634931083,
+        0.3594687745739781
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD16|hao2021_P4": {
+      "typed": {
+       "u": 0.2778656570963045,
+       "ci": [
+        0.18283082823149738,
+        0.3779072610183589
+       ]
+      },
+      "unseen": 0.21060616456743764,
+      "rows": 0.17725542631756486,
+      "gain_over_unseen": {
+       "gain": -0.06725949252886687,
+       "ci": [
+        -0.08677488125268314,
+        -0.05034926558417054
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.10061023077873965,
+       "ci": [
+        0.07633794100195503,
+        0.1301669115369478
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD25|hao2021_P6": {
+      "typed": {
+       "u": 0.7910452051758323,
+       "ci": [
+        0.6078239369004447,
+        1.0251789107158424
+       ]
+      },
+      "unseen": 0.6494149569172195,
+      "rows": 0.45806208583399954,
+      "gain_over_unseen": {
+       "gain": -0.1416302482586128,
+       "ci": [
+        -0.19243821439121328,
+        -0.10713359806357371
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.3329831193418328,
+       "ci": [
+        0.2517857700458824,
+        0.4421924397602897
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD20|hao2021_P8": {
+      "typed": {
+       "u": 0.45035674249520263,
+       "ci": [
+        0.27011546388214946,
+        0.6132460749488242
+       ]
+      },
+      "unseen": 0.36594224802952746,
+      "rows": 0.2830707498346452,
+      "gain_over_unseen": {
+       "gain": -0.08441449446567517,
+       "ci": [
+        -0.1096657997964797,
+        -0.06531235893526792
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.16728599266055744,
+       "ci": [
+        0.13547856958785698,
+        0.21223791554861615
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD196|hao2021_P6": {
+      "typed": {
+       "u": 0.5027364664031171,
+       "ci": [
+        0.3669339731501511,
+        0.6595322011168313
+       ]
+      },
+      "unseen": 0.47637318850515986,
+      "rows": 0.365001465087047,
+      "gain_over_unseen": {
+       "gain": -0.026363277897957227,
+       "ci": [
+        -0.03320412746488424,
+        -0.02168732020844144
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.13773500131607008,
+       "ci": [
+        0.09991196563965392,
+        0.19228986958109157
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD103|hao2021_P6": {
+      "typed": {
+       "u": 1.0073728829714972,
+       "ci": [
+        0.9025522793128077,
+        1.1576877486112407
+       ]
+      },
+      "unseen": 1.0658785616467674,
+      "rows": 0.6599155408261179,
+      "gain_over_unseen": {
+       "gain": 0.058505678675270234,
+       "ci": [
+        0.03319987668812991,
+        0.1033726034344261
+       ],
+       "reading": "unresolved"
+      },
+      "own_row_still_adds": {
+       "gain": 0.34745734214537927,
+       "ci": [
+        0.19985803641609762,
+        0.6094406672682591
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD69|hao2021_P8": {
+      "typed": {
+       "u": 0.8788609912593699,
+       "ci": [
+        0.6585113986870809,
+        1.1508206559433676
+       ]
+      },
+      "unseen": 0.7533683772996492,
+      "rows": 0.4534652115639566,
+      "gain_over_unseen": {
+       "gain": -0.12549261395972067,
+       "ci": [
+        -0.17218788112057287,
+        -0.09551536344753318
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.4253957796954133,
+       "ci": [
+        0.32774219216297296,
+        0.5758430556593722
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD107a|hao2021_P8": {
+      "typed": {
+       "u": 0.6918108022511409,
+       "ci": [
+        0.5513418561300113,
+        0.8289153932027822
+       ]
+      },
+      "unseen": 0.6125506193427017,
+      "rows": 0.36397943589057713,
+      "gain_over_unseen": {
+       "gain": -0.07926018290843917,
+       "ci": [
+        -0.08897409271861663,
+        -0.06896831988508177
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.32783136636056376,
+       "ci": [
+        0.2810584031249614,
+        0.37367068622418853
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD95|hao2021_P2": {
+      "typed": {
+       "u": 0.36540600236224585,
+       "ci": [
+        0.29756279374582034,
+        0.4381707139697584
+       ]
+      },
+      "unseen": 0.29076456159028574,
+      "rows": 0.2308248318324969,
+      "gain_over_unseen": {
+       "gain": -0.07464144077196011,
+       "ci": [
+        -0.08501809487693625,
+        -0.06752663051232922
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.13458117052974894,
+       "ci": [
+        0.11965044744442165,
+        0.15760700800717095
+       ],
+       "reading": "a step"
+      }
+     },
+     "HLA-DR|hao2021_P5": {
+      "typed": {
+       "u": 0.7649274801764654,
+       "ci": [
+        0.5576550885511175,
+        1.1280159699598769
+       ]
+      },
+      "unseen": 0.6263807484178261,
+      "rows": 0.44154028905496245,
+      "gain_over_unseen": {
+       "gain": -0.1385467317586393,
+       "ci": [
+        -0.18871799752414284,
+        -0.1150617082658655
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.32338719112150294,
+       "ci": [
+        0.25877102107426797,
+        0.4552269464532377
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD39|hao2021_P8": {
+      "typed": {
+       "u": 0.47768663752126517,
+       "ci": [
+        0.15329677542137662,
+        0.8070651638801933
+       ]
+      },
+      "unseen": 0.3468052878685607,
+      "rows": 0.34035618201635653,
+      "gain_over_unseen": {
+       "gain": -0.13088134965270448,
+       "ci": [
+        -0.18719120881333892,
+        -0.08822803780516417
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.13733045550490863,
+       "ci": [
+        0.09638549425416544,
+        0.18783546088174838
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD21|hao2021_P6": {
+      "typed": {
+       "u": 0.19947830020084256,
+       "ci": [
+        0.09752469824541668,
+        0.31230740722967865
+       ]
+      },
+      "unseen": 0.10944744480591229,
+      "rows": 0.07729570253441809,
+      "gain_over_unseen": {
+       "gain": -0.09003085539493028,
+       "ci": [
+        -0.1175881915327443,
+        -0.07072055804216018
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.12218259766642448,
+       "ci": [
+        0.07976736653415081,
+        0.16073035405815314
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "integrinB7|hao2021_P7": {
+      "typed": {
+       "u": 0.7370600041579188,
+       "ci": [
+        0.591535789380468,
+        0.8860596791365625
+       ]
+      },
+      "unseen": 0.7501287030855649,
+      "rows": 0.41984295796828286,
+      "gain_over_unseen": {
+       "gain": 0.01306869892764606,
+       "ci": [
+        0.009213433839549043,
+        0.019646523731089834
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.317217046189636,
+       "ci": [
+        0.2521222943393644,
+        0.4142666457549575
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD268|hao2021_P6": {
+      "typed": {
+       "u": 0.364458150858319,
+       "ci": [
+        0.2947799370965972,
+        0.4568606628936105
+       ]
+      },
+      "unseen": 0.31903006317506954,
+      "rows": 0.2959034830268643,
+      "gain_over_unseen": {
+       "gain": -0.04542808768324946,
+       "ci": [
+        -0.0574367119518058,
+        -0.036690209306849166
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.0685546678314547,
+       "ci": [
+        0.05335947365646437,
+        0.0941986823607321
+       ],
+       "reading": "no step"
+      }
+     },
+     "CD163|hao2021_P8": {
+      "typed": {
+       "u": 0.8264806840154084,
+       "ci": [
+        0.6790531148867958,
+        0.9889207896035279
+       ]
+      },
+      "unseen": 0.7255649506341499,
+      "rows": 0.4556595283423345,
+      "gain_over_unseen": {
+       "gain": -0.10091573338125848,
+       "ci": [
+        -0.12685857913345414,
+        -0.08009559069128111
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.37082115567307394,
+       "ci": [
+        0.29814279617013695,
+        0.4667686916364216
+       ],
+       "reading": "a step"
+      }
+     },
+     "IgD|hao2021_P6": {
+      "typed": {
+       "u": 0.38362853267074204,
+       "ci": [
+        0.28106639756131824,
+        0.50379830442499
+       ]
+      },
+      "unseen": 0.24084668963490108,
+      "rows": 0.2024041078463399,
+      "gain_over_unseen": {
+       "gain": -0.14278184303584096,
+       "ci": [
+        -0.18237599287367873,
+        -0.11013356300203271
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.18122442482440215,
+       "ci": [
+        0.14156693440754523,
+        0.22738359928985707
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD18|hao2021_P2": {
+      "typed": {
+       "u": 0.5235772514499284,
+       "ci": [
+        0.4391716576828387,
+        0.65516184160154
+       ]
+      },
+      "unseen": 0.49706040184837663,
+      "rows": 0.4443217980463642,
+      "gain_over_unseen": {
+       "gain": -0.026516849601551762,
+       "ci": [
+        -0.029280243076273155,
+        -0.023195158072044596
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.07925545340356421,
+       "ci": [
+        0.06802511659888538,
+        0.08908646250840191
+       ],
+       "reading": "no step"
+      }
+     },
+     "CD38|hao2021_P5": {
+      "typed": {
+       "u": 0.7609839438758492,
+       "ci": [
+        0.7038113786775975,
+        0.8551893790107578
+       ]
+      },
+      "unseen": 0.701847330478411,
+      "rows": 0.4416546408371179,
+      "gain_over_unseen": {
+       "gain": -0.059136613397438254,
+       "ci": [
+        -0.07583492562525013,
+        -0.046131972464430106
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.3193293030387313,
+       "ci": [
+        0.24747963584286692,
+        0.4129051433871712
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD22|hao2021_P8": {
+      "typed": {
+       "u": 0.4386388676351115,
+       "ci": [
+        0.24614621116333607,
+        0.6285005214580112
+       ]
+      },
+      "unseen": 0.3826991222361388,
+      "rows": 0.31980029103547736,
+      "gain_over_unseen": {
+       "gain": -0.05593974539897273,
+       "ci": [
+        -0.07330679146684035,
+        -0.03949696863260818
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.11883857659963415,
+       "ci": [
+        0.09281413372816666,
+        0.15003767676537821
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD71|hao2021_P8": {
+      "typed": {
+       "u": 0.5422371930093608,
+       "ci": [
+        0.3801462211326403,
+        0.7030472340391686
+       ]
+      },
+      "unseen": 0.40571766868697245,
+      "rows": 0.25213116317900885,
+      "gain_over_unseen": {
+       "gain": -0.13651952432238834,
+       "ci": [
+        -0.16595335069514391,
+        -0.10842197456087041
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.29010602983035194,
+       "ci": [
+        0.22112130293621635,
+        0.3805525115916073
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD63|hao2021_P7": {
+      "typed": {
+       "u": 0.6394367178515928,
+       "ci": [
+        0.5366170870881217,
+        0.8279547897035489
+       ]
+      },
+      "unseen": 0.6682671376111062,
+      "rows": 0.306478812482991,
+      "gain_over_unseen": {
+       "gain": 0.028830419759513393,
+       "ci": [
+        0.01949057108758195,
+        0.04803742044115857
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.3329579053686018,
+       "ci": [
+        0.2118034975443818,
+        0.5567160219829393
+       ],
+       "reading": "a step"
+      }
+     },
+     "CD72|hao2021_P8": {
+      "typed": {
+       "u": 0.32684618684090316,
+       "ci": [
+        0.0756292433256714,
+        0.5910088932572073
+       ]
+      },
+      "unseen": 0.23761112995893618,
+      "rows": 0.20171634693745288,
+      "gain_over_unseen": {
+       "gain": -0.08923505688196698,
+       "ci": [
+        -0.12335062678107345,
+        -0.05911637023748332
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.12512983990345028,
+       "ci": [
+        0.06077066139987204,
+        0.16756544797185435
+       ],
+       "reading": "unresolved"
+      }
+     },
+     "CD49a|hao2021_P7": {
+      "typed": {
+       "u": 0.7469963318754862,
+       "ci": [
+        0.6616819996102176,
+        0.8905581796613821
+       ]
+      },
+      "unseen": 0.8001364120946884,
+      "rows": 0.3787646272127262,
+      "gain_over_unseen": {
+       "gain": 0.053140080219202246,
+       "ci": [
+        0.039231986165564885,
+        0.06715121586377308
+       ],
+       "reading": "no step"
+      },
+      "own_row_still_adds": {
+       "gain": 0.36823170466276,
+       "ci": [
+        0.2697836939709224,
+        0.48732161811962715
+       ],
+       "reading": "a step"
+      }
+     }
+    },
+    "sets": {
+     "own_row_needed": {
+      "pairs": 10,
+      "median_abs_u": 0.766908430959007,
+      "ci": [
+       0.7198196043063391,
+       0.8514082667677575
+      ],
+      "gain_of_the_median_over_unseen": {
+       "gain": -0.015159890766399897,
+       "ci": [
+        -0.0699216104369424,
+        0.027545044287719724
+       ],
+       "reading": "no step"
+      },
+      "pairs_that_gain_a_step_over_unseen": 0,
+      "pairs_with_no_step": 9,
+      "pairs_unresolved": 1,
+      "pairs_where_the_own_row_still_adds_a_step": 10,
+      "pairs_where_it_adds_no_step": 0,
+      "rank_among_the_35_groupings": 2,
+      "best_grouping": "P1+P2+P4+P8|P3+P5+P6+P7",
+      "median_abs_u_of_the_best": 0.7570603795203995,
+      "median_over_the_35_groupings": 0.8660275766661694
+     },
+     "a_step_to_remove": {
+      "pairs": 16,
+      "median_abs_u": 0.7144354032045299,
+      "ci": [
+       0.6243951768757046,
+       0.7663730561527157
+      ],
+      "gain_of_the_median_over_unseen": {
+       "gain": -0.0555943559403671,
+       "ci": [
+        -0.09272036537800614,
+        0.007112117614064775
+       ],
+       "reading": "no step"
+      },
+      "pairs_that_gain_a_step_over_unseen": 0,
+      "pairs_with_no_step": 14,
+      "pairs_unresolved": 2,
+      "pairs_where_the_own_row_still_adds_a_step": 11,
+      "pairs_where_it_adds_no_step": 2,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.7144354032045299,
+      "median_over_the_35_groupings": 0.7711373321548041
+     },
+     "admitted": {
+      "pairs": 26,
+      "median_abs_u": 0.5329072222296446,
+      "ci": [
+       0.4766093668941798,
+       0.6786991532008312
+      ],
+      "gain_of_the_median_over_unseen": {
+       "gain": -0.04619042705287635,
+       "ci": [
+        -0.1323702954488443,
+        -0.024250867944113887
+       ],
+       "reading": "no step"
+      },
+      "pairs_that_gain_a_step_over_unseen": 0,
+      "pairs_with_no_step": 24,
+      "pairs_unresolved": 2,
+      "pairs_where_the_own_row_still_adds_a_step": 16,
+      "pairs_where_it_adds_no_step": 3,
+      "rank_among_the_35_groupings": 1,
+      "best_grouping": "P1+P2+P3+P4|P5+P6+P7+P8",
+      "median_abs_u_of_the_best": 0.5329072222296446,
+      "median_over_the_35_groupings": 0.6061670046198437
+     }
+    }
+   }
+  },
+  "by_grouping": {
+   "P1+P2+P3+P4|P5+P6+P7+P8": {
+    "own_row_needed": 0.766908430959007,
+    "a_step_to_remove": 0.7144354032045299,
+    "admitted": 0.5329072222296446
+   },
+   "P1+P2+P3+P5|P4+P6+P7+P8": {
+    "own_row_needed": 0.8345049564628808,
+    "a_step_to_remove": 0.7681201036284733,
+    "admitted": 0.5919917870308703
+   },
+   "P1+P2+P3+P6|P4+P5+P7+P8": {
+    "own_row_needed": 0.8558575272624361,
+    "a_step_to_remove": 0.7787970200593877,
+    "admitted": 0.6390794824319324
+   },
+   "P1+P2+P3+P7|P4+P5+P6+P8": {
+    "own_row_needed": 0.88360849279346,
+    "a_step_to_remove": 0.7941946353379018,
+    "admitted": 0.5681019966950912
+   },
+   "P1+P2+P3+P8|P4+P5+P6+P7": {
+    "own_row_needed": 0.8394965622407793,
+    "a_step_to_remove": 0.7808603847951694,
+    "admitted": 0.584737968562578
+   },
+   "P1+P2+P4+P5|P3+P6+P7+P8": {
+    "own_row_needed": 0.87260176804618,
+    "a_step_to_remove": 0.7417477155142813,
+    "admitted": 0.5892003022200643
+   },
+   "P1+P2+P4+P6|P3+P5+P7+P8": {
+    "own_row_needed": 0.8445447105966312,
+    "a_step_to_remove": 0.7520532425395938,
+    "admitted": 0.6623212390299944
+   },
+   "P1+P2+P4+P7|P3+P5+P6+P8": {
+    "own_row_needed": 0.9194788918818126,
+    "a_step_to_remove": 0.7487959669860461,
+    "admitted": 0.5592471757892024
+   },
+   "P1+P2+P4+P8|P3+P5+P6+P7": {
+    "own_row_needed": 0.7570603795203995,
+    "a_step_to_remove": 0.7223135561866607,
+    "admitted": 0.5778971082884755
+   },
+   "P1+P2+P5+P6|P3+P4+P7+P8": {
+    "own_row_needed": 0.8915199303524507,
+    "a_step_to_remove": 0.830040236196214,
+    "admitted": 0.6184406678560952
+   },
+   "P1+P2+P5+P7|P3+P4+P6+P8": {
+    "own_row_needed": 0.9417854596059483,
+    "a_step_to_remove": 0.7505260349799263,
+    "admitted": 0.6265131992808979
+   },
+   "P1+P2+P5+P8|P3+P4+P6+P7": {
+    "own_row_needed": 0.8855624388152608,
+    "a_step_to_remove": 0.7515345739435862,
+    "admitted": 0.6064308806065366
+   },
+   "P1+P2+P6+P7|P3+P4+P5+P8": {
+    "own_row_needed": 0.8393885885585124,
+    "a_step_to_remove": 0.793355235952407,
+    "admitted": 0.5838991588921508
+   },
+   "P1+P2+P6+P8|P3+P4+P5+P7": {
+    "own_row_needed": 0.8734697712768194,
+    "a_step_to_remove": 0.7711373321548041,
+    "admitted": 0.6143362727973958
+   },
+   "P1+P2+P7+P8|P3+P4+P5+P6": {
+    "own_row_needed": 0.8987727366807224,
+    "a_step_to_remove": 0.7763814484823098,
+    "admitted": 0.6339117671878991
+   },
+   "P1+P3+P4+P5|P2+P6+P7+P8": {
+    "own_row_needed": 0.8419485382268229,
+    "a_step_to_remove": 0.78551310999192,
+    "admitted": 0.5830935444681091
+   },
+   "P1+P3+P4+P6|P2+P5+P7+P8": {
+    "own_row_needed": 0.8660275766661694,
+    "a_step_to_remove": 0.7683365051527172,
+    "admitted": 0.6571756251994261
+   },
+   "P1+P3+P4+P7|P2+P5+P6+P8": {
+    "own_row_needed": 0.8633076002700437,
+    "a_step_to_remove": 0.7964183750396556,
+    "admitted": 0.5656722562253856
+   },
+   "P1+P3+P4+P8|P2+P5+P6+P7": {
+    "own_row_needed": 0.8201790708427591,
+    "a_step_to_remove": 0.7582099845136091,
+    "admitted": 0.583281211923865
+   },
+   "P1+P3+P5+P6|P2+P4+P7+P8": {
+    "own_row_needed": 0.8773183282623981,
+    "a_step_to_remove": 0.7810134177261365,
+    "admitted": 0.6290332132049952
+   },
+   "P1+P3+P5+P7|P2+P4+P6+P8": {
+    "own_row_needed": 0.8568206112748953,
+    "a_step_to_remove": 0.7323683904424425,
+    "admitted": 0.6156626342457359
+   },
+   "P1+P3+P5+P8|P2+P4+P6+P7": {
+    "own_row_needed": 0.8734096838994133,
+    "a_step_to_remove": 0.79396801576798,
+    "admitted": 0.5911406505430735
+   },
+   "P1+P3+P6+P7|P2+P4+P5+P8": {
+    "own_row_needed": 0.8197625497512011,
+    "a_step_to_remove": 0.7408826756350699,
+    "admitted": 0.601235148663647
+   },
+   "P1+P3+P6+P8|P2+P4+P5+P7": {
+    "own_row_needed": 0.9355823680373703,
+    "a_step_to_remove": 0.7789112151042397,
+    "admitted": 0.6229381334197887
+   },
+   "P1+P3+P7+P8|P2+P4+P5+P6": {
+    "own_row_needed": 0.8782805966604788,
+    "a_step_to_remove": 0.8268875512552594,
+    "admitted": 0.6230876507993861
+   },
+   "P1+P4+P5+P6|P2+P3+P7+P8": {
+    "own_row_needed": 0.9022622466350367,
+    "a_step_to_remove": 0.8372236845089779,
+    "admitted": 0.6482189312725619
+   },
+   "P1+P4+P5+P7|P2+P3+P6+P8": {
+    "own_row_needed": 0.8984626354050003,
+    "a_step_to_remove": 0.7708267085900897,
+    "admitted": 0.6107276335067905
+   },
+   "P1+P4+P5+P8|P2+P3+P6+P7": {
+    "own_row_needed": 0.8061883932776829,
+    "a_step_to_remove": 0.7639581207114965,
+    "admitted": 0.5752327758349307
+   },
+   "P1+P4+P6+P7|P2+P3+P5+P8": {
+    "own_row_needed": 0.8662404874279175,
+    "a_step_to_remove": 0.7650605905311572,
+    "admitted": 0.6170937386583863
+   },
+   "P1+P4+P6+P8|P2+P3+P5+P7": {
+    "own_row_needed": 0.8424138091729632,
+    "a_step_to_remove": 0.7556867762970481,
+    "admitted": 0.6433385563070655
+   },
+   "P1+P4+P7+P8|P2+P3+P5+P6": {
+    "own_row_needed": 0.8334753892271785,
+    "a_step_to_remove": 0.7741326234481216,
+    "admitted": 0.6061670046198437
+   },
+   "P1+P5+P6+P7|P2+P3+P4+P8": {
+    "own_row_needed": 0.8087635280294342,
+    "a_step_to_remove": 0.7836746714722365,
+    "admitted": 0.5823587466531207
+   },
+   "P1+P5+P6+P8|P2+P3+P4+P7": {
+    "own_row_needed": 0.8900076414794655,
+    "a_step_to_remove": 0.8254423011889924,
+    "admitted": 0.5635624734630511
+   },
+   "P1+P5+P7+P8|P2+P3+P4+P6": {
+    "own_row_needed": 0.8751660737111819,
+    "a_step_to_remove": 0.7482943642094255,
+    "admitted": 0.647977888599067
+   },
+   "P1+P6+P7+P8|P2+P3+P4+P5": {
+    "own_row_needed": 0.8346156403073919,
+    "a_step_to_remove": 0.7711573154543354,
+    "admitted": 0.5907170785240882
+   }
+  },
+  "anchors": {
+   "own_row_needed": {
+    "unseen": {
+     "median_abs_u": 0.7517485401926071,
+     "ci": [
+      0.687922587983779,
+      0.8471451879434828
+     ]
+    },
+    "rows": {
+     "median_abs_u": 0.44755992620053725,
+     "ci": [
+      0.38948222751842865,
+      0.5244553829956281
+     ]
+    }
+   },
+   "a_step_to_remove": {
+    "unseen": {
+     "median_abs_u": 0.6588410472641628,
+     "ci": [
+      0.5709900398515747,
+      0.7291641523279152
+     ]
+    },
+    "rows": {
+     "median_abs_u": 0.3993037925905045,
+     "ci": [
+      0.33660041189814643,
+      0.4658651113296833
+     ]
+    }
+   },
+   "admitted": {
+    "unseen": {
+     "median_abs_u": 0.48671679517676825,
+     "ci": [
+      0.41542158712638144,
+      0.5884638502217495
+     ]
+    },
+    "rows": {
+     "median_abs_u": 0.35216780895346683,
+     "ci": [
+      0.2673603168280388,
+      0.42294559923090314
+     ]
+    }
+   }
+  }
+ },
+ "statements": {
+  "batch": {
+   "H1_the_types_record_covers_the_member": "refuted",
+   "H2_the_repair_with_the_types_record_gains_a_step": "refuted",
+   "not_a_random_grouping_by_the_record": true,
+   "not_a_random_grouping_with_the_repair": true
+  },
+  "state": {
+   "H1_the_types_record_covers_the_member": "refuted",
+   "H2_the_repair_with_the_types_record_gains_a_step": "refuted",
+   "not_a_random_grouping_by_the_record": true,
+   "not_a_random_grouping_with_the_repair": true
+  }
+ }
+}
