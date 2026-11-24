@@ -8,7 +8,8 @@ Updated on 23 November 2026: events without control cells are in the round
 ([`runs/batch1_round_20261123`](runs/batch1_round_20261123/)). Sections 2 to 4, 6 and 7 carry the changes.
 Updated on 24 November 2026: the stages inside the encoder were read for one stratum
 ([`runs/encoder_stages_20261124`](runs/encoder_stages_20261124/)), and the encoder was run with its annotation
-positions ([`runs/annotation_input_20261124`](runs/annotation_input_20261124/)); Sections 2 and 7.
+positions ([`runs/annotation_input_20261124`](runs/annotation_input_20261124/)), and the head was given the first
+of them beside Z ([`runs/annotation_beside_z_20261124`](runs/annotation_beside_z_20261124/)); Sections 2 and 7.
 
 The loop was built on one system: TEDDY with a prediction head, RNA as its input, proteins as readouts, knockouts as
 events. This document says what in it does not depend on that system, what a system has to expose to be put through
@@ -228,3 +229,11 @@ annotation positions themselves, a summary the model learned in pre-training, re
 0.40); by the rule that difference is unresolved. It is a lead and comes before the trial: let the head read the
 first annotation position beside Z on the three strata, which needs no training. From this run on the grids are made
 on the owner's machine, where they equal the cloud's to 5e-6 and take less than half the time.
+
+That was done the same day ([`runs/annotation_beside_z_20261124`](runs/annotation_beside_z_20261124/)), with the
+five targets, cells, halves and resamples of the run of 23 November. For IRF1 the repaired output goes from 0.68 to
+0.51, a step; it does not close (the input view beside Z gave 0.39). MHC-I in co-culture gains no step. No control
+loses and every grade is kept; PD-L1 under IFN-γ goes from relative to absolute, where the input view had cost it its
+grade. So the annotation position is the first wider stage that could be given to every type: a candidate for an
+adjustment between rounds, to be declared and then read on units that have not been read. What it leaves for a
+retraining is the part no stage after training has reached: an event read without its own record (0.82 here).
