@@ -1,0 +1,59 @@
+{
+ "cells": 16,
+ "tokens_of_the_cells": [
+  1067,
+  2048
+ ],
+ "device": "mps",
+ "limit_mean_over_genes": 0.0001,
+ "limit_annotation_positions": 0.001,
+ "N_against_the_recorded_state": 4.76837158203125e-06,
+ "largest_value": {
+  "mean_over_genes": 4.988891124725342,
+  "annotation_positions": 14.179312705993652,
+  "single_gene_position": 15.82229232788086
+ },
+ "order_of_the_annotations": {
+  "mean_over_genes": 1.049041748046875e-05,
+  "any_single_gene_position": 0.00010609626770019531,
+  "annotation_positions": 2.002716064453125e-05
+ },
+ "this_device_against_cpu": {
+  "N": {
+   "mean_over_genes": 1.1444091796875e-05,
+   "any_single_gene_position": 0.00021600723266601562
+  },
+  "P": {
+   "mean_over_genes": 1.0013580322265625e-05,
+   "any_single_gene_position": 0.00010609626770019531,
+   "annotation_positions": 2.5033950805664062e-05
+  },
+  "T": {
+   "mean_over_genes": 7.62939453125e-06,
+   "any_single_gene_position": 0.00031113624572753906,
+   "annotation_positions": 3.695487976074219e-05
+  }
+ },
+ "official_class_against_this_code_on_cpu": {
+  "transformers": "4.57.6",
+  "N": {
+   "mean_over_genes": 0.0,
+   "any_single_gene_position": 0.0
+  },
+  "P": {
+   "mean_over_genes": 0.0,
+   "any_single_gene_position": 0.0,
+   "annotation_positions": 0.0
+  },
+  "T": {
+   "mean_over_genes": 0.0,
+   "any_single_gene_position": 0.0,
+   "annotation_positions": 0.0
+  }
+ },
+ "hold": true,
+ "torch": "2.15.0",
+ "numpy": "2.5.3",
+ "python": "3.13.7",
+ "seconds": 31.9
+}

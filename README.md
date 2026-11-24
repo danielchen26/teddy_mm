@@ -198,6 +198,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   last layer brings back 0.16, to the 0.40 of the embedding. Eight window means read no more than one mean, and the
   four pathway genes lose nothing at any stage. So the tokeniser is not where it is lost: the response does not reach
   the average that the embedding is. Forecasts: 8 of 9 intervals, 5 of 9 outcomes.
+- **TEDDY's annotation positions (24 November; development cells; one event;**
+  [`annotation_input_20261124/`](anm_diag/runs/annotation_input_20261124/)**):** TEDDY takes four annotation positions
+  (disease, tissue, cell type, sex) in front of the genes, and this repository had never given them. The same 7,478
+  cells were run without them, with the four placeholders and with the labels of the cell line; the forward pass
+  equals the official class exactly. The embedding reads IRF1 the same in all three (*u* 0.40, 0.41, 0.41: no change
+  of a step), and what the labels say does not matter. So the loss is not a matter of a missing input. The annotation
+  positions themselves read more than the mean (0.29 against 0.40); by the rule the difference is unresolved, and it
+  is the next thing to test. Forecasts: 7 of 9 intervals, 10 of 17 outcomes. The grids were made on the owner's
+  machine, where they equal the cloud's to 5e-6.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

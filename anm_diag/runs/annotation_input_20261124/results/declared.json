@@ -1,0 +1,267 @@
+{
+ "written": "24 November 2026, after the code check on 16 cells (results/check.json) and before the states of the stratum were computed in any way of running with annotations",
+ "forecasts": [
+  {
+   "id": "V-u",
+   "kind": "interval",
+   "what": "IRF1: u at V (check against the record, 0.184)",
+   "interval": [
+    0.179,
+    0.189
+   ]
+  },
+  {
+   "id": "ZN-u",
+   "kind": "interval",
+   "what": "IRF1: u at ZN, the state without annotation positions (check against the record, 0.396)",
+   "interval": [
+    0.391,
+    0.401
+   ]
+  },
+  {
+   "id": "ZP-u",
+   "kind": "interval",
+   "what": "IRF1: u at ZP, the state with the four placeholders",
+   "interval": [
+    0.3,
+    0.5
+   ],
+   "why": "every cell gets the same four tokens; they can change how the layers treat the genes, not what a cell is given"
+  },
+  {
+   "id": "ZP-against-none",
+   "kind": "outcome",
+   "what": "IRF1: ZP against ZN",
+   "probabilities": {
+    "no change of a step": 0.65,
+    "unresolved": 0.25,
+    "brings back a step": 0.06,
+    "costs a step": 0.04
+   }
+  },
+  {
+   "id": "ZP-from-input",
+   "kind": "outcome",
+   "what": "IRF1: ZP from the input",
+   "probabilities": {
+    "loss": 0.7,
+    "unresolved": 0.25,
+    "no added loss": 0.05
+   }
+  },
+  {
+   "id": "ZT-u",
+   "kind": "interval",
+   "what": "IRF1: u at ZT, the state with the labels of the line",
+   "interval": [
+    0.3,
+    0.5
+   ]
+  },
+  {
+   "id": "ZT-against-none",
+   "kind": "outcome",
+   "what": "IRF1: ZT against ZN",
+   "probabilities": {
+    "no change of a step": 0.65,
+    "unresolved": 0.25,
+    "brings back a step": 0.04,
+    "costs a step": 0.06
+   },
+   "why": "label tokens as an input may be something the model never saw"
+  },
+  {
+   "id": "ZP-moves",
+   "kind": "interval",
+   "what": "How far the state moves from ZN to ZP: median over cells, common shift taken out, as a share of the cell's distance from the mean of the stratum",
+   "interval": [
+    0.03,
+    0.5
+   ]
+  },
+  {
+   "id": "ZT-moves",
+   "kind": "interval",
+   "what": "The same from ZN to ZT",
+   "interval": [
+    0.0,
+    0.5
+   ],
+   "why": "close to zero if the label tokens were never an input in training"
+  },
+  {
+   "id": "ZW-against-none",
+   "kind": "outcome",
+   "what": "IRF1: ZW (wrong labels) against ZN",
+   "probabilities": {
+    "no change of a step": 0.6,
+    "unresolved": 0.28,
+    "costs a step": 0.08,
+    "brings back a step": 0.04
+   }
+  },
+  {
+   "id": "content",
+   "kind": "outcome",
+   "what": "IRF1: ZT against ZW (does the content of the labels matter)",
+   "probabilities": {
+    "no change of a step": 0.75,
+    "unresolved": 0.2,
+    "brings back a step": 0.03,
+    "costs a step": 0.02
+   }
+  },
+  {
+   "id": "AP-u",
+   "kind": "interval",
+   "what": "IRF1: u at AP, the four annotation positions with the placeholders",
+   "interval": [
+    0.4,
+    0.95
+   ],
+   "why": "trained to say four coarse labels that are the same for every cell of this line"
+  },
+  {
+   "id": "AP-from-input",
+   "kind": "outcome",
+   "what": "IRF1: AP from the input",
+   "probabilities": {
+    "loss": 0.7,
+    "unresolved": 0.22,
+    "no added loss": 0.08
+   }
+  },
+  {
+   "id": "AP-against-none",
+   "kind": "outcome",
+   "what": "IRF1: AP against ZN",
+   "probabilities": {
+    "costs a step": 0.35,
+    "unresolved": 0.33,
+    "no change of a step": 0.25,
+    "brings back a step": 0.07
+   }
+  },
+  {
+   "id": "CP-u",
+   "kind": "interval",
+   "what": "IRF1: u at CP, the first position with the placeholders (the official cell_emb)",
+   "interval": [
+    0.45,
+    1.0
+   ]
+  },
+  {
+   "id": "ZAP-u",
+   "kind": "interval",
+   "what": "IRF1: u at ZAP, ZP beside AP",
+   "interval": [
+    0.28,
+    0.46
+   ]
+  },
+  {
+   "id": "ZAP-against-none",
+   "kind": "outcome",
+   "what": "IRF1: ZAP against ZN",
+   "probabilities": {
+    "no change of a step": 0.6,
+    "unresolved": 0.27,
+    "brings back a step": 0.1,
+    "costs a step": 0.03
+   }
+  },
+  {
+   "id": "statement",
+   "kind": "outcome",
+   "what": "IRF1: the statement of the rule about annotations in the input",
+   "probabilities": {
+    "changes nothing": 0.47,
+    "unresolved": 0.35,
+    "costs a step": 0.1,
+    "brings back": 0.08
+   }
+  },
+  {
+   "id": "control",
+   "kind": "outcome",
+   "what": "Control (four pathway genes, linear reader): ZP and ZT are no loss from the input and cost no step",
+   "probabilities": {
+    "holds": 0.8,
+    "fails": 0.2
+   }
+  },
+  {
+   "id": "PERM",
+   "kind": "outcome",
+   "what": "The permuted view reads nothing (|u| at least 0.9)",
+   "probabilities": {
+    "yes": 0.97,
+    "no": 0.03
+   }
+  },
+  {
+   "id": "own-category",
+   "kind": "outcome",
+   "what": "With the placeholders, the token the model ranks first at each of the four positions is a label of that position's own kind for at least 90% of the cells",
+   "probabilities": {
+    "yes": 0.75,
+    "no": 0.25
+   },
+   "why": "if the placeholders are how the model was asked in training, it answers in kind"
+  },
+  {
+   "id": "says-disease",
+   "kind": "outcome",
+   "what": "What the model ranks first at the disease position for most cells",
+   "probabilities": {
+    "healthy": 0.45,
+    "cancer_disease": 0.4,
+    "another": 0.15
+   },
+   "why": "a leukaemia line; studies of cell lines are often filed as normal"
+  },
+  {
+   "id": "says-tissue",
+   "kind": "outcome",
+   "what": "What it ranks first at the tissue position for most cells",
+   "probabilities": {
+    "hematopoietic_tissue": 0.5,
+    "immune_tissue": 0.2,
+    "another": 0.3
+   }
+  },
+  {
+   "id": "says-cell_type",
+   "kind": "outcome",
+   "what": "What it ranks first at the cell-type position for most cells",
+   "probabilities": {
+    "precursor_cell": 0.32,
+    "immune_cell": 0.28,
+    "hematopoietic_cell": 0.25,
+    "another": 0.15
+   },
+   "why": "the official mapping files put monocytes under precursor_cell"
+  },
+  {
+   "id": "says-sex",
+   "kind": "outcome",
+   "what": "What it ranks first at the sex position for most cells",
+   "probabilities": {
+    "male": 0.6,
+    "female": 0.4
+   }
+  },
+  {
+   "id": "labels-untrained",
+   "kind": "outcome",
+   "what": "The input embeddings of the label tokens look untrained (median norm below twice that of ids no token has)",
+   "probabilities": {
+    "yes": 0.55,
+    "no": 0.45
+   },
+   "why": "the paper describes the labels as what is predicted, not as what is given"
+  }
+ ]
+}
