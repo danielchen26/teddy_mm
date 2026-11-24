@@ -1,0 +1,244 @@
+{
+ "cells": 7478,
+ "sizes": {
+  "70": {
+   "layers": 12,
+   "d_model": 512,
+   "the_model_says_at_the_placeholders": {
+    "disease": {
+     "ranked_first_share_of_cells": {
+      "infectious_disease": 0.675,
+      "cancer_disease": 0.2292,
+      "healthy": 0.0455,
+      "immune_disease": 0.0283
+     },
+     "mean_probability_of_all_label_tokens": 0.9994
+    },
+    "tissue": {
+     "ranked_first_share_of_cells": {
+      "respiratory_tissue": 0.9457,
+      "immune_tissue": 0.0277,
+      "hematopoietic_tissue": 0.0218,
+      "central_nervous_tissue": 0.0019
+     },
+     "mean_probability_of_all_label_tokens": 0.9995
+    },
+    "cell_type": {
+     "ranked_first_share_of_cells": {
+      "immune_cell": 0.9144,
+      "precursor_cell": 0.0756,
+      "hematopoietic_cell": 0.0095,
+      "epithelial_cell": 0.0004
+     },
+     "mean_probability_of_all_label_tokens": 0.9999
+    },
+    "sex": {
+     "ranked_first_share_of_cells": {
+      "male": 0.9481,
+      "female": 0.0519
+     },
+     "mean_probability_of_all_label_tokens": 1.0
+    }
+   }
+  },
+  "160": {
+   "layers": 12,
+   "d_model": 768,
+   "heads": 12,
+   "d_hid": 3072,
+   "weights": 154009408,
+   "device": "mps",
+   "torch": "2.15.0",
+   "seconds": 1616.4,
+   "the_model_says_at_the_placeholders": {
+    "disease": {
+     "ranked_first_share_of_cells": {
+      "infectious_disease": 0.9104,
+      "healthy": 0.0765,
+      "respiratory_disease": 0.0127,
+      "cancer_disease": 0.0004
+     },
+     "mean_probability_of_all_label_tokens": 0.998
+    },
+    "tissue": {
+     "ranked_first_share_of_cells": {
+      "hematopoietic_tissue": 0.8185,
+      "respiratory_tissue": 0.1325,
+      "immune_tissue": 0.0481,
+      "renal_tissue": 0.0004
+     },
+     "mean_probability_of_all_label_tokens": 0.9991
+    },
+    "cell_type": {
+     "ranked_first_share_of_cells": {
+      "immune_cell": 0.9628,
+      "hematopoietic_cell": 0.0193,
+      "precursor_cell": 0.0177,
+      "secretory_cell": 0.0003
+     },
+     "mean_probability_of_all_label_tokens": 0.9997
+    },
+    "sex": {
+     "ranked_first_share_of_cells": {
+      "male": 0.9833,
+      "female": 0.0167
+     },
+     "mean_probability_of_all_label_tokens": 0.9999
+    }
+   },
+   "code_check": {
+    "cells": 16,
+    "hold": true,
+    "official_class_against_this_code_on_cpu": {
+     "transformers": "4.57.6",
+     "N": {
+      "mean_over_genes": 0.0,
+      "any_single_gene_position": 0.0
+     },
+     "P": {
+      "mean_over_genes": 0.0,
+      "any_single_gene_position": 0.0,
+      "annotation_positions": 0.0
+     }
+    },
+    "this_device_against_cpu": {
+     "N": {
+      "mean_over_genes": 2.4139881134033203e-06,
+      "any_single_gene_position": 3.7223100662231445e-05
+     },
+     "P": {
+      "mean_over_genes": 2.5033950805664062e-06,
+      "any_single_gene_position": 3.713369369506836e-05,
+      "annotation_positions": 2.6047229766845703e-05
+     }
+    },
+    "order_of_the_annotations": {
+     "mean_over_genes": 1.9073486328125e-06,
+     "any_single_gene_position": 2.6106834411621094e-05,
+     "annotation_positions": 1.5497207641601562e-05
+    }
+   }
+  },
+  "400": {
+   "layers": 24,
+   "d_model": 1024,
+   "heads": 16,
+   "d_hid": 4096,
+   "weights": 394234688,
+   "device": "mps",
+   "torch": "2.15.0",
+   "seconds": 5091.8,
+   "the_model_says_at_the_placeholders": {
+    "disease": {
+     "ranked_first_share_of_cells": {
+      "healthy": 0.8839,
+      "infectious_disease": 0.0483,
+      "cancer_disease": 0.0394,
+      "immune_disease": 0.0283
+     },
+     "mean_probability_of_all_label_tokens": 0.9998
+    },
+    "tissue": {
+     "ranked_first_share_of_cells": {
+      "respiratory_tissue": 0.5777,
+      "sensory_tissue": 0.226,
+      "hematopoietic_tissue": 0.1167,
+      "immune_tissue": 0.0611
+     },
+     "mean_probability_of_all_label_tokens": 0.9997
+    },
+    "cell_type": {
+     "ranked_first_share_of_cells": {
+      "immune_cell": 0.9972,
+      "precursor_cell": 0.0025,
+      "hematopoietic_cell": 0.0003
+     },
+     "mean_probability_of_all_label_tokens": 1.0
+    },
+    "sex": {
+     "ranked_first_share_of_cells": {
+      "male": 0.9441,
+      "female": 0.0559
+     },
+     "mean_probability_of_all_label_tokens": 1.0
+    }
+   },
+   "code_check": {
+    "cells": 8,
+    "hold": true,
+    "official_class_against_this_code_on_cpu": {
+     "transformers": "4.57.6",
+     "N": {
+      "mean_over_genes": 0.0,
+      "any_single_gene_position": 0.0
+     },
+     "P": {
+      "mean_over_genes": 0.0,
+      "any_single_gene_position": 0.0,
+      "annotation_positions": 0.0
+     }
+    },
+    "this_device_against_cpu": {
+     "N": {
+      "mean_over_genes": 1.5497207641601562e-06,
+      "any_single_gene_position": 0.00013828277587890625
+     },
+     "P": {
+      "mean_over_genes": 1.6689300537109375e-06,
+      "any_single_gene_position": 0.000133514404296875,
+      "annotation_positions": 2.4557113647460938e-05
+     }
+    },
+    "order_of_the_annotations": {
+     "mean_over_genes": 1.0728836059570312e-06,
+     "any_single_gene_position": 7.82012939453125e-05,
+     "annotation_positions": 1.430511474609375e-05
+    }
+   }
+  }
+ },
+ "width": {
+  "V": 512,
+  "E70": 512,
+  "P70": 512,
+  "Z70": 512,
+  "C70": 512,
+  "E160": 768,
+  "P160": 768,
+  "Z160": 768,
+  "C160": 768,
+  "E400": 1024,
+  "P400": 1024,
+  "Z400": 1024,
+  "C400": 1024,
+  "Z160r": 512,
+  "C160r": 512,
+  "Z400r": 512,
+  "C400r": 512,
+  "ZP160": 768,
+  "ZP400": 1024,
+  "PERM": 512
+ },
+ "stages": [
+  "V",
+  "E70",
+  "P70",
+  "Z70",
+  "C70",
+  "E160",
+  "P160",
+  "Z160",
+  "C160",
+  "E400",
+  "P400",
+  "Z400",
+  "C400",
+  "Z160r",
+  "C160r",
+  "Z400r",
+  "C400r",
+  "ZP160",
+  "ZP400",
+  "PERM"
+ ]
+}
