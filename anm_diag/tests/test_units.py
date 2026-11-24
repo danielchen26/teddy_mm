@@ -79,11 +79,22 @@ def test_a_disease_is_a_pool_of_patient_donors_read_by_unit_on_both_sides(diseas
     assert disease["read_as"] == "a pool" and e["resampled_by"] == "event" and len(e["events"]) == 8
     assert e["as_trained"]["verdict"] == "reject" and e["A3"]["holds"] and e["arms"]["rows"]["verdict"] == "support" and e["gate3"]["passes"]
     assert disease["status"] == "closed (absolute)"
+
+
+def test_the_healthy_side_counts_by_donor_in_a_reading():
+    """An output that reads every cell and misses the level of its donor: one patient against the healthy donors. Counting
+    the healthy side by donor leaves the value as it is and widens its interval; by cell the levels of the donors would
+    average out as if they were noise of single cells."""
     d = toy.planted_groups()
-    tr = d["treated"]
-    by_cell, _a = cycle.output_u(d["y"], d["o"], tr, d["unit"])
-    by_unit, _a = cycle.output_u(d["y"], d["o"], tr, d["unit"], control_cluster=d["unit"])
-    assert by_cell[0] == by_unit[0] and by_unit[1:].std() >= by_cell[1:].std()                         # the same value; the healthy side now counts by donor
+    tr, unit, y = d["treated"], d["unit"], d["y"]
+    level = np.zeros(len(y))
+    for u in np.unique(unit):
+        k = unit == u
+        level[k] = y[k].mean() - y[tr == tr[k][0]].mean()
+    m = ~tr | (unit == "d00")
+    by_cell, _a = cycle.output_u(y[m], (y - level)[m], tr[m], None)
+    by_unit, _a = cycle.output_u(y[m], (y - level)[m], tr[m], None, control_cluster=unit[m])
+    assert by_cell[0] == by_unit[0] and by_unit[1:].std() > 3 * by_cell[1:].std()
 
 
 def test_a_disease_with_nothing_wrong_leaves_nothing_open(tmp_path):
@@ -146,3 +157,24 @@ def test_an_item_when_the_rows_of_the_other_units_do_not_carry():
     got = outer.open_items([t(step)], {"final_units": 1})
     assert [(i["reading"], i["lever"], i["event"]) for i in got] == [("pooled, and differs", "S", "d1")]
     assert outer.open_items([t(none)], {"final_units": 1}) == []
+
+
+def test_the_arms_of_the_unit_repair_are_what_they_say():
+    """`controls` is a ridge readout of the stage and the readout centred by unit. `unseen|U` is, up to the scale and offset
+    of the output (which u does not see), the arm `rows` of a fit that was never given the cells of U."""
+    import anm_diag.cycle as C
+    d = toy.planted_units(n_ordinary=10, n_cell=150)
+    x, y, o, unit = d["z"], d["y"], d["o"], d["unit"]
+    ev = [(u, np.where(unit == u)[0]) for u in sorted(set(unit))]
+    R = cycle.UnitRows(x, y, o, np.array([], int), ev)
+    t = o.mean() + o.std() / y.std() * (y - y.mean())
+    xw, tw = np.vstack([x[T] - x[T].mean(0) for _u, T in ev]), np.concatenate([t[T] - t[T].mean() for _u, T in ev])
+    w = np.linalg.solve(xw.T @ xw / len(xw) + R.log["ridge_weight"] * xw.var(0).mean() * np.eye(x.shape[1]), xw.T @ tw / len(xw))
+    assert np.abs(R.th["controls"][:-1] - w).max() < 1e-9 and abs(R.th["controls"][-1] - t.mean()) < 1e-9
+    orig = C._cv_weight
+    C._cv_weight = lambda F, tt, p, seed=0: (R.log["ridge_weight"], R.log["cv_error"]) if F.shape[1] == x.shape[1] else orig(F, tt, p, seed)       # the same ridge weight
+    try:
+        R2 = cycle.UnitRows(x, y, o, np.array([], int), [(u, T) for u, T in ev if u != "solo"])
+    finally:
+        C._cv_weight = orig
+    assert np.corrcoef(R.out("unseen|solo", x), R2.out("rows", x))[0, 1] > 0.99999
