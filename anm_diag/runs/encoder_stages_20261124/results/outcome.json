@@ -1,0 +1,210 @@
+{
+ "intervals": {
+  "inside": 8,
+  "of": 9
+ },
+ "outcomes": {
+  "most_likely_happened": 5,
+  "of": 9
+ },
+ "rows": [
+  {
+   "id": "V-u",
+   "what": "IRF1: u at V (check against the record, 0.184)",
+   "forecast": [
+    0.179,
+    0.189
+   ],
+   "observed": 0.18370169645910994,
+   "inside": true
+  },
+  {
+   "id": "L12-u",
+   "what": "IRF1: u at L12 (check against the record, 0.396)",
+   "forecast": [
+    0.391,
+    0.401
+   ],
+   "observed": 0.3958113793478839,
+   "inside": true
+  },
+  {
+   "id": "SELV-u",
+   "what": "IRF1: u at SELV",
+   "forecast": [
+    0.12,
+    0.32
+   ],
+   "observed": 0.25189811963900455,
+   "inside": true
+  },
+  {
+   "id": "SELV-from-input",
+   "what": "IRF1: SELV from the input",
+   "forecast": {
+    "no added loss": 0.6,
+    "unresolved": 0.3,
+    "loss": 0.1
+   },
+   "observed": "unresolved",
+   "probability_given": 0.3,
+   "most_likely_happened": false
+  },
+  {
+   "id": "RANK-u",
+   "what": "IRF1: u at RANK",
+   "forecast": [
+    0.18,
+    0.5
+   ],
+   "observed": 0.20493759833680214,
+   "inside": true
+  },
+  {
+   "id": "RANK-from-input",
+   "what": "IRF1: RANK from the input",
+   "forecast": {
+    "no added loss": 0.35,
+    "unresolved": 0.35,
+    "loss": 0.3
+   },
+   "observed": "no added loss",
+   "probability_given": 0.35,
+   "most_likely_happened": true
+  },
+  {
+   "id": "SET-u",
+   "what": "IRF1: u at SET",
+   "forecast": [
+    0.3,
+    0.85
+   ],
+   "observed": 0.24138971896986838,
+   "inside": false
+  },
+  {
+   "id": "E0-u",
+   "what": "IRF1: u at E0",
+   "forecast": [
+    0.45,
+    0.95
+   ],
+   "observed": 0.5162963245323564,
+   "inside": true
+  },
+  {
+   "id": "E0-from-input",
+   "what": "IRF1: E0 from the input",
+   "forecast": {
+    "loss": 0.75,
+    "unresolved": 0.2,
+    "no added loss": 0.05
+   },
+   "observed": "loss",
+   "probability_given": 0.75,
+   "most_likely_happened": true
+  },
+  {
+   "id": "L6-u",
+   "what": "IRF1: u at L6",
+   "forecast": [
+    0.35,
+    0.75
+   ],
+   "observed": 0.5405094102974157,
+   "inside": true
+  },
+  {
+   "id": "first-loss",
+   "what": "IRF1: the first stage of the chain that is a loss from the input",
+   "forecast": {
+    "SELV": 0.07,
+    "RANK": 0.23,
+    "E0": 0.5,
+    "a layer": 0.17,
+    "none": 0.03
+   },
+   "observed": "E0",
+   "probability_given": 0.5,
+   "most_likely_happened": true
+  },
+  {
+   "id": "layers-bring-back",
+   "what": "IRF1: |u| at E0 minus |u| at L12, read against the step margin",
+   "forecast": {
+    "loss": 0.45,
+    "unresolved": 0.35,
+    "no added loss": 0.2
+   },
+   "observed": "unresolved",
+   "probability_given": 0.35,
+   "most_likely_happened": false
+  },
+  {
+   "id": "W12-u",
+   "what": "IRF1: u at W12",
+   "forecast": [
+    0.12,
+    0.42
+   ],
+   "observed": 0.4181216043665623,
+   "inside": true
+  },
+  {
+   "id": "mean-at-the-end",
+   "what": "IRF1: |u| at L12 minus |u| at W12 (what the single mean loses against eight windows)",
+   "forecast": {
+    "loss": 0.3,
+    "unresolved": 0.4,
+    "no added loss": 0.3
+   },
+   "observed": "no added loss",
+   "probability_given": 0.3,
+   "most_likely_happened": false
+  },
+  {
+   "id": "W12-from-input",
+   "what": "IRF1: W12 from the input",
+   "forecast": {
+    "no added loss": 0.35,
+    "unresolved": 0.35,
+    "loss": 0.3
+   },
+   "observed": "loss",
+   "probability_given": 0.3,
+   "most_likely_happened": false
+  },
+  {
+   "id": "W0-u",
+   "what": "IRF1: u at W0",
+   "forecast": [
+    0.25,
+    0.8
+   ],
+   "observed": 0.44057832203790814,
+   "inside": true
+  },
+  {
+   "id": "control",
+   "what": "Control (four pathway genes, linear reader): some stage of the chain is a loss from the input",
+   "forecast": {
+    "none": 0.55,
+    "some": 0.45
+   },
+   "observed": "none",
+   "probability_given": 0.55,
+   "most_likely_happened": true
+  },
+  {
+   "id": "PERM",
+   "what": "The permuted view reads nothing (|u| at least 0.9)",
+   "forecast": {
+    "yes": 0.97,
+    "no": 0.03
+   },
+   "observed": "yes",
+   "probability_given": 0.97,
+   "most_likely_happened": true
+  }
+ ]
+}

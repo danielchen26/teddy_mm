@@ -6,6 +6,8 @@ Updated on 23 November 2026: events without control cells are in the round
 ([`runs/unit_events_20261123`](runs/unit_events_20261123/)), the head was given a view of the input beside Z
 ([`runs/input_beside_z_20261123`](runs/input_beside_z_20261123/)), and the round on batch 1 was run
 ([`runs/batch1_round_20261123`](runs/batch1_round_20261123/)). Sections 2 to 4, 6 and 7 carry the changes.
+Updated on 24 November 2026: the stages inside the encoder were read for one stratum
+([`runs/encoder_stages_20261124`](runs/encoder_stages_20261124/)); Sections 2 and 7.
 
 The loop was built on one system: TEDDY with a prediction head, RNA as its input, proteins as readouts, knockouts as
 events. This document says what in it does not depend on that system, what a system has to expose to be put through
@@ -36,7 +38,7 @@ stages are called, which repair is used.
 | the system's own output | what the system as trained says for that readout, on a scale that moves with it | the head's protein output | the output of the model for that readout | `o` |
 | the stage the model reads | an array per cell: the last thing before the part of the model that a round may change | the embedding Z | the fused embedding | `z` |
 | views of the model's own input | one or more arrays per cell, read by at least two reader classes of which one is not linear | 512 components of RNA; 4,000 genes | each modality the model receives, alone and together | `view_a` |
-| stages inside the model | optional: arrays per cell at points between the input and the stage the model reads, in order | none was read | the output of each modality's encoder; the fused state | `mid` |
+| stages inside the model | optional: arrays per cell at points between the input and the stage the model reads, in order | for one stratum (24 November): the tokens, what enters layer 1 and the output of each of the twelve layers, each averaged over a cell's tokens | the output of each modality's encoder; the fused state | `mid` |
 | other measured inputs | arrays the model does not receive, never the readout itself | none was read | a modality that was measured and left out | `view_b` |
 | a control view | a view that must read nothing | the RNA view with its rows permuted | the same | `perm` |
 | events with control cells | units that change the readout, each with cells that did not get the event | knockouts against non-targeting guides | perturbations of any kind | planted shifts |
@@ -207,3 +209,12 @@ measure step 5 will be read by (the arms `controls` and `unseen`).
 
 Every step that is left needs the owner: the encoder for step 2, GPUs and the pre-training data for step 5, the
 agreement to read for step 6.
+
+On 24 November the loss of IRF1 was read along the stages inside the encoder
+([`runs/encoder_stages_20261124`](runs/encoder_stages_20261124/)). The tokens the model receives still carry the
+response (0.21 against 0.18 at the input view). The average of what enters layer 1 does not (0.52), the averages of
+layers 1 to 11 do not, and the last layer brings part back (Z: 0.40). The tokeniser is not where it is lost, and
+eight window means read no more than one mean. For step 5 this says what a retraining has to change, and where to
+start: the response has to reach the average that Z is, and the last layer is the one that moves it there. A trial
+that trains the last layer on the owner's machine is within reach (measured: 23 cells per second) and comes before
+any retraining on GPUs.

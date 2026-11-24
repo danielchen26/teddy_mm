@@ -190,6 +190,14 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   MHC-I in co-culture gains 0.10 [0.08, 0.12]. Given to every type the wider stage costs PD-L1 under IFN-γ its grade.
   Both hypotheses are unresolved. With this, steps 1, 3 and 4 of the plan in [`GENERAL.md`](anm_diag/GENERAL.md) are
   done; the steps that are left (a second encoder, retraining with the TEG, the final audit) need the owner.
+- **Where inside the encoder (24 November; development cells; one event;**
+  [`encoder_stages_20261124/`](anm_diag/runs/encoder_stages_20261124/)**):** the loss of IRF1 between the input and the
+  embedding was read along the encoder's own stages for the 7,478 cells of the THP-1 stratum. The tokens the model
+  receives still carry the response (*u* 0.21, against 0.18 at the input view). The average of what enters layer 1
+  does not (0.52): that one step loses 0.31 [0.22, 0.42]. The averages of layers 1 to 11 stay at 0.51 to 0.60, and the
+  last layer brings back 0.16, to the 0.40 of the embedding. Eight window means read no more than one mean, and the
+  four pathway genes lose nothing at any stage. So the tokeniser is not where it is lost: the response does not reach
+  the average that the embedding is. Forecasts: 8 of 9 intervals, 5 of 9 outcomes.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
