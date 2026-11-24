@@ -1,0 +1,47 @@
+{
+ "note": "the grids of runs/encoder_stages_20261124 (the same arrays and SPEC files), made again on the owner's machine and compared with the grids made in the cloud container; one process per grid, one thread each; the owner's machine was under other load",
+ "packages": {
+  "both": {
+   "numpy": "2.5.3",
+   "scipy": "1.18.1",
+   "scikit-learn": "1.9.1",
+   "pyyaml": "6.0.3"
+  },
+  "python": {
+   "cloud": "3.13.18",
+   "owner": "3.13.7"
+  }
+ },
+ "T_thp1_IRF1": {
+  "stages": 21,
+  "readers": [
+   "ridge",
+   "hgb"
+  ],
+  "numeric_values_compared_in_scope_json": "all",
+  "largest_difference": 1.6800690870732993e-06,
+  "largest_difference_in_any_resample": 9.5367431640625e-07,
+  "seconds": {
+   "cloud_2_cpus": 1519,
+   "owner_apple_m4_max": 589
+  }
+ },
+ "C_thp1a_pool": {
+  "stages": 21,
+  "readers": [
+   "ridge"
+  ],
+  "numeric_values_compared_in_scope_json": "all",
+  "largest_difference": 4.517057092201515e-06,
+  "largest_difference_in_any_resample": 1.3113021850585938e-06,
+  "seconds": {
+   "cloud_2_cpus": 675,
+   "owner_apple_m4_max": 105
+  }
+ },
+ "this_run_on_the_owners_machine": {
+  "states_five_ways_7478_cells_seconds": 1728,
+  "grid_T_seconds": 533,
+  "grid_C_seconds": 82
+ }
+}

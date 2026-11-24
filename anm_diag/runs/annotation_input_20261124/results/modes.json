@@ -1,0 +1,930 @@
+{
+ "margin": 0.1,
+ "step_margin": 0.1,
+ "stages": [
+  "V",
+  "ZN",
+  "ZP",
+  "ZT",
+  "ZD",
+  "ZW",
+  "AP",
+  "AT",
+  "CP",
+  "ZAP",
+  "PERM"
+ ],
+ "note": "exploratory; development cells; one event (IRF1); every cell of the stratum has the same four annotation tokens",
+ "IRF1": {
+  "scope": "own",
+  "stages": {
+   "V": {
+    "reader": "ridge",
+    "u": 0.1837016446685168,
+    "ci": [
+     0.03929966533994088,
+     0.2992835682831112
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.1837016446685168,
+      "ci": [
+       0.03929966533994088,
+       0.2992835682831112
+      ],
+      "verdict": "unresolved"
+     },
+     "hgb": {
+      "u": 0.36074889640790686,
+      "ci": [
+       0.22898978773526824,
+       0.47117900610835417
+      ],
+      "verdict": "reject"
+     }
+    }
+   },
+   "ZN": {
+    "reader": "ridge",
+    "u": 0.3958111637146299,
+    "ci": [
+     0.26740311409830064,
+     0.5022479903817397
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.3958111637146299,
+      "ci": [
+       0.26740311409830064,
+       0.5022479903817397
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5654461762723273,
+      "ci": [
+       0.45355225104803554,
+       0.6723223164009505
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.2121095210313797,
+     "ci": [
+      0.11642133295536042,
+      0.3171975320205092
+     ],
+     "reading": "loss"
+    }
+   },
+   "ZP": {
+    "reader": "ridge",
+    "u": 0.41364389684202474,
+    "ci": [
+     0.2905267671869869,
+     0.5244677170835029
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.41364389684202474,
+      "ci": [
+       0.2905267671869869,
+       0.5244677170835029
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.6050485895833393,
+      "ci": [
+       0.49663336912887956,
+       0.7090855161310161
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.22994224727153778,
+     "ci": [
+      0.1328958872705698,
+      0.33743328675627704
+     ],
+     "reading": "loss"
+    },
+    "against_no_annotations": {
+     "change": 0.01783272624015808,
+     "ci": [
+      0.0002856396138668062,
+      0.03729581832885742
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZT": {
+    "reader": "ridge",
+    "u": 0.41125907367398873,
+    "ci": [
+     0.28807497109663116,
+     0.52180372934296
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.41125907367398873,
+      "ci": [
+       0.28807497109663116,
+       0.52180372934296
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5938724258596988,
+      "ci": [
+       0.4893975313933712,
+       0.700525807801221
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.22755743563175201,
+     "ci": [
+      0.1303906086832285,
+      0.3355473399162292
+     ],
+     "reading": "loss"
+    },
+    "against_no_annotations": {
+     "change": 0.015447914600372314,
+     "ci": [
+      -0.0008483313024044036,
+      0.03326834961771964
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZD": {
+    "reader": "ridge",
+    "u": 0.40519012224233897,
+    "ci": [
+     0.28188155625780137,
+     0.5148878091991934
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.40519012224233897,
+      "ci": [
+       0.28188155625780137,
+       0.5148878091991934
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5913470156194628,
+      "ci": [
+       0.4827223065788726,
+       0.7037245580263634
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.22148846089839935,
+     "ci": [
+      0.12331323511898518,
+      0.3283849342726171
+     ],
+     "reading": "loss"
+    },
+    "against_no_annotations": {
+     "change": 0.009378939867019653,
+     "ci": [
+      0.0006054811179637909,
+      0.02014300152659416
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZW": {
+    "reader": "ridge",
+    "u": 0.4094344416281186,
+    "ci": [
+     0.2850446430316352,
+     0.5194758976472135
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.4094344416281186,
+      "ci": [
+       0.2850446430316352,
+       0.5194758976472135
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5986920603664814,
+      "ci": [
+       0.4851918454404174,
+       0.7091686950983744
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.22573278844356537,
+     "ci": [
+      0.12779281735420228,
+      0.3334689125418663
+     ],
+     "reading": "loss"
+    },
+    "against_no_annotations": {
+     "change": 0.013623267412185669,
+     "ci": [
+      -0.0008034825325012204,
+      0.029388964176177975
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "AP": {
+    "reader": "ridge",
+    "u": 0.29634519902332757,
+    "ci": [
+     0.1590352934562623,
+     0.40354980968901716
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.29634519902332757,
+      "ci": [
+       0.1590352934562623,
+       0.40354980968901716
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5461758380433699,
+      "ci": [
+       0.4219032719289308,
+       0.6562704842151463
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.11264355480670929,
+     "ci": [
+      0.018526200950145722,
+      0.21073819595039822
+     ],
+     "reading": "unresolved"
+    },
+    "against_no_annotations": {
+     "change": -0.09946596622467041,
+     "ci": [
+      -0.181440893933177,
+      -0.022828420996665967
+     ],
+     "reading": "unresolved"
+    }
+   },
+   "AT": {
+    "reader": "ridge",
+    "u": 0.29813382182936,
+    "ci": [
+     0.1592183830779871,
+     0.40604715090404153
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.29813382182936,
+      "ci": [
+       0.1592183830779871,
+       0.40604715090404153
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5579272226701191,
+      "ci": [
+       0.44122262089420083,
+       0.6658815735266364
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.11443217098712921,
+     "ci": [
+      0.017823269963264467,
+      0.2133456841111183
+     ],
+     "reading": "unresolved"
+    },
+    "against_no_annotations": {
+     "change": -0.09767735004425049,
+     "ci": [
+      -0.18194229546934365,
+      -0.01880515404045583
+     ],
+     "reading": "unresolved"
+    }
+   },
+   "CP": {
+    "reader": "ridge",
+    "u": 0.2875621320059941,
+    "ci": [
+     0.15319173374187595,
+     0.3961237448432906
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.2875621320059941,
+      "ci": [
+       0.15319173374187595,
+       0.3961237448432906
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.6095776363228936,
+      "ci": [
+       0.48877885551121686,
+       0.7214992949152048
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.10386048257350922,
+     "ci": [
+      0.008331993222236635,
+      0.19929222622886297
+     ],
+     "reading": "unresolved"
+    },
+    "against_no_annotations": {
+     "change": -0.10824903845787048,
+     "ci": [
+      -0.18570962157100437,
+      -0.03533859625458718
+     ],
+     "reading": "unresolved"
+    }
+   },
+   "ZAP": {
+    "reader": "ridge",
+    "u": 0.30934510149537653,
+    "ci": [
+     0.17979706245207042,
+     0.4171551938652143
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.30934510149537653,
+      "ci": [
+       0.17979706245207042,
+       0.4171551938652143
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 0.5315100208788909,
+      "ci": [
+       0.41814900628263796,
+       0.6380614462088579
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.12564344704151154,
+     "ci": [
+      0.03265907242894173,
+      0.22355227963998914
+     ],
+     "reading": "unresolved"
+    },
+    "against_no_annotations": {
+     "change": -0.08646607398986816,
+     "ci": [
+      -0.1526533529162407,
+      -0.023827201128005987
+     ],
+     "reading": "unresolved"
+    }
+   },
+   "PERM": {
+    "reader": "ridge",
+    "u": 0.9990144205722211,
+    "ci": [
+     0.9913169100888455,
+     1.0047299610091687
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 0.9990144205722211,
+      "ci": [
+       0.9913169100888455,
+       1.0047299610091687
+      ],
+      "verdict": "reject"
+     },
+     "hgb": {
+      "u": 1.001531703420915,
+      "ci": [
+       0.9961326308885656,
+       1.010130112323714
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.8153127878904343,
+     "ci": [
+      0.7007293000817298,
+      0.9582698757760226
+     ],
+     "reading": "loss"
+    }
+   }
+  }
+ },
+ "checks": {
+  "V_repeats_the_record": 5.1790593147416075e-08,
+  "ZN_repeats_the_record": 3.9774036175721506e-08,
+  "limit": 0.005,
+  "state_without_annotations_against_the_recorded_state": 2.847239375114441e-05,
+  "control_view_reads_nothing": true,
+  "control_view": 0.9990144205722211,
+  "hold": true
+ },
+ "annotations_in_the_input": {
+  "against_no_annotations": {
+   "ZP": "no change of a step",
+   "ZT": "no change of a step"
+  },
+  "from_the_input": {
+   "ZN": "loss",
+   "ZP": "loss",
+   "ZT": "loss"
+  },
+  "statement": "changes nothing"
+ },
+ "content": {
+  "labels_of_the_line_against_wrong_labels": {
+   "change": 0.0018246471881866455,
+   "ci": [
+    -0.002945379167795181,
+    0.006756064295768736
+   ],
+   "reading": "no change of a step"
+  },
+  "labels_of_the_line_against_the_official_defaults": {
+   "change": 0.006068974733352661,
+   "ci": [
+    -0.004547334462404251,
+    0.017590117454528806
+   ],
+   "reading": "no change of a step"
+  },
+  "labels_of_the_line_against_placeholders": {
+   "change": -0.0023848116397857666,
+   "ci": [
+    -0.006572166830301285,
+    0.001066777110099792
+   ],
+   "reading": "no change of a step"
+  },
+  "side": {
+   "ZD": "no change of a step",
+   "ZW": "no change of a step"
+  }
+ },
+ "annotation_positions": {
+  "AP": {
+   "against_no_annotations": "unresolved",
+   "from_the_input": "unresolved"
+  },
+  "AT": {
+   "against_no_annotations": "unresolved",
+   "from_the_input": "unresolved"
+  },
+  "CP": {
+   "against_no_annotations": "unresolved",
+   "from_the_input": "unresolved"
+  },
+  "ZAP": {
+   "against_no_annotations": "unresolved",
+   "from_the_input": "unresolved"
+  },
+  "statement": "unresolved"
+ },
+ "general_code": {
+  "ZN": {
+   "added": 0.2121095210313797,
+   "ci": [
+    0.11642133295536042,
+    0.3171975320205092
+   ],
+   "reading": "loss",
+   "dominated": false
+  },
+  "ZP": {
+   "added": 0.22994224727153778,
+   "ci": [
+    0.1328958872705698,
+    0.33743328675627704
+   ],
+   "reading": "loss",
+   "dominated": false
+  },
+  "ZT": {
+   "added": 0.22755743563175201,
+   "ci": [
+    0.1303906086832285,
+    0.3355473399162292
+   ],
+   "reading": "loss",
+   "dominated": false
+  }
+ },
+ "control": {
+  "events": [
+   "IFNGR1",
+   "IFNGR2",
+   "JAK2",
+   "STAT1"
+  ],
+  "scope": "units",
+  "readers": "ridge",
+  "stages": {
+   "V": {
+    "reader": "ridge",
+    "u": 0.08302488021484089,
+    "ci": [
+     0.0034629569502649007,
+     0.14967158690206164
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.08302488021484089,
+      "ci": [
+       0.0034629569502649007,
+       0.14967158690206164
+      ],
+      "verdict": "unresolved"
+     }
+    }
+   },
+   "ZN": {
+    "reader": "ridge",
+    "u": 0.0818805440434166,
+    "ci": [
+     -0.03398299349294549,
+     0.1499691658766131
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.0818805440434166,
+      "ci": [
+       -0.03398299349294549,
+       0.1499691658766131
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": -0.0011443346738815308,
+     "ci": [
+      -0.05356808053329587,
+      0.05614086268469691
+     ],
+     "reading": "no added loss"
+    }
+   },
+   "ZP": {
+    "reader": "ridge",
+    "u": 0.08648398151818837,
+    "ci": [
+     -0.027622343071612526,
+     0.15281155642951988
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.08648398151818837,
+      "ci": [
+       -0.027622343071612526,
+       0.15281155642951988
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": 0.0034591034054756165,
+     "ci": [
+      -0.048240931052714583,
+      0.05972178177908063
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": 0.004603438079357147,
+     "ci": [
+      -0.010032447415869682,
+      0.012446178030222653
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZT": {
+    "reader": "ridge",
+    "u": 0.08470970994704408,
+    "ci": [
+     -0.028347344334389374,
+     0.15121539445582535
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.08470970994704408,
+      "ci": [
+       -0.028347344334389374,
+       0.15121539445582535
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": 0.001684829592704773,
+     "ci": [
+      -0.05032782247290015,
+      0.05833130090031771
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": 0.0028291642665863037,
+     "ci": [
+      -0.008994494756916537,
+      0.01067347046919167
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZD": {
+    "reader": "ridge",
+    "u": 0.08506829698732876,
+    "ci": [
+     -0.03088578255066121,
+     0.15267498587161965
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.08506829698732876,
+      "ci": [
+       -0.03088578255066121,
+       0.15267498587161965
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": 0.00204341858625412,
+     "ci": [
+      -0.05065743564628065,
+      0.05945302199106662
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": 0.0031877532601356506,
+     "ci": [
+      -0.003563579451292753,
+      0.007443191949278115
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZW": {
+    "reader": "ridge",
+    "u": 0.08577533413536587,
+    "ci": [
+     -0.028591675786167357,
+     0.15248802772865588
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.08577533413536587,
+      "ci": [
+       -0.028591675786167357,
+       0.15248802772865588
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": 0.0027504488825798035,
+     "ci": [
+      -0.04966698959469795,
+      0.05956653067842124
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": 0.0038947835564613342,
+     "ci": [
+      -0.007139669812750071,
+      0.010423569241538644
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "AP": {
+    "reader": "ridge",
+    "u": 0.10013689092499678,
+    "ci": [
+     0.027044853739347504,
+     0.15251935596531582
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.10013689092499678,
+      "ci": [
+       0.027044853739347504,
+       0.15251935596531582
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": 0.01711200922727585,
+     "ci": [
+      -0.026853575929999353,
+      0.059884720109403114
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": 0.01825634390115738,
+     "ci": [
+      -0.024671398662030695,
+      0.056835925724590196
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "AT": {
+    "reader": "ridge",
+    "u": 0.10804522255320437,
+    "ci": [
+     0.03631539494631997,
+     0.15959328758641142
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.10804522255320437,
+      "ci": [
+       0.03631539494631997,
+       0.15959328758641142
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": 0.025020338594913483,
+     "ci": [
+      -0.01765070967376232,
+      0.06569370335055282
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": 0.026164673268795013,
+     "ci": [
+      -0.01916713211685419,
+      0.06529226759448643
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "CP": {
+    "reader": "ridge",
+    "u": 0.04421661580259295,
+    "ci": [
+     -0.031047002935835455,
+     0.09832989487140167
+    ],
+    "verdict": "support",
+    "by_class": {
+     "ridge": {
+      "u": 0.04421661580259295,
+      "ci": [
+       -0.031047002935835455,
+       0.09832989487140167
+      ],
+      "verdict": "support"
+     }
+    },
+    "from_the_input": {
+     "added": -0.03880826756358147,
+     "ci": [
+      -0.08567855311557651,
+      0.01878266935236751
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": -0.037663932889699936,
+     "ci": [
+      -0.07620520181953908,
+      0.012777737568831068
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "ZAP": {
+    "reader": "ridge",
+    "u": 0.06618328271430463,
+    "ci": [
+     -0.01843977485977175,
+     0.12218175885977242
+    ],
+    "verdict": "unresolved",
+    "by_class": {
+     "ridge": {
+      "u": 0.06618328271430463,
+      "ci": [
+       -0.01843977485977175,
+       0.12218175885977242
+      ],
+      "verdict": "unresolved"
+     }
+    },
+    "from_the_input": {
+     "added": -0.016841597855091095,
+     "ci": [
+      -0.05996927050873637,
+      0.029266382148489322
+     ],
+     "reading": "no added loss"
+    },
+    "against_no_annotations": {
+     "change": -0.015697263181209564,
+     "ci": [
+      -0.0471110200509429,
+      0.015022582845995202
+     ],
+     "reading": "no change of a step"
+    }
+   },
+   "PERM": {
+    "reader": "ridge",
+    "u": 1.0391650753576562,
+    "ci": [
+     0.7830469057176337,
+     1.323163540741857
+    ],
+    "verdict": "reject",
+    "by_class": {
+     "ridge": {
+      "u": 1.0391650753576562,
+      "ci": [
+       0.7830469057176337,
+       1.323163540741857
+      ],
+      "verdict": "reject"
+     }
+    },
+    "from_the_input": {
+     "added": 0.9561401382088661,
+     "ci": [
+      0.6917893437668681,
+      1.2351325629279017
+     ],
+     "reading": "loss"
+    }
+   }
+  },
+  "ways_of_running_that_lose_for_the_control": [],
+  "holds": true
+ }
+}

@@ -1,0 +1,309 @@
+{
+ "intervals": {
+  "inside": 7,
+  "of": 9
+ },
+ "outcomes": {
+  "most_likely_happened": 10,
+  "of": 17
+ },
+ "rows": [
+  {
+   "id": "V-u",
+   "what": "IRF1: u at V (check against the record, 0.184)",
+   "forecast": [
+    0.179,
+    0.189
+   ],
+   "observed": 0.1837016446685168,
+   "inside": true
+  },
+  {
+   "id": "ZN-u",
+   "what": "IRF1: u at ZN, the state without annotation positions (check against the record, 0.396)",
+   "forecast": [
+    0.391,
+    0.401
+   ],
+   "observed": 0.3958111637146299,
+   "inside": true
+  },
+  {
+   "id": "ZP-u",
+   "what": "IRF1: u at ZP, the state with the four placeholders",
+   "forecast": [
+    0.3,
+    0.5
+   ],
+   "observed": 0.41364389684202474,
+   "inside": true
+  },
+  {
+   "id": "ZP-against-none",
+   "what": "IRF1: ZP against ZN",
+   "forecast": {
+    "no change of a step": 0.65,
+    "unresolved": 0.25,
+    "brings back a step": 0.06,
+    "costs a step": 0.04
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.65,
+   "most_likely_happened": true
+  },
+  {
+   "id": "ZP-from-input",
+   "what": "IRF1: ZP from the input",
+   "forecast": {
+    "loss": 0.7,
+    "unresolved": 0.25,
+    "no added loss": 0.05
+   },
+   "observed": "loss",
+   "probability_given": 0.7,
+   "most_likely_happened": true
+  },
+  {
+   "id": "ZT-u",
+   "what": "IRF1: u at ZT, the state with the labels of the line",
+   "forecast": [
+    0.3,
+    0.5
+   ],
+   "observed": 0.41125907367398873,
+   "inside": true
+  },
+  {
+   "id": "ZT-against-none",
+   "what": "IRF1: ZT against ZN",
+   "forecast": {
+    "no change of a step": 0.65,
+    "unresolved": 0.25,
+    "brings back a step": 0.04,
+    "costs a step": 0.06
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.65,
+   "most_likely_happened": true
+  },
+  {
+   "id": "ZP-moves",
+   "what": "How far the state moves from ZN to ZP: median over cells, common shift taken out, as a share of the cell's distance from the mean of the stratum",
+   "forecast": [
+    0.03,
+    0.5
+   ],
+   "observed": 0.13538074493408203,
+   "inside": true
+  },
+  {
+   "id": "ZT-moves",
+   "what": "The same from ZN to ZT",
+   "forecast": [
+    0.0,
+    0.5
+   ],
+   "observed": 0.13172444701194763,
+   "inside": true
+  },
+  {
+   "id": "ZW-against-none",
+   "what": "IRF1: ZW (wrong labels) against ZN",
+   "forecast": {
+    "no change of a step": 0.6,
+    "unresolved": 0.28,
+    "costs a step": 0.08,
+    "brings back a step": 0.04
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "content",
+   "what": "IRF1: ZT against ZW (does the content of the labels matter)",
+   "forecast": {
+    "no change of a step": 0.75,
+    "unresolved": 0.2,
+    "brings back a step": 0.03,
+    "costs a step": 0.02
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.75,
+   "most_likely_happened": true
+  },
+  {
+   "id": "AP-u",
+   "what": "IRF1: u at AP, the four annotation positions with the placeholders",
+   "forecast": [
+    0.4,
+    0.95
+   ],
+   "observed": 0.29634519902332757,
+   "inside": false
+  },
+  {
+   "id": "AP-from-input",
+   "what": "IRF1: AP from the input",
+   "forecast": {
+    "loss": 0.7,
+    "unresolved": 0.22,
+    "no added loss": 0.08
+   },
+   "observed": "unresolved",
+   "probability_given": 0.22,
+   "most_likely_happened": false
+  },
+  {
+   "id": "AP-against-none",
+   "what": "IRF1: AP against ZN",
+   "forecast": {
+    "costs a step": 0.35,
+    "unresolved": 0.33,
+    "no change of a step": 0.25,
+    "brings back a step": 0.07
+   },
+   "observed": "unresolved",
+   "probability_given": 0.33,
+   "most_likely_happened": false
+  },
+  {
+   "id": "CP-u",
+   "what": "IRF1: u at CP, the first position with the placeholders (the official cell_emb)",
+   "forecast": [
+    0.45,
+    1.0
+   ],
+   "observed": 0.2875621320059941,
+   "inside": false
+  },
+  {
+   "id": "ZAP-u",
+   "what": "IRF1: u at ZAP, ZP beside AP",
+   "forecast": [
+    0.28,
+    0.46
+   ],
+   "observed": 0.30934510149537653,
+   "inside": true
+  },
+  {
+   "id": "ZAP-against-none",
+   "what": "IRF1: ZAP against ZN",
+   "forecast": {
+    "no change of a step": 0.6,
+    "unresolved": 0.27,
+    "brings back a step": 0.1,
+    "costs a step": 0.03
+   },
+   "observed": "unresolved",
+   "probability_given": 0.27,
+   "most_likely_happened": false
+  },
+  {
+   "id": "statement",
+   "what": "IRF1: the statement of the rule about annotations in the input",
+   "forecast": {
+    "changes nothing": 0.47,
+    "unresolved": 0.35,
+    "costs a step": 0.1,
+    "brings back": 0.08
+   },
+   "observed": "changes nothing",
+   "probability_given": 0.47,
+   "most_likely_happened": true
+  },
+  {
+   "id": "control",
+   "what": "Control (four pathway genes, linear reader): ZP and ZT are no loss from the input and cost no step",
+   "forecast": {
+    "holds": 0.8,
+    "fails": 0.2
+   },
+   "observed": "holds",
+   "probability_given": 0.8,
+   "most_likely_happened": true
+  },
+  {
+   "id": "PERM",
+   "what": "The permuted view reads nothing (|u| at least 0.9)",
+   "forecast": {
+    "yes": 0.97,
+    "no": 0.03
+   },
+   "observed": "yes",
+   "probability_given": 0.97,
+   "most_likely_happened": true
+  },
+  {
+   "id": "own-category",
+   "what": "With the placeholders, the token the model ranks first at each of the four positions is a label of that position's own kind for at least 90% of the cells",
+   "forecast": {
+    "yes": 0.75,
+    "no": 0.25
+   },
+   "observed": "yes",
+   "probability_given": 0.75,
+   "most_likely_happened": true
+  },
+  {
+   "id": "says-disease",
+   "what": "What the model ranks first at the disease position for most cells",
+   "forecast": {
+    "healthy": 0.45,
+    "cancer_disease": 0.4,
+    "another": 0.15
+   },
+   "observed": "another",
+   "probability_given": 0.15,
+   "most_likely_happened": false
+  },
+  {
+   "id": "says-tissue",
+   "what": "What it ranks first at the tissue position for most cells",
+   "forecast": {
+    "hematopoietic_tissue": 0.5,
+    "immune_tissue": 0.2,
+    "another": 0.3
+   },
+   "observed": "another",
+   "probability_given": 0.3,
+   "most_likely_happened": false
+  },
+  {
+   "id": "says-cell_type",
+   "what": "What it ranks first at the cell-type position for most cells",
+   "forecast": {
+    "precursor_cell": 0.32,
+    "immune_cell": 0.28,
+    "hematopoietic_cell": 0.25,
+    "another": 0.15
+   },
+   "observed": "immune_cell",
+   "probability_given": 0.28,
+   "most_likely_happened": false
+  },
+  {
+   "id": "says-sex",
+   "what": "What it ranks first at the sex position for most cells",
+   "forecast": {
+    "male": 0.6,
+    "female": 0.4
+   },
+   "observed": "male",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "labels-untrained",
+   "what": "The input embeddings of the label tokens look untrained (median norm below twice that of ids no token has)",
+   "forecast": {
+    "yes": 0.55,
+    "no": 0.45
+   },
+   "observed": "no",
+   "probability_given": 0.45,
+   "most_likely_happened": false
+  }
+ ]
+}
