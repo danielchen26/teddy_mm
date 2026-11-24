@@ -231,6 +231,15 @@ def _u_shift(t, c, P_t, P_c, Ct, Cc, sd_c):
     return u, per, a[0]
 
 
+def _u_each(t, c, P_t, P_c, Ct, Cc):
+    """u of every readout on its own, for every draw: (B + 1, R). The statistic of one readout, column by column."""
+    myt, mpt, _, _, _ = t.moments(P_t, Ct)
+    myc, mpc, vpc, cpyc, _ = c.moments(P_c, Cc)
+    a = np.where(vpc > 1e-12, cpyc / np.where(vpc > 1e-12, vpc, 1.0), 0.0)
+    dY = myt - myc
+    return 1.0 - a * (mpt - mpc) / np.where(np.abs(dY) > 1e-12, dY, np.nan)
+
+
 def _u_variation(t, P_t, Ct):
     _, _, vp, cpy, vy = t.moments(P_t, Ct)
     r2 = np.where((vp > 1e-12) & (vy > 1e-12), cpy * cpy / np.where((vp > 1e-12) & (vy > 1e-12), vp * vy, 1.0), 0.0)
@@ -255,12 +264,14 @@ def _union(by_class, margin, signed):
 
 
 def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None, treated_cluster=None, reads=None, input_view=None,
-               decision=None, variation=False, keep_draws=False):
+               decision=None, variation=False, keep_draws=False, each_readout=False):
     """The grid of u over stages and scopes for one event.
 
     treated, control   boolean masks or index arrays over the study's cells
     treated_cluster    labels over the study's cells: the clusters the treated side is resampled by (default: by cell)
     reads              the stage the system's map reads (default: the last stage); input_view: the first view, if any
+    each_readout       with several readouts: also the grid of every readout on its own (`each_readout` of the shift target,
+                       one entry per readout, and draws under the target name "shift@<index>"), on the same resamples
     """
     d = {**DEFAULT_DECISION, **(decision or {})}
     ti, ci_ = (np.where(x)[0] if np.asarray(x).dtype == bool else np.asarray(x) for x in (treated, control))
@@ -296,7 +307,7 @@ def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None,
            "readouts": int(study.R), "decision": d, "reads": reads, "input_view": input_view,
            "delta": {"value": float(dnorm[0]), "ci": div, "resolved": resolved, "unit": "control SD"},
            "targets": {}}
-    draws = {}
+    draws, each = {}, {}
 
     def cell(u, per=None, extra=None):
         return {"u": float(u[0]), "ci": ci(u[1:], d["alpha"]), **({"per_readout": [float(x) for x in per]} if per is not None and len(per) > 1 else {}),
@@ -318,6 +329,8 @@ def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None,
                 u, per, a = _u_shift(t, c, Pt, Pc, Ct, Cc, sd_c)
                 by["shift"][cls] = cell(u, per, {"slope": [float(x) for x in np.atleast_1d(a)][:8]})
                 draws[("shift", stage, scope, cls)] = u
+                if each_readout and study.R > 1:
+                    each[(stage, scope, cls)] = _u_each(t, c, Pt, Pc, Ct, Cc)
                 if "variation" in by:
                     uv, perv = _u_variation(t, Pt, Ct)
                     by["variation"][cls] = cell(uv, perv)
@@ -327,6 +340,20 @@ def scope_grid(study, treated, control, *, event=None, stages=None, scopes=None,
                 v, best = _union(by[tg], d["margin_u"], sg)
                 out["targets"][tg]["stages"].setdefault(stage, {})[scope] = {"u": by[tg][best]["u"], "ci": by[tg][best]["ci"], "verdict": v,
                                                                               "class": best, "by_class": by[tg]}
+    if each:                                                 # every readout on its own: the single-readout statistic and verdict, the same resamples
+        E = []
+        for r in range(study.R):
+            S = {}
+            for (stage, scope, cls), ue in each.items():
+                S.setdefault(stage, {}).setdefault(scope, {})[cls] = cell(ue[:, r])
+                draws[(f"shift@{r}", stage, scope, cls)] = ue[:, r]
+            for stage in S:
+                for scope, bc in S[stage].items():
+                    v, best = _union(bc, d["margin_u"], True)
+                    S[stage][scope] = {"u": bc[best]["u"], "ci": bc[best]["ci"], "verdict": v, "class": best, "by_class": bc}
+            iv = ci(dY[1:, r], d["alpha"])
+            E.append({"delta": {"value": float(dY[0, r]), "ci": iv, "resolved": bool(iv[0] > 0 or iv[1] < 0), "unit": "control SD"}, "stages": S})
+        out["targets"]["shift"]["each_readout"] = E
     # gaps between consecutive scopes at the stage the system reads, paired
     for tg in targets:
         T = out["targets"][tg]
@@ -537,7 +564,9 @@ def run_spec(spec, base="."):
     block = np.asarray(z[keys.get("block", keys["unit"])]).astype(str).astype(object)
     ctl = keys.get("control", "others")
     is_ctl = np.zeros(len(unit), bool) if ctl == "others" else (np.asarray(z[ctl["key"]]).astype(str) == str(ctl["equals"]))
-    if is_ctl.any():                                         # controls without a unit of their own get pseudo-blocks
+    if is_ctl.any() and keys.get("control_block"):           # control cells that come in units of their own (healthy donors) keep them
+        block[is_ctl] = np.asarray(z[keys["control_block"]]).astype(str)[is_ctl]
+    elif is_ctl.any():                                       # controls without a unit of their own get pseudo-blocks
         block[is_ctl] = fold_blocks(int(is_ctl.sum()), int(spec.get("control_folds", 5)), int((spec.get("decision") or {}).get("seed", 0)))
     block = block.astype(str)
     side = {}
@@ -577,7 +606,7 @@ def run_spec(spec, base="."):
         e = {"id": f"{spec.get('name', 'run')}:{kind}:{u}", "kind": kind, "study": spec.get("study"), "unit": u}
         results.append(scope_grid(study, t, c, event=e, reads=spec.get("reads"), input_view=spec.get("input_view"), decision=spec.get("decision"),
                                   treated_cluster=cluster if (cluster is not None and u == "pool") else None, variation=bool(spec.get("variation")),
-                                  keep_draws=bool(spec.get("keep_draws"))))
+                                  keep_draws=bool(spec.get("keep_draws")), each_readout=bool(spec.get("each_readout"))))
         if kind in CONTRAST_KINDS:
             cs = dict(name=spec.get("name", "run"), kind=kind, treated=[u] if u != "pool" else wanted, control="others", study=spec.get("study"),
                       label_basis=spec.get("label_basis"), confounded_with=spec.get("confounded_with"), pooling=spec.get("pooling"),

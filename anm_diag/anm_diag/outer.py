@@ -177,7 +177,7 @@ def open_items(targets, world=None, d=DEFAULTS):
       reference {"units": {u, ci, verdict}, "own": {u, ci, verdict}}   the stage the model reads
       input_view {"own": {u, ci, verdict}, "gap_to_later": {added, ci}, "classes": [..], "nonlinear": bool, ...}  or None
       model {"own": {u, ci, verdict}, "added": {added, ci, reading}, "reading": one of INNER or None, "rows_of_type": int,
-             "events": {site: {u, ci, verdict, "added": {reading}}}}
+             "events": {site: {u, ci, verdict, "added": {reading}, "unseen": {u, ci, verdict, "own_row_adds": {gain_difference, ci, reading}}}}}
       attainable ("absolute" or "relative"),
       gates {"evaluable": bool, "why": [..], "guard_kept": bool, "guard_holds_under_some_change": bool},
       arms {"other": {added, ci, reading, "pair": str}, "rows_other": {...}},
@@ -250,6 +250,12 @@ def open_items(targets, world=None, d=DEFAULTS):
                 elif (x.get("added") or {}).get("reading") == "no added loss":
                     note.append("for this event the loss is already at the reference stage")
                 _item(items, t, "pooled, and differs", f"one event inside the pool: {s}", x["u"], x["ci"], None, event=s, evidence=m.get("evidence"), note="; ".join(note))
+        # a unit event whose repair needs the unit's own row: the rows of the other units of its type do not carry to it
+        for s, x in (m.get("events") or {}).items():
+            own = (x.get("unseen") or {}).get("own_row_adds")
+            if own and own["reading"] == "a step":
+                _item(items, t, "pooled, and differs", f"the rows of the other units do not carry to this unit: {s}", own["gain_difference"], own["ci"], None, event=s, evidence=m.get("evidence"),
+                      note=f"with its own row the output leaves {x['u']:.2f}; with the rows of the other units alone, {x['unseen']['u']:.2f}")
         # what carries across types
         arms = t.get("arms") or {}
         o, ro = arms.get("other"), arms.get("rows_other")

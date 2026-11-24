@@ -130,6 +130,120 @@ def run(folder=None, seed=0, sound=False, **size):
     return res
 
 
+# --- events without control cells -----------------------------------------------------------------------------------------
+# A study of units (donors) in which no cell is a control cell: every unit is read against the other units. Most units are
+# ordinary; a few differ from the others, each in a known place. The model, its two steps and its head are as above, with one
+# more block in modality a (a marker that varies only between units).
+#
+#   unit        differs in                                      and the loop should say
+#   h1 h2 h3    factor 1                                        a loss in the head; closed by the repair, with or without the unit's own row
+#   early       factor 5                                        upstream, between the input and mid
+#   enc         factor 2                                        upstream, between mid and z
+#   modb        factor 3                                        unreadable from the model's input
+#   post        the readout itself                              unreadable
+#   solo        the readout itself, and the marker with it      closed with its own row; the rows of the other units do not carry to it
+#   weak        factor 1, barely                                refused at selection
+UNITS = {"h1": (0, -3.0), "h2": (0, 2.5), "h3": (0, -3.5), "early": (4, 3.0), "enc": (1, -3.0), "modb": (2, 3.0), "post": (None, -3.0), "solo": ("marker", 3.0), "weak": (0, -0.03)}
+TRUTH_UNITS = {"early": "upstream", "enc": "upstream", "modb": "unreadable", "post": "unreadable", "solo": "pooled, and differs"}
+LOST_UNITS = {"early": ["the input", "mid"], "enc": ["mid", "z"]}
+RIDGE = {"ridge": CLASSES["ridge"]}                          # one reader class: a unit event is fitted once for every pair of units
+
+
+def units_of(sound=False):
+    return {k: v for k, v in UNITS.items() if v[0] == 0 and k != "weak"} if sound else dict(UNITS)
+
+
+def planted_units(seed=0, n_ordinary=72, n_cell=300, sound=False):
+    """The cells of one study of units, all of the same size. No cell is a control cell."""
+    rng = np.random.default_rng(seed)
+    special = units_of(sound)
+    unit = np.array([u for u in [f"u{k:02d}" for k in range(n_ordinary)] + list(special) for _ in range(n_cell)])
+    n = len(unit)
+    f, own, marker = rng.normal(size=(n, 5)) * SD, np.zeros(n), 0.05 * rng.normal(size=n)
+    for u, (factor, d) in special.items():
+        m = unit == u
+        if factor is None:
+            own[m] += d
+        elif factor == "marker":
+            own[m] += d
+            marker[m] += d
+        else:
+            f[m, factor] += d
+
+    def L(dims):
+        v = rng.normal(size=(1, dims))
+        return v * np.sqrt(dims) / np.linalg.norm(v)
+
+    noise = lambda dims, s=0.2: s * rng.normal(size=(n, dims))
+    a = np.hstack([f[:, [0]] * L(8) + noise(8), f[:, [1]] * L(8) + noise(8), f[:, [3]] * L(8) + noise(8), noise(4, 1.0), f[:, [4]] * L(8) + noise(8), marker[:, None] * L(4) + noise(4, 0.05)])
+    b = np.hstack([f[:, [2]] * L(6) + noise(6), noise(4, 1.0)])
+    rot = lambda x: x @ np.linalg.qr(rng.normal(size=(x.shape[1], x.shape[1])))[0]
+    mid = rot(np.hstack([a[:, :28], a[:, 36:]]))             # the first step drops factor 5
+    z = rot(np.hstack([a[:, :8], a[:, 16:28], a[:, 36:]]))   # the second step drops factor 2
+    y = f[:, 0] + f[:, 1] + f[:, 2] + f[:, 4] + own + 0.3 * rng.normal(size=n)
+    o = f[:, 0] + 0.1 * rng.normal(size=n) if sound else a[:, 24] + 0.1 * f[:, 0]
+    return {"ids": np.array([f"cell{i:05d}" for i in range(n)]), "unit": unit, "view_a": a, "view_b": b, "mid": mid, "z": z, "perm": a[rng.permutation(n)], "y": y, "o": o}
+
+
+def run_units(folder=None, seed=0, sound=False, **size):
+    """The round for the planted study of units: selection, the audit, the repair, the reading, the open items."""
+    folder = Path(folder or tempfile.mkdtemp())
+    folder.mkdir(parents=True, exist_ok=True)
+    d = planted_units(seed, sound=sound, **size)
+    sel = cycle.select(d["ids"], d["unit"], d["y"], seed=1, control=None)
+    d = {q: v[~sel["share"]] for q, v in d.items()}
+    np.savez(folder / "units.npz", **d)
+    res = {"admitted": sel["admitted"], "selection": sel["table"]}
+    if not sel["admitted"]:
+        t = {"readout": "readout", "group": "units", "type": {"type": "units"}, "events_n": 0, "admitted": False, "response": {"snr": max(x["snr"] for x in sel["table"])}}
+        return {**res, "read_as": "not read", "target": t, "status": outer.target_status(t), "items": outer.open_items([t], {"final_units": 1})}
+    sp = dict(name="units", kind="donor", study="planted", readout_name="readout", events=list(sel["admitted"]), reads="z", decision=DECISION, label_basis="design", keep_draws=True,
+              readout_classes=json.loads(json.dumps(RIDGE)), keys=dict(readouts=["y"], stages={k: k for k in STAGES}, unit="unit", frozen={"array": "o"}), arrays={"audit": "units.npz"})
+    T = cycle.one_units("readout", "units", {"type": "units"}, d["z"], d["y"], d["o"], d["unit"], sel["admitted"], *cycle.grid(SC.run_spec(sp, folder)), "z", inputs=["view_a"],
+                        between=["mid"], others=["view_b"], control="perm", evidence="planted")
+    return {**res, **T, "status": outer.target_status(T["target"]), "items": outer.open_items([T["target"]], {"final_units": 1})}
+
+
+# A group of units against another group: patients against healthy donors. The cells of the healthy donors are the control
+# cells; both sides count by unit. The disease acts on factor 1, which the head does not read.
+def planted_groups(seed=0, n_healthy=12, n_patients=8, n_cell=400, sound=False):
+    rng = np.random.default_rng(seed)
+    unit = np.array([f"c{k:02d}" for k in range(n_healthy) for _ in range(n_cell)] + [f"d{k:02d}" for k in range(n_patients) for _ in range(n_cell)])
+    n, treated = len(unit), np.char.startswith(unit, "d")
+    f = rng.normal(size=(n, 5)) * SD
+    for u in np.unique(unit):                                # every donor has a level of its own; the patients share the disease
+        f[unit == u, 0] += 0.15 * rng.normal() + (-3.0 if u.startswith("d") else 0.0)
+
+    def L(dims):
+        v = rng.normal(size=(1, dims))
+        return v * np.sqrt(dims) / np.linalg.norm(v)
+
+    noise = lambda dims, s=0.2: s * rng.normal(size=(n, dims))
+    a = np.hstack([f[:, [0]] * L(8) + noise(8), f[:, [1]] * L(8) + noise(8), f[:, [3]] * L(8) + noise(8), noise(4, 1.0)])
+    z = (lambda x: x @ np.linalg.qr(rng.normal(size=(x.shape[1], x.shape[1])))[0])(np.hstack([a[:, :8], a[:, 16:28]]))
+    y = f[:, 0] + f[:, 1] + 0.3 * rng.normal(size=n)
+    o = f[:, 0] + 0.1 * rng.normal(size=n) if sound else a[:, 24] + 0.1 * f[:, 0]
+    return {"ids": np.array([f"cell{i:05d}" for i in range(n)]), "unit": unit, "treated": treated, "A": treated.astype(int), "view_a": a, "z": z, "perm": a[rng.permutation(n)], "y": y, "o": o}
+
+
+def run_groups(folder=None, seed=0, sound=False, **size):
+    """The round for the planted disease: the patient donors are the events, pooled; the healthy donors' cells are the control cells."""
+    folder = Path(folder or tempfile.mkdtemp())
+    folder.mkdir(parents=True, exist_ok=True)
+    d = planted_groups(seed, sound=sound, **size)
+    lab = np.where(d["treated"], d["unit"], "control")
+    sel = cycle.select(d["ids"], lab, d["y"], seed=1, reference_unit=d["unit"])
+    d = {q: v[~sel["share"]] for q, v in d.items()}
+    np.savez(folder / "groups.npz", **d)
+    sites = sel["admitted"]
+    sp = dict(name="groups", kind="disease", study="planted", readout_name="readout", events=list(sites), also_pooled=True, reads="z", decision=DECISION, label_basis="design", keep_draws=True,
+              readout_classes=json.loads(json.dumps(RIDGE)), arrays={"audit": "groups.npz"},
+              keys=dict(readouts=["y"], stages={k: k for k in ("view_a", "z", "perm")}, unit="unit", control={"key": "A", "equals": 0}, control_block="unit", cluster="unit", frozen={"array": "o"}))
+    T = cycle.one_type("readout", "groups", {"type": "groups"}, d["z"], d["y"], d["o"], d["treated"], d["unit"], sites, *cycle.grid(SC.run_spec(sp, folder)), "z", inputs=["view_a"],
+                       control="perm", evidence="planted", control_cluster=d["unit"])
+    return {"admitted": sites, **T, "status": outer.target_status(T["target"]), "items": outer.open_items([T["target"]], {"final_units": 1})}
+
+
 def main():
     r = run(sys.argv[1] if len(sys.argv) > 1 else None)
     f = lambda x: f"{x['u']:.2f} [{x['ci'][0]:.2f}, {x['ci'][1]:.2f}] {x['verdict']}"
