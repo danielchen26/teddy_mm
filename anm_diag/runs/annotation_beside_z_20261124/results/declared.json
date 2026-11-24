@@ -1,0 +1,186 @@
+{
+ "written": "24 November 2026, before the states of the two melanoma strata were computed with the placeholders and before any grid or reading of this run",
+ "forecasts": [
+  {
+   "id": "T1-ref-C-u",
+   "kind": "interval",
+   "what": "IRF1: a reader of the annotation position alone, with IRF1's own cells (check: 0.288 in the run before)",
+   "interval": [
+    0.283,
+    0.293
+   ]
+  },
+  {
+   "id": "T1-ref-ZC-u",
+   "kind": "interval",
+   "what": "IRF1: a reader of the joint stage ZC, with IRF1's own cells",
+   "interval": [
+    0.24,
+    0.36
+   ],
+   "why": "the four positions beside the state read 0.31 in the run before; Z alone 0.40"
+  },
+  {
+   "id": "T1-rows-ZC-u",
+   "kind": "interval",
+   "what": "IRF1: the repaired output with the head reading ZC (0.68 at Z; 0.39 with the input view beside Z)",
+   "interval": [
+    0.45,
+    0.72
+   ]
+  },
+  {
+   "id": "T1-rows-gain-ZC",
+   "kind": "interval",
+   "what": "IRF1: the gain of the repair from Z to ZC",
+   "interval": [
+    -0.02,
+    0.22
+   ],
+   "why": "the reader gains about 0.09; with the input view the reader gained 0.19 and the repair 0.29"
+  },
+  {
+   "id": "T1-rows-gain-ZC-reading",
+   "kind": "outcome",
+   "what": "IRF1: the gain of the repair against the step margin",
+   "probabilities": {
+    "unresolved": 0.45,
+    "no step": 0.35,
+    "a step": 0.2
+   }
+  },
+  {
+   "id": "T1-cells-ZC-u",
+   "kind": "interval",
+   "what": "IRF1: fitted on every cell of the fitted half, at ZC (0.42 at Z; 0.06 with the input view)",
+   "interval": [
+    0.2,
+    0.42
+   ]
+  },
+  {
+   "id": "T1-controls-ZC-u",
+   "kind": "interval",
+   "what": "IRF1: a readout of control cells with no record, at ZC (0.90 at Z; 1.00 with the input view)",
+   "interval": [
+    0.75,
+    1.05
+   ]
+  },
+  {
+   "id": "T1-rows-C-u",
+   "kind": "interval",
+   "what": "IRF1: the repaired output with the head reading the annotation position alone",
+   "interval": [
+    0.45,
+    0.75
+   ]
+  },
+  {
+   "id": "H1",
+   "kind": "outcome",
+   "what": "H1: IRF1 closes with the head reading ZC",
+   "probabilities": {
+    "unresolved": 0.5,
+    "refuted": 0.42,
+    "confirmed": 0.08
+   },
+   "why": "gate 3 did not pass at Z or with the input view"
+  },
+  {
+   "id": "T1-ZC-against-ZV",
+   "kind": "outcome",
+   "what": "IRF1, the repaired output: |u| at ZC minus |u| at ZV (loss: the input view beside Z removes a step more than the annotation position)",
+   "probabilities": {
+    "loss": 0.5,
+    "unresolved": 0.4,
+    "no added loss": 0.1
+   }
+  },
+  {
+   "id": "T2-rows-ZC-u",
+   "kind": "interval",
+   "what": "MHC-I, co-culture: the repaired output with the head reading ZC (0.36 at Z; 0.26 with the input view)",
+   "interval": [
+    0.28,
+    0.38
+   ]
+  },
+  {
+   "id": "T2-rows-gain-ZC-reading",
+   "kind": "outcome",
+   "what": "MHC-I, co-culture: the gain of the repair against the step margin",
+   "probabilities": {
+    "no step": 0.6,
+    "unresolved": 0.35,
+    "a step": 0.05
+   }
+  },
+  {
+   "id": "H2",
+   "kind": "outcome",
+   "what": "H2: the same for MHC-I in co-culture",
+   "probabilities": {
+    "refuted": 0.6,
+    "unresolved": 0.35,
+    "confirmed": 0.05
+   }
+  },
+  {
+   "id": "C1",
+   "kind": "outcome",
+   "what": "Control, PD-L1 THP-1 (four pathway genes): no harm at ZC",
+   "probabilities": {
+    "holds": 0.85,
+    "fails or unresolved": 0.15
+   }
+  },
+  {
+   "id": "C2",
+   "kind": "outcome",
+   "what": "Control, PD-L1 co-culture: no harm at ZC",
+   "probabilities": {
+    "holds": 0.85,
+    "fails or unresolved": 0.15
+   }
+  },
+  {
+   "id": "C3",
+   "kind": "outcome",
+   "what": "Control, PD-L1 IFN-gamma: no harm at ZC",
+   "probabilities": {
+    "holds": 0.8,
+    "fails or unresolved": 0.2
+   }
+  },
+  {
+   "id": "grades-kept",
+   "kind": "outcome",
+   "what": "Every target keeps at ZC the grade it had at Z",
+   "probabilities": {
+    "yes": 0.6,
+    "no": 0.4
+   },
+   "why": "with the input view PD-L1 under IFN-gamma lost its grade"
+  },
+  {
+   "id": "records-repeat",
+   "kind": "outcome",
+   "what": "The readings at Z and at ZV repeat the records to 0.005",
+   "probabilities": {
+    "yes": 0.95,
+    "no": 0.05
+   }
+  },
+  {
+   "id": "mel-says-disease",
+   "kind": "outcome",
+   "what": "With the placeholders, what the model ranks first at the disease position for most cells of the co-culture stratum",
+   "probabilities": {
+    "cancer_disease": 0.75,
+    "healthy": 0.12,
+    "another": 0.13
+   }
+  }
+ ]
+}

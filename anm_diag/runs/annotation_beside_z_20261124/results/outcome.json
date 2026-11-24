@@ -1,0 +1,219 @@
+{
+ "intervals": {
+  "inside": 8,
+  "of": 8
+ },
+ "outcomes": {
+  "most_likely_happened": 9,
+  "of": 11
+ },
+ "rows": [
+  {
+   "id": "T1-ref-C-u",
+   "what": "IRF1: a reader of the annotation position alone, with IRF1's own cells (check: 0.288 in the run before)",
+   "forecast": [
+    0.283,
+    0.293
+   ],
+   "observed": 0.28756213188171387,
+   "inside": true
+  },
+  {
+   "id": "T1-ref-ZC-u",
+   "what": "IRF1: a reader of the joint stage ZC, with IRF1's own cells",
+   "forecast": [
+    0.24,
+    0.36
+   ],
+   "observed": 0.28620612621307373,
+   "inside": true
+  },
+  {
+   "id": "T1-rows-ZC-u",
+   "what": "IRF1: the repaired output with the head reading ZC (0.68 at Z; 0.39 with the input view beside Z)",
+   "forecast": [
+    0.45,
+    0.72
+   ],
+   "observed": 0.5065003170968525,
+   "inside": true
+  },
+  {
+   "id": "T1-rows-gain-ZC",
+   "what": "IRF1: the gain of the repair from Z to ZC",
+   "forecast": [
+    -0.02,
+    0.22
+   ],
+   "observed": 0.17178716452078424,
+   "inside": true
+  },
+  {
+   "id": "T1-rows-gain-ZC-reading",
+   "what": "IRF1: the gain of the repair against the step margin",
+   "forecast": {
+    "unresolved": 0.45,
+    "no step": 0.35,
+    "a step": 0.2
+   },
+   "observed": "a step",
+   "probability_given": 0.2,
+   "most_likely_happened": false
+  },
+  {
+   "id": "T1-cells-ZC-u",
+   "what": "IRF1: fitted on every cell of the fitted half, at ZC (0.42 at Z; 0.06 with the input view)",
+   "forecast": [
+    0.2,
+    0.42
+   ],
+   "observed": 0.2770651278509706,
+   "inside": true
+  },
+  {
+   "id": "T1-controls-ZC-u",
+   "what": "IRF1: a readout of control cells with no record, at ZC (0.90 at Z; 1.00 with the input view)",
+   "forecast": [
+    0.75,
+    1.05
+   ],
+   "observed": 0.8178808868185435,
+   "inside": true
+  },
+  {
+   "id": "T1-rows-C-u",
+   "what": "IRF1: the repaired output with the head reading the annotation position alone",
+   "forecast": [
+    0.45,
+    0.75
+   ],
+   "observed": 0.5487135728854468,
+   "inside": true
+  },
+  {
+   "id": "H1",
+   "what": "H1: IRF1 closes with the head reading ZC",
+   "forecast": {
+    "unresolved": 0.5,
+    "refuted": 0.42,
+    "confirmed": 0.08
+   },
+   "observed": "unresolved",
+   "probability_given": 0.5,
+   "most_likely_happened": true
+  },
+  {
+   "id": "T1-ZC-against-ZV",
+   "what": "IRF1, the repaired output: |u| at ZC minus |u| at ZV (loss: the input view beside Z removes a step more than the annotation position)",
+   "forecast": {
+    "loss": 0.5,
+    "unresolved": 0.4,
+    "no added loss": 0.1
+   },
+   "observed": "unresolved",
+   "probability_given": 0.4,
+   "most_likely_happened": false
+  },
+  {
+   "id": "T2-rows-ZC-u",
+   "what": "MHC-I, co-culture: the repaired output with the head reading ZC (0.36 at Z; 0.26 with the input view)",
+   "forecast": [
+    0.28,
+    0.38
+   ],
+   "observed": 0.3244674531931745,
+   "inside": true
+  },
+  {
+   "id": "T2-rows-gain-ZC-reading",
+   "what": "MHC-I, co-culture: the gain of the repair against the step margin",
+   "forecast": {
+    "no step": 0.6,
+    "unresolved": 0.35,
+    "a step": 0.05
+   },
+   "observed": "no step",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "H2",
+   "what": "H2: the same for MHC-I in co-culture",
+   "forecast": {
+    "refuted": 0.6,
+    "unresolved": 0.35,
+    "confirmed": 0.05
+   },
+   "observed": "refuted",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C1",
+   "what": "Control, PD-L1 THP-1 (four pathway genes): no harm at ZC",
+   "forecast": {
+    "holds": 0.85,
+    "fails or unresolved": 0.15
+   },
+   "observed": "holds",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C2",
+   "what": "Control, PD-L1 co-culture: no harm at ZC",
+   "forecast": {
+    "holds": 0.85,
+    "fails or unresolved": 0.15
+   },
+   "observed": "holds",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C3",
+   "what": "Control, PD-L1 IFN-gamma: no harm at ZC",
+   "forecast": {
+    "holds": 0.8,
+    "fails or unresolved": 0.2
+   },
+   "observed": "holds",
+   "probability_given": 0.8,
+   "most_likely_happened": true
+  },
+  {
+   "id": "grades-kept",
+   "what": "Every target keeps at ZC the grade it had at Z",
+   "forecast": {
+    "yes": 0.6,
+    "no": 0.4
+   },
+   "observed": "yes",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "records-repeat",
+   "what": "The readings at Z and at ZV repeat the records to 0.005",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_happened": true
+  },
+  {
+   "id": "mel-says-disease",
+   "what": "With the placeholders, what the model ranks first at the disease position for most cells of the co-culture stratum",
+   "forecast": {
+    "cancer_disease": 0.75,
+    "healthy": 0.12,
+    "another": 0.13
+   },
+   "observed": "cancer_disease",
+   "probability_given": 0.75,
+   "most_likely_happened": true
+  }
+ ]
+}

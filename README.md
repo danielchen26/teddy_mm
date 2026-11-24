@@ -207,6 +207,13 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   positions themselves read more than the mean (0.29 against 0.40); by the rule the difference is unresolved, and it
   is the next thing to test. Forecasts: 7 of 9 intervals, 10 of 17 outcomes. The grids were made on the owner's
   machine, where they equal the cloud's to 5e-6.
+- **The head reads the annotation position beside Z (24 November; development cells;**
+  [`annotation_beside_z_20261124/`](anm_diag/runs/annotation_beside_z_20261124/)**):** the lead above, tested in the
+  round with the five targets, cells, halves and resamples of 23 November. For IRF1 the repaired output goes from
+  0.68 to 0.51 [0.39, 0.61], a gain of 0.17 [0.12, 0.23]: a step, and not closed (the input view beside Z gave 0.39).
+  MHC-I in co-culture gains 0.04, no step. No control loses a step and every target keeps its grade; PD-L1 under
+  IFN-γ goes from relative to absolute, where the input view had cost it its grade. H1 unresolved, H2 refuted.
+  Forecasts: 8 of 8 intervals, 9 of 11 outcomes.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
