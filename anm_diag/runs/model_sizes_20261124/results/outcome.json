@@ -1,0 +1,298 @@
+{
+ "intervals": {
+  "inside": 6,
+  "of": 6
+ },
+ "outcomes": {
+  "most_likely_happened": 11,
+  "of": 18
+ },
+ "rows": [
+  {
+   "id": "Z160-u",
+   "what": "IRF1: u at Z160, the state of the 160M checkpoint (the 70M: 0.40; the input view: 0.18)",
+   "forecast": [
+    0.25,
+    0.48
+   ],
+   "observed": 0.3538959532367688,
+   "inside": true
+  },
+  {
+   "id": "Z400-u",
+   "what": "IRF1: u at Z400, the state of the 400M checkpoint",
+   "forecast": [
+    0.2,
+    0.48
+   ],
+   "observed": 0.351271478919739,
+   "inside": true
+  },
+  {
+   "id": "Z160-from-input",
+   "what": "IRF1: Z160 from the input",
+   "forecast": {
+    "loss": 0.5,
+    "unresolved": 0.38,
+    "no added loss": 0.12
+   },
+   "observed": "unresolved",
+   "probability_given": 0.38,
+   "most_likely_happened": false
+  },
+  {
+   "id": "Z400-from-input",
+   "what": "IRF1: Z400 from the input",
+   "forecast": {
+    "loss": 0.42,
+    "unresolved": 0.4,
+    "no added loss": 0.18
+   },
+   "observed": "unresolved",
+   "probability_given": 0.4,
+   "most_likely_happened": false
+  },
+  {
+   "id": "Z160-against-small",
+   "what": "IRF1: Z160 against Z70",
+   "forecast": {
+    "no change of a step": 0.45,
+    "unresolved": 0.37,
+    "brings back a step": 0.15,
+    "costs a step": 0.03
+   },
+   "observed": "unresolved",
+   "probability_given": 0.37,
+   "most_likely_happened": false
+  },
+  {
+   "id": "Z400-against-small",
+   "what": "IRF1: Z400 against Z70",
+   "forecast": {
+    "no change of a step": 0.35,
+    "unresolved": 0.4,
+    "brings back a step": 0.22,
+    "costs a step": 0.03
+   },
+   "observed": "unresolved",
+   "probability_given": 0.4,
+   "most_likely_happened": true
+  },
+  {
+   "id": "statement-160",
+   "what": "The statement of the rule for the 160M checkpoint",
+   "forecast": {
+    "unresolved": 0.48,
+    "loses it as the small model does": 0.32,
+    "loses less, by a step": 0.1,
+    "does not lose it": 0.08,
+    "loses more, by a step": 0.02
+   },
+   "observed": "unresolved",
+   "probability_given": 0.48,
+   "most_likely_happened": true
+  },
+  {
+   "id": "statement-400",
+   "what": "The statement of the rule for the 400M checkpoint",
+   "forecast": {
+    "unresolved": 0.47,
+    "loses it as the small model does": 0.25,
+    "loses less, by a step": 0.14,
+    "does not lose it": 0.12,
+    "loses more, by a step": 0.02
+   },
+   "observed": "unresolved",
+   "probability_given": 0.47,
+   "most_likely_happened": true
+  },
+  {
+   "id": "E160-u",
+   "what": "IRF1: u at E160, what enters the first layer of the 160M checkpoint, averaged (the 70M: 0.52)",
+   "forecast": [
+    0.4,
+    0.7
+   ],
+   "observed": 0.45419409631445506,
+   "inside": true
+  },
+  {
+   "id": "E400-u",
+   "what": "IRF1: u at E400",
+   "forecast": [
+    0.38,
+    0.7
+   ],
+   "observed": 0.4885511386989313,
+   "inside": true
+  },
+  {
+   "id": "E160-from-input",
+   "what": "IRF1: E160 from the input",
+   "forecast": {
+    "loss": 0.8,
+    "unresolved": 0.17,
+    "no added loss": 0.03
+   },
+   "observed": "loss",
+   "probability_given": 0.8,
+   "most_likely_happened": true
+  },
+  {
+   "id": "E400-from-input",
+   "what": "IRF1: E400 from the input",
+   "forecast": {
+    "loss": 0.8,
+    "unresolved": 0.17,
+    "no added loss": 0.03
+   },
+   "observed": "loss",
+   "probability_given": 0.8,
+   "most_likely_happened": true
+  },
+  {
+   "id": "last-layer-160",
+   "what": "IRF1: Z160 against the layer before the last (the 70M: brings back a step)",
+   "forecast": {
+    "brings back a step": 0.45,
+    "unresolved": 0.35,
+    "no change of a step": 0.18,
+    "costs a step": 0.02
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.18,
+   "most_likely_happened": false
+  },
+  {
+   "id": "last-layer-400",
+   "what": "IRF1: Z400 against the layer before the last",
+   "forecast": {
+    "brings back a step": 0.4,
+    "unresolved": 0.35,
+    "no change of a step": 0.23,
+    "costs a step": 0.02
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.23,
+   "most_likely_happened": false
+  },
+  {
+   "id": "C160-u",
+   "what": "IRF1: u at C160, the first annotation position of the 160M checkpoint (the 70M: 0.29)",
+   "forecast": [
+    0.18,
+    0.42
+   ],
+   "observed": 0.2762090167163255,
+   "inside": true
+  },
+  {
+   "id": "C400-u",
+   "what": "IRF1: u at C400",
+   "forecast": [
+    0.15,
+    0.42
+   ],
+   "observed": 0.36925858074391427,
+   "inside": true
+  },
+  {
+   "id": "C160-against-state",
+   "what": "IRF1: C160 against Z160 (the 70M: unresolved, the position reading more)",
+   "forecast": {
+    "unresolved": 0.55,
+    "no change of a step": 0.25,
+    "brings back a step": 0.15,
+    "costs a step": 0.05
+   },
+   "observed": "unresolved",
+   "probability_given": 0.55,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C400-against-state",
+   "what": "IRF1: C400 against Z400",
+   "forecast": {
+    "unresolved": 0.52,
+    "no change of a step": 0.28,
+    "brings back a step": 0.14,
+    "costs a step": 0.06
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.28,
+   "most_likely_happened": false
+  },
+  {
+   "id": "placeholders-160",
+   "what": "IRF1: the state of the 160M checkpoint with the placeholders against without",
+   "forecast": {
+    "no change of a step": 0.85,
+    "unresolved": 0.12,
+    "brings back a step": 0.02,
+    "costs a step": 0.01
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "placeholders-400",
+   "what": "IRF1: the same for the 400M checkpoint",
+   "forecast": {
+    "no change of a step": 0.85,
+    "unresolved": 0.12,
+    "brings back a step": 0.02,
+    "costs a step": 0.01
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "control",
+   "what": "Control (four pathway genes, linear reader): no state of the three sizes is a loss from the input",
+   "forecast": {
+    "holds": 0.85,
+    "fails": 0.15
+   },
+   "observed": "holds",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "records-repeat",
+   "what": "The stages of the 70M checkpoint repeat their records to 0.005 and the permuted view reads nothing",
+   "forecast": {
+    "yes": 0.95,
+    "no": 0.05
+   },
+   "observed": "yes",
+   "probability_given": 0.95,
+   "most_likely_happened": true
+  },
+  {
+   "id": "says-disease-160",
+   "what": "What the 160M checkpoint ranks first at the disease placeholder for most cells (the 70M: infectious_disease)",
+   "forecast": {
+    "infectious_disease": 0.55,
+    "cancer_disease": 0.25,
+    "another": 0.2
+   },
+   "observed": "infectious_disease",
+   "probability_given": 0.55,
+   "most_likely_happened": true
+  },
+  {
+   "id": "says-disease-400",
+   "what": "The same for the 400M checkpoint",
+   "forecast": {
+    "infectious_disease": 0.5,
+    "cancer_disease": 0.28,
+    "another": 0.22
+   },
+   "observed": "another",
+   "probability_given": 0.22,
+   "most_likely_happened": false
+  }
+ ]
+}

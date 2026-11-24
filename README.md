@@ -214,6 +214,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   MHC-I in co-culture gains 0.04, no step. No control loses a step and every target keeps its grade; PD-L1 under
   IFN-γ goes from relative to absolute, where the input view had cost it its grade. H1 unresolved, H2 refuted.
   Forecasts: 8 of 8 intervals, 9 of 11 outcomes.
+- **The same reading on the two larger checkpoints (24 November; development cells; one event;**
+  [`model_sizes_20261124/`](anm_diag/runs/model_sizes_20261124/)**):** the same 7,478 cells and tokens through
+  TEDDY-G 160M and 400M of the official release, read with the same tool (no head exists for them, so a reader of
+  each stage is asked). Their states leave *u* 0.35 and 0.35 where the 70M leaves 0.40: −0.04 [−0.11, 0.04] and
+  −0.05 [−0.12, 0.04] against the small model, unresolved, and the same for a state reduced to the small model's
+  width. From the input they leave 0.17 more ([0.08, 0.27]; the small model 0.21, a resolved loss). What enters the
+  first layer is a loss in every size, and the four pathway genes lose nothing at any state. By the rule the
+  statement is "unresolved" for both: a larger checkpoint is not the repair, and size is not shown to help by a
+  step. Forecasts: 6 of 6 intervals, 11 of 18 outcomes.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

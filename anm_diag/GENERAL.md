@@ -189,6 +189,14 @@ an input that lacks the response. Both are in the run folder with a proposal.
   same as a second real system passing through it.
 - **What the paper has and the loop does not use.** The propagation law of the TEG, and the TEG as a constraint in
   training. Here the TEG is the test and the source of rows for a repair of the head.
+- **The schema is not revised by the loop yet.** The rules of a split and of a merge are written
+  ([`OUTER_LOOP.md`](OUTER_LOOP.md), Section 8.3), and the loop flags an event that differs from its type: IRF1 in
+  THP-1, and ten items for eight donors read as one type. What follows a flag has not been done. Every new type so
+  far was proposed by hand from a field of the record; the type made for IRF1 has one member, which is the same as
+  the event having its own record, and it did not help (0.68 with its own row, 0.54 with the pooled rows); and the
+  test of a split on units not used for the proposal could not be run. This is why the readings so far look like
+  "readable with a record, not without": a type that covers an event without a record of its own needs several
+  members, and no such type has been proposed and tested.
 
 ## 7. Plan
 
@@ -196,7 +204,7 @@ an input that lacks the response. Both are in the run folder with a proposal.
 |---|---|---|---|
 | done | the general cycle, the planted system, the comparison on the first system | CPU | |
 | done, 23 November | events without control cells (donor, disease) in the round: [`runs/unit_events_20261123`](runs/unit_events_20261123/). The general code, planted units and a planted disease (576 scores, none wrong), and one round on eight real donors: 7 of 16 pairs relative, none absolute; for 10 of 16 the repair needs the donor's own row. A disease on real cells is not read | CPU | |
-| 2 | a second system by swapping the encoder on the same cells: the loop is run unchanged, only the stage arrays differ | inference | the owner names the encoder |
+| 2 | a second system by swapping the encoder on the same cells: the loop is run unchanged, only the stage arrays differ. The lightest form was read on 24 November, two larger checkpoints of the same family ([`runs/model_sizes_20261124`](runs/model_sizes_20261124/)): not an independent system, and the step stays open | inference | the owner names the encoder |
 | done, 23 November | a repair in front of the head at small scale: the head reads Z together with a view of the input ([`runs/input_beside_z_20261123`](runs/input_beside_z_20261123/)). For IRF1 the repaired output goes from 0.68 to 0.39, a step, and does not close; given to every type it costs one control target its grade | CPU | |
 | done, 23 November | the states of batch 1 (6,759 cells) and the round on them: [`runs/batch1_round_20261123`](runs/batch1_round_20261123/). Three events admitted, none gives the model anything to repair; the repair itself is not tested by this batch | inference on the owner's machine | |
 | 5 | **retraining TEDDY with the TEG as a constraint in pre-training.** The rows of the TEG enter the training loss; the schema is sealed for an iteration; the retrained encoder is one more system for the same loop, judged by the same items | several GPUs, the pre-training data | the owner; after 1 to 3 |
@@ -237,3 +245,12 @@ loses and every grade is kept; PD-L1 under IFN-γ goes from relative to absolute
 grade. So the annotation position is the first wider stage that could be given to every type: a candidate for an
 adjustment between rounds, to be declared and then read on units that have not been read. What it leaves for a
 retraining is the part no stage after training has reached: an event read without its own record (0.82 here).
+
+The same reading was then made on the two larger checkpoints of the official release, 160M and 400M
+([`runs/model_sizes_20261124`](runs/model_sizes_20261124/)), with the same cells and tokens. Their states leave 0.35
+and 0.35 where the small one leaves 0.40; against the small model that is −0.04 [−0.11, 0.04] and −0.05
+[−0.12, 0.04], unresolved, and the two larger ones do not differ. From the input they leave 0.17 more
+([0.08, 0.27]), unresolved where the small model's 0.21 is a resolved loss. What enters the first layer is a loss in
+every size. So a larger checkpoint is not the repair, and nothing is a reason to make the trial on one. Inside, one
+thing differs: in the larger models the layer before the last already reads what the last reads, and the last layer
+does not bring back a step as it does in the small one.
