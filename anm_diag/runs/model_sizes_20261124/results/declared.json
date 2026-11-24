@@ -1,0 +1,253 @@
+{
+ "written": "24 November 2026, after the code checks on a few cells and before the states of the stratum were computed with the two larger checkpoints",
+ "forecasts": [
+  {
+   "id": "Z160-u",
+   "kind": "interval",
+   "what": "IRF1: u at Z160, the state of the 160M checkpoint (the 70M: 0.40; the input view: 0.18)",
+   "interval": [
+    0.25,
+    0.48
+   ],
+   "why": "the same recipe with wider layers; the mean over tokens is still what a head reads"
+  },
+  {
+   "id": "Z400-u",
+   "kind": "interval",
+   "what": "IRF1: u at Z400, the state of the 400M checkpoint",
+   "interval": [
+    0.2,
+    0.48
+   ],
+   "why": "twice the layers; the last layer was the one that brought part back in the small model"
+  },
+  {
+   "id": "Z160-from-input",
+   "kind": "outcome",
+   "what": "IRF1: Z160 from the input",
+   "probabilities": {
+    "loss": 0.5,
+    "unresolved": 0.38,
+    "no added loss": 0.12
+   }
+  },
+  {
+   "id": "Z400-from-input",
+   "kind": "outcome",
+   "what": "IRF1: Z400 from the input",
+   "probabilities": {
+    "loss": 0.42,
+    "unresolved": 0.4,
+    "no added loss": 0.18
+   }
+  },
+  {
+   "id": "Z160-against-small",
+   "kind": "outcome",
+   "what": "IRF1: Z160 against Z70",
+   "probabilities": {
+    "no change of a step": 0.45,
+    "unresolved": 0.37,
+    "brings back a step": 0.15,
+    "costs a step": 0.03
+   }
+  },
+  {
+   "id": "Z400-against-small",
+   "kind": "outcome",
+   "what": "IRF1: Z400 against Z70",
+   "probabilities": {
+    "no change of a step": 0.35,
+    "unresolved": 0.4,
+    "brings back a step": 0.22,
+    "costs a step": 0.03
+   }
+  },
+  {
+   "id": "statement-160",
+   "kind": "outcome",
+   "what": "The statement of the rule for the 160M checkpoint",
+   "probabilities": {
+    "unresolved": 0.48,
+    "loses it as the small model does": 0.32,
+    "loses less, by a step": 0.1,
+    "does not lose it": 0.08,
+    "loses more, by a step": 0.02
+   }
+  },
+  {
+   "id": "statement-400",
+   "kind": "outcome",
+   "what": "The statement of the rule for the 400M checkpoint",
+   "probabilities": {
+    "unresolved": 0.47,
+    "loses it as the small model does": 0.25,
+    "loses less, by a step": 0.14,
+    "does not lose it": 0.12,
+    "loses more, by a step": 0.02
+   }
+  },
+  {
+   "id": "E160-u",
+   "kind": "interval",
+   "what": "IRF1: u at E160, what enters the first layer of the 160M checkpoint, averaged (the 70M: 0.52)",
+   "interval": [
+    0.4,
+    0.7
+   ]
+  },
+  {
+   "id": "E400-u",
+   "kind": "interval",
+   "what": "IRF1: u at E400",
+   "interval": [
+    0.38,
+    0.7
+   ]
+  },
+  {
+   "id": "E160-from-input",
+   "kind": "outcome",
+   "what": "IRF1: E160 from the input",
+   "probabilities": {
+    "loss": 0.8,
+    "unresolved": 0.17,
+    "no added loss": 0.03
+   },
+   "why": "an average of gene embeddings, as in the small model"
+  },
+  {
+   "id": "E400-from-input",
+   "kind": "outcome",
+   "what": "IRF1: E400 from the input",
+   "probabilities": {
+    "loss": 0.8,
+    "unresolved": 0.17,
+    "no added loss": 0.03
+   }
+  },
+  {
+   "id": "last-layer-160",
+   "kind": "outcome",
+   "what": "IRF1: Z160 against the layer before the last (the 70M: brings back a step)",
+   "probabilities": {
+    "brings back a step": 0.45,
+    "unresolved": 0.35,
+    "no change of a step": 0.18,
+    "costs a step": 0.02
+   }
+  },
+  {
+   "id": "last-layer-400",
+   "kind": "outcome",
+   "what": "IRF1: Z400 against the layer before the last",
+   "probabilities": {
+    "brings back a step": 0.4,
+    "unresolved": 0.35,
+    "no change of a step": 0.23,
+    "costs a step": 0.02
+   }
+  },
+  {
+   "id": "C160-u",
+   "kind": "interval",
+   "what": "IRF1: u at C160, the first annotation position of the 160M checkpoint (the 70M: 0.29)",
+   "interval": [
+    0.18,
+    0.42
+   ]
+  },
+  {
+   "id": "C400-u",
+   "kind": "interval",
+   "what": "IRF1: u at C400",
+   "interval": [
+    0.15,
+    0.42
+   ]
+  },
+  {
+   "id": "C160-against-state",
+   "kind": "outcome",
+   "what": "IRF1: C160 against Z160 (the 70M: unresolved, the position reading more)",
+   "probabilities": {
+    "unresolved": 0.55,
+    "no change of a step": 0.25,
+    "brings back a step": 0.15,
+    "costs a step": 0.05
+   }
+  },
+  {
+   "id": "C400-against-state",
+   "kind": "outcome",
+   "what": "IRF1: C400 against Z400",
+   "probabilities": {
+    "unresolved": 0.52,
+    "no change of a step": 0.28,
+    "brings back a step": 0.14,
+    "costs a step": 0.06
+   }
+  },
+  {
+   "id": "placeholders-160",
+   "kind": "outcome",
+   "what": "IRF1: the state of the 160M checkpoint with the placeholders against without",
+   "probabilities": {
+    "no change of a step": 0.85,
+    "unresolved": 0.12,
+    "brings back a step": 0.02,
+    "costs a step": 0.01
+   },
+   "why": "no change in the small model"
+  },
+  {
+   "id": "placeholders-400",
+   "kind": "outcome",
+   "what": "IRF1: the same for the 400M checkpoint",
+   "probabilities": {
+    "no change of a step": 0.85,
+    "unresolved": 0.12,
+    "brings back a step": 0.02,
+    "costs a step": 0.01
+   }
+  },
+  {
+   "id": "control",
+   "kind": "outcome",
+   "what": "Control (four pathway genes, linear reader): no state of the three sizes is a loss from the input",
+   "probabilities": {
+    "holds": 0.85,
+    "fails": 0.15
+   }
+  },
+  {
+   "id": "records-repeat",
+   "kind": "outcome",
+   "what": "The stages of the 70M checkpoint repeat their records to 0.005 and the permuted view reads nothing",
+   "probabilities": {
+    "yes": 0.95,
+    "no": 0.05
+   }
+  },
+  {
+   "id": "says-disease-160",
+   "kind": "outcome",
+   "what": "What the 160M checkpoint ranks first at the disease placeholder for most cells (the 70M: infectious_disease)",
+   "probabilities": {
+    "infectious_disease": 0.55,
+    "cancer_disease": 0.25,
+    "another": 0.2
+   }
+  },
+  {
+   "id": "says-disease-400",
+   "kind": "outcome",
+   "what": "The same for the 400M checkpoint",
+   "probabilities": {
+    "infectious_disease": 0.5,
+    "cancer_disease": 0.28,
+    "another": 0.22
+   }
+  }
+ ]
+}
