@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The arrays and SPEC files of the stages between the input and Z, for `anm_diag scope`. No readout enters a stage.
 
-  python build.py --work WORK --layers LAYERS_DIR
+  python build_stages.py --work WORK --layers LAYERS_DIR
 
 Environment as runs/teg_loop_20261120 (ANM_FEATURES: the exported views of the THP-1 cells; ANM_ZV_WORK: the folder
 runs/input_beside_z_20261123/scripts/build_zv.py wrote). LAYERS_DIR: what scripts/layers.py wrote on the owner's machine

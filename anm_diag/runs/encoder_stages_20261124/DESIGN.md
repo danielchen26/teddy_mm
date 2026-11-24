@@ -113,7 +113,7 @@ What each outcome would mean:
 1. Commit this file, the forecasts (`results/declared.json`) and the scripts.
 2. `scripts/layers.py` on the owner's machine: tokens and stages of the 7,478 cells; the check against the stored
    states. RNA counts only.
-3. `scripts/build.py`: the views and the SPEC files. No readout enters.
+3. `scripts/build_stages.py`: the views and the SPEC files. No readout enters.
 4. `anm_diag scope` for the two SPEC files.
 5. `scripts/read.py`: one reading; a result file that exists is not overwritten.
 6. `scripts/score.py`: the forecasts against what was read.

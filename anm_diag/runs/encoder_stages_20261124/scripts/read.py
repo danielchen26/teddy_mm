@@ -3,7 +3,7 @@
 
   python read.py --observe OBSERVE        (writes results/stages.json; refuses to run when it exists)
 
-OBSERVE: the grids of `anm_diag scope` for the two SPEC files of build.py, one folder per SPEC. The reading code is
+OBSERVE: the grids of `anm_diag scope` for the two SPEC files of build_stages.py, one folder per SPEC. The reading code is
 anm_diag.cycle, unchanged (`place` with the stages inside the model given in order). DESIGN.md, Section 4.
 """
 import argparse
@@ -18,7 +18,7 @@ RUN = HERE.parent
 sys.path.insert(0, str(HERE.parents[2]))
 sys.path.insert(0, str(HERE))
 from anm_diag import cycle  # noqa: E402
-from build import CHAIN  # noqa: E402
+from build_stages import CHAIN  # noqa: E402
 
 RECORDED = {"V": 0.18370169645910994, "L12": 0.3958111239405937}      # runs/input_beside_z_20261123/results/round.json (T1: the input view alone; the reference at Z)
 v = lambda x: {k: x[k] for k in ("u", "ci", "verdict")}
