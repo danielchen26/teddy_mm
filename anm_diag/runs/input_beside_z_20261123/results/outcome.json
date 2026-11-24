@@ -1,0 +1,206 @@
+{
+ "intervals": {
+  "inside": 4,
+  "of": 10
+ },
+ "outcomes": {
+  "most_likely_happened": 6,
+  "of": 8
+ },
+ "rows": [
+  {
+   "id": "T1-ref-ZV",
+   "what": "IRF1: u of the reference reader at ZV (own cells)",
+   "forecast": [
+    0.15,
+    0.33
+   ],
+   "observed": 0.20974823832511902,
+   "inside": true
+  },
+  {
+   "id": "T1-rows-ZV",
+   "what": "IRF1: u of the arm rows with the head reading ZV",
+   "forecast": [
+    0.4,
+    0.7
+   ],
+   "observed": 0.3851153525622141,
+   "inside": false
+  },
+  {
+   "id": "T1-cells-ZV",
+   "what": "IRF1: u of the arm cells with the head reading ZV",
+   "forecast": [
+    0.15,
+    0.4
+   ],
+   "observed": 0.05630851017424221,
+   "inside": false
+  },
+  {
+   "id": "T1-gain-rows",
+   "what": "IRF1: gain of the arm rows (Z minus ZV)",
+   "forecast": [
+    0.0,
+    0.25
+   ],
+   "observed": 0.29317212905542334,
+   "inside": false
+  },
+  {
+   "id": "T1-gain-cells",
+   "what": "IRF1: gain of the arm cells",
+   "forecast": [
+    0.03,
+    0.27
+   ],
+   "observed": 0.3628503425612335,
+   "inside": false
+  },
+  {
+   "id": "T1-gain-rows-reading",
+   "what": "IRF1: the gain of rows read against the step margin",
+   "forecast": {
+    "a step": 0.2,
+    "no step": 0.25,
+    "unresolved": 0.55
+   },
+   "observed": "a step",
+   "probability_given": 0.2,
+   "most_likely_happened": false
+  },
+  {
+   "id": "T1-grade",
+   "what": "IRF1: grade of the round at ZV",
+   "forecast": {
+    "relative or absolute": 0.1,
+    "loss no longer resolved": 0.2,
+    "not closed": 0.3,
+    "not tested (gate 3)": 0.38,
+    "not a target": 0.02
+   },
+   "observed": "not tested (gate 3)",
+   "probability_given": 0.38,
+   "most_likely_happened": true
+  },
+  {
+   "id": "H1",
+   "what": "H1: IRF1 closes without retraining",
+   "forecast": {
+    "confirmed": 0.08,
+    "refuted": 0.25,
+    "unresolved": 0.67
+   },
+   "observed": "unresolved",
+   "probability_given": 0.67,
+   "most_likely_happened": true
+  },
+  {
+   "id": "T2-ref-ZV",
+   "what": "MHC-I co-culture: u of the reference reader at ZV (pool, units)",
+   "forecast": [
+    0.18,
+    0.33
+   ],
+   "observed": 0.22981072962284088,
+   "inside": true
+  },
+  {
+   "id": "T2-rows-ZV",
+   "what": "MHC-I co-culture: u of the arm rows at ZV",
+   "forecast": [
+    0.25,
+    0.4
+   ],
+   "observed": 0.258470296154088,
+   "inside": true
+  },
+  {
+   "id": "T2-gain-rows",
+   "what": "MHC-I co-culture: gain of the arm rows",
+   "forecast": [
+    -0.02,
+    0.1
+   ],
+   "observed": 0.10307518054354381,
+   "inside": false
+  },
+  {
+   "id": "H2",
+   "what": "H2: MHC-I in co-culture closes without retraining",
+   "forecast": {
+    "confirmed": 0.05,
+    "refuted": 0.6,
+    "unresolved": 0.35
+   },
+   "observed": "unresolved",
+   "probability_given": 0.35,
+   "most_likely_happened": false
+  },
+  {
+   "id": "C1",
+   "what": "C1: no harm for PD-L1 in THP-1 (four genes)",
+   "forecast": {
+    "holds": 0.85,
+    "fails or unresolved": 0.15
+   },
+   "observed": "holds",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C2",
+   "what": "C2: no harm for PD-L1 in co-culture",
+   "forecast": {
+    "holds": 0.9,
+    "fails or unresolved": 0.1
+   },
+   "observed": "holds",
+   "probability_given": 0.9,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C3",
+   "what": "C3: no harm for PD-L1 under IFN-gamma",
+   "forecast": {
+    "holds": 0.9,
+    "fails or unresolved": 0.1
+   },
+   "observed": "holds",
+   "probability_given": 0.9,
+   "most_likely_happened": true
+  },
+  {
+   "id": "C3-rows-ZV",
+   "what": "PD-L1 under IFN-gamma: u of the arm rows at ZV",
+   "forecast": [
+    -0.02,
+    0.1
+   ],
+   "observed": -0.04796407386704882,
+   "inside": false
+  },
+  {
+   "id": "C3-support",
+   "what": "PD-L1 under IFN-gamma: the arm rows at ZV is supported",
+   "forecast": {
+    "yes": 0.35,
+    "no": 0.65
+   },
+   "observed": "no",
+   "probability_given": 0.65,
+   "most_likely_happened": true
+  },
+  {
+   "id": "CHECK-Z",
+   "what": "largest difference between the readings at Z of this run and bridge.json (arm rows, five targets)",
+   "forecast": [
+    0.0,
+    0.002
+   ],
+   "observed": 3.175237850427948e-14,
+   "inside": true
+  }
+ ]
+}
