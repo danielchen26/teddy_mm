@@ -173,6 +173,23 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   unread units and in two more conditions, what the first outer step found under IFN-γ. It does not test the repair:
   the one unit that acts through transcription (BRD4) was not admitted on the selection third. Forecasts: 6 of 7
   intervals, 13 of 16 outcomes. No final unit was touched.
+- **Events without control cells in the round (23 November; development cells;**
+  [`unit_events_20261123/`](anm_diag/runs/unit_events_20261123/)**):** a donor, a batch or a disease has no control
+  cells, and until now the round could not admit, repair or read such events. They are in the general code now (a unit
+  against the other units; a group of units against another), with a repair that needs no control cell. On planted
+  systems with a known answer, over twelve seeds and three sizes, 495 of 576 scores are right, 81 undecided and none
+  wrong. One round on eight real donors (112 proteins, donors read before): 26 pairs of a donor and a protein are
+  admitted; for 16 the head has a step to remove, and the repair lowers the median *u* from 0.85 to 0.40; 7 reach the
+  relative grade and none the absolute one. For 10 of the 16 the repair needs the donor's own row: without the donor's
+  cells it leaves 0.66. Donor and batch vary together in this study, and a disease was read on planted cells only.
+- **The head reads Z beside a view of the input (23 November; development cells;**
+  [`input_beside_z_20261123/`](anm_diag/runs/input_beside_z_20261123/)**):** the one loss placed between the input
+  and the embedding (IRF1 in THP-1) was read again with the head given 512 components of the input beside Z. The
+  repaired output goes from 0.68 to 0.39 [0.26, 0.49], a gain of 0.29 [0.23, 0.38]; it is still rejected and gate 3
+  does not pass. Fitted on every cell of the event it leaves 0.06, so what is short is the record, not the stage.
+  MHC-I in co-culture gains 0.10 [0.08, 0.12]. Given to every type the wider stage costs PD-L1 under IFN-γ its grade.
+  Both hypotheses are unresolved. With this, steps 1, 3 and 4 of the plan in [`GENERAL.md`](anm_diag/GENERAL.md) are
+  done; the steps that are left (a second encoder, retraining with the TEG, the final audit) need the owner.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
