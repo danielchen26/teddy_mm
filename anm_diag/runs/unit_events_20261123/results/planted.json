@@ -1,0 +1,5420 @@
+{
+ "sizes": {
+  "large": {
+   "units": {
+    "n_ordinary": 72,
+    "n_cell": 300
+   },
+   "disease": {
+    "n_healthy": 12,
+    "n_patients": 8,
+    "n_cell": 400
+   }
+  },
+  "medium": {
+   "units": {
+    "n_ordinary": 40,
+    "n_cell": 200
+   },
+   "disease": {
+    "n_healthy": 10,
+    "n_patients": 6,
+    "n_cell": 200
+   }
+  },
+  "small": {
+   "units": {
+    "n_ordinary": 20,
+    "n_cell": 100
+   },
+   "disease": {
+    "n_healthy": 8,
+    "n_patients": 5,
+    "n_cell": 80
+   }
+  }
+ },
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "table": {
+  "large": {
+   "h1: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "h2: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "h3: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "solo: a loss in the head, nothing placed before the model": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "modb: unreadable": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "post: unreadable": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: lost in the first step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "solo: the rows of the other units do not carry": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "weak: refused at selection": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "no other definite item": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "units, nothing wrong: nothing is open and no repair is read": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "disease: closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "disease, nothing wrong: nothing is open": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   }
+  },
+  "medium": {
+   "h1: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "h2: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "h3: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "solo: a loss in the head, nothing placed before the model": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: upstream": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "modb: unreadable": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "post: unreadable": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: lost in the first step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "enc: lost in the second step": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "solo: the rows of the other units do not carry": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "weak: refused at selection": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "no other definite item": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "units, nothing wrong: nothing is open and no repair is read": {
+    "right": 11,
+    "undecided": 1,
+    "wrong": 0
+   },
+   "disease: closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "disease, nothing wrong: nothing is open": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   }
+  },
+  "small": {
+   "h1: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "h2: a loss in the head, closed by the repair": {
+    "right": 4,
+    "undecided": 8,
+    "wrong": 0
+   },
+   "h3: a loss in the head, closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "solo: a loss in the head, nothing placed before the model": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "early: upstream": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "enc: upstream": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "modb: unreadable": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "post: unreadable": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "early: lost in the first step": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "enc: lost in the second step": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "solo: the rows of the other units do not carry": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "weak: refused at selection": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "no other definite item": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "units, nothing wrong: nothing is open and no repair is read": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   },
+   "disease: closed by the repair": {
+    "right": 12,
+    "undecided": 0,
+    "wrong": 0
+   },
+   "disease, nothing wrong: nothing is open": {
+    "right": 3,
+    "undecided": 9,
+    "wrong": 0
+   }
+  }
+ },
+ "total": {
+  "large": {
+   "right": 192,
+   "undecided": 0,
+   "wrong": 0
+  },
+  "medium": {
+   "right": 191,
+   "undecided": 1,
+   "wrong": 0
+  },
+  "small": {
+   "right": 112,
+   "undecided": 80,
+   "wrong": 0
+  }
+ },
+ "runs": [
+  {
+   "size": "large",
+   "seed": 1,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "modb",
+    "h3",
+    "solo",
+    "early",
+    "h1",
+    "enc",
+    "post",
+    "h2"
+   ],
+   "grades": {
+    "modb": "not a target for a repair",
+    "h3": "absolute",
+    "solo": "not tested (gate 3)",
+    "early": "not a target for a repair",
+    "h1": "absolute",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "h2": "absolute"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d06",
+    "d04",
+    "d01",
+    "d02",
+    "d05",
+    "d00",
+    "d07"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d06",
+    "d04",
+    "d01",
+    "d02",
+    "d05",
+    "d00",
+    "d07"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "enc",
+    "h1",
+    "modb",
+    "post",
+    "early",
+    "h2",
+    "solo"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "enc": "not a target for a repair",
+    "h1": "absolute",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "relative",
+    "solo": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d01",
+    "d06",
+    "d02",
+    "d03",
+    "d07",
+    "d05"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d01",
+    "d06",
+    "d02",
+    "d03",
+    "d07",
+    "d05"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "h1",
+    "modb",
+    "early",
+    "enc",
+    "solo",
+    "post",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "h1": "absolute",
+    "modb": "not a target for a repair",
+    "early": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "post": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d00",
+    "d02",
+    "d03",
+    "d04",
+    "d07",
+    "d01",
+    "d06"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d00",
+    "d02",
+    "d03",
+    "d04",
+    "d07",
+    "d01",
+    "d06"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "enc",
+    "solo",
+    "h1",
+    "modb",
+    "post",
+    "early",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "enc": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h1": "absolute",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d02",
+    "d04",
+    "d06",
+    "d03",
+    "d05",
+    "d07",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d02",
+    "d04",
+    "d06",
+    "d03",
+    "d05",
+    "d07",
+    "d01"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "solo",
+    "h3",
+    "modb",
+    "post",
+    "enc",
+    "h1",
+    "early",
+    "h2"
+   ],
+   "grades": {
+    "solo": "not tested (gate 3)",
+    "h3": "absolute",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h1": "absolute",
+    "early": "not a target for a repair",
+    "h2": "absolute"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d01",
+    "d02",
+    "d03",
+    "d04",
+    "d00",
+    "d07",
+    "d06"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d01",
+    "d02",
+    "d03",
+    "d04",
+    "d00",
+    "d07",
+    "d06"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "modb",
+    "solo",
+    "post",
+    "h1",
+    "enc",
+    "early",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "post": "not a target for a repair",
+    "h1": "absolute",
+    "enc": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d03",
+    "d00",
+    "d02",
+    "d06",
+    "d04",
+    "d05",
+    "d07"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d03",
+    "d00",
+    "d02",
+    "d06",
+    "d04",
+    "d05",
+    "d07"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "modb",
+    "h3",
+    "h1",
+    "enc",
+    "solo",
+    "post",
+    "early",
+    "h2"
+   ],
+   "grades": {
+    "modb": "not a target for a repair",
+    "h3": "absolute",
+    "h1": "absolute",
+    "enc": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d02",
+    "d03",
+    "d01",
+    "d06",
+    "d04",
+    "d00",
+    "d07"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d02",
+    "d03",
+    "d01",
+    "d06",
+    "d04",
+    "d00",
+    "d07"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "modb",
+    "enc",
+    "post",
+    "h1",
+    "early",
+    "solo",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "modb": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "h1": "absolute",
+    "early": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "absolute"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d04",
+    "d00",
+    "d06",
+    "d02",
+    "d03",
+    "d07",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d04",
+    "d00",
+    "d06",
+    "d02",
+    "d03",
+    "d07",
+    "d01"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "h1",
+    "early",
+    "enc",
+    "post",
+    "modb",
+    "solo",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "h1": "absolute",
+    "early": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d06",
+    "d03",
+    "d05",
+    "d04",
+    "d00",
+    "d01",
+    "d07",
+    "d02"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d06",
+    "d03",
+    "d05",
+    "d04",
+    "d00",
+    "d01",
+    "d07",
+    "d02"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "early",
+    "solo",
+    "modb",
+    "post",
+    "h1",
+    "enc",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "early": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "h1": "relative",
+    "enc": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d02",
+    "d06",
+    "d00",
+    "d04",
+    "d05",
+    "d03",
+    "d01",
+    "d07"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d02",
+    "d06",
+    "d00",
+    "d04",
+    "d05",
+    "d03",
+    "d01",
+    "d07"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "h1",
+    "modb",
+    "early",
+    "enc",
+    "post",
+    "solo",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "h1": "absolute",
+    "modb": "not a target for a repair",
+    "early": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d06",
+    "d00",
+    "d01",
+    "d04",
+    "d07",
+    "d05",
+    "d03",
+    "d02"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d06",
+    "d00",
+    "d01",
+    "d04",
+    "d07",
+    "d05",
+    "d03",
+    "d02"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 12,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "early",
+    "h1",
+    "post",
+    "modb",
+    "enc",
+    "h2",
+    "solo"
+   ],
+   "grades": {
+    "h3": "relative",
+    "early": "not a target for a repair",
+    "h1": "absolute",
+    "post": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h2": "relative",
+    "solo": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 12,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "large",
+   "seed": 12,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d05",
+    "d07",
+    "d01",
+    "d02",
+    "d06",
+    "d03"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "large",
+   "seed": 12,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d05",
+    "d07",
+    "d01",
+    "d02",
+    "d06",
+    "d03"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 1,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "early",
+    "h1",
+    "enc",
+    "post",
+    "modb",
+    "solo",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "early": "not a target for a repair",
+    "h1": "relative",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 1,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 1,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d00",
+    "d05",
+    "d03",
+    "d02",
+    "d04"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 1,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d00",
+    "d05",
+    "d03",
+    "d02",
+    "d04"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 2,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "h1",
+    "enc",
+    "modb",
+    "post",
+    "early",
+    "h2",
+    "solo"
+   ],
+   "grades": {
+    "h3": "relative",
+    "h1": "relative",
+    "enc": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "relative",
+    "solo": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 2,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 2,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d00",
+    "d05",
+    "d01",
+    "d02",
+    "d04"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 2,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d00",
+    "d05",
+    "d01",
+    "d02",
+    "d04"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 3,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "post",
+    "h3",
+    "solo",
+    "enc",
+    "early",
+    "modb",
+    "h1",
+    "h2"
+   ],
+   "grades": {
+    "post": "not a target for a repair",
+    "h3": "relative",
+    "solo": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "early": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "h1": "relative",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 3,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 3,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d01",
+    "d05",
+    "d04",
+    "d00"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 3,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d01",
+    "d05",
+    "d04",
+    "d00"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 4,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "post",
+    "solo",
+    "modb",
+    "early",
+    "enc",
+    "h1",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "post": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "early": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h1": "relative",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 4,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [
+    [
+     "pool",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 4,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d04",
+    "d00",
+    "d01",
+    "d05"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 4,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d04",
+    "d00",
+    "d01",
+    "d05"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 5,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "early",
+    "h3",
+    "enc",
+    "solo",
+    "modb",
+    "h1",
+    "post",
+    "h2"
+   ],
+   "grades": {
+    "early": "not a target for a repair",
+    "h3": "absolute",
+    "enc": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "h1": "absolute",
+    "post": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 5,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 5,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d00",
+    "d02",
+    "d04",
+    "d01",
+    "d03"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 5,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d00",
+    "d02",
+    "d04",
+    "d01",
+    "d03"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 6,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "modb",
+    "h3",
+    "solo",
+    "post",
+    "enc",
+    "early",
+    "h1",
+    "h2"
+   ],
+   "grades": {
+    "modb": "not a target for a repair",
+    "h3": "absolute",
+    "solo": "not tested (gate 3)",
+    "post": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h1": "relative",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 6,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 6,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d05",
+    "d03",
+    "d02",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 6,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d05",
+    "d03",
+    "d02",
+    "d01"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 7,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "modb",
+    "h3",
+    "h1",
+    "post",
+    "early",
+    "solo",
+    "enc",
+    "h2"
+   ],
+   "grades": {
+    "modb": "not a target for a repair",
+    "h3": "relative",
+    "h1": "relative",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 7,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 7,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d01",
+    "d05",
+    "d02",
+    "d04",
+    "d00"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 7,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d01",
+    "d05",
+    "d02",
+    "d04",
+    "d00"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 8,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "early",
+    "post",
+    "solo",
+    "modb",
+    "h1",
+    "enc",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "early": "not a target for a repair",
+    "post": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "h1": "relative",
+    "enc": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 8,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 8,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d03",
+    "d04",
+    "d00",
+    "d02",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 8,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d03",
+    "d04",
+    "d00",
+    "d02",
+    "d01"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 9,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "post",
+    "early",
+    "h1",
+    "enc",
+    "modb",
+    "solo",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h1": "relative",
+    "enc": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 9,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 9,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d03",
+    "d05",
+    "d01",
+    "d02",
+    "d00"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 9,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d03",
+    "d05",
+    "d01",
+    "d02",
+    "d00"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 10,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "h1",
+    "solo",
+    "early",
+    "enc",
+    "post",
+    "modb",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "h1": "relative",
+    "solo": "not tested (gate 3)",
+    "early": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 10,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 10,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d04",
+    "d03",
+    "d00",
+    "d01",
+    "d02"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 10,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d05",
+    "d04",
+    "d03",
+    "d00",
+    "d01",
+    "d02"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 11,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "modb",
+    "enc",
+    "h1",
+    "early",
+    "post",
+    "solo",
+    "h2"
+   ],
+   "grades": {
+    "h3": "absolute",
+    "modb": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h1": "relative",
+    "early": "not a target for a repair",
+    "post": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 11,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 11,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d04",
+    "d05",
+    "d01",
+    "d02",
+    "d03"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 11,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d04",
+    "d05",
+    "d01",
+    "d02",
+    "d03"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 12,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "early",
+    "modb",
+    "solo",
+    "enc",
+    "post",
+    "h1",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "early": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "h1": "relative",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 12,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "medium",
+   "seed": 12,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d05",
+    "d04",
+    "d00",
+    "d01",
+    "d02"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "medium",
+   "seed": 12,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d05",
+    "d04",
+    "d00",
+    "d01",
+    "d02"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "post",
+    "modb",
+    "h1",
+    "early",
+    "solo",
+    "enc",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "post": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "h1": "relative",
+    "early": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "h2": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [
+    [
+     "h2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d02",
+    "d00",
+    "d01",
+    "d03"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d02",
+    "d00",
+    "d01",
+    "d03"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "modb",
+    "solo",
+    "h1",
+    "post",
+    "early",
+    "enc",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h1": "relative",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h2": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [
+    [
+     "h3",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d04",
+    "d01",
+    "d00"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d02",
+     "unresolved"
+    ],
+    [
+     "d04",
+     "unresolved"
+    ],
+    [
+     "d00",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d04",
+    "d01",
+    "d00"
+   ],
+   "items": [
+    [
+     "d02",
+     "unresolved"
+    ],
+    [
+     "d04",
+     "unresolved"
+    ],
+    [
+     "d00",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "early",
+    "post",
+    "solo",
+    "modb",
+    "h2",
+    "enc",
+    "h1"
+   ],
+   "grades": {
+    "h3": "relative",
+    "early": "not a target for a repair",
+    "post": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "h2": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "h1": "relative"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [
+    [
+     "h2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d03",
+    "d02",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d00",
+     "unresolved"
+    ],
+    [
+     "d02",
+     "unresolved"
+    ],
+    [
+     "d01",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d04",
+    "d00",
+    "d03",
+    "d02",
+    "d01"
+   ],
+   "items": [
+    [
+     "d00",
+     "unresolved"
+    ],
+    [
+     "d02",
+     "unresolved"
+    ],
+    [
+     "d01",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "solo",
+    "modb",
+    "post",
+    "enc",
+    "h1",
+    "early",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h1": "relative",
+    "early": "not a target for a repair",
+    "h2": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d02",
+    "d03",
+    "d01",
+    "d04"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d00",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d02",
+    "d03",
+    "d01",
+    "d04"
+   ],
+   "items": [
+    [
+     "d00",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "solo",
+    "enc",
+    "h1",
+    "early",
+    "modb",
+    "post",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "solo": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "h1": "relative",
+    "early": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "h2": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d02",
+    "d00",
+    "d04",
+    "d03"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d01",
+     "unresolved"
+    ],
+    [
+     "d02",
+     "unresolved"
+    ],
+    [
+     "d00",
+     "unresolved"
+    ],
+    [
+     "d04",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d02",
+    "d00",
+    "d04",
+    "d03"
+   ],
+   "items": [
+    [
+     "d01",
+     "unresolved"
+    ],
+    [
+     "d02",
+     "unresolved"
+    ],
+    [
+     "d00",
+     "unresolved"
+    ],
+    [
+     "d04",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "solo",
+    "h1",
+    "modb",
+    "post",
+    "h2",
+    "enc",
+    "early"
+   ],
+   "grades": {
+    "h3": "relative",
+    "solo": "not tested (gate 3)",
+    "h1": "relative",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "h2": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "early": "not a target for a repair"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d02",
+    "d00",
+    "d04",
+    "d03",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d02",
+    "d00",
+    "d04",
+    "d03",
+    "d01"
+   ],
+   "items": [
+    [
+     "d03",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "modb",
+    "solo",
+    "enc",
+    "post",
+    "early",
+    "h1",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "modb": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "enc": "not a target for a repair",
+    "post": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h1": "relative",
+    "h2": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d03",
+    "d04",
+    "d00",
+    "d02"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d01",
+    "d03",
+    "d04",
+    "d00",
+    "d02"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "solo",
+    "modb",
+    "post",
+    "enc",
+    "h1",
+    "h2",
+    "early"
+   ],
+   "grades": {
+    "h3": "relative",
+    "solo": "not tested (gate 3)",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "h1": "relative",
+    "h2": "relative",
+    "early": "not a target for a repair"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [
+    [
+     "h2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d02",
+    "d04",
+    "d03",
+    "d00",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d02",
+    "d04",
+    "d03",
+    "d00",
+    "d01"
+   ],
+   "items": [
+    [
+     "d00",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "enc",
+    "modb",
+    "post",
+    "solo",
+    "h1",
+    "h2",
+    "early"
+   ],
+   "grades": {
+    "h3": "relative",
+    "enc": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "post": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h1": "relative",
+    "h2": "relative",
+    "early": "not a target for a repair"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d00",
+    "d04",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d03",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d02",
+    "d00",
+    "d04",
+    "d01"
+   ],
+   "items": [
+    [
+     "d03",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "right",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "right",
+    "enc: upstream": "right",
+    "modb: unreadable": "right",
+    "post: unreadable": "right",
+    "early: lost in the first step": "right",
+    "enc: lost in the second step": "right",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "solo",
+    "post",
+    "h3",
+    "modb",
+    "early",
+    "h2",
+    "h1",
+    "enc"
+   ],
+   "grades": {
+    "solo": "not tested (gate 3)",
+    "post": "not a target for a repair",
+    "h3": "relative",
+    "modb": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "relative",
+    "h1": "relative",
+    "enc": "not a target for a repair"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "post",
+     "unreadable"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "modb",
+     "unreadable"
+    ],
+    [
+     "early",
+     "upstream"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "enc",
+     "upstream"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [
+    [
+     "h2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d04",
+    "d03",
+    "d02",
+    "d01"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d04",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d04",
+    "d03",
+    "d02",
+    "d01"
+   ],
+   "items": [
+    [
+     "d04",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "h3",
+    "solo",
+    "h1",
+    "post",
+    "modb",
+    "enc",
+    "early",
+    "h2"
+   ],
+   "grades": {
+    "h3": "relative",
+    "solo": "not tested (gate 3)",
+    "h1": "relative",
+    "post": "not a target for a repair",
+    "modb": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "early": "not a target for a repair",
+    "h2": "not tested (gate 3)"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h1",
+    "h2"
+   ],
+   "items": [
+    [
+     "h1",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d03",
+    "d00",
+    "d01",
+    "d04",
+    "d02"
+   ],
+   "read_as": "a pool",
+   "items": [
+    [
+     "d00",
+     "unresolved"
+    ],
+    [
+     "d04",
+     "unresolved"
+    ],
+    [
+     "d02",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "d03",
+    "d00",
+    "d01",
+    "d04",
+    "d02"
+   ],
+   "items": [
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "d00",
+     "unresolved"
+    ],
+    [
+     "d04",
+     "unresolved"
+    ],
+    [
+     "d02",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 12,
+   "system": "units",
+   "score": {
+    "h1: a loss in the head, closed by the repair": "right",
+    "h2: a loss in the head, closed by the repair": "undecided",
+    "h3: a loss in the head, closed by the repair": "right",
+    "solo: a loss in the head, nothing placed before the model": "right",
+    "early: upstream": "undecided",
+    "enc: upstream": "undecided",
+    "modb: unreadable": "undecided",
+    "post: unreadable": "undecided",
+    "early: lost in the first step": "undecided",
+    "enc: lost in the second step": "undecided",
+    "solo: the rows of the other units do not carry": "right",
+    "weak: refused at selection": "right",
+    "no other definite item": "right"
+   },
+   "status": "not graded",
+   "admitted": [
+    "early",
+    "h3",
+    "modb",
+    "enc",
+    "solo",
+    "h2",
+    "h1",
+    "post"
+   ],
+   "grades": {
+    "early": "not a target for a repair",
+    "h3": "relative",
+    "modb": "not a target for a repair",
+    "enc": "not a target for a repair",
+    "solo": "not tested (gate 3)",
+    "h2": "not tested (gate 3)",
+    "h1": "relative",
+    "post": "not a target for a repair"
+   },
+   "items": [
+    [
+     "pool",
+     "rule"
+    ],
+    [
+     "pool",
+     "unresolved"
+    ],
+    [
+     "pool",
+     "invalid"
+    ],
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ],
+    [
+     "h1",
+     "unresolved"
+    ],
+    [
+     "solo",
+     "pooled, and differs"
+    ]
+   ],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 12,
+   "system": "units sound",
+   "score": {
+    "units, nothing wrong: nothing is open and no repair is read": "undecided"
+   },
+   "status": "undecided before the model",
+   "admitted": [
+    "h3",
+    "h2",
+    "h1"
+   ],
+   "items": [
+    [
+     "h3",
+     "unresolved"
+    ],
+    [
+     "h2",
+     "unresolved"
+    ]
+   ],
+   "extra_definite": [],
+   "repair_read": false
+  },
+  {
+   "size": "small",
+   "seed": 12,
+   "system": "disease",
+   "score": {
+    "disease: closed by the repair": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d01",
+    "d03",
+    "d02",
+    "d04"
+   ],
+   "read_as": "a pool",
+   "items": [],
+   "extra_definite": []
+  },
+  {
+   "size": "small",
+   "seed": 12,
+   "system": "disease sound",
+   "score": {
+    "disease, nothing wrong: nothing is open": "right"
+   },
+   "status": "closed (absolute)",
+   "admitted": [
+    "d00",
+    "d01",
+    "d03",
+    "d02",
+    "d04"
+   ],
+   "items": [],
+   "extra_definite": [],
+   "repair_read": false
+  }
+ ]
+}
