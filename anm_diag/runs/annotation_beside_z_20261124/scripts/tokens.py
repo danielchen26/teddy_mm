@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The tokens of the cells of the two melanoma strata, on the owner's machine: what the encoder is given.
 
-  python tokens.py --repo TEDDY_MM --ckpt TEDDY_G_70M --strata STRATA.npz --out OUT_DIR
+  python tokens.py --repo TEDDY_MM --ckpt TEDDY_G_70M --strata STRATA.npz --out OUT_DIR [--maps FOLDER]
 
 STRATA.npz: for the strata mel_co and mel_ifn the cells (`<stratum>__ids`) and the state the earlier rounds read
 (`<stratum>__Z`), in the order of those rounds. Reads RNA counts only: no protein value and no label of an event is
@@ -79,6 +79,7 @@ def main():
     ap.add_argument("--ckpt", type=Path, required=True)
     ap.add_argument("--strata", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--maps", type=Path, help="folder with the symbol map, if not the checkout's data/reference")
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     K = np.load(a.strata)
@@ -104,7 +105,8 @@ def main():
         c = np.load(cf)
         assert list(c["ids"].astype(str)) == ids, "counts file is for another list of cells"
         X = sp.csr_matrix((c["vals"], (c["rows"].astype(np.int64), c["cols"].astype(np.int64))), shape=tuple(int(v) for v in c["shape"]), dtype=np.float32)
-        with open(a.repo / "data" / "reference" / MAP) as f:
+        ref = a.maps if a.maps and (a.maps / MAP).exists() else a.repo / "data" / "reference"
+        with open(ref / MAP) as f:
             mp = {r["symbol"]: r["ensembl"] for r in csv.DictReader(f)}
         genes = c["genes"].astype(str)
         ens = np.array([mp.get(s, "") for s in genes])
