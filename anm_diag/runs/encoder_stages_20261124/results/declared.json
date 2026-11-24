@@ -1,0 +1,181 @@
+{
+ "written": "24 November 2026, before the stages were computed and before any reading of this run",
+ "forecasts": [
+  {
+   "id": "V-u",
+   "kind": "interval",
+   "what": "IRF1: u at V (check against the record, 0.184)",
+   "interval": [
+    0.179,
+    0.189
+   ]
+  },
+  {
+   "id": "L12-u",
+   "kind": "interval",
+   "what": "IRF1: u at L12 (check against the record, 0.396)",
+   "interval": [
+    0.391,
+    0.401
+   ]
+  },
+  {
+   "id": "SELV-u",
+   "kind": "interval",
+   "what": "IRF1: u at SELV",
+   "interval": [
+    0.12,
+    0.32
+   ],
+   "why": "induced genes rank high after the normalisation by gene medians; most of them should be tokens"
+  },
+  {
+   "id": "SELV-from-input",
+   "kind": "outcome",
+   "what": "IRF1: SELV from the input",
+   "probabilities": {
+    "no added loss": 0.6,
+    "unresolved": 0.3,
+    "loss": 0.1
+   }
+  },
+  {
+   "id": "RANK-u",
+   "kind": "interval",
+   "what": "IRF1: u at RANK",
+   "interval": [
+    0.18,
+    0.5
+   ],
+   "why": "order in place of values"
+  },
+  {
+   "id": "RANK-from-input",
+   "kind": "outcome",
+   "what": "IRF1: RANK from the input",
+   "probabilities": {
+    "no added loss": 0.35,
+    "unresolved": 0.35,
+    "loss": 0.3
+   }
+  },
+  {
+   "id": "SET-u",
+   "kind": "interval",
+   "what": "IRF1: u at SET",
+   "interval": [
+    0.3,
+    0.85
+   ]
+  },
+  {
+   "id": "E0-u",
+   "kind": "interval",
+   "what": "IRF1: u at E0",
+   "interval": [
+    0.45,
+    0.95
+   ],
+   "why": "one mean of embeddings carries which genes are tokens and nothing of their order"
+  },
+  {
+   "id": "E0-from-input",
+   "kind": "outcome",
+   "what": "IRF1: E0 from the input",
+   "probabilities": {
+    "loss": 0.75,
+    "unresolved": 0.2,
+    "no added loss": 0.05
+   }
+  },
+  {
+   "id": "L6-u",
+   "kind": "interval",
+   "what": "IRF1: u at L6",
+   "interval": [
+    0.35,
+    0.75
+   ]
+  },
+  {
+   "id": "first-loss",
+   "kind": "outcome",
+   "what": "IRF1: the first stage of the chain that is a loss from the input",
+   "probabilities": {
+    "SELV": 0.07,
+    "RANK": 0.23,
+    "E0": 0.5,
+    "a layer": 0.17,
+    "none": 0.03
+   }
+  },
+  {
+   "id": "layers-bring-back",
+   "kind": "outcome",
+   "what": "IRF1: |u| at E0 minus |u| at L12, read against the step margin",
+   "probabilities": {
+    "loss": 0.45,
+    "unresolved": 0.35,
+    "no added loss": 0.2
+   },
+   "why": "'loss' here means E0 leaves at least a step more than L12: the layers bring it back"
+  },
+  {
+   "id": "W12-u",
+   "kind": "interval",
+   "what": "IRF1: u at W12",
+   "interval": [
+    0.12,
+    0.42
+   ]
+  },
+  {
+   "id": "mean-at-the-end",
+   "kind": "outcome",
+   "what": "IRF1: |u| at L12 minus |u| at W12 (what the single mean loses against eight windows)",
+   "probabilities": {
+    "loss": 0.3,
+    "unresolved": 0.4,
+    "no added loss": 0.3
+   }
+  },
+  {
+   "id": "W12-from-input",
+   "kind": "outcome",
+   "what": "IRF1: W12 from the input",
+   "probabilities": {
+    "no added loss": 0.35,
+    "unresolved": 0.35,
+    "loss": 0.3
+   }
+  },
+  {
+   "id": "W0-u",
+   "kind": "interval",
+   "what": "IRF1: u at W0",
+   "interval": [
+    0.25,
+    0.8
+   ]
+  },
+  {
+   "id": "control",
+   "kind": "outcome",
+   "what": "Control (four pathway genes, linear reader): some stage of the chain is a loss from the input",
+   "probabilities": {
+    "none": 0.55,
+    "some": 0.45
+   },
+   "why": "E0 may lose something for the pool too"
+  },
+  {
+   "id": "PERM",
+   "kind": "outcome",
+   "what": "The permuted view reads nothing (|u| at least 0.9)",
+   "probabilities": {
+    "yes": 0.97,
+    "no": 0.03
+   }
+  }
+ ]
+}
