@@ -223,6 +223,14 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   first layer is a loss in every size, and the four pathway genes lose nothing at any state. By the rule the
   statement is "unresolved" for both: a larger checkpoint is not the repair, and size is not shown to help by a
   step. Forecasts: 6 of 6 intervals, 11 of 18 outcomes.
+- **A proposed type, put to its test (24 November; development donors; no training;**
+  [`type_growth_20261124/`](anm_diag/runs/type_growth_20261124/)**):** the loop flags an event that differs from its
+  type; this takes the step after the flag. For the eight donors, a type as a grouping into two groups of four: the
+  batch from the record, which is also the grouping the states find with no protein, against all 35 groupings. The
+  batch is the best of them and does not cover a member: the type-mates' record leaves *u* 0.82 [0.80, 0.84] of a
+  donor's change (rejected for 10 of 10 flagged pairs), the repair with it leaves 0.77 against 0.75 without and
+  0.45 with the donor's own row, and the own row still adds a step for 10 of 10. For these donors the items do not
+  close by the schema. Forecasts: 3 of 3 intervals, 8 of 9 outcomes.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
