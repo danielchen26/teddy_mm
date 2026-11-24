@@ -1,0 +1,52 @@
+{
+ "cells": 16,
+ "tokens_of_the_cells": [
+  1067,
+  2048
+ ],
+ "device": "mps",
+ "limit_mean_over_genes": 0.0001,
+ "limit_annotation_positions": 0.001,
+ "layers": 12,
+ "d_model": 768,
+ "largest_value": {
+  "mean_over_genes": 3.657989501953125,
+  "annotation_positions": 10.985846519470215
+ },
+ "order_of_the_annotations": {
+  "mean_over_genes": 1.9073486328125e-06,
+  "any_single_gene_position": 2.6106834411621094e-05,
+  "annotation_positions": 1.5497207641601562e-05
+ },
+ "this_device_against_cpu": {
+  "N": {
+   "mean_over_genes": 2.4139881134033203e-06,
+   "any_single_gene_position": 3.7223100662231445e-05
+  },
+  "P": {
+   "mean_over_genes": 2.5033950805664062e-06,
+   "any_single_gene_position": 3.713369369506836e-05,
+   "annotation_positions": 2.6047229766845703e-05
+  }
+ },
+ "official_class_against_this_code_on_cpu": {
+  "transformers": "4.57.6",
+  "N": {
+   "mean_over_genes": 0.0,
+   "any_single_gene_position": 0.0
+  },
+  "P": {
+   "mean_over_genes": 0.0,
+   "any_single_gene_position": 0.0,
+   "annotation_positions": 0.0
+  }
+ },
+ "hold": true,
+ "heads": 12,
+ "d_hid": 3072,
+ "weights": 154009408,
+ "torch": "2.15.0",
+ "numpy": "2.5.3",
+ "python": "3.13.7",
+ "seconds": 116.7
+}
