@@ -2,6 +2,10 @@
 
 Written on 22 November 2026, after the first outer step. Run and checks:
 [`runs/framework_generalization_20261122`](runs/framework_generalization_20261122/).
+Updated on 23 November 2026: events without control cells are in the round
+([`runs/unit_events_20261123`](runs/unit_events_20261123/)), the head was given a view of the input beside Z
+([`runs/input_beside_z_20261123`](runs/input_beside_z_20261123/)), and the round on batch 1 was run
+([`runs/batch1_round_20261123`](runs/batch1_round_20261123/)). Sections 2 to 4, 6 and 7 carry the changes.
 
 The loop was built on one system: TEDDY with a prediction head, RNA as its input, proteins as readouts, knockouts as
 events. This document says what in it does not depend on that system, what a system has to expose to be put through
@@ -36,6 +40,7 @@ stages are called, which repair is used.
 | other measured inputs | arrays the model does not receive, never the readout itself | none was read | a modality that was measured and left out | `view_b` |
 | a control view | a view that must read nothing | the RNA view with its rows permuted | the same | `perm` |
 | events with control cells | units that change the readout, each with cells that did not get the event | knockouts against non-targeting guides | perturbations of any kind | planted shifts |
+| events without control cells | a unit read against the other units (a donor, a batch, a study), or a group of units against another (a disease): the unit of every cell, from the record | eight donors of a study the head was not fitted on | the same | `run_units`, `run_groups` |
 | a repair | an object fitted on control cells and on the rows of the admitted events, with one output per arm (§3) | a linear readout of Z, updated once by the rows | a change to whatever part the round may change | the same linear readout |
 | a census | which units of the claim exist, which were read, which are set aside as final | 615 units, 133 final | the same | not used |
 
@@ -48,6 +53,8 @@ and which part of the model a round may change.
     grid = cycle.grid(scope.run_spec(spec, folder))             # the audit, or cycle.load(folder) for a grid on disk
     T = cycle.one_type(readout, group, type, x, y, o, treated, unit, sites, *grid,
                        model_stage, inputs=[...], between=[...], others=[...], control=..., alone=[...])
+    T = cycle.one_units(readout, group, type, x, y, o, unit, events, *grid,       # events without control cells
+                        model_stage, inputs=[...], control=...)
     items = outer.open_items([T["target"], ...], world)
 
 `one_type` is `cross_fit` (the repair, every cell read by a fit that did not see it), `read` (A3, every arm against the
@@ -61,6 +68,16 @@ about a family. `anm_diag/toy.py` is a complete run in about a hundred lines and
 A repair is a plug-in: any class with the constructor `(x, y, o, control_cells, [(event, cells)], other)`, a dict `th`
 with one entry per arm (`controls` and `rows` at least) and a method `out(arm, x)`. `cycle.LinearRows` is the one used
 so far. A repair of an encoder is another class of the same shape and has not been written.
+
+**Events without control cells** (since 23 November; [`runs/unit_events_20261123`](runs/unit_events_20261123/)). A
+unit read against the other units goes through `one_units`: `select(control=None)` screens every unit against the
+others, which count as units; the repair is `cycle.UnitRows`, the same linear readout where no cell is a control
+cell (it starts from the variation among the cells of a unit and is updated once by the row of every unit); every
+event is read on its own, its cells by cell and the other units by unit. Beside the arms of a knockout it has the
+arm `unseen`: the same repair fitted without any cell of the unit, read against a reader that never saw the unit.
+Where the unit's own row reads at least a step more than `unseen`, the outer step raises "pooled, and differs" for
+that unit. A group of units against another (a disease) is `one_type(control_cluster=unit)`: the patient donors are
+the events of a pool, the healthy donors' cells are the control cells, and both sides are resampled by unit.
 
 ## 4. How it was checked
 
@@ -90,6 +107,21 @@ outer step and compared with what the step's own scripts recorded:
 placings), largest difference 0; the same statuses for the seven targets; the same 17 open items.
 
 Both checks, with their scripts and result files, are in the run folder.
+
+**Events without control cells, planted** ([`runs/unit_events_20261123`](runs/unit_events_20261123/), 23 November).
+A study of units in which no cell is a control cell, with nine units that differ in a known place (three in the
+head, one in each step of the model, one that only the second modality carries, one that acts on the readout, one
+that only its own row reaches, one too weak to follow), and a disease, patients against healthy donors. Each also
+with nothing wrong. The rule was written before the scored runs. Twelve seeds at three sizes, 576 scores:
+
+| size | ordinary units, cells per unit | right | undecided | wrong |
+|---|---|---|---|---|
+| large | 72, 300 | 192 | 0 | 0 |
+| medium | 40, 200 | 191 | 1 | 0 |
+| small | 20, 100 | 112 | 80 | 0 |
+
+With 20 units a loss before the model is placed in 3 of 12 runs; in the others no reading is supported and the loop
+says `invalid`. Nothing false is said at any size.
 
 ## 5. What the check changed
 
@@ -121,18 +153,27 @@ an input that lacks the response. Both are in the run folder with a proposal.
 
 ## 6. What is not general yet
 
-- **Events without control cells of their own.** A donor, a batch, a study or a disease is read against the other
-  units, and both sides are resampled by unit. The audit reads such events. The round does not: its repair is fitted on
-  control cells, and its halves are halves of cells. Before donors and diseases enter the loop this has to be designed
-  and planted like the rest.
+- **Events without control cells of their own: in the round, and thin on real cells.** Since 23 November the round
+  reads a unit against the other units and a group of units against another (Section 3), and both are checked on
+  planted systems (Section 4). On real cells there is one round, on eight donors that had been read before, in which
+  donor and batch vary together. A disease has not been read on real cells: the one disease study at hand is a final
+  study. A unit event is read with linear readers only when a panel of readouts is read at once. Nothing is said
+  about a family of units from fewer than ten of them.
+- **A repair is made for what it has seen.** Across kinds of cell the rows of the events carried and the readout of
+  control cells did not ([`runs/outer_step_20261122`](runs/outer_step_20261122/)). Across donors the row of a unit
+  does not carry to another unit: for 10 of 16 pairs of a donor and a protein the repair needs the donor's own row
+  ([`runs/unit_events_20261123`](runs/unit_events_20261123/)). No repair so far holds for a type or a unit it has no
+  cells of.
 - **Every view on the same cells.** Gaps between stages are read on paired resamples, so every stage has to exist for
   every cell that is read. A modality that is missing for part of the cells is not handled.
 - **Events are yes or no, and a type has one partner.** There is no dose. What carries across types is tested against
   one other type per run.
 - **One quantity.** The shift of the mean of a readout. The audit also reads the variation among the cells of a unit;
   the round does not use it.
-- **One repair.** A linear readout of the stage the model reads. Nothing that changes an encoder has been put through
-  the loop, on any system.
+- **One repair.** A linear readout of a stage. On 23 November the same readout was given a wider stage, the state the
+  head reads beside a view of the input ([`runs/input_beside_z_20261123`](runs/input_beside_z_20261123/)): one item
+  gained a step and did not close, and one control target lost its grade. Nothing that changes an encoder has been
+  put through the loop, on any system.
 - **A limit of u.** The slope that puts an output on the readout's scale is taken among control cells. A response
   along a direction that does not vary among control cells cannot be read as supported by any output. This is why the
   planted system has no case in which the rows of events add a step over a readout of control cells; that case has
@@ -150,12 +191,19 @@ an input that lacks the response. Both are in the run folder with a proposal.
 | | step | needs | whose |
 |---|---|---|---|
 | done | the general cycle, the planted system, the comparison on the first system | CPU | |
-| 1 | events without control cells (donor, disease) in the round: design, planted donors, forecasts written first | CPU | |
+| done, 23 November | events without control cells (donor, disease) in the round: [`runs/unit_events_20261123`](runs/unit_events_20261123/). The general code, planted units and a planted disease (576 scores, none wrong), and one round on eight real donors: 7 of 16 pairs relative, none absolute; for 10 of 16 the repair needs the donor's own row. A disease on real cells is not read | CPU | |
 | 2 | a second system by swapping the encoder on the same cells: the loop is run unchanged, only the stage arrays differ | inference | the owner names the encoder |
-| 3 | a repair in front of the head at small scale: the head reads Z together with a view of the input. It tests whether a loss placed "upstream" (IRF1) closes without retraining | CPU | |
+| done, 23 November | a repair in front of the head at small scale: the head reads Z together with a view of the input ([`runs/input_beside_z_20261123`](runs/input_beside_z_20261123/)). For IRF1 the repaired output goes from 0.68 to 0.39, a step, and does not close; given to every type it costs one control target its grade | CPU | |
 | done, 23 November | the states of batch 1 (6,759 cells) and the round on them: [`runs/batch1_round_20261123`](runs/batch1_round_20261123/). Three events admitted, none gives the model anything to repair; the repair itself is not tested by this batch | inference on the owner's machine | |
 | 5 | **retraining TEDDY with the TEG as a constraint in pre-training.** The rows of the TEG enter the training loss; the schema is sealed for an iteration; the retrained encoder is one more system for the same loop, judged by the same items | several GPUs, the pre-training data | the owner; after 1 to 3 |
 | 6 | the final audit on the 133 units set aside, once and with the hypotheses named | inference | the owner |
 
-Step 5 is placed after 1 to 3 on purpose: they cost no GPU, and 3 says whether the upstream loss is worth a
-retraining at all.
+Step 5 was placed after 1 to 3 on purpose: they cost no GPU, and 3 says whether the upstream loss is worth a
+retraining at all. Steps 1, 3 and 4 are done. What step 3 says: the part that the encoder drops for IRF1 is in the
+input and comes back in front of the head, but a repair made from one record does not close it, and without the
+event's own record the wider stage gives nothing. What steps 1 and 3 say together: no repair made after training
+holds for a type, a unit or an event it has no cells of. That is what a retraining has to change, and it is the
+measure step 5 will be read by (the arms `controls` and `unseen`).
+
+Every step that is left needs the owner: the encoder for step 2, GPUs and the pre-training data for step 5, the
+agreement to read for step 6.

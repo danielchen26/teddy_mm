@@ -9,9 +9,17 @@ stage: a system is arrays and names that a run declares.
   target        the result as one target of `outer.open_items` (target_by_event: a type with too few events to pool)
   one_type      the four steps above for one type, from its cells and its grid to its target
 
+  one_units     the same for a type whose events have no control cells: a unit (a donor, a batch) against the other units
+
 The audit itself (the grid of u over stages and scopes) is `scope.run_spec`, which is general already.
 The repair is a plug-in. `LinearRows` is the one used so far: a linear readout of a stage, fitted on a type's control
-cells and updated once by the rows of its events. Any object with the same two methods can take its place.
+cells and updated once by the rows of its events. `UnitRows` is the same readout where no cell is a control cell. Any
+object with the same two methods can take its place.
+
+Two shapes of event have no control cells of their own (GENERAL.md, Section 6):
+  a unit against the other units      a donor, a batch, a study: `select(control=None)`, `UnitRows`, `one_units`
+  a group of units against another    a disease: patients against healthy donors. The healthy donors' cells are the control
+                                      cells; `control_cluster` makes that side count by unit, as the audit tool does
 """
 import hashlib
 
@@ -41,31 +49,44 @@ def in_split(cell, seed, of=3):
     return int(hashlib.sha256(f"{seed}|{cell}".encode()).hexdigest(), 16) % of == 0
 
 
-def screen(y, yc, min_snr=MIN_SNR):
-    """A1 on the cells given: the change against its interval (Welch, cells as units)."""
+def screen(y, yc, min_snr=MIN_SNR, units=None):
+    """A1 on the cells given: the change against its interval (Welch, cells as units). units: the unit of every reference
+    cell where the reference side is made of units (other donors, healthy donors); that side then counts by unit."""
     d = y.mean() - yc.mean()
-    half = 1.96 * np.sqrt(y.var(ddof=1) / len(y) + yc.var(ddof=1) / len(yc))
+    vc = yc.var(ddof=1) / len(yc)
+    if units is not None:                                    # the variance of a mean of cells that come in units
+        el, inv = np.unique(units, return_inverse=True)
+        dev = np.bincount(inv, weights=yc - yc.mean())
+        vc = len(el) / max(len(el) - 1, 1) * float((dev ** 2).sum()) / len(yc) ** 2
+    half = 1.96 * np.sqrt(y.var(ddof=1) / len(y) + vc)
     return {"cells": int(len(y)), "change_in_control_sd": float(d / yc.std(ddof=1)), "snr": float(abs(d) / half), "A1": bool(abs(d) / half >= min_snr)}
 
 
-def select(ids, unit, y, seed, control="control", own=(), min_snr=MIN_SNR):
+def select(ids, unit, y, seed, control="control", own=(), min_snr=MIN_SNR, reference_unit=None):
     """Every unit screened on its cells in the selection share against the control cells in it. `own`: units that act on
-    the readout itself (A2), refused. The cells of the share enter no reading of u."""
+    the readout itself (A2), refused. The cells of the share enter no reading of u.
+    control=None: no cell is a control cell; every unit is screened against the other units, which count as units.
+    reference_unit: the unit of every cell, where the control cells come in units of their own (healthy donors)."""
     ids, unit = np.asarray(ids).astype(str), np.asarray(unit).astype(str)
     share = np.array([in_split(i, seed) for i in ids])
-    C = (unit == control) & share
-    rows = sorted(({"event": str(g), **screen(y[(unit == g) & share], y[C], min_snr), "A2_own": str(g) in own} for g in sorted(set(unit) - {control})), key=lambda x: -x["snr"])
+    if control is None:
+        ref = lambda g: ((unit != g) & share, unit)
+    else:
+        ref = lambda g: ((unit == control) & share, reference_unit)
+    one = lambda g, m, ru: screen(y[(unit == g) & share], y[m], min_snr, None if ru is None else np.asarray(ru).astype(str)[m])
+    rows = sorted(({"event": str(g), **one(g, *ref(g)), "A2_own": str(g) in own} for g in sorted(set(unit) - {control})), key=lambda x: -x["snr"])
     return {"share": share, "pass_A1": [x["event"] for x in rows if x["A1"]], "admitted": [x["event"] for x in rows if x["A1"] and not x["A2_own"]], "table": rows}
 
 
 # --- the reading of an output --------------------------------------------------------------------------------------------
-def output_u(y, pred, treated, cluster=None, seed=0):
+def output_u(y, pred, treated, cluster=None, seed=0, control_cluster=None):
     """u of an output for one event, as the tool computes it for the system's own output: 1 - a * shift(pred) / shift(y),
     a the slope of y on pred among the control cells. Returns the draws (row 0 is the value on the data) and the slope.
-    Treated cells are resampled by `cluster` when given, otherwise by cell; the same seed gives the same resamples for
-    every output, so differences between outputs are paired."""
+    Treated cells are resampled by `cluster` when given, otherwise by cell; the cells of the other side by
+    `control_cluster` when given (the other units of a donor event; healthy donors), otherwise by cell. The same seed
+    gives the same resamples for every output, so differences between outputs are paired."""
     ti, ci_ = np.where(treated)[0], np.where(~treated)[0]
-    t, c = SC._Side(y[ti, None], None if cluster is None else cluster[ti]), SC._Side(y[ci_, None], None)
+    t, c = SC._Side(y[ti, None], None if cluster is None else cluster[ti]), SC._Side(y[ci_, None], None if control_cluster is None else control_cluster[ci_])
     rng = np.random.default_rng(seed + 1)
     Ct, Cc = SC._counts(t.E, DRAWS, rng), SC._counts(c.E, DRAWS, rng)
     u, _, a = SC._u_shift(t, c, pred[ti, None], pred[ci_, None], Ct, Cc, np.ones(1))
@@ -148,6 +169,73 @@ class LinearRows:
         return self.feat(x) @ self.th[arm]
 
 
+class UnitRows:
+    """The readout of `LinearRows` for events that have no control cells: a unit (a donor, a batch) read against the other
+    units. events: [(unit, its cells)], every unit of the fit; C is not used.
+      controls   a readout of the variation among the cells of a unit (x and y centred by unit): what can be learned with
+                 no record of how any unit differs from the others. It takes the place of the readout of control cells
+      rows       the same, updated once by the row of every unit (the unit against the other units of the fit)
+      cells      fitted on every cell, not centred
+      unseen|U   for every unit U: the arm `rows` of a fit that holds no cell of U (its readout, its rows, its centre)
+    The ridge weight is chosen once, on all units of the fit."""
+
+    def __init__(self, x, y, o, C, events, other=None):
+        events = [(str(n), np.asarray(T)) for n, T in events if len(T)]
+        A = np.concatenate([T for _n, T in events])
+        scale = o[A].std() / y[A].std()
+        t = o[A].mean() + scale * (y - y[A].mean())
+        self.xc, p = x[A].mean(0), x.shape[1]
+        st = []                                                 # per unit: n, sums of x, t, y, y*y, and the scatter of x and of x with t about the unit's own mean
+        for _n, T in events:
+            xm, tm = x[T].mean(0), t[T].mean()
+            st.append((len(T), x[T].sum(0), t[T].sum(), y[T].sum(), (y[T] ** 2).sum(), (x[T] - xm).T @ (x[T] - xm), (x[T] - xm).T @ (t[T] - tm)))
+        xw = np.vstack([x[T] - x[T].mean(0) for _n, T in events])
+        tw = np.concatenate([t[T] - t[T].mean() for _n, T in events])
+        pen = np.ones(p) * xw.var(0).mean()
+        lam, cv = _cv_weight(xw, tw, pen)
+        self.th, self.log = {}, {"n_cells": int(len(A)), "units": len(events), "ridge_weight": lam, "cv_error": cv, "rows": []}
+
+        def fit(keep):
+            """The readout of the units `keep`: within-unit weights, the centre, and the rows of those units among themselves."""
+            n = np.array([st[k][0] for k in keep], np.float64)
+            N, sx, sy = n.sum(), np.array([st[k][1] for k in keep]), np.array([st[k][3] for k in keep])
+            syy, tbar = np.array([st[k][4] for k in keep]), sum(st[k][2] for k in keep) / n.sum()
+            Sw = sum(st[k][5] for k in keep) / N
+            Minv = np.linalg.inv(Sw + lam * np.diag(pen))
+            w = Minv @ (sum(st[k][6] for k in keep) / N)
+            xc = sx.sum(0) / N
+            D = sx / n[:, None] - (sx.sum(0) - sx) / (N - n)[:, None]                 # a unit against the other units of the fit
+            dy = sy / n - (sy.sum() - sy) / (N - n)
+            var = lambda s1, s2, m: (s2 - s1 ** 2 / m) / np.maximum(m - 1, 1)
+            se2 = var(sy, syy, n) / n + var(sy.sum() - sy, syy.sum() - syy, N - n) / (N - n)
+            S = N * scale ** 2 * se2 / cv
+            K = Minv @ D.T @ np.linalg.inv(D @ Minv @ D.T + np.diag(S))
+            before = scale * dy - D @ w
+            w2 = w + K @ before
+            closed = 1 - np.abs(scale * dy - D @ w2) / np.maximum(np.abs(before), 1e-12)
+            full = lambda v: np.r_[v, tbar + (self.xc - xc) @ v]                     # in the features of this object, which are centred at self.xc
+            return full(w), full(w2), dy, se2, closed
+
+        every = list(range(len(events)))
+        self.th["controls"], self.th["rows"], dy, se2, closed = fit(every)
+        self.log["rows"] = [{"event": n, "n_cells": int(len(T)), "measured_change": float(a), "standard_error": float(np.sqrt(s)), "share_of_the_residual_closed": float(c)}
+                            for (n, T), a, s, c in zip(events, dy, se2, closed)]
+        F = self.feat(x[A])
+        pen1 = np.r_[pen, 0.0]
+        lam2, _cv = _cv_weight(F, t[A], pen1)
+        self.th["cells"] = np.linalg.solve(F.T @ F / len(A) + lam2 * np.diag(pen1), F.T @ t[A] / len(A))
+        self.log["ridge_weight_cells"] = lam2
+        if len(events) > 2:
+            for k, (name, _T) in enumerate(events):
+                self.th[f"unseen|{name}"] = fit([j for j in every if j != k])[1]
+
+    def feat(self, x):
+        return np.hstack([x - self.xc, np.ones((len(x), 1))])
+
+    def out(self, arm, x):
+        return self.feat(x) @ self.th[arm]
+
+
 def cross_fit(x, y, o, treated, unit, sites, first, repair=LinearRows, other=None, fixed=None):
     """Every cell is read by a repair fitted without it (two halves). Returns the output of every arm on the cells it was
     not fitted on, the output of the arm `rows` on the cells it was fitted on (gate 3), and the logs of the fits.
@@ -158,7 +246,8 @@ def cross_fit(x, y, o, treated, unit, sites, first, repair=LinearRows, other=Non
         fit = first if fold == 0 else ~first
         rd = ~fit
         C = np.where(fit & ~treated)[0]
-        R = repair(x, y, o, C, [(s, np.where(fit & treated & (unit == s))[0]) for s in sites], other)
+        ev = [(s, np.where(fit & treated & (unit == s))[0]) for s in sites]
+        R = repair(x, y, o, C, [(s, T) for s, T in ev if len(T)], other)
         fits.append(getattr(R, "log", None))
         for a in R.th:
             out.setdefault(a, np.full(n, np.nan))[rd] = R.out(a, x[rd])
@@ -168,37 +257,47 @@ def cross_fit(x, y, o, treated, unit, sites, first, repair=LinearRows, other=Non
     return out, inside, fits
 
 
-def read(y, o, treated, unit, sites, out, inside, reference, event_reference=None, events=None, seed=0):
+def read(y, o, treated, unit, sites, out, inside, reference, event_reference=None, events=None, seed=0, control_cluster=None, references=None):
     """The reading of a round for one type. sites: the events whose rows repair it, pooled; events: the events also read
     one by one (default: the sites). reference: the draws of the reference stage for the pool (from the grid, paired by
-    seed); event_reference: {event: draws}. Cells of events outside `sites` enter no pooled reading."""
+    seed); event_reference: {event: draws}. Cells of events outside `sites` enter no pooled reading.
+    control_cluster: the unit of every cell where the side an event is read against is made of units (`output_u`).
+    references: {arm: draws} for an arm that is read against another reference than the round's (the arm `unseen` of a
+    unit event, against a reader that never saw the unit)."""
     pool = ~treated | np.isin(unit, sites)
     cl = unit[pool] if len(sites) > 1 else None
-    u0, s0 = output_u(y[pool], o[pool], treated[pool], cl, seed)
+    cc = None if control_cluster is None else np.asarray(control_cluster)
+    output = lambda yy, pp, tt, c_, m: output_u(yy, pp, tt, c_, seed, None if cc is None else cc[m])
+    u0, s0 = output(y[pool], o[pool], treated[pool], cl, pool)
     ref = np.asarray(reference, np.float64)
     e = {"events": list(sites), "resampled_by": "event" if cl is not None else "cell", "resampling_units": len(sites) if cl is not None else None,
          "approximate": bool(cl is not None and len(sites) < 10), "reference": val(ref),            # an interval from fewer than ten events is approximate, as in the tool
          "as_trained": {**val(u0), "slope": s0, "beyond_reference": diff(u0, ref)}, "arms": {}, "by_event": {}}
     U = {}
     for a, p in out.items():
-        u, slope = output_u(y[pool], p[pool], treated[pool], cl, seed)
+        u, slope = output(y[pool], p[pool], treated[pool], cl, pool)
         U[a] = u
         T_, C_ = treated[pool], ~treated[pool]
         gain = np.abs(u0) - np.abs(u)
+        ra = None if not references or a not in references else np.asarray(references[a], np.float64)
         e["arms"][a] = {**val(u), "slope": slope, "valid": bool(slope > 0 and np.sign(p[pool][T_].mean() - p[pool][C_].mean()) == np.sign(y[pool][T_].mean() - y[pool][C_].mean())),
-                        "gain": float(gain[0]), "gain_ci": interval(gain[1:]), "beyond_reference": diff(u, ref)}
+                        "gain": float(gain[0]), "gain_ci": interval(gain[1:]), "beyond_reference": diff(u, ref if ra is None else ra), **({"reference": val(ra)} if ra is not None else {})}
     for s in (events if events is not None else (sites if len(sites) > 1 else [])):
         m = ~treated | (unit == s)
-        ue0, _s = output_u(y[m], o[m], treated[m], None, seed)
+        ue0, _s = output(y[m], o[m], treated[m], None, m)
         r = None if not event_reference or s not in event_reference else np.asarray(event_reference[s], np.float64)
         e["by_event"][s] = {**({"reference": val(r)} if r is not None else {}), "as_trained": {**val(ue0), **({"beyond_reference": diff(ue0, r)} if r is not None else {})}, "arms": {}}
         for a, p in out.items():
-            ue, _s = output_u(y[m], p[m], treated[m], None, seed)
+            ue, _s = output(y[m], p[m], treated[m], None, m)
             e["by_event"][s]["arms"][a] = {**val(ue), **({"beyond_reference": diff(ue, r)} if r is not None else {})}
-    d = np.abs(U["controls"]) - np.abs(U["rows"])                    # what the rows add over a readout of control cells (3b)
-    iv = interval(d[1:])
-    e["rows_minus_controls"] = {"gain_difference": float(d[0]), "ci": iv, "reading": "a step" if iv[0] > STEP else ("no step" if iv[1] < STEP else "unresolved")}
-    ui, _s = output_u(y[pool], inside[pool], treated[pool], cl, seed)
+    def step_between(a, b):                                          # what arm b removes beyond arm a, on paired resamples
+        d = np.abs(U[a]) - np.abs(U[b])
+        iv = interval(d[1:])
+        return {"gain_difference": float(d[0]), "ci": iv, "reading": "a step" if iv[0] > STEP else ("no step" if iv[1] < STEP else "unresolved")}
+    e["rows_minus_controls"] = step_between("controls", "rows")      # what the rows add over a readout of control cells (3b)
+    if "unseen" in U:
+        e["rows_minus_unseen"] = step_between("unseen", "rows")      # what the unit's own row adds over the rows of the other units
+    ui, _s = output(y[pool], inside[pool], treated[pool], cl, pool)
     g3, g0 = diff(ui, ref), e["as_trained"]["beyond_reference"]
     e["A3"] = {**g0, "holds": bool(g0["ci"][0] > STEP)}             # a repair has something to remove: the output as trained loses a step more than the reference stage
     e["gate3"] = {"on_the_cells_it_was_fitted_on": val(ui), "against_the_reference": g3, "passes": bool(g3["ci"][1] < STEP),
@@ -236,13 +335,18 @@ def grid(res, target="shift"):
     return by, draws
 
 
-def load(folder, target="shift"):
-    """The files the tool writes (scope.json, scope_draws.npz), in the form of `grid`."""
+def load(folder, target="shift", readout=None):
+    """The files the tool writes (scope.json, scope_draws.npz), in the form of `grid`. readout: the index of one readout of
+    a run made with `each_readout`; its grid and its draws are returned under the name of the target."""
     import json
     from pathlib import Path
-    res = json.loads((Path(folder) / "scope.json").read_text())
-    z = np.load(Path(folder) / "scope_draws.npz")
-    return {r["event"]["unit"]: r["targets"][target]["stages"] for r in res["results"]}, {k: np.asarray(z[k], np.float64) for k in z.files}
+    res = json.loads((Path(folder) / "scope.json").read_text()) if not isinstance(folder, dict) else folder["json"]
+    z = np.load(Path(folder) / "scope_draws.npz") if not isinstance(folder, dict) else folder["draws"]
+    if readout is None:
+        return {r["event"]["unit"]: r["targets"][target]["stages"] for r in res["results"]}, {k: np.asarray(z[k], np.float64) for k in z.files}
+    tag = f"|{target}@{int(readout)}|"
+    return ({r["event"]["unit"]: r["targets"][target]["each_readout"][int(readout)]["stages"] for r in res["results"]},
+            {k.replace(tag, f"|{target}|"): np.asarray(z[k], np.float64) for k in z.files if tag in k})
 
 
 def merge(*grids):
@@ -375,6 +479,8 @@ def target_by_event(readout, group, type_, reads, placed=None, attainable=None, 
         repaired[s] = bool(e["A3"]["holds"] and not sound[s])
         a = e["arms"]["rows"] if repaired[s] else e["as_trained"]
         ev[s] = {**v(a), "added": a["beyond_reference"], "in_pool": False, "reference": v(e["reference"])}
+        if repaired[s] and "unseen" in e["arms"]:                # a unit event: the same repair without the unit's own row and cells
+            ev[s]["unseen"] = {**v(e["arms"]["unseen"]), "added": e["arms"]["unseen"]["beyond_reference"], "own_row_adds": e["rows_minus_unseen"]}
         if placed and s in placed["events"]:
             ev[s]["before"] = before(placed, s, evidence)
     order = ["loss", "unresolved", "no added loss"]
@@ -393,13 +499,15 @@ def target_by_event(readout, group, type_, reads, placed=None, attainable=None, 
 
 
 def one_type(readout, group, type_, x, y, o, treated, unit, sites, by, draws, model_stage, inputs=(), others=(), control=None, alone=(), first=None, repair=LinearRows,
-             other=None, fixed=None, pair=None, evidence=None, seed=0, target_name="shift", between=(), **more):
+             other=None, fixed=None, pair=None, evidence=None, seed=0, target_name="shift", between=(), control_cluster=None, **more):
     """One round for one type: from its cells and its grid to its target.
     x: the stage the model reads; y: the readout, measured outside; o: the system's own output; treated, unit: the record.
     sites: the admitted events whose rows repair the type; alone: admitted events of the type read on their own.
     by, draws: the grid of the audit tool for these events (and "pool"), at `model_stage`, at the stages of the model's
     input (`inputs`), at stages inside the model (`between`), of other measured inputs (`others`) and of a control view.
-    other, fixed: the cells and the fitted repair of another type, for the arms that test what carries across (cross_fit)."""
+    other, fixed: the cells and the fitted repair of another type, for the arms that test what carries across (cross_fit).
+    control_cluster: the unit of every cell where the control cells come in units of their own (a disease: the events are
+    the patient donors, the control cells are those of the healthy donors); that side is then resampled by unit."""
     if not sites:
         raise ValueError("no admitted event: the type is not a target (protocol 3c)")
     first = halves(np.where(treated, unit, "control"), seed) if first is None else first
@@ -408,13 +516,43 @@ def one_type(readout, group, type_, x, y, o, treated, unit, sites, by, draws, mo
     placed = place(by, draws, model_stage, list(inputs), others, control, target=target_name, between=between) if inputs else None
     if len(sites) >= MIN_POOL:
         refs = {**{s: ref(s, "units") for s in sites}, **{s: ref(s, "own") for s in alone}}
-        e = read(y, o, treated, unit, sites, out, inside, ref("pool", "units"), refs, events=[*sites, *alone], seed=seed)
+        e = read(y, o, treated, unit, sites, out, inside, ref("pool", "units"), refs, events=[*sites, *alone], seed=seed, control_cluster=control_cluster)
         k = f"pool|{target_name}|system|frozen|system"
         if k in draws and abs(e["as_trained"]["u"] - draws[k][0]) > 2e-4:
             raise ValueError("the resamples of the cycle and of the tool do not pair: the seeds or the cells differ")
         t = target(readout, group, type_, e, placed, events_alone=[*sites, *alone], evidence=evidence, pair=pair, **more)
         return {"read_as": "a pool", "reading": e, "placed": placed, "target": t, "fits": fits}
-    reads = {s: read(y, o, treated, unit, [s], out, inside, ref(s, "units" if s in sites else "own"), seed=seed) for s in [*sites, *alone]}
+    reads = {s: read(y, o, treated, unit, [s], out, inside, ref(s, "units" if s in sites else "own"), seed=seed, control_cluster=control_cluster) for s in [*sites, *alone]}
     t = target_by_event(readout, group, type_, reads, placed, evidence=evidence, **more)
     return {"read_as": "event by event", "reading": reads, "placed": placed, "target": t, "fits": fits}
+
+
+def one_units(readout, group, type_, x, y, o, unit, events, by, draws, model_stage, inputs=(), others=(), control=None, first=None, repair=UnitRows, evidence=None, seed=0,
+              target_name="shift", between=(), **more):
+    """One round for a type whose events have no control cells: every admitted unit is read against the other units.
+    unit: the unit of every cell (a donor, a batch); events: the admitted units. Every unit of the type is in the fit; no
+    cell is a control cell. The fit of a half holds half the cells of every unit, so the arm `rows` has the unit's own
+    row, as an event with control cells has its own; the arm `unseen` is the same repair without any cell of the unit. Each event is read
+    on its own: its cells by cell, the other units by unit, as the audit tool reads it. `rows`, `controls` and `cells`
+    are read against a reader of the stage with the unit's own cells, `unseen` against one that never saw the unit."""
+    if not len(events):
+        raise ValueError("no admitted event: the type is not a target (protocol 3c)")
+    unit = np.asarray(unit).astype(str)
+    first = halves(unit, seed) if first is None else first
+    out, inside, fits = cross_fit(x, y, o, np.ones(len(y), bool), unit, sorted(set(unit)), first, repair)
+    placed = place({s: by[s] for s in events}, draws, model_stage, list(inputs), others, control, target=target_name, between=between) if inputs else None
+    reads = {}
+    for s in events:
+        ref = lambda sc: draws[f"{s}|{target_name}|{model_stage}|{sc}|{by[s][model_stage][sc]['class']}"]
+        arms = {a: p for a, p in out.items() if "|" not in a}
+        refs = None
+        if f"unseen|{s}" in out:
+            arms["unseen"], refs = out[f"unseen|{s}"], {"unseen": ref("units")}
+        e = read(y, o, unit == s, unit, [s], arms, inside, ref("own"), seed=seed, control_cluster=unit, references=refs)
+        k = f"{s}|{target_name}|system|frozen|system"
+        if k in draws and abs(e["as_trained"]["u"] - draws[k][0]) > 2e-4:
+            raise ValueError("the resamples of the cycle and of the tool do not pair: the seeds or the cells differ")
+        reads[s] = e
+    t = target_by_event(readout, group, type_, reads, placed, evidence=evidence, **more)
+    return {"read_as": "unit by unit", "reading": reads, "placed": placed, "target": t, "fits": fits}
 

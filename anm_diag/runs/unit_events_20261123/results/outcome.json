@@ -1,0 +1,195 @@
+{
+ "intervals": {
+  "inside": 10,
+  "of": 16
+ },
+ "outcomes": {
+  "most_likely_happened": 2,
+  "of": 2
+ },
+ "not_scored": 0,
+ "rows": [
+  {
+   "id": "N-pairs",
+   "what": "admitted pairs of a donor and a protein",
+   "forecast": [
+    40,
+    110
+   ],
+   "observed": 26,
+   "inside": false
+  },
+  {
+   "id": "N-proteins",
+   "what": "proteins with at least one admitted donor",
+   "forecast": [
+    35,
+    80
+   ],
+   "observed": 26,
+   "inside": false
+  },
+  {
+   "id": "T-rejected",
+   "what": "share of admitted pairs whose output as trained is rejected",
+   "forecast": [
+    0.75,
+    0.98
+   ],
+   "observed": 0.8461538461538461,
+   "inside": true
+  },
+  {
+   "id": "T-median",
+   "what": "median |u| of the output as trained over admitted pairs",
+   "forecast": [
+    0.6,
+    0.97
+   ],
+   "observed": 0.5845636243657739,
+   "inside": false
+  },
+  {
+   "id": "Z-supported",
+   "what": "share whose reference (Z, own cells) is supported",
+   "forecast": [
+    0.05,
+    0.35
+   ],
+   "observed": 0.0,
+   "inside": false
+  },
+  {
+   "id": "Z-rejected",
+   "what": "share whose reference (Z, own cells) is rejected",
+   "forecast": [
+    0.3,
+    0.7
+   ],
+   "observed": 0.5769230769230769,
+   "inside": true
+  },
+  {
+   "id": "A3-share",
+   "what": "share for which A3 holds",
+   "forecast": [
+    0.3,
+    0.7
+   ],
+   "observed": 0.6153846153846154,
+   "inside": true
+  },
+  {
+   "id": "R-closed",
+   "what": "among pairs with A3: share graded relative or absolute",
+   "forecast": [
+    0.3,
+    0.8
+   ],
+   "observed": 0.4375,
+   "inside": true
+  },
+  {
+   "id": "R-absolute",
+   "what": "among pairs with A3: share graded absolute",
+   "forecast": [
+    0.02,
+    0.25
+   ],
+   "observed": 0.0,
+   "inside": false
+  },
+  {
+   "id": "R-fall",
+   "what": "among pairs with A3: median fall of |u| from the output as trained to rows",
+   "forecast": [
+    0.25,
+    0.6
+   ],
+   "observed": 0.4273719926930815,
+   "inside": true
+  },
+  {
+   "id": "U-needed",
+   "what": "among pairs with A3: share for which the own row is needed (a step over unseen)",
+   "forecast": [
+    0.3,
+    0.8
+   ],
+   "observed": 0.625,
+   "inside": true
+  },
+  {
+   "id": "U-not-needed",
+   "what": "among pairs with A3: share for which it is not (no step)",
+   "forecast": [
+    0.05,
+    0.4
+   ],
+   "observed": 0.3125,
+   "inside": true
+  },
+  {
+   "id": "U-median",
+   "what": "among pairs with A3: median of |u| of unseen minus |u| of rows",
+   "forecast": [
+    0.08,
+    0.35
+   ],
+   "observed": 0.2543819365467088,
+   "inside": true
+  },
+  {
+   "id": "C-rows",
+   "what": "among pairs with A3: share for which the rows add a step over controls",
+   "forecast": [
+    0.2,
+    0.7
+   ],
+   "observed": 0.625,
+   "inside": true
+  },
+  {
+   "id": "P-unreadable",
+   "what": "among pairs whose reference is rejected: share read as lost at the input view",
+   "forecast": [
+    0.4,
+    0.9
+   ],
+   "observed": 0.0,
+   "inside": false
+  },
+  {
+   "id": "P-upstream",
+   "what": "among pairs whose reference is rejected: share read as lost between the input view and Z",
+   "forecast": [
+    0.0,
+    0.25
+   ],
+   "observed": 0.0,
+   "inside": true
+  },
+  {
+   "id": "K-control",
+   "what": "the control view reads nothing for every admitted pair (|u| at least 0.9)",
+   "forecast": {
+    "yes": 0.8,
+    "no": 0.2
+   },
+   "observed": "yes",
+   "probability_given": 0.8,
+   "most_likely_happened": true
+  },
+  {
+   "id": "K-positive",
+   "what": "some reading of the family is supported (the positive control holds for at least one protein)",
+   "forecast": {
+    "yes": 0.85,
+    "no": 0.15
+   },
+   "observed": "yes",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  }
+ ]
+}

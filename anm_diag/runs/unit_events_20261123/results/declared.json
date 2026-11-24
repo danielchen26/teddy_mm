@@ -1,0 +1,168 @@
+{
+ "written": "23 November 2026, before the round on the eight donors reads anything",
+ "forecasts": [
+  {
+   "id": "N-pairs",
+   "kind": "interval",
+   "what": "admitted pairs of a donor and a protein",
+   "interval": [
+    40,
+    110
+   ],
+   "why": "by chance alone about one donor in twelve passes for a protein when the other side counts by unit: about 75 of 896"
+  },
+  {
+   "id": "N-proteins",
+   "kind": "interval",
+   "what": "proteins with at least one admitted donor",
+   "interval": [
+    35,
+    80
+   ]
+  },
+  {
+   "id": "T-rejected",
+   "kind": "interval",
+   "what": "share of admitted pairs whose output as trained is rejected",
+   "interval": [
+    0.75,
+    0.98
+   ]
+  },
+  {
+   "id": "T-median",
+   "kind": "interval",
+   "what": "median |u| of the output as trained over admitted pairs",
+   "interval": [
+    0.6,
+    0.97
+   ]
+  },
+  {
+   "id": "Z-supported",
+   "kind": "interval",
+   "what": "share whose reference (Z, own cells) is supported",
+   "interval": [
+    0.05,
+    0.35
+   ]
+  },
+  {
+   "id": "Z-rejected",
+   "kind": "interval",
+   "what": "share whose reference (Z, own cells) is rejected",
+   "interval": [
+    0.3,
+    0.7
+   ]
+  },
+  {
+   "id": "A3-share",
+   "kind": "interval",
+   "what": "share for which A3 holds",
+   "interval": [
+    0.3,
+    0.7
+   ]
+  },
+  {
+   "id": "R-closed",
+   "kind": "interval",
+   "what": "among pairs with A3: share graded relative or absolute",
+   "interval": [
+    0.3,
+    0.8
+   ]
+  },
+  {
+   "id": "R-absolute",
+   "kind": "interval",
+   "what": "among pairs with A3: share graded absolute",
+   "interval": [
+    0.02,
+    0.25
+   ]
+  },
+  {
+   "id": "R-fall",
+   "kind": "interval",
+   "what": "among pairs with A3: median fall of |u| from the output as trained to rows",
+   "interval": [
+    0.25,
+    0.6
+   ]
+  },
+  {
+   "id": "U-needed",
+   "kind": "interval",
+   "what": "among pairs with A3: share for which the own row is needed (a step over unseen)",
+   "interval": [
+    0.3,
+    0.8
+   ]
+  },
+  {
+   "id": "U-not-needed",
+   "kind": "interval",
+   "what": "among pairs with A3: share for which it is not (no step)",
+   "interval": [
+    0.05,
+    0.4
+   ]
+  },
+  {
+   "id": "U-median",
+   "kind": "interval",
+   "what": "among pairs with A3: median of |u| of unseen minus |u| of rows",
+   "interval": [
+    0.08,
+    0.35
+   ]
+  },
+  {
+   "id": "C-rows",
+   "kind": "interval",
+   "what": "among pairs with A3: share for which the rows add a step over controls",
+   "interval": [
+    0.2,
+    0.7
+   ]
+  },
+  {
+   "id": "P-unreadable",
+   "kind": "interval",
+   "what": "among pairs whose reference is rejected: share read as lost at the input view",
+   "interval": [
+    0.4,
+    0.9
+   ]
+  },
+  {
+   "id": "P-upstream",
+   "kind": "interval",
+   "what": "among pairs whose reference is rejected: share read as lost between the input view and Z",
+   "interval": [
+    0.0,
+    0.25
+   ]
+  },
+  {
+   "id": "K-control",
+   "kind": "outcome",
+   "what": "the control view reads nothing for every admitted pair (|u| at least 0.9)",
+   "probabilities": {
+    "yes": 0.8,
+    "no": 0.2
+   }
+  },
+  {
+   "id": "K-positive",
+   "kind": "outcome",
+   "what": "some reading of the family is supported (the positive control holds for at least one protein)",
+   "probabilities": {
+    "yes": 0.85,
+    "no": 0.15
+   }
+  }
+ ]
+}

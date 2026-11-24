@@ -1,0 +1,7951 @@
+{
+ "rule": "a cell is in the selection third if sha256('20261123-units|<barcode>') is divisible by 3; a donor is screened against the other donors, which count as units",
+ "min_snr": 3.0,
+ "donors": [
+  "hao2021_P1",
+  "hao2021_P2",
+  "hao2021_P3",
+  "hao2021_P4",
+  "hao2021_P5",
+  "hao2021_P6",
+  "hao2021_P7",
+  "hao2021_P8"
+ ],
+ "batch_of_donor": {
+  "hao2021_P1": [
+   "hao2021_Batch1"
+  ],
+  "hao2021_P2": [
+   "hao2021_Batch1"
+  ],
+  "hao2021_P3": [
+   "hao2021_Batch1"
+  ],
+  "hao2021_P4": [
+   "hao2021_Batch1"
+  ],
+  "hao2021_P5": [
+   "hao2021_Batch2"
+  ],
+  "hao2021_P6": [
+   "hao2021_Batch2"
+  ],
+  "hao2021_P7": [
+   "hao2021_Batch2"
+  ],
+  "hao2021_P8": [
+   "hao2021_Batch2"
+  ]
+ },
+ "proteins": {
+  "CD86": {
+   "index": 0,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.15228225018725888,
+     "snr": 2.002546279978094,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.12729883174578277,
+     "snr": 1.6070261710147287,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.1106289681482382,
+     "snr": 1.3536737038695603,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.09983241000863073,
+     "snr": 1.2747159312010972,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.06277613996299411,
+     "snr": 0.788856302705145,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.0412943166378097,
+     "snr": 0.4994900216986428,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.028869211901696664,
+     "snr": 0.36376797996030463,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.019271611779675506,
+     "snr": 0.24283607479182875,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD274": {
+   "index": 1,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.3996936812186274,
+     "snr": 3.8025263413891706,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.24476279060122616,
+     "snr": 1.786268779133296,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.1736361274626798,
+     "snr": 1.2053969462058407,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.1779986317107727,
+     "snr": 1.1894053385553403,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.10390803294237018,
+     "snr": 0.6954842199078856,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.09776225601734387,
+     "snr": 0.6624175031965901,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.09329161003415336,
+     "snr": 0.5782334025542061,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.04035854443125561,
+     "snr": 0.2510507861149113,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD270": {
+   "index": 2,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.23500197814890264,
+     "snr": 1.9393666170312323,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.2278212392126158,
+     "snr": 1.871937699754942,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.20370013251999314,
+     "snr": 1.7492278379448525,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.19778665892809957,
+     "snr": 1.6715555228733665,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.13810359641768613,
+     "snr": 1.1005758939321282,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.09274286637254753,
+     "snr": 0.6840232510505007,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.07556594372126964,
+     "snr": 0.5579474398025897,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.06335177133086103,
+     "snr": 0.4862366716948735,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD155": {
+   "index": 3,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.2779606426016159,
+     "snr": 2.506836123880576,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.3073904974445856,
+     "snr": 2.487687151830425,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.22159639162738798,
+     "snr": 1.6581132971109045,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.12240962497397771,
+     "snr": 0.9069734735957107,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.1122389741493653,
+     "snr": 0.8299090583243429,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.09079739518952312,
+     "snr": 0.6450788824726448,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.04910154144840729,
+     "snr": 0.3397717054703137,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.044629136513705835,
+     "snr": 0.3095460474986372,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD112": {
+   "index": 4,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.3365387629297761,
+     "snr": 2.097376466164618,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.29571818528200583,
+     "snr": 1.95772779968747,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.2893007847210558,
+     "snr": 1.760859557318846,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.2167305195371841,
+     "snr": 1.348271828457477,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.19884175143131022,
+     "snr": 1.140216356853958,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.16590341782779666,
+     "snr": 0.984420913451453,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.15226554679837764,
+     "snr": 0.8940696037211118,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.0512689616148107,
+     "snr": 0.2912977862503759,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD47": {
+   "index": 5,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.7961525163911947,
+     "snr": 3.5577460708846473,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.48948267718170907,
+     "snr": 1.851331509044999,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.37625758902189677,
+     "snr": 1.2966604363206506,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.333013861417788,
+     "snr": 1.1582555643602996,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.27239215003753353,
+     "snr": 0.93072226002772,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.27188164822144617,
+     "snr": 0.9074773760400123,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.26322114480472425,
+     "snr": 0.8932087038084434,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.017504252708057232,
+     "snr": 0.058888539902002886,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD48": {
+   "index": 6,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.5764734015178133,
+     "snr": 2.552408898163593,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.4936742185806003,
+     "snr": 2.114106191303298,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.4027954774517926,
+     "snr": 1.6864233946118192,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.3737100146294291,
+     "snr": 1.475094012076623,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.28169640459214457,
+     "snr": 1.1060724621180007,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.25694987669121466,
+     "snr": 0.9466608335652856,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.06399605326378965,
+     "snr": 0.24028445285845704,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.055558421633532785,
+     "snr": 0.19951629973750423,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD40": {
+   "index": 7,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.20237798565652243,
+     "snr": 2.3198794147066675,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.1476742884161259,
+     "snr": 1.6532209837444556,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.10126804444041679,
+     "snr": 1.2015429500011592,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.09960680747950044,
+     "snr": 1.1670155329759297,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.09465430662672207,
+     "snr": 1.0913493537659178,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.060588657529260445,
+     "snr": 0.6616622749787674,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.045224182269265625,
+     "snr": 0.47567202322178836,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.01911761915241161,
+     "snr": 0.20389829749103827,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD154": {
+   "index": 8,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.3894513099660313,
+     "snr": 1.7181842787247337,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.3651935247704033,
+     "snr": 1.5908385131056588,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3618020670134654,
+     "snr": 1.58438230774892,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.3223170823319033,
+     "snr": 1.390710541164337,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.2979891015671876,
+     "snr": 1.273200923129911,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.3003427932836905,
+     "snr": 1.2562203331663213,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.28895325929645777,
+     "snr": 1.2271661371713987,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.2928819462522114,
+     "snr": 1.2251609939659411,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD52": {
+   "index": 9,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.22025704693983864,
+     "snr": 1.917864381122773,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.2056310997581058,
+     "snr": 1.8620841020097523,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.15914967772214297,
+     "snr": 1.5240877937611288,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.13371232962130464,
+     "snr": 1.20164199705769,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.12860568048884527,
+     "snr": 1.1610019268310816,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.1044820825821966,
+     "snr": 0.8835867690776807,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.09312930226292702,
+     "snr": 0.8009619163339626,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.07794491877342073,
+     "snr": 0.6898597398918205,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD3": {
+   "index": 10,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.362124396760674,
+     "snr": 2.0357033117406123,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.3190649896300852,
+     "snr": 1.746746584551797,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3172944493443052,
+     "snr": 1.7284163364190919,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.30925332141411643,
+     "snr": 1.7199467504879538,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.2602248252202491,
+     "snr": 1.3961360806637289,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.16137754871713889,
+     "snr": 0.8470307564535576,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.1639306972817435,
+     "snr": 0.8360188579207214,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.07952606473282413,
+     "snr": 0.38835380415638276,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD8": {
+   "index": 11,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.22678850200446318,
+     "snr": 2.516667575644121,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.19409411907715282,
+     "snr": 1.9201774117443373,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.1868537639632361,
+     "snr": 1.9091024750822807,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.10245451599826569,
+     "snr": 0.9494160090801893,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.0854358736538171,
+     "snr": 0.774680259222848,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.06842895163241124,
+     "snr": 0.6010200177592726,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.0453411655505676,
+     "snr": 0.3990671712146588,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.0044798558102844875,
+     "snr": 0.04110756555260226,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD56": {
+   "index": 12,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3587010054624858,
+     "snr": 2.6876185091027343,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.2764580428056013,
+     "snr": 1.8864990221574631,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.24709486640305736,
+     "snr": 1.6490763339920496,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.21996881812551575,
+     "snr": 1.462455877165815,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.1420331465398932,
+     "snr": 0.8194861894540009,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.11953251470196499,
+     "snr": 0.7628540982703437,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.09677166823554563,
+     "snr": 0.5592888266221239,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.08265589096377512,
+     "snr": 0.5303518319321332,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD19": {
+   "index": 13,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.31489174401661296,
+     "snr": 3.0195161130632564,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.1551785107165599,
+     "snr": 1.5724998117878388,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.16006105179957886,
+     "snr": 1.5698269836638516,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.15710629256883854,
+     "snr": 1.328411166701659,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.06777733992657514,
+     "snr": 0.5828387747873484,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.03166602469768638,
+     "snr": 0.2835581487948681,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.028039269891190672,
+     "snr": 0.24854570213094065,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.013222615443062864,
+     "snr": 0.11486989236897789,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD11c": {
+   "index": 14,
+   "admitted": [
+    "hao2021_P7"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.3320955753817268,
+     "snr": 4.290349264568215,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.11751999911047653,
+     "snr": 1.2277670580798068,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.10010267922062631,
+     "snr": 0.9200206896685106,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.06321968115319203,
+     "snr": 0.6323945892311069,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.05976528191650698,
+     "snr": 0.5346743652059714,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.04521609421575296,
+     "snr": 0.44648439340248675,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.045417934953434484,
+     "snr": 0.39292026158222504,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.00028871593099302176,
+     "snr": 0.002798978634535522,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD45RA": {
+   "index": 15,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.33127507962443514,
+     "snr": 2.9717709085393342,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.21640956471245187,
+     "snr": 1.8070924142851892,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.17169953600134286,
+     "snr": 1.3531382849882607,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.1666782888627178,
+     "snr": 1.3246161936245109,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.12790539501548778,
+     "snr": 0.9987535217761861,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.11442438717795556,
+     "snr": 0.8346770105202808,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.03861894497468589,
+     "snr": 0.2690018301015683,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.011040533440828,
+     "snr": 0.07638449720446493,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD123": {
+   "index": 16,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2646816314085713,
+     "snr": 2.6817785501132416,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.20939142584370762,
+     "snr": 1.8840413020743187,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.14300891362558854,
+     "snr": 1.2366081387877148,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.14974434892722635,
+     "snr": 1.194852231789439,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.12399109181321546,
+     "snr": 1.0400834899066693,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.11997643500207289,
+     "snr": 0.9731298079992773,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.08200587723962363,
+     "snr": 0.696575879101193,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.03696554477259253,
+     "snr": 0.26718168702049105,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD105": {
+   "index": 17,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.275110966374576,
+     "snr": 1.8086635645298876,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.241428633314665,
+     "snr": 1.5315576600921401,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.2406313548965737,
+     "snr": 1.5193456657995024,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.22569741222300033,
+     "snr": 1.4116461866448524,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.202732892745983,
+     "snr": 1.2449390188357974,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.20155111973308926,
+     "snr": 1.2417913647712,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.1935879200551279,
+     "snr": 1.185288714662936,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.17285047465316786,
+     "snr": 1.032599295238665,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD194": {
+   "index": 18,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.7468421930667181,
+     "snr": 1.631417627941153,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.7023004755302376,
+     "snr": 1.5187906481413773,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.6957920490558669,
+     "snr": 1.4920058397199818,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.6858488342250197,
+     "snr": 1.4703715752134412,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.6587059034395201,
+     "snr": 1.4210622589925022,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.6575684541972406,
+     "snr": 1.4185361418182072,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.622504472174938,
+     "snr": 1.3268618280201319,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.575853682377549,
+     "snr": 1.2161790872533271,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD4": {
+   "index": 19,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.4398652926736965,
+     "snr": 2.547465287822426,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.2889083675186743,
+     "snr": 1.4489828082909522,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.27795524618383416,
+     "snr": 1.4085251451376084,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.2741068364807017,
+     "snr": 1.3755522784174747,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2650110663035117,
+     "snr": 1.2978629465681026,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.22701241347798976,
+     "snr": 1.1103751839918503,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.22935570641054115,
+     "snr": 1.1046173723826282,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.14816945009738544,
+     "snr": 0.7054286616561959,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD44": {
+   "index": 20,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.1441069189376619,
+     "snr": 2.0040662618472598,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.13908385578668728,
+     "snr": 1.6603270729285313,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.11275014462250456,
+     "snr": 1.35270646816942,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.11129268018399689,
+     "snr": 1.2858691538137457,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.07562548589761013,
+     "snr": 0.8823776594424767,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.06849737939977266,
+     "snr": 0.7477528268461965,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.04921835329923821,
+     "snr": 0.6030883778845363,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.016096656347213602,
+     "snr": 0.19301399532813546,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD14": {
+   "index": 21,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.20651521548526,
+     "snr": 2.85313698881287,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.17439836252089347,
+     "snr": 2.224442393397668,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.08944699766413096,
+     "snr": 0.9404369911821243,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.07053641102655606,
+     "snr": 0.7508535137420066,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.052593560163589466,
+     "snr": 0.5536970018931452,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.04255619342797823,
+     "snr": 0.4907814136759446,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.019992706771089604,
+     "snr": 0.22341578294205705,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.008174424703318759,
+     "snr": 0.09041655674138878,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD16": {
+   "index": 22,
+   "admitted": [
+    "hao2021_P4"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.40764059235058425,
+     "snr": 3.0799399621965313,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.4253464283036213,
+     "snr": 2.6944115378976203,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.22016631326002187,
+     "snr": 1.1841922146616466,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.17900834015600345,
+     "snr": 1.000267554281943,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.14609565282514198,
+     "snr": 0.7957564563917016,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.1253454990594784,
+     "snr": 0.6854969880453221,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.029894319392131576,
+     "snr": 0.16172933854209046,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.015268021247895534,
+     "snr": 0.08001290270402817,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD25": {
+   "index": 23,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.21884057035192112,
+     "snr": 3.8780951819057123,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.08691235183710813,
+     "snr": 1.0782237742146838,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.05137349249956501,
+     "snr": 0.6798768188033028,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.048650596261212514,
+     "snr": 0.6383931500181345,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.03196930252976728,
+     "snr": 0.3881487963578007,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.02535390768863927,
+     "snr": 0.3329927155625777,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.019933475168962596,
+     "snr": 0.23347497345055573,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.017105509727695846,
+     "snr": 0.21638825241152687,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD45RO": {
+   "index": 24,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.24620720459694465,
+     "snr": 2.3938378124254793,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.2334983538236926,
+     "snr": 2.06419424957597,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.21313959303079702,
+     "snr": 1.8255761104061945,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.19730390208593473,
+     "snr": 1.6547517356885253,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.07867943916728729,
+     "snr": 0.6189628215102265,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.036559737962952935,
+     "snr": 0.2778142906469602,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.023355357434714202,
+     "snr": 0.17030239007776035,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.012767812958519151,
+     "snr": 0.09654689819799396,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD279": {
+   "index": 25,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.2155925873074974,
+     "snr": 2.3946478175893873,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.1535174023136787,
+     "snr": 1.5749721356767523,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.16007302717539013,
+     "snr": 1.501897507456783,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.13042854907205323,
+     "snr": 1.337272166105201,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.13178686412948545,
+     "snr": 1.3012835488014016,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.04803155757175667,
+     "snr": 0.4477838543154314,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.039243159808560975,
+     "snr": 0.3676524611057694,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.03443460461382658,
+     "snr": 0.31984871189516884,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "TIGIT": {
+   "index": 26,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.23374696022696304,
+     "snr": 2.578427481675782,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.22655740831460988,
+     "snr": 2.0004563221300953,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.18669673324737374,
+     "snr": 1.8010289361554315,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.07284483262314188,
+     "snr": 0.6630379225000884,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.07437183743931648,
+     "snr": 0.6629580745208847,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.07123232189210428,
+     "snr": 0.6475907295254676,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.0674880816133556,
+     "snr": 0.5735291616386693,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.051627836624996586,
+     "snr": 0.46472812148634246,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD20": {
+   "index": 27,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.23424345078220446,
+     "snr": 3.508375972246663,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.13977555536190714,
+     "snr": 1.4570747553665746,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.12983603366230417,
+     "snr": 1.426009727579413,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.06443161903655395,
+     "snr": 0.6835754302653785,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.0694456973967274,
+     "snr": 0.646516094926195,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.060842408093227,
+     "snr": 0.6328225306582237,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.05816511284868311,
+     "snr": 0.5563331953401184,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.020595886436373105,
+     "snr": 0.22008134816018712,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD335": {
+   "index": 28,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.2880567176147324,
+     "snr": 2.0436395251226145,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.2923755422661534,
+     "snr": 1.7015119284074263,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.276384611872917,
+     "snr": 1.679555184195234,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.2747254332174111,
+     "snr": 1.6087837537680627,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.21662806877447868,
+     "snr": 1.40141225322964,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.19995931941514578,
+     "snr": 1.268602799350709,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.04240115218666076,
+     "snr": 0.2513123193385889,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.012895846605653278,
+     "snr": 0.0731273210996975,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD31": {
+   "index": 29,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.20476216096999283,
+     "snr": 2.5934697003161884,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.20723489094670625,
+     "snr": 2.4114802522303553,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.09795104614905677,
+     "snr": 1.0285524992555133,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.0642211939872252,
+     "snr": 0.7300101624222846,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.05726102384873139,
+     "snr": 0.6013180481128623,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.04455248241998882,
+     "snr": 0.4757438550527219,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.029876842109359585,
+     "snr": 0.28438561768024123,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.013737638356985599,
+     "snr": 0.14819502792520825,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "Podoplanin": {
+   "index": 30,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.41589550360953226,
+     "snr": 1.5717388755429318,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.38991361032384286,
+     "snr": 1.509271960328282,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.39706799854321545,
+     "snr": 1.5001623254809096,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.3802194874129176,
+     "snr": 1.4584715490661004,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3774343610798281,
+     "snr": 1.4432969131836269,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.3572314990504569,
+     "snr": 1.317677088359761,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.3444915164282039,
+     "snr": 1.3129547850753247,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.3383631486846102,
+     "snr": 1.2410726183540628,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD146": {
+   "index": 31,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.14828142210427966,
+     "snr": 1.935467156067698,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.15006014513328458,
+     "snr": 1.7718317228886569,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.1229809236656078,
+     "snr": 1.3842410404326857,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.10208602202471992,
+     "snr": 1.2122369819261947,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.09141527911548439,
+     "snr": 1.0434462363614236,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.06641296570292854,
+     "snr": 0.7530025322341105,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.03622083374344028,
+     "snr": 0.4161086812980231,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.031421878677783975,
+     "snr": 0.3433870486646357,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "IgM": {
+   "index": 32,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.26869557912180275,
+     "snr": 2.4480841349833167,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.22256392103618394,
+     "snr": 1.8152064607010112,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.213174210438371,
+     "snr": 1.741165939081029,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.18226132073953397,
+     "snr": 1.4393590673131358,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.1196271936659804,
+     "snr": 0.950071583508156,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.10969080840008134,
+     "snr": 0.7775371650288521,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.08247710588558012,
+     "snr": 0.6404831804100686,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.004938780335560251,
+     "snr": 0.03315726165737989,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD195": {
+   "index": 33,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.24618067140391747,
+     "snr": 2.2390183401249217,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.2271885131790813,
+     "snr": 1.7793121198290875,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.18226038298502673,
+     "snr": 1.455436731358133,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.1846103202294144,
+     "snr": 1.444802897931047,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.1788981275323572,
+     "snr": 1.4061550052403935,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.1276332916204893,
+     "snr": 0.9910456746966172,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.05916963378238602,
+     "snr": 0.4114372626668508,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.0266408042325987,
+     "snr": 0.20188199245845287,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD196": {
+   "index": 34,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.657854834120042,
+     "snr": 3.181117191171912,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.36756172204460125,
+     "snr": 1.6334420297791317,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.3051000267395495,
+     "snr": 1.2934500999917347,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.3158188377623874,
+     "snr": 1.2749662105081814,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.30325215171685727,
+     "snr": 1.2608729511704626,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.2861730643259386,
+     "snr": 1.1594359345208893,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.18145136043788612,
+     "snr": 0.7207696122282145,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.018260941998923457,
+     "snr": 0.07093040490289061,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD185": {
+   "index": 35,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.5266761774839265,
+     "snr": 1.649632712310251,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.5882534110998519,
+     "snr": 1.6462622716153303,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.49761221945669,
+     "snr": 1.5383174020211048,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.47338447498492026,
+     "snr": 1.4498687006732167,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.5009203880830315,
+     "snr": 1.394600999542865,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.4737595159675275,
+     "snr": 1.3077306355373308,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.46346083768651014,
+     "snr": 1.2854350318226246,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.38072631236038307,
+     "snr": 1.1313314103918661,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD103": {
+   "index": 36,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.19893498986576563,
+     "snr": 3.05919060468563,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.07510880121107269,
+     "snr": 0.9915921137394826,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.07468514977469874,
+     "snr": 0.9577863543540941,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.06264985308929767,
+     "snr": 0.805924115451495,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.05738762835241671,
+     "snr": 0.7208376034698747,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.05228084711977425,
+     "snr": 0.6551614732190606,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.02576567888143309,
+     "snr": 0.33801525318150233,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.008759971117943481,
+     "snr": 0.11543949132846744,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD69": {
+   "index": 37,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.32589120929645365,
+     "snr": 3.606110450176384,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.2761643984161773,
+     "snr": 2.2633297199928424,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.17314051347006337,
+     "snr": 1.3200043814393787,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.09674887998333107,
+     "snr": 0.7629782649522662,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.07126449347312108,
+     "snr": 0.5636438319010671,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.0434276680885318,
+     "snr": 0.33057812610433807,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.030688891484855745,
+     "snr": 0.2264912247205116,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.003954442540034539,
+     "snr": 0.02922769296788247,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD161": {
+   "index": 38,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.262898420580819,
+     "snr": 2.876613142268876,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.3026970091400446,
+     "snr": 2.8404033062345024,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.14998656886873774,
+     "snr": 1.2561239851202914,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.07812486434480165,
+     "snr": 0.6815306122296932,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.05847039239751063,
+     "snr": 0.4870630854330278,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.035507858365871926,
+     "snr": 0.2959516309585295,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.020633588324448112,
+     "snr": 0.16395796679854832,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.0009042877660784881,
+     "snr": 0.007333924336689401,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD152": {
+   "index": 39,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.10569882921694027,
+     "snr": 1.4772033684101136,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.08670264605572901,
+     "snr": 1.2478839639015673,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.08623495743801775,
+     "snr": 1.2465476514716451,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.07959382404037867,
+     "snr": 1.1122682543615516,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.07912528939504626,
+     "snr": 1.060840895402531,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.07683668551433044,
+     "snr": 1.0524764699327762,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.04775998180913651,
+     "snr": 0.656571339239634,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.04562993180395104,
+     "snr": 0.581667746095812,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD223": {
+   "index": 40,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.4768420636287865,
+     "snr": 1.7817887482409729,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.422546466068215,
+     "snr": 1.553659486145292,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.41633842091767714,
+     "snr": 1.5214814418157732,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.40365533058465514,
+     "snr": 1.4764629956690287,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.3851735985687446,
+     "snr": 1.3909451355066518,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.380181116671019,
+     "snr": 1.3703002536269988,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.33579771604149083,
+     "snr": 1.2035193454858018,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2907135338384487,
+     "snr": 1.008776068704181,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD27": {
+   "index": 41,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.305252841568362,
+     "snr": 2.3900786517682233,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.2982463842863264,
+     "snr": 2.362761176401857,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.19255113485860692,
+     "snr": 1.2861420829082233,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.1769785491225532,
+     "snr": 1.1972209982713764,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.1762094518855333,
+     "snr": 1.158380475260949,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.12557603938519274,
+     "snr": 0.8397413679525219,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.10807547835357498,
+     "snr": 0.7411822736782079,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.06348407904374812,
+     "snr": 0.4043434858250984,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD107a": {
+   "index": 42,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.4075416530932911,
+     "snr": 4.531873023130532,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.24013572923717486,
+     "snr": 1.7969801963886598,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.19603783676303416,
+     "snr": 1.2888236402799644,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.1144393436638673,
+     "snr": 0.8179493501059357,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.08161706369958077,
+     "snr": 0.5316008583487428,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.08084239197505357,
+     "snr": 0.5290669017161819,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.03334726416112571,
+     "snr": 0.23481240405777257,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.005861536163559804,
+     "snr": 0.041685176901388926,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD95": {
+   "index": 43,
+   "admitted": [
+    "hao2021_P2"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.47208648558808997,
+     "snr": 3.0739830341592156,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.4020834509785634,
+     "snr": 2.221955884962253,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.24854633550418231,
+     "snr": 1.3143492577699507,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.2492491625749307,
+     "snr": 1.2389278166432123,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.21790105021904133,
+     "snr": 1.0718441232250402,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.09127561438402994,
+     "snr": 0.453975114611362,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.08973805381536346,
+     "snr": 0.4462093746901537,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.07841029097643996,
+     "snr": 0.37743584141225844,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD134": {
+   "index": 44,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.11253006916831287,
+     "snr": 1.6219290836229099,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.08428381660693716,
+     "snr": 1.2761454444107392,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.09211281408600319,
+     "snr": 1.2613698580307204,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.07858106095748217,
+     "snr": 1.1532692933529227,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.0730533901578195,
+     "snr": 1.064226653629066,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.06827075515530195,
+     "snr": 0.9265132725483062,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.0364985761479365,
+     "snr": 0.5044381279862548,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.008268931090446765,
+     "snr": 0.10538823521421496,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "HLA-DR": {
+   "index": 45,
+   "admitted": [
+    "hao2021_P5"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.2674834573481313,
+     "snr": 3.161243638329579,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.1545917262545552,
+     "snr": 1.5037599655017018,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.14671917162030454,
+     "snr": 1.4318052720170704,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.06762284939723133,
+     "snr": 0.6845288837347719,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.06697153806291097,
+     "snr": 0.6789601840337949,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.05935486876138386,
+     "snr": 0.6005539529535378,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.05263569583914806,
+     "snr": 0.5251878144234209,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.016938940962293682,
+     "snr": 0.15229623832490582,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD1c": {
+   "index": 46,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.21277980375367905,
+     "snr": 1.9825026477695482,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.2057313942865348,
+     "snr": 1.882264672092699,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.1440195713690509,
+     "snr": 1.4204792216930593,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.13459644604212317,
+     "snr": 1.3233121579401526,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.1208784441582544,
+     "snr": 1.1570257061778404,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.11578980143716125,
+     "snr": 1.0163009902498086,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.0685214783245601,
+     "snr": 0.6044693828248933,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.03767606487014921,
+     "snr": 0.33663143925227196,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD11b": {
+   "index": 47,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.4342882654976302,
+     "snr": 2.6069411145320007,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.3586546422374715,
+     "snr": 2.2381854501443663,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.27320033361441565,
+     "snr": 1.570140359501778,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.2155760242592872,
+     "snr": 1.1554743851228462,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.18113573866318836,
+     "snr": 0.9373144898571095,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.14734029247365477,
+     "snr": 0.7732270012083636,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.12558470375093317,
+     "snr": 0.6555375933586213,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.11134921679354771,
+     "snr": 0.5752992335454808,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD64": {
+   "index": 48,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.4326542847590064,
+     "snr": 2.2844109799394925,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.4299067366920414,
+     "snr": 2.252191135495208,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.34551370209779625,
+     "snr": 1.9104350728773885,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.2658354828233363,
+     "snr": 1.3771234178923661,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.19411397916686918,
+     "snr": 0.9657118379498296,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.1483702066142266,
+     "snr": 0.7247473309158488,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.1150076398103673,
+     "snr": 0.5393674008539657,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.03563323955815725,
+     "snr": 0.16685391225959564,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD141": {
+   "index": 49,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.32968342856093535,
+     "snr": 2.8086766943968633,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.24590817045172939,
+     "snr": 1.8225495789022534,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.2385547908003702,
+     "snr": 1.7060906530541802,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.1717897483908261,
+     "snr": 1.1212511447461333,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.14220505253578547,
+     "snr": 0.9961595071367576,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.11980270714563167,
+     "snr": 0.8128056820644031,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.10352628981211405,
+     "snr": 0.7104174690542178,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.038799070839619955,
+     "snr": 0.2649047514592707,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD1d": {
+   "index": 50,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.6226044612765554,
+     "snr": 1.9210405203601644,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.5545752450543354,
+     "snr": 1.6334544875779833,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.5101794249221597,
+     "snr": 1.4881053152070094,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.4994244440001066,
+     "snr": 1.4734709944753022,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.49978330461516157,
+     "snr": 1.4543296532290093,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.458515809075875,
+     "snr": 1.3431888277308957,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.3680249779315771,
+     "snr": 1.0460879111169346,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.35402811081501023,
+     "snr": 1.0016814950450694,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD314": {
+   "index": 51,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.1598986556727864,
+     "snr": 2.217350226868196,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.14721649480510146,
+     "snr": 1.8634149491018903,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.12883458434552045,
+     "snr": 1.5620689268997132,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.10325847682635567,
+     "snr": 1.1840117632156928,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.0624230273111985,
+     "snr": 0.6839458310403739,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.02941224592589508,
+     "snr": 0.34252157179461623,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.026454610278550634,
+     "snr": 0.3025951844113409,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.009475077751091028,
+     "snr": 0.1087575374292802,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD35": {
+   "index": 52,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.29645063841780567,
+     "snr": 2.3248778714076046,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.287488480747491,
+     "snr": 2.1539199408598306,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.201276402627165,
+     "snr": 1.5681384940354721,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.15660395696100826,
+     "snr": 1.1965938340859172,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.15242939368050398,
+     "snr": 1.0725409181954517,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.0961796688432167,
+     "snr": 0.7042002674881206,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.0902228822056204,
+     "snr": 0.6519169067150345,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.04175042373585817,
+     "snr": 0.29833099761463233,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD57": {
+   "index": 53,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.8814967594705042,
+     "snr": 2.496488474204114,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.5549513461432211,
+     "snr": 1.551666597984637,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.528737228517927,
+     "snr": 1.4371511346576926,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.5063371372079926,
+     "snr": 1.3686667355833466,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.5174028365966419,
+     "snr": 1.3459349155342595,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.4654679980162668,
+     "snr": 1.195954451070661,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.4187110679488176,
+     "snr": 1.1092830248670136,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.26584525660914227,
+     "snr": 0.6956525364697929,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD272": {
+   "index": 54,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.2787686360726946,
+     "snr": 2.7061428728400525,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.19130460342277933,
+     "snr": 2.1179296703343513,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.1273464053904258,
+     "snr": 1.305357840202249,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.11308819465743841,
+     "snr": 1.1170978612906806,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.03758580069157064,
+     "snr": 0.38210130312674884,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.01950212461865464,
+     "snr": 0.1912297301145454,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.01794195658557427,
+     "snr": 0.1784895928518392,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.00420026758850342,
+     "snr": 0.03614732467854836,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD278": {
+   "index": 55,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.467313244402327,
+     "snr": 2.086800187882409,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.4153194309303899,
+     "snr": 1.7814126389819975,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.37999912632543015,
+     "snr": 1.6038897307350257,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.3671123459069967,
+     "snr": 1.519581388418933,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.2791057734828743,
+     "snr": 1.112884382101044,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.2713380780728399,
+     "snr": 1.106910271221956,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.2744720789947656,
+     "snr": 1.1019253102620772,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.21458247063282415,
+     "snr": 0.8611836861148754,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD39": {
+   "index": 56,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2279966463362151,
+     "snr": 3.305680688400981,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.10816446503939417,
+     "snr": 1.2318568293533763,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.07656007649718559,
+     "snr": 0.8248225352805987,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.05784101795559908,
+     "snr": 0.726503722042015,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.056162651557566924,
+     "snr": 0.6908564887524395,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.05914877615321352,
+     "snr": 0.6841012785026555,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.045445797624199195,
+     "snr": 0.5084535456021609,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.026408688674913004,
+     "snr": 0.31348359611287185,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CX3CR1": {
+   "index": 57,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.17424010205135906,
+     "snr": 2.0768574114779765,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.15241146308680698,
+     "snr": 1.8628532544146128,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.1311976832080461,
+     "snr": 1.69455380773736,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.08523777195556421,
+     "snr": 0.956009006167606,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.07687873085901936,
+     "snr": 0.8442021152742677,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.0569497701403449,
+     "snr": 0.6216292840956356,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.03763567227074108,
+     "snr": 0.4053054298213383,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.034168498236857844,
+     "snr": 0.37108347572748823,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD24": {
+   "index": 58,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.491812353338982,
+     "snr": 1.9570755506351467,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.4164336446390658,
+     "snr": 1.5626046704907013,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.3998421020485851,
+     "snr": 1.5440817529785362,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.3638353864134335,
+     "snr": 1.367258692919986,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3744037615409694,
+     "snr": 1.3505106632643065,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.35681405939631894,
+     "snr": 1.3399035586702066,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.34452946805572954,
+     "snr": 1.2998202818513394,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.22906962884678592,
+     "snr": 0.8032191677132258,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD21": {
+   "index": 59,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.35521635019716175,
+     "snr": 3.1763634471105417,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.18804964142366845,
+     "snr": 1.7459567825498794,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.17498118394969833,
+     "snr": 1.369932348346728,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.12214732446577185,
+     "snr": 1.0285884789011075,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.09475142963417621,
+     "snr": 0.8019282734218123,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.09560162234880605,
+     "snr": 0.788367505501902,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.012955058508186288,
+     "snr": 0.1000863968235612,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.00900104323206758,
+     "snr": 0.07120151870368378,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD79b": {
+   "index": 60,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.11683266592466232,
+     "snr": 1.9825804819647712,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.05765666849696824,
+     "snr": 1.0738834094559657,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.0529922647891718,
+     "snr": 0.919107220076349,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.044741064829989255,
+     "snr": 0.7648566096854678,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.04289720153389167,
+     "snr": 0.6481081017839349,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.05004223871080009,
+     "snr": 0.6350250821238194,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.046139842664537134,
+     "snr": 0.6133760025166181,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.003334141140172992,
+     "snr": 0.05822918937534551,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD244": {
+   "index": 61,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.5265388701038894,
+     "snr": 2.018213672153307,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.4793250323953734,
+     "snr": 1.9053152127477835,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.4606958008041816,
+     "snr": 1.7823999425685346,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.43656197680547093,
+     "snr": 1.6563364321972505,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.35471088073375034,
+     "snr": 1.3021596021103092,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.24763271477252674,
+     "snr": 0.8858424900399912,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.22414222605215417,
+     "snr": 0.7860493593463667,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.1324450792222006,
+     "snr": 0.463281893313325,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD169": {
+   "index": 62,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.34999365164553653,
+     "snr": 2.537968870694041,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.24942432653813223,
+     "snr": 1.997245283792603,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.2238246699646664,
+     "snr": 1.7669903854249038,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.17869591197850349,
+     "snr": 1.3370881482110526,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.13056319101269126,
+     "snr": 0.8557475109764617,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.1101860062139992,
+     "snr": 0.7150552517812522,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.10278915747809793,
+     "snr": 0.6907863117108076,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.01623486391310907,
+     "snr": 0.1077924760867741,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "integrinB7": {
+   "index": 63,
+   "admitted": [
+    "hao2021_P7"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.38362214486789425,
+     "snr": 3.578656151764099,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.3128499994776408,
+     "snr": 2.4911435154730652,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.13231168089378204,
+     "snr": 0.8748656515104501,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.13036961916408057,
+     "snr": 0.8604378426851095,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.11546208862105244,
+     "snr": 0.7829696335599312,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.05490325527139814,
+     "snr": 0.3558281732608817,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.047015682200249126,
+     "snr": 0.3062623356364524,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.044699860000303564,
+     "snr": 0.29017571351528665,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD268": {
+   "index": 64,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.5648793653359016,
+     "snr": 3.4963869088259747,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.3147866410663836,
+     "snr": 1.9495387667568562,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.24611054345427721,
+     "snr": 1.3207159795916699,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.18025748428894495,
+     "snr": 1.0069901579416556,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.17626593219861633,
+     "snr": 0.9639819721385428,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.1276022446006185,
+     "snr": 0.6515475064569235,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.10855223816748898,
+     "snr": 0.5674827537850206,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.060791226326487,
+     "snr": 0.32540535714940866,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD42b": {
+   "index": 65,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.6527012209798664,
+     "snr": 2.223083180417065,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.47884519532381953,
+     "snr": 1.693689206190026,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.4791368277680047,
+     "snr": 1.676861896172813,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.5017703539667062,
+     "snr": 1.6203254466841068,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.38587559799204485,
+     "snr": 1.2378782162633037,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.36430159340738216,
+     "snr": 1.202838351787535,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.2582636673327754,
+     "snr": 0.820294812810025,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.15490323475479764,
+     "snr": 0.49233106049806624,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD54": {
+   "index": 66,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.44981460716119337,
+     "snr": 2.403795142318654,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.32116045290863415,
+     "snr": 1.6604361553688878,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.2857707288609952,
+     "snr": 1.4723118378390176,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.2734615255582075,
+     "snr": 1.3374515760820724,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.2541496980260275,
+     "snr": 1.2557727727494041,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.23031574258891988,
+     "snr": 1.1077832254903603,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.2011090701069787,
+     "snr": 0.9748574961485118,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.15181234325174373,
+     "snr": 0.71004290244943,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD62P": {
+   "index": 67,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.7766107222288704,
+     "snr": 2.694638444650062,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.534936600471441,
+     "snr": 1.8425816087141198,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.5096346042447729,
+     "snr": 1.7552482260728373,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.46545637991700983,
+     "snr": 1.429920434203146,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.34991840481098224,
+     "snr": 1.1105490322816494,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.3105725248397083,
+     "snr": 0.9617994103860331,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.1601549379639704,
+     "snr": 0.47602904120529443,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.12535604162298333,
+     "snr": 0.38607287549199953,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD119": {
+   "index": 68,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.3460913563430375,
+     "snr": 2.5332227920445343,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.27154856186950516,
+     "snr": 1.9320814646171576,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.26601404079630625,
+     "snr": 1.7799829895604509,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.198344200206417,
+     "snr": 1.328274087002909,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.13742886671496315,
+     "snr": 0.8762201847414942,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.12064769583548693,
+     "snr": 0.75302532909127,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.1192779493833149,
+     "snr": 0.7452336420707557,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.014503398765107393,
+     "snr": 0.087336092245064,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "TCR": {
+   "index": 69,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.35798796807020966,
+     "snr": 2.498815825699533,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3044036217326356,
+     "snr": 2.009819874557193,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.2932597712509631,
+     "snr": 1.9285804690882045,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.19657093131053557,
+     "snr": 1.2145601181722971,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.16956736652142437,
+     "snr": 0.9968242308009939,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.14744226927931744,
+     "snr": 0.8804968096759106,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.053417418340289576,
+     "snr": 0.30389594288385885,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.011562863751875364,
+     "snr": 0.069811389230393,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD192": {
+   "index": 70,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.42746244828359936,
+     "snr": 1.95175078997059,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.38764943160281023,
+     "snr": 1.8784737919726986,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.37642906732235026,
+     "snr": 1.6827273209906013,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.30598302577789116,
+     "snr": 1.3836270824135801,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.296145873543522,
+     "snr": 1.358651379152672,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.24308507755682798,
+     "snr": 1.0388384694931947,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.21072716859412075,
+     "snr": 0.9250828835225986,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.20931189707302023,
+     "snr": 0.8747910930101777,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD122": {
+   "index": 71,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.27643779944042396,
+     "snr": 2.6591447657470093,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.28102744618011194,
+     "snr": 2.292725370054617,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.15685774285450532,
+     "snr": 1.0877312680455038,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.13673554224096546,
+     "snr": 0.9935799892337012,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.12193267387011811,
+     "snr": 0.9322875080521706,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.12224708790226622,
+     "snr": 0.9155262641291066,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.08598967858645552,
+     "snr": 0.6487218408749998,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.0823704761372079,
+     "snr": 0.5888263956919716,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD41": {
+   "index": 72,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.6708349663019926,
+     "snr": 2.753947640516833,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.4508727057337999,
+     "snr": 1.7892393857867175,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.4212155174582525,
+     "snr": 1.6634874767932566,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.4005527445737131,
+     "snr": 1.432819173128687,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.27486983942838417,
+     "snr": 0.9884711985509297,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.2653484560914303,
+     "snr": 0.9665013386354334,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.21460078416335546,
+     "snr": 0.7623701520866597,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.10086544140865417,
+     "snr": 0.3551995028024743,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD137": {
+   "index": 73,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.24199139713960832,
+     "snr": 1.7506456776184538,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.21166502034644183,
+     "snr": 1.5509156464288076,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.2119344216034163,
+     "snr": 1.54310050463865,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.2012271047246742,
+     "snr": 1.4548943307070077,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.18919227066158628,
+     "snr": 1.342105680162736,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.1652225263682675,
+     "snr": 1.1562953154885278,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.1427831338754462,
+     "snr": 0.9958869258213026,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.14306542875062903,
+     "snr": 0.9747046948764307,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD163": {
+   "index": 74,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.21800858622325117,
+     "snr": 3.591677630543582,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.12005566609477406,
+     "snr": 1.3935949138911914,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.08463365024928075,
+     "snr": 1.0245712955475186,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.07134514573780502,
+     "snr": 0.8787350338523225,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.05108729078831584,
+     "snr": 0.5578571926182193,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.0318857541599031,
+     "snr": 0.3528653266883692,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.012196683543152186,
+     "snr": 0.14385359706161516,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.011863391175420134,
+     "snr": 0.13460485133140404,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD83": {
+   "index": 75,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.47595492002991213,
+     "snr": 1.690434457030694,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.44117719974189595,
+     "snr": 1.5432506875310288,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.43508717686637655,
+     "snr": 1.50245026899176,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.42769045206089074,
+     "snr": 1.4853197005660121,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.39633439999635817,
+     "snr": 1.3567002760289042,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.3845018358580214,
+     "snr": 1.3120992042244815,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.3769885104474066,
+     "snr": 1.2781342269738998,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3506877107269961,
+     "snr": 1.1950582393503544,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD124": {
+   "index": 76,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.07302191216014257,
+     "snr": 1.3260448817350816,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.08047666900373181,
+     "snr": 1.2348739706007852,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.06464022666510756,
+     "snr": 1.1579278825503272,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.059441371138104104,
+     "snr": 0.945899732759229,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.048533081646019216,
+     "snr": 0.777110488177319,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.02162129618723935,
+     "snr": 0.31938921855352964,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.013278465996102653,
+     "snr": 0.22719685058060432,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.010039097610829393,
+     "snr": 0.17209372928112007,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD13": {
+   "index": 77,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.549619329428089,
+     "snr": 2.916603395970059,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.44039538677771667,
+     "snr": 1.8316268152474053,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.3520139815139942,
+     "snr": 1.5217510464969832,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.32835579227704653,
+     "snr": 1.2915683974530967,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.2638018097134361,
+     "snr": 1.106146278616171,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.23924603891583962,
+     "snr": 0.9299463204772331,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.18697283188049874,
+     "snr": 0.7445260145503189,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.06939450390053438,
+     "snr": 0.26298225309719164,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD2": {
+   "index": 78,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.32097377698379687,
+     "snr": 2.3278200026975813,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.3038678250121435,
+     "snr": 2.1527376808522445,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.21734051405030294,
+     "snr": 1.4743643626661944,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.18568438678509327,
+     "snr": 1.2331543840135812,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.1466005710055413,
+     "snr": 0.9629216457870191,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.15134417919834373,
+     "snr": 0.9270157959132327,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.13239963843189734,
+     "snr": 0.8383838400024908,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.06937974625511942,
+     "snr": 0.4334730621827557,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD226": {
+   "index": 79,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.5853737429500685,
+     "snr": 2.9317823181806357,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.42311285908532353,
+     "snr": 2.154463247403137,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.3057051069589105,
+     "snr": 1.3183145934423348,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.28135463966244056,
+     "snr": 1.2880426195897905,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.26751990301362927,
+     "snr": 1.1485540084545058,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.13662243071609015,
+     "snr": 0.5870997219341959,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.12410408624653518,
+     "snr": 0.5277426705050352,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.10122668298050302,
+     "snr": 0.439471740894942,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD29": {
+   "index": 80,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.5180902259722828,
+     "snr": 2.3391728629115662,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.44523368635657384,
+     "snr": 1.7755759069676333,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.4188604135916237,
+     "snr": 1.645214091058701,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.3764636524646435,
+     "snr": 1.5708550477500591,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.36647136946424536,
+     "snr": 1.447989213339408,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.21488645037866866,
+     "snr": 0.8349936837453273,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.1752799405022718,
+     "snr": 0.6720791317618628,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.12584718839103795,
+     "snr": 0.47860420959238215,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD303": {
+   "index": 81,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.17920590532407205,
+     "snr": 2.0603175389465003,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.13887307268479376,
+     "snr": 1.5968960421803053,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.10797099462729544,
+     "snr": 1.1893752885935192,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.1059241208496342,
+     "snr": 1.1682539440995379,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.10151304523434929,
+     "snr": 1.0081465085355965,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.08423442735812232,
+     "snr": 0.9466846295490798,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.08898294605100761,
+     "snr": 0.8854762951817957,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.08260536288490683,
+     "snr": 0.8413011000202906,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD49b": {
+   "index": 82,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.6174885816978853,
+     "snr": 2.0650142123275548,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.5237987501806242,
+     "snr": 1.918749559052146,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.4874537748056309,
+     "snr": 1.6239440859198528,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.418037308035111,
+     "snr": 1.4650961720957758,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.38640146914089224,
+     "snr": 1.283634198943511,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.35665340476058915,
+     "snr": 1.2097740141648903,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.27632565607721676,
+     "snr": 0.9006121463824173,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.19748961477745944,
+     "snr": 0.6311637598953732,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD81": {
+   "index": 83,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.2782164410490406,
+     "snr": 2.785844465531435,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.24620439460833735,
+     "snr": 2.265127617790742,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.1962867064500311,
+     "snr": 1.737849810393157,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.10965437025720674,
+     "snr": 0.8627356613144379,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.09384804216124243,
+     "snr": 0.731716380193281,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.07900300129675529,
+     "snr": 0.6442828406683313,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.03416904245557261,
+     "snr": 0.2740259328304737,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.007425935032094473,
+     "snr": 0.05560821705903571,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "IgD": {
+   "index": 84,
+   "admitted": [
+    "hao2021_P6"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.44014452291034833,
+     "snr": 3.8884435393589443,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.18214102478056343,
+     "snr": 1.5775289056056387,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.1422199248058436,
+     "snr": 1.1715510418527586,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.11583029872727481,
+     "snr": 0.9408050369093542,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.12194596592277561,
+     "snr": 0.8663872891786392,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.03358073165203367,
+     "snr": 0.2501800260404906,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.011457303689823038,
+     "snr": 0.08582675581731268,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.0027620362970222218,
+     "snr": 0.01989593033648842,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD18": {
+   "index": 85,
+   "admitted": [
+    "hao2021_P2"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.6319133941068754,
+     "snr": 4.086097520884395,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.34390286932985137,
+     "snr": 1.5167418438804858,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.3199679026415958,
+     "snr": 1.4532666809423989,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.3159219348642909,
+     "snr": 1.4409257159849092,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.16505352847722582,
+     "snr": 0.7232754600597523,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.1280762918772351,
+     "snr": 0.5580814748212546,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.08165327016263114,
+     "snr": 0.3570708192258038,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.04751954582329186,
+     "snr": 0.19873582816768404,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD28": {
+   "index": 86,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.4113828749903721,
+     "snr": 1.9254420368352052,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.4106794261350451,
+     "snr": 1.8637748628729622,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.3967026633192506,
+     "snr": 1.8002688536529814,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.3254375401674867,
+     "snr": 1.4172598910294816,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.2809620153520705,
+     "snr": 1.2231245528440085,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.270137828417575,
+     "snr": 1.158553272442238,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.20659217361049642,
+     "snr": 0.8814509553956199,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.17471636706775648,
+     "snr": 0.7022170461722419,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD38": {
+   "index": 87,
+   "admitted": [
+    "hao2021_P5"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.7326978944300531,
+     "snr": 4.729484798709051,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.4218403577231736,
+     "snr": 2.0325793813813013,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.31024806152744694,
+     "snr": 1.3655400300125133,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.15382850907812656,
+     "snr": 0.647923875233852,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.12507425325182936,
+     "snr": 0.5027829196128671,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.11189542973987064,
+     "snr": 0.4492008210047978,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.013606268933254074,
+     "snr": 0.05551227233716451,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.0005369260834152534,
+     "snr": 0.002163464630821814,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD127": {
+   "index": 88,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.5405663202437369,
+     "snr": 2.1541042972900897,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.5045307607965642,
+     "snr": 1.9797526013526217,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.44771592769920904,
+     "snr": 1.6993591934778207,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.3827664110835827,
+     "snr": 1.4033657195103548,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.29387856857482086,
+     "snr": 1.055878448340556,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.2934668668055716,
+     "snr": 1.054924985298318,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.24065844387893953,
+     "snr": 0.86971615334022,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.2297427212987208,
+     "snr": 0.7909317854787854,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD45": {
+   "index": 89,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.664669001826938,
+     "snr": 2.336487827572447,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.6535563963041822,
+     "snr": 2.252497517102975,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.5537800527226644,
+     "snr": 1.8469573633624088,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.3801051171986524,
+     "snr": 1.1819272331679886,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.3698001528257695,
+     "snr": 1.177927779863094,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.310011570399888,
+     "snr": 0.9668583897763916,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.2810343183593762,
+     "snr": 0.8547519109893758,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.05371537093339093,
+     "snr": 0.162131283817515,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD22": {
+   "index": 90,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2960037884785412,
+     "snr": 3.7778766136463546,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.18744274009553574,
+     "snr": 1.4853836396395328,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.1524965398004034,
+     "snr": 1.344981843427051,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.11962985442350835,
+     "snr": 1.0302412861671322,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.11058351815479786,
+     "snr": 0.9481228023421021,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.05532035424497504,
+     "snr": 0.43304789664834303,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.04062150295289588,
+     "snr": 0.3596109820319604,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.03357933442300513,
+     "snr": 0.28802328566352847,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD71": {
+   "index": 91,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.34378259940929506,
+     "snr": 3.7276396273353893,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.2617365353920342,
+     "snr": 2.193596874029815,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.13180281869000834,
+     "snr": 1.0167426609546784,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.10049577212660003,
+     "snr": 0.7543372611160574,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.09300531486693286,
+     "snr": 0.7283905296458133,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.0632662308757913,
+     "snr": 0.47906874525036647,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.023431257941088808,
+     "snr": 0.18157715305290933,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -6.105965378171201e-05,
+     "snr": 0.00047613627845009517,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD26": {
+   "index": 92,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.33104858943892246,
+     "snr": 2.2536902631813276,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.3306711811213107,
+     "snr": 2.23359525746245,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.30276325076620625,
+     "snr": 1.888585795275707,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.2657399482255035,
+     "snr": 1.6480190153780208,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.11389832673500737,
+     "snr": 0.6571153361319843,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.08766212133115162,
+     "snr": 0.5257705221417565,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.05831781066647629,
+     "snr": 0.3170560925219778,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.043338398055576904,
+     "snr": 0.26149532135659315,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD115": {
+   "index": 93,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.3802019680999252,
+     "snr": 1.574897253466072,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.37839612351879465,
+     "snr": 1.5556041045818476,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.38178873281784825,
+     "snr": 1.5425501284349126,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.37757734797364706,
+     "snr": 1.5351717254420896,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.3683326590360198,
+     "snr": 1.5156628901948208,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.3390121848072932,
+     "snr": 1.357083537856757,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.30339440632773385,
+     "snr": 1.185416872568893,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.3015444461499677,
+     "snr": 1.053630805348616,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD63": {
+   "index": 94,
+   "admitted": [
+    "hao2021_P7"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.6627359569494548,
+     "snr": 3.063601815098774,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.4111388440680622,
+     "snr": 1.6819392057789153,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.33363927687504547,
+     "snr": 1.3792789932469902,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.3228243949647285,
+     "snr": 1.3491476012079113,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.28288790488999616,
+     "snr": 1.181185090497889,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.24804836949914597,
+     "snr": 0.9542948699084044,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.14667547488526878,
+     "snr": 0.5670466479255158,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.14278474738415983,
+     "snr": 0.5461235824120338,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD304": {
+   "index": 95,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.3330238808864959,
+     "snr": 1.8990168963570433,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.32216137933463446,
+     "snr": 1.8410917503766533,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.2754603192632787,
+     "snr": 1.6896429834304725,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.21999421473198408,
+     "snr": 1.324668914478974,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.2227835095845337,
+     "snr": 1.3207039377947731,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.19176863450298762,
+     "snr": 1.0941447534231747,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.16924907421329516,
+     "snr": 0.9269142247752142,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.14249252325978143,
+     "snr": 0.7940042678639401,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD36": {
+   "index": 96,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.4119756917100244,
+     "snr": 2.9466312669508246,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.32785287704947463,
+     "snr": 2.572556286445957,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.18692878181443584,
+     "snr": 1.1838478460885065,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.19238597389795412,
+     "snr": 1.1283342570761183,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.12678055937797084,
+     "snr": 0.7608460401030989,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.11269668900807418,
+     "snr": 0.69472794118217,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.03967378991488616,
+     "snr": 0.2316845517706163,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.003842360248730953,
+     "snr": 0.02245840024325996,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD172a": {
+   "index": 97,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.34167737655338204,
+     "snr": 2.946551580830718,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.1868792139065031,
+     "snr": 1.350456840436636,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.1906896687339319,
+     "snr": 1.3196721291242683,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.17239405217990272,
+     "snr": 1.261272528579529,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.15727557446097482,
+     "snr": 1.1422257449640543,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.16139840082041965,
+     "snr": 1.0406811398139497,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.12787023561371616,
+     "snr": 0.9247233104209533,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.08127490499470807,
+     "snr": 0.5733872126877982,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD72": {
+   "index": 98,
+   "admitted": [
+    "hao2021_P8"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2512503658690363,
+     "snr": 3.405589210976736,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.20525380236361135,
+     "snr": 1.8412542110559702,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.10463800622910524,
+     "snr": 0.9939129686035734,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.0851412813024533,
+     "snr": 0.8755011313498328,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.10400214259866712,
+     "snr": 0.8683136147228777,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.0878015082847283,
+     "snr": 0.8008266709749615,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.03211900270404102,
+     "snr": 0.3111607056476487,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.005323380927377236,
+     "snr": 0.05179106282603598,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD158": {
+   "index": 99,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.28133335907626467,
+     "snr": 2.5777401789014758,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.22221729252813044,
+     "snr": 2.572173478436211,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.14967224945128038,
+     "snr": 1.4435438585862943,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.10189348066378695,
+     "snr": 0.8055320536890731,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.08354446823549079,
+     "snr": 0.6430974593947372,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.06608514264183764,
+     "snr": 0.5840552032703877,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.033113695211860236,
+     "snr": 0.3054148802014879,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.003530249756851526,
+     "snr": 0.03325818533484656,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD93": {
+   "index": 100,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.637304802096724,
+     "snr": 1.779035522626311,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.5995567529053358,
+     "snr": 1.6442117341486597,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.5664956073621189,
+     "snr": 1.5618463615320282,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.5189522043004451,
+     "snr": 1.3467622675109008,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.5005023582211855,
+     "snr": 1.3390124111432422,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.5026332824625879,
+     "snr": 1.3313331322888748,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.47541525652967354,
+     "snr": 1.2873741845574898,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.4195460436773688,
+     "snr": 1.1224040383442273,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD49a": {
+   "index": 101,
+   "admitted": [
+    "hao2021_P7"
+   ],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 1.1579713770490672,
+     "snr": 5.1039378922693714,
+     "A1": true,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.5389406280929925,
+     "snr": 1.8641309485633393,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.4317874613282192,
+     "snr": 1.4032123418382343,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.20571640965469926,
+     "snr": 0.6227477765708433,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.15128649561564614,
+     "snr": 0.45044869673157206,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.14370838768273933,
+     "snr": 0.43675606200232553,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.1297396455076079,
+     "snr": 0.39837122997218083,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.07551547260462925,
+     "snr": 0.23153097406501097,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD49d": {
+   "index": 102,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.44019112401007476,
+     "snr": 2.1938601747701707,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.41005512841802816,
+     "snr": 1.9506755070934265,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.3939318447478791,
+     "snr": 1.8206367167156277,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.35408733995315184,
+     "snr": 1.6179544275873101,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.23345285660189,
+     "snr": 1.0349049961950718,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.2115071670273523,
+     "snr": 0.9416823451721311,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.21012026798457387,
+     "snr": 0.9133735513785094,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.023473810161648352,
+     "snr": 0.09891199215364668,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD73": {
+   "index": 103,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.35427115257828434,
+     "snr": 2.7010228744402895,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.2937422429458534,
+     "snr": 2.309553768171442,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.1990157607486558,
+     "snr": 1.294633845152438,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.17773923199075234,
+     "snr": 1.1774050707837027,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.17315845786399825,
+     "snr": 1.039416519025472,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.10365071833610384,
+     "snr": 0.6470256739917006,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.09293375013830565,
+     "snr": 0.6028985031604496,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.0404980895913999,
+     "snr": 0.25978661166061373,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD9": {
+   "index": 104,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.6322836331001765,
+     "snr": 2.80807592566762,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.4157806507186663,
+     "snr": 1.7651647600218363,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.3513931633165493,
+     "snr": 1.4529588442059478,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.354200396101277,
+     "snr": 1.3660599258221502,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.29934372723719105,
+     "snr": 1.1637571377963405,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.26607594021784914,
+     "snr": 1.0503107124611484,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.2198623542710732,
+     "snr": 0.8419945679160835,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.04858739129248307,
+     "snr": 0.18406083390077127,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "TCRVa7.2": {
+   "index": 105,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.2680466887464213,
+     "snr": 2.8060047532149675,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.18177066169113443,
+     "snr": 2.2847567773375075,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.10752372020149426,
+     "snr": 1.177348410885268,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.11509830779838752,
+     "snr": 1.030989042650409,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.04701892711482702,
+     "snr": 0.44764345961038093,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.01413310512695104,
+     "snr": 0.13629156978578055,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.011795475070473512,
+     "snr": 0.11572692775401205,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.0068087150587581,
+     "snr": 0.06200952622990604,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "TCRVd2": {
+   "index": 106,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.36307809586995227,
+     "snr": 2.3739014828078115,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.2305986253971577,
+     "snr": 1.7686445722884947,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.21982458147283382,
+     "snr": 1.692658191712945,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.21561624511623445,
+     "snr": 1.6068588280288516,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.16859560516095012,
+     "snr": 1.117669704090453,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.13159855199963844,
+     "snr": 0.9148313710187235,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.04000531027315639,
+     "snr": 0.2724441873338741,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.02826506629248768,
+     "snr": 0.1582455248105327,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "LOX-1": {
+   "index": 107,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.6429290796108724,
+     "snr": 1.8119498232160076,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.5464456700278454,
+     "snr": 1.5068699217622827,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.5439228044828275,
+     "snr": 1.4866673694827772,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.5347118070843123,
+     "snr": 1.4601339254132435,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.5078108006482293,
+     "snr": 1.3808100732317654,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.48828364166840005,
+     "snr": 1.3206351091080935,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.47503278007621585,
+     "snr": 1.2805546078970964,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.44782526396336975,
+     "snr": 1.192717550321906,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD158b": {
+   "index": 108,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.2668932328756323,
+     "snr": 2.296453416930038,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.20220971926106027,
+     "snr": 1.5642557983621477,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.20172096935302533,
+     "snr": 1.3625928826904208,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.20732414954918976,
+     "snr": 1.2873449538994894,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": 0.18245349299288868,
+     "snr": 1.258661450035247,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": 0.17784649495378158,
+     "snr": 1.184296238848755,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": -0.15370097833797225,
+     "snr": 1.0899557529975494,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": -0.08322830108347869,
+     "snr": 0.5651410638925956,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD158e1": {
+   "index": 109,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.19455587591823262,
+     "snr": 2.711244290453562,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": 0.2593774207056882,
+     "snr": 2.214526924753313,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.09780439125040148,
+     "snr": 0.963242921207021,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": -0.07959564313981451,
+     "snr": 0.9420802535709816,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.07883601574815861,
+     "snr": 0.826945946058177,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": 0.06969076115872465,
+     "snr": 0.5949803083351116,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": -0.02398082674169913,
+     "snr": 0.255177619218032,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.0005716354986074167,
+     "snr": 0.005781375305242763,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD142": {
+   "index": 110,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.19625155481451784,
+     "snr": 1.9950484063163645,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.19696686373309993,
+     "snr": 1.9112793167345101,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.19330824384641834,
+     "snr": 1.8868543707647232,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.13477526284465272,
+     "snr": 1.2366286725144013,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.09643854649124298,
+     "snr": 0.8792530342683949,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.09919793395366426,
+     "snr": 0.8689990289553843,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.07402490414159058,
+     "snr": 0.6590039988721443,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.02553947557007396,
+     "snr": 0.21125281958313938,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  },
+  "CD319": {
+   "index": 111,
+   "admitted": [],
+   "table": [
+    {
+     "event": "hao2021_P1",
+     "cells": 1643,
+     "change_in_control_sd": 0.5119782956206969,
+     "snr": 1.6199922116320258,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P7",
+     "cells": 1680,
+     "change_in_control_sd": -0.4958470206248346,
+     "snr": 1.5916449652549254,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P6",
+     "cells": 1609,
+     "change_in_control_sd": -0.48391220370514665,
+     "snr": 1.5367851292407164,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P2",
+     "cells": 1683,
+     "change_in_control_sd": 0.44238071257490374,
+     "snr": 1.3634785416305248,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P3",
+     "cells": 1616,
+     "change_in_control_sd": 0.44085763140385636,
+     "snr": 1.3448321539030625,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P4",
+     "cells": 1740,
+     "change_in_control_sd": 0.4342919348381816,
+     "snr": 1.3444210692111418,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P8",
+     "cells": 1650,
+     "change_in_control_sd": -0.4252306372619793,
+     "snr": 1.324002256100083,
+     "A1": false,
+     "A2_own": false
+    },
+    {
+     "event": "hao2021_P5",
+     "cells": 1673,
+     "change_in_control_sd": -0.4169396236689911,
+     "snr": 1.29954870953142,
+     "A1": false,
+     "A2_own": false
+    }
+   ]
+  }
+ },
+ "cells": {
+  "all": 40000,
+  "selection_third": 13294,
+  "read": 26706,
+  "read_by_donor": {
+   "hao2021_P1": 3357,
+   "hao2021_P2": 3317,
+   "hao2021_P3": 3384,
+   "hao2021_P4": 3260,
+   "hao2021_P5": 3327,
+   "hao2021_P6": 3391,
+   "hao2021_P7": 3320,
+   "hao2021_P8": 3350
+  }
+ },
+ "admitted_pairs": 26,
+ "proteins_with_an_admitted_donor": 26
+}

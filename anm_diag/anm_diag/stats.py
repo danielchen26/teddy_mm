@@ -22,7 +22,7 @@ def _hgb_extra(spec):
 def make_learner(spec, kind):
     if kind == "m":
         if spec["regressor"] == "RidgeCV":
-            return RidgeCV(alphas=np.asarray(spec["alphas"], float))
+            return RidgeCV(alphas=np.asarray(spec["alphas"], float), alpha_per_target=bool(spec.get("alpha_per_target", False)))     # several readouts: one weight for all, unless asked per readout
         if spec["regressor"] == "HistGradientBoostingRegressor":
             return HistGradientBoostingRegressor(max_iter=spec["max_iter"], learning_rate=spec["learning_rate"],
                                                  max_leaf_nodes=spec["max_leaf_nodes"], random_state=0, **_hgb_extra(spec))
