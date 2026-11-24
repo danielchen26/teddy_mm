@@ -1,0 +1,146 @@
+{
+ "intervals": {
+  "inside": 3,
+  "of": 3
+ },
+ "outcomes": {
+  "most_likely_happened": 8,
+  "of": 9
+ },
+ "rows": [
+  {
+   "id": "same-grouping",
+   "what": "the grouping found in the states is the batch",
+   "forecast": {
+    "yes": 0.55,
+    "no": 0.45
+   },
+   "observed": "yes",
+   "probability_given": 0.55,
+   "most_likely_happened": true
+  },
+  {
+   "id": "H1-batch",
+   "what": "H1 for the batch: the type's record covers the member",
+   "forecast": {
+    "refuted": 0.6,
+    "unresolved": 0.3,
+    "confirmed": 0.1
+   },
+   "observed": "refuted",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "P1-batch-median",
+   "what": "part 1, the batch, the ten pairs: the median of |u_type|",
+   "forecast": [
+    0.45,
+    1.05
+   ],
+   "observed": 0.8207556210177556,
+   "inside": true
+  },
+  {
+   "id": "P1-batch-rank",
+   "what": "part 1: the batch is first or second of the 35 groupings",
+   "forecast": {
+    "yes": 0.5,
+    "no": 0.5
+   },
+   "observed": "yes",
+   "probability_given": 0.5,
+   "most_likely_happened": true
+  },
+  {
+   "id": "H2-batch",
+   "what": "H2 for the batch: the repair with the type's record gains a step over `unseen`",
+   "forecast": {
+    "refuted": 0.65,
+    "unresolved": 0.25,
+    "confirmed": 0.1
+   },
+   "observed": "refuted",
+   "probability_given": 0.65,
+   "most_likely_happened": true
+  },
+  {
+   "id": "P2-batch-median",
+   "what": "part 2, the batch, the ten pairs: the median of |u| of `typed` (`unseen` 0.75, `rows` 0.45)",
+   "forecast": [
+    0.5,
+    0.9
+   ],
+   "observed": 0.766908430959007,
+   "inside": true
+  },
+  {
+   "id": "P2-batch-gain",
+   "what": "part 2, the batch: the gain of the median over `unseen`",
+   "forecast": {
+    "no step": 0.6,
+    "unresolved": 0.25,
+    "a step": 0.15
+   },
+   "observed": "no step",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  },
+  {
+   "id": "P2-batch-rank",
+   "what": "part 2: the batch is first or second of the 35 groupings",
+   "forecast": {
+    "no": 0.65,
+    "yes": 0.35
+   },
+   "observed": "yes",
+   "probability_given": 0.35,
+   "most_likely_happened": false
+  },
+  {
+   "id": "H1-state",
+   "what": "H1 for the grouping found in the states",
+   "forecast": {
+    "refuted": 0.62,
+    "unresolved": 0.29,
+    "confirmed": 0.09
+   },
+   "observed": "refuted",
+   "probability_given": 0.62,
+   "most_likely_happened": true
+  },
+  {
+   "id": "H2-state",
+   "what": "H2 for the grouping found in the states",
+   "forecast": {
+    "refuted": 0.65,
+    "unresolved": 0.25,
+    "confirmed": 0.1
+   },
+   "observed": "refuted",
+   "probability_given": 0.65,
+   "most_likely_happened": true
+  },
+  {
+   "id": "P1-best",
+   "what": "part 1, the ten pairs: the median of |u_type| of the best of the 35 groupings",
+   "forecast": [
+    0.4,
+    0.95
+   ],
+   "observed": 0.8207556210177556,
+   "inside": true
+  },
+  {
+   "id": "checks",
+   "what": "the arms rows and unseen repeat the round of 23 November",
+   "forecast": {
+    "yes": 0.93,
+    "no": 0.07
+   },
+   "observed": "yes",
+   "probability_given": 0.93,
+   "most_likely_happened": true
+  }
+ ]
+}
