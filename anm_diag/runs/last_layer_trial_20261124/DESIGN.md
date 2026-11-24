@@ -3,6 +3,12 @@
 Written on 24 November 2026, **after the scripts were tried on made-up values and after a pilot that was looked at by
 its training curve alone (Section 7), and before any state of a trained layer was read**.
 
+**Amended the same day, still before any state of a trained layer was read or kept.** The first training made the
+rows swing and was stopped by hand. What was changed is how the gradient of the loss is taken (Section 4, "Steps")
+and one arm of part B (`cells5`, Section 5); Section 7 says what happened and what each pilot showed. The loss, the
+learning rate, the limit of steps, the stopping rule, the rule of Section 6, the hypotheses and the forecasts are as
+first committed.
+
 Everything here is exploratory. The cells are development cells of the THP-1 screen that earlier runs have read. No
 final unit is read. One layer of the encoder is trained on the owner's machine; the owner agreed to the trial on
 24 November.
@@ -72,11 +78,17 @@ it holds no record of any event. It is not trained.
 A degenerate solution of the rows is closed off by construction: the readout is fixed and was fitted on control
 cells, so its slope among them cannot change sign, and the control cells are held.
 
-**Steps.** Adam, learning rate 1e-5 (set by the pilot, Section 7). A step is 64 cells: 24 control cells and the rest
-in equal parts from the events of the record, in four passes of 16. The gradient of `rows` is taken with the shifts
-as they stand (a running value, made exact every 25 steps on all cells of the fitted half). **Training stops when
-every row of the record is read to within 0.03 control SD on the cells of the fitted half, or after 600 steps.** It
-is not run to a loss of zero.
+**Steps** (amended, Section 7). Adam without momentum (betas 0 and 0.999), learning rate 1e-5. A step is 64 cells:
+24 control cells and the rest in equal parts from the events of the record. The cells of a step are first read as
+the layer stands. That gives the shift of every event in the step: the shift as released, read once on all cells of
+the fitted half, plus the mean change of *r* among the step's cells of the event, minus the mean change among the
+step's control cells. With these the gradient of the step's loss is exact, and four passes of 16 cells carry it to
+the weights. Every 25 steps all cells of the fitted half are read. **Training stops when every row of the record is
+read to within 0.03 control SD on the cells of the fitted half, or after 600 steps.** It is not run to a loss of
+zero.
+
+(As first committed: Adam with momentum, and the gradient of `rows` taken with a running value of the shifts, made
+exact every 25 steps. That made the rows swing.)
 
 ## 5. The arms
 
@@ -87,7 +99,7 @@ What the record holds about the knockout cells of the fitted half:
 | `rows4` | `T4` | the rows of IFNGR1, IFNGR2, JAK2, STAT1. No cell of IRF1 is used | **question 1**: IRF1 is an event without a record |
 | `rows5` | `T5` | the same and the row of IRF1 | **question 2** |
 | `mixed` | `TM` | as `rows5`, with the event labels permuted among the knockout cells | does the event of a row matter, or only "a knockout shifts" |
-| `cells5` | `TC` | the measured protein of every knockout cell, cell by cell, in place of the rows | ordinary fine-tuning with the same cells |
+| `cells5` | `TC` | the measured protein of every cell of the fitted half, knockout and control, cell by cell, in place of the rows (amended: as first committed, of the knockout cells only) | ordinary fine-tuning with the same cells |
 | `prop` | `TP` | `rows4`, and for the cells of IRF1 a row that was **not measured**: the mean of the four measured shifts | the simplest propagation: events of one type shift alike |
 
 **Two parts.** The arms `rows4` and `rows5` are trained and read first (part A, `results/trial.json`): the three
@@ -166,6 +178,55 @@ What each outcome would mean:
   and the cells of IRF1 follow them by about a tenth.
 - **Speed** on the owner's machine: 37 cells a second for one training, 60 for two at once. Two folds are trained
   at once.
+
+### What happened after the first commit, and the amendment
+
+All of it before any state of a trained layer was computed for the cells of the other half, written or read. Every
+line below is a training curve on the cells of the fitted half
+([`results/pilot.json`](results/pilot.json), `after_the_first_commit`).
+
+1. **The first training, as first committed, made the rows swing.** The arm `rows4`, both folds. In fold 0 the row of
+   IFNGR1 (−0.93) was read at −0.89, −0.89, −1.02, −0.79, −1.16, −0.57 at steps 100 to 225, and the largest error of
+   a row went from 0.15 to 0.50. The pilot of 100 steps had been too short to show it. Both folds were stopped by
+   hand before step 250; the script then started the next arm, which was stopped 9 seconds later, before its first
+   step. No state was written.
+   Why it swung: the gradient of a row was taken with a running value of the shift, which lags, and Adam's momentum
+   adds to the lag.
+2. **Two replacements of the rows term were tried and dropped.** Both ask every knockout cell, one by one, to move by
+   what its row is missing.
+   - With the control cells entering only through `hold`, the rows did not move (IFNGR1 from −0.49 to −0.50 in 75
+     steps): the layer moves knockout and control cells together, and the row is their difference.
+   - Relative to the control cells of the step, and with the exact gradient of a step and no momentum, the curve was
+     smooth and stopped short: after 150 steps at 1e-5 the largest error was 0.26 and no longer falling. This term
+     asks more than a row does: that the cells of an event move alike.
+3. **What is used: the loss as first committed, with its gradient taken exactly.** The cells of a step are read as
+   the layer stands, so the shift of every event in the step is known without a running value (Section 4), and Adam
+   is run without momentum. Arm `rows5`, fold 0, 200 steps:
+
+   | learning rate | largest error of a row at steps 25, 50, … 200 | control cells moved |
+   |---|---|---|
+   | **1e-5** | 0.34, 0.31, 0.27, 0.24, 0.22, 0.20, 0.18, 0.17 | 0.001 |
+   | 3e-5 | 0.27, 0.22, 0.16, 0.14, 0.14, 0.11, 0.15, 0.21 | 0.002 |
+
+   At 1e-5 the error falls at every reading. At 3e-5 it falls faster and then the four pathway rows drift together
+   (0.11 at step 150, 0.21 at step 200). **The learning rate stays 1e-5 and the limit stays 600 steps.** At step 200
+   the rows are read at −0.86, −0.87, −0.23, −0.99, −0.91 for IFNGR1, IFNGR2, IRF1, JAK2, STAT1 (the rows: −0.93,
+   −1.02, −0.40, −1.17, −0.83). It is not expected that every row is within 0.03 after 600 steps; an arm that is
+   not is read as it is, and said (Section 8).
+4. **The arm `cells5`** (part B) takes the measured protein of every cell of the fitted half, control cells
+   included. As first committed it took the knockout cells only, which is the shape of the first replacement above
+   that did not move. No training of this arm was run in either form.
+5. **What was not changed:** the readout, the loss and its weights, the cells and folds, the arms of part A, the
+   stopping rule, the rule of Section 6, the hypotheses, and the forecasts. The forecasts were written after the
+   first pilot and were not revised after the later ones. One thing the later pilots show that the forecasts did not
+   have: with the exact gradient the row of IRF1 is learned at about the same pace as before (−0.01 at the start,
+   −0.16 after 100 steps, −0.23 after 200).
+
+The training of the trial was started with this script while the amendment was being written, and the amendment was
+committed before the first arm had finished, so before any state of a trained layer existed as a file.
+
+Speed with two trainings at once is now 17 cells a second each, the readings of every 25 steps included (the cells
+of a step are read once more than before): about 40 minutes for the two folds of an arm.
 
 ## 8. What would change the plan
 

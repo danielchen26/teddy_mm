@@ -16,9 +16,11 @@ fitted on the control cells of the fit half, at the state as released. It reads 
 among those control cells. It is the readout of the round's arm `controls`: it holds no record of any event.
 
 The loss, DESIGN.md Section 4:
-  rows   for every event of the arm's record: (the shift of r from the control cells to the event's cells, minus the
-         measured shift)^2, averaged over the events. This is a row of the TEG written as a term: it uses the protein of
-         a knockout cell only through the mean of its event.
+  rows   a row of the TEG written as a term. For every event e of the arm's record: (the shift of r from the control
+         cells to the cells of e, minus the measured shift)^2, averaged over the events. It uses the protein of a
+         knockout cell only through the mean of its event. In a step the shift of e is taken as: the shift as
+         released, read once on all cells of the fit, plus the mean change of r among the step's cells of e, minus
+         the mean change of r among the step's control cells.
   hold   the control cells stay where they are: the squared distance of a control cell's state from its state as
          released, in units of the spread of the control cells' states.
   loss = rows + hold  (weights 1 and 1; nothing is tuned)
@@ -30,9 +32,17 @@ Arms (what the record holds about the knockout cells of the fit half):
   cells5  the measured protein of every knockout cell, cell by cell, in place of the rows (ordinary fine-tuning)
   prop    rows4, and for the cells of IRF1 a row that was not measured: the mean of the four measured shifts
 
-Steps: Adam, learning rate 1e-5; a step is 64 cells (24 control cells and the rest in equal parts from the events), in
-four passes of 16. Every 25 steps all cells of the fit half are read: training stops when every row of the record is
-read to within 0.03 (control SD), or after --steps steps. The weights of the last step are kept.
+Steps: Adam without momentum (betas 0 and 0.999), learning rate 1e-5; a step is 64 cells (24 control cells and the
+rest in equal parts from the events). The cells of a step are first read as the layer stands, which gives the exact
+gradient of the step's loss with respect to every cell's r; then four passes of 16 carry it to the weights. Every 25
+steps all cells of the fit half are read: training stops when every row of the record is read to within 0.03
+(control SD), or after --steps steps. The weights of the last step are kept.
+
+(The loss is the declared one. How its gradient is taken was changed three times before any state was read, each
+time by the training curve of a pilot: DESIGN.md, Section 7. With a running value of the shifts and Adam with
+momentum the rows swung about their values. Two forms that ask every knockout cell, one by one, to move by what its
+row is missing were tried and dropped: the first did not move the rows, the second held them short of their values,
+because it also asks the cells of an event to move alike.)
 
 Writes OUT/<arm>_<fold>.npz: the state of EVERY cell under the trained layer (ZT), the state as released (Z0), the
 readout, and the log. --bench N: time N steps and stop (nothing is written). --pilot: train as declared and write the
@@ -168,7 +178,6 @@ def main():
     xc, w, b, lam, cv = ridge(x0[C], t[C])
     v0 = float(((x0[C] - x0[C].mean(0)) ** 2).sum(1).mean())      # the spread of the control cells' states
     W, XC, X0 = torch.tensor(w, dtype=torch.float32, device=dev), torch.tensor(xc, dtype=torch.float32, device=dev), torch.tensor(x0, dtype=torch.float32, device=dev)
-    T_ = torch.tensor(np.nan_to_num(t), dtype=torch.float32, device=dev)
     at_ = lambda i: torch.from_numpy(np.asarray(i, np.int64)).to(dev)
     r_of = lambda z: ((z / (z.norm(dim=1, keepdim=True) + 1e-6)) - XC) @ W + b
 
@@ -183,11 +192,16 @@ def main():
 
     s_hat, hold = full()
     err = max(abs(s_hat[g] - target[g]) for g in list(ev))       # read on all cells of the fit; only this value stops the training
+    r0 = (x0 - xc) @ w + b                                       # the readout at the released state, every cell
+    missing = np.zeros(len(ids))                                 # for a knockout cell of the record: what the row says is missing
+    for g, T in ev.items():
+        missing[T] = target[g] - s_hat[g]
+    tt = np.where(np.isfinite(t), t, 0.0)
     log = {"arm": a.arm, "fold": a.fold, "cells_of_the_fit": int(fit.sum()), "control_cells_of_the_fit": int(len(C)), "events": {g: int(len(T)) for g, T in ev.items()}, "rows": target,
            "readout": {"ridge_weight": lam, "cv_error": cv, "spread_of_the_control_states": v0}, "released_state_against_the_record": rec,
            "curve": [{"step": 0, "shift": dict(s_hat), "hold": hold, "largest_error_of_a_row": max(abs(s_hat[g] - target[g]) for g in groups)}]}
     say("step 0:", json.dumps({g: round(s_hat[g], 3) for g in groups}), "rows", json.dumps({g: round(target[g], 3) for g in groups}), f"hold {hold:.4f}")
-    opt = torch.optim.Adam(par, lr=a.lr)
+    opt = torch.optim.Adam(par, lr=a.lr, betas=(0.0, 0.999))
     rng = np.random.default_rng(1000 + a.fold)
     per = (STEP_CELLS - N_CTRL) // len(groups)
     pools = {"control": rng.permutation(C), **{g: rng.permutation(T) for g, T in ev.items()}}
@@ -206,14 +220,21 @@ def main():
         ie = {g: draw(g, per) for g in groups}
         idx = np.concatenate([ic] + [ie[g] for g in groups])
         grp = np.concatenate([np.full(len(ic), -1)] + [np.full(per, k) for k, _g in enumerate(groups)])
-        coef = np.zeros(len(idx), np.float32)                    # d loss / d r for every cell of the step, with the shifts as they stand
-        if a.arm != "cells5":
-            c = {g: 2.0 * (s_hat[g] - target[g]) / len(groups) for g in groups}
-            for k, g in enumerate(groups):
-                coef[grp == k] = c[g] / per
-            coef[grp == -1] = -sum(c.values()) / len(ic)
+        with torch.no_grad():                                    # the cells of the step as the layer stands: the exact gradient of the step's loss in r
+            rr = r_of(states(idx, batch=PASS)).cpu().numpy().astype(np.float64)
+        ctl = grp == -1
+        coef = np.zeros(len(idx))
+        if a.arm == "cells5":                                    # every cell of the step against its own measured protein
+            coef[:] = 2.0 * (rr - tt[idx]) / len(idx)
+        else:
+            d = rr - r0[idx]                                     # the change of r, cell by cell
+            res = np.array([(d - missing[idx])[grp == k].mean() for k in range(len(groups))]) - d[ctl].mean()   # for every event: its shift as it stands, minus the row
+            for k in range(len(groups)):
+                coef[grp == k] = 2.0 * res[k] / (len(groups) * per)
+            coef[ctl] = -2.0 * res.mean() / ctl.sum()
+        cf = torch.tensor(coef, dtype=torch.float32, device=dev)
         opt.zero_grad(set_to_none=True)
-        sums, o = {k: 0.0 for k in range(-1, len(groups))}, rng.permutation(len(idx))
+        o = rng.permutation(len(idx))
         for s in range(0, len(idx), PASS):
             j = o[s:s + PASS]
             z = states(idx[j], grad=True, batch=PASS)
@@ -221,18 +242,10 @@ def main():
             g_ = torch.from_numpy(grp[j]).to(dev)
             isc = g_ == -1
             loss = (((z[isc] / (z[isc].norm(dim=1, keepdim=True) + 1e-6)) - X0[at_(idx[j])][isc]) ** 2).sum() / (v0 * len(ic)) if bool(isc.any()) else z.sum() * 0.0
-            if a.arm == "cells5":
-                loss = loss + ((r[~isc] - T_[at_(idx[j])][~isc]) ** 2).sum() / (len(idx) - len(ic))
-            else:
-                loss = loss + (torch.from_numpy(coef[j]).to(dev) * r).sum()
+            loss = loss + (cf[at_(j)] * r).sum()
             loss.backward()
-            for k in sums:
-                sums[k] += float(r[g_ == k].sum().detach())
         opt.step()
         steps += 1
-        bm = sums[-1] / len(ic)                                  # the shifts move with the step: a running value between the full readings
-        for k, g in enumerate(groups):
-            s_hat[g] = 0.9 * s_hat[g] + 0.1 * (sums[k] / per - bm)
         if steps % EVERY == 0 and not a.bench:
             s_hat, hold = full()
             err = max(abs(s_hat[g] - target[g]) for g in groups)
