@@ -15,8 +15,9 @@ checked on systems with a known answer and run on cells read before.
   On a planted study of units, 216 placements: **174 right, 42 undecided, none wrong**; both controls of the measure
   hold in 144 of 144.
 - **An edge is a record of the event graph** (rule 4j): declared from the run's declarations, or proposed from
-  measured rows and admitted or refused by rows it did not see. Of five edges the library under interferon proposed,
-  **four are admitted** by another condition, one is refused, and a sixth has no row elsewhere.
+  measured rows and admitted or refused by rows it did not see. The library under interferon proposes five edges.
+  Four of them can be asked of another condition: **three are admitted** (one of them in both conditions), one is
+  refused. The fifth has no row elsewhere.
 - **The law by type** (rule 4k). The recorded pathway events still forecast each other (error 0.11 against 0.64 for
   the control readout in co-culture) and no longer move an event of another type. With the error of a row counted
   once, the intervals of batch 2 are about right: mean squared *z* **1.02** (it was 0.30), 74 of 79 inside.
@@ -162,7 +163,8 @@ edge and asked of the rows of the other two conditions, forecast without it (rul
 | STAT3 → MHC-I | co-culture (batch 2) | +0.19 | +0.01 ± 0.13 | refused | +0.11, +0.03 |
 | NONO → PD-L1 | no row elsewhere | | | stays proposed | |
 
-With the intervals as committed for batch 2, two of these stood outside (TAPBP, and CD44 with no signal); hypothesis
+Five proposed pairs, five tests on four of them: three pairs admitted (CD44 in both conditions), one refused, one
+with no row to be asked of. With the intervals as committed for batch 2, two of the tests stood outside (TAPBP, and CD44 with no signal); hypothesis
 HB5 of batch 2 stays as it was scored, unresolved. The first version of the rule for the widening refused all five
 (Section 6): what is in this table was reached after seeing these rows, and is not a test of the rule.
 
@@ -171,7 +173,7 @@ HB5 of batch 2 stays as it was scored, unresolved. The first version of the rule
 | the part outside the input | accounts | |
 |---|---|---|
 | on the graph: a declared edge (the knockouts of the genes behind the readouts) | 7 | the edge carries its share |
-| on the graph: an edge admitted in part C (TAPBP, CD44 twice, SSR2) | 4 | |
+| on the graph: an edge admitted in part C (TAPBP; CD44 in two conditions; SSR2) | 4 | |
 | open, not forecast by the recorded events: CMTM6 → PD-L1 in THP-1 | 1 | lever G: propose an edge |
 | open, undecided: CD44 → PD-L1 in co-culture, BRD4 → PD-L1 in THP-1 | 2 | lever E: more records of the type |
 

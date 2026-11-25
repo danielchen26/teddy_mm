@@ -411,8 +411,8 @@ On cells read before (retrospective): with types and the error of a row counted 
 about right (mean squared *z* 1.02, 74 of 79 inside) and no event of another type is moved. The declared size model
 (the class's share of the scale) is refuted: error 0.84 against 0.68 for one size per class. Explored afterwards, the
 *pair's own* share under one condition times the scale of another forecasts the ten own-gene changes with an error of
-0.23; it fails for a readout that stands at the background of its panel. Four of five edges proposed by the library
-under interferon are admitted by another condition.
+0.23; it fails for a readout that stands at the background of its panel. Of five edges proposed by the library
+under interferon, three are admitted by another condition, one is refused, and one has no row elsewhere.
 
 So what a system has to expose for an edge is: the declarations an edge can follow from (which sites are part of a
 readout's own measurement), a scale per condition for each class of edge, and one measured row of a pair for its
