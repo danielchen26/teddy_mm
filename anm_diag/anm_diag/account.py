@@ -246,12 +246,15 @@ def reading(xs, y, unit, first, event, others=(), control="control", o=None, dra
         v_ref = _var_of_mean(y[Cf], uF)
         shift = lambda a: x[a].mean(0) - xc
         row = lambda a: (y[a].mean() - yc, np.sqrt(_var_of_mean(y[a], _units(cl, a)) + v_ref))
+        left = y - x @ th_c                                                                 # what the reference readout leaves in a cell
+        v_left = _var_of_mean(left[Cf], uF)
+        beside = lambda a: np.sqrt(_var_of_mean(left[a], _units(cl, a)) + v_left)            # the error of a row beside its readout: the shift's error is in both and cancels
         Df, (dyf, sef) = shift(Tf), row(Tf)
         arms = [np.where(fit & (unit == h))[0] for h in others]
         keep = [j for j, a in enumerate(arms) if len(a) > 1]
         ro = [row(arms[j]) for j in keep]
         A_own, D_own = _closer(Mi, Df)
-        r_oth, s_oth = np.array([r[0] for r in ro]), np.array([r[1] for r in ro])
+        r_oth, s_oth = np.array([r[0] for r in ro]), np.array([beside(arms[j]) for j in keep])
         if keep:
             D_oth = np.array([shift(arms[j]) for j in keep])
             A_oth, D_oth, t2 = _teacher(Mi, k, D_oth, r_oth - D_oth @ th_c, s_oth)
@@ -306,7 +309,8 @@ LEVER = {"not_in_the_input": "no stage holds this part cell by cell, so no head 
          "lost_before_the_state": "the model, between its input and the state its head reads",
          "held_not_read": "the head: a readout with the cells of recorded events",
          "read": "nothing: a readout of control cells reads this part"}
-FORECAST, NOT_FORECAST = 0.75, 0.50                           # across events: the other events forecast a change if the interval of `others` lies above the first, and do not if it lies below the second
+FORECAST, NOT_FORECAST = 0.75, 0.50                           # across events: what the other events forecast misses the change by |1 - others|. They forecast it if the interval of
+                                                               # `others` lies within a quarter of the change on either side, and do not if it lies beyond a half on one side
 
 
 def across_events(r):
@@ -314,7 +318,9 @@ def across_events(r):
     if "others" not in r["shares"]:
         return None
     o = r["shares"]["others"]
-    says = "the other events forecast it" if o["ci"][0] >= FORECAST else ("the other events do not forecast it" if o["ci"][1] < NOT_FORECAST else "unresolved")
+    lo, hi = o["ci"]
+    says = ("the other events forecast it" if (lo >= FORECAST and hi <= 2 - FORECAST) else
+            "the other events do not forecast it" if (hi < NOT_FORECAST or lo > 2 - NOT_FORECAST) else "unresolved")
     return {"others": o["share"], "ci": o["ci"], "reading": says}
 
 
@@ -535,7 +541,10 @@ class Law:
     forecast of its size.
     types: {event: type} from the event graph. The error of a readout is then a property of a type of event: the rows of
     an event update the readout for the events of its type and for no other, and an event with no type is taught by no
-    row. None: every event is of one type (one readout error for all).
+    row. How far the control prior is widened is chosen by type as well, by the rows of the type. For an event with no
+    type the control prior stands as the control cells give it: what such an event shows beyond it is its direct part,
+    and is flagged; a widening that the events of no type chose together would hide it, and would be the teaching the
+    rule excludes. None: every event is of one type (one readout error, one widening for all).
     scale: {(event, readout): s}. The direct part of an edge is its class's share times s, so that one class holds in
     conditions where the readout has more or less to lose (for the knockout of a protein's own gene: how far the
     readout stands above its background among control cells). None: s = 1, one size per class."""
@@ -553,6 +562,11 @@ class Law:
         self.typed = types is not None
         self.type = ["(all)" if types is None else str(types.get(e, f"({e})")) for e in self.events]
         same = np.array([[a == b for b in self.type] for a in self.type])
+        by = {}
+        for i, (e, t) in enumerate(zip(self.events, self.type)):
+            by.setdefault(t if (types is None or e in types) else None, []).append(i)
+        # the events whose rows choose a widening together: {type: its events}; an event in no group keeps the control prior as it is
+        self.groups = {t: np.array(idx) for t, idx in by.items() if t is not None}
         Xc = X[C]
         G = Xc.T @ Xc / nc
         w, V = np.linalg.eigh(G)
@@ -576,13 +590,25 @@ class Law:
             K0 = same * ((cv / nc) * (DV / (w + lam)) @ DV.T / sd ** 2)                    # the rows of another type do not bear on this type's readout
             dy = np.array([y[unit == e].mean() - y[C].mean() for e in self.events])
             se2 = np.array([y[unit == e].var(ddof=1) / (unit == e).sum() + y[C].var(ddof=1) / nc for e in self.events])
-            noise = (se2 + float(th @ G @ th) * (1 / self.n + 1 / nc)) / sd ** 2          # the row's own error, and that of the event's shift of the stage
+            left = y - y[C].mean() - X @ th                                                # what the control readout leaves in a cell
+            # the error of a row beside its readout: the change and the shift are means over the same cells, so the error of the
+            # shift is in both and cancels; what is left is the mean of what the readout leaves in the cells of the two arms
+            noise = (np.array([left[unit == e].var(ddof=1) / (unit == e).sum() for e in self.events]) + cv / nc) / sd ** 2
             cls = np.array([(edges or {}).get((e, name)) for e in self.events], dtype=object)
             sc = np.array([float((scale or {}).get((e, name), 1.0)) for e in self.events])
             self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise, "scale": sc,
-                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "w": np.ones(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": float(y[C].mean())}
+                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "tau": np.ones(len(dy)), "w": np.ones(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": float(y[C].mean())}
         self.classes = sorted({c for q in self.r.values() for c in q["cls"] if c is not None})
         self.sigma0, self.cl, self.fixed = None, {}, False
+
+    def _prior(self, q):
+        """The readout's prior among the recorded rows: the control prior, widened by the factor the rows of each type chose."""
+        return q["tau2"] * q["K0"] if not self.typed else np.sqrt(np.outer(q["tau"], q["tau"])) * q["K0"]
+
+    def _widening(self, q, t):
+        """The widening for an event of type `t`: its type's, where the rows of that type chose one; else 1, the control
+        prior as it is."""
+        return q["tau2"] if not self.typed else q["tau2"].get(t, 1.0)
 
     def _var_direct(self, q):
         s2 = np.array([self.sigma0 ** 2 if c is None else (self.cl[c]["sigma"] * s) ** 2 for c, s in zip(q["cls"], q["scale"])])
@@ -614,15 +640,19 @@ class Law:
             for q in self.r.values():
                 Vd, rho = self._var_direct(q), q["change"] - q["read"] - self._mean_direct(q)
                 Vd = np.where(np.isfinite(Vd), Vd, 1e6)
-                best = None
-                for t2 in taus:
-                    L = np.linalg.cholesky(t2 * q["K0"] + np.diag(Vd + q["noise"]))
-                    a = np.linalg.solve(L, rho)
-                    nll = 0.5 * a @ a + np.log(np.diag(L)).sum()
-                    if best is None or nll < best[0]:
-                        best = (nll, t2)
-                q["tau2"] = float(best[1])
-                Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(Vd + q["noise"]))
+                chosen = {}
+                for g, b in self.groups.items():
+                    best = None
+                    for t2 in taus:
+                        L = np.linalg.cholesky(t2 * q["K0"][np.ix_(b, b)] + np.diag((Vd + q["noise"])[b]))
+                        a = np.linalg.solve(L, rho[b])
+                        nll = 0.5 * a @ a + np.log(np.diag(L)).sum()
+                        if best is None or nll < best[0]:
+                            best = (nll, t2)
+                    chosen[g] = float(best[1])
+                    q["tau"][b] = best[1]
+                q["tau2"] = chosen if self.typed else chosen["(all)"]
+                Si = np.linalg.inv(self._prior(q) + np.diag(Vd + q["noise"]))
                 m = Vd * (Si @ rho)                                   # the direct part beyond its class mean, given every row
                 v = Vd - Vd * np.diag(Si) * Vd
                 q["direct_dev"], q["direct_var"] = m, v
@@ -659,7 +689,7 @@ class Law:
             Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
             V = Vd + q["noise"]
             rho = q["change"] - q["read"] - self._mean_direct(q)
-            Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(V))
+            Si = np.linalg.inv(self._prior(q) + np.diag(V))
             m_loo = rho - (Si @ rho) / np.diag(Si)                  # what the rows of the other events add through the stage
             v_loo = np.maximum(1 / np.diag(Si) - V, 0.0)
             for i, e in enumerate(self.events):
@@ -691,15 +721,17 @@ class Law:
                     out.setdefault(c, []).append((self.events[i], name, float(q["direct_dev"][i] / q["scale"][i] + self.cl[c]["mu"])))
         return out
 
-    def new(self, x, unit, edges=None, classes=None, types=None, scale=None):
+    def new(self, x, unit, edges=None, classes=None, types=None, scale=None, shares=None):
         """Events with no measured change, from the stage of their cells alone: for every pair the part a readout of
         control cells reads, what the rows of the recorded events add through the stage, the part by its edge, and the
         forecast with its spread. `x`, `unit`: the stage and the event of the new cells. `classes`: {class: [values]}, the
         direct parts of recorded pairs of a class as shares of their scale (this law's own when not given; a library
         with no pair of a class takes them from one that has). types: {event: type} of the new events (in a law with
         types, the rows that teach are those of the event's type; an event with no type is taught by none).
-        scale: {(event, readout): s} of the new pairs. The error of a row not yet measured is taken at the spread among
-        control cells."""
+        scale: {(event, readout): s} of the new pairs. shares: {(event, readout): (share, its spread)}, the pair's own
+        share of its scale where the pair was measured elsewhere (the same knockout in another condition): the edge is
+        then forecast at that share of this condition's scale, and its class is not asked. The error of a row not yet
+        measured is taken at what the readout leaves among control cells."""
         edges = edges or {}
         vals = {c: [v for _e, _r, v in rows] for c, rows in self.class_values().items()}
         vals.update(classes or {})
@@ -716,24 +748,29 @@ class Law:
                 k = of_type * ((q["cv"] / self._nc) * (dV / (self._w + q["lam"])) @ DV.T / q["sd"] ** 2)
                 knn = (q["cv"] / self._nc) * float((dV / (self._w + q["lam"])) @ dV) / q["sd"] ** 2
                 Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
-                Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(Vd + q["noise"]))
+                Si = np.linalg.inv(self._prior(q) + np.diag(Vd + q["noise"]))
                 rho = q["change"] - q["read"] - self._mean_direct(q)
-                add = float(q["tau2"] * k @ Si @ rho)
-                var = max(float(q["tau2"] * knn - q["tau2"] ** 2 * k @ Si @ k), 0.0)
+                t2 = self._widening(q, tn)
+                add = float(t2 * k @ Si @ rho)
+                var = max(float(t2 * knn - t2 ** 2 * k @ Si @ k), 0.0)
                 c = edges.get((str(e), name))
                 why = None
                 sn = float((scale or {}).get((str(e), name), 1.0))
+                own = (shares or {}).get((str(e), name))
                 if c is None:
                     edge, sd_d = 0.0, self.sigma0
+                elif own is not None:
+                    edge, sd_d = float(own[0] * sn), float(abs(own[1] * sn))
                 elif len(vals.get(c, [])) >= max(self.min_class - 1, 2):
-                    edge, sd_d = float(np.mean(vals[c]) * sn), float(np.std(vals[c], ddof=1) * np.sqrt(1 + 1 / len(vals[c])) * sn)
+                    edge, sd_d = float(np.mean(vals[c]) * sn), float(np.std(vals[c], ddof=1) * np.sqrt(1 + 1 / len(vals[c])) * abs(sn))
                 else:
                     edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(vals.get(c, []))} recorded pairs: its size cannot be forecast"
                 read = float(d @ q["th"] / q["sd"])
-                noise = (1 / n + 1 / self._nc) * (1 + q["thGth"] / q["sd"] ** 2)
+                noise = (1 / n + 1 / self._nc) * q["cv"] / q["sd"] ** 2
                 f = read + add + (edge if edge == edge else 0.0)
                 sd = float(np.sqrt(var + (sd_d ** 2 if sd_d == sd_d else 0.0) + noise))
-                out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "type": tn if self.typed else None, "taught_by": int(of_type.sum()), "scale": sn,
+                out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "type": tn if self.typed else None, "taught_by": int(of_type.sum()), "widening": float(t2), "scale": sn,
+                            "size_of_the_edge_from": None if c is None else ("the pair's own share, measured elsewhere" if own is not None else "its class"),
                             "shift_times_noise": float((d ** 2).sum() / (len(d) * (1 / n + 1 / self._nc))),
                             "read": read, "from_the_recorded_events": add, "by_its_edge": edge, "forecast": float(f), "sd": sd,
                             "interval": [float(f - 1.96 * sd), float(f + 1.96 * sd)], "no_forecast": why,
@@ -786,6 +823,7 @@ class Law:
             r = cand[i]
             moved = r["shift_times_noise"] >= 4.0
             out.append({"event": r["event"], "readout": r["readout"], "direct": r["direct"], "errors": r["direct"] / np.hypot(r["direct_sd"], self.sigma0), "shift_times_noise": r["shift_times_noise"],
+                        "change": r["change"], "forecast": r["forecast"], "z": r["z"], "flag": "a direction the law does not cover" if moved else "a missing edge",
                         "candidate": "a direction of the stage the law does not cover: its record would teach the readout" if moved else "a missing edge: the event does not move the stage"})
         return sorted(out, key=lambda r: -abs(r["errors"]))
 

@@ -163,6 +163,10 @@ an input that lacks the response. Both are in the run folder with a proposal.
   donor and batch vary together. A disease has not been read on real cells: the one disease study at hand is a final
   study. A unit event is read with linear readers only when a panel of readouts is read at once. Nothing is said
   about a family of units from fewer than ten of them.
+  Since 25 November the account of Section 8 reads them as well: a unit against the other units, and a group of units
+  against another, by the same three readings and four parts ([`runs/one_loop_20261125`](runs/one_loop_20261125/)).
+  On the planted study of units: 174 placements right, 42 undecided, none wrong. On the eight donors (explored): 11
+  of 26 changes are not in the input, 11 are held by the state and not read, 4 have nothing open.
 - **A repair is made for what it has seen.** Across kinds of cell the rows of the events carried and the readout of
   control cells did not ([`runs/outer_step_20261122`](runs/outer_step_20261122/)). Across donors the row of a unit
   does not carry to another unit: for 10 of 16 pairs of a donor and a protein the repair needs the donor's own row
@@ -390,6 +394,32 @@ protein was opened once.
 readout there is for the event to remove), not one mean per class; and a readout taught by records is asked for by
 the type of the event, not applied to every event.
 
+**One loop for every shape of event** ([`runs/one_loop_20261125`](runs/one_loop_20261125/), 25 November; rules 4i to
+4l of the protocol). The method already had a form for events with no control cells, for the event graph as a table
+of records, and for the step after a rejection; the account had not been carried into them. It is now:
+
+- `account.reading(control=None, cluster=...)` reads a unit against the other units and a group of units against
+  another; arms made of units are resampled by unit.
+- An edge is a record (`events.edge`): declared from the declarations, or proposed from measured rows and admitted or
+  refused by rows it did not see. It carries a class, a scale, and the share its pair showed where it was measured.
+- `Law(types=, scale=)`: rows teach within a type and choose that type's widening; an event of no type keeps the
+  control prior. The size of an edge is a share of a scale measured in each condition.
+- `account.plan` and `outer.open_parts` send every open part to a lever; a part outside the input that no other event
+  forecasts goes to lever G, the graph.
+
+On cells read before (retrospective): with types and the error of a row counted once, the intervals of batch 2 are
+about right (mean squared *z* 1.02, 74 of 79 inside) and no event of another type is moved. The declared size model
+(the class's share of the scale) is refuted: error 0.84 against 0.68 for one size per class. Explored afterwards, the
+*pair's own* share under one condition times the scale of another forecasts the ten own-gene changes with an error of
+0.23; it fails for a readout that stands at the background of its panel. Four of five edges proposed by the library
+under interferon are admitted by another condition.
+
+So what a system has to expose for an edge is: the declarations an edge can follow from (which sites are part of a
+readout's own measurement), a scale per condition for each class of edge, and one measured row of a pair for its
+share.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
-nothing to bring back in the units opened, so its evidence is still that of run 41. Nothing was trained.
+nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,
+not confirmed on units never read; a pair never measured has only its class, which is weak. The law is not run on
+units with no control cells. Nothing was trained.

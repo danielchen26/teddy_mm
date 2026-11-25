@@ -47,7 +47,7 @@ ROUTES = {
 # Version 4 (LOOP_PROTOCOL.md): the open parts of an account (account.chain, account.plan), each sent to a lever. They take
 # the place of "unreadable", "upstream" and "self event" for a target read by the account: a part that is not in the input
 # is no dead end, it is asked of the other events and then of the graph.
-ROUTES.update({
+ROUTES4 = {
     "held, not read": ("M", "the state holds the change cell by cell and a readout with no record of the event does not read it",
                        ["a readout taught by the records of the events of the same type, credited up to what the state carries", "a richer reader of the state"],
                        "train what comes before the state"),
@@ -60,12 +60,12 @@ ROUTES.update({
     "outside the input, forecast by its type": ("E", "no stage holds the change cell by cell, and the rows of the other events forecast it through the state",
                                                 ["the records of events of the type teach the readout: ask for them, by type"], "add an edge"),
     "outside the input, not forecast": ("G", "no stage holds the change cell by cell, and the rows of the other events do not forecast it",
-                                        ["an edge between the event and the readout: declared if it follows from the declarations (the site is a gene of the measured protein; the unit is a batch of the measurement)",
+                                        ["an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
                                          "else proposed, and tested on rows the proposal did not see", "a size for the edge: its class's share of a scale measured in each condition"],
                                         "train, or change the head: no change of the model can supply it"),
     "outside the input, undecided": ("E", "no stage holds the change cell by cell, and whether the other events forecast it is undecided",
                                      ["more recorded events of the type"], "add an edge, or train"),
-})
+}
 PARTS4 = {"held_not_read": "held, not read", "held_as_identity": "held as the identity", "lost_before_the_state": "lost before the state",
           "not_in_the_input, forecast": "outside the input, forecast by its type", "not_in_the_input, not forecast": "outside the input, not forecast",
           "not_in_the_input, undecided": "outside the input, undecided"}
@@ -142,7 +142,7 @@ def target_status(t):
 
 
 def _item(items, t, reading, question, value=None, ci=None, n=None, needs=None, note=None, event="pool", evidence=None, standing=None, key=None):
-    lever, meaning, actions, dont = ROUTES[reading]
+    lever, meaning, actions, dont = (ROUTES.get(reading) or ROUTES4[reading])
     obs = {"readout": t.get("readout"), "group": t.get("group"), "event": event, "value": value, "ci": ci, "evidence": evidence, "note": note}
     if key:
         for it in items:
@@ -363,7 +363,7 @@ def open_parts(accounts, edges=()):
 
 def counts(items):
     return {"by_lever": {k: sum(i["lever"] == k for i in items) for k in LEVERS},
-            "by_reading": {k: sum(i["reading"] == k for i in items) for k in ROUTES},
+            "by_reading": {k: sum(i["reading"] == k for i in items) for k in {**ROUTES, **ROUTES4}},
             "by_what_the_next_step_needs": {k: sum(i["next_step_needs"] == k for i in items) for k in sorted({i["next_step_needs"] for i in items})}}
 
 
@@ -407,7 +407,7 @@ def outer_check(targets, items, diff=(), hypotheses=(), roles=None, reads=None, 
             say("O1", "error", f"target {(t.get('readout'), t.get('group'))} has an unknown status")
     ids = {i["id"] for i in items}
     for i in items:
-        if i["reading"] not in ROUTES:
+        if i["reading"] not in ROUTES and i["reading"] not in ROUTES4:
             say("O2", "error", f"{i['id']}: reading {i['reading']!r} is not in the table")
         if i["state"] not in STATES:
             say("O2", "error", f"{i['id']}: unknown state {i['state']!r}")

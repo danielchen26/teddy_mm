@@ -499,17 +499,25 @@ EDGE_STATES = ("declared", "proposed", "admitted", "refused", "undecided")
 EDGE_BASES = ("declaration", "flag", "account")
 
 
-def edge(site, readout, cls, basis="declaration", status=None, stratum=None, scale=None, evidence=None, provenance=None):
+def edge(site, readout, cls, basis="declaration", status=None, stratum=None, scale=None, evidence=None, provenance=None, share=None):
     """One edge. site: the event's site (a gene, a donor, a batch). readout: the readout it acts on. cls: its class; the
     size of an edge is forecast from the recorded pairs of its class, so an edge with no class forecasts nothing.
     basis: "declaration" (it follows from what the run declares: the site is a gene of the measured protein; the unit is
     a batch of the measurement), "flag" (the law of a library flagged the pair) or "account" (the account of the pair
     placed its change outside the input, and other events did not forecast it). An edge that rests on measured rows is
     "proposed" until rows it did not see are forecast with it (rule G2). stratum: None for every stratum.
-    scale: the name of the quantity its size is forecast in (None: spreads of the readout among control cells)."""
+    scale: the name of the quantity its size is forecast in (None: spreads of the readout among control cells).
+    share: the pair's own share of that scale where it was measured, {"value", "measured_in"}: what the edge carries
+    from one condition to another (`edge_shares`, `account.Law.new`)."""
     status = status or ("declared" if basis == "declaration" else "proposed")
     return {"edge_id": f"{site}->{readout}" + (f"@{stratum}" if stratum else ""), "kind": "edge", "site": str(site), "readout": str(readout), "class": cls, "basis": basis,
-            "status": status, "stratum": stratum, "scale": scale, "evidence": evidence, "provenance": provenance}
+            "status": status, "stratum": stratum, "scale": scale, "share": share, "evidence": evidence, "provenance": provenance}
+
+
+def edge_shares(edges, spread, states=("declared", "admitted")):
+    """{(site, readout): (share, spread)} of the edges that carry a measured share, for `account.Law.new(shares=)`.
+    spread: how far a pair's share is taken to move between conditions."""
+    return {(e["site"], e["readout"]): (float(e["share"]["value"]), float(spread)) for e in edges if e["status"] in states and e.get("share")}
 
 
 def own_edges(decl, sites, cls="own", partners=None, scale=None):

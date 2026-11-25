@@ -294,6 +294,19 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   model loses a step between its input and its state in one (IRF1). Three hypotheses confirmed, two unresolved, one
   half not tested (no pair where a typed state had something to bring back). A screen of 13 November had shown the
   sign of the own-gene changes; the calibration and the accounts are what was new.
+- **One loop for every shape of event (25 November; cells read before; nothing trained, nothing opened;**
+  [`one_loop_20261125/`](anm_diag/runs/one_loop_20261125/)**):** the method already had a form for events with no
+  control cells, for the event graph as a table of records, and for the step after a rejection, and version 4 had not
+  been carried into them. Now the account reads a donor, a batch or a disease by the same three readings (planted
+  study of units: 174 placements right, 42 undecided, none wrong); an edge is a record of the event graph, declared
+  or proposed and then admitted or refused by rows it did not see; the law teaches within a type; and every open
+  part of an account names its lever, with a lever for the graph (rules 4i to 4l). Retrospective, on batch 2: the
+  intervals are about right once the error of a row is counted once (mean squared *z* 1.02, was 0.30); four of five
+  edges the library under interferon proposed are admitted by another condition. The declared size model (the
+  class's share of a scale) is refuted, 0.84 against 0.68; explored afterwards, the pair's own share under one
+  condition times the scale of another forecasts the ten own-gene changes with an error of 0.23, and fails for
+  HLA-E, which stands at the background of the panel. Three faults of the method were found and corrected on the
+  way; one moves three readings of run 41 from "forecast" to "unresolved".
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

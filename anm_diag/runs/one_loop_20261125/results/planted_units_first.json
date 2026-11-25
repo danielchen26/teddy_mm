@@ -1,0 +1,3162 @@
+{
+ "seeds": 12,
+ "sizes": {
+  "large": {
+   "n_ordinary": 40,
+   "n_cell": 300
+  },
+  "small": {
+   "n_ordinary": 16,
+   "n_cell": 150
+  }
+ },
+ "by_size": {
+  "large": {
+   "by_unit": {
+    "h1": {
+     "right": 11,
+     "undecided": 1,
+     "wrong": 0
+    },
+    "h2": {
+     "right": 9,
+     "undecided": 3,
+     "wrong": 0
+    },
+    "h3": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "early": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "enc": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "modb": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "post": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "solo": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "weak": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    }
+   },
+   "total": {
+    "right": 104,
+    "undecided": 4,
+    "wrong": 0
+   },
+   "controls_of_the_measure": {
+    "checks": 72,
+    "hold": 72
+   }
+  },
+  "small": {
+   "by_unit": {
+    "h1": {
+     "right": 1,
+     "undecided": 11,
+     "wrong": 0
+    },
+    "h2": {
+     "right": 0,
+     "undecided": 12,
+     "wrong": 0
+    },
+    "h3": {
+     "right": 2,
+     "undecided": 10,
+     "wrong": 0
+    },
+    "early": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "enc": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    },
+    "modb": {
+     "right": 7,
+     "undecided": 5,
+     "wrong": 0
+    },
+    "post": {
+     "right": 10,
+     "undecided": 2,
+     "wrong": 0
+    },
+    "solo": {
+     "right": 8,
+     "undecided": 2,
+     "wrong": 2
+    },
+    "weak": {
+     "right": 12,
+     "undecided": 0,
+     "wrong": 0
+    }
+   },
+   "total": {
+    "right": 64,
+    "undecided": 42,
+    "wrong": 2
+   },
+   "controls_of_the_measure": {
+    "checks": 72,
+    "hold": 72
+   }
+  }
+ },
+ "rows": [
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.003644850628173435,
+    "lost_before_the_state": 0.004603439139948762,
+    "held_not_read": 0.027615638929354147,
+    "read": 0.9641360713025237
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.025396166456444824,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.01873284381720164,
+    "read": 1.0441290102736465
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.016213386299636312,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.02734679659823247,
+    "read": 0.9888665897014038
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 93%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.0412002865007729,
+    "lost_before_the_state": 0.9332529765770468,
+    "held_not_read": -0.023717210415838026,
+    "read": 0.04926394733801837
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 96%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.01932570217706997,
+    "lost_before_the_state": 0.9640371876798236,
+    "held_not_read": 0.020513816879938432,
+    "read": -0.003876706736832006
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 102% [across events: the other events do not forecast it, -2%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0161233743298475,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.024221541964792516,
+    "read": 0.008098167634945067
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 0%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9890803665461562,
+    "lost_before_the_state": 0.008655784522181742,
+    "held_not_read": 0.020623181354313732,
+    "read": -0.01835933242265164
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 111%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.1111167694840034,
+    "read": -0.1111167694840035
+   }
+  },
+  {
+   "size": "large",
+   "seed": 0,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.178057113281068,
+    "lost_before_the_state": 0.10737401324431839,
+    "held_not_read": -0.3699192061977834,
+    "read": 1.084488079672397
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0032624993720546946,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.020675678348722082,
+    "read": 0.9825868210233326
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: lost before the state 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.013267867367415365,
+    "lost_before_the_state": 0.01309858210092063,
+    "held_not_read": -0.01957195233737319,
+    "read": 1.019741237603868
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.012615755849917254,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.017753538550573822,
+    "read": 0.9696307055995089
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 90% (unresolved: not in the input 8%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.07889195444009645,
+    "lost_before_the_state": 0.9022656523319852,
+    "held_not_read": -0.018290634188071267,
+    "read": 0.03713302741598963
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 96%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.04998273688238353,
+    "lost_before_the_state": 0.9571526538367598,
+    "held_not_read": 0.019064311933084915,
+    "read": -0.02619970265222829
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 98% [across events: the other events do not forecast it, 2%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9793701688575633,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.022405086959385943,
+    "read": 0.043034918101822604
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 106% [across events: the other events do not forecast it, -6%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.057450786881484,
+    "lost_before_the_state": 0.0010248693399244058,
+    "held_not_read": 0.018245591716293613,
+    "read": -0.07672124793770199
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 97%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9719004653958642,
+    "read": 0.028099534604135813
+   }
+  },
+  {
+   "size": "large",
+   "seed": 1,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.244241631073027,
+    "lost_before_the_state": 1.4374501974449085,
+    "held_not_read": -0.9683294902121893,
+    "read": 0.2866376616942537
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.0018901925271278541,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.02479270031252878,
+    "read": 0.9733171071603434
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.04977718688976318,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.013893059515527328,
+    "read": 1.0636702464052905
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.01083428783641116,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.02536383647954965,
+    "read": 0.9854704513568615
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 99%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.010206897367845968,
+    "lost_before_the_state": 0.9877552231804926,
+    "held_not_read": -0.021547118651131927,
+    "read": 0.023584998102793377
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 99%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.022336142588119556,
+    "lost_before_the_state": 0.9926303007621374,
+    "held_not_read": 0.021690895877077877,
+    "read": -0.03665733922733486
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 97% [across events: the other events do not forecast it, 3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9686685986953399,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.01978077181902472,
+    "read": 0.051112173123684775
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, -0%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9909735887246796,
+    "lost_before_the_state": 0.010510463611951737,
+    "held_not_read": 0.01958168972497482,
+    "read": -0.02106574206160611
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 102%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.0194044976467467,
+    "read": -0.01940449764674657
+   }
+  },
+  {
+   "size": "large",
+   "seed": 2,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -2.7376853815485953,
+    "lost_before_the_state": 1.6019198750297168,
+    "held_not_read": 3.3824486999616896,
+    "read": -1.246683193442811
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.03536084826629393,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.03904937735390901,
+    "read": 0.9963114709123849
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.02153329034226914,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.012538069007775432,
+    "read": 1.0340713593500446
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.005176405129834416,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.03382811221711368,
+    "read": 0.9713482929127207
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 94%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.04052234399879784,
+    "lost_before_the_state": 0.9427013772015153,
+    "held_not_read": -0.01902970966592271,
+    "read": 0.03580598846560962
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 95%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.03314295530021272,
+    "lost_before_the_state": 0.9479755194453797,
+    "held_not_read": 0.017447564868490875,
+    "read": 0.0014339603859166857
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9895595343358045,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.019977035968947406,
+    "read": 0.030417501633142947
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 97% [across events: the other events do not forecast it, 3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9749816924949658,
+    "lost_before_the_state": 0.0016870049217750926,
+    "held_not_read": 0.01760329281256233,
+    "read": 0.005728009770696778
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 103%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.0272227059238834,
+    "read": -0.027222705923883327
+   }
+  },
+  {
+   "size": "large",
+   "seed": 3,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.4696830040990554,
+    "lost_before_the_state": 0.2118061155333859,
+    "held_not_read": -4.622620480837584,
+    "read": 5.880497369403254
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: lost before the state 3%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.010861139357059013,
+    "lost_before_the_state": 0.033488088375370983,
+    "held_not_read": 0.016119211738522266,
+    "read": 0.9395315605290477
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.023521606762393565,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03127300962092061,
+    "read": 1.007751402858527
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.009897967064204982,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.023103415709731845,
+    "read": 0.9867945513544731
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 104%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.01442540198184572,
+    "lost_before_the_state": 1.037029598418752,
+    "held_not_read": -0.02425700713569232,
+    "read": -0.027197993264905487
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 103%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.002325155035763249,
+    "lost_before_the_state": 1.0331114697478396,
+    "held_not_read": 0.024258637156687607,
+    "read": -0.055044951868763986
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 97% [across events: the other events do not forecast it, 2%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9720825037308021,
+    "lost_before_the_state": 0.011601179701709152,
+    "held_not_read": -0.019647770072196973,
+    "read": 0.03596408663968575
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 103% [across events: the other events do not forecast it, -3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0262037163451887,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.02243402812540129,
+    "read": -0.04863774447058999
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 118%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.1806819967846525,
+    "read": -0.18068199678465235
+   }
+  },
+  {
+   "size": "large",
+   "seed": 4,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.3510125927750045,
+    "lost_before_the_state": 0.08606245052624173,
+    "held_not_read": 0.6225123643607422,
+    "read": -0.059587407661988424
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.00776510898215621,
+    "lost_before_the_state": 0.022237050306398776,
+    "held_not_read": 0.015133574948607231,
+    "read": 0.9548642657628378
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.01053983717723761,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.02283888857824312,
+    "read": 1.0333787257554807
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.013765752727254221,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.013753250345972301,
+    "read": 0.9724809969267735
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 94% (unresolved: not in the input 6%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.056010945509578525,
+    "lost_before_the_state": 0.9397904429491544,
+    "held_not_read": -0.02167481235127412,
+    "read": 0.025873423892541225
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 101%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.016420126075717745,
+    "lost_before_the_state": 1.0092249206811437,
+    "held_not_read": 0.021846877586956956,
+    "read": -0.04749192434381837
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 103% [across events: the other events do not forecast it, -3%] (unresolved: lost before the state 0%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.031125075195938,
+    "lost_before_the_state": 0.0037583938882048695,
+    "held_not_read": -0.020985684500052414,
+    "read": -0.013897784584090444
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 101% [across events: the other events do not forecast it, -1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0132437081840726,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.020540867700582263,
+    "read": -0.033784575884654874
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 105%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.0452721241656413,
+    "read": -0.04527212416564125
+   }
+  },
+  {
+   "size": "large",
+   "seed": 5,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.6955600373847243,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.8402951516929784,
+    "read": -0.5358551890777027
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0037293432470688614,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.034620977284511745,
+    "read": 0.9691083659625571
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.022985881639700945,
+    "lost_before_the_state": 0.012036360373525623,
+    "held_not_read": -0.0186472656899348,
+    "read": 0.9836250236767082
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.012672164012890175,
+    "lost_before_the_state": 0.01182960757547269,
+    "held_not_read": 0.02720406478334625,
+    "read": 0.9482941636282909
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 101%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.011330387318647661,
+    "lost_before_the_state": 1.0054063620204445,
+    "held_not_read": -0.021677080031791224,
+    "read": 0.004940330692699029
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 100%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.019143583884040027,
+    "lost_before_the_state": 1.0018545688945641,
+    "held_not_read": 0.02205624240545443,
+    "read": -0.043054395184058715
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 97% [across events: the other events do not forecast it, 1%] (unresolved: lost before the state 2%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9722796183579476,
+    "lost_before_the_state": 0.022701770941153443,
+    "held_not_read": -0.020339769228595598,
+    "read": 0.025358379929494527
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9899182085660198,
+    "lost_before_the_state": 0.00187230961014484,
+    "held_not_read": 0.019810064965057342,
+    "read": -0.011600583141221933
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 106%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.0563419924512214,
+    "read": -0.05634199245122148
+   }
+  },
+  {
+   "size": "large",
+   "seed": 6,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.6147666850028183,
+    "lost_before_the_state": 0.12408560949512382,
+    "held_not_read": 1.4733500808037145,
+    "read": -1.2122023753016566
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.014334977353401057,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.021935189828890644,
+    "read": 0.9637298328177083
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.007075373019120312,
+    "lost_before_the_state": 0.005600683936563877,
+    "held_not_read": -0.028998009668077862,
+    "read": 1.0163219527123937
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.01637451286074243,
+    "lost_before_the_state": 0.011138009385522452,
+    "held_not_read": 0.020290805245177235,
+    "read": 0.9849456982300427
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 98%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.038378378308150274,
+    "lost_before_the_state": 0.9793298010764561,
+    "held_not_read": -0.023153292858188033,
+    "read": 0.005445113473581696
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 99% (unresolved: not in the input 5%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.047679327957415585,
+    "lost_before_the_state": 0.9922028429661153,
+    "held_not_read": 0.028089900104543444,
+    "read": -0.0679720710280743
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 98% [across events: the other events do not forecast it, 3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9763897430070587,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.02351138642138966,
+    "read": 0.04712164341433094
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 101% [across events: the other events do not forecast it, -1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0100765349667151,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.021524823498446526,
+    "read": -0.03160135846516165
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 112%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.1194215366282436,
+    "read": -0.1194215366282437
+   }
+  },
+  {
+   "size": "large",
+   "seed": 7,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 12.004244035777917,
+    "lost_before_the_state": 4.9736996070943515,
+    "held_not_read": 47.92184405911491,
+    "read": -63.89978770198718
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.006501585929901577,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.033269414340582504,
+    "read": 0.9602289997295159
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.018272437866684976,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.00565558184707271,
+    "read": 1.0239280197137577
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0034707321402041025,
+    "lost_before_the_state": 0.006858697988959328,
+    "held_not_read": 0.02988352710432407,
+    "read": 0.9667285070469207
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 100%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0009428397370192521,
+    "lost_before_the_state": 1.0025071484812722,
+    "held_not_read": -0.01897195398934063,
+    "read": 0.01740764524508768
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 93%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.05367031472912531,
+    "lost_before_the_state": 0.9326069761389433,
+    "held_not_read": 0.01869433535415616,
+    "read": -0.00497162622222475
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 0%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9929637986190191,
+    "lost_before_the_state": 0.002239624635745008,
+    "held_not_read": -0.01986071872688058,
+    "read": 0.024657295472116505
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 101% [across events: the other events do not forecast it, -1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0129262268322567,
+    "lost_before_the_state": 0.0017813662120635954,
+    "held_not_read": 0.019182546376366072,
+    "read": -0.033890139420686416
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 97%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.968852840818483,
+    "read": 0.031147159181516962
+   }
+  },
+  {
+   "size": "large",
+   "seed": 8,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.4787931903199516,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.7231173002674092,
+    "read": 0.7556758900525424
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.011733072119167076,
+    "lost_before_the_state": 0.009896076991283587,
+    "held_not_read": 0.03027753817617629,
+    "read": 0.948093312713373
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.014967937107823959,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.022143664838823796,
+    "read": 1.0371116019466478
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.008686896268502053,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.03399564215055839,
+    "read": 0.9573174615809396
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 96%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.025105069061586383,
+    "lost_before_the_state": 0.9608827301998798,
+    "held_not_read": -0.02407226669267741,
+    "read": 0.03808446743121123
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 94% (unresolved: not in the input 5%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.05335677163925179,
+    "lost_before_the_state": 0.9413275770845947,
+    "held_not_read": 0.023920164191653763,
+    "read": -0.01860451291550024
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9910448803274031,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.025508554466141538,
+    "read": 0.034463674138738416
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 101% [across events: the other events do not forecast it, -2%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0140695567169222,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.027172936386336312,
+    "read": -0.04124249310325854
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 125%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.254281414779299,
+    "read": -0.25428141477929916
+   }
+  },
+  {
+   "size": "large",
+   "seed": 9,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -47.795277460975406,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -29.34896454711633,
+    "read": 78.14424200809174
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.00011045506469486988,
+    "lost_before_the_state": 0.03227702500342966,
+    "held_not_read": 0.018086625687352864,
+    "read": 0.9495258942445226
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: lost before the state 3%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.003092008187026929,
+    "lost_before_the_state": 0.025277520734127812,
+    "held_not_read": -0.022837119566981867,
+    "read": 0.9944675906458271
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.017209265769736026,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.020165256259351172,
+    "read": 0.9626254779709128
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 94% (unresolved: not in the input 7%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.06833440562994575,
+    "lost_before_the_state": 0.9402178987827658,
+    "held_not_read": -0.019530313381454882,
+    "read": 0.010978008968743284
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 103%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.027316396336769855,
+    "lost_before_the_state": 1.0270134838540925,
+    "held_not_read": 0.019465669885606926,
+    "read": -0.0737955500764692
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 98% [across events: the other events do not forecast it, 2%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9789210510680768,
+    "lost_before_the_state": 0.0010920000017121678,
+    "held_not_read": -0.017434520134825632,
+    "read": 0.037421469065036655
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 103% [across events: the other events do not forecast it, -3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0316113720799454,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.017278200618363555,
+    "read": -0.04888957269830891
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 97%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9720008838560262,
+    "read": 0.027999116143973792
+   }
+  },
+  {
+   "size": "large",
+   "seed": 10,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -13.88122397303396,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -23.499988927113847,
+    "read": 38.38121290014781
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.020944497967412046,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.01748701164993216,
+    "read": 0.9615684903826558
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "h2",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.048717714697572134,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.016256934053914707,
+    "read": 1.0649746487514868
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.022972409530740867,
+    "lost_before_the_state": 0.006711665686332968,
+    "held_not_read": 0.013130126751700333,
+    "read": 0.9571857980312258
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 97%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.03146719226921313,
+    "lost_before_the_state": 0.9670907577285621,
+    "held_not_read": -0.022954906444010867,
+    "read": 0.024396956446235615
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 100%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.01209946405745721,
+    "lost_before_the_state": 0.9986467640115475,
+    "held_not_read": 0.019157027402930328,
+    "read": -0.029903255471935043
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 0%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9945894222290188,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.018201361846064284,
+    "read": 0.02361193961704548
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 102% [across events: the other events do not forecast it, -2%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0203585818597944,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.020104944625378325,
+    "read": -0.04046352648517277
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 92%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9206179063120757,
+    "read": 0.07938209368792423
+   }
+  },
+  {
+   "size": "large",
+   "seed": 11,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.7358230489683835,
+    "lost_before_the_state": 0.43006305200492445,
+    "held_not_read": -1.6032615597460032,
+    "read": 1.4373754587726952
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: not in the input 3%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.03387502257128494,
+    "lost_before_the_state": 0.0020922525338495923,
+    "held_not_read": 0.041629413931366877,
+    "read": 0.9224033109634986
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input 4%; lost before the state 0%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.04480763714699976,
+    "lost_before_the_state": 0.004161589055140746,
+    "held_not_read": -0.037118951921375154,
+    "read": 0.9881497257192347
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.03009940030474456,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.04035979083664165,
+    "read": 0.9897396094681029
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 99% (unresolved: not in the input 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.010493858524040611,
+    "lost_before_the_state": 0.9860384321920361,
+    "held_not_read": -0.032101038671272716,
+    "read": 0.035568747955195976
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 98% (unresolved: not in the input 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.011766597682355884,
+    "lost_before_the_state": 0.9805367180684601,
+    "held_not_read": 0.0261665219185686,
+    "read": -0.018469837669384585
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 101% [across events: the other events do not forecast it, -1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0050223835156977,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03056614313767625,
+    "read": 0.025543759621978523
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 104% [across events: the other events do not forecast it, -6%] (unresolved: lost before the state 2%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0431473677374086,
+    "lost_before_the_state": 0.0197546593100697,
+    "held_not_read": 0.024663373322777224,
+    "read": -0.0875654003702555
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 77%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.7711694484906841,
+    "read": 0.22883055150931586
+   }
+  },
+  {
+   "size": "small",
+   "seed": 0,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9772223610420514,
+    "lost_before_the_state": 1.2763513221455416,
+    "held_not_read": -11.160878618500316,
+    "read": 9.907304935312723
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 7%; not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.01233235754971107,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.07327487499683716,
+    "read": 0.9143927674534518
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: held not read 1%; not in the input -2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.018469762517375976,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.007996464492018074,
+    "read": 1.010473298025358
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 8%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.009077199187531804,
+    "lost_before_the_state": 0.0021345647445947247,
+    "held_not_read": 0.08166275001763845,
+    "read": 0.9252798844252986
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 94% (unresolved: not in the input 2%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.02340173091530373,
+    "lost_before_the_state": 0.9399567761399604,
+    "held_not_read": -0.03420132567358994,
+    "read": 0.07084281861832578
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 99% (unresolved: not in the input 4%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.03990577393120709,
+    "lost_before_the_state": 0.9868879624960735,
+    "held_not_read": 0.03136098396720579,
+    "read": -0.058154720394486346
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "modb",
+   "score": "undecided",
+   "says": "not in the input 92% [across events: unresolved, 24%] (unresolved: lost before the state 3%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9214762492300008,
+    "lost_before_the_state": 0.02617558685300192,
+    "held_not_read": -0.02590390224582252,
+    "read": 0.07825206616281978
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 16%] (unresolved: lost before the state 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9864780781348336,
+    "lost_before_the_state": 0.01090826094387276,
+    "held_not_read": 0.029123751595294893,
+    "read": -0.026510090674001223
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 78%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.7780754183226017,
+    "read": 0.22192458167739823
+   }
+  },
+  {
+   "size": "small",
+   "seed": 1,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.681957620319597,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -2.9621528183784713,
+    "read": 3.280195198058874
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.01122053275985535,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.04082713884820188,
+    "read": 0.9479523283919428
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input 3%; lost before the state 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.02662568461999104,
+    "lost_before_the_state": 0.019953328865759623,
+    "held_not_read": -0.04154025388765448,
+    "read": 0.9949612404019038
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 6%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.028551473746703415,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.05972811246746956,
+    "read": 0.9688233612792339
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 94% (unresolved: not in the input 3%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.02791471088084596,
+    "lost_before_the_state": 0.9404501699075981,
+    "held_not_read": -0.03019398617305221,
+    "read": 0.06182910538460814
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 101% (unresolved: not in the input 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.013846490117694232,
+    "lost_before_the_state": 1.0058658159399467,
+    "held_not_read": 0.037460754303912755,
+    "read": -0.057173060361553715
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "modb",
+   "score": "undecided",
+   "says": "not in the input 102% [across events: unresolved, -3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0188788447286647,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.034104063087703126,
+    "read": 0.01522521835903838
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 100% [across events: the other events do not forecast it, 4%] (unresolved: lost before the state 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0007641595432466,
+    "lost_before_the_state": 0.01295165641651641,
+    "held_not_read": 0.034260209997588366,
+    "read": -0.04797602595735138
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 92%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9237135430721599,
+    "read": 0.07628645692784009
+   }
+  },
+  {
+   "size": "small",
+   "seed": 2,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.22438727716185813,
+    "lost_before_the_state": 0.48727947627344703,
+    "held_not_read": 1.417879775586437,
+    "read": -1.1295465290217421
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 5%; not in the input -1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.007385742122589134,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.051963475768558864,
+    "read": 0.9554222663540303
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: lost before the state 0%; not in the input -1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.011486260854945307,
+    "lost_before_the_state": 0.0007419651123368176,
+    "held_not_read": -0.01474215049897687,
+    "read": 1.0254864462415854
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: not in the input 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.015542442411117019,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.04282841708124918,
+    "read": 0.9416291405076338
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 96% (unresolved: not in the input 4%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.039210032154153196,
+    "lost_before_the_state": 0.9574832429191353,
+    "held_not_read": -0.035788745928234104,
+    "read": 0.03909547085494557
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 98% (unresolved: not in the input 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.005697977894183026,
+    "lost_before_the_state": 0.9848315766263552,
+    "held_not_read": 0.026068951798970317,
+    "read": -0.016598506319508575
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 103% [across events: the other events do not forecast it, -27%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0309756324819097,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03903688256669597,
+    "read": 0.00806125008478626
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 103% [across events: the other events do not forecast it, -3%] (unresolved: lost before the state 0%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0266923910164223,
+    "lost_before_the_state": 0.004436075204756307,
+    "held_not_read": 0.027101446540408275,
+    "read": -0.05822991276158687
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "solo",
+   "score": "undecided",
+   "says": "held not read 84%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.8360210845734511,
+    "read": 0.16397891542654888
+   }
+  },
+  {
+   "size": "small",
+   "seed": 3,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.07310904685837316,
+    "lost_before_the_state": 0.391566454313916,
+    "held_not_read": -0.33559575785645357,
+    "read": 0.8709202566841644
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: not in the input -2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.022636382109028075,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.028949883226439654,
+    "read": 0.9936864988825884
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input -7%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.069641589162029,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.014401643111379814,
+    "read": 1.0840432322734088
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.008687336514304977,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.025097468950217583,
+    "read": 0.9662151945354774
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 95%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.00960990539651052,
+    "lost_before_the_state": 0.9463386615281364,
+    "held_not_read": -0.03324181308815978,
+    "read": 0.07729324616351287
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 106%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.012422314027095371,
+    "lost_before_the_state": 1.0595954807157288,
+    "held_not_read": 0.03175585655960124,
+    "read": -0.07892902324823471
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 101% [across events: the other events do not forecast it, -0%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0063965698722184,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03535550405798803,
+    "read": 0.028958934185769652
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 100% [across events: the other events do not forecast it, -11%] (unresolved: lost before the state 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9968168871505662,
+    "lost_before_the_state": 0.00977051847431143,
+    "held_not_read": 0.031218865252740174,
+    "read": -0.03780627087761776
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 82%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.8179054993402193,
+    "read": 0.18209450065978067
+   }
+  },
+  {
+   "size": "small",
+   "seed": 4,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.19869629700442104,
+    "lost_before_the_state": 0.2513433489196353,
+    "held_not_read": -0.7873657743534805,
+    "read": 1.3373261284294242
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 8%; not in the input 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.02487722172963036,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.07626536836387687,
+    "read": 0.8988574099064928
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: lost before the state 2%; not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.007882872502120275,
+    "lost_before_the_state": 0.023205553833568482,
+    "held_not_read": -0.013675793950689519,
+    "read": 0.9825873676150008
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 6%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0020921543001712894,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.06402775966606566,
+    "read": 0.9380643946341056
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 98% (unresolved: not in the input 6%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.061933446627101985,
+    "lost_before_the_state": 0.9788315017878482,
+    "held_not_read": -0.04135179967786972,
+    "read": 0.0005868512629195668
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 90% (unresolved: not in the input 8%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.07665616192702018,
+    "lost_before_the_state": 0.8969706911648465,
+    "held_not_read": 0.03891401100638045,
+    "read": -0.012540864098247142
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "modb",
+   "score": "undecided",
+   "says": "not in the input 95% [across events: unresolved, 5%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9531237677329192,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03610180790165718,
+    "read": 0.082978040168738
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 103% [across events: the other events do not forecast it, -3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0299622703644848,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.036144638787967184,
+    "read": -0.06610690915245203
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "solo",
+   "score": "wrong",
+   "says": "held not read 94%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9409175971275281,
+    "read": 0.05908240287247194
+   }
+  },
+  {
+   "size": "small",
+   "seed": 5,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.1255502862289932,
+    "lost_before_the_state": 0.01342216798620055,
+    "held_not_read": -1.4480972910698675,
+    "read": 1.3091248368546737
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "h1",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.010712212945227728,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.023690437571429523,
+    "read": 0.9870217753737982
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input -0%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.004622793378174617,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.05899298125063002,
+    "read": 1.0636157746288046
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.009370346616322522,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.0031248317634089418,
+    "read": 0.9875048216202685
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 98% (unresolved: not in the input 4%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.038149456628651324,
+    "lost_before_the_state": 0.9837069201931741,
+    "held_not_read": -0.036648380620000434,
+    "read": 0.01479200379817504
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 100% (unresolved: not in the input 4%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.04390960268354438,
+    "lost_before_the_state": 0.9965325288047735,
+    "held_not_read": 0.033667032255645796,
+    "read": -0.07410916374396367
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, -26%] (unresolved: lost before the state 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9906790596867496,
+    "lost_before_the_state": 0.008711563580875215,
+    "held_not_read": -0.04848573841728516,
+    "read": 0.049095115149660314
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "post",
+   "score": "undecided",
+   "says": "not in the input 102% [across events: unresolved, 9%] (unresolved: lost before the state 1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0178753086856023,
+    "lost_before_the_state": 0.013079019746769172,
+    "held_not_read": 0.034733170602237115,
+    "read": -0.06568749903460856
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 90%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.8961510084469673,
+    "read": 0.10384899155303269
+   }
+  },
+  {
+   "size": "small",
+   "seed": 6,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -1.3014723240644877,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 4.899485255919524,
+    "read": -2.598012931855036
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 7%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.033028905375849016,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.06809264747707588,
+    "read": 0.9649362578987731
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.008708951968299572,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.024441528766533716,
+    "read": 1.0157325767982341
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 5%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.01099407420095988,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.04531113535118747,
+    "read": 0.9436947904478526
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 90% (unresolved: not in the input 5%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.05435028494047056,
+    "lost_before_the_state": 0.895172287265886,
+    "held_not_read": -0.036682867981023035,
+    "read": 0.08716029577466643
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 95% (unresolved: not in the input 7%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.06945191480080926,
+    "lost_before_the_state": 0.9481040087986505,
+    "held_not_read": 0.0361647654837729,
+    "read": -0.05372068908323269
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 97% [across events: the other events do not forecast it, 3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9738597031018912,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03409372093196695,
+    "read": 0.060234017830075766
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 106% [across events: the other events do not forecast it, 3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0609326610836483,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.03396762222778009,
+    "read": -0.09490028331142834
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 98%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9752606233495451,
+    "read": 0.02473937665045493
+   }
+  },
+  {
+   "size": "small",
+   "seed": 7,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -14.594421592915271,
+    "lost_before_the_state": 40.577899204849544,
+    "held_not_read": 29.80961812308447,
+    "read": -54.793095735018746
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 6%; not in the input -1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.009472226968868735,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.06486362795857459,
+    "read": 0.9446085990102941
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: lost before the state 4%; not in the input -0%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0008097885164841667,
+    "lost_before_the_state": 0.0432235754867647,
+    "held_not_read": -0.037033699352928884,
+    "read": 0.9946199123826484
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 4%; lost before the state 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.008910801707672,
+    "lost_before_the_state": 0.01447123368083647,
+    "held_not_read": 0.0435706248683595,
+    "read": 0.933047339743132
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 103%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.013488962733405274,
+    "lost_before_the_state": 1.027243580732652,
+    "held_not_read": -0.04042429885714783,
+    "read": -0.00030824460890965425
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 102% (unresolved: held not read 4%; not in the input -1%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.010395835635158557,
+    "lost_before_the_state": 1.0173621381078777,
+    "held_not_read": 0.0389213409764945,
+    "read": -0.04588764344921362
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 99% [across events: the other events do not forecast it, 1%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9916996783325739,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.039805235911917376,
+    "read": 0.04810555757934349
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 100% [across events: the other events do not forecast it, -2%] (unresolved: lost before the state 2%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0003295841304227,
+    "lost_before_the_state": 0.018653974774602178,
+    "held_not_read": 0.03392018590277711,
+    "read": -0.05290374480780201
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 96%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9592311993467166,
+    "read": 0.040768800653283366
+   }
+  },
+  {
+   "size": "small",
+   "seed": 8,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.0889414064679358,
+    "lost_before_the_state": 0.3690191405557961,
+    "held_not_read": -0.3154555673909545,
+    "read": 0.8574950203672226
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 6%; lost before the state 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.005649004619012521,
+    "lost_before_the_state": 0.012925219557432532,
+    "held_not_read": 0.05681018858543907,
+    "read": 0.9246155872381159
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.015033496802224211,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.027155888123295946,
+    "read": 1.0121223913210717
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 6%; not in the input 3%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.027236198643915133,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.06434395165074647,
+    "read": 0.9084198497053384
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 98%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.0013214657698485954,
+    "lost_before_the_state": 0.980442889362847,
+    "held_not_read": -0.03895955504380433,
+    "read": 0.059838131450805965
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 96% (unresolved: not in the input 6%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.06258633125570023,
+    "lost_before_the_state": 0.9633978466764139,
+    "held_not_read": 0.04032729044766549,
+    "read": -0.06631146837977965
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "modb",
+   "score": "undecided",
+   "says": "not in the input 98% [across events: unresolved, 15%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9754529356561673,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.03507443775548594,
+    "read": 0.05962150209931863
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 104% [across events: the other events do not forecast it, -48%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0433989163098265,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.03693333439811848,
+    "read": -0.08033225070794499
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "solo",
+   "score": "undecided",
+   "says": "held not read 101%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 1.0059592793833374,
+    "read": -0.005959279383337504
+   }
+  },
+  {
+   "size": "small",
+   "seed": 9,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.13457801914048229,
+    "lost_before_the_state": 1.0710307728678816,
+    "held_not_read": 2.094744007893251,
+    "read": -2.3003527999016145
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 5%; lost before the state 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.003000378377946422,
+    "lost_before_the_state": 0.012839966848089412,
+    "held_not_read": 0.05335214476597905,
+    "read": 0.9308075100079851
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input 2%; lost before the state 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.022864744665573755,
+    "lost_before_the_state": 0.016117268347192293,
+    "held_not_read": -0.031684151742600086,
+    "read": 0.992702138729834
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "h3",
+   "score": "undecided",
+   "says": "unresolved: held not read 5%; not in the input 2%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.024275373068217698,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.0528987552588166,
+    "read": 0.9228258716729657
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 97% (unresolved: not in the input 8%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.08393373596180564,
+    "lost_before_the_state": 0.9684072328497891,
+    "held_not_read": -0.04104422336945048,
+    "read": -0.011296745442144299
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 98%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.009292449569303862,
+    "lost_before_the_state": 0.9805473309471802,
+    "held_not_read": 0.03433539778693666,
+    "read": -0.005590279164812961
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "modb",
+   "score": "right",
+   "says": "not in the input 100% [across events: the other events do not forecast it, -0%] (unresolved: lost before the state 0%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0036635826412272,
+    "lost_before_the_state": 0.004468114792160804,
+    "held_not_read": -0.04309187965963248,
+    "read": 0.03496018222624444
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "post",
+   "score": "right",
+   "says": "not in the input 102% [across events: the other events do not forecast it, -3%]",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 1.0239793648692732,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.03698200154436384,
+    "read": -0.06096136641363705
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "solo",
+   "score": "right",
+   "says": "held not read 88%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.881430190578577,
+    "read": 0.11856980942142299
+   }
+  },
+  {
+   "size": "small",
+   "seed": 10,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.08468501594942057,
+    "lost_before_the_state": 0.1973716391748589,
+    "held_not_read": -0.8633351402391723,
+    "read": 1.750648517013734
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "h1",
+   "score": "undecided",
+   "says": "unresolved: held not read 4%; not in the input 1%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.012946174743380334,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.044467169644193394,
+    "read": 0.9425866556124263
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "h2",
+   "score": "undecided",
+   "says": "unresolved: not in the input -4%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.03506858062984364,
+    "lost_before_the_state": 0.0,
+    "held_not_read": -0.026983794972402997,
+    "read": 1.0620523756022466
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "h3",
+   "score": "right",
+   "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.007693948068069778,
+    "lost_before_the_state": 0.01290332184581977,
+    "held_not_read": 0.041078297208172576,
+    "read": 0.9537123290140774
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "early",
+   "score": "right",
+   "says": "lost before the state 99%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.03150246400370338,
+    "lost_before_the_state": 0.9939543067671124,
+    "held_not_read": -0.03248974840073067,
+    "read": 0.07003790563732167
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "enc",
+   "score": "right",
+   "says": "lost before the state 110%",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.06492406645611526,
+    "lost_before_the_state": 1.095599989619223,
+    "held_not_read": 0.03493178999461766,
+    "read": -0.0656077131577254
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "modb",
+   "score": "undecided",
+   "says": "not in the input 97% [across events: unresolved, 5%] (unresolved: lost before the state 3%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9657342638124258,
+    "lost_before_the_state": 0.03018337156382156,
+    "held_not_read": -0.033805975340127255,
+    "read": 0.03788833996387992
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "post",
+   "score": "undecided",
+   "says": "not in the input 99% [across events: unresolved, 26%] (unresolved: lost before the state 2%)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": 0.9859399318419488,
+    "lost_before_the_state": 0.019743570601055582,
+    "held_not_read": 0.03338595387493207,
+    "read": -0.039069456317936485
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "solo",
+   "score": "wrong",
+   "says": "held not read 90%",
+   "carried_by": "identity",
+   "parts": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.8963587572229742,
+    "read": 0.10364124277702579
+   }
+  },
+  {
+   "size": "small",
+   "seed": 11,
+   "unit": "weak",
+   "score": "right",
+   "says": "no change to account for (the change does not stand out from its error)",
+   "carried_by": "cells",
+   "parts": {
+    "not_in_the_input": -0.1259544948228961,
+    "lost_before_the_state": 0.24616436555396692,
+    "held_not_read": -1.0391791069102168,
+    "read": 1.918969236179146
+   }
+  }
+ ],
+ "total": {
+  "right": 168,
+  "undecided": 46,
+  "wrong": 2
+ }
+}

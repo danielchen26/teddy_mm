@@ -81,6 +81,8 @@ def test_edges_are_records_declared_proposed_and_tested():
     assert EV.test_edges(prop, [dict(rows[0], change=0.1)])[0]["status"] == "refused"
     assert EV.test_edges(prop, [dict(rows[0], change=1.9)])[0]["status"] == "undecided"                     # outside, on the other side
     assert EV.test_edges(prop, [])[0]["status"] == "undecided"
+    own[0]["share"] = {"value": -0.56, "measured_in": "another condition"}                                  # what an edge carries from one condition to another
+    assert EV.edge_shares(own + prop, 0.1) == {(own[0]["site"], own[0]["readout"]): (-0.56, 0.1)}
     bad = EV.check_edges([dict(prop[0], status="admitted"), EV.edge("X", "PDL1", None), own[0], own[0]])
     assert {b["code"] for b in bad} >= {"G1", "G2", "G5"}
 
@@ -103,6 +105,12 @@ def test_records_teach_within_a_type_and_no_other():
     none = part.new(d["Z"][~keep], d["unit"][~keep])[0]
     assert new["taught_by"] == 1 and abs(new["forecast"] - rows["r1"]["change"]) < 0.15
     assert none["taught_by"] == 0 and abs(none["from_the_recorded_events"]) < 1e-12 and abs(none["forecast"] - none["read"]) < 1e-12
+    # the widening is a type's own: an event of no type keeps the control prior, so what it shows beyond it is flagged and not hidden
+    assert set(typed.r["y"]["tau2"]) == {"R", "C"} and none["widening"] == 1.0 and new["widening"] == part.r["y"]["tau2"]["R"] > 1
+    flags = typed.flags()
+    assert {f["event"] for f in flags if f["flag"] == "a missing edge"} >= {"x"} and not any(f["event"].startswith("q") for f in flags)
+    prop = EV.propose_edges(flags, known=[EV.edge(e, r, c) for (e, r), c in d["edges"].items()])          # the law's flags are what the graph reads
+    assert "x" in {e["site"] for e in prop} and all(e["status"] == "proposed" and e["evidence"]["z"] is not None for e in prop)
 
 
 def test_an_edge_has_a_size_its_class_share_of_a_scale():
@@ -138,6 +146,42 @@ def test_an_edge_has_a_size_its_class_share_of_a_scale():
     assert abs(part.new(x[~keep], unit[~keep], edges=edges)[0]["forecast"] - change) > 1.2          # with one size per class it is forecast at the class's mean
 
 
+def test_a_pair_measured_in_one_condition_is_forecast_in_another_at_its_own_share():
+    """Pairs of one class whose shares differ (one gene of several behind a protein removes less of it than the only
+    gene): the class's mean share misses each; the pair's own share, measured where the scale is one value, forecasts it
+    where the scale is another."""
+    def condition(seed, scale_of):
+        rng = np.random.default_rng(seed)
+        n_c, n_e, p = 3000, 300, 10
+        th = rng.normal(size=p) * 0.3
+        names = [f"q{k:02d}" for k in range(12)] + [f"k{k}" for k in range(6)]
+        unit = np.array(["control"] * n_c + [e for e in names for _ in range(n_e)])
+        x = rng.normal(size=(len(unit), p))
+        y = x @ th + 0.5 * rng.normal(size=len(unit))
+        sd = y[:n_c].std()
+        for e in names:
+            x[unit == e] += 0.15 * rng.normal(size=p)
+        for k, sh in enumerate(SHARES):
+            y[unit == f"k{k}"] += sh * scale_of * sd
+        return x, y, unit
+    SHARES = [-0.9, -0.6, -0.1, -0.15, -0.3, -0.75]
+    edges = {(f"k{k}", "y"): "own" for k in range(6)}
+    xa, ya, ua = condition(1, 2.0)                                                   # where the pairs were measured
+    a = AC.Law(xa, {"y": ya}, ua, edges=edges, scale={k: 2.0 for k in edges}).fit()
+    seen = {(e, r): (v, 0.05) for e, r, v in a.class_values()["own"]}
+    assert all(abs(seen[(f"k{k}", "y")][0] - sh) < 0.08 for k, sh in enumerate(SHARES))
+    xb, yb, ub = condition(2, 5.0)                                                   # another condition: the readout has more to lose
+    new = np.isin(ub, [f"k{k}" for k in range(6)])
+    b = AC.Law(xb[~new], {"y": yb[~new]}, ub[~new]).fit()
+    kw = dict(edges=edges, scale={k: 5.0 for k in edges})
+    own = b.new(xb[new], ub[new], shares=seen, **kw)
+    cls = b.new(xb[new], ub[new], classes={"own": [v for v, _s in seen.values()]}, **kw)
+    ch = {e: v[0] for e, v in b.measure(yb[new], ub[new], "y").items()}
+    err = lambda rows: float(np.sqrt(np.mean([(ch[r["event"]] - r["forecast"]) ** 2 for r in rows])))
+    assert err(own) < 0.25 * err(cls) and all(r["size_of_the_edge_from"].startswith("the pair's own share") for r in own)
+    assert sum(r["interval"][0] < ch[r["event"]] < r["interval"][1] for r in own) >= 5 and cls[0]["size_of_the_edge_from"] == "its class"
+
+
 def test_the_step_after_a_rejection_sends_each_open_part_to_its_lever():
     d, un, first = _units()
     accs = [{"readout": "y", "group": "units", "type": {"type": "units"}, "event": e, "account": _acc(d, un, first, e, controls=False)} for e in ("h1", "early", "post", "solo")]
@@ -150,3 +194,15 @@ def test_the_step_after_a_rejection_sends_each_open_part_to_its_lever():
     assert outer.counts(items)["by_lever"]["G"] == 1 and [i["id"] for i in items] == ["P01", "P02", "P03"]
     with_edge = outer.open_parts(accs, edges=[EV.edge("post", "y", "own", provenance="declared for the test")])
     assert {i["event"]: i["state"] for i in with_edge}["post"] == "on the graph"
+    assert set(outer.PARTS4.values()) == set(outer.ROUTES4) == set(outer.NEEDS4) and not set(outer.ROUTES4) & set(outer.ROUTES)      # the parts of an account have their own table
+    assert {v[0] for v in outer.ROUTES4.values()} == {"M", "E", "G"} and all(k in outer.LEVERS for k in "MEG")
+
+
+def test_a_forecast_that_overshoots_is_no_forecast():
+    """`others` is a share of the change: 14 times the change misses it as surely as none of it (found by the planted
+    study of units, where a readout of other units overshot a unit it had no row like)."""
+    r = lambda lo, hi: AC.across_events({"shares": {"others": {"share": (lo + hi) / 2, "ci": [lo, hi]}}})["reading"]
+    assert r(0.80, 1.10) == "the other events forecast it"
+    assert r(-0.10, 0.40) == "the other events do not forecast it"
+    assert r(3.2, 27.0) == "the other events do not forecast it"
+    assert r(1.10, 1.42) == "unresolved" and r(0.40, 0.90) == "unresolved"

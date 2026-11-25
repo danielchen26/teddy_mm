@@ -1,0 +1,6436 @@
+{
+ "note": "retrospective: every value here was read before (the library in development, batch 1 on 23 November, batch 2 this morning); nothing is a forecast",
+ "scale": {
+  "PDL1": {
+   "Co-culture": {
+    "control_cells": 5276,
+    "above_background": 2.4707326622196333,
+    "spread_of_the_readout": 0.757283525715694,
+    "scale": 3.1266829233116273
+   },
+   "Control": {
+    "control_cells": 2645,
+    "above_background": 1.1032237017687438,
+    "spread_of_the_readout": 0.8362223016170501,
+    "scale": 1.2643241462035921
+   },
+   "IFN\u03b3": {
+    "control_cells": 4000,
+    "above_background": 2.517325617269394,
+    "spread_of_the_readout": 0.7469366024687759,
+    "scale": 3.229774845561965
+   }
+  },
+  "MHC1": {
+   "Co-culture": {
+    "control_cells": 5276,
+    "above_background": 3.6831994948398123,
+    "spread_of_the_readout": 0.5214672196478164,
+    "scale": 6.768848963517524
+   },
+   "Control": {
+    "control_cells": 2645,
+    "above_background": 2.445638677618336,
+    "spread_of_the_readout": 0.5467639982386581,
+    "scale": 4.286560698218984
+   },
+   "IFN\u03b3": {
+    "control_cells": 4000,
+    "above_background": 2.6247142940258144,
+    "spread_of_the_readout": 0.5082075517490114,
+    "scale": 4.9494565552691006
+   }
+  },
+  "HLAE": {
+   "Co-culture": {
+    "control_cells": 5276,
+    "above_background": 0.1926941288833546,
+    "spread_of_the_readout": 0.40362107303824063,
+    "scale": 0.4575212227064573
+   },
+   "Control": {
+    "control_cells": 2645,
+    "above_background": -0.1158804454970284,
+    "spread_of_the_readout": 0.43908646486824837,
+    "scale": -0.2529162305985474
+   },
+   "IFN\u03b3": {
+    "control_cells": 4000,
+    "above_background": 0.3725521146789511,
+    "spread_of_the_readout": 0.5624344845088222,
+    "scale": 0.6347923531261733
+   }
+  }
+ },
+ "types": {
+  "IFNGR1": "interferon pathway",
+  "IFNGR2": "interferon pathway",
+  "JAK1": "interferon pathway",
+  "JAK2": "interferon pathway",
+  "STAT1": "interferon pathway"
+ },
+ "library": {
+  "events": 206,
+  "spread_of_a_direct_part_without_an_edge": 0.03941361732142139,
+  "widening_of_the_control_prior": {
+   "PDL1": {
+    "interferon pathway": 3.981071705534973
+   },
+   "MHC1": {
+    "interferon pathway": 5.011872336272724
+   },
+   "HLAE": {
+    "interferon pathway": 1.9952623149688797
+   }
+  },
+  "calibration": {
+   "pairs": 618,
+   "inside_95": 0.9546925566343042,
+   "mean_z2": 1.5572518320853237,
+   "median_abs_z": 0.58839380041084,
+   "error": {
+    "no_change": 0.2129321885053654,
+    "control_readout": 0.1759482090771795,
+    "forecast": 0.14854710428852608
+   },
+   "pairs_with_a_change": {
+    "pairs": 17,
+    "inside_95": 0.7058823529411765,
+    "error": {
+     "no_change": 1.1781242499433664,
+     "control_readout": 0.967968942626924,
+     "forecast": 0.7895586428743755
+    }
+   }
+  },
+  "class_own": [
+   {
+    "event": "CD274",
+    "readout": "PDL1",
+    "share_of_the_scale": -0.5627672245712094,
+    "scale": 3.229774845561965,
+    "direct_part_with_one_size": -1.8133288712960596
+   },
+   {
+    "event": "B2M",
+    "readout": "MHC1",
+    "share_of_the_scale": -0.5754722233922419,
+    "scale": 4.9494565552691006,
+    "direct_part_with_one_size": -2.806295767021245
+   },
+   {
+    "event": "HLA-A",
+    "readout": "MHC1",
+    "share_of_the_scale": -0.07826719845621952,
+    "scale": 4.9494565552691006,
+    "direct_part_with_one_size": -0.3810202165125607
+   },
+   {
+    "event": "HLA-B",
+    "readout": "MHC1",
+    "share_of_the_scale": -0.14109859204101244,
+    "scale": 4.9494565552691006,
+    "direct_part_with_one_size": -0.6867806048970111
+   },
+   {
+    "event": "HLA-C",
+    "readout": "MHC1",
+    "share_of_the_scale": -0.13069049975001718,
+    "scale": 4.9494565552691006,
+    "direct_part_with_one_size": -0.6306910742049788
+   },
+   {
+    "event": "B2M",
+    "readout": "HLAE",
+    "share_of_the_scale": -0.30486945517988817,
+    "scale": 0.6347923531261733,
+    "direct_part_with_one_size": -0.1988892917305075
+   },
+   {
+    "event": "HLA-E",
+    "readout": "HLAE",
+    "share_of_the_scale": -0.3732859037903983,
+    "scale": 0.6347923531261733,
+    "direct_part_with_one_size": -0.2609547192086775
+   }
+  ],
+  "flags": [
+   {
+    "event": "TAPBP",
+    "readout": "MHC1",
+    "direct": -1.6082307336586017,
+    "errors": -17.86203281286972,
+    "shift_times_noise": 1.093561678511878,
+    "change": -1.5643403470921367,
+    "forecast": 0.04389038656646511,
+    "z": -17.86203281286972,
+    "flag": "a missing edge",
+    "candidate": "a missing edge: the event does not move the stage"
+   },
+   {
+    "event": "SSR2",
+    "readout": "MHC1",
+    "direct": 0.44320564463750445,
+    "errors": 6.024559813860481,
+    "shift_times_noise": 2.470144741676191,
+    "change": 0.47578040906824004,
+    "forecast": 0.032574764430735606,
+    "z": 6.0245598138604795,
+    "flag": "a missing edge",
+    "candidate": "a missing edge: the event does not move the stage"
+   },
+   {
+    "event": "STAT3",
+    "readout": "MHC1",
+    "direct": 0.5547345365315692,
+    "errors": 5.98618397935674,
+    "shift_times_noise": 1.2407229854441821,
+    "change": 0.6067411751948093,
+    "forecast": 0.052006638663240075,
+    "z": 5.986183979356739,
+    "flag": "a missing edge",
+    "candidate": "a missing edge: the event does not move the stage"
+   },
+   {
+    "event": "CD44",
+    "readout": "MHC1",
+    "direct": 0.37210839255171974,
+    "errors": 5.1157522966295765,
+    "shift_times_noise": 1.002361038528011,
+    "change": 0.41197279829224237,
+    "forecast": 0.03986440574052263,
+    "z": 5.1157522966295765,
+    "flag": "a missing edge",
+    "candidate": "a missing edge: the event does not move the stage"
+   },
+   {
+    "event": "NONO",
+    "readout": "PDL1",
+    "direct": 0.25657557568682593,
+    "errors": 3.624220689314068,
+    "shift_times_noise": 2.5666108749530063,
+    "change": 0.30108090666254156,
+    "forecast": 0.04450533097571563,
+    "z": 3.624220689314068,
+    "flag": "a missing edge",
+    "candidate": "a missing edge: the event does not move the stage"
+   }
+  ]
+ },
+ "strata": {
+  "mel_co": {
+   "study": "frangieh2021",
+   "condition": "Co-culture",
+   "recorded_events": [
+    "CD44",
+    "CDH19",
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "STAT1",
+    "TAPBP"
+   ],
+   "types": {
+    "CD44": "(CD44)",
+    "CDH19": "(CDH19)",
+    "IFNGR1": "interferon pathway",
+    "IFNGR2": "interferon pathway",
+    "JAK1": "interferon pathway",
+    "JAK2": "interferon pathway",
+    "STAT1": "interferon pathway",
+    "TAPBP": "(TAPBP)"
+   },
+   "spread_of_a_direct_part_without_an_edge": {
+    "value": 0.10818187804005393,
+    "from": "the stratum's own rows"
+   },
+   "widening_of_the_control_prior": {
+    "PDL1": {
+     "interferon pathway": 39.810717055349734
+    },
+    "MHC1": {
+     "interferon pathway": 199.52623149688807
+    },
+    "HLAE": {
+     "interferon pathway": 3.981071705534973
+    }
+   },
+   "recorded_pairs_each_left_out": [
+    {
+     "event": "CD44",
+     "readout": "PDL1",
+     "type": "(CD44)",
+     "edge": null,
+     "change": 0.2529752911545699,
+     "se": 0.057634367720192536,
+     "read": 0.0427489580226206,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.0427489580226206,
+     "sd": 0.11821967694208964,
+     "interval": [
+      -0.18896160878387508,
+      0.2744595248291163
+     ],
+     "z": 1.7782685469097457
+    },
+    {
+     "event": "CDH19",
+     "readout": "PDL1",
+     "type": "(CDH19)",
+     "edge": null,
+     "change": -0.00305151363605004,
+     "se": 0.06236646664200365,
+     "read": -0.04677187706862119,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.04677187706862119,
+     "sd": 0.11906578569391064,
+     "interval": [
+      -0.28014081702868604,
+      0.18659706289144368
+     ],
+     "z": 0.3671950189365536
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.1613583414016442,
+     "se": 0.05998204992445938,
+     "read": -0.8776988446223178,
+     "from_the_other_events": -0.26990712236129977,
+     "by_its_edge": 0.0,
+     "forecast": -1.1476059669836176,
+     "sd": 0.14971249310203083,
+     "interval": [
+      -1.4410424534635982,
+      -0.8541694805036372
+     ],
+     "z": -0.09185856258939035
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.1075864293678515,
+     "se": 0.05050922480647132,
+     "read": -0.8394846085710798,
+     "from_the_other_events": -0.2426977487482084,
+     "by_its_edge": 0.0,
+     "forecast": -1.0821823573192881,
+     "sd": 0.13938825065733676,
+     "interval": [
+      -1.3553833286076682,
+      -0.8089813860309081
+     ],
+     "z": -0.18225404170553142
+    },
+    {
+     "event": "JAK1",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.9088546646345472,
+     "se": 0.057186358392372925,
+     "read": -0.8253446283298218,
+     "from_the_other_events": -0.2973063271527728,
+     "by_its_edge": 0.0,
+     "forecast": -1.1226509554825945,
+     "sd": 0.1546289774692963,
+     "interval": [
+      -1.4257237513224152,
+      -0.8195781596427738
+     ],
+     "z": 1.3826405266794155
+    },
+    {
+     "event": "JAK2",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.172578092801521,
+     "se": 0.050513034820204736,
+     "read": -0.8581860172775642,
+     "from_the_other_events": -0.24928018963608106,
+     "by_its_edge": 0.0,
+     "forecast": -1.1074662069136452,
+     "sd": 0.142636594310724,
+     "interval": [
+      -1.387033931762664,
+      -0.8278984820646261
+     ],
+     "z": -0.4564879454849721
+    },
+    {
+     "event": "STAT1",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.270145747708634,
+     "se": 0.05510080644830022,
+     "read": -0.8757599764788815,
+     "from_the_other_events": -0.23987679871301462,
+     "by_its_edge": 0.0,
+     "forecast": -1.115636775191896,
+     "sd": 0.14651327008292253,
+     "interval": [
+      -1.4028027845544242,
+      -0.828470765829368
+     ],
+     "z": -1.0545732303243933
+    },
+    {
+     "event": "TAPBP",
+     "readout": "PDL1",
+     "type": "(TAPBP)",
+     "edge": null,
+     "change": 0.10293533613404772,
+     "se": 0.08590081976135737,
+     "read": 0.0414379338705999,
+     "from_the_other_events": 6.938893903907228e-18,
+     "by_its_edge": 0.0,
+     "forecast": 0.04143793387059991,
+     "sd": 0.12745749512162538,
+     "interval": [
+      -0.20837875656778584,
+      0.29125462430898563
+     ],
+     "z": 0.4824934163719785
+    },
+    {
+     "event": "CD44",
+     "readout": "MHC1",
+     "type": "(CD44)",
+     "edge": null,
+     "change": 0.40501764793990674,
+     "se": 0.06370751765784366,
+     "read": 0.03622757006090041,
+     "from_the_other_events": 5.551115123125783e-17,
+     "by_its_edge": 0.0,
+     "forecast": 0.036227570060900466,
+     "sd": 0.12179009688894052,
+     "interval": [
+      -0.20248101984142294,
+      0.27493615996322385
+     ],
+     "z": 3.0280793537368087
+    },
+    {
+     "event": "CDH19",
+     "readout": "MHC1",
+     "type": "(CDH19)",
+     "edge": null,
+     "change": 0.0006964058382579887,
+     "se": 0.06607036834907255,
+     "read": -0.017117794469721,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.017117794469721,
+     "sd": 0.12082826690746744,
+     "interval": [
+      -0.25394119760835715,
+      0.21970560866891517
+     ],
+     "z": 0.1474340463860285
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "MHC1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.7436305754993457,
+     "se": 0.07178557761052194,
+     "read": -0.8527790494693699,
+     "from_the_other_events": -1.0510325172431711,
+     "by_its_edge": 0.0,
+     "forecast": -1.903811566712541,
+     "sd": 0.2214245565849277,
+     "interval": [
+      -2.3378036976189995,
+      -1.4698194358060828
+     ],
+     "z": 0.723411141400469
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "MHC1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.8848321269127322,
+     "se": 0.06057477826726005,
+     "read": -0.8533474307556304,
+     "from_the_other_events": -0.9869010942083983,
+     "by_its_edge": 0.0,
+     "forecast": -1.8402485249640286,
+     "sd": 0.18871241265717326,
+     "interval": [
+      -2.210124853772088,
+      -1.470372196155969
+     ],
+     "z": -0.23625156035547562
+    },
+    {
+     "event": "JAK1",
+     "readout": "MHC1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -2.0842505322332308,
+     "se": 0.06786032044875917,
+     "read": -0.9540723690681312,
+     "from_the_other_events": -1.0465990123128552,
+     "by_its_edge": 0.0,
+     "forecast": -2.0006713813809864,
+     "sd": 0.24039751253070646,
+     "interval": [
+      -2.471850505941171,
+      -1.5294922568208018
+     ],
+     "z": -0.34767061427712814
+    },
+    {
+     "event": "JAK2",
+     "readout": "MHC1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.9288589523307471,
+     "se": 0.06202170513022715,
+     "read": -0.9279288726806745,
+     "from_the_other_events": -1.0422399572580874,
+     "by_its_edge": 0.0,
+     "forecast": -1.9701688299387619,
+     "sd": 0.1969167866799353,
+     "interval": [
+      -2.356125731831435,
+      -1.5842119280460887
+     ],
+     "z": 0.2097834232647672
+    },
+    {
+     "event": "STAT1",
+     "readout": "MHC1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -2.1485952899828487,
+     "se": 0.06033909181455733,
+     "read": -0.9476202073419419,
+     "from_the_other_events": -1.011361749257814,
+     "by_its_edge": 0.0,
+     "forecast": -1.958981956599756,
+     "sd": 0.2077520020053352,
+     "interval": [
+      -2.366175880530213,
+      -1.551788032669299
+     ],
+     "z": -0.9126907637608389
+    },
+    {
+     "event": "TAPBP",
+     "readout": "MHC1",
+     "type": "(TAPBP)",
+     "edge": null,
+     "change": -1.7211283588153283,
+     "se": 0.084386482198246,
+     "read": 0.01955160276289708,
+     "from_the_other_events": 2.220446049250313e-16,
+     "by_its_edge": 0.0,
+     "forecast": 0.019551602762897302,
+     "sd": 0.1321079348351429,
+     "interval": [
+      -0.23937994951398278,
+      0.2784831550397774
+     ],
+     "z": -13.176195387131097
+    },
+    {
+     "event": "CD44",
+     "readout": "HLAE",
+     "type": "(CD44)",
+     "edge": null,
+     "change": 0.03735228699828722,
+     "se": 0.06019364973450231,
+     "read": -0.009332730440062257,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.009332730440062257,
+     "sd": 0.12327567769928495,
+     "interval": [
+      -0.25095305873066076,
+      0.23228759785053624
+     ],
+     "z": 0.3787042043462258
+    },
+    {
+     "event": "CDH19",
+     "readout": "HLAE",
+     "type": "(CDH19)",
+     "edge": null,
+     "change": -0.004802145119040426,
+     "se": 0.06376677145570013,
+     "read": 0.004728188499357759,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.004728188499357759,
+     "sd": 0.12494542003700869,
+     "interval": [
+      -0.24016483477317926,
+      0.2496212117718948
+     ],
+     "z": -0.07627597406591863
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "HLAE",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.06326850341303157,
+     "se": 0.048459095495676494,
+     "read": -0.06024623630844911,
+     "from_the_other_events": -0.07800619331593904,
+     "by_its_edge": 0.0,
+     "forecast": -0.13825242962438816,
+     "sd": 0.12674654998741422,
+     "interval": [
+      -0.38667566759972005,
+      0.1101708083509437
+     ],
+     "z": 0.5916052643547489
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "HLAE",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.14242933736863206,
+     "se": 0.04214893283836146,
+     "read": -0.07426385261425954,
+     "from_the_other_events": -0.06420660087854856,
+     "by_its_edge": 0.0,
+     "forecast": -0.1384704534928081,
+     "sd": 0.12384949374368052,
+     "interval": [
+      -0.38121546123042194,
+      0.10427455424480572
+     ],
+     "z": -0.03196528105328625
+    },
+    {
+     "event": "JAK1",
+     "readout": "HLAE",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.17490301599081998,
+     "se": 0.04439831424771247,
+     "read": -0.06493585122612419,
+     "from_the_other_events": -0.06104357052524952,
+     "by_its_edge": 0.0,
+     "forecast": -0.12597942175137372,
+     "sd": 0.12635102321989222,
+     "interval": [
+      -0.3736274272623625,
+      0.12166858375961503
+     ],
+     "z": -0.38720378349689466
+    },
+    {
+     "event": "JAK2",
+     "readout": "HLAE",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.2080556367179061,
+     "se": 0.04018432950967594,
+     "read": -0.05306902905928393,
+     "from_the_other_events": -0.05316780387513356,
+     "by_its_edge": 0.0,
+     "forecast": -0.10623683293441749,
+     "sd": 0.12413593821555367,
+     "interval": [
+      -0.3495432718369027,
+      0.1370696059680677
+     ],
+     "z": -0.8202201976891426
+    },
+    {
+     "event": "STAT1",
+     "readout": "HLAE",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.20796575226515143,
+     "se": 0.04296084444885956,
+     "read": -0.07571315652014952,
+     "from_the_other_events": -0.05727017221640625,
+     "by_its_edge": 0.0,
+     "forecast": -0.13298332873655577,
+     "sd": 0.1251685013040372,
+     "interval": [
+      -0.37831359129246867,
+      0.11234693381935715
+     ],
+     "z": -0.599051860071901
+    },
+    {
+     "event": "TAPBP",
+     "readout": "HLAE",
+     "type": "(TAPBP)",
+     "edge": null,
+     "change": -0.14567387878002921,
+     "se": 0.07088738033195316,
+     "read": -0.02313478812367607,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.02313478812367607,
+     "sd": 0.12855375467467867,
+     "interval": [
+      -0.27510014728604626,
+      0.2288305710386941
+     ],
+     "z": -0.9532128483252288
+    }
+   ],
+   "pairs_of_the_batch": [
+    {
+     "event": "CD274",
+     "readout": "PDL1",
+     "cells": 228,
+     "edge": "own",
+     "type": "(CD274)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 3.1266829233116273,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 0.8011979024441318,
+     "read": -0.13734104434825276,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -0.9676865213922186,
+     "forecast": -1.1050275657404713,
+     "sd": 0.6880619688167734,
+     "interval": [
+      -2.453629024621347,
+      0.24357389314040456
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01096744617812317,
+      "direct": 0.6860759127147946,
+      "row": 0.05107670749868212
+     },
+     "change": -2.1162245254831356,
+     "se": 0.0632073917197218,
+     "snr": 33.48064946054145,
+     "z": -1.4696306518460398,
+     "inside": true,
+     "forecast_with_one_size": -1.1056211221869727,
+     "interval_with_one_size": [
+      -3.1545282825097662,
+      0.9432860381358208
+     ]
+    },
+    {
+     "event": "CD274",
+     "readout": "MHC1",
+     "cells": 228,
+     "edge": null,
+     "type": "(CD274)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8011979024441318,
+     "read": -0.07370042811346793,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.07370042811346793,
+     "sd": 0.1220047249932922,
+     "interval": [
+      -0.3128296891003206,
+      0.16542883287338478
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.011842226717057956,
+      "direct": 0.10818187804005393,
+      "row": 0.05515066500775446
+     },
+     "change": 0.0489224848945398,
+     "se": 0.0702185148751002,
+     "snr": 0.6967177386414354,
+     "z": 1.0050669186357293,
+     "inside": true,
+     "forecast_with_one_size": -0.07370042811346793,
+     "interval_with_one_size": [
+      -0.3128296891003206,
+      0.16542883287338478
+     ]
+    },
+    {
+     "event": "CD274",
+     "readout": "HLAE",
+     "cells": 228,
+     "edge": null,
+     "type": "(CD274)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8011979024441318,
+     "read": 0.015243366437690887,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.015243366437690887,
+     "sd": 0.12673278400456534,
+     "interval": [
+      -0.23315289021125715,
+      0.2636396230866389
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.008016012584137441,
+      "direct": 0.10818187804005393,
+      "row": 0.06552574568462123
+     },
+     "change": 0.1766811688426254,
+     "se": 0.0679568189284358,
+     "snr": 2.5999034626486184,
+     "z": 1.2738440465343126,
+     "inside": true,
+     "forecast_with_one_size": 0.015243366437690887,
+     "interval_with_one_size": [
+      -0.23315289021125715,
+      0.2636396230866389
+     ]
+    },
+    {
+     "event": "CTSA",
+     "readout": "PDL1",
+     "cells": 200,
+     "edge": null,
+     "type": "(CTSA)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.871868766035,
+     "read": -0.09884828633363334,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.09884828633363334,
+     "sd": 0.12172227000500473,
+     "interval": [
+      -0.3374239355434426,
+      0.13972736287617593
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.012411918492618535,
+      "direct": 0.10818187804005393,
+      "row": 0.05439610793274426
+     },
+     "change": -0.21305526973209196,
+     "se": 0.07479880580516145,
+     "snr": 2.8483779578923465,
+     "z": -0.9382587376472925,
+     "inside": true,
+     "forecast_with_one_size": -0.09884828633363334,
+     "interval_with_one_size": [
+      -0.3374239355434426,
+      0.13972736287617593
+     ]
+    },
+    {
+     "event": "CTSA",
+     "readout": "MHC1",
+     "cells": 200,
+     "edge": null,
+     "type": "(CTSA)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.871868766035,
+     "read": -0.08443105836556132,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.08443105836556132,
+     "sd": 0.12382531960077349,
+     "interval": [
+      -0.3271286847830774,
+      0.15826656805195471
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013401912386533911,
+      "direct": 0.10818187804005393,
+      "row": 0.0587348259752616
+     },
+     "change": -0.08347632023810456,
+     "se": 0.08412780715764558,
+     "snr": 0.992255985962879,
+     "z": 0.007710362715274591,
+     "inside": true,
+     "forecast_with_one_size": -0.08443105836556132,
+     "interval_with_one_size": [
+      -0.3271286847830774,
+      0.15826656805195471
+     ]
+    },
+    {
+     "event": "CTSA",
+     "readout": "HLAE",
+     "cells": 200,
+     "edge": null,
+     "type": "(CTSA)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.871868766035,
+     "read": 0.04392403240127894,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.04392403240127894,
+     "sd": 0.12909597996006658,
+     "interval": [
+      -0.20910408832045152,
+      0.29695215312300943
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009624095205294074,
+      "direct": 0.10818187804005393,
+      "row": 0.06978416795417314
+     },
+     "change": 0.0783755308330964,
+     "se": 0.07186619948842204,
+     "snr": 1.0905757002737153,
+     "z": 0.26686732183662404,
+     "inside": true,
+     "forecast_with_one_size": 0.04392403240127894,
+     "interval_with_one_size": [
+      -0.20910408832045152,
+      0.29695215312300943
+     ]
+    },
+    {
+     "event": "CTSL",
+     "readout": "PDL1",
+     "cells": 214,
+     "edge": null,
+     "type": "(CTSL)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.3035058955114642,
+     "read": 0.02692720178876632,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.02692720178876632,
+     "sd": 0.12098541623046433,
+     "interval": [
+      -0.21020421402294376,
+      0.2640586176004764
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.012716956502951925,
+      "direct": 0.10818187804005393,
+      "row": 0.05265388135254255
+     },
+     "change": 0.02976218742215875,
+     "se": 0.07036634240075317,
+     "snr": 0.4229605576577502,
+     "z": 0.023432457578127307,
+     "inside": true,
+     "forecast_with_one_size": 0.02692720178876632,
+     "interval_with_one_size": [
+      -0.21020421402294376,
+      0.2640586176004764
+     ]
+    },
+    {
+     "event": "CTSL",
+     "readout": "MHC1",
+     "cells": 214,
+     "edge": null,
+     "type": "(CTSL)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.3035058955114642,
+     "read": -0.0024358898649642744,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.0024358898649642744,
+     "sd": 0.12298049768855118,
+     "interval": [
+      -0.24347766533452458,
+      0.23860588560459606
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013731280702276714,
+      "direct": 0.10818187804005393,
+      "row": 0.05685363669745254
+     },
+     "change": 0.05366863048400357,
+     "se": 0.0662251927536166,
+     "snr": 0.8103959875763848,
+     "z": 0.4562066457972293,
+     "inside": true,
+     "forecast_with_one_size": -0.0024358898649642744,
+     "interval_with_one_size": [
+      -0.24347766533452458,
+      0.23860588560459606
+     ]
+    },
+    {
+     "event": "CTSL",
+     "readout": "HLAE",
+     "cells": 214,
+     "edge": null,
+     "type": "(CTSL)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.3035058955114642,
+     "read": 0.01574312572803281,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.01574312572803281,
+     "sd": 0.12790980939864285,
+     "interval": [
+      -0.23496010069330714,
+      0.2664463521493728
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009732510784146655,
+      "direct": 0.10818187804005393,
+      "row": 0.06754908465671842
+     },
+     "change": 0.04404665751423585,
+     "se": 0.06931238718427235,
+     "snr": 0.6354803131673189,
+     "z": 0.2212772571491561,
+     "inside": true,
+     "forecast_with_one_size": 0.01574312572803281,
+     "interval_with_one_size": [
+      -0.23496010069330714,
+      0.2664463521493728
+     ]
+    },
+    {
+     "event": "HLA-B",
+     "readout": "PDL1",
+     "cells": 144,
+     "edge": null,
+     "type": "(HLA-B)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.6353992518608131,
+     "read": 0.06552361812177049,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.06552361812177049,
+     "sd": 0.12682182962368985,
+     "interval": [
+      -0.18304716794066161,
+      0.3140944041842026
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017687582133643374,
+      "direct": 0.10818187804005393,
+      "row": 0.06377779528247063
+     },
+     "change": 0.10243584253010984,
+     "se": 0.0824777799810684,
+     "snr": 1.2419810833126514,
+     "z": 0.29105576317473575,
+     "inside": true,
+     "forecast_with_one_size": 0.06552361812177049,
+     "interval_with_one_size": [
+      -0.18304716794066161,
+      0.3140944041842026
+     ]
+    },
+    {
+     "event": "HLA-B",
+     "readout": "MHC1",
+     "cells": 144,
+     "edge": "own",
+     "type": "(HLA-B)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 6.768848963517524,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 1.6353992518608131,
+     "read": 0.058682591883555395,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -2.0949114662378463,
+     "forecast": -2.036228874354291,
+     "sd": 1.4869805554902358,
+     "interval": [
+      -4.950710763115153,
+      0.878253014406571
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01909837115234724,
+      "direct": 1.485262287406886,
+      "row": 0.06886481127718413
+     },
+     "change": -0.8319325468989448,
+     "se": 0.07765593182036588,
+     "snr": 10.713058582870085,
+     "z": 0.8098937965320652,
+     "inside": true,
+     "forecast_with_one_size": -0.9095974859551647,
+     "interval_with_one_size": [
+      -2.9607327466226265,
+      1.141537774712297
+     ]
+    },
+    {
+     "event": "HLA-B",
+     "readout": "HLAE",
+     "cells": 144,
+     "edge": null,
+     "type": "(HLA-B)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.6353992518608131,
+     "read": -0.047733981778542864,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.047733981778542864,
+     "sd": 0.13628063754594902,
+     "interval": [
+      -0.31484403136860295,
+      0.2193760678115172
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013213955870749673,
+      "direct": 0.10818187804005393,
+      "row": 0.08181983136075938
+     },
+     "change": -0.06123049399219502,
+     "se": 0.09430948647615417,
+     "snr": 0.6492506351169343,
+     "z": -0.09903470116289709,
+     "inside": true,
+     "forecast_with_one_size": -0.047733981778542864,
+     "interval_with_one_size": [
+      -0.31484403136860295,
+      0.2193760678115172
+     ]
+    },
+    {
+     "event": "HLA-C",
+     "readout": "PDL1",
+     "cells": 158,
+     "edge": null,
+     "type": "(HLA-C)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.7768911476434517,
+     "read": -0.10540556754997914,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.10540556754997914,
+     "sd": 0.12544277996830003,
+     "interval": [
+      -0.3512734162878472,
+      0.1404622811878889
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01777105144503329,
+      "direct": 0.10818187804005393,
+      "row": 0.060965252730061
+     },
+     "change": -0.1149766955486239,
+     "se": 0.07469676282692714,
+     "snr": 1.5392460288409768,
+     "z": -0.0762987555048081,
+     "inside": true,
+     "forecast_with_one_size": -0.10540556754997914,
+     "interval_with_one_size": [
+      -0.3512734162878472,
+      0.1404622811878889
+     ]
+    },
+    {
+     "event": "HLA-C",
+     "readout": "MHC1",
+     "cells": 158,
+     "edge": "own",
+     "type": "(HLA-C)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 6.768848963517524,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 2.7768911476434517,
+     "read": -0.05499802111351802,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -2.0949114662378463,
+     "forecast": -2.1499094873513642,
+     "sd": 1.4868441673577786,
+     "interval": [
+      -5.06412405537261,
+      0.7643050806698817
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01918849810563631,
+      "direct": 1.485262287406886,
+      "row": 0.06582793596308914
+     },
+     "change": -0.628493123737337,
+     "se": 0.10323156464763265,
+     "snr": 6.088187521739261,
+     "z": 1.0232520643489396,
+     "inside": true,
+     "forecast_with_one_size": -1.023278098952238,
+     "interval_with_one_size": [
+      -3.0740335027255776,
+      1.0274773048211012
+     ]
+    },
+    {
+     "event": "HLA-C",
+     "readout": "HLAE",
+     "cells": 158,
+     "edge": null,
+     "type": "(HLA-C)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.7768911476434517,
+     "read": 0.03484262334253995,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.03484262334253995,
+     "sd": 0.13420933234154145,
+     "interval": [
+      -0.22820766804688125,
+      0.29789291473196117
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013847877923009145,
+      "direct": 0.10818187804005393,
+      "row": 0.07821165148696615
+     },
+     "change": 0.08132791511982128,
+     "se": 0.07813298998926518,
+     "snr": 1.0408908596867348,
+     "z": 0.3463640789075952,
+     "inside": true,
+     "forecast_with_one_size": 0.03484262334253995,
+     "interval_with_one_size": [
+      -0.22820766804688125,
+      0.29789291473196117
+     ]
+    },
+    {
+     "event": "HLA-E",
+     "readout": "PDL1",
+     "cells": 192,
+     "edge": null,
+     "type": "(HLA-E)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0560622759961165,
+     "read": -0.008864151345033542,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.008864151345033542,
+     "sd": 0.12224922778826192,
+     "interval": [
+      -0.2484726378100269,
+      0.23074433511995981
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.012799697778859137,
+      "direct": 0.10818187804005393,
+      "row": 0.055477226817164514
+     },
+     "change": -0.0042610265649546284,
+     "se": 0.0727102205397003,
+     "snr": 0.05860285573784056,
+     "z": 0.0376536102792536,
+     "inside": true,
+     "forecast_with_one_size": -0.008864151345033542,
+     "interval_with_one_size": [
+      -0.2484726378100269,
+      0.23074433511995981
+     ]
+    },
+    {
+     "event": "HLA-E",
+     "readout": "MHC1",
+     "cells": 192,
+     "edge": null,
+     "type": "(HLA-E)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0560622759961165,
+     "read": 0.06084712250676247,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.06084712250676247,
+     "sd": 0.12442909256055737,
+     "interval": [
+      -0.18303389891192998,
+      0.3047281439254549
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013820621550842387,
+      "direct": 0.10818187804005393,
+      "row": 0.05990217658081417
+     },
+     "change": 0.14089114892781648,
+     "se": 0.06724359662933058,
+     "snr": 2.0952351746509947,
+     "z": 0.6432902850440547,
+     "inside": true,
+     "forecast_with_one_size": 0.06084712250676247,
+     "interval_with_one_size": [
+      -0.18303389891192998,
+      0.3047281439254549
+     ]
+    },
+    {
+     "event": "HLA-E",
+     "readout": "HLAE",
+     "cells": 192,
+     "edge": "own",
+     "type": "(HLA-E)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 0.4575212227064573,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 1.0560622759961165,
+     "read": 0.010117477972220623,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -0.14159962213085586,
+     "forecast": -0.13148214415863524,
+     "sd": 0.12344404061153985,
+     "interval": [
+      -0.37343246375725336,
+      0.11046817543998286
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009722497154450041,
+      "direct": 0.10039210823535001,
+      "row": 0.07117112346764648
+     },
+     "change": -0.46530451210546075,
+     "se": 0.055139254283405464,
+     "snr": 8.438716086254676,
+     "z": -2.704240450110631,
+     "inside": false,
+     "forecast_with_one_size": -0.9581625998664994,
+     "interval_with_one_size": [
+      -3.009347254070162,
+      1.0930220543371632
+     ]
+    },
+    {
+     "event": "PFN1",
+     "readout": "PDL1",
+     "cells": 102,
+     "edge": null,
+     "type": "(PFN1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8501151303912531,
+     "read": -0.08271895218881405,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.08271895218881405,
+     "sd": 0.1336549869128185,
+     "interval": [
+      -0.34468272653793824,
+      0.17924482216031018
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.02150189896750328,
+      "direct": 0.10818187804005393,
+      "row": 0.07548513185511345
+     },
+     "change": -0.20149934917871243,
+     "se": 0.0992507325558724,
+     "snr": 2.0302051580856593,
+     "z": -0.8887090540615397,
+     "inside": true,
+     "forecast_with_one_size": -0.08271895218881405,
+     "interval_with_one_size": [
+      -0.34468272653793824,
+      0.17924482216031018
+     ]
+    },
+    {
+     "event": "PFN1",
+     "readout": "MHC1",
+     "cells": 102,
+     "edge": null,
+     "type": "(PFN1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8501151303912531,
+     "read": -0.0021647672996005876,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.0021647672996005876,
+     "sd": 0.13742475418991754,
+     "interval": [
+      -0.27151728551183896,
+      0.2671877509126378
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.023216923820274668,
+      "direct": 0.10818187804005393,
+      "row": 0.08150594319563279
+     },
+     "change": -0.03188196728457737,
+     "se": 0.11265434901207427,
+     "snr": 0.28300698165820715,
+     "z": -0.21624342834121693,
+     "inside": true,
+     "forecast_with_one_size": -0.0021647672996005876,
+     "interval_with_one_size": [
+      -0.27151728551183896,
+      0.2671877509126378
+     ]
+    },
+    {
+     "event": "PFN1",
+     "readout": "HLAE",
+     "cells": 102,
+     "edge": null,
+     "type": "(PFN1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8501151303912531,
+     "read": 0.014382099184050407,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.014382099184050407,
+     "sd": 0.14608861432554576,
+     "interval": [
+      -0.27195158489401927,
+      0.3007157832621201
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.016148187205343337,
+      "direct": 0.10818187804005393,
+      "row": 0.09683904454953143
+     },
+     "change": -0.01854735442733529,
+     "se": 0.10121471668445091,
+     "snr": 0.1832476050410624,
+     "z": -0.22540739237902055,
+     "inside": true,
+     "forecast_with_one_size": 0.014382099184050407,
+     "interval_with_one_size": [
+      -0.27195158489401927,
+      0.3007157832621201
+     ]
+    },
+    {
+     "event": "STAT3",
+     "readout": "PDL1",
+     "cells": 185,
+     "edge": null,
+     "type": "(STAT3)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.6524113516103107,
+     "read": 0.14625918447042977,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.14625918447042977,
+     "sd": 0.1227580088499315,
+     "interval": [
+      -0.09434651287543597,
+      0.3868648818162955
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013271097934479642,
+      "direct": 0.10818187804005393,
+      "row": 0.05648086366319312
+     },
+     "change": 0.17329546215721672,
+     "se": 0.06750056795049549,
+     "snr": 2.567318578479378,
+     "z": 0.22024043840461854,
+     "inside": true,
+     "forecast_with_one_size": 0.14625918447042977,
+     "interval_with_one_size": [
+      -0.09434651287543597,
+      0.3868648818162955
+     ]
+    },
+    {
+     "event": "STAT3",
+     "readout": "MHC1",
+     "cells": 185,
+     "edge": null,
+     "type": "(STAT3)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.6524113516103107,
+     "read": 0.009797987214743101,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.009797987214743101,
+     "sd": 0.12501172953147896,
+     "interval": [
+      -0.23522500266695567,
+      0.25482097709644186
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.014329621314930558,
+      "direct": 0.10818187804005393,
+      "row": 0.06098586506026816
+     },
+     "change": 0.18885842804895073,
+     "se": 0.07268198783528915,
+     "snr": 2.5984213375800747,
+     "z": 1.4323491204008882,
+     "inside": true,
+     "forecast_with_one_size": 0.009797987214743101,
+     "interval_with_one_size": [
+      -0.23522500266695567,
+      0.25482097709644186
+     ]
+    },
+    {
+     "event": "STAT3",
+     "readout": "HLAE",
+     "cells": 185,
+     "edge": null,
+     "type": "(STAT3)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.6524113516103107,
+     "read": -0.0396215932868337,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.0396215932868337,
+     "sd": 0.13065439008896357,
+     "interval": [
+      -0.2957041978612023,
+      0.2164610112875349
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.010816232121697699,
+      "direct": 0.10818187804005393,
+      "row": 0.07245867812716096
+     },
+     "change": -0.10204262594357605,
+     "se": 0.06792922845186652,
+     "snr": 1.502190268742441,
+     "z": -0.47775687150075397,
+     "inside": true,
+     "forecast_with_one_size": -0.0396215932868337,
+     "interval_with_one_size": [
+      -0.2957041978612023,
+      0.2164610112875349
+     ]
+    },
+    {
+     "event": "STX7",
+     "readout": "PDL1",
+     "cells": 213,
+     "edge": null,
+     "type": "(STX7)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.013945930347196,
+     "read": 0.032583426445595955,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.032583426445595955,
+     "sd": 0.1209821962475032,
+     "interval": [
+      -0.20454167819951033,
+      0.26970853109070225
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.012183312749127104,
+      "direct": 0.10818187804005393,
+      "row": 0.05277253038327072
+     },
+     "change": 0.12635861144632243,
+     "se": 0.06718846301316422,
+     "snr": 1.8806593539960128,
+     "z": 0.7751155782366762,
+     "inside": true,
+     "forecast_with_one_size": 0.032583426445595955,
+     "interval_with_one_size": [
+      -0.20454167819951033,
+      0.26970853109070225
+     ]
+    },
+    {
+     "event": "STX7",
+     "readout": "MHC1",
+     "cells": 213,
+     "edge": null,
+     "type": "(STX7)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.013945930347196,
+     "read": 0.01996031664605642,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.01996031664605642,
+     "sd": 0.12297680445466938,
+     "interval": [
+      -0.22107422008509559,
+      0.2609948533772084
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013155072693930979,
+      "direct": 0.10818187804005393,
+      "row": 0.05698174935912621
+     },
+     "change": 0.06811655267664654,
+     "se": 0.06831993393231883,
+     "snr": 0.9970231052056671,
+     "z": 0.3915879603811062,
+     "inside": true,
+     "forecast_with_one_size": 0.01996031664605642,
+     "interval_with_one_size": [
+      -0.22107422008509559,
+      0.2609948533772084
+     ]
+    },
+    {
+     "event": "STX7",
+     "readout": "HLAE",
+     "cells": 213,
+     "edge": null,
+     "type": "(STX7)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.013945930347196,
+     "read": 0.017052113577770343,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.017052113577770343,
+     "sd": 0.12798362168822,
+     "interval": [
+      -0.23379578493114087,
+      0.26790001208668157
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009644838375697002,
+      "direct": 0.10818187804005393,
+      "row": 0.06770129819188846
+     },
+     "change": 0.055074043394186645,
+     "se": 0.06976742797606235,
+     "snr": 0.7893947790806177,
+     "z": 0.2970843402841128,
+     "inside": true,
+     "forecast_with_one_size": 0.017052113577770343,
+     "interval_with_one_size": [
+      -0.23379578493114087,
+      0.26790001208668157
+     ]
+    },
+    {
+     "event": "TOP1MT",
+     "readout": "PDL1",
+     "cells": 192,
+     "edge": null,
+     "type": "(TOP1MT)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.152115746012778,
+     "read": 0.06564616661342948,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.06564616661342948,
+     "sd": 0.12237069363056342,
+     "interval": [
+      -0.17420039290247483,
+      0.30549272612933376
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01391205333619013,
+      "direct": 0.10818187804005393,
+      "row": 0.055477226817164514
+     },
+     "change": 0.0733749100521129,
+     "se": 0.07044035934992661,
+     "snr": 1.041660075690533,
+     "z": 0.06315845084621699,
+     "inside": true,
+     "forecast_with_one_size": 0.06564616661342948,
+     "interval_with_one_size": [
+      -0.17420039290247483,
+      0.30549272612933376
+     ]
+    },
+    {
+     "event": "TOP1MT",
+     "readout": "MHC1",
+     "cells": 192,
+     "edge": null,
+     "type": "(TOP1MT)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.152115746012778,
+     "read": -0.011399284931562816,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.011399284931562816,
+     "sd": 0.12456821816073785,
+     "interval": [
+      -0.255552992526609,
+      0.23275442266348337
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.015021700314845692,
+      "direct": 0.10818187804005393,
+      "row": 0.05990217658081417
+     },
+     "change": 0.08031327402264897,
+     "se": 0.07250471377678526,
+     "snr": 1.1076972770336468,
+     "z": 0.7362436447141724,
+     "inside": true,
+     "forecast_with_one_size": -0.011399284931562816,
+     "interval_with_one_size": [
+      -0.255552992526609,
+      0.23275442266348337
+     ]
+    },
+    {
+     "event": "TOP1MT",
+     "readout": "HLAE",
+     "cells": 192,
+     "edge": null,
+     "type": "(TOP1MT)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.152115746012778,
+     "read": 0.021928181074099773,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.021928181074099773,
+     "sd": 0.13001507784256977,
+     "interval": [
+      -0.23290137149733697,
+      0.2767577336455365
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.011630688478735815,
+      "direct": 0.10818187804005393,
+      "row": 0.07117112346764648
+     },
+     "change": 0.011091595578161641,
+     "se": 0.07320473022094996,
+     "snr": 0.15151473879740374,
+     "z": -0.08334868290476075,
+     "inside": true,
+     "forecast_with_one_size": 0.021928181074099773,
+     "interval_with_one_size": [
+      -0.23290137149733697,
+      0.2767577336455365
+     ]
+    }
+   ],
+   "calibration": {
+    "pairs": 30,
+    "inside": 29,
+    "mean_z2": 0.6754829007873016,
+    "error": {
+     "no_change": 0.4504614137276324,
+     "control_readout": 0.4245594875802216,
+     "forecast": 0.4099763796708617
+    }
+   }
+  },
+  "mel_ctl": {
+   "study": "frangieh2021",
+   "condition": "Control",
+   "recorded_events": [
+    "B2M",
+    "KLF4"
+   ],
+   "types": {
+    "B2M": "(B2M)",
+    "KLF4": "(KLF4)"
+   },
+   "spread_of_a_direct_part_without_an_edge": {
+    "value": 0.03941361732142139,
+    "from": "the library under interferon"
+   },
+   "widening_of_the_control_prior": {
+    "PDL1": {},
+    "MHC1": {},
+    "HLAE": {}
+   },
+   "recorded_pairs_each_left_out": [
+    {
+     "event": "B2M",
+     "readout": "PDL1",
+     "type": "(B2M)",
+     "edge": null,
+     "change": 0.039095695450870056,
+     "se": 0.08163667846650291,
+     "read": 0.022450180613344535,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.022450180613344535,
+     "sd": 0.0864209974861799,
+     "interval": [
+      -0.14693497445956807,
+      0.19183533568625713
+     ],
+     "z": 0.192609612498252
+    },
+    {
+     "event": "KLF4",
+     "readout": "PDL1",
+     "type": "(KLF4)",
+     "edge": null,
+     "change": -0.06896767575105331,
+     "se": 0.07923243097994222,
+     "read": -0.03574318061277059,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.03574318061277059,
+     "sd": 0.08364902103694188,
+     "interval": [
+      -0.1996952618451767,
+      0.1282089006196355
+     ],
+     "z": -0.3971892883672816
+    },
+    {
+     "event": "B2M",
+     "readout": "MHC1",
+     "type": "(B2M)",
+     "edge": "own",
+     "change": -2.2680082247505555,
+     "se": 0.13187023218117888,
+     "read": -0.2506496474056301,
+     "from_the_other_events": 0.0,
+     "by_its_edge": NaN,
+     "forecast": -0.2506496474056301,
+     "sd": 0.1293969796635128,
+     "interval": [
+      -0.5042677275461152,
+      0.0029684327348549755
+     ],
+     "z": NaN
+    },
+    {
+     "event": "KLF4",
+     "readout": "MHC1",
+     "type": "(KLF4)",
+     "edge": null,
+     "change": -0.19640084692258097,
+     "se": 0.08646328138706427,
+     "read": -0.025116063152592835,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.025116063152592835,
+     "sd": 0.09075939139483716,
+     "interval": [
+      -0.20300447028647367,
+      0.15277234398128797
+     ],
+     "z": -1.887240330037423
+    },
+    {
+     "event": "B2M",
+     "readout": "HLAE",
+     "type": "(B2M)",
+     "edge": "own",
+     "change": 0.030062814329917212,
+     "se": 0.07768909533650137,
+     "read": 0.07966003851153844,
+     "from_the_other_events": 0.0,
+     "by_its_edge": NaN,
+     "forecast": 0.07966003851153844,
+     "sd": 0.0765208356610975,
+     "interval": [
+      -0.07032079938421268,
+      0.22964087640728956
+     ],
+     "z": NaN
+    },
+    {
+     "event": "KLF4",
+     "readout": "HLAE",
+     "type": "(KLF4)",
+     "edge": null,
+     "change": 0.2683642062453098,
+     "se": 0.09010676164550027,
+     "read": 0.025148957002065014,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.025148957002065014,
+     "sd": 0.09565131959574846,
+     "interval": [
+      -0.16232762940560197,
+      0.212625543409732
+     ],
+     "z": 2.5427275888210046
+    }
+   ],
+   "pairs_of_the_batch": [
+    {
+     "event": "CD274",
+     "readout": "PDL1",
+     "cells": 148,
+     "edge": "own",
+     "type": "(CD274)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.2643241462035921,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 2.1738063865650368,
+     "read": -0.07151312421448784,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -0.3912994905335981,
+     "forecast": -0.46281261474808594,
+     "sd": 0.2874074178891233,
+     "interval": [
+      -1.0261311538107676,
+      0.10050592431459565
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.0196286573723094,
+      "direct": 0.2774257460220022,
+      "row": 0.0724754793815752
+     },
+     "change": -0.7261694232630305,
+     "se": 0.056326755241001156,
+     "snr": 12.892086898242631,
+     "z": -0.9163187590952957,
+     "inside": true,
+     "forecast_with_one_size": -1.039793202053208,
+     "interval_with_one_size": [
+      -3.09142553875822,
+      1.011839134651804
+     ]
+    },
+    {
+     "event": "CD274",
+     "readout": "MHC1",
+     "cells": 148,
+     "edge": null,
+     "type": "(CD274)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.1738063865650368,
+     "read": -0.05101989181499264,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.05101989181499264,
+     "sd": 0.08629930445482902,
+     "interval": [
+      -0.22016652854645752,
+      0.11812674491647224
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.02006961116449379,
+      "direct": 0.03941361732142139,
+      "row": 0.07410362627249661
+     },
+     "change": -0.003924540549164268,
+     "se": 0.09242427485475263,
+     "snr": 0.04246222710788691,
+     "z": 0.5457210989513726,
+     "inside": true,
+     "forecast_with_one_size": -0.05101989181499264,
+     "interval_with_one_size": [
+      -0.22016652854645752,
+      0.11812674491647224
+     ]
+    },
+    {
+     "event": "CD274",
+     "readout": "HLAE",
+     "cells": 148,
+     "edge": null,
+     "type": "(CD274)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.1738063865650368,
+     "read": 0.0797920987952739,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.0797920987952739,
+     "sd": 0.09030282662192171,
+     "interval": [
+      -0.09720144138369265,
+      0.25678563897424045
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.016297448614381222,
+      "direct": 0.03941361732142139,
+      "row": 0.07959623379413758
+     },
+     "change": 0.2642628528102594,
+     "se": 0.08578520090670765,
+     "snr": 3.0805179683340507,
+     "z": 2.0428015480326485,
+     "inside": false,
+     "forecast_with_one_size": 0.0797920987952739,
+     "interval_with_one_size": [
+      -0.09720144138369265,
+      0.25678563897424045
+     ]
+    },
+    {
+     "event": "CD44",
+     "readout": "PDL1",
+     "cells": 180,
+     "edge": null,
+     "type": "(CD44)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.706328051931774,
+     "read": -0.04304067511674009,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.04304067511674009,
+     "sd": 0.0788525299914965,
+     "interval": [
+      -0.19759163390007323,
+      0.11151028366659305
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01720241970350628,
+      "direct": 0.03941361732142139,
+      "row": 0.0660936079514867
+     },
+     "change": -0.037405545828148215,
+     "se": 0.07732374870389214,
+     "snr": 0.48375235881787226,
+     "z": 0.07146415326432227,
+     "inside": true,
+     "forecast_with_one_size": -0.04304067511674009,
+     "interval_with_one_size": [
+      -0.19759163390007323,
+      0.11151028366659305
+     ]
+    },
+    {
+     "event": "CD44",
+     "readout": "MHC1",
+     "cells": 180,
+     "edge": null,
+     "type": "(CD44)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.706328051931774,
+     "read": 0.031293262032970434,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.031293262032970434,
+     "sd": 0.08018503583061502,
+     "interval": [
+      -0.125869408195035,
+      0.1884559322609759
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017588868560355225,
+      "direct": 0.03941361732142139,
+      "row": 0.06757838739984932
+     },
+     "change": 0.3274180579178897,
+     "se": 0.08000449660858341,
+     "snr": 4.092495694582773,
+     "z": 3.6930181899582992,
+     "inside": false,
+     "forecast_with_one_size": 0.031293262032970434,
+     "interval_with_one_size": [
+      -0.125869408195035,
+      0.1884559322609759
+     ]
+    },
+    {
+     "event": "CD44",
+     "readout": "HLAE",
+     "cells": 180,
+     "edge": null,
+     "type": "(CD44)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.706328051931774,
+     "read": 0.026434908430345197,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.026434908430345197,
+     "sd": 0.08372813126089321,
+     "interval": [
+      -0.1376722288410055,
+      0.19054204570169586
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.013712942472038405,
+      "direct": 0.03941361732142139,
+      "row": 0.07258734010032658
+     },
+     "change": -0.040904425945320906,
+     "se": 0.07469708230581647,
+     "snr": 0.5476040654152269,
+     "z": -0.8042617619858214,
+     "inside": true,
+     "forecast_with_one_size": 0.026434908430345197,
+     "interval_with_one_size": [
+      -0.1376722288410055,
+      0.19054204570169586
+     ]
+    },
+    {
+     "event": "HLA-A",
+     "readout": "PDL1",
+     "cells": 171,
+     "edge": null,
+     "type": "(HLA-A)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0798031227592988,
+     "read": -0.0025680495244605125,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.0025680495244605125,
+     "sd": 0.08015900400142263,
+     "interval": [
+      -0.15967969736724888,
+      0.15454359831832784
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.016982435525888247,
+      "direct": 0.03941361732142139,
+      "row": 0.06770250789852389
+     },
+     "change": 0.007483340340438348,
+     "se": 0.07740790619622877,
+     "snr": 0.09667410873339097,
+     "z": 0.1253931481573857,
+     "inside": true,
+     "forecast_with_one_size": -0.0025680495244605125,
+     "interval_with_one_size": [
+      -0.15967969736724888,
+      0.15454359831832784
+     ]
+    },
+    {
+     "event": "HLA-A",
+     "readout": "MHC1",
+     "cells": 171,
+     "edge": "own",
+     "type": "(HLA-A)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 4.286560698218984,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 1.0798031227592988,
+     "read": 0.02620342212143358,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -1.3266605896842019,
+     "forecast": -1.3004571675627683,
+     "sd": 0.9432870800840225,
+     "interval": [
+      -3.1492998445274525,
+      0.5483855094019159
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017363942482967822,
+      "direct": 0.9405833963883663,
+      "row": 0.06922343095668287
+     },
+     "change": -0.3299047203079209,
+     "se": 0.08395896178968039,
+     "snr": 3.92935683428699,
+     "z": 1.0289046333258336,
+     "inside": true,
+     "forecast_with_one_size": -0.9420766557172865,
+     "interval_with_one_size": [
+      -2.9931990680410223,
+      1.1090457566064496
+     ]
+    },
+    {
+     "event": "HLA-A",
+     "readout": "HLAE",
+     "cells": 171,
+     "edge": null,
+     "type": "(HLA-A)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0798031227592988,
+     "read": -0.04466741349465469,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.04466741349465469,
+     "sd": 0.08531495889737582,
+     "interval": [
+      -0.21188473293351132,
+      0.12254990594420193
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.014023008739718611,
+      "direct": 0.03941361732142139,
+      "row": 0.0743543153232363
+     },
+     "change": -0.08475106661663963,
+     "se": 0.07508581754328787,
+     "snr": 1.1287226987677084,
+     "z": -0.4698314766839542,
+     "inside": true,
+     "forecast_with_one_size": -0.04466741349465469,
+     "interval_with_one_size": [
+      -0.21188473293351132,
+      0.12254990594420193
+     ]
+    },
+    {
+     "event": "HLA-B",
+     "readout": "PDL1",
+     "cells": 112,
+     "edge": null,
+     "type": "(HLA-B)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8940015053104636,
+     "read": -0.03976583501284668,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.03976583501284668,
+     "sd": 0.09412078802202746,
+     "interval": [
+      -0.2242425795360205,
+      0.1447109095103271
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021300093726199943,
+      "direct": 0.03941361732142139,
+      "row": 0.08277436508233135
+     },
+     "change": -0.13476168145627238,
+     "se": 0.08161204729267317,
+     "snr": 1.6512474068074356,
+     "z": -1.0092971854548587,
+     "inside": true,
+     "forecast_with_one_size": -0.03976583501284668,
+     "interval_with_one_size": [
+      -0.2242425795360205,
+      0.1447109095103271
+     ]
+    },
+    {
+     "event": "HLA-B",
+     "readout": "MHC1",
+     "cells": 112,
+     "edge": "own",
+     "type": "(HLA-B)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 4.286560698218984,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 0.8940015053104636,
+     "read": -0.014255434381675024,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": -1.3266605896842019,
+     "forecast": -1.3409160240658768,
+     "sd": 0.9446344930667665,
+     "interval": [
+      -3.1923996304767392,
+      0.5105675823449856
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021778595995830513,
+      "direct": 0.9405833963883663,
+      "row": 0.08463387434403971
+     },
+     "change": -0.591530512218142,
+     "se": 0.11220263499698437,
+     "snr": 5.271984140426295,
+     "z": 0.7933073769250648,
+     "inside": true,
+     "forecast_with_one_size": -0.982535512220395,
+     "interval_with_one_size": [
+      -3.0360387264810824,
+      1.0709677020402926
+     ]
+    },
+    {
+     "event": "HLA-B",
+     "readout": "HLAE",
+     "cells": 112,
+     "edge": null,
+     "type": "(HLA-B)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8940015053104636,
+     "read": -0.03014644472729574,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.03014644472729574,
+     "sd": 0.100600273278005,
+     "interval": [
+      -0.22732298035218554,
+      0.16703009089759405
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01740404643779946,
+      "direct": 0.03941361732142139,
+      "row": 0.09090699049490507
+     },
+     "change": -0.042266077238205274,
+     "se": 0.09561988027209807,
+     "snr": 0.4420218590311134,
+     "z": -0.12047315694081064,
+     "inside": true,
+     "forecast_with_one_size": -0.03014644472729574,
+     "interval_with_one_size": [
+      -0.22732298035218554,
+      0.16703009089759405
+     ]
+    },
+    {
+     "event": "HLA-E",
+     "readout": "PDL1",
+     "cells": 123,
+     "edge": null,
+     "type": "(HLA-E)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.2808484180963544,
+     "read": 0.08286799456594403,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.08286799456594403,
+     "sd": 0.09094932936184784,
+     "interval": [
+      -0.09539269098327773,
+      0.26112868011516577
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021321445479149343,
+      "direct": 0.03941361732142139,
+      "row": 0.07914381367921368
+     },
+     "change": 0.07712192937700667,
+     "se": 0.10420540135492526,
+     "snr": 0.7400953153505753,
+     "z": -0.06317875271049295,
+     "inside": true,
+     "forecast_with_one_size": 0.08286799456594403,
+     "interval_with_one_size": [
+      -0.09539269098327773,
+      0.26112868011516577
+     ]
+    },
+    {
+     "event": "HLA-E",
+     "readout": "MHC1",
+     "cells": 123,
+     "edge": null,
+     "type": "(HLA-E)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.2808484180963544,
+     "read": -0.06792144263738205,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.06792144263738205,
+     "sd": 0.09261222191578296,
+     "interval": [
+      -0.24944139759231665,
+      0.11359851231755254
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021800427411563475,
+      "direct": 0.03941361732142139,
+      "row": 0.08092176334269993
+     },
+     "change": -0.034978911331650736,
+     "se": 0.09298697552023162,
+     "snr": 0.37617000806785256,
+     "z": 0.35570393004594625,
+     "inside": true,
+     "forecast_with_one_size": -0.06792144263738205,
+     "interval_with_one_size": [
+      -0.24944139759231665,
+      0.11359851231755254
+     ]
+    },
+    {
+     "event": "HLA-E",
+     "readout": "HLAE",
+     "cells": 123,
+     "edge": "own",
+     "type": "(HLA-E)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": -0.2529162305985474,
+     "size_of_the_edge_from": "its class",
+     "shift_times_noise": 1.2808484180963544,
+     "read": -0.041518484878681476,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.07827580646787177,
+     "forecast": 0.036757321589190296,
+     "sd": 0.10464131957688541,
+     "interval": [
+      -0.1683396647815051,
+      0.2418543079598857
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01774575511905686,
+      "direct": 0.05549642800508226,
+      "row": 0.08691973548465877
+     },
+     "change": -0.22655257906556062,
+     "se": 0.08951530831153551,
+     "snr": 2.530880844169149,
+     "z": -2.5163090614628905,
+     "inside": false,
+     "forecast_with_one_size": -1.0097985627174015,
+     "interval_with_one_size": [
+      -3.063519476634039,
+      1.0439223511992357
+     ]
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "PDL1",
+     "cells": 152,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0895420033369336,
+     "read": -0.07622388831330545,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.07622388831330545,
+     "sd": 0.08369900832677825,
+     "interval": [
+      -0.24027394463379081,
+      0.0878261680071799
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.018174151411133273,
+      "direct": 0.03941361732142139,
+      "row": 0.07156668907398084
+     },
+     "change": -0.08101646275880067,
+     "se": 0.08353814462313965,
+     "snr": 0.9698140068143136,
+     "z": -0.057259632357697904,
+     "inside": true,
+     "forecast_with_one_size": -0.07622388831330545,
+     "interval_with_one_size": [
+      -0.24027394463379081,
+      0.0878261680071799
+     ]
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "MHC1",
+     "cells": 152,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0895420033369336,
+     "read": 0.07704700038585079,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.07704700038585079,
+     "sd": 0.085165930417976,
+     "interval": [
+      -0.08987822323338217,
+      0.24397222400508373
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01858243002298464,
+      "direct": 0.03941361732142139,
+      "row": 0.07317442017563898
+     },
+     "change": 0.24088026562967305,
+     "se": 0.08471802914891895,
+     "snr": 2.8433176273051535,
+     "z": 1.9236948911350342,
+     "inside": true,
+     "forecast_with_one_size": 0.07704700038585079,
+     "interval_with_one_size": [
+      -0.08987822323338217,
+      0.24397222400508373
+     ]
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "HLAE",
+     "cells": 152,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0895420033369336,
+     "read": 0.01438953250270962,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.01438953250270962,
+     "sd": 0.08923793397779824,
+     "interval": [
+      -0.16051681809377494,
+      0.18929588309919415
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.015241580043166248,
+      "direct": 0.03941361732142139,
+      "row": 0.07859815435526579
+     },
+     "change": 0.07243765077862567,
+     "se": 0.0895657806425954,
+     "snr": 0.8087648012323135,
+     "z": 0.6504870259586916,
+     "inside": true,
+     "forecast_with_one_size": 0.01438953250270962,
+     "interval_with_one_size": [
+      -0.16051681809377494,
+      0.18929588309919415
+     ]
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "PDL1",
+     "cells": 168,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.496938756028861,
+     "read": 0.026179759924438037,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.026179759924438037,
+     "sd": 0.08035208066087107,
+     "interval": [
+      -0.13131031817086924,
+      0.18366983801974535
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.015572856484885073,
+      "direct": 0.03941361732142139,
+      "row": 0.06826792641550536
+     },
+     "change": 0.03984248898908311,
+     "se": 0.07832658424734229,
+     "snr": 0.5086713453923533,
+     "z": 0.17003578441620107,
+     "inside": true,
+     "forecast_with_one_size": 0.026179759924438037,
+     "interval_with_one_size": [
+      -0.13131031817086924,
+      0.18366983801974535
+     ]
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "MHC1",
+     "cells": 168,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.496938756028861,
+     "read": -0.04972989714946366,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.04972989714946366,
+     "sd": 0.08172650804337712,
+     "interval": [
+      -0.2099138529144828,
+      0.11045405861555549
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.015922697535747814,
+      "direct": 0.03941361732142139,
+      "row": 0.06980155148554959
+     },
+     "change": -0.06253244108417179,
+     "se": 0.08180180013165364,
+     "snr": 0.7644384473633916,
+     "z": -0.1566510577928162,
+     "inside": true,
+     "forecast_with_one_size": -0.04972989714946366,
+     "interval_with_one_size": [
+      -0.2099138529144828,
+      0.11045405861555549
+     ]
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "HLAE",
+     "cells": 168,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.496938756028861,
+     "read": 0.007313095320473208,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.007313095320473208,
+     "sd": 0.08558378675166194,
+     "interval": [
+      -0.1604311267127842,
+      0.1750573173537306
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.012241639476940814,
+      "direct": 0.03941361732142139,
+      "row": 0.07497528651036353
+     },
+     "change": 0.026261463347703337,
+     "se": 0.08319918365576111,
+     "snr": 0.31564568537548227,
+     "z": 0.22140137456423278,
+     "inside": true,
+     "forecast_with_one_size": 0.007313095320473208,
+     "interval_with_one_size": [
+      -0.1604311267127842,
+      0.1750573173537306
+     ]
+    },
+    {
+     "event": "JAK2",
+     "readout": "PDL1",
+     "cells": 172,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.004110802451134,
+     "read": -0.04561411055867397,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.04561411055867397,
+     "sd": 0.08016045870209182,
+     "interval": [
+      -0.2027286096147739,
+      0.11150038849742598
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01771064923830083,
+      "direct": 0.03941361732142139,
+      "row": 0.06751739636958903
+     },
+     "change": -0.04179046854655182,
+     "se": 0.06972689306950537,
+     "snr": 0.5993450547824369,
+     "z": 0.047699851947358755,
+     "inside": true,
+     "forecast_with_one_size": -0.04561411055867397,
+     "interval_with_one_size": [
+      -0.2027286096147739,
+      0.11150038849742598
+     ]
+    },
+    {
+     "event": "JAK2",
+     "readout": "MHC1",
+     "cells": 172,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.004110802451134,
+     "read": -0.06475987650570889,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.06475987650570889,
+     "sd": 0.08152954639386661,
+     "interval": [
+      -0.22455778743768745,
+      0.09503803442626968
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.018108515368191785,
+      "direct": 0.03941361732142139,
+      "row": 0.06903416093493252
+     },
+     "change": 0.0679631125375219,
+     "se": 0.07690891195931199,
+     "snr": 0.8836831884122507,
+     "z": 1.62791276185998,
+     "inside": true,
+     "forecast_with_one_size": -0.06475987650570889,
+     "interval_with_one_size": [
+      -0.22455778743768745,
+      0.09503803442626968
+     ]
+    },
+    {
+     "event": "JAK2",
+     "readout": "HLAE",
+     "cells": 172,
+     "edge": null,
+     "type": "interferon pathway",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.004110802451134,
+     "read": 0.017620816386291798,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.017620816386291798,
+     "sd": 0.08527156572894652,
+     "interval": [
+      -0.1495114524424434,
+      0.18475308521502698
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.014813286107069576,
+      "direct": 0.03941361732142139,
+      "row": 0.07415101648808799
+     },
+     "change": 0.03821695348823502,
+     "se": 0.08435425638418424,
+     "snr": 0.4530530541835278,
+     "z": 0.24153581473351088,
+     "inside": true,
+     "forecast_with_one_size": 0.017620816386291798,
+     "interval_with_one_size": [
+      -0.1495114524424434,
+      0.18475308521502698
+     ]
+    },
+    {
+     "event": "S100A6",
+     "readout": "PDL1",
+     "cells": 139,
+     "edge": null,
+     "type": "(S100A6)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1035023164606461,
+     "read": 0.0388008564533205,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.0388008564533205,
+     "sd": 0.08689894843239242,
+     "interval": [
+      -0.13152108247416866,
+      0.20912279538080963
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.020572268711751832,
+      "direct": 0.03941361732142139,
+      "row": 0.07466442103403484
+     },
+     "change": 0.010576450577017503,
+     "se": 0.08312053403658543,
+     "snr": 0.12724233186906966,
+     "z": -0.32479571255412426,
+     "inside": true,
+     "forecast_with_one_size": 0.0388008564533205,
+     "interval_with_one_size": [
+      -0.13152108247416866,
+      0.20912279538080963
+     ]
+    },
+    {
+     "event": "S100A6",
+     "readout": "MHC1",
+     "cells": 139,
+     "edge": null,
+     "type": "(S100A6)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1035023164606461,
+     "read": -0.03290434812099911,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.03290434812099911,
+     "sd": 0.08845304775763635,
+     "interval": [
+      -0.20627232172596638,
+      0.14046362548396812
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.02103442054059167,
+      "direct": 0.03941361732142139,
+      "row": 0.07634174205358943
+     },
+     "change": -0.12542211781308155,
+     "se": 0.08781974208196981,
+     "snr": 1.4281767953271163,
+     "z": -1.0459534412605378,
+     "inside": true,
+     "forecast_with_one_size": -0.03290434812099911,
+     "interval_with_one_size": [
+      -0.20627232172596638,
+      0.14046362548396812
+     ]
+    },
+    {
+     "event": "S100A6",
+     "readout": "HLAE",
+     "cells": 139,
+     "edge": null,
+     "type": "(S100A6)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1035023164606461,
+     "read": -0.054879168382227235,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.054879168382227235,
+     "sd": 0.09252965373664772,
+     "interval": [
+      -0.23623728970605676,
+      0.1264789529416023
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.016860136687063584,
+      "direct": 0.03941361732142139,
+      "row": 0.08200024012866065
+     },
+     "change": 0.03626509840722307,
+     "se": 0.09928274384058505,
+     "snr": 0.36527091218845353,
+     "z": 0.9850276436661007,
+     "inside": true,
+     "forecast_with_one_size": -0.054879168382227235,
+     "interval_with_one_size": [
+      -0.23623728970605676,
+      0.1264789529416023
+     ]
+    },
+    {
+     "event": "SCARB2",
+     "readout": "PDL1",
+     "cells": 155,
+     "edge": null,
+     "type": "(SCARB2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0391590261537318,
+     "read": -0.037975599195924706,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.037975599195924706,
+     "sd": 0.08336107434152833,
+     "interval": [
+      -0.20136330490532023,
+      0.1254121065134708
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.019172604035104106,
+      "direct": 0.03941361732142139,
+      "row": 0.07090872118101886
+     },
+     "change": 0.03081072468302741,
+     "se": 0.08135248957680485,
+     "snr": 0.3787311838064773,
+     "z": 0.8251611969051189,
+     "inside": true,
+     "forecast_with_one_size": -0.037975599195924706,
+     "interval_with_one_size": [
+      -0.20136330490532023,
+      0.1254121065134708
+     ]
+    },
+    {
+     "event": "SCARB2",
+     "readout": "MHC1",
+     "cells": 155,
+     "edge": null,
+     "type": "(SCARB2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0391590261537318,
+     "read": -0.036730366298640085,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.036730366298640085,
+     "sd": 0.08481872093236412,
+     "interval": [
+      -0.20297505932607374,
+      0.1295143267287936
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.019603312681904142,
+      "direct": 0.03941361732142139,
+      "row": 0.07250167116790006
+     },
+     "change": 0.10149889595328351,
+     "se": 0.07792702375660293,
+     "snr": 1.3024864939062077,
+     "z": 1.6297022724753178,
+     "inside": true,
+     "forecast_with_one_size": -0.036730366298640085,
+     "interval_with_one_size": [
+      -0.20297505932607374,
+      0.1295143267287936
+     ]
+    },
+    {
+     "event": "SCARB2",
+     "readout": "HLAE",
+     "cells": 155,
+     "edge": null,
+     "type": "(SCARB2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.0391590261537318,
+     "read": 0.05552006470677346,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.05552006470677346,
+     "sd": 0.08867236955707253,
+     "interval": [
+      -0.1182777796250887,
+      0.2293179090386356
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.0156446809745987,
+      "direct": 0.03941361732142139,
+      "row": 0.07787554076672357
+     },
+     "change": 0.09595135365888495,
+     "se": 0.07891005391506066,
+     "snr": 1.2159585363123395,
+     "z": 0.45596265391429003,
+     "inside": true,
+     "forecast_with_one_size": 0.05552006470677346,
+     "interval_with_one_size": [
+      -0.1182777796250887,
+      0.2293179090386356
+     ]
+    },
+    {
+     "event": "SLC19A1",
+     "readout": "PDL1",
+     "cells": 104,
+     "edge": null,
+     "type": "(SLC19A1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.6559890891579586,
+     "read": -0.05509581330940915,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.05509581330940915,
+     "sd": 0.0967483303148526,
+     "interval": [
+      -0.24472254072652025,
+      0.13453091410770193
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.0212031955923743,
+      "direct": 0.03941361732142139,
+      "row": 0.08577430084252449
+     },
+     "change": -0.07739419908651574,
+     "se": 0.09397432215224343,
+     "snr": 0.8235675162533548,
+     "z": -0.23047824912884707,
+     "inside": true,
+     "forecast_with_one_size": -0.05509581330940915,
+     "interval_with_one_size": [
+      -0.24472254072652025,
+      0.13453091410770193
+     ]
+    },
+    {
+     "event": "SLC19A1",
+     "readout": "MHC1",
+     "cells": 104,
+     "edge": null,
+     "type": "(SLC19A1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.6559890891579586,
+     "read": 0.0018332422670447673,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.0018332422670447673,
+     "sd": 0.09856437429651056,
+     "interval": [
+      -0.19135293135411593,
+      0.19501941588820546
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021679521065153428,
+      "direct": 0.03941361732142139,
+      "row": 0.08770120305040718
+     },
+     "change": 0.007219234817883648,
+     "se": 0.09910714530708445,
+     "snr": 0.07284272789327932,
+     "z": 0.05464441477238251,
+     "inside": true,
+     "forecast_with_one_size": 0.0018332422670447673,
+     "interval_with_one_size": [
+      -0.19135293135411593,
+      0.19501941588820546
+     ]
+    },
+    {
+     "event": "SLC19A1",
+     "readout": "HLAE",
+     "cells": 104,
+     "edge": null,
+     "type": "(SLC19A1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.6559890891579586,
+     "read": 0.020339040649588188,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.020339040649588188,
+     "sd": 0.10356683184558221,
+     "interval": [
+      -0.18265194976775295,
+      0.22333003106692934
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017282954240684247,
+      "direct": 0.03941361732142139,
+      "row": 0.09420167153976657
+     },
+     "change": -0.043617727644414406,
+     "se": 0.0921280888951175,
+     "snr": 0.4734465695263761,
+     "z": -0.6175410327252446,
+     "inside": true,
+     "forecast_with_one_size": 0.020339040649588188,
+     "interval_with_one_size": [
+      -0.18265194976775295,
+      0.22333003106692934
+     ]
+    },
+    {
+     "event": "SSR2",
+     "readout": "PDL1",
+     "cells": 100,
+     "edge": null,
+     "type": "(SSR2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.8370338029073028,
+     "read": -0.09706920170497105,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.09706920170497105,
+     "sd": 0.0989275708293957,
+     "interval": [
+      -0.29096724053058665,
+      0.09682883712064452
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.024348401579711493,
+      "direct": 0.03941361732142139,
+      "row": 0.08740930374026988
+     },
+     "change": -0.030978228361326177,
+     "se": 0.10463300943804403,
+     "snr": 0.2960655392375883,
+     "z": 0.6680743577300734,
+     "inside": true,
+     "forecast_with_one_size": -0.09706920170497105,
+     "interval_with_one_size": [
+      -0.29096724053058665,
+      0.09682883712064452
+     ]
+    },
+    {
+     "event": "SSR2",
+     "readout": "MHC1",
+     "cells": 100,
+     "edge": null,
+     "type": "(SSR2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.8370338029073028,
+     "read": 0.05180661200067763,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.05180661200067763,
+     "sd": 0.10080047137542728,
+     "interval": [
+      -0.14576231189515984,
+      0.2493755358965151
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.024895383464745995,
+      "direct": 0.03941361732142139,
+      "row": 0.08937293595542298
+     },
+     "change": 0.4575556946652506,
+     "se": 0.09645230219154148,
+     "snr": 4.743854571315526,
+     "z": 4.025269694953875,
+     "inside": false,
+     "forecast_with_one_size": 0.05180661200067763,
+     "interval_with_one_size": [
+      -0.14576231189515984,
+      0.2493755358965151
+     ]
+    },
+    {
+     "event": "SSR2",
+     "readout": "HLAE",
+     "cells": 100,
+     "edge": null,
+     "type": "(SSR2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.8370338029073028,
+     "read": 0.05912002282490205,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.05912002282490205,
+     "sd": 0.1057219696400491,
+     "interval": [
+      -0.14809503766959417,
+      0.26633508331939826
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.020204387476500656,
+      "direct": 0.03941361732142139,
+      "row": 0.09599731434218062
+     },
+     "change": 0.14551530141961078,
+     "se": 0.10979928582298452,
+     "snr": 1.3252845893206142,
+     "z": 0.8171932370240373,
+     "inside": true,
+     "forecast_with_one_size": 0.05912002282490205,
+     "interval_with_one_size": [
+      -0.14809503766959417,
+      0.26633508331939826
+     ]
+    },
+    {
+     "event": "TMEM173",
+     "readout": "PDL1",
+     "cells": 158,
+     "edge": null,
+     "type": "(TMEM173)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1033781926041535,
+     "read": 0.023591266146675168,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.023591266146675168,
+     "sd": 0.0825360673411213,
+     "interval": [
+      -0.13817942584192258,
+      0.18536195813527293
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01791387115280212,
+      "direct": 0.03941361732142139,
+      "row": 0.07026992530307305
+     },
+     "change": 0.06239371399030308,
+     "se": 0.0817915320640937,
+     "snr": 0.762838308755605,
+     "z": 0.4701271709888662,
+     "inside": true,
+     "forecast_with_one_size": 0.023591266146675168,
+     "interval_with_one_size": [
+      -0.13817942584192258,
+      0.18536195813527293
+     ]
+    },
+    {
+     "event": "TMEM173",
+     "readout": "MHC1",
+     "cells": 158,
+     "edge": null,
+     "type": "(TMEM173)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1033781926041535,
+     "read": -0.0053496435290410595,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.0053496435290410595,
+     "sd": 0.08397101105838121,
+     "interval": [
+      -0.16993282520346822,
+      0.15923353814538613
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.01831630262163372,
+      "direct": 0.03941361732142139,
+      "row": 0.07184852487059193
+     },
+     "change": 0.006023967162382143,
+     "se": 0.07886690930915036,
+     "snr": 0.07638142809386377,
+     "z": 0.13544687086732407,
+     "inside": true,
+     "forecast_with_one_size": -0.0053496435290410595,
+     "interval_with_one_size": [
+      -0.16993282520346822,
+      0.15923353814538613
+     ]
+    },
+    {
+     "event": "TMEM173",
+     "readout": "HLAE",
+     "cells": 158,
+     "edge": null,
+     "type": "(TMEM173)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1033781926041535,
+     "read": -0.015968458396639088,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.015968458396639088,
+     "sd": 0.08789800552467623,
+     "interval": [
+      -0.1882485492250045,
+      0.15631163243172636
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.014724215270313121,
+      "direct": 0.03941361732142139,
+      "row": 0.07717398285387404
+     },
+     "change": 0.05080565305541612,
+     "se": 0.07850659339331403,
+     "snr": 0.647151415689156,
+     "z": 0.7596772082992171,
+     "inside": true,
+     "forecast_with_one_size": -0.015968458396639088,
+     "interval_with_one_size": [
+      -0.1882485492250045,
+      0.15631163243172636
+     ]
+    }
+   ],
+   "calibration": {
+    "pairs": 39,
+    "inside": 35,
+    "mean_z2": 1.5447784748035351,
+    "error": {
+     "no_change": 0.20376493129204404,
+     "control_readout": 0.18554717451545263,
+     "forecast": 0.22994146440069038
+    }
+   }
+  },
+  "thp1": {
+   "study": "papalexi2021",
+   "condition": "all",
+   "recorded_events": [
+    "BRD4",
+    "CMTM6",
+    "IFNGR1",
+    "IFNGR2",
+    "IRF1",
+    "JAK2",
+    "POU2F2",
+    "STAT1"
+   ],
+   "types": {
+    "BRD4": "(BRD4)",
+    "CMTM6": "(CMTM6)",
+    "IFNGR1": "interferon pathway",
+    "IFNGR2": "interferon pathway",
+    "IRF1": "(IRF1)",
+    "JAK2": "interferon pathway",
+    "POU2F2": "(POU2F2)",
+    "STAT1": "interferon pathway"
+   },
+   "spread_of_a_direct_part_without_an_edge": {
+    "value": 0.22621038623745438,
+    "from": "the stratum's own rows"
+   },
+   "widening_of_the_control_prior": {
+    "PDL1": {
+     "interferon pathway": 25.11886431509581
+    }
+   },
+   "recorded_pairs_each_left_out": [
+    {
+     "event": "BRD4",
+     "readout": "PDL1",
+     "type": "(BRD4)",
+     "edge": null,
+     "change": 0.36326099586711946,
+     "se": 0.056781675499470816,
+     "read": 0.1259432008098372,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.1259432008098372,
+     "sd": 0.23185780037708736,
+     "interval": [
+      -0.32849808792925406,
+      0.5803844895489284
+     ],
+     "z": 1.023548893637889
+    },
+    {
+     "event": "CMTM6",
+     "readout": "PDL1",
+     "type": "(CMTM6)",
+     "edge": null,
+     "change": -0.5386962125734551,
+     "se": 0.041499839983990754,
+     "read": 0.021081467249502144,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.021081467249502144,
+     "sd": 0.22865415466601358,
+     "interval": [
+      -0.42708067589588444,
+      0.46924361039488877
+     ],
+     "z": -2.448141301611612
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.927386804553153,
+     "se": 0.03578254360081222,
+     "read": -0.5765746782625939,
+     "from_the_other_events": -0.286758159053842,
+     "by_its_edge": 0.0,
+     "forecast": -0.863332837316436,
+     "sd": 0.25726892597387696,
+     "interval": [
+      -1.3675799322252349,
+      -0.35908574240763713
+     ],
+     "z": -0.24897669624982657
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.0495551460255008,
+     "se": 0.035401754278686456,
+     "read": -0.627305917820147,
+     "from_the_other_events": -0.2818172218294715,
+     "by_its_edge": 0.0,
+     "forecast": -0.9091231396496184,
+     "sd": 0.25814649384967536,
+     "interval": [
+      -1.4150902675949821,
+      -0.40315601170425475
+     ],
+     "z": -0.5440012152853766
+    },
+    {
+     "event": "IRF1",
+     "readout": "PDL1",
+     "type": "(IRF1)",
+     "edge": null,
+     "change": -0.35603240839307576,
+     "se": 0.03873010667402742,
+     "read": -0.04014470904442192,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.04014470904442192,
+     "sd": 0.2295713599470199,
+     "interval": [
+      -0.49010457454058093,
+      0.4098151564517371
+     ],
+     "z": -1.3759891452555488
+    },
+    {
+     "event": "JAK2",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -1.1322011086423196,
+     "se": 0.03718193168901942,
+     "read": -0.654203065585823,
+     "from_the_other_events": -0.289570091197342,
+     "by_its_edge": 0.0,
+     "forecast": -0.943773156783165,
+     "sd": 0.2637445236475914,
+     "interval": [
+      -1.4607124231324442,
+      -0.42683389043388587
+     ],
+     "z": -0.7144336089075624
+    },
+    {
+     "event": "POU2F2",
+     "readout": "PDL1",
+     "type": "(POU2F2)",
+     "edge": null,
+     "change": 0.0995786376336557,
+     "se": 0.044296076612952304,
+     "read": 0.06483871854710156,
+     "from_the_other_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.06483871854710156,
+     "sd": 0.22882842945938767,
+     "interval": [
+      -0.38366500319329827,
+      0.5133424402875014
+     ],
+     "z": 0.15181644679652775
+    },
+    {
+     "event": "STAT1",
+     "readout": "PDL1",
+     "type": "interferon pathway",
+     "edge": null,
+     "change": -0.846534394746404,
+     "se": 0.05261787655583051,
+     "read": -0.632347498024567,
+     "from_the_other_events": -0.48009340532518524,
+     "by_its_edge": 0.0,
+     "forecast": -1.1124409033497522,
+     "sd": 0.3513320260938597,
+     "interval": [
+      -1.8010516744937173,
+      -0.42383013220578714
+     ],
+     "z": 0.7568524610742723
+    }
+   ],
+   "pairs_of_the_batch": [
+    {
+     "event": "ATF2",
+     "readout": "PDL1",
+     "cells": 1102,
+     "edge": null,
+     "type": "(ATF2)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.9948109192670798,
+     "read": -0.009468676233162542,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.009468676233162542,
+     "sd": 0.2278419426346993,
+     "interval": [
+      -0.4560388837971732,
+      0.4371015313308481
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.008471114881804562,
+      "direct": 0.22621038623745438,
+      "row": 0.025866043271335393
+     },
+     "change": 0.0026525004972579674,
+     "se": 0.03714576517086751,
+     "snr": 0.07140788418428534,
+     "z": 0.05319993584260508,
+     "inside": true,
+     "forecast_with_one_size": -0.009468676233162542,
+     "interval_with_one_size": [
+      -0.4560388837971732,
+      0.4371015313308481
+     ]
+    },
+    {
+     "event": "CAV1",
+     "readout": "PDL1",
+     "cells": 882,
+     "edge": null,
+     "type": "(CAV1)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.8024607421166686,
+     "read": 0.013263545652200441,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.013263545652200441,
+     "sd": 0.22811900420858952,
+     "interval": [
+      -0.433849702596635,
+      0.4603767939010359
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009161364323138289,
+      "direct": 0.22621038623745438,
+      "row": 0.027985900792344115
+     },
+     "change": -0.008330106576702252,
+     "se": 0.039292625395854916,
+     "snr": 0.21200178132105718,
+     "z": -0.09465959359158738,
+     "inside": true,
+     "forecast_with_one_size": 0.013263545652200441,
+     "interval_with_one_size": [
+      -0.433849702596635,
+      0.4603767939010359
+     ]
+    },
+    {
+     "event": "ETV7",
+     "readout": "PDL1",
+     "cells": 841,
+     "edge": null,
+     "type": "(ETV7)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 2.2783627418637713,
+     "read": 0.0010844056062656393,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.0010844056062656393,
+     "sd": 0.228215098175427,
+     "interval": [
+      -0.4462171868175713,
+      0.4483859980301026
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009995198128648282,
+      "direct": 0.22621038623745438,
+      "row": 0.028479610388672243
+     },
+     "change": -0.012731275130052386,
+     "se": 0.040407523740693514,
+     "snr": 0.31507189630704846,
+     "z": -0.06053797862969622,
+     "inside": true,
+     "forecast_with_one_size": 0.0010844056062656393,
+     "interval_with_one_size": [
+      -0.4462171868175713,
+      0.4483859980301026
+     ]
+    },
+    {
+     "event": "IRF7",
+     "readout": "PDL1",
+     "cells": 614,
+     "edge": null,
+     "type": "(IRF7)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.8931793332011528,
+     "read": 0.08265510100646455,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.08265510100646455,
+     "sd": 0.22879564378698192,
+     "interval": [
+      -0.36578436081602,
+      0.5310945628289491
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.011979297137478162,
+      "direct": 0.22621038623745438,
+      "row": 0.032137271419540835
+     },
+     "change": 0.11029312675079063,
+     "se": 0.04668437058340913,
+     "snr": 2.362527873300428,
+     "z": 0.12079786698237233,
+     "inside": true,
+     "forecast_with_one_size": 0.08265510100646455,
+     "interval_with_one_size": [
+      -0.36578436081602,
+      0.5310945628289491
+     ]
+    },
+    {
+     "event": "MARCH8",
+     "readout": "PDL1",
+     "cells": 1003,
+     "edge": null,
+     "type": "(MARCH8)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.5619841948892956,
+     "read": -0.05662415774156299,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.05662415774156299,
+     "sd": 0.22798435236857464,
+     "interval": [
+      -0.5034734883839693,
+      0.3902251729008433
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.009565559175380317,
+      "direct": 0.22621038623745438,
+      "row": 0.026725010025862046
+     },
+     "change": -0.0520587170175043,
+     "se": 0.03728920974903322,
+     "snr": 1.3960799214537927,
+     "z": 0.020025237156091735,
+     "inside": true,
+     "forecast_with_one_size": -0.05662415774156299,
+     "interval_with_one_size": [
+      -0.5034734883839693,
+      0.3902251729008433
+     ]
+    },
+    {
+     "event": "MYC",
+     "readout": "PDL1",
+     "cells": 109,
+     "edge": null,
+     "type": "(MYC)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 6.929668968265989,
+     "read": 0.18325527465235983,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.18325527465235983,
+     "sd": 0.23867794580812962,
+     "interval": [
+      -0.28455349913157424,
+      0.6510640484362938
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.030944151741486514,
+      "direct": 0.22621038623745438,
+      "row": 0.06955920101963521
+     },
+     "change": 0.1692322336639772,
+     "se": 0.11404469151369002,
+     "snr": 1.4839115386941304,
+     "z": -0.05875298172565804,
+     "inside": true,
+     "forecast_with_one_size": 0.18325527465235983,
+     "interval_with_one_size": [
+      -0.28455349913157424,
+      0.6510640484362938
+     ]
+    },
+    {
+     "event": "SMAD4",
+     "readout": "PDL1",
+     "cells": 659,
+     "edge": null,
+     "type": "(SMAD4)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 44.25690161267572,
+     "read": -0.17055620021529697,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.17055620021529697,
+     "sd": 0.23096040791778114,
+     "interval": [
+      -0.623238599734148,
+      0.2821261993035541
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.034566719716196063,
+      "direct": 0.22621038623745438,
+      "row": 0.03125240905772727
+     },
+     "change": -0.12038208013328554,
+     "se": 0.043019438894813855,
+     "snr": 2.7983182306870584,
+     "z": 0.2172412169443031,
+     "inside": true,
+     "forecast_with_one_size": -0.17055620021529697,
+     "interval_with_one_size": [
+      -0.623238599734148,
+      0.2821261993035541
+     ]
+    },
+    {
+     "event": "STAT5A",
+     "readout": "PDL1",
+     "cells": 659,
+     "edge": null,
+     "type": "(STAT5A)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 0.5143912033408882,
+     "read": 0.031044723223017805,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.031044723223017805,
+     "sd": 0.22858763075160543,
+     "interval": [
+      -0.4169870330501288,
+      0.47907647949616444
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.010220225977076672,
+      "direct": 0.22621038623745438,
+      "row": 0.03125240905772727
+     },
+     "change": 0.05648419747595127,
+     "se": 0.042616701333409654,
+     "snr": 1.3254005051693218,
+     "z": 0.11128981112970741,
+     "inside": true,
+     "forecast_with_one_size": 0.031044723223017805,
+     "interval_with_one_size": [
+      -0.4169870330501288,
+      0.47907647949616444
+     ]
+    },
+    {
+     "event": "TNFRSF14",
+     "readout": "PDL1",
+     "cells": 964,
+     "edge": null,
+     "type": "(TNFRSF14)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.291077613704884,
+     "read": -0.022923141108895956,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": -0.022923141108895956,
+     "sd": 0.2280453868749423,
+     "interval": [
+      -0.46989209938378285,
+      0.424045817165991
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.00994937863322108,
+      "direct": 0.22621038623745438,
+      "row": 0.027102942608813234
+     },
+     "change": -0.05117561410927822,
+     "se": 0.03938573911781962,
+     "snr": 1.2993437537426944,
+     "z": -0.12388969313321661,
+     "inside": true,
+     "forecast_with_one_size": -0.022923141108895956,
+     "interval_with_one_size": [
+      -0.46989209938378285,
+      0.424045817165991
+     ]
+    },
+    {
+     "event": "UBE2L6",
+     "readout": "PDL1",
+     "cells": 518,
+     "edge": null,
+     "type": "(UBE2L6)",
+     "taught_by": 0,
+     "widening": 1.0,
+     "scale": 1.0,
+     "size_of_the_edge_from": null,
+     "shift_times_noise": 1.1192292472309433,
+     "read": 0.035860147617630594,
+     "from_the_recorded_events": 0.0,
+     "by_its_edge": 0.0,
+     "forecast": 0.035860147617630594,
+     "sd": 0.22915883035128523,
+     "interval": [
+      -0.4132911598708885,
+      0.4850114551061496
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.012553625905985038,
+      "direct": 0.22621038623745438,
+      "row": 0.03442436873616455
+     },
+     "change": 0.034296844555534264,
+     "se": 0.04951065916623114,
+     "snr": 0.692716379323152,
+     "z": -0.0068219193635256845,
+     "inside": true,
+     "forecast_with_one_size": 0.035860147617630594,
+     "interval_with_one_size": [
+      -0.4132911598708885,
+      0.4850114551061496
+     ]
+    }
+   ],
+   "calibration": {
+    "pairs": 10,
+    "inside": 10,
+    "mean_z2": 0.010887492939062823,
+    "error": {
+     "no_change": 0.08076525945319873,
+     "control_readout": 0.023980589012996722,
+     "forecast": 0.023980589012996722
+    }
+   }
+  }
+ },
+ "calibration_of_the_batch": {
+  "as_committed_before_the_batch_was_read": {
+   "pairs": 79,
+   "inside": 77,
+   "error": {
+    "no_change": 0.31365506674770244,
+    "control_readout": 0.2924353406014361,
+    "forecast": 0.2305094527877751
+   },
+   "mean_z2": 0.3
+  },
+  "with_types_a_scale_and_the_error_of_a_row_beside_its_readout": {
+   "pairs": 79,
+   "inside": 74,
+   "mean_z2": 1.0205028160803487,
+   "error": {
+    "no_change": 0.31365506674770244,
+    "control_readout": 0.2924353406014361,
+    "forecast": 0.3000046338906574
+   }
+  },
+  "pairs_without_an_edge": {
+   "pairs": 71,
+   "inside": 68,
+   "mean_z2": 0.8533040331943494,
+   "error": {
+    "no_change": 0.11582874054524396,
+    "control_readout": 0.0895203161275923,
+    "forecast": 0.0895203161275923
+   }
+  }
+ },
+ "R1": {
+  "mel_co": {
+   "pathway_pairs": 15,
+   "inside": 15,
+   "error": {
+    "control_readout": 0.6351398666156183,
+    "forecast": 0.10676078735467155
+   }
+  },
+  "thp1": {
+   "pathway_pairs": 4,
+   "inside": 4,
+   "error": {
+    "control_readout": 0.37938163983174367,
+    "forecast": 0.1803021238733592
+   }
+  },
+  "pairs_without_an_edge": {
+   "pairs": 71,
+   "largest_part_from_the_recorded_events": 0.0,
+   "error_forecast": 0.0895203161275923,
+   "error_control_readout": 0.0895203161275923
+  },
+  "outcome": "holds"
+ },
+ "R2": {
+  "pairs": [
+   {
+    "stratum": "mel_co",
+    "batch": null,
+    "event": "CD274",
+    "readout": "PDL1",
+    "cells": 228,
+    "change": -2.1162245254831356,
+    "se": 0.0632073917197218,
+    "read": -0.13734104434825276,
+    "scale": 3.1266829233116273,
+    "forecast": -1.1050275657404713,
+    "interval": [
+     -2.453629024621347,
+     0.24357389314040456
+    ],
+    "inside": true,
+    "forecast_with_one_size": -1.1056211221869727,
+    "interval_with_one_size": [
+     -3.1545282825097662,
+     0.9432860381358208
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.6329018738615644,
+    "share_of_the_same_pair_under_interferon": -0.5627672245712094,
+    "forecast_from_the_same_pair_under_interferon": -1.896935715214533
+   },
+   {
+    "stratum": "mel_co",
+    "batch": null,
+    "event": "HLA-B",
+    "readout": "MHC1",
+    "cells": 144,
+    "change": -0.8319325468989448,
+    "se": 0.07765593182036588,
+    "read": 0.058682591883555395,
+    "scale": 6.768848963517524,
+    "forecast": -2.036228874354291,
+    "interval": [
+     -4.950710763115153,
+     0.878253014406571
+    ],
+    "inside": true,
+    "forecast_with_one_size": -0.9095974859551647,
+    "interval_with_one_size": [
+     -2.9607327466226265,
+     1.141537774712297
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.13157556677401175,
+    "share_of_the_same_pair_under_interferon": -0.14109859204101244,
+    "forecast_from_the_same_pair_under_interferon": -0.8963924666070335
+   },
+   {
+    "stratum": "mel_co",
+    "batch": null,
+    "event": "HLA-C",
+    "readout": "MHC1",
+    "cells": 158,
+    "change": -0.628493123737337,
+    "se": 0.10323156464763265,
+    "read": -0.05499802111351802,
+    "scale": 6.768848963517524,
+    "forecast": -2.1499094873513642,
+    "interval": [
+     -5.06412405537261,
+     0.7643050806698817
+    ],
+    "inside": true,
+    "forecast_with_one_size": -1.023278098952238,
+    "interval_with_one_size": [
+     -3.0740335027255776,
+     1.0274773048211012
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.08472564622357809,
+    "share_of_the_same_pair_under_interferon": -0.13069049975001718,
+    "forecast_from_the_same_pair_under_interferon": -0.939622274888009
+   },
+   {
+    "stratum": "mel_co",
+    "batch": null,
+    "event": "HLA-E",
+    "readout": "HLAE",
+    "cells": 192,
+    "change": -0.46530451210546075,
+    "se": 0.055139254283405464,
+    "read": 0.010117477972220623,
+    "scale": 0.4575212227064573,
+    "forecast": -0.13148214415863524,
+    "interval": [
+     -0.37343246375725336,
+     0.11046817543998286
+    ],
+    "inside": false,
+    "forecast_with_one_size": -0.9581625998664994,
+    "interval_with_one_size": [
+     -3.009347254070162,
+     1.0930220543371632
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -1.039125545401659,
+    "share_of_the_same_pair_under_interferon": -0.3732859037903983,
+    "forecast_from_the_same_pair_under_interferon": -0.1606687451490474
+   },
+   {
+    "stratum": "mel_ctl",
+    "batch": null,
+    "event": "CD274",
+    "readout": "PDL1",
+    "cells": 148,
+    "change": -0.7261694232630305,
+    "se": 0.056326755241001156,
+    "read": -0.07151312421448784,
+    "scale": 1.2643241462035921,
+    "forecast": -0.46281261474808594,
+    "interval": [
+     -1.0261311538107676,
+     0.10050592431459565
+    ],
+    "inside": true,
+    "forecast_with_one_size": -1.039793202053208,
+    "interval_with_one_size": [
+     -3.09142553875822,
+     1.011839134651804
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.5177915022933718,
+    "share_of_the_same_pair_under_interferon": -0.5627672245712094,
+    "forecast_from_the_same_pair_under_interferon": -0.7830333149318474
+   },
+   {
+    "stratum": "mel_ctl",
+    "batch": null,
+    "event": "HLA-A",
+    "readout": "MHC1",
+    "cells": 171,
+    "change": -0.3299047203079209,
+    "se": 0.08395896178968039,
+    "read": 0.02620342212143358,
+    "scale": 4.286560698218984,
+    "forecast": -1.3004571675627683,
+    "interval": [
+     -3.1492998445274525,
+     0.5483855094019159
+    ],
+    "inside": true,
+    "forecast_with_one_size": -0.9420766557172865,
+    "interval_with_one_size": [
+     -2.9931990680410223,
+     1.1090457566064496
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.08307549280179638,
+    "share_of_the_same_pair_under_interferon": -0.07826719845621952,
+    "forecast_from_the_same_pair_under_interferon": -0.3092936747407025
+   },
+   {
+    "stratum": "mel_ctl",
+    "batch": null,
+    "event": "HLA-B",
+    "readout": "MHC1",
+    "cells": 112,
+    "change": -0.591530512218142,
+    "se": 0.11220263499698437,
+    "read": -0.014255434381675024,
+    "scale": 4.286560698218984,
+    "forecast": -1.3409160240658768,
+    "interval": [
+     -3.1923996304767392,
+     0.5105675823449856
+    ],
+    "inside": true,
+    "forecast_with_one_size": -0.982535512220395,
+    "interval_with_one_size": [
+     -3.0360387264810824,
+     1.0709677020402926
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.13467092115978158,
+    "share_of_the_same_pair_under_interferon": -0.14109859204101244,
+    "forecast_from_the_same_pair_under_interferon": -0.6190831135987128
+   },
+   {
+    "stratum": "mel_ctl",
+    "batch": null,
+    "event": "HLA-E",
+    "readout": "HLAE",
+    "cells": 123,
+    "change": -0.22655257906556062,
+    "se": 0.08951530831153551,
+    "read": -0.041518484878681476,
+    "scale": -0.2529162305985474,
+    "forecast": 0.036757321589190296,
+    "interval": [
+     -0.1683396647815051,
+     0.2418543079598857
+    ],
+    "inside": false,
+    "forecast_with_one_size": -1.0097985627174015,
+    "interval_with_one_size": [
+     -3.063519476634039,
+     1.0439223511992357
+    ],
+    "inside_with_one_size": true,
+    "share_measured": 0.7316022927788401,
+    "share_of_the_same_pair_under_interferon": -0.3732859037903983,
+    "forecast_from_the_same_pair_under_interferon": 0.05289157884355807
+   },
+   {
+    "stratum": "mel_ctl",
+    "batch": 1,
+    "event": "B2M",
+    "readout": "MHC1",
+    "cells": 150,
+    "change": -2.2680082247505555,
+    "se": 0.13186969000928622,
+    "read": -0.2506496474056301,
+    "scale": 4.286560698218984,
+    "forecast": -1.577310237089832,
+    "interval": [
+     -3.4273700926181547,
+     0.27274961843849055
+    ],
+    "inside": true,
+    "forecast_with_one_size": -1.21892972524435,
+    "interval_with_one_size": [
+     -3.271149346826865,
+     0.8332898963381647
+    ],
+    "inside_with_one_size": true,
+    "share_measured": -0.47062405489396536,
+    "share_of_the_same_pair_under_interferon": -0.5754722233922419,
+    "forecast_from_the_same_pair_under_interferon": -2.7174462631155096
+   },
+   {
+    "stratum": "mel_ctl",
+    "batch": 1,
+    "event": "B2M",
+    "readout": "HLAE",
+    "cells": 150,
+    "change": 0.030062814329917212,
+    "se": 0.07768817504505567,
+    "read": 0.07966003851153848,
+    "scale": -0.2529162305985474,
+    "forecast": 0.15793584497941027,
+    "interval": [
+     -0.03812202491283792,
+     0.3539937148716584
+    ],
+    "inside": true,
+    "forecast_with_one_size": -0.8886200393271816,
+    "interval_with_one_size": [
+     -2.9414579546987123,
+     1.1642178760443493
+    ],
+    "inside_with_one_size": true,
+    "share_measured": 0.19610138923961223,
+    "share_of_the_same_pair_under_interferon": -0.30486945517988817,
+    "forecast_from_the_same_pair_under_interferon": 0.1567664719402686
+   }
+  ],
+  "error": {
+   "share_of_the_class_times_the_scale": 0.8387281379129422,
+   "one_size_per_class": 0.6789795851590836,
+   "no_edge": 1.0128753814485152,
+   "explored_the_pair's_own_share_under_interferon_times_the_scale": 0.2328952190473865
+  },
+  "inside": {
+   "share_of_the_class_times_the_scale": 8,
+   "one_size_per_class": 10
+  },
+  "error_by_readout": {
+   "PDL1": {
+    "pairs": 2,
+    "no_edge": 1.4738647668277518,
+    "one_size_per_class": 0.7482242689783649,
+    "share_of_the_class_times_the_scale": 0.7388762074880961,
+    "explored_the_pair's_own_share_under_interferon_times_the_scale": 0.16018908278147753
+   },
+   "MHC1": {
+    "pairs": 5,
+    "no_edge": 1.0631920910489132,
+    "one_size_per_class": 0.5983464056998818,
+    "share_of_the_class_times_the_scale": 1.0719749814424966,
+    "explored_the_pair's_own_share_under_interferon_times_the_scale": 0.24663127997724033
+   },
+   "HLAE": {
+    "pairs": 3,
+    "no_edge": 0.29592992937940776,
+    "one_size_per_class": 0.7528526972305092,
+    "share_of_the_class_times_the_scale": 0.25633375970397576,
+    "explored_the_pair's_own_share_under_interferon_times_the_scale": 0.24963026308956734
+   }
+  },
+  "half_width_of_the_interval": {
+   "share_of_the_class_times_the_scale": 1.3934107769491098,
+   "one_size_per_class": 2.0517018893127377
+  },
+  "outcome": "does not hold"
+ },
+ "R3": {
+  "how": "variation: the spread over the conditions divided by the size of the mean",
+  "pairs": [
+   {
+    "event": "CD274",
+    "readout": "PDL1",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -1.9947141341578833,
+      "direct": -1.8269362292876905,
+      "scale": 3.229774845561965
+     },
+     "Co-culture": {
+      "change": -2.1162245254831356,
+      "direct": -1.9788834811348828,
+      "scale": 3.1266829233116273
+     },
+     "Control": {
+      "change": -0.7261694232630305,
+      "direct": -0.6546562990485426,
+      "scale": 1.2643241462035921
+     }
+    },
+    "variation_of_the_change": 0.3898600562029121,
+    "variation_of_the_change_over_the_scale": 0.06742968173761711,
+    "less_with_the_scale": true
+   },
+   {
+    "event": "B2M",
+    "readout": "MHC1",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -2.8748900546823846,
+      "direct": -2.863511610346947,
+      "scale": 4.9494565552691006
+     },
+     "Control": {
+      "change": -2.2680082247505555,
+      "direct": -2.0173585773449254,
+      "scale": 4.286560698218984
+     }
+    },
+    "variation_of_the_change": 0.11800385637779799,
+    "variation_of_the_change_over_the_scale": 0.04662584064600302,
+    "less_with_the_scale": true
+   },
+   {
+    "event": "HLA-A",
+    "readout": "MHC1",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -0.3781336925245471,
+      "direct": -0.38301857353979935,
+      "scale": 4.9494565552691006
+     },
+     "Control": {
+      "change": -0.3299047203079209,
+      "direct": -0.35610814242935446,
+      "scale": 4.286560698218984
+     }
+    },
+    "variation_of_the_change": 0.06811632157595646,
+    "variation_of_the_change_over_the_scale": 0.0036745553599871164,
+    "less_with_the_scale": true
+   },
+   {
+    "event": "HLA-B",
+    "readout": "MHC1",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -0.7491974394211187,
+      "direct": -0.6924442301002115,
+      "scale": 4.9494565552691006
+     },
+     "Co-culture": {
+      "change": -0.8319325468989448,
+      "direct": -0.8906151387825002,
+      "scale": 6.768848963517524
+     },
+     "Control": {
+      "change": -0.591530512218142,
+      "direct": -0.577275077836467,
+      "scale": 4.286560698218984
+     }
+    },
+    "variation_of_the_change": 0.13769323512104006,
+    "variation_of_the_change_over_the_scale": 0.0846085751936541,
+    "less_with_the_scale": true
+   },
+   {
+    "event": "HLA-C",
+    "readout": "MHC1",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -0.587045345497331,
+      "direct": -0.6411805592798598,
+      "scale": 4.9494565552691006
+     },
+     "Co-culture": {
+      "change": -0.628493123737337,
+      "direct": -0.573495102623819,
+      "scale": 6.768848963517524
+     }
+    },
+    "variation_of_the_change": 0.03409828589472986,
+    "variation_of_the_change_over_the_scale": 0.12180728470510009,
+    "less_with_the_scale": false
+   },
+   {
+    "event": "B2M",
+    "readout": "HLAE",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -0.20804334498229454,
+      "direct": -0.19534297651923993,
+      "scale": 0.6347923531261733
+     },
+     "Control": {
+      "change": 0.030062814329917212,
+      "direct": -0.04959722418162127,
+      "scale": -0.2529162305985474
+     }
+    },
+    "variation_of_the_change": 1.337821381020988,
+    "variation_of_the_change_over_the_scale": 0.4676895476107594,
+    "less_with_the_scale": true
+   },
+   {
+    "event": "HLA-E",
+    "readout": "HLAE",
+    "conditions": {
+     "IFN\u03b3": {
+      "change": -0.2597364618875809,
+      "direct": -0.2554969633133272,
+      "scale": 0.6347923531261733
+     },
+     "Co-culture": {
+      "change": -0.46530451210546075,
+      "direct": -0.4754219900776814,
+      "scale": 0.4575212227064573
+     },
+     "Control": {
+      "change": -0.22655257906556062,
+      "direct": -0.18503409418687913,
+      "scale": -0.2529162305985474
+     }
+    },
+    "variation_of_the_change": 0.3329146451564824,
+    "variation_of_the_change_over_the_scale": 4.513333519552834,
+    "less_with_the_scale": false
+   }
+  ],
+  "less_with_the_scale": 5,
+  "of": 7,
+  "outcome": "does not hold"
+ },
+ "edges": [
+  {
+   "edge_id": "CD274->PDL1",
+   "kind": "edge",
+   "site": "CD274",
+   "readout": "PDL1",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.5627672245712094,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a gene of the readout's own measurement (declaration; rule S3)"
+  },
+  {
+   "edge_id": "B2M->MHC1",
+   "kind": "edge",
+   "site": "B2M",
+   "readout": "MHC1",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.5754722233922419,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a declared partner of the readout (declaration; rule S3)"
+  },
+  {
+   "edge_id": "HLA-A->MHC1",
+   "kind": "edge",
+   "site": "HLA-A",
+   "readout": "MHC1",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.07826719845621952,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a gene of the readout's own measurement (declaration; rule S3)"
+  },
+  {
+   "edge_id": "HLA-B->MHC1",
+   "kind": "edge",
+   "site": "HLA-B",
+   "readout": "MHC1",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.14109859204101244,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a gene of the readout's own measurement (declaration; rule S3)"
+  },
+  {
+   "edge_id": "HLA-C->MHC1",
+   "kind": "edge",
+   "site": "HLA-C",
+   "readout": "MHC1",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.13069049975001718,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a gene of the readout's own measurement (declaration; rule S3)"
+  },
+  {
+   "edge_id": "B2M->HLAE",
+   "kind": "edge",
+   "site": "B2M",
+   "readout": "HLAE",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.30486945517988817,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a declared partner of the readout (declaration; rule S3)"
+  },
+  {
+   "edge_id": "HLA-E->HLAE",
+   "kind": "edge",
+   "site": "HLA-E",
+   "readout": "HLAE",
+   "class": "own",
+   "basis": "declaration",
+   "status": "declared",
+   "stratum": null,
+   "scale": "how far the readout stands above the background of the antibody panel among control cells, in spreads of the readout",
+   "share": {
+    "value": -0.3732859037903983,
+    "measured_in": "the library under interferon"
+   },
+   "evidence": null,
+   "provenance": "the site is a gene of the readout's own measurement (declaration; rule S3)"
+  },
+  {
+   "edge_id": "TAPBP->MHC1@mel_co",
+   "kind": "edge",
+   "site": "TAPBP",
+   "readout": "MHC1",
+   "class": "flagged",
+   "basis": "flag",
+   "status": "admitted",
+   "stratum": "mel_co",
+   "scale": null,
+   "share": null,
+   "evidence": {
+    "change": -1.5643403470921367,
+    "forecast": 0.04389038656646511,
+    "z": -17.86203281286972,
+    "shift_times_noise": 1.093561678511878,
+    "direct": -1.6082307336586017
+   },
+   "provenance": "flagged by the law of a library",
+   "test": {
+    "change": -1.7211283588153283,
+    "forecast_without_the_edge": 0.019551602762897302,
+    "sd": 0.1321079348351429,
+    "z": -13.176195387131097,
+    "same_side_as_proposed": true
+   },
+   "proposed_in": "the library under interferon",
+   "explored_share_of_the_scale": {
+    "under_interferon": -0.32493077082301264,
+    "where_tested": -0.25716040806347934
+   }
+  },
+  {
+   "edge_id": "STAT3->MHC1@mel_co",
+   "kind": "edge",
+   "site": "STAT3",
+   "readout": "MHC1",
+   "class": "flagged",
+   "basis": "flag",
+   "status": "refused",
+   "stratum": "mel_co",
+   "scale": null,
+   "share": null,
+   "evidence": {
+    "change": 0.6067411751948093,
+    "forecast": 0.052006638663240075,
+    "z": 5.986183979356739,
+    "shift_times_noise": 1.2407229854441821,
+    "direct": 0.5547345365315692
+   },
+   "provenance": "flagged by the law of a library",
+   "test": {
+    "change": 0.18885842804895073,
+    "forecast_without_the_edge": 0.009797987214743101,
+    "sd": 0.12501172953147896,
+    "z": 1.4323491204008882,
+    "same_side_as_proposed": true
+   },
+   "proposed_in": "the library under interferon",
+   "explored_share_of_the_scale": {
+    "under_interferon": 0.11207988803154743,
+    "where_tested": 0.026453602643418485
+   }
+  },
+  {
+   "edge_id": "CD44->MHC1@mel_co",
+   "kind": "edge",
+   "site": "CD44",
+   "readout": "MHC1",
+   "class": "flagged",
+   "basis": "flag",
+   "status": "admitted",
+   "stratum": "mel_co",
+   "scale": null,
+   "share": null,
+   "evidence": {
+    "change": 0.41197279829224237,
+    "forecast": 0.03986440574052263,
+    "z": 5.1157522966295765,
+    "shift_times_noise": 1.002361038528011,
+    "direct": 0.37210839255171974
+   },
+   "provenance": "flagged by the law of a library",
+   "test": {
+    "change": 0.40501764793990674,
+    "forecast_without_the_edge": 0.036227570060900466,
+    "sd": 0.12179009688894052,
+    "z": 3.0280793537368087,
+    "same_side_as_proposed": true
+   },
+   "proposed_in": "the library under interferon",
+   "explored_share_of_the_scale": {
+    "under_interferon": 0.07518166659238174,
+    "where_tested": 0.05448342544894953
+   }
+  },
+  {
+   "edge_id": "SSR2->MHC1@mel_ctl",
+   "kind": "edge",
+   "site": "SSR2",
+   "readout": "MHC1",
+   "class": "flagged",
+   "basis": "flag",
+   "status": "admitted",
+   "stratum": "mel_ctl",
+   "scale": null,
+   "share": null,
+   "evidence": {
+    "change": 0.47578040906824004,
+    "forecast": 0.032574764430735606,
+    "z": 6.0245598138604795,
+    "shift_times_noise": 2.470144741676191,
+    "direct": 0.44320564463750445
+   },
+   "provenance": "flagged by the law of a library",
+   "test": {
+    "change": 0.4575556946652506,
+    "forecast_without_the_edge": 0.05180661200067763,
+    "sd": 0.10080047137542728,
+    "z": 4.025269694953875,
+    "same_side_as_proposed": true
+   },
+   "proposed_in": "the library under interferon",
+   "explored_share_of_the_scale": {
+    "under_interferon": 0.08954632487190455,
+    "where_tested": 0.09465609173180657
+   }
+  },
+  {
+   "edge_id": "CD44->MHC1@mel_ctl",
+   "kind": "edge",
+   "site": "CD44",
+   "readout": "MHC1",
+   "class": "flagged",
+   "basis": "flag",
+   "status": "admitted",
+   "stratum": "mel_ctl",
+   "scale": null,
+   "share": null,
+   "evidence": {
+    "change": 0.41197279829224237,
+    "forecast": 0.03986440574052263,
+    "z": 5.1157522966295765,
+    "shift_times_noise": 1.002361038528011,
+    "direct": 0.37210839255171974
+   },
+   "provenance": "flagged by the law of a library",
+   "test": {
+    "change": 0.3274180579178897,
+    "forecast_without_the_edge": 0.031293262032970434,
+    "sd": 0.08018503583061502,
+    "z": 3.6930181899582992,
+    "same_side_as_proposed": true
+   },
+   "proposed_in": "the library under interferon",
+   "explored_share_of_the_scale": {
+    "under_interferon": 0.07518166659238174,
+    "where_tested": 0.0690821422423706
+   }
+  },
+  {
+   "edge_id": "NONO->PDL1",
+   "kind": "edge",
+   "site": "NONO",
+   "readout": "PDL1",
+   "class": "flagged",
+   "basis": "flag",
+   "status": "proposed",
+   "stratum": null,
+   "scale": null,
+   "share": null,
+   "evidence": {
+    "change": 0.30108090666254156,
+    "forecast": 0.04450533097571563,
+    "z": 3.624220689314068,
+    "shift_times_noise": 2.5666108749530063,
+    "direct": 0.25657557568682593
+   },
+   "provenance": "flagged by the law of a library",
+   "proposed_in": "the library under interferon"
+  }
+ ],
+ "edge_checks": [],
+ "C": {
+  "proposed": [
+   [
+    "CD44",
+    "MHC1"
+   ],
+   [
+    "NONO",
+    "PDL1"
+   ],
+   [
+    "SSR2",
+    "MHC1"
+   ],
+   [
+    "STAT3",
+    "MHC1"
+   ],
+   [
+    "TAPBP",
+    "MHC1"
+   ]
+  ],
+  "tested": [
+   {
+    "edge": "TAPBP->MHC1@mel_co",
+    "status": "admitted",
+    "proposed_with": {
+     "change": -1.5643403470921367,
+     "forecast": 0.04389038656646511,
+     "z": -17.86203281286972,
+     "shift_times_noise": 1.093561678511878,
+     "direct": -1.6082307336586017
+    },
+    "test": {
+     "change": -1.7211283588153283,
+     "forecast_without_the_edge": 0.019551602762897302,
+     "sd": 0.1321079348351429,
+     "z": -13.176195387131097,
+     "same_side_as_proposed": true
+    },
+    "explored_share_of_the_scale": {
+     "under_interferon": -0.32493077082301264,
+     "where_tested": -0.25716040806347934
+    }
+   },
+   {
+    "edge": "STAT3->MHC1@mel_co",
+    "status": "refused",
+    "proposed_with": {
+     "change": 0.6067411751948093,
+     "forecast": 0.052006638663240075,
+     "z": 5.986183979356739,
+     "shift_times_noise": 1.2407229854441821,
+     "direct": 0.5547345365315692
+    },
+    "test": {
+     "change": 0.18885842804895073,
+     "forecast_without_the_edge": 0.009797987214743101,
+     "sd": 0.12501172953147896,
+     "z": 1.4323491204008882,
+     "same_side_as_proposed": true
+    },
+    "explored_share_of_the_scale": {
+     "under_interferon": 0.11207988803154743,
+     "where_tested": 0.026453602643418485
+    }
+   },
+   {
+    "edge": "CD44->MHC1@mel_co",
+    "status": "admitted",
+    "proposed_with": {
+     "change": 0.41197279829224237,
+     "forecast": 0.03986440574052263,
+     "z": 5.1157522966295765,
+     "shift_times_noise": 1.002361038528011,
+     "direct": 0.37210839255171974
+    },
+    "test": {
+     "change": 0.40501764793990674,
+     "forecast_without_the_edge": 0.036227570060900466,
+     "sd": 0.12179009688894052,
+     "z": 3.0280793537368087,
+     "same_side_as_proposed": true
+    },
+    "explored_share_of_the_scale": {
+     "under_interferon": 0.07518166659238174,
+     "where_tested": 0.05448342544894953
+    }
+   },
+   {
+    "edge": "SSR2->MHC1@mel_ctl",
+    "status": "admitted",
+    "proposed_with": {
+     "change": 0.47578040906824004,
+     "forecast": 0.032574764430735606,
+     "z": 6.0245598138604795,
+     "shift_times_noise": 2.470144741676191,
+     "direct": 0.44320564463750445
+    },
+    "test": {
+     "change": 0.4575556946652506,
+     "forecast_without_the_edge": 0.05180661200067763,
+     "sd": 0.10080047137542728,
+     "z": 4.025269694953875,
+     "same_side_as_proposed": true
+    },
+    "explored_share_of_the_scale": {
+     "under_interferon": 0.08954632487190455,
+     "where_tested": 0.09465609173180657
+    }
+   },
+   {
+    "edge": "CD44->MHC1@mel_ctl",
+    "status": "admitted",
+    "proposed_with": {
+     "change": 0.41197279829224237,
+     "forecast": 0.03986440574052263,
+     "z": 5.1157522966295765,
+     "shift_times_noise": 1.002361038528011,
+     "direct": 0.37210839255171974
+    },
+    "test": {
+     "change": 0.3274180579178897,
+     "forecast_without_the_edge": 0.031293262032970434,
+     "sd": 0.08018503583061502,
+     "z": 3.6930181899582992,
+     "same_side_as_proposed": true
+    },
+    "explored_share_of_the_scale": {
+     "under_interferon": 0.07518166659238174,
+     "where_tested": 0.0690821422423706
+    }
+   }
+  ],
+  "not_tested": [
+   "NONO->PDL1"
+  ],
+  "counts": {
+   "admitted": 4,
+   "refused": 1,
+   "undecided": 0,
+   "proposed, no row elsewhere": 1
+  }
+ },
+ "step_after_a_rejection": {
+  "accounts": 14,
+  "items": [
+   {
+    "id": "P01",
+    "key": null,
+    "readout": "PDL1",
+    "group": "mel_co",
+    "type": null,
+    "event": "CD274",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 95% of the change",
+    "value": 0.9484927602158797,
+    "ci": [
+     0.9077588223502299,
+     0.9907018869561456
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "mel_co",
+      "event": "CD274",
+      "value": 0.9484927602158797,
+      "ci": [
+       0.9077588223502299,
+       0.9907018869561456
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.06010997316165102,
+      "ci": [
+       0.015690924419281882,
+       0.10577016541772408
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "CD274->PDL1",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P02",
+    "key": null,
+    "readout": "PDL1",
+    "group": "mel_co",
+    "type": null,
+    "event": "CD44",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 80% of the change",
+    "value": 0.7974922807777983,
+    "ci": [
+     0.5386021131450912,
+     1.091046714060451
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "units of the pool",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "more recorded events of the type"
+    ],
+    "not": "add an edge, or train",
+    "evidence": null,
+    "note": "more recorded events of the type, so that it can be said whether they forecast the change",
+    "state": "open",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "mel_co",
+      "event": "CD44",
+      "value": 0.7974922807777983,
+      "ci": [
+       0.5386021131450912,
+       1.091046714060451
+      ],
+      "evidence": null,
+      "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.20646424633093652,
+      "ci": [
+       -0.13645831925453175,
+       0.5185920771264321
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "judged_by": "the interval of `others` at the state"
+   },
+   {
+    "id": "P03",
+    "key": null,
+    "readout": "PDL1",
+    "group": "mel_co",
+    "type": null,
+    "event": "CD44",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: 1% of the change",
+    "value": 0.013554179714579256,
+    "ci": [
+     -0.12928615608375743,
+     0.17741147596952092
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data: the records already read",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a readout taught by the records of the events of the same type, credited up to what the state carries",
+     "a richer reader of the state"
+    ],
+    "not": "train what comes before the state",
+    "evidence": null,
+    "note": "a readout taught by the records of the events of the same type",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "mel_co",
+      "event": "CD44",
+      "value": 0.013554179714579256,
+      "ci": [
+       -0.12928615608375743,
+       0.17741147596952092
+      ],
+      "evidence": null,
+      "note": "a readout taught by the records of the events of the same type"
+     }
+    ],
+    "credited_now": null,
+    "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+   },
+   {
+    "id": "P04",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-B",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 91% of the change",
+    "value": 0.9129001674524546,
+    "ci": [
+     0.8260092756293734,
+     1.0112362582104986
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "units of the pool",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "more recorded events of the type"
+    ],
+    "not": "add an edge, or train",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "HLA-B",
+      "value": 0.9129001674524546,
+      "ci": [
+       0.8260092756293734,
+       1.0112362582104986
+      ],
+      "evidence": null,
+      "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.28745578897089946,
+      "ci": [
+       0.04390661153335976,
+       0.5269255309876881
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "judged_by": "the interval of `others` at the state",
+    "edge": {
+     "edge_id": "HLA-B->MHC1",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P05",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-B",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 13% of the change",
+    "value": 0.12539062773569598,
+    "ci": [
+     0.06526404357731487,
+     0.19649660411478959
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data first; then the owner's decision",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a state kept by type, judged by what it carries against the mean state and a matched control",
+     "training of what comes before the state: the owner's decision"
+    ],
+    "not": "change the head",
+    "evidence": null,
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "HLA-B",
+      "value": 0.12539062773569598,
+      "ci": [
+       0.06526404357731487,
+       0.19649660411478959
+      ],
+      "evidence": null,
+      "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+     }
+    ],
+    "credited_now": {
+     "candidate_states": {
+      "T over Z": {
+       "gain": 0.01978074826979448,
+       "ci": [
+        -0.07933646579734298,
+        0.11751085331685507
+       ],
+       "reading": "unresolved"
+      },
+      "V over Z": {
+       "gain": 0.12539062773569598,
+       "ci": [
+        0.06526404357731487,
+        0.19649660411478959
+       ],
+       "reading": "unresolved"
+      }
+     }
+    },
+    "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+   },
+   {
+    "id": "P06",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-C",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 78% of the change",
+    "value": 0.7783530398260857,
+    "ci": [
+     0.6499335191782138,
+     0.9256776928033064
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "units of the pool",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "more recorded events of the type"
+    ],
+    "not": "add an edge, or train",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "HLA-C",
+      "value": 0.7783530398260857,
+      "ci": [
+       0.6499335191782138,
+       0.9256776928033064
+      ],
+      "evidence": null,
+      "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.31894466138754146,
+      "ci": [
+       -0.10107993650326565,
+       0.6911858880981387
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "judged_by": "the interval of `others` at the state",
+    "edge": {
+     "edge_id": "HLA-C->MHC1",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P07",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-C",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 11% of the change",
+    "value": 0.11346900481639377,
+    "ci": [
+     -0.027429848318971134,
+     0.25563462520991315
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data first; then the owner's decision",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a state kept by type, judged by what it carries against the mean state and a matched control",
+     "training of what comes before the state: the owner's decision"
+    ],
+    "not": "change the head",
+    "evidence": null,
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "HLA-C",
+      "value": 0.11346900481639377,
+      "ci": [
+       -0.027429848318971134,
+       0.25563462520991315
+      ],
+      "evidence": null,
+      "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+     }
+    ],
+    "credited_now": {
+     "candidate_states": {
+      "T over Z": {
+       "gain": -0.003617359107261242,
+       "ci": [
+        -0.1416495778837804,
+        0.1554449579541432
+       ],
+       "reading": "unresolved"
+      },
+      "V over Z": {
+       "gain": 0.11346900481639377,
+       "ci": [
+        -0.027429848318971134,
+        0.25563462520991315
+       ],
+       "reading": "unresolved"
+      }
+     }
+    },
+    "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+   },
+   {
+    "id": "P08",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-C",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: 4% of the change",
+    "value": 0.03578680896827985,
+    "ci": [
+     -0.04604871296813827,
+     0.12852631947759985
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data: the records already read",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a readout taught by the records of the events of the same type, credited up to what the state carries",
+     "a richer reader of the state"
+    ],
+    "not": "train what comes before the state",
+    "evidence": null,
+    "note": "a readout taught by the records of the events of the same type",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "HLA-C",
+      "value": 0.03578680896827985,
+      "ci": [
+       -0.04604871296813827,
+       0.12852631947759985
+      ],
+      "evidence": null,
+      "note": "a readout taught by the records of the events of the same type"
+     }
+    ],
+    "credited_now": null,
+    "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+   },
+   {
+    "id": "P09",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "CD44",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 88% of the change",
+    "value": 0.881165916029384,
+    "ci": [
+     0.7509467940188621,
+     1.0244753207496664
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'flagged' (flag)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "CD44",
+      "value": 0.881165916029384,
+      "ci": [
+       0.7509467940188621,
+       1.0244753207496664
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.027946625853484126,
+      "ci": [
+       -0.3283738437244319,
+       0.34689539528924945
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "CD44->MHC1@mel_ctl",
+     "class": "flagged",
+     "basis": "flag",
+     "status": "admitted"
+    }
+   },
+   {
+    "id": "P10",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "CD44",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 3% of the change",
+    "value": 0.025358969909702878,
+    "ci": [
+     -0.08851408463023751,
+     0.14717769810350384
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data first; then the owner's decision",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a state kept by type, judged by what it carries against the mean state and a matched control",
+     "training of what comes before the state: the owner's decision"
+    ],
+    "not": "change the head",
+    "evidence": null,
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "CD44",
+      "value": 0.025358969909702878,
+      "ci": [
+       -0.08851408463023751,
+       0.14717769810350384
+      ],
+      "evidence": null,
+      "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+     }
+    ],
+    "credited_now": {
+     "candidate_states": {
+      "T over Z": {
+       "gain": 0.003629289249316603,
+       "ci": [
+        -0.16975113181529147,
+        0.19353399459725293
+       ],
+       "reading": "unresolved"
+      },
+      "V over Z": {
+       "gain": 0.025358969909702878,
+       "ci": [
+        -0.08851408463023751,
+        0.14717769810350384
+       ],
+       "reading": "unresolved"
+      }
+     }
+    },
+    "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+   },
+   {
+    "id": "P11",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_co",
+    "type": null,
+    "event": "TAPBP",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 97% of the change",
+    "value": 0.9663908462140985,
+    "ci": [
+     0.9175223561040993,
+     1.0201147047741286
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'flagged' (flag)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_co",
+      "event": "TAPBP",
+      "value": 0.9663908462140985,
+      "ci": [
+       0.9175223561040993,
+       1.0201147047741286
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": -0.011426078966891419,
+      "ci": [
+       -0.08766761768271157,
+       0.06272279727542607
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "TAPBP->MHC1@mel_co",
+     "class": "flagged",
+     "basis": "flag",
+     "status": "admitted"
+    }
+   },
+   {
+    "id": "P12",
+    "key": null,
+    "readout": "HLAE",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-E",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 94% of the change",
+    "value": 0.9448889894184804,
+    "ci": [
+     0.8990468551498713,
+     0.98335115027416
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "HLAE",
+      "group": "mel_co",
+      "event": "HLA-E",
+      "value": 0.9448889894184804,
+      "ci": [
+       0.8990468551498713,
+       0.98335115027416
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": -0.008156246881396574,
+      "ci": [
+       -0.15858768622724856,
+       0.1364192779316362
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "HLA-E->HLAE",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P13",
+    "key": null,
+    "readout": "HLAE",
+    "group": "mel_co",
+    "type": null,
+    "event": "HLA-E",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 8% of the change",
+    "value": 0.07593986388102425,
+    "ci": [
+     0.013294016839930346,
+     0.1510185745413065
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data first; then the owner's decision",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a state kept by type, judged by what it carries against the mean state and a matched control",
+     "training of what comes before the state: the owner's decision"
+    ],
+    "not": "change the head",
+    "evidence": null,
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "HLAE",
+      "group": "mel_co",
+      "event": "HLA-E",
+      "value": 0.07593986388102425,
+      "ci": [
+       0.013294016839930346,
+       0.1510185745413065
+      ],
+      "evidence": null,
+      "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+     }
+    ],
+    "credited_now": {
+     "candidate_states": {
+      "T over Z": {
+       "gain": 0.02149557173201,
+       "ci": [
+        -0.05098369546321324,
+        0.10349032677748791
+       ],
+       "reading": "unresolved"
+      },
+      "V over Z": {
+       "gain": 0.07593986388102425,
+       "ci": [
+        0.013294016839930346,
+        0.1510185745413065
+       ],
+       "reading": "unresolved"
+      }
+     }
+    },
+    "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+   },
+   {
+    "id": "P14",
+    "key": null,
+    "readout": "PDL1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "CD274",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 92% of the change",
+    "value": 0.921087466998789,
+    "ci": [
+     0.805434003701373,
+     1.0281601924089125
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "mel_ctl",
+      "event": "CD274",
+      "value": 0.921087466998789,
+      "ci": [
+       0.805434003701373,
+       1.0281601924089125
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.07649207924671203,
+      "ci": [
+       -0.06593266269602702,
+       0.21713620743603604
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "CD274->PDL1",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P15",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "CD44",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 88% of the change",
+    "value": 0.8811194108219851,
+    "ci": [
+     0.6460984480055378,
+     1.110431993529942
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "units of the pool",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "more recorded events of the type"
+    ],
+    "not": "add an edge, or train",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'flagged' (flag)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "CD44",
+      "value": 0.8811194108219851,
+      "ci": [
+       0.6460984480055378,
+       1.110431993529942
+      ],
+      "evidence": null,
+      "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.23884596976849576,
+      "ci": [
+       -0.28703704583655903,
+       1.030379550033352
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "judged_by": "the interval of `others` at the state",
+    "edge": {
+     "edge_id": "CD44->MHC1@mel_ctl",
+     "class": "flagged",
+     "basis": "flag",
+     "status": "admitted"
+    }
+   },
+   {
+    "id": "P16",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "CD44",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: -1% of the change",
+    "value": -0.011763858722111775,
+    "ci": [
+     -0.24941182306839293,
+     0.1677530190972993
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data: the records already read",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a readout taught by the records of the events of the same type, credited up to what the state carries",
+     "a richer reader of the state"
+    ],
+    "not": "train what comes before the state",
+    "evidence": null,
+    "note": "a readout taught by the records of the events of the same type",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "CD44",
+      "value": -0.011763858722111775,
+      "ci": [
+       -0.24941182306839293,
+       0.1677530190972993
+      ],
+      "evidence": null,
+      "note": "a readout taught by the records of the events of the same type"
+     }
+    ],
+    "credited_now": null,
+    "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+   },
+   {
+    "id": "P17",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "HLA-B",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 93% of the change",
+    "value": 0.9304007408072317,
+    "ci": [
+     0.8231791303576333,
+     1.0792487126772625
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "HLA-B",
+      "value": 0.9304007408072317,
+      "ci": [
+       0.8231791303576333,
+       1.0792487126772625
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": -0.13682979559490152,
+      "ci": [
+       -0.6366634032208127,
+       0.2038761124312363
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "HLA-B->MHC1",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P18",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "HLA-B",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 3% of the change",
+    "value": 0.030148658150269347,
+    "ci": [
+     -0.08019123363762198,
+     0.1480110732551089
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data first; then the owner's decision",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a state kept by type, judged by what it carries against the mean state and a matched control",
+     "training of what comes before the state: the owner's decision"
+    ],
+    "not": "change the head",
+    "evidence": null,
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "HLA-B",
+      "value": 0.030148658150269347,
+      "ci": [
+       -0.08019123363762198,
+       0.1480110732551089
+      ],
+      "evidence": null,
+      "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+     }
+    ],
+    "credited_now": {
+     "candidate_states": {
+      "V over Z": {
+       "gain": 0.030148658150269347,
+       "ci": [
+        -0.08019123363762198,
+        0.1480110732551089
+       ],
+       "reading": "unresolved"
+      }
+     }
+    },
+    "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+   },
+   {
+    "id": "P19",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "HLA-B",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: 2% of the change",
+    "value": 0.019879043302591454,
+    "ci": [
+     -0.08968728087173335,
+     0.1571862845647119
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data: the records already read",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a readout taught by the records of the events of the same type, credited up to what the state carries",
+     "a richer reader of the state"
+    ],
+    "not": "train what comes before the state",
+    "evidence": null,
+    "note": "a readout taught by the records of the events of the same type",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "HLA-B",
+      "value": 0.019879043302591454,
+      "ci": [
+       -0.08968728087173335,
+       0.1571862845647119
+      ],
+      "evidence": null,
+      "note": "a readout taught by the records of the events of the same type"
+     }
+    ],
+    "credited_now": null,
+    "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+   },
+   {
+    "id": "P20",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "SSR2",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 89% of the change",
+    "value": 0.8892801440957914,
+    "ci": [
+     0.7007349558512247,
+     1.0803791886811145
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "units of the pool",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "more recorded events of the type"
+    ],
+    "not": "add an edge, or train",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'flagged' (flag)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "SSR2",
+      "value": 0.8892801440957914,
+      "ci": [
+       0.7007349558512247,
+       1.0803791886811145
+      ],
+      "evidence": null,
+      "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": -0.04002261982682853,
+      "ci": [
+       -0.7311128559345333,
+       0.5278348170361183
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "judged_by": "the interval of `others` at the state",
+    "edge": {
+     "edge_id": "SSR2->MHC1@mel_ctl",
+     "class": "flagged",
+     "basis": "flag",
+     "status": "admitted"
+    }
+   },
+   {
+    "id": "P21",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "SSR2",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: 2% of the change",
+    "value": 0.017157529450806536,
+    "ci": [
+     -0.16186875152447489,
+     0.23762715838431622
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data: the records already read",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a readout taught by the records of the events of the same type, credited up to what the state carries",
+     "a richer reader of the state"
+    ],
+    "not": "train what comes before the state",
+    "evidence": null,
+    "note": "a readout taught by the records of the events of the same type",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "SSR2",
+      "value": 0.017157529450806536,
+      "ci": [
+       -0.16186875152447489,
+       0.23762715838431622
+      ],
+      "evidence": null,
+      "note": "a readout taught by the records of the events of the same type"
+     }
+    ],
+    "credited_now": null,
+    "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+   },
+   {
+    "id": "P22",
+    "key": null,
+    "readout": "MHC1",
+    "group": "mel_ctl",
+    "type": null,
+    "event": "B2M",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 87% of the change",
+    "value": 0.8695202491392592,
+    "ci": [
+     0.8366168736737216,
+     0.9036808427756944
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "on the graph: an edge of class 'own' (declaration)",
+    "state": "on the graph",
+    "observations": [
+     {
+      "readout": "MHC1",
+      "group": "mel_ctl",
+      "event": "B2M",
+      "value": 0.8695202491392592,
+      "ci": [
+       0.8366168736737216,
+       0.9036808427756944
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.10866074920859936,
+      "ci": [
+       0.0529916810306483,
+       0.1547108093863514
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)",
+    "edge": {
+     "edge_id": "B2M->MHC1",
+     "class": "own",
+     "basis": "declaration",
+     "status": "declared"
+    }
+   },
+   {
+    "id": "P23",
+    "key": null,
+    "readout": "PDL1",
+    "group": "thp1",
+    "type": null,
+    "event": "BRD4",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 39% of the change",
+    "value": 0.38584182835378944,
+    "ci": [
+     0.16129479590399193,
+     0.569476920553622
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "units of the pool",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "more recorded events of the type"
+    ],
+    "not": "add an edge, or train",
+    "evidence": null,
+    "note": "more recorded events of the type, so that it can be said whether they forecast the change",
+    "state": "open",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "thp1",
+      "event": "BRD4",
+      "value": 0.38584182835378944,
+      "ci": [
+       0.16129479590399193,
+       0.569476920553622
+      ],
+      "evidence": null,
+      "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": 0.2515603633131855,
+      "ci": [
+       -0.16767613015442184,
+       0.5557234704864918
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "judged_by": "the interval of `others` at the state"
+   },
+   {
+    "id": "P24",
+    "key": null,
+    "readout": "PDL1",
+    "group": "thp1",
+    "type": null,
+    "event": "BRD4",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 15% of the change",
+    "value": 0.15057316660720887,
+    "ci": [
+     -0.05819827424779408,
+     0.3934432603385344
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data first; then the owner's decision",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a state kept by type, judged by what it carries against the mean state and a matched control",
+     "training of what comes before the state: the owner's decision"
+    ],
+    "not": "change the head",
+    "evidence": null,
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "thp1",
+      "event": "BRD4",
+      "value": 0.15057316660720887,
+      "ci": [
+       -0.05819827424779408,
+       0.3934432603385344
+      ],
+      "evidence": null,
+      "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+     }
+    ],
+    "credited_now": {
+     "candidate_states": {
+      "T over Z": {
+       "gain": 0.03028287324489365,
+       "ci": [
+        -0.12047445593811815,
+        0.21074521964131906
+       ],
+       "reading": "unresolved"
+      },
+      "V over Z": {
+       "gain": 0.15057316660720887,
+       "ci": [
+        -0.05819827424779408,
+        0.3934432603385344
+       ],
+       "reading": "unresolved"
+      }
+     }
+    },
+    "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+   },
+   {
+    "id": "P25",
+    "key": null,
+    "readout": "PDL1",
+    "group": "thp1",
+    "type": null,
+    "event": "BRD4",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: 9% of the change",
+    "value": 0.0946987889365844,
+    "ci": [
+     -0.09852666720454928,
+     0.31983769128582273
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data: the records already read",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "a readout taught by the records of the events of the same type, credited up to what the state carries",
+     "a richer reader of the state"
+    ],
+    "not": "train what comes before the state",
+    "evidence": null,
+    "note": "a readout taught by the records of the events of the same type",
+    "state": "at the margin",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "thp1",
+      "event": "BRD4",
+      "value": 0.0946987889365844,
+      "ci": [
+       -0.09852666720454928,
+       0.31983769128582273
+      ],
+      "evidence": null,
+      "note": "a readout taught by the records of the events of the same type"
+     }
+    ],
+    "credited_now": null,
+    "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+   },
+   {
+    "id": "P26",
+    "key": null,
+    "readout": "PDL1",
+    "group": "thp1",
+    "type": null,
+    "event": "CMTM6",
+    "reading": "outside the input, not forecast",
+    "lever": "G",
+    "question": "not in the input: 102% of the change",
+    "value": 1.0191635671026609,
+    "ci": [
+     0.934840084048516,
+     1.1395043819854096
+    ],
+    "resampling_units": null,
+    "units_needed": null,
+    "more_units_in_pool": null,
+    "next_step_needs": "no new data to propose; rows not yet read to test",
+    "after": [],
+    "standing": null,
+    "actions": [
+     "an edge between the event and the readout: declared if it follows from the declarations (the site is part of the readout's own measurement; the unit is a batch of the measurement)",
+     "else proposed, and tested on rows the proposal did not see",
+     "a size for the edge: its class's share of a scale measured in each condition"
+    ],
+    "not": "train, or change the head: no change of the model can supply it",
+    "evidence": null,
+    "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)",
+    "state": "open",
+    "observations": [
+     {
+      "readout": "PDL1",
+      "group": "thp1",
+      "event": "CMTM6",
+      "value": 1.0191635671026609,
+      "ci": [
+       0.934840084048516,
+       1.1395043819854096
+      ],
+      "evidence": null,
+      "note": "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)"
+     }
+    ],
+    "credited_now": {
+     "forecast_by_the_other_events": {
+      "others": -0.020924276632605033,
+      "ci": [
+       -0.15500074855799015,
+       0.09943494345948285
+      ],
+      "reading": "the other events do not forecast it"
+     }
+    },
+    "judged_by": "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)"
+   }
+  ],
+  "by_reading_and_state": {
+   "held, not read | at the margin": 6,
+   "lost before the state | at the margin": 6,
+   "outside the input, not forecast | on the graph": 7,
+   "outside the input, not forecast | open": 1,
+   "outside the input, undecided | on the graph": 4,
+   "outside the input, undecided | open": 2
+  }
+ }
+}
