@@ -291,7 +291,30 @@ typed state (refuted). A check added after that reading found the reason in the 
 bring the columns of a stage to one scale, and the block is nineteen times smaller than the rest. At one scale the
 typed state gains a step in every output of the round: 0.90 to 0.73 with no record of IRF1, 0.68 to 0.49 with its
 record. The same typing of what enters the first layer reads as much with a record, so this is a way around the
-encoder, not a repair of it; and nothing closes. Two things follow. A block that is chosen by the records of one
-type reads part of an event without a record, which the whole input view beside the state did not (1.00): the
-typing is where the TEG helps, and it has to be repeated by a rule declared first, on events that did not enter the
-check. And the round's reader needs a rule for the scale of a stage before any state made of blocks is judged by it.
+encoder, not a repair of it; and nothing closes. The round's reader needs a rule for the scale of a stage before
+any state made of blocks is judged by it. (That run also said the typed state reads a step more of an event without
+a record. That held for a readout of control cells alone: a reader fitted with the cells of the pathway's events
+leaves 0.64 at the mean state and at the typed state.)
+
+The two open steps were then designed again and the audit was run again
+([`runs/typed_repair_20261125`](runs/typed_repair_20261125/)); nothing was trained. An exploration on the THP-1
+cells found that **the repair of the round did not apply its rows**: its gain weighs a row against a control fit that
+is sure of cells it never saw, and for IRF1 it closed 27% of the row on the cells it was fitted on, so gate 3 never
+passed. With the uncertainty of the control fit widened until the rows are not surprising, IRF1 with its own record
+leaves 0.17 [−0.01, 0.29] at the plain mean state where it left 0.68; gate 3 passes and the grade is relative. A row
+derived from the RNA of IRF1's cells, by a rule that projects the event's shift of the input view on the shift of
+the recorded events of its type, is 92% of the measured one and leaves 0.22. Those THP-1 readings are not counted:
+the rule was found there. On the melanoma strata, declared first, the picture is mixed. Every MHC-I event read on
+its own gains a step with its record (5 of 5) and with a derived row (5 of 5); the rule gives 75% to 107% of the
+measured change for 15 of 15 events with one left out; a permuted state does not close. But the pooled MHC-I target
+does not move (0.36: its rows were already applied, and the state is the limit), the guard on control cells is
+tripped there, and PD-L1 under IFN-γ loses its grade because gate 3 reads an output that overshoots on the cells it
+was fitted on. The typed state, with its genes now chosen on the fitted half, removes about 0.05 where the state is
+the limit and never a step; four programs found among control cells with no record remove nothing; and the last
+layers trained on 24 November add nothing once the repair applies a record. Three things follow. The item that
+"one record cannot close" was a property of the repair, not of the encoder, and the earlier localisation of a loss
+at the mean (0.40 against 0.18) is a statement about ridge readers. An event without a protein record can be
+reached with no training, by a row derived from its RNA, as far as that rule holds; it has been tested on members
+of a type and on one event that is unlike its type. And four rules of the loop are now in question (the scale of a
+stage, the weight of a row, gate 3 for rows that are closed, the reader classes of the tool); they are the owner's
+decision, as is a batch of events that no run has read, on which all of this would be tested.

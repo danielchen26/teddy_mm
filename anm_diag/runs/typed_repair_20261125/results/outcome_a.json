@@ -1,0 +1,215 @@
+{
+ "intervals": {
+  "held": 4,
+  "of": 8
+ },
+ "outcomes": {
+  "the_most_probable_class_happened": 6,
+  "of": 9
+ },
+ "rows": [
+  {
+   "id": "H1",
+   "kind": "outcome",
+   "what": "H1: for T2 (MHC-I, co-culture) at Z the new rows gain a step over the old",
+   "probabilities": {
+    "unresolved": 0.45,
+    "confirmed": 0.4,
+    "refuted": 0.15
+   },
+   "outcome": "refuted",
+   "probability_given": 0.15,
+   "the_most_probable_class_happened": false
+  },
+  {
+   "id": "H2",
+   "kind": "outcome",
+   "what": "H2: C2 and C3 are not harmed and at Z no melanoma target has a lower grade than it had",
+   "probabilities": {
+    "confirmed": 0.65,
+    "refuted": 0.35
+   },
+   "outcome": "refuted",
+   "probability_given": 0.35,
+   "the_most_probable_class_happened": false
+  },
+  {
+   "id": "H3",
+   "kind": "outcome",
+   "what": "H3: events on their own with their record",
+   "probabilities": {
+    "confirmed": 0.45,
+    "unresolved": 0.4,
+    "refuted": 0.15
+   },
+   "outcome": "confirmed",
+   "probability_given": 0.45,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "H4",
+   "kind": "outcome",
+   "what": "H4: the permuted state does not close and the made-up event does not move",
+   "probabilities": {
+    "confirmed": 0.8,
+    "refuted": 0.2
+   },
+   "outcome": "confirmed",
+   "probability_given": 0.8,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "H5",
+   "kind": "outcome",
+   "what": "H5: the correlation among control cells falls by less than 0.03",
+   "probabilities": {
+    "confirmed": 0.75,
+    "refuted": 0.25
+   },
+   "outcome": "refuted",
+   "probability_given": 0.25,
+   "the_most_probable_class_happened": false
+  },
+  {
+   "id": "H6",
+   "kind": "outcome",
+   "what": "H6: without a protein record, the derived row",
+   "probabilities": {
+    "confirmed": 0.5,
+    "unresolved": 0.35,
+    "refuted": 0.15
+   },
+   "outcome": "confirmed",
+   "probability_given": 0.5,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "H7",
+   "kind": "outcome",
+   "what": "H7: the rule on the records, one left out",
+   "probabilities": {
+    "confirmed": 0.55,
+    "unresolved": 0.3,
+    "refuted": 0.15
+   },
+   "outcome": "confirmed",
+   "probability_given": 0.55,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "grade-T2",
+   "kind": "outcome",
+   "what": "the grade of T2 at Z with the new rows",
+   "probabilities": {
+    "relative": 0.55,
+    "loss no longer resolved": 0.15,
+    "not tested (gate 3)": 0.15,
+    "absolute": 0.1,
+    "not closed": 0.05
+   },
+   "outcome": "relative",
+   "probability_given": 0.55,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "type-or-derived",
+   "kind": "outcome",
+   "what": "for the five MHC-I events at Z, which arm leaves the smaller median |u|",
+   "probabilities": {
+    "type": 0.6,
+    "derived": 0.4
+   },
+   "outcome": "type",
+   "probability_given": 0.6,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "u-T2-Z",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at Z",
+   "interval": [
+    0.05,
+    0.28
+   ],
+   "value": 0.3567977009156559,
+   "inside": false
+  },
+  {
+   "id": "u-T2-ZV",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at ZV",
+   "interval": [
+    0.0,
+    0.22
+   ],
+   "value": 0.29654266443502064,
+   "inside": false
+  },
+  {
+   "id": "gain-T2-Z",
+   "kind": "interval",
+   "what": "the gain of the new rows over the old, T2 at Z",
+   "interval": [
+    0.08,
+    0.3
+   ],
+   "value": 0.004747775781964503,
+   "inside": false
+  },
+  {
+   "id": "u-C2-Z",
+   "kind": "interval",
+   "what": "u of the new rows, C2 at Z",
+   "interval": [
+    -0.05,
+    0.15
+   ],
+   "value": 0.09068520408417624,
+   "inside": true
+  },
+  {
+   "id": "u-C3-Z",
+   "kind": "interval",
+   "what": "u of the new rows, C3 at Z",
+   "interval": [
+    -0.12,
+    0.1
+   ],
+   "value": 0.010229119797996344,
+   "inside": true
+  },
+  {
+   "id": "derived-MHC1",
+   "kind": "interval",
+   "what": "median |u| of `derived` over the five MHC-I events at Z",
+   "interval": [
+    0.08,
+    0.4
+   ],
+   "value": 0.36701491546730125,
+   "inside": true
+  },
+  {
+   "id": "type-MHC1",
+   "kind": "interval",
+   "what": "median |u| of `type` over the five MHC-I events at Z",
+   "interval": [
+    0.05,
+    0.35
+   ],
+   "value": 0.3622927526472032,
+   "inside": false
+  },
+  {
+   "id": "ratio-15",
+   "kind": "interval",
+   "what": "median over the fifteen melanoma events of the derived change over the measured one",
+   "interval": [
+    0.75,
+    1.1
+   ],
+   "value": 0.7982881340802312,
+   "inside": true
+  }
+ ]
+}

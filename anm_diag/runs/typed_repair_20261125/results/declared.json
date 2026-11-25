@@ -1,0 +1,290 @@
+{
+ "note": "Forecasts for part A, written on 25 November 2026 after the exploration on THP-1 (DESIGN.md, Section 2) and before the melanoma strata were read by the rules of this run. What was known: the round as it was, for the melanoma targets (runs/input_beside_z_20261123).",
+ "part_A": [
+  {
+   "id": "H1",
+   "kind": "outcome",
+   "what": "H1: for T2 (MHC-I, co-culture) at Z the new rows gain a step over the old",
+   "probabilities": {
+    "unresolved": 0.45,
+    "confirmed": 0.4,
+    "refuted": 0.15
+   }
+  },
+  {
+   "id": "H2",
+   "kind": "outcome",
+   "what": "H2: C2 and C3 are not harmed and at Z no melanoma target has a lower grade than it had",
+   "probabilities": {
+    "confirmed": 0.65,
+    "refuted": 0.35
+   }
+  },
+  {
+   "id": "H3",
+   "kind": "outcome",
+   "what": "H3: events on their own with their record",
+   "probabilities": {
+    "confirmed": 0.45,
+    "unresolved": 0.4,
+    "refuted": 0.15
+   }
+  },
+  {
+   "id": "H4",
+   "kind": "outcome",
+   "what": "H4: the permuted state does not close and the made-up event does not move",
+   "probabilities": {
+    "confirmed": 0.8,
+    "refuted": 0.2
+   }
+  },
+  {
+   "id": "H5",
+   "kind": "outcome",
+   "what": "H5: the correlation among control cells falls by less than 0.03",
+   "probabilities": {
+    "confirmed": 0.75,
+    "refuted": 0.25
+   }
+  },
+  {
+   "id": "H6",
+   "kind": "outcome",
+   "what": "H6: without a protein record, the derived row",
+   "probabilities": {
+    "confirmed": 0.5,
+    "unresolved": 0.35,
+    "refuted": 0.15
+   }
+  },
+  {
+   "id": "H7",
+   "kind": "outcome",
+   "what": "H7: the rule on the records, one left out",
+   "probabilities": {
+    "confirmed": 0.55,
+    "unresolved": 0.3,
+    "refuted": 0.15
+   }
+  },
+  {
+   "id": "grade-T2",
+   "kind": "outcome",
+   "what": "the grade of T2 at Z with the new rows",
+   "probabilities": {
+    "relative": 0.55,
+    "loss no longer resolved": 0.15,
+    "not tested (gate 3)": 0.15,
+    "absolute": 0.1,
+    "not closed": 0.05
+   }
+  },
+  {
+   "id": "type-or-derived",
+   "kind": "outcome",
+   "what": "for the five MHC-I events at Z, which arm leaves the smaller median |u|",
+   "probabilities": {
+    "type": 0.6,
+    "derived": 0.4
+   }
+  },
+  {
+   "id": "u-T2-Z",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at Z",
+   "interval": [
+    0.05,
+    0.28
+   ]
+  },
+  {
+   "id": "u-T2-ZV",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at ZV",
+   "interval": [
+    0.0,
+    0.22
+   ]
+  },
+  {
+   "id": "gain-T2-Z",
+   "kind": "interval",
+   "what": "the gain of the new rows over the old, T2 at Z",
+   "interval": [
+    0.08,
+    0.3
+   ]
+  },
+  {
+   "id": "u-C2-Z",
+   "kind": "interval",
+   "what": "u of the new rows, C2 at Z",
+   "interval": [
+    -0.05,
+    0.15
+   ]
+  },
+  {
+   "id": "u-C3-Z",
+   "kind": "interval",
+   "what": "u of the new rows, C3 at Z",
+   "interval": [
+    -0.12,
+    0.1
+   ]
+  },
+  {
+   "id": "derived-MHC1",
+   "kind": "interval",
+   "what": "median |u| of `derived` over the five MHC-I events at Z",
+   "interval": [
+    0.08,
+    0.4
+   ]
+  },
+  {
+   "id": "type-MHC1",
+   "kind": "interval",
+   "what": "median |u| of `type` over the five MHC-I events at Z",
+   "interval": [
+    0.05,
+    0.35
+   ]
+  },
+  {
+   "id": "ratio-15",
+   "kind": "interval",
+   "what": "median over the fifteen melanoma events of the derived change over the measured one",
+   "interval": [
+    0.75,
+    1.1
+   ]
+  }
+ ],
+ "parts_B_D_E": [
+  {
+   "id": "HB1",
+   "kind": "outcome",
+   "what": "HB1: for T2 the new rows at T gain a step over the new rows at Z",
+   "probabilities": {
+    "refuted": 0.55,
+    "unresolved": 0.33,
+    "confirmed": 0.12
+   }
+  },
+  {
+   "id": "HB2",
+   "kind": "outcome",
+   "what": "HB2: for T2 the rows at T remove a step that the rows at R leave",
+   "probabilities": {
+    "refuted": 0.55,
+    "unresolved": 0.35,
+    "confirmed": 0.1
+   }
+  },
+  {
+   "id": "HB3",
+   "kind": "outcome",
+   "what": "HB3: MHC-I events on their own at T",
+   "probabilities": {
+    "refuted": 0.7,
+    "unresolved": 0.2,
+    "confirmed": 0.1
+   }
+  },
+  {
+   "id": "HB4",
+   "kind": "outcome",
+   "what": "HB4: the guard at T for T2",
+   "probabilities": {
+    "confirmed": 0.5,
+    "refuted": 0.5
+   }
+  },
+  {
+   "id": "HB5",
+   "kind": "outcome",
+   "what": "HB5: C2 and C3 not harmed at T",
+   "probabilities": {
+    "confirmed": 0.85,
+    "refuted": 0.15
+   }
+  },
+  {
+   "id": "HD1",
+   "kind": "outcome",
+   "what": "HD1: for T2 the new rows at P gain a step over the new rows at Z",
+   "probabilities": {
+    "refuted": 0.65,
+    "unresolved": 0.28,
+    "confirmed": 0.07
+   }
+  },
+  {
+   "id": "HE",
+   "kind": "outcome",
+   "what": "HE: a trained last layer adds a step under the new repair",
+   "probabilities": {
+    "refuted": 0.6,
+    "unresolved": 0.28,
+    "confirmed": 0.12
+   }
+  },
+  {
+   "id": "u-T2-T",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at T",
+   "interval": [
+    0.26,
+    0.4
+   ]
+  },
+  {
+   "id": "u-T2-P",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at P",
+   "interval": [
+    0.26,
+    0.42
+   ]
+  },
+  {
+   "id": "u-IRF1-T",
+   "kind": "interval",
+   "what": "u of the new rows with IRF1's record at T (THP-1, genes chosen on the fitted half)",
+   "interval": [
+    0.0,
+    0.2
+   ]
+  },
+  {
+   "id": "u-IRF1-T-derived",
+   "kind": "interval",
+   "what": "u of `derived` for IRF1 at T",
+   "interval": [
+    0.05,
+    0.3
+   ]
+  },
+  {
+   "id": "u-IRF1-rows5",
+   "kind": "interval",
+   "what": "u of the new rows with IRF1's record at the state of the layer trained with IRF1's record",
+   "interval": [
+    0.0,
+    0.22
+   ]
+  },
+  {
+   "id": "u-IRF1-rows5-none",
+   "kind": "interval",
+   "what": "u of the readout of control cells (no record) at that state",
+   "interval": [
+    0.65,
+    0.9
+   ]
+  }
+ ],
+ "note_B_D_E": "Written on 25 November 2026 after part A was read and before any typed state of this run, or any trained state under the new repair, was read."
+}
