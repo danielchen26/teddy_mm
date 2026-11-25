@@ -273,6 +273,86 @@ def must_fail(xs, y, unit, first, event, control="control", draws=DRAWS, seed=0)
             "made_up_event": {"change": m["change"], "snr": m["snr"], "no_change_to_account_for": bool(m["snr"] < MIN_SNR)}}
 
 
+def credit(r, key="found_again"):
+    """A repair that reads a stage is credited up to what the stage carries (LOOP_PROTOCOL.md, 4b). r: a reading of the
+    stage; key: the share the repair closed on cells it was not fitted on. Returns the share that is credited and what
+    the repair claims beyond what the stage carries; a step beyond means the repair has followed the mean."""
+    d = r["_draws"]
+    c, x = np.minimum(d[key], d["carried"]), d[key] - d["carried"]
+    return {"credited": {"share": float(c[0]), "ci": interval(c[1:])},
+            "beyond_what_the_stage_carries": {"share": float(x[0]), "ci": interval(x[1:]), "reading": step(interval(x[1:]))}}
+
+
+def account(stages, y, unit, first, event, others=(), inputs=(), state=None, o=None, pairs=(), control="control", draws=DRAWS, seed=0, controls=True):
+    """The account of one event's change of one readout: the readings at every stage, the chain, the gains of the named
+    pairs of stages (b over a), what a repair that follows the mean is credited with at the state, and the two controls
+    of the measure at the state. stages: {name: array, or the two arrays of a stage chosen on the fitted half}.
+    The resamples are left out of what is returned."""
+    state = state or list(stages)[-1]
+    R = {n: reading(xs, y, unit, first, event, others=others, control=control, o=o if n == state else None, draws=draws, seed=seed) for n, xs in stages.items()}
+    out = {"stages": {n: {k: v for k, v in r.items() if k != "_draws"} for n, r in R.items()}, "chain": chain(R, [i for i in inputs if i in R], state),
+           "gains": {f"{b} over {a}": {k: gain(R[a], R[b], k) for k in ("carried", "read", "others", "found_again") if k in R[a]["_draws"] and k in R[b]["_draws"]}
+                     for a, b in pairs if a in R and b in R},
+           "a_repair_that_follows_the_mean": credit(R[state])}
+    if controls:
+        out["must_fail"] = must_fail(stages[state], y, unit, first, event, control=control, draws=draws, seed=seed)
+    return out
+
+
+def run_spec(spec, base=".", draws=DRAWS):
+    """The account of every event of a SPEC (the file format of `anm_diag scope`). Read from the SPEC: keys.stages,
+    keys.readouts (the first), keys.unit, keys.control, keys.frozen (the system's own output, if any), events, and under
+    `account`: state (default Z), inputs (default V), pairs, others (default: the events of the SPEC), seed, and
+    unit_length (the stages put at unit length, as a head reads them; default Z)."""
+    from pathlib import Path
+    keys, acc = spec["keys"], spec.get("account") or {}
+    z = np.load(Path(base) / spec["arrays"]["audit"], allow_pickle=False)
+    unit_ = np.asarray(z[keys["unit"]]).astype(str)
+    ctl = keys["control"]
+    is_ctl = np.asarray(z[ctl["key"]]).astype(str) == str(ctl["equals"])
+    un = np.where(is_ctl, "control", unit_)
+    ro = keys["readouts"][0] if isinstance(keys["readouts"], (list, tuple)) else keys["readouts"]
+    y = np.asarray(z[ro], np.float64)
+    o = np.asarray(z[keys["frozen"]["array"]], np.float64) if keys.get("frozen") else None
+    at_unit_length = lambda x: x / (np.linalg.norm(x, axis=1, keepdims=True) + 1e-12)
+    stages = {n: at_unit_length(np.asarray(z[k], np.float64)) if n in acc.get("unit_length", ["Z"]) else np.asarray(z[k], np.float64) for n, k in keys["stages"].items()}
+    seed = int(acc.get("seed", (spec.get("decision") or {}).get("seed", 0)))
+    first = cycle.halves(un, seed)
+    ev = spec.get("events", "each")
+    events = [str(e) for e in (sorted(set(un.tolist()) - {"control"} - set(map(str, spec.get("units_exclude", []))) ) if ev in ("each", "pooled") else ev)]
+    state = acc.get("state", "Z" if "Z" in stages else list(stages)[-1])
+    inputs = acc.get("inputs", [n for n in ("V",) if n in stages])
+    oth = [str(e) for e in acc.get("others", events)]
+    res = {"name": spec.get("name"), "readout": spec.get("readout_name", ro), "state": state, "inputs": inputs, "cells": int(len(un)), "control_cells": int(is_ctl.sum()), "events": {}}
+    for e in events:
+        res["events"][e] = account(stages, y, un, first, e, others=[h for h in oth if h != e], inputs=inputs, state=state, o=o,
+                                   pairs=[tuple(p) for p in acc.get("pairs", [])], draws=draws, seed=seed)
+    return res
+
+
+def main(argv=None):
+    """python -m anm_diag account SPEC.yaml --out DIR [--draws N]"""
+    import argparse
+    import json
+    from pathlib import Path
+
+    import yaml
+    ap = argparse.ArgumentParser(prog="anm_diag account")
+    ap.add_argument("spec")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--draws", type=int, default=DRAWS)
+    a = ap.parse_args(argv)
+    spec = yaml.safe_load(open(a.spec))
+    res = run_spec(spec, Path(a.spec).resolve().parent, a.draws)
+    Path(a.out).mkdir(parents=True, exist_ok=True)
+    (Path(a.out) / "account.json").write_text(json.dumps(res, indent=1, default=float) + "\n")
+    for e, r in res["events"].items():
+        st = r["stages"][res["state"]]["shares"]
+        print(f"{e:10s} change {r['chain']['change']:+.3f} | at {res['state']}: read {st['read']['share']:.0%}, carried {st['carried']['share']:.0%}"
+              + (f", others {st['others']['share']:.0%}" if "others" in st else "") + f" | {r['chain']['says']}")
+    return 0
+
+
 # --- many events at once: the law of their rows, and the edges ---------------------------------------------------------
 class Law:
     """Every event of a library and every readout, from rows. In spreads of a readout among control cells:
@@ -286,7 +366,8 @@ class Law:
 
     def __init__(self, x, Y, unit, control="control", edges=None, nu=4.0, min_cells=30, min_class=3, seed=0):
         C = np.where(unit == control)[0]
-        X = (x - x[C].mean(0)) / one_scale(x, C)
+        self._centre, self._scale = x[C].mean(0), one_scale(x, C)
+        X = (x - self._centre) / self._scale
         self.events = [str(e) for e in sorted(set(unit.tolist())) if e != control and (unit == e).sum() >= min_cells]
         self.readouts, self.nu, self.min_class = list(Y), nu, min_class
         self.n = np.array([(unit == e).sum() for e in self.events])
@@ -296,6 +377,7 @@ class Law:
         Xc = X[C]
         G = Xc.T @ Xc / nc
         w, V = np.linalg.eigh(G)
+        self._nc, self._w, self._V = nc, w, V
         fold = np.random.default_rng(seed).permutation(nc) % 5
         self.r = {}
         for name, y in Y.items():
@@ -316,9 +398,9 @@ class Law:
             noise = (se2 + float(th @ G @ th) * (1 / self.n + 1 / nc)) / sd ** 2          # the row's own error, and that of the event's shift of the stage
             cls = np.array([(edges or {}).get((e, name)) for e in self.events], dtype=object)
             self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise,
-                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "w": np.ones(len(dy))}
+                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "w": np.ones(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": float(y[C].mean())}
         self.classes = sorted({c for q in self.r.values() for c in q["cls"] if c is not None})
-        self.sigma0, self.cl = None, {}
+        self.sigma0, self.cl, self.fixed = None, {}, False
 
     def _var_direct(self, q):
         s2 = np.array([self.sigma0 ** 2 if c is None else self.cl[c]["sigma"] ** 2 for c in q["cls"]])
@@ -327,11 +409,15 @@ class Law:
     def _mean_direct(self, q, without=None):
         return np.array([0.0 if c is None else self.cl[c]["mu"] for c in q["cls"]])
 
-    def fit(self, iters=40):
+    def fit(self, iters=40, sigma0=None):
+        """The spread of a direct part with no edge, the classes and the widening of the control prior, from the rows.
+        `sigma0`: hold the spread at this value (a library with too few rows to tell it takes it from a larger one);
+        the widening is still chosen by the rows."""
         res = np.concatenate([q["change"] - q["read"] for q in self.r.values()])
         cls = np.concatenate([q["cls"] for q in self.r.values()])
         none = np.array([c is None for c in cls])
-        self.sigma0 = float(1.4826 * np.median(np.abs(res[none] - np.median(res[none])))) + 1e-6
+        self.fixed = sigma0 is not None
+        self.sigma0 = float(sigma0) if self.fixed else float(1.4826 * np.median(np.abs(res[none] - np.median(res[none])))) + 1e-6
         edge_res = res[~none]
         pooled = (float(edge_res.mean()), float(edge_res.std(ddof=1))) if len(edge_res) >= self.min_class else (0.0, float("nan"))
         for c in self.classes:
@@ -361,7 +447,8 @@ class Law:
             s2 = np.array([self.sigma0 ** 2 if c is None else self.cl[c]["sigma"] ** 2 for c in cls])
             s2 = np.where(np.isfinite(s2), s2, 1e6)
             Wn = (self.nu + 1) / (self.nu + Ed2 / s2)
-            self.sigma0 = float(np.sqrt((Wn[none] * Ed2[none]).mean())) + 1e-9
+            if not self.fixed:
+                self.sigma0 = float(np.sqrt((Wn[none] * Ed2[none]).mean())) + 1e-9
             for c in self.classes:
                 m = cls == c
                 if self.cl[c]["own"]:
@@ -408,6 +495,66 @@ class Law:
                              "by_its_edge": edge, "forecast": float(f), "sd": sd, "interval": [float(f - t95 * sd), float(f + t95 * sd)], "z": z, "no_forecast": why,
                              "direct": float(q["change"][i] - q["read"][i] - m_loo[i]), "direct_sd": float(np.sqrt(v_loo[i] + q["noise"][i]))})
         return rows
+
+    def class_values(self):
+        """The direct parts of the recorded pairs of every class, as fitted: {class: [(event, readout, value)]}."""
+        out = {}
+        for name, q in self.r.items():
+            for i, c in enumerate(q["cls"]):
+                if c is not None:
+                    out.setdefault(c, []).append((self.events[i], name, float(q["direct_dev"][i] + self.cl[c]["mu"])))
+        return out
+
+    def new(self, x, unit, edges=None, classes=None):
+        """Events with no measured change, from the stage of their cells alone: for every pair the part a readout of
+        control cells reads, what the rows of the recorded events add through the stage, the part by its edge, and the
+        forecast with its spread. `x`, `unit`: the stage and the event of the new cells. `classes`: {class: [values]}, the
+        direct parts of recorded pairs of a class (this law's own when not given; a library with no pair of a class takes
+        them from one that has). The error of a row not yet measured is taken at the spread among control cells."""
+        edges = edges or {}
+        vals = {c: [v for _e, _r, v in rows] for c, rows in self.class_values().items()}
+        vals.update(classes or {})
+        X = (x - self._centre) / self._scale
+        out = []
+        for e in sorted(set(unit.tolist())):
+            m = unit == e
+            n, d = int(m.sum()), X[m].mean(0)
+            dV = d @ self._V
+            for name, q in self.r.items():
+                DV = self.D @ self._V
+                k = (q["cv"] / self._nc) * (dV / (self._w + q["lam"])) @ DV.T / q["sd"] ** 2
+                knn = (q["cv"] / self._nc) * float((dV / (self._w + q["lam"])) @ dV) / q["sd"] ** 2
+                Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
+                Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(Vd + q["noise"]))
+                rho = q["change"] - q["read"] - self._mean_direct(q)
+                add = float(q["tau2"] * k @ Si @ rho)
+                var = max(float(q["tau2"] * knn - q["tau2"] ** 2 * k @ Si @ k), 0.0)
+                c = edges.get((str(e), name))
+                why = None
+                if c is None:
+                    edge, sd_d = 0.0, self.sigma0
+                elif len(vals.get(c, [])) >= max(self.min_class - 1, 2):
+                    edge, sd_d = float(np.mean(vals[c])), float(np.std(vals[c], ddof=1) * np.sqrt(1 + 1 / len(vals[c])))
+                else:
+                    edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(vals.get(c, []))} recorded pairs: its size cannot be forecast"
+                read = float(d @ q["th"] / q["sd"])
+                noise = (1 / n + 1 / self._nc) * (1 + q["thGth"] / q["sd"] ** 2)
+                f = read + add + (edge if edge == edge else 0.0)
+                sd = float(np.sqrt(var + (sd_d ** 2 if sd_d == sd_d else 0.0) + noise))
+                out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "shift_times_noise": float((d ** 2).sum() / (len(d) * (1 / n + 1 / self._nc))),
+                            "read": read, "from_the_recorded_events": add, "by_its_edge": edge, "forecast": float(f), "sd": sd,
+                            "interval": [float(f - 1.96 * sd), float(f + 1.96 * sd)], "no_forecast": why,
+                            "parts_of_the_spread": {"readout": float(np.sqrt(var)), "direct": float(sd_d), "row": float(np.sqrt(noise))}})
+        return out
+
+    def measure(self, y, unit, readout):
+        """The change of new events once measured, in the law's units: {event: (change, its error)}."""
+        q = self.r[readout]
+        out = {}
+        for e in sorted(set(unit.tolist())):
+            v = y[unit == e]
+            out[str(e)] = (float((v.mean() - q["centre"]) / q["sd"]), float(np.sqrt(v.var(ddof=1) / len(v) + q["sd"] ** 2 / self._nc) / q["sd"]))
+        return out
 
     def calibration(self, rows=None):
         """How the forecasts did: the share of measured changes inside the 95% interval, the mean squared z, and the error

@@ -1,0 +1,101 @@
+{
+ "source": "runs/outer_step_20261122/results/census.json",
+ "seed": 20261125,
+ "units": {
+  "CD274@frangieh2021 | Co-culture": "targeted",
+  "HLA-B@frangieh2021 | Co-culture": "targeted",
+  "HLA-C@frangieh2021 | Co-culture": "targeted",
+  "HLA-E@frangieh2021 | Co-culture": "targeted",
+  "STAT3@frangieh2021 | Co-culture": "targeted",
+  "PFN1@frangieh2021 | Co-culture": "targeted",
+  "CTSA@frangieh2021 | Co-culture": "calibration",
+  "CTSL@frangieh2021 | Co-culture": "calibration",
+  "STX7@frangieh2021 | Co-culture": "calibration",
+  "TOP1MT@frangieh2021 | Co-culture": "calibration",
+  "CD274@frangieh2021 | Control": "targeted",
+  "HLA-A@frangieh2021 | Control": "targeted",
+  "HLA-B@frangieh2021 | Control": "targeted",
+  "HLA-E@frangieh2021 | Control": "targeted",
+  "SSR2@frangieh2021 | Control": "targeted",
+  "CD44@frangieh2021 | Control": "targeted",
+  "IFNGR1@frangieh2021 | Control": "targeted",
+  "IFNGR2@frangieh2021 | Control": "targeted",
+  "JAK2@frangieh2021 | Control": "targeted",
+  "S100A6@frangieh2021 | Control": "calibration",
+  "SCARB2@frangieh2021 | Control": "calibration",
+  "SLC19A1@frangieh2021 | Control": "calibration",
+  "TMEM173@frangieh2021 | Control": "calibration",
+  "ATF2@papalexi2021 | all": "calibration",
+  "CAV1@papalexi2021 | all": "calibration",
+  "ETV7@papalexi2021 | all": "calibration",
+  "IRF7@papalexi2021 | all": "calibration",
+  "MARCH8@papalexi2021 | all": "calibration",
+  "MYC@papalexi2021 | all": "calibration",
+  "SMAD4@papalexi2021 | all": "calibration",
+  "STAT5A@papalexi2021 | all": "calibration",
+  "TNFRSF14@papalexi2021 | all": "calibration",
+  "UBE2L6@papalexi2021 | all": "calibration"
+ },
+ "strata": {
+  "frangieh2021 | Co-culture": {
+   "targeted": {
+    "CD274": "own gene of PD-L1",
+    "HLA-B": "own gene of MHC-I",
+    "HLA-C": "own gene of MHC-I",
+    "HLA-E": "own gene of HLA-E",
+    "STAT3": "flagged on MHC-I by the law of the library under interferon (run 41)",
+    "PFN1": "named in the plan of the batch; no edge, no flag"
+   },
+   "calibration": [
+    "CTSA",
+    "CTSL",
+    "STX7",
+    "TOP1MT"
+   ],
+   "pool_of_the_draw": 119
+  },
+  "frangieh2021 | Control": {
+   "targeted": {
+    "CD274": "own gene of PD-L1",
+    "HLA-A": "own gene of MHC-I",
+    "HLA-B": "own gene of MHC-I",
+    "HLA-E": "own gene of HLA-E",
+    "SSR2": "flagged on MHC-I by the law of the library under interferon (run 41)",
+    "CD44": "flagged on MHC-I by the law of the library under interferon (run 41)",
+    "IFNGR1": "the pathway with no signal given",
+    "IFNGR2": "the pathway with no signal given",
+    "JAK2": "the pathway with no signal given"
+   },
+   "calibration": [
+    "S100A6",
+    "SCARB2",
+    "SLC19A1",
+    "TMEM173"
+   ],
+   "pool_of_the_draw": 114
+  },
+  "papalexi2021 | all": {
+   "targeted": {},
+   "calibration": [
+    "ATF2",
+    "CAV1",
+    "ETV7",
+    "IRF7",
+    "MARCH8",
+    "MYC",
+    "SMAD4",
+    "STAT5A",
+    "TNFRSF14",
+    "UBE2L6"
+   ],
+   "pool_of_the_draw": null
+  }
+ },
+ "counts": {
+  "units": 33,
+  "targeted": 15,
+  "calibration": 18,
+  "final_units_in_the_batch": 0,
+  "unread_and_not_final_left_after_the_batch": 225
+ }
+}

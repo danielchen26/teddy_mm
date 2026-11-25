@@ -326,7 +326,8 @@ decision, as is a batch of events that no run has read, on which all of this wou
 
 Added on 25 November ([`runs/account_20261125`](runs/account_20261125/)). The owner asked why nothing specific to the
 event graph had shown any weight, and for each link of the loop to be rebuilt on its foundation. `account.py` is the
-result. It stands beside the loop; the protocol and `cycle.py`, `outer.py`, `scope.py` are unchanged.
+result. When it was written it stood beside the loop, with the protocol and `cycle.py`, `outer.py`, `scope.py`
+unchanged; since version 4 of the protocol (below) it is the reading of a round.
 
 **Why a new reading.** A reading of a stage is only as good as what its evidence can prove. For one event, one
 readout and one stage, on halves of the cells:
@@ -370,6 +371,25 @@ for an edge the graph lacks.
 **What a system has to expose for it**: what Section 2 lists, and for `Law` the edges it knows, as a table of
 (event, readout, class).
 
-**What is not done.** The account is not the round's reading; whether it replaces it is the owner's decision. Its
-auxiliary fits are linear. One class of edge was tried, on one library. The last link, a forecast for a sealed batch
-written before it is opened, is prepared and not made.
+**On units never read** ([`runs/batch2_forecast_20261125`](runs/batch2_forecast_20261125/), 25 November). The owner
+accepted the account into the method ([`LOOP_PROTOCOL.md`](LOOP_PROTOCOL.md), version 4; `python -m anm_diag account`).
+`Law.new` then forecast 79 pairs of 33 units from the RNA of their cells alone; the forecasts were committed, and the
+protein was opened once.
+
+- 77 of 79 pairs fall inside their 95% interval. The intervals are wider than they need to be (mean squared *z* 0.30).
+- The forecast has a smaller error than "no change" and than the control readout alone (0.23 against 0.31 and 0.29).
+  All of that gain is in the eight pairs with an edge. Among the 71 pairs with no edge the control readout alone is
+  the better forecast; what the recorded events add is right for events of their type and hurt for one readout
+  where it was applied to events unlike them.
+- The edge "the site is a gene of the measured protein" holds in two conditions it was not learned in: all eight
+  pairs fall. Its size does not carry over (0.23 to 2.1 spreads, forecast about 1 for each).
+- In all 14 accounts of batch 1 and batch 2, 78% to 102% of the change is not in the input. Of the 34 accounts read
+  so far, the model loses a step between its input and its state in one (IRF1).
+
+**What a general system needs from this**, beyond Section 2: an edge carries a size per condition (how much of the
+readout there is for the event to remove), not one mean per class; and a readout taught by records is asked for by
+the type of the event, not applied to every event.
+
+**What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
+edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
+nothing to bring back in the units opened, so its evidence is still that of run 41. Nothing was trained.

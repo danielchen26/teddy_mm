@@ -1,0 +1,711 @@
+{
+ "pairs": 79,
+ "inside": 77,
+ "error": {
+  "no_change": 0.31365506674770244,
+  "control_readout": 0.2924353406014361,
+  "forecast": 0.2305094527877751
+ },
+ "by_stratum": {
+  "mel_co": {
+   "pairs": 30,
+   "inside": 29,
+   "error": {
+    "no_change": 0.45046141372763243,
+    "control_readout": 0.42455948758022166,
+    "forecast": 0.28822625840939015
+   },
+   "pairs_with_a_change": 4
+  },
+  "mel_ctl": {
+   "pairs": 39,
+   "inside": 38,
+   "error": {
+    "no_change": 0.20376493129204404,
+    "control_readout": 0.18554717451545255,
+    "forecast": 0.2088386353136339
+   },
+   "pairs_with_a_change": 4
+  },
+  "thp1": {
+   "pairs": 10,
+   "inside": 10,
+   "error": {
+    "no_change": 0.08076525945319873,
+    "control_readout": 0.023980589012996784,
+    "forecast": 0.02115015047220435
+   },
+   "pairs_with_a_change": 0
+  }
+ },
+ "pairs_with_a_change": {
+  "pairs": 8,
+  "inside": 7,
+  "error": {
+   "no_change": 0.933797360040941,
+   "control_readout": 0.8858781982386231,
+   "forecast": 0.5618618306282861
+  }
+ },
+ "hypotheses": {
+  "HB1_the_intervals_hold": {
+   "inside": 77,
+   "of": 79,
+   "outcome": "confirmed"
+  },
+  "HB2_the_forecast_uses_what_it_adds": {
+   "no_change": 0.31365506674770244,
+   "control_readout": 0.2924353406014361,
+   "forecast": 0.2305094527877751,
+   "outcome": "confirmed"
+  },
+  "HB3_an_edge_in_another_condition": {
+   "inside": 8,
+   "of": 8,
+   "error": {
+    "with_the_edge": 0.6379792987435607,
+    "without_it": 0.8167486902384222
+   },
+   "outcome": "confirmed",
+   "pairs": [
+    {
+     "stratum": "mel_co",
+     "event": "CD274",
+     "readout": "PDL1",
+     "change": -2.1162245254831356,
+     "se": 0.06320767595233483,
+     "forecast": -1.1318987891585381,
+     "interval": [
+      -3.165352613407395,
+      0.9015550350903188
+     ],
+     "inside": true,
+     "z": -0.9487692418631007,
+     "by_its_edge": -0.9867321132894672,
+     "read": -0.13734104434825245
+    },
+    {
+     "stratum": "mel_co",
+     "event": "HLA-B",
+     "readout": "MHC1",
+     "change": -0.8319325468989448,
+     "se": 0.07765616316928313,
+     "forecast": -1.3612602107980958,
+     "interval": [
+      -3.9657615575236234,
+      1.2432411359274316
+     ],
+     "inside": true,
+     "z": 0.3983419791841136,
+     "by_its_edge": -0.9867321132894672,
+     "read": 0.058682591883556075
+    },
+    {
+     "stratum": "mel_co",
+     "event": "HLA-C",
+     "readout": "MHC1",
+     "change": -0.628493123737337,
+     "se": 0.10323173867993976,
+     "forecast": -1.3146858792057583,
+     "interval": [
+      -3.9354288781152182,
+      1.3060571197037016
+     ],
+     "inside": true,
+     "z": 0.5131895043801546,
+     "by_its_edge": -0.9867321132894672,
+     "read": -0.05499802111351927
+    },
+    {
+     "stratum": "mel_co",
+     "event": "HLA-E",
+     "readout": "HLAE",
+     "change": -0.46530451210546075,
+     "se": 0.055139580105538155,
+     "forecast": -0.9762632222923877,
+     "interval": [
+      -3.0023388058642233,
+      1.0498123612794477
+     ],
+     "inside": true,
+     "z": 0.49429502042605755,
+     "by_its_edge": -0.9867321132894672,
+     "read": 0.010117477972220644
+    },
+    {
+     "stratum": "mel_ctl",
+     "event": "CD274",
+     "readout": "PDL1",
+     "change": -0.7261694232630305,
+     "se": 0.0563280245379903,
+     "forecast": -1.058382332735421,
+     "interval": [
+      -3.087426670118773,
+      0.9706620046479313
+     ],
+     "inside": true,
+     "z": 0.3209083658593629,
+     "by_its_edge": -0.9867321132894672,
+     "read": -0.07151312421448808
+    },
+    {
+     "stratum": "mel_ctl",
+     "event": "HLA-A",
+     "readout": "MHC1",
+     "change": -0.3299047203079209,
+     "se": 0.0839598133464683,
+     "forecast": -0.9665719298086474,
+     "interval": [
+      -3.0082787891190677,
+      1.0751349295017727
+     ],
+     "inside": true,
+     "z": 0.6111884891462268,
+     "by_its_edge": -0.9867321132894672,
+     "read": 0.02620342212143345
+    },
+    {
+     "stratum": "mel_ctl",
+     "event": "HLA-B",
+     "readout": "MHC1",
+     "change": -0.591530512218142,
+     "se": 0.11220327220112293,
+     "forecast": -1.0073757637046612,
+     "interval": [
+      -3.0607646807062263,
+      1.0460131532969037
+     ],
+     "inside": true,
+     "z": 0.3969324496519411,
+     "by_its_edge": -0.9867321132894672,
+     "read": -0.014255434381675086
+    },
+    {
+     "stratum": "mel_ctl",
+     "event": "HLA-E",
+     "readout": "HLAE",
+     "change": -0.22655257906556062,
+     "se": 0.08951610701143145,
+     "forecast": -0.9923715046687606,
+     "interval": [
+      -3.093838206267206,
+      1.109095196929685
+     ],
+     "inside": true,
+     "z": 0.714265466609848,
+     "by_its_edge": -0.9867321132894672,
+     "read": -0.04151848487868145
+    }
+   ]
+  },
+  "HB4_an_own_gene_change_is_outside_the_input": {
+   "pairs_with_a_change": 6,
+   "as_forecast": 4,
+   "pairs": [
+    {
+     "stratum": "mel_co",
+     "pair": "CD274|PDL1",
+     "read_at_the_state": {
+      "share": 0.05290913115808867,
+      "ci": [
+       0.012480978103171893,
+       0.09031127368221623
+      ]
+     },
+     "others_at_the_state": {
+      "share": 0.06010997316165102,
+      "ci": [
+       0.015690924419281882,
+       0.10577016541772408
+      ]
+     },
+     "largest_part": "not_in_the_input",
+     "parts": {
+      "not_in_the_input": 0.9484927602158797,
+      "lost_before_the_state": 0.007735835615884423,
+      "held_not_read": -0.009137726989852789,
+      "read": 0.05290913115808867
+     },
+     "says": "not in the input 95% [across events: the other events do not forecast it, 6%]",
+     "as_forecast": true
+    },
+    {
+     "stratum": "mel_co",
+     "pair": "HLA-B|MHC1",
+     "read_at_the_state": {
+      "share": -0.06570465362153335,
+      "ci": [
+       -0.20790578353361303,
+       0.03836293576678161
+      ]
+     },
+     "others_at_the_state": {
+      "share": 0.28745578897089946,
+      "ci": [
+       0.04390661153335976,
+       0.5269255309876881
+      ]
+     },
+     "largest_part": "not_in_the_input",
+     "parts": {
+      "not_in_the_input": 0.9129001674524546,
+      "lost_before_the_state": 0.12539062773569598,
+      "held_not_read": 0.02741385843338276,
+      "read": -0.06570465362153335
+     },
+     "says": "not in the input 91% [across events: unresolved, 29%] (unresolved: lost before the state 13%)",
+     "as_forecast": false
+    },
+    {
+     "stratum": "mel_co",
+     "pair": "HLA-C|MHC1",
+     "read_at_the_state": {
+      "share": 0.07239114638924066,
+      "ci": [
+       -0.08143961085272627,
+       0.20745478417243113
+      ]
+     },
+     "others_at_the_state": {
+      "share": 0.31894466138754146,
+      "ci": [
+       -0.10107993650326565,
+       0.6911858880981387
+      ]
+     },
+     "largest_part": "not_in_the_input",
+     "parts": {
+      "not_in_the_input": 0.7783530398260857,
+      "lost_before_the_state": 0.11346900481639377,
+      "held_not_read": 0.03578680896827985,
+      "read": 0.07239114638924066
+     },
+     "says": "not in the input 78% [across events: unresolved, 32%] (unresolved: lost before the state 11%; held not read 4%)",
+     "as_forecast": false
+    },
+    {
+     "stratum": "mel_co",
+     "pair": "HLA-E|HLAE",
+     "read_at_the_state": {
+      "share": -0.017107184674956446,
+      "ci": [
+       -0.14426236857841918,
+       0.08984672339396198
+      ]
+     },
+     "others_at_the_state": {
+      "share": -0.008156246881396574,
+      "ci": [
+       -0.15858768622724856,
+       0.1364192779316362
+      ]
+     },
+     "largest_part": "not_in_the_input",
+     "parts": {
+      "not_in_the_input": 0.9448889894184804,
+      "lost_before_the_state": 0.07593986388102425,
+      "held_not_read": -0.0037216686245482335,
+      "read": -0.017107184674956446
+     },
+     "says": "not in the input 94% [across events: the other events do not forecast it, -1%] (unresolved: lost before the state 8%)",
+     "as_forecast": true
+    },
+    {
+     "stratum": "mel_ctl",
+     "pair": "CD274|PDL1",
+     "read_at_the_state": {
+      "share": 0.07767617280898004,
+      "ci": [
+       -0.06709001312971688,
+       0.21879424536464928
+      ]
+     },
+     "others_at_the_state": {
+      "share": 0.07649207924671203,
+      "ci": [
+       -0.06593266269602702,
+       0.21713620743603604
+      ]
+     },
+     "largest_part": "not_in_the_input",
+     "parts": {
+      "not_in_the_input": 0.921087466998789,
+      "lost_before_the_state": 0.0,
+      "held_not_read": 0.0012363601922310008,
+      "read": 0.07767617280898004
+     },
+     "says": "not in the input 92% [across events: the other events do not forecast it, 8%]",
+     "as_forecast": true
+    },
+    {
+     "stratum": "mel_ctl",
+     "pair": "HLA-B|MHC1",
+     "read_at_the_state": {
+      "share": 0.019571557739907524,
+      "ci": [
+       -0.21148479067253517,
+       0.17043452577671309
+      ]
+     },
+     "others_at_the_state": {
+      "share": -0.13682979559490152,
+      "ci": [
+       -0.6366634032208127,
+       0.2038761124312363
+      ]
+     },
+     "largest_part": "not_in_the_input",
+     "parts": {
+      "not_in_the_input": 0.9304007408072317,
+      "lost_before_the_state": 0.030148658150269347,
+      "held_not_read": 0.019879043302591454,
+      "read": 0.019571557739907524
+     },
+     "says": "not in the input 93% [across events: the other events do not forecast it, -14%] (unresolved: lost before the state 3%; held not read 2%)",
+     "as_forecast": true
+    }
+   ],
+   "outcome": "unresolved"
+  },
+  "HB5_a_flag_in_another_condition": {
+   "outside": 1,
+   "of": 3,
+   "outcome": "unresolved",
+   "pairs": [
+    {
+     "stratum": "mel_co",
+     "event": "STAT3",
+     "readout": "MHC1",
+     "change": 0.18885842804895073,
+     "se": 0.0726822350163651,
+     "forecast": -0.14553950339422264,
+     "interval": [
+      -1.3881639423925798,
+      1.0970849356041346
+     ],
+     "inside": true,
+     "z": 0.5274481372319817
+    },
+    {
+     "stratum": "mel_ctl",
+     "event": "SSR2",
+     "readout": "MHC1",
+     "change": 0.4575556946652506,
+     "se": 0.0964530434482045,
+     "forecast": 0.045933701678075485,
+     "interval": [
+      -0.3681700990868948,
+      0.46003750244304575
+     ],
+     "inside": true,
+     "z": 1.9482533238393547
+    },
+    {
+     "stratum": "mel_ctl",
+     "event": "CD44",
+     "readout": "MHC1",
+     "change": 0.3274180579178897,
+     "se": 0.08000539025569228,
+     "forecast": 0.024498685662015036,
+     "interval": [
+      -0.2765551237653304,
+      0.32555249508936046
+     ],
+     "inside": false,
+     "z": 1.9721456797071346
+    }
+   ]
+  },
+  "HB6_the_typed_state_where_the_mean_state_loses": {
+   "pairs": 5,
+   "a_no_pair_where_the_typed_state_carries_less": true,
+   "pairs_where_the_state_loses_a_step": 0,
+   "b_brings_back_at_least_half": "not tested: no pair loses a step before the state",
+   "outcome": "(a) holds; (b) not tested",
+   "rows": [
+    {
+     "stratum": "mel_co",
+     "pair": "CD44|PDL1",
+     "of_the_batch": false,
+     "carried": {
+      "V": 0.007120615313131795,
+      "Z": 0.20250771922220168,
+      "T": 0.20788139366435288,
+      "R": 0.21130369488490663
+     },
+     "T_over_Z": {
+      "gain": 0.0053736744421511995,
+      "ci": [
+       -0.3080486900285322,
+       0.26932764541680493
+      ],
+      "reading": "unresolved"
+     },
+     "T_over_R": {
+      "gain": -0.0034223012205537584,
+      "ci": [
+       -0.13750237954921413,
+       0.12575370499915428
+      ],
+      "reading": "unresolved"
+     },
+     "V_over_Z": {
+      "gain": -0.19538710390906988,
+      "ci": [
+       -0.5095964501684648,
+       -0.01013295471565339
+      ],
+      "reading": "no step"
+     },
+     "lost_before_the_state": {
+      "share": 0.0,
+      "ci": [
+       0.0,
+       0.0
+      ],
+      "reading": "no step"
+     },
+     "the_typed_state_carries_less": false,
+     "the_state_loses_a_step": false,
+     "brought_back": null
+    },
+    {
+     "stratum": "mel_co",
+     "pair": "CD44|MHC1",
+     "of_the_batch": false,
+     "carried": {
+      "V": 0.11883408397061601,
+      "Z": 0.09347511406091313,
+      "T": 0.09710440331022974,
+      "R": 0.09042496318781479
+     },
+     "T_over_Z": {
+      "gain": 0.003629289249316603,
+      "ci": [
+       -0.16975113181529147,
+       0.19353399459725293
+      ],
+      "reading": "unresolved"
+     },
+     "T_over_R": {
+      "gain": 0.006679440122414948,
+      "ci": [
+       -0.05221482238546307,
+       0.06583735707989656
+      ],
+      "reading": "no step"
+     },
+     "V_over_Z": {
+      "gain": 0.025358969909702878,
+      "ci": [
+       -0.08851408463023751,
+       0.14717769810350384
+      ],
+      "reading": "unresolved"
+     },
+     "lost_before_the_state": {
+      "share": 0.025358969909702878,
+      "ci": [
+       -0.08851408463023751,
+       0.14717769810350384
+      ],
+      "reading": "unresolved"
+     },
+     "the_typed_state_carries_less": false,
+     "the_state_loses_a_step": false,
+     "brought_back": null
+    },
+    {
+     "stratum": "mel_co",
+     "pair": "TAPBP|MHC1",
+     "of_the_batch": false,
+     "carried": {
+      "V": 0.03360915378590146,
+      "Z": -0.0009998384670808491,
+      "T": 0.0040412346384659514,
+      "R": -0.007706141610745343
+     },
+     "T_over_Z": {
+      "gain": 0.0050410731055468005,
+      "ci": [
+       -0.03964907498508722,
+       0.0550174006147079
+      ],
+      "reading": "no step"
+     },
+     "T_over_R": {
+      "gain": 0.011747376249211294,
+      "ci": [
+       -0.0012971929363569028,
+       0.025769798039502575
+      ],
+      "reading": "no step"
+     },
+     "V_over_Z": {
+      "gain": 0.03460899225298231,
+      "ci": [
+       -0.0028270104563045267,
+       0.0748761860168995
+      ],
+      "reading": "no step"
+     },
+     "lost_before_the_state": {
+      "share": 0.03460899225298231,
+      "ci": [
+       -0.0028270104563045267,
+       0.0748761860168995
+      ],
+      "reading": "no step"
+     },
+     "the_typed_state_carries_less": false,
+     "the_state_loses_a_step": false,
+     "brought_back": null
+    },
+    {
+     "stratum": "thp1",
+     "pair": "BRD4|PDL1",
+     "of_the_batch": false,
+     "carried": {
+      "V": 0.6141581716462106,
+      "Z": 0.4635850050390017,
+      "T": 0.49386787828389533,
+      "R": 0.5294860442851879
+     },
+     "T_over_Z": {
+      "gain": 0.03028287324489365,
+      "ci": [
+       -0.12047445593811815,
+       0.21074521964131906
+      ],
+      "reading": "unresolved"
+     },
+     "T_over_R": {
+      "gain": -0.03561816600129253,
+      "ci": [
+       -0.126697463799469,
+       0.052219736707174495
+      ],
+      "reading": "no step"
+     },
+     "V_over_Z": {
+      "gain": 0.15057316660720887,
+      "ci": [
+       -0.05819827424779408,
+       0.3934432603385344
+      ],
+      "reading": "unresolved"
+     },
+     "lost_before_the_state": {
+      "share": 0.15057316660720887,
+      "ci": [
+       -0.05819827424779408,
+       0.3934432603385344
+      ],
+      "reading": "unresolved"
+     },
+     "the_typed_state_carries_less": false,
+     "the_state_loses_a_step": false,
+     "brought_back": null
+    },
+    {
+     "stratum": "thp1",
+     "pair": "CMTM6|PDL1",
+     "of_the_batch": false,
+     "carried": {
+      "V": -0.03866598690217615,
+      "Z": -0.019163567102660872,
+      "T": -0.029486915816198556,
+      "R": -0.024289171011912414
+     },
+     "T_over_Z": {
+      "gain": -0.010323348713537683,
+      "ci": [
+       -0.10324620271996449,
+       0.0911252024996739
+      ],
+      "reading": "no step"
+     },
+     "T_over_R": {
+      "gain": -0.005197744804286142,
+      "ci": [
+       -0.03361967938985337,
+       0.022425945028916264
+      ],
+      "reading": "no step"
+     },
+     "V_over_Z": {
+      "gain": -0.01950241979951528,
+      "ci": [
+       -0.09160571794319644,
+       0.061523666740483006
+      ],
+      "reading": "no step"
+     },
+     "lost_before_the_state": {
+      "share": 0.0,
+      "ci": [
+       0.0,
+       0.0
+      ],
+      "reading": "no step"
+     },
+     "the_typed_state_carries_less": false,
+     "the_state_loses_a_step": false,
+     "brought_back": null
+    }
+   ]
+  }
+ },
+ "forecasts_of_the_hypotheses": {
+  "HB1_the_intervals_hold": {
+   "probability_confirmed": 0.4,
+   "probability_refuted": 0.25,
+   "value": "pairs inside their 95% interval, of 79",
+   "interval": [
+    66,
+    77
+   ]
+  },
+  "HB2_the_forecast_uses_what_it_adds": {
+   "probability_confirmed": 0.75,
+   "probability_refuted": 0.05
+  },
+  "HB3_an_edge_in_another_condition": {
+   "probability_confirmed": 0.75,
+   "value": "own-gene pairs inside, of 8",
+   "interval": [
+    5,
+    8
+   ],
+   "not_blind": "the sign of these changes was known from the screen; the intervals of the class are wide"
+  },
+  "HB4_an_own_gene_change_is_outside_the_input": {
+   "probability_confirmed": 0.55,
+   "probability_refuted": 0.15,
+   "value": "own-gene pairs with a change of at least four errors, of 8",
+   "interval": [
+    4,
+    8
+   ]
+  },
+  "HB5_a_flag_in_another_condition": {
+   "probability_confirmed": 0.6,
+   "probability_refuted": 0.1,
+   "value": "flagged pairs outside their interval, of 3",
+   "interval": [
+    1,
+    3
+   ]
+  },
+  "HB6_the_typed_state_where_the_mean_state_loses": {
+   "probability_a_holds": 0.8,
+   "probability_b_is_tested": 0.35,
+   "probability_b_holds_if_tested": 0.6,
+   "value": "pairs (not own-gene, THP-1 and co-culture, change of at least four errors) where the state carries a step less than the input",
+   "interval": [
+    0,
+    2
+   ]
+  }
+ }
+}

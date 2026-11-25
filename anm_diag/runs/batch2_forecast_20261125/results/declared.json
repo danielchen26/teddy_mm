@@ -1,0 +1,14 @@
+{
+ "run": "batch2_forecast_20261125",
+ "written": "25 November 2026, with DESIGN.md and forecasts.json, before any protein value of the batch was opened",
+ "seen_before": "A screen of 13 November (runs/loop_reading_20261112/results/data_census.json) read the mean shift of every measured protein for every unit from the protein files; its lists of clear responses are in the repository. The author looked at the co-culture list while writing the design (CD274, HLA-B, HLA-C, HLA-E are listed as clear there; CD274 with -2.1 spreads on its antibody) and not at the list of the condition with no signal. The census of 22 November says none of the ten THP-1 units is listed as clear. The forecasts of forecasts.json are the output of scripts/forecast.py and take nothing from that screen. The protein of the cells of the batch has not been read against their states.",
+ "forecasts": {
+  "HB1_the_intervals_hold": {"probability_confirmed": 0.40, "probability_refuted": 0.25, "value": "pairs inside their 95% interval, of 79", "interval": [66, 77]},
+  "HB2_the_forecast_uses_what_it_adds": {"probability_confirmed": 0.75, "probability_refuted": 0.05},
+  "HB3_an_edge_in_another_condition": {"probability_confirmed": 0.75, "value": "own-gene pairs inside, of 8", "interval": [5, 8], "not_blind": "the sign of these changes was known from the screen; the intervals of the class are wide"},
+  "HB4_an_own_gene_change_is_outside_the_input": {"probability_confirmed": 0.55, "probability_refuted": 0.15, "value": "own-gene pairs with a change of at least four errors, of 8", "interval": [4, 8]},
+  "HB5_a_flag_in_another_condition": {"probability_confirmed": 0.60, "probability_refuted": 0.10, "value": "flagged pairs outside their interval, of 3", "interval": [1, 3]},
+  "HB6_the_typed_state_where_the_mean_state_loses": {"probability_a_holds": 0.80, "probability_b_is_tested": 0.35, "probability_b_holds_if_tested": 0.60,
+   "value": "pairs (not own-gene, THP-1 and co-culture, change of at least four errors) where the state carries a step less than the input", "interval": [0, 2]}
+ }
+}

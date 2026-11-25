@@ -215,9 +215,13 @@ with the audited unit's own cells (`own`). Where the scopes part says what is mi
 The events can be perturbations or contrasts nobody assigned (a donor, a batch, a study, a disease); the file format
 and the code are the same. A reading becomes a hypothesis with a forecast for every arm of an intervention, and
 `anm_diag loop test` reads the arms against it. The protocol is [`LOOP_PROTOCOL.md`](LOOP_PROTOCOL.md), version 2.
+Since version 4 (25 November) the reading of a round is the account of a change: for every event of the same SPEC,
+what a readout of control cells reads, what each stage carries, what the other events forecast, and the four parts
+of the change ([`anm_diag/account.py`](anm_diag/account.py); [`GENERAL.md`](GENERAL.md), Section 8).
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR
+python -m anm_diag account SPEC.yaml --out DIR
 python -m anm_diag loop test --hypothesis H.json --arms ARMS.json
 ```
 

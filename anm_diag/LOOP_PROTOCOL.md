@@ -279,9 +279,32 @@ outcome recorded under the rule a run was made with.
 | 3d | The response of an event was screened on the cells that were then audited. | **A selection split.** One third of an event's cells, and of the control cells, drawn by cell before anything is read, serves admission (A1 of the round, the no-leakage rules). Those cells enter no reading of *u*. Events admitted before this version keep their admission, and how they fare on a third is reported. |
 | 3e | The type of a cell was assigned by a reader of its state, and four in a hundred knockout cells of one group got the wrong one. | **The type comes from the record** (the design labels). The reader of types is a component of the system only where no record exists at use, and is then audited like one. |
 
+# Version 4: the account of a change (25 November 2026)
+
+Run 41 ([`runs/account_20261125`](runs/account_20261125/)) found that the reading of a repair used since run 40 could
+not see what a stage holds, and that the events that need the event graph had never been targets. It rebuilt the
+reading ([`anm_diag/account.py`](anm_diag/account.py); [`GENERAL.md`](GENERAL.md), Section 8). The owner accepted it
+into the method on 25 November. It applies from batch 2 ([`runs/batch2_forecast_20261125`](runs/batch2_forecast_20261125/))
+on, and changes no outcome recorded under the rule a run was made with.
+
+| | the case | the rule from now on |
+|---|---|---|
+| 4a | A repair was read by letting a readout follow the mean change of an event on one half of its cells and reading the other half. That number is near one whenever the event's shift of a stage can be found again, whatever the stage holds. | **The reading of a round is the account.** For an event, a readout and a stage, on halves of cells: `read` (a readout of control cells), `carried` (what the stage holds, from the evidence inside the arms), `others` (what the recorded events forecast). The readout made to follow the event's own mean is still reported, as `found_again`, and is not evidence that a stage holds a change. |
+| 4b | Gate 3 asked whether a changed head adds no loss beyond a reference stage. A head that follows the mean passes it on a stage that holds nothing. | **A repair is credited up to what the stage carries** (`account.credit`). What it closes beyond `carried` at the stage it reads is not credited; a step beyond means it has followed the mean. Gate 3 of version 3 is kept as a report. |
+| 4c | A deficit was placed by comparing *u* at stages (head, state, upstream, unreadable). | **A change has four parts, cell by cell** (`account.chain`): not in the input, lost before the state, held and not read, read. A part is *open* when its interval lies above a step, *unresolved* when it holds a step. Each open part names its place: an edge, the model before the state, the head. |
+| 4d | "Unreadable" was a dead end, and rule S3 kept an event that acts on the measured protein out as leakage. | **A part that is not in the input is asked of the other events.** If they forecast the change (`others` at the state: lower end at 0.75 or above), their records teach the readout. If they do not (upper end below 0.50), no change of the model can supply it: it needs an edge between the event and the readout in the event graph. S3 stays a rule of admission for a *repair of the model*; such an event is a target *of the graph*. |
+| 4e | A library was read one target at a time. | **A library is read by the law of its rows** (`account.Law`): every pair of an event and a readout is forecast with its event left out, with an interval; pairs with no edge whose direct part stands out are flagged (a missing edge when the event does not move the stage, a direction the law does not cover when it does). |
+| 4f | Units never read were opened after a screen of their protein. | **A batch never read is opened after its forecasts are committed.** `Law.new` forecasts every pair from the RNA of the cells alone; the commit precedes the export of any measured value; the batch is read once and scored by the share inside the intervals and by the error against "no change" and against the control readout alone. What was known of the batch before is written in the design. |
+| 4g | Where every cell of an arm is edited, no cell of one arm is like a cell of the other, and `carried` read from cells says "direct". | **Below an overlap of 0.10 a stage is said to hold the change as the identity of the event**, and whether it is more than the identity is asked of the other events. |
+| 4h | The selection third (3d) cost a third of the cells of every event. | **The account needs no admission.** Its shares carry the error of the change in their intervals; a pair is read when its change is at least four errors, and that line is reported. 3d stays for the admission of a target of a repair. |
+
+What does not change: *u*, the margin and the step (0.10); the roles of units (final, development, unread); a
+declaration committed before a reading; a reading made once; nothing final is read except as a final audit.
+
 ## Commands
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR                        the grid, the readings, the typed events
+python -m anm_diag account SPEC.yaml --out DIR                      version 4: read, carried, others at every stage; the four parts
 python -m anm_diag loop test --hypothesis H.json --arms ARMS.json   a hypothesis against the arms of an intervention
 ```
