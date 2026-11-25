@@ -280,3 +280,18 @@ undone. A loss on one projection teaches one projection: if the response is want
 be fitted again while the encoder trains, or be several; if it is wanted at the system's output, the readout has to
 be the system's head, which this trial did not use. And the reading has to use a readout fitted on cells the
 trained layers have not used.
+
+The owner's design of a model built on the TEG keeps the state by type and lets every reader read the state only.
+It was brought to TEDDY at the one place where it needs no training
+([`runs/typed_state_20261125`](runs/typed_state_20261125/)): the output of the last layer is kept in two blocks, the
+128 genes that the pathway's events move most and the rest, which add up to the mean a head reads today. By the rule
+written first, a reader with IRF1's cells leaves 0.27 at the typed state where the mean leaves 0.40 and the input
+0.18 (a gain of 0.12 [0.08, 0.18], unresolved), 128 genes at random give nothing, and the round did not use the
+typed state (refuted). A check added after that reading found the reason in the round: its linear reader does not
+bring the columns of a stage to one scale, and the block is nineteen times smaller than the rest. At one scale the
+typed state gains a step in every output of the round: 0.90 to 0.73 with no record of IRF1, 0.68 to 0.49 with its
+record. The same typing of what enters the first layer reads as much with a record, so this is a way around the
+encoder, not a repair of it; and nothing closes. Two things follow. A block that is chosen by the records of one
+type reads part of an event without a record, which the whole input view beside the state did not (1.00): the
+typing is where the TEG helps, and it has to be repeated by a rule declared first, on events that did not enter the
+check. And the round's reader needs a rule for the scale of a stage before any state made of blocks is judged by it.

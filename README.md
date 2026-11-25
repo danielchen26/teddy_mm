@@ -243,6 +243,17 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   other control cells, a third to a half), and with the event labels shuffled the result is the same. A derived row
   for IRF1 can be trained in, and the rule that gives it ("the mean of its type") is wrong for IRF1 by a factor of
   2.7. Forecasts: 8 of 8 intervals, 16 of 21 outcomes.
+- **A typed state in place of the mean (25 November; development cells; nothing trained; one event;**
+  [`typed_state_20261125/`](anm_diag/runs/typed_state_20261125/)**):** the owner's design of a model built on the
+  TEG keeps the state by type. Here TEDDY-G 70M's output is kept in two blocks that add up to the mean a head reads:
+  the 128 genes the pathway's events move most, and the rest. By the declared reading a reader with IRF1's cells
+  leaves *u* 0.27 where the mean leaves 0.40 and the input 0.18 (gain 0.12 [0.08, 0.18], unresolved); 128 genes at
+  random give nothing; the round did not use the typed state (refuted). A check that was not declared: the round's
+  linear reader does not bring columns to one scale and the block is nineteen times smaller than the rest; at one
+  scale the typed state gains a step in every output (no record of IRF1 0.90 to 0.73, its record 0.68 to 0.49, its
+  cells 0.42 to 0.24), and genes at random still give nothing. The same typing of what enters the first layer reads
+  as much, so it is a way around the encoder and not a repair of it. Nothing closes. Forecasts: 6 of 6 intervals,
+  8 of 16 outcomes; the added check 2 of 2 and 2 of 5.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
