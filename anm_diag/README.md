@@ -218,6 +218,12 @@ and the code are the same. A reading becomes a hypothesis with a forecast for ev
 Since version 4 (25 November) the reading of a round is the account of a change: for every event of the same SPEC,
 what a readout of control cells reads, what each stage carries, what the other events forecast, and the four parts
 of the change ([`anm_diag/account.py`](anm_diag/account.py); [`GENERAL.md`](GENERAL.md), Section 8).
+The same account reads an event with no control cells: leave `keys.control` out of the SPEC and a unit (a donor, a
+batch, a study) is read against the cells of every other unit; give `keys.cluster` and an arm made of units is
+resampled by unit. An edge between an event and a readout is a record of the event graph (`events.edge`: declared
+from the declarations, or proposed from measured rows and admitted or refused by rows it did not see), and every open
+part of an account names its lever, its proposal and what judges it (`account.plan`, `outer.open_parts`; rules 4i to
+4l of the protocol, [`runs/one_loop_20261125`](runs/one_loop_20261125/)).
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR

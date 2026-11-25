@@ -41,14 +41,44 @@ from . import cycle
 
 STEP, MARGIN, ALPHA = cycle.STEP, cycle.MARGIN, cycle.ALPHA
 DRAWS, MIN_SNR, MIN_OVERLAP = 300, 4.0, 0.10
+MIN_ROWS = 8                                                 # rows of other events below which a part of a row's own cannot be told from what a readout would learn
 LAMBDAS = 10.0 ** np.arange(-3, 3.01, 0.5)
 interval = lambda d: [float(v) for v in np.percentile(d, [100 * ALPHA / 2, 100 * (1 - ALPHA / 2)])]
 step = lambda iv: "a step" if iv[0] > STEP else ("no step" if iv[1] < STEP else "unresolved")
 
 
-def one_scale(x, C):
-    """The spread of every column among the control cells of the fit (a column that does not vary is left as it is)."""
-    sd = x[C].std(0)
+def _units(cluster, cells):
+    """The units an arm is resampled by: its clusters if it is made of two or more, else None (its cells)."""
+    if cluster is None:
+        return None
+    u, inv = np.unique(cluster[cells], return_inverse=True)
+    return inv if len(u) >= 2 else None
+
+
+def _within(v, inv):
+    """v centred: by unit where the cells come in units, else as a whole."""
+    if inv is None:
+        return v - v.mean(0)
+    n = np.bincount(inv).astype(float)
+    if v.ndim == 1:
+        return v - (np.bincount(inv, weights=v) / n)[inv]
+    S = np.zeros((len(n), v.shape[1]))
+    np.add.at(S, inv, v)
+    return v - (S / n[:, None])[inv]
+
+
+def _var_of_mean(v, inv):
+    """The variance of the mean of cells: by cell, or by unit where the cells come in units."""
+    if inv is None:
+        return float(v.var(ddof=1) / len(v))
+    dev = np.bincount(inv, weights=v - v.mean())
+    return float(len(dev) / (len(dev) - 1) * (dev ** 2).sum() / len(v) ** 2)
+
+
+def one_scale(x, C, inv=None):
+    """The spread of every column among the control cells of the fit, within their unit where they come in units (a
+    column that does not vary is left as it is)."""
+    sd = _within(x[C], inv).std(0)
     return np.where(sd > 1e-12, sd, 1.0)
 
 
@@ -78,20 +108,22 @@ def _stage(xs, f):
 _KEPT = {}
 
 
-def _control_fit(x, y, C, seed=0):
-    """The ridge readout of control cells of centred columns, with what it leaves uncertain: (readout, Mi, cv / n, root).
-    The same control cells, stage and readout give the same fit for every event read against them: kept by content."""
-    key = (x.shape[1], len(C), float(x[C].sum()), hash(np.ascontiguousarray(x[C[:16]]).tobytes()), hash(y[C].tobytes()), seed)
+def _control_fit(x, y, C, seed=0, inv=None):
+    """The ridge readout of the reference cells of centred columns, with what it leaves uncertain: (readout, Mi, cv / n,
+    root). Where the reference cells come in units they are centred by unit: the readout is then one of the variation
+    inside a unit, which is what can be learned with no record of how any unit differs from another.
+    The same cells, stage and readout give the same fit for every event read against them: kept by content."""
+    key = (x.shape[1], len(C), float(x[C].sum()), hash(np.ascontiguousarray(x[C[:16]]).tobytes()), hash(y[C].tobytes()), seed, None if inv is None else hash(inv.tobytes()))
     if key not in _KEPT:
         if len(_KEPT) >= 12:
             _KEPT.pop(next(iter(_KEPT)))
-        _KEPT[key] = _control_fit_(x, y, C, seed)
+        _KEPT[key] = _control_fit_(x, y, C, seed, inv)
     _KEPT[key] = _KEPT.pop(key)                                 # the one used last is dropped last
     return _KEPT[key]
 
 
-def _control_fit_(x, y, C, seed=0):
-    Xc, yc, n = x[C] - x[C].mean(0), y[C] - y[C].mean(), len(C)
+def _control_fit_(x, y, C, seed=0, inv=None):
+    Xc, yc, n = _within(x[C], inv), _within(y[C], inv), len(C)
     G, b = Xc.T @ Xc, Xc.T @ yc
     fold, err = np.random.default_rng(seed).permutation(n) % 5, np.zeros(len(LAMBDAS))
     for k in range(5):
@@ -112,12 +144,66 @@ def _closer(Mi, D):
     return Mi @ D.T @ np.linalg.pinv(D @ Mi @ D.T), D
 
 
-def reading(xs, y, unit, first, event, others=(), control="control", o=None, draws=DRAWS, seed=0):
+WIDENINGS = 10.0 ** np.arange(0, 8.01, 0.25)
+
+
+def _teacher(Mi, k, D, rho, s, nu=4.0, iters=30):
+    """What rows with errors teach a readout. The readout of the reference cells is known up to k Mi; its error among
+    events may be wider by a factor that the rows themselves choose (their likelihood). With MIN_ROWS rows or more, a row
+    may also hold a part of its own that no readout explains (small for most rows, heavy-tailed, its spread from the
+    rows, as `Law`): such a row teaches less. With fewer rows that part cannot be told from what a readout would learn,
+    and every row teaches. Returns the matrix A such that readout + A (rows - D readout) is the readout given the rows,
+    the rows' shifts, and the factor. With exact rows and a factor without bound this is `_closer`: the smallest change
+    of the readout that closes the rows. A row inside its error teaches nothing."""
+    D = np.atleast_2d(D)
+    K0, s2, m = k * D @ Mi @ D.T, np.maximum(s, 1e-12) ** 2, len(rho)
+
+    def widen(extra):
+        best = (np.inf, WIDENINGS[0])
+        for t2 in WIDENINGS:
+            C = t2 * K0 + np.diag(s2 + extra)
+            sign, logdet = np.linalg.slogdet(C)
+            nll = 0.5 * (logdet + rho @ np.linalg.solve(C, rho))
+            if nll < best[0] - 1e-9:
+                best = (nll, t2)
+        return best[1]
+    Vd = np.zeros(m)
+    t2 = widen(Vd)
+    if m >= MIN_ROWS:
+        sigma0, w = float(1.4826 * np.median(np.abs(rho - np.median(rho)))) + 1e-9, np.ones(m)
+        for _ in range(iters):
+            Vd = sigma0 ** 2 / w
+            t2 = widen(Vd)
+            Si = np.linalg.inv(t2 * K0 + np.diag(s2 + Vd))
+            d = Vd * (Si @ rho)
+            Ed2 = d * d + Vd - Vd * np.diag(Si) * Vd
+            w = (nu + 1) / (nu + Ed2 / sigma0 ** 2)
+            sigma0 = float(np.sqrt((w * Ed2).mean())) + 1e-12
+        Vd = sigma0 ** 2 / w
+    return t2 * k * Mi @ D.T @ np.linalg.inv(t2 * K0 + np.diag(s2 + Vd)), D, float(t2)
+
+
+def reference(unit, event, control="control"):
+    """The cells an event is read against: its control cells, or, where no cell is a control cell (control=None: a donor,
+    a batch, a study), the cells of every other unit."""
+    return (unit == control) if control is not None else (unit != event)
+
+
+def reading(xs, y, unit, first, event, others=(), control="control", o=None, draws=DRAWS, seed=0, cluster=None):
     """The account of one event's change of one readout at one stage.
 
     xs: the stage, cells by columns; or (the stage for the half fitted on `first`, the stage for the other half) when the
     stage itself was chosen on the fitted half. unit: the event of every cell. first: the half of every cell. others:
     the other events whose rows may teach a readout. o: the system's own output as trained, if it has one.
+
+    Three shapes of event are read by the same three readings (GENERAL.md, Section 6):
+      an event with control cells            control: their label. Cells are the units of every resample.
+      a unit against the other units         control=None: no cell is a control cell; a donor, a batch or a study is read
+                                             against the cells of every other unit. cluster: the unit of every cell.
+      a group of units against another       control: the label of the reference cells (healthy donors); cluster: the
+                                             donor of every cell.
+    cluster: an arm made of two or more units is resampled by unit, and the reference readout is one of the variation
+    inside a unit (the cells centred by unit): with no record of an event, nothing says how one unit differs from another.
 
     Returns the change, how far the event's shift of the stage stands out, and each share of the change with its
     interval. `overlap`: the share of the difference between the arms that the stage does not tell (one: the stage does
@@ -130,30 +216,49 @@ def reading(xs, y, unit, first, event, others=(), control="control", o=None, dra
     stage, so differences between stages are paired."""
     rng = np.random.default_rng(seed + 7)
     others = [h for h in others if h != event]
+    ref = reference(unit, event, control)
+    cl = None if cluster is None else np.asarray(cluster)
     keys = ["read", "carried", "found_again"] + (["others"] if others else []) + (["as_trained"] if o is not None else [])
     num, den = {k: np.zeros(draws + 1) for k in keys if k != "carried"}, np.zeros(draws + 1)
     sxy, sxx, see = np.zeros(draws + 1), np.zeros(draws + 1), 0.0
-    vis = []
+    vis, wide = [], []
     for f, fit in ((0, first), (1, ~first)):
         x = _stage(xs, f)
-        Cf, Tf = np.where(fit & (unit == control))[0], np.where(fit & (unit == event))[0]
-        Cs, Ts = np.where(~fit & (unit == control))[0], np.where(~fit & (unit == event))[0]
-        idx = [(np.arange(len(Ts)), np.arange(len(Cs)))] + [(rng.integers(0, len(Ts), len(Ts)), rng.integers(0, len(Cs), len(Cs))) for _ in range(draws)]
+        Cf, Tf = np.where(fit & ref)[0], np.where(fit & (unit == event))[0]
+        Cs, Ts = np.where(~fit & ref)[0], np.where(~fit & (unit == event))[0]
+        uT, uC, uF = _units(cl, Ts), _units(cl, Cs), _units(cl, Cf)
+        if uT is None and uC is None:                                                       # cells are the units of both arms
+            idx = [(np.arange(len(Ts)), np.arange(len(Cs)))] + [(rng.integers(0, len(Ts), len(Ts)), rng.integers(0, len(Cs), len(Cs))) for _ in range(draws)]
+            WT = np.array([np.bincount(it, minlength=len(Ts)) for it, _ic in idx], np.float64)
+            WC = np.array([np.bincount(ic, minlength=len(Cs)) for _it, ic in idx], np.float64)
+        else:                                                                               # an arm made of units is drawn by unit
+            def weights(inv, n):
+                inv = np.arange(n) if inv is None else inv
+                g = int(inv.max()) + 1
+                return np.vstack([np.ones(n), rng.multinomial(g, np.full(g, 1.0 / g), size=draws)[:, inv].astype(np.float64)])
+            WT, WC = weights(uT, len(Ts)), weights(uC, len(Cs))
         zth = np.vstack([np.zeros(x.shape[1]), rng.normal(size=(draws, x.shape[1]))])        # for the control readout: what its fit leaves uncertain
         zrow = np.vstack([np.zeros(1 + len(others)), rng.normal(size=(draws, 1 + len(others)))])
-        x = (x - x[Cf].mean(0)) / one_scale(x, Cf)
+        x = (x - x[Cf].mean(0)) / one_scale(x, Cf, uF)
         xc, yc = x[Cf].mean(0), y[Cf].mean()
-        th_c, Mi, k, root = _control_fit(x, y, Cf, seed)
+        th_c, Mi, k, root = _control_fit(x, y, Cf, seed, uF)
         TH = th_c + np.sqrt(k) * zth @ root.T                                               # a readout of control cells for every resample
+        v_ref = _var_of_mean(y[Cf], uF)
         shift = lambda a: x[a].mean(0) - xc
-        row = lambda a: (y[a].mean() - yc, np.sqrt(y[a].var(ddof=1) / len(a) + y[Cf].var(ddof=1) / len(Cf)))
+        row = lambda a: (y[a].mean() - yc, np.sqrt(_var_of_mean(y[a], _units(cl, a)) + v_ref))
+        left = y - x @ th_c                                                                 # what the reference readout leaves in a cell
+        v_left = _var_of_mean(left[Cf], uF)
+        beside = lambda a: np.sqrt(_var_of_mean(left[a], _units(cl, a)) + v_left)            # the error of a row beside its readout: the shift's error is in both and cancels
         Df, (dyf, sef) = shift(Tf), row(Tf)
         arms = [np.where(fit & (unit == h))[0] for h in others]
         keep = [j for j, a in enumerate(arms) if len(a) > 1]
         ro = [row(arms[j]) for j in keep]
         A_own, D_own = _closer(Mi, Df)
-        A_oth, D_oth = _closer(Mi, np.array([shift(arms[j]) for j in keep])) if keep else (None, None)
-        r_oth, s_oth = np.array([r[0] for r in ro]), np.array([r[1] for r in ro])
+        r_oth, s_oth = np.array([r[0] for r in ro]), np.array([beside(arms[j]) for j in keep])
+        if keep:
+            D_oth = np.array([shift(arms[j]) for j in keep])
+            A_oth, D_oth, t2 = _teacher(Mi, k, D_oth, r_oth - D_oth @ th_c, s_oth)
+            wide.append(t2)
         F, R = np.r_[Cf, Tf], np.r_[Cs, Ts]
         arm = (unit == event).astype(float)
         mu = x[F].mean(0)
@@ -162,32 +267,32 @@ def reading(xs, y, unit, first, event, others=(), control="control", o=None, dra
         ey, ee = e_res * y_res, e_res * e_res
         see += float(((arm[R] - arm[R].mean()) ** 2).sum())
         nC = len(Cs)
-        xT, xC = x[Ts], x[Cs]
-        a_tr = np.polyfit(o[Cf], y[Cf], 1)[0] if o is not None else None                     # the output as trained, on the scale of the readout among control cells
-        for b, (it, ic) in enumerate(idx):
-            Ds = xT[it].mean(0) - xC[ic].mean(0)
-            den[b] += y[Ts[it]].mean() - y[Cs[ic]].mean()
-            th = TH[b]
-            num["read"][b] += Ds @ th
-            num["found_again"][b] += Ds @ (th + A_own @ (dyf + sef * zrow[b, :1] - D_own @ th))
-            if others:
-                num["others"][b] += Ds @ (th + A_oth @ (r_oth + s_oth * zrow[b, 1:1 + len(keep)] - D_oth @ th) if keep else th)
-            if o is not None:
-                num["as_trained"][b] += a_tr * (o[Ts[it]].mean() - o[Cs[ic]].mean())
-            sxy[b] += ey[nC + it].sum() + ey[ic].sum()
-            sxx[b] += ee[nC + it].sum() + ee[ic].sum()
-        Ds = xT.mean(0) - xC.mean(0)
-        vis.append((float(Df @ Ds / (np.linalg.norm(Df) * np.linalg.norm(Ds) + 1e-300)), float((Df @ Df) / (x.shape[1] * (1 / len(Tf) + 1 / len(Cf))))))
+        sT, sC = WT.sum(1), WC.sum(1)
+        DS = (WT @ x[Ts]) / sT[:, None] - (WC @ x[Cs]) / sC[:, None]                         # the shift of the stage on the cells read, for every resample
+        den += (WT @ y[Ts]) / sT - (WC @ y[Cs]) / sC
+        num["read"] += np.einsum("bp,bp->b", DS, TH)
+        num["found_again"] += np.einsum("bp,bp->b", DS, TH + (dyf + sef * zrow[:, 0] - TH @ D_own[0])[:, None] * A_own[:, 0][None, :])
+        if others:
+            num["others"] += np.einsum("bp,bp->b", DS, TH + (r_oth[None, :] + s_oth[None, :] * zrow[:, 1:1 + len(keep)] - TH @ D_oth.T) @ A_oth.T if keep else TH)
+        if o is not None:                                                                    # the output as trained, on the scale of the readout among the reference cells
+            a_tr = np.polyfit(_within(o[Cf], uF), _within(y[Cf], uF), 1)[0]
+            num["as_trained"] += a_tr * ((WT @ o[Ts]) / sT - (WC @ o[Cs]) / sC)
+        sxy += WT @ ey[nC:] + WC @ ey[:nC]
+        sxx += WT @ ee[nC:] + WC @ ee[:nC]
+        vis.append((float(Df @ DS[0] / (np.linalg.norm(Df) * np.linalg.norm(DS[0]) + 1e-300)), float((Df @ Df) / (x.shape[1] * (1 / len(Tf) + 1 / len(Cf))))))
     D = {k: num[k] / den for k in num}
     overlap = float(sxx[0] / see)
     by = "cells" if overlap >= MIN_OVERLAP else "identity"
     D["carried"] = 1 - (sxy / sxx) / (den / 2) if by == "cells" else np.ones(draws + 1)
-    T, C = unit == event, unit == control
+    T, C = np.where(unit == event)[0], np.where(ref)[0]
     change = float(y[T].mean() - y[C].mean())
-    se = float(np.sqrt(y[T].var(ddof=1) / T.sum() + y[C].var(ddof=1) / C.sum()))
-    return {"event": str(event), "change": change, "snr": abs(change) / se, "cells": {"event": int(T.sum()), "control": int(C.sum())},
+    se = float(np.sqrt(_var_of_mean(y[T], _units(cl, T)) + _var_of_mean(y[C], _units(cl, C))))
+    cells = {"event": int(len(T)), "control": int(len(C))}
+    if cl is not None:
+        cells.update(units_of_the_event=int(len(set(cl[T].tolist()))), units_of_the_reference=int(len(set(cl[C].tolist()))))
+    return {"event": str(event), "change": change, "snr": abs(change) / se, "cells": cells, "read_against": "control cells" if control is not None else "the other units",
             "shift_of_the_stage": {"cosine_between_the_halves": float(np.mean([v[0] for v in vis])), "times_its_noise": float(np.mean([v[1] for v in vis]))},
-            "overlap": overlap, "carried_by": by,
+            "overlap": overlap, "carried_by": by, **({"widening_by_the_rows_of_the_others": wide} if wide else {}),
             "shares": {k: {"share": float(D[k][0]), "ci": interval(D[k][1:])} for k in keys}, "_draws": D}
 
 
@@ -204,7 +309,8 @@ LEVER = {"not_in_the_input": "no stage holds this part cell by cell, so no head 
          "lost_before_the_state": "the model, between its input and the state its head reads",
          "held_not_read": "the head: a readout with the cells of recorded events",
          "read": "nothing: a readout of control cells reads this part"}
-FORECAST, NOT_FORECAST = 0.75, 0.50                           # across events: the other events forecast a change if the interval of `others` lies above the first, and do not if it lies below the second
+FORECAST, NOT_FORECAST = 0.75, 0.50                           # across events: what the other events forecast misses the change by |1 - others|. They forecast it if the interval of
+                                                               # `others` lies within a quarter of the change on either side, and do not if it lies beyond a half on one side
 
 
 def across_events(r):
@@ -212,7 +318,9 @@ def across_events(r):
     if "others" not in r["shares"]:
         return None
     o = r["shares"]["others"]
-    says = "the other events forecast it" if o["ci"][0] >= FORECAST else ("the other events do not forecast it" if o["ci"][1] < NOT_FORECAST else "unresolved")
+    lo, hi = o["ci"]
+    says = ("the other events forecast it" if (lo >= FORECAST and hi <= 2 - FORECAST) else
+            "the other events do not forecast it" if (hi < NOT_FORECAST or lo > 2 - NOT_FORECAST) else "unresolved")
     return {"others": o["share"], "ci": o["ci"], "reading": says}
 
 
@@ -255,20 +363,26 @@ def chain(by_stage, inputs, state):
     return out
 
 
-def must_fail(xs, y, unit, first, event, control="control", draws=DRAWS, seed=0):
+def must_fail(xs, y, unit, first, event, control="control", draws=DRAWS, seed=0, cluster=None):
     """Two controls of the measure. A stage with its cells permuted holds nothing: it must carry nothing. An event made
-    of control cells has no change: it must have no change to account for."""
+    of reference cells has no change: it must have no change to account for."""
     rng = np.random.default_rng(seed + 11)
     perm = rng.permutation(len(y))
     xp = tuple(x[perm] for x in xs) if isinstance(xs, (tuple, list)) else xs[perm]
-    p = reading(xp, y, unit, first, event, control=control, draws=draws, seed=seed)
-    C = np.where(unit == control)[0]
+    p = reading(xp, y, unit, first, event, control=control, draws=draws, seed=seed, cluster=cluster)
+    ref = reference(unit, event, control)
+    C = np.where(ref)[0]
     fake = rng.choice(C, min(int((unit == event).sum()), len(C) // 3), replace=False)
     un = unit.astype(object).copy()
     un[fake] = "made-up"
-    keep = (un == control) | (un == "made-up")
+    keep = ref | (un == "made-up")
+    cl = None
+    if cluster is not None:
+        cl = np.asarray(cluster).astype(object).copy()
+        cl[fake] = "made-up"
+        cl = cl[keep].astype(str)
     sub = (lambda x: x[keep])
-    m = reading(tuple(sub(x) for x in xs) if isinstance(xs, (tuple, list)) else sub(xs), y[keep], un[keep].astype(str), first[keep], "made-up", control=control, draws=draws, seed=seed)
+    m = reading(tuple(sub(x) for x in xs) if isinstance(xs, (tuple, list)) else sub(xs), y[keep], un[keep].astype(str), first[keep], "made-up", control=control, draws=draws, seed=seed, cluster=cl)
     return {"permuted_stage": {k: p["shares"][k] for k in ("read", "carried", "found_again")},
             "made_up_event": {"change": m["change"], "snr": m["snr"], "no_change_to_account_for": bool(m["snr"] < MIN_SNR)}}
 
@@ -283,50 +397,111 @@ def credit(r, key="found_again"):
             "beyond_what_the_stage_carries": {"share": float(x[0]), "ci": interval(x[1:]), "reading": step(interval(x[1:]))}}
 
 
-def account(stages, y, unit, first, event, others=(), inputs=(), state=None, o=None, pairs=(), control="control", draws=DRAWS, seed=0, controls=True):
+ROUTE = {   # the open part of an account -> (lever of the outer step, what is proposed, how the proposal is judged)
+    "read": (None, "nothing: a readout with no record of the event reads the change", None),
+    "held_not_read": ("M: the head", "a readout taught by the records of the events of the same type",
+                      "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"),
+    "held_as_identity": ("E: records", "the state holds the change only as the identity of the event: its own record answers it, which is the graph's memory and not the model",
+                         "whether it is more than the identity is asked of the other events (`others`)"),
+    "lost_before_the_state": ("M: the model before the state", "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+                              "what the candidate state carries against the mean state and against a matched control (`gain`)"),
+    "not_in_the_input, forecast": ("E: records", "the records of events of the same type teach the readout: ask for them by type",
+                                   "the forecast of the event left out, through the state (`others`, `Law.forecast`)"),
+    "not_in_the_input, not forecast": ("G: the graph", "an edge between the event and the readout: declared if it follows from the declarations, else proposed (`events.edge`)",
+                                       "rows the proposal did not see, forecast without the edge (`events.test_edges`); its size from its class and its scale (`Law`)"),
+    "not_in_the_input, undecided": ("E: records", "more recorded events of the type, so that it can be said whether they forecast the change",
+                                    "the interval of `others` at the state"),
+}
+
+
+def plan(acc, state=None):
+    """What a round does next for one account: for every open part (and every part still unresolved), the lever, the
+    proposal, how it is judged, and what the readings already made credit it with. This is the step after a rejection:
+    the account names the place, the place names the lever, and the proposal is judged on cells or rows that did not
+    make it. Nothing here fits anything."""
+    ch = acc["chain"]
+    state = state or ch["state"]
+    out = []
+    taught, own = acc.get("a_readout_taught_by_the_other_events"), acc.get("a_repair_that_follows_the_mean")
+    for group in ("open", "unresolved"):
+        for it in ch[group]:
+            part, key = it["part"], it["part"]
+            now = None
+            if part == "held_not_read":
+                if ch["carried_by"].get(state) == "identity":
+                    key = "held_as_identity"
+                    now = {"its_own_record": own["credited"]} if own else None
+                else:
+                    now = {"a_readout_taught_by_the_other_events": taught["credited"]} if taught else None
+            elif part == "lost_before_the_state":
+                g = {k: v["carried"] for k, v in acc.get("gains", {}).items() if k.endswith(f" over {state}") and "carried" in v}
+                now = {"candidate_states": g} if g else None
+            elif part == "not_in_the_input":
+                a = (ch.get("across_events") or {}).get("reading")
+                key = "not_in_the_input, " + ("forecast" if a == "the other events forecast it" else "not forecast" if a == "the other events do not forecast it" else "undecided")
+                now = {"forecast_by_the_other_events": ch["across_events"]} if ch.get("across_events") else None
+            lever, proposal, judged = ROUTE[key]
+            out.append({"part": part, "resolved": group == "open", "share": it["share"], "ci": it["ci"], "reading": key, "lever": lever, "proposal": proposal, "judged_by": judged, "credited_now": now})
+    return out
+
+
+def account(stages, y, unit, first, event, others=(), inputs=(), state=None, o=None, pairs=(), control="control", draws=DRAWS, seed=0, controls=True, cluster=None):
     """The account of one event's change of one readout: the readings at every stage, the chain, the gains of the named
     pairs of stages (b over a), what a repair that follows the mean is credited with at the state, and the two controls
     of the measure at the state. stages: {name: array, or the two arrays of a stage chosen on the fitted half}.
+    control=None and cluster: an event with no control cells, and arms made of units (see `reading`).
     The resamples are left out of what is returned."""
     state = state or list(stages)[-1]
-    R = {n: reading(xs, y, unit, first, event, others=others, control=control, o=o if n == state else None, draws=draws, seed=seed) for n, xs in stages.items()}
+    R = {n: reading(xs, y, unit, first, event, others=others, control=control, o=o if n == state else None, draws=draws, seed=seed, cluster=cluster) for n, xs in stages.items()}
     out = {"stages": {n: {k: v for k, v in r.items() if k != "_draws"} for n, r in R.items()}, "chain": chain(R, [i for i in inputs if i in R], state),
            "gains": {f"{b} over {a}": {k: gain(R[a], R[b], k) for k in ("carried", "read", "others", "found_again") if k in R[a]["_draws"] and k in R[b]["_draws"]}
                      for a, b in pairs if a in R and b in R},
            "a_repair_that_follows_the_mean": credit(R[state])}
+    if "others" in R[state]["_draws"]:
+        out["a_readout_taught_by_the_other_events"] = credit(R[state], "others")
+    out["plan"] = plan(out, state)
     if controls:
-        out["must_fail"] = must_fail(stages[state], y, unit, first, event, control=control, draws=draws, seed=seed)
+        out["must_fail"] = must_fail(stages[state], y, unit, first, event, control=control, draws=draws, seed=seed, cluster=cluster)
     return out
 
 
 def run_spec(spec, base=".", draws=DRAWS):
     """The account of every event of a SPEC (the file format of `anm_diag scope`). Read from the SPEC: keys.stages,
-    keys.readouts (the first), keys.unit, keys.control, keys.frozen (the system's own output, if any), events, and under
+    keys.readouts (the first; of an array with one column per readout, the column `account.column`), keys.unit,
+    keys.control (left out for a study of units in which no cell is a control cell: every unit is then read against the
+    other units), keys.cluster (the donor of every cell, where an arm is made of donors), keys.frozen (the system's own
+    output, if any), events, and under
     `account`: state (default Z), inputs (default V), pairs, others (default: the events of the SPEC), seed, and
     unit_length (the stages put at unit length, as a head reads them; default Z)."""
     from pathlib import Path
     keys, acc = spec["keys"], spec.get("account") or {}
     z = np.load(Path(base) / spec["arrays"]["audit"], allow_pickle=False)
     unit_ = np.asarray(z[keys["unit"]]).astype(str)
-    ctl = keys["control"]
-    is_ctl = np.asarray(z[ctl["key"]]).astype(str) == str(ctl["equals"])
-    un = np.where(is_ctl, "control", unit_)
+    ctl = keys.get("control")
+    if ctl:
+        is_ctl = np.asarray(z[ctl["key"]]).astype(str) == str(ctl["equals"])
+        un, control = np.where(is_ctl, "control", unit_), "control"
+    else:
+        is_ctl, un, control = np.zeros(len(unit_), bool), unit_, None
+    cluster = np.asarray(z[keys["cluster"]]).astype(str) if keys.get("cluster") else (un if control is None else None)
     ro = keys["readouts"][0] if isinstance(keys["readouts"], (list, tuple)) else keys["readouts"]
-    y = np.asarray(z[ro], np.float64)
-    o = np.asarray(z[keys["frozen"]["array"]], np.float64) if keys.get("frozen") else None
+    col = lambda v: v[:, int(acc["column"])] if v.ndim == 2 else v
+    y = col(np.asarray(z[ro], np.float64))
+    o = col(np.asarray(z[keys["frozen"]["array"]], np.float64)) if keys.get("frozen") else None
     at_unit_length = lambda x: x / (np.linalg.norm(x, axis=1, keepdims=True) + 1e-12)
     stages = {n: at_unit_length(np.asarray(z[k], np.float64)) if n in acc.get("unit_length", ["Z"]) else np.asarray(z[k], np.float64) for n, k in keys["stages"].items()}
     seed = int(acc.get("seed", (spec.get("decision") or {}).get("seed", 0)))
     first = cycle.halves(un, seed)
     ev = spec.get("events", "each")
-    events = [str(e) for e in (sorted(set(un.tolist()) - {"control"} - set(map(str, spec.get("units_exclude", []))) ) if ev in ("each", "pooled") else ev)]
+    events = [str(e) for e in (sorted(set(un.tolist()) - {"control"} - set(map(str, spec.get("units_exclude", [])))) if ev in ("each", "pooled") else ev)]
     state = acc.get("state", "Z" if "Z" in stages else list(stages)[-1])
     inputs = acc.get("inputs", [n for n in ("V",) if n in stages])
     oth = [str(e) for e in acc.get("others", events)]
-    res = {"name": spec.get("name"), "readout": spec.get("readout_name", ro), "state": state, "inputs": inputs, "cells": int(len(un)), "control_cells": int(is_ctl.sum()), "events": {}}
+    res = {"name": spec.get("name"), "readout": spec.get("readout_name", ro), "state": state, "inputs": inputs, "cells": int(len(un)), "control_cells": int(is_ctl.sum()),
+           "read_against": "control cells" if control else "the other units", "events": {}}
     for e in events:
         res["events"][e] = account(stages, y, un, first, e, others=[h for h in oth if h != e], inputs=inputs, state=state, o=o,
-                                   pairs=[tuple(p) for p in acc.get("pairs", [])], draws=draws, seed=seed)
+                                   pairs=[tuple(p) for p in acc.get("pairs", [])], control=control, draws=draws, seed=seed, cluster=cluster)
     return res
 
 
@@ -362,9 +537,19 @@ class Law:
     readout: a prior from the control cells (their ridge readout and its uncertainty, widened by one factor that the rows
     choose), updated by the rows of the other events. direct: zero with a small spread and heavy tails for a pair with no
     edge; for a pair with an edge of class k a mean and a spread of its own, learned from the other pairs of that class.
-    edges: {(event, readout): class}. A class with fewer than `min_class` recorded pairs gives no forecast of its size."""
+    edges: {(event, readout): class} (`events.edge_table`). A class with fewer than `min_class` recorded pairs gives no
+    forecast of its size.
+    types: {event: type} from the event graph. The error of a readout is then a property of a type of event: the rows of
+    an event update the readout for the events of its type and for no other, and an event with no type is taught by no
+    row. How far the control prior is widened is chosen by type as well, by the rows of the type. For an event with no
+    type the control prior stands as the control cells give it: what such an event shows beyond it is its direct part,
+    and is flagged; a widening that the events of no type chose together would hide it, and would be the teaching the
+    rule excludes. None: every event is of one type (one readout error, one widening for all).
+    scale: {(event, readout): s}. The direct part of an edge is its class's share times s, so that one class holds in
+    conditions where the readout has more or less to lose (for the knockout of a protein's own gene: how far the
+    readout stands above its background among control cells). None: s = 1, one size per class."""
 
-    def __init__(self, x, Y, unit, control="control", edges=None, nu=4.0, min_cells=30, min_class=3, seed=0):
+    def __init__(self, x, Y, unit, control="control", edges=None, nu=4.0, min_cells=30, min_class=3, seed=0, types=None, scale=None):
         C = np.where(unit == control)[0]
         self._centre, self._scale = x[C].mean(0), one_scale(x, C)
         X = (x - self._centre) / self._scale
@@ -374,40 +559,63 @@ class Law:
         self.D = np.array([X[unit == e].mean(0) for e in self.events])
         nc, p = len(C), X.shape[1]
         self.times_noise = (self.D ** 2).sum(1) / (p * (1 / self.n + 1 / nc))
+        self.typed = types is not None
+        self.type = ["(all)" if types is None else str(types.get(e, f"({e})")) for e in self.events]
+        same = np.array([[a == b for b in self.type] for a in self.type])
+        by = {}
+        for i, (e, t) in enumerate(zip(self.events, self.type)):
+            by.setdefault(t if (types is None or e in types) else None, []).append(i)
+        # the events whose rows choose a widening together: {type: its events}; an event in no group keeps the control prior as it is
+        self.groups = {t: np.array(idx) for t, idx in by.items() if t is not None}
         Xc = X[C]
         G = Xc.T @ Xc / nc
         w, V = np.linalg.eigh(G)
         self._nc, self._w, self._V = nc, w, V
         fold = np.random.default_rng(seed).permutation(nc) % 5
-        self.r = {}
+        self.r, parts = {}, []
+        for k in range(5):                                          # the folds of the control cells are the same for every readout
+            m = fold == k
+            wk, Vk = np.linalg.eigh((G * nc - Xc[m].T @ Xc[m]) / (nc - m.sum()))
+            parts.append((m, wk, Vk, Xc[m] @ Vk, Xc[~m]))
         for name, y in Y.items():
             sd, yc = y[C].std(), y[C] - y[C].mean()
             err = np.zeros(len(LAMBDAS))
-            for k in range(5):
-                m = fold == k
-                wk, Vk = np.linalg.eigh((G * nc - Xc[m].T @ Xc[m]) / (nc - m.sum()))
-                c, Fv = Vk.T @ (Xc[~m].T @ yc[~m] / (nc - m.sum())), Xc[m] @ Vk
+            for m, wk, Vk, Fv, Xr in parts:
+                c = Vk.T @ (Xr.T @ yc[~m] / (nc - m.sum()))
                 for i, lam in enumerate(LAMBDAS):
                     err[i] += ((yc[m] - Fv @ (c / (wk + lam))) ** 2).sum()
             lam, cv = LAMBDAS[int(err.argmin())], float(err.min() / nc)
             th = V @ ((V.T @ (Xc.T @ yc / nc)) / (w + lam))
             DV = self.D @ V
-            K0 = (cv / nc) * (DV / (w + lam)) @ DV.T / sd ** 2
+            K0 = same * ((cv / nc) * (DV / (w + lam)) @ DV.T / sd ** 2)                    # the rows of another type do not bear on this type's readout
             dy = np.array([y[unit == e].mean() - y[C].mean() for e in self.events])
             se2 = np.array([y[unit == e].var(ddof=1) / (unit == e).sum() + y[C].var(ddof=1) / nc for e in self.events])
-            noise = (se2 + float(th @ G @ th) * (1 / self.n + 1 / nc)) / sd ** 2          # the row's own error, and that of the event's shift of the stage
+            left = y - y[C].mean() - X @ th                                                # what the control readout leaves in a cell
+            # the error of a row beside its readout: the change and the shift are means over the same cells, so the error of the
+            # shift is in both and cancels; what is left is the mean of what the readout leaves in the cells of the two arms
+            noise = (np.array([left[unit == e].var(ddof=1) / (unit == e).sum() for e in self.events]) + cv / nc) / sd ** 2
             cls = np.array([(edges or {}).get((e, name)) for e in self.events], dtype=object)
-            self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise,
-                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "w": np.ones(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": float(y[C].mean())}
+            sc = np.array([float((scale or {}).get((e, name), 1.0)) for e in self.events])
+            self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise, "scale": sc,
+                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "tau": np.ones(len(dy)), "w": np.ones(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": float(y[C].mean())}
         self.classes = sorted({c for q in self.r.values() for c in q["cls"] if c is not None})
         self.sigma0, self.cl, self.fixed = None, {}, False
 
+    def _prior(self, q):
+        """The readout's prior among the recorded rows: the control prior, widened by the factor the rows of each type chose."""
+        return q["tau2"] * q["K0"] if not self.typed else np.sqrt(np.outer(q["tau"], q["tau"])) * q["K0"]
+
+    def _widening(self, q, t):
+        """The widening for an event of type `t`: its type's, where the rows of that type chose one; else 1, the control
+        prior as it is."""
+        return q["tau2"] if not self.typed else q["tau2"].get(t, 1.0)
+
     def _var_direct(self, q):
-        s2 = np.array([self.sigma0 ** 2 if c is None else self.cl[c]["sigma"] ** 2 for c in q["cls"]])
+        s2 = np.array([self.sigma0 ** 2 if c is None else (self.cl[c]["sigma"] * s) ** 2 for c, s in zip(q["cls"], q["scale"])])
         return s2 / q["w"]
 
     def _mean_direct(self, q, without=None):
-        return np.array([0.0 if c is None else self.cl[c]["mu"] for c in q["cls"]])
+        return np.array([0.0 if c is None else self.cl[c]["mu"] * s for c, s in zip(q["cls"], q["scale"])])
 
     def fit(self, iters=40, sigma0=None):
         """The spread of a direct part with no edge, the classes and the widening of the control prior, from the rows.
@@ -415,7 +623,9 @@ class Law:
         the widening is still chosen by the rows."""
         res = np.concatenate([q["change"] - q["read"] for q in self.r.values()])
         cls = np.concatenate([q["cls"] for q in self.r.values()])
+        sc = np.concatenate([q["scale"] for q in self.r.values()])
         none = np.array([c is None for c in cls])
+        res = np.where(none, res, res / sc)                          # a pair with an edge: its direct part as a share of its scale
         self.fixed = sigma0 is not None
         self.sigma0 = float(sigma0) if self.fixed else float(1.4826 * np.median(np.abs(res[none] - np.median(res[none])))) + 1e-6
         edge_res = res[~none]
@@ -430,20 +640,25 @@ class Law:
             for q in self.r.values():
                 Vd, rho = self._var_direct(q), q["change"] - q["read"] - self._mean_direct(q)
                 Vd = np.where(np.isfinite(Vd), Vd, 1e6)
-                best = None
-                for t2 in taus:
-                    L = np.linalg.cholesky(t2 * q["K0"] + np.diag(Vd + q["noise"]))
-                    a = np.linalg.solve(L, rho)
-                    nll = 0.5 * a @ a + np.log(np.diag(L)).sum()
-                    if best is None or nll < best[0]:
-                        best = (nll, t2)
-                q["tau2"] = float(best[1])
-                Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(Vd + q["noise"]))
+                chosen = {}
+                for g, b in self.groups.items():
+                    best = None
+                    for t2 in taus:
+                        L = np.linalg.cholesky(t2 * q["K0"][np.ix_(b, b)] + np.diag((Vd + q["noise"])[b]))
+                        a = np.linalg.solve(L, rho[b])
+                        nll = 0.5 * a @ a + np.log(np.diag(L)).sum()
+                        if best is None or nll < best[0]:
+                            best = (nll, t2)
+                    chosen[g] = float(best[1])
+                    q["tau"][b] = best[1]
+                q["tau2"] = chosen if self.typed else chosen["(all)"]
+                Si = np.linalg.inv(self._prior(q) + np.diag(Vd + q["noise"]))
                 m = Vd * (Si @ rho)                                   # the direct part beyond its class mean, given every row
                 v = Vd - Vd * np.diag(Si) * Vd
                 q["direct_dev"], q["direct_var"] = m, v
                 Ed.append(m + self._mean_direct(q)); Ed2.append(m * m + v); W.append(q["w"])
             Ed, Ed2, W = np.concatenate(Ed), np.concatenate(Ed2), np.concatenate(W)
+            Ed, Ed2 = np.where(none, Ed, Ed / sc), np.where(none, Ed2, Ed2 / sc ** 2)
             s2 = np.array([self.sigma0 ** 2 if c is None else self.cl[c]["sigma"] ** 2 for c in cls])
             s2 = np.where(np.isfinite(s2), s2, 1e6)
             Wn = (self.nu + 1) / (self.nu + Ed2 / s2)
@@ -464,17 +679,17 @@ class Law:
         """Every pair with its event left out: the part a readout of control cells reads, what the rows of the other events
         add through the stage, the part by its edge, the forecast with its spread, and how far the measured change is."""
         rows = []
-        dev = {}                                                    # the direct parts of the pairs of a class, as fitted: (event, value)
+        dev = {}                                                    # the direct parts of the pairs of a class, as fitted, as shares of their scale: (event, value)
         for name, q in self.r.items():
             for i, c in enumerate(q["cls"]):
                 if c is not None:
-                    dev.setdefault(c, []).append((self.events[i], float(q["direct_dev"][i] + self.cl[c]["mu"])))
+                    dev.setdefault(c, []).append((self.events[i], float(q["direct_dev"][i] / q["scale"][i] + self.cl[c]["mu"])))
         t95 = 1.96
         for name, q in self.r.items():
             Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
             V = Vd + q["noise"]
             rho = q["change"] - q["read"] - self._mean_direct(q)
-            Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(V))
+            Si = np.linalg.inv(self._prior(q) + np.diag(V))
             m_loo = rho - (Si @ rho) / np.diag(Si)                  # what the rows of the other events add through the stage
             v_loo = np.maximum(1 / np.diag(Si) - V, 0.0)
             for i, e in enumerate(self.events):
@@ -484,33 +699,39 @@ class Law:
                 else:
                     oth = [v for h, v in dev[c] if h != e]
                     if len(oth) >= self.min_class - 1 and len(oth) >= 2:
-                        edge, sd_d, why = float(np.mean(oth)), float(np.std(oth, ddof=1) * np.sqrt(1 + 1 / len(oth))), None
+                        edge, sd_d, why = float(np.mean(oth) * q["scale"][i]), float(np.std(oth, ddof=1) * np.sqrt(1 + 1 / len(oth)) * q["scale"][i]), None
                     else:
                         edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(oth)} other recorded pairs: its size cannot be forecast"
                 f = q["read"][i] + m_loo[i] + (edge if edge == edge else 0.0)
                 sd = float(np.sqrt(v_loo[i] + (sd_d ** 2 if sd_d == sd_d else 0.0) + q["noise"][i]))
                 z = float((q["change"][i] - f) / sd) if why is None else float("nan")
-                rows.append({"event": e, "readout": name, "cells": int(self.n[i]), "edge": c, "change": float(q["change"][i]), "se": float(q["se"][i]),
+                rows.append({"event": e, "readout": name, "cells": int(self.n[i]), "edge": c, "type": self.type[i] if self.typed else None, "change": float(q["change"][i]), "se": float(q["se"][i]),
                              "shift_times_noise": float(self.times_noise[i]), "read": float(q["read"][i]), "from_the_other_events": float(m_loo[i]),
                              "by_its_edge": edge, "forecast": float(f), "sd": sd, "interval": [float(f - t95 * sd), float(f + t95 * sd)], "z": z, "no_forecast": why,
                              "direct": float(q["change"][i] - q["read"][i] - m_loo[i]), "direct_sd": float(np.sqrt(v_loo[i] + q["noise"][i]))})
         return rows
 
     def class_values(self):
-        """The direct parts of the recorded pairs of every class, as fitted: {class: [(event, readout, value)]}."""
+        """The direct parts of the recorded pairs of every class, as fitted, each as a share of its scale:
+        {class: [(event, readout, value)]}."""
         out = {}
         for name, q in self.r.items():
             for i, c in enumerate(q["cls"]):
                 if c is not None:
-                    out.setdefault(c, []).append((self.events[i], name, float(q["direct_dev"][i] + self.cl[c]["mu"])))
+                    out.setdefault(c, []).append((self.events[i], name, float(q["direct_dev"][i] / q["scale"][i] + self.cl[c]["mu"])))
         return out
 
-    def new(self, x, unit, edges=None, classes=None):
+    def new(self, x, unit, edges=None, classes=None, types=None, scale=None, shares=None):
         """Events with no measured change, from the stage of their cells alone: for every pair the part a readout of
         control cells reads, what the rows of the recorded events add through the stage, the part by its edge, and the
         forecast with its spread. `x`, `unit`: the stage and the event of the new cells. `classes`: {class: [values]}, the
-        direct parts of recorded pairs of a class (this law's own when not given; a library with no pair of a class takes
-        them from one that has). The error of a row not yet measured is taken at the spread among control cells."""
+        direct parts of recorded pairs of a class as shares of their scale (this law's own when not given; a library
+        with no pair of a class takes them from one that has). types: {event: type} of the new events (in a law with
+        types, the rows that teach are those of the event's type; an event with no type is taught by none).
+        scale: {(event, readout): s} of the new pairs. shares: {(event, readout): (share, its spread)}, the pair's own
+        share of its scale where the pair was measured elsewhere (the same knockout in another condition): the edge is
+        then forecast at that share of this condition's scale, and its class is not asked. The error of a row not yet
+        measured is taken at what the readout leaves among control cells."""
         edges = edges or {}
         vals = {c: [v for _e, _r, v in rows] for c, rows in self.class_values().items()}
         vals.update(classes or {})
@@ -520,28 +741,37 @@ class Law:
             m = unit == e
             n, d = int(m.sum()), X[m].mean(0)
             dV = d @ self._V
+            tn = "(all)" if not self.typed else str((types or {}).get(str(e), f"({e})"))
+            of_type = np.array([t == tn for t in self.type], float)
             for name, q in self.r.items():
                 DV = self.D @ self._V
-                k = (q["cv"] / self._nc) * (dV / (self._w + q["lam"])) @ DV.T / q["sd"] ** 2
+                k = of_type * ((q["cv"] / self._nc) * (dV / (self._w + q["lam"])) @ DV.T / q["sd"] ** 2)
                 knn = (q["cv"] / self._nc) * float((dV / (self._w + q["lam"])) @ dV) / q["sd"] ** 2
                 Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
-                Si = np.linalg.inv(q["tau2"] * q["K0"] + np.diag(Vd + q["noise"]))
+                Si = np.linalg.inv(self._prior(q) + np.diag(Vd + q["noise"]))
                 rho = q["change"] - q["read"] - self._mean_direct(q)
-                add = float(q["tau2"] * k @ Si @ rho)
-                var = max(float(q["tau2"] * knn - q["tau2"] ** 2 * k @ Si @ k), 0.0)
+                t2 = self._widening(q, tn)
+                add = float(t2 * k @ Si @ rho)
+                var = max(float(t2 * knn - t2 ** 2 * k @ Si @ k), 0.0)
                 c = edges.get((str(e), name))
                 why = None
+                sn = float((scale or {}).get((str(e), name), 1.0))
+                own = (shares or {}).get((str(e), name))
                 if c is None:
                     edge, sd_d = 0.0, self.sigma0
+                elif own is not None:
+                    edge, sd_d = float(own[0] * sn), float(abs(own[1] * sn))
                 elif len(vals.get(c, [])) >= max(self.min_class - 1, 2):
-                    edge, sd_d = float(np.mean(vals[c])), float(np.std(vals[c], ddof=1) * np.sqrt(1 + 1 / len(vals[c])))
+                    edge, sd_d = float(np.mean(vals[c]) * sn), float(np.std(vals[c], ddof=1) * np.sqrt(1 + 1 / len(vals[c])) * abs(sn))
                 else:
                     edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(vals.get(c, []))} recorded pairs: its size cannot be forecast"
                 read = float(d @ q["th"] / q["sd"])
-                noise = (1 / n + 1 / self._nc) * (1 + q["thGth"] / q["sd"] ** 2)
+                noise = (1 / n + 1 / self._nc) * q["cv"] / q["sd"] ** 2
                 f = read + add + (edge if edge == edge else 0.0)
                 sd = float(np.sqrt(var + (sd_d ** 2 if sd_d == sd_d else 0.0) + noise))
-                out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "shift_times_noise": float((d ** 2).sum() / (len(d) * (1 / n + 1 / self._nc))),
+                out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "type": tn if self.typed else None, "taught_by": int(of_type.sum()), "widening": float(t2), "scale": sn,
+                            "size_of_the_edge_from": None if c is None else ("the pair's own share, measured elsewhere" if own is not None else "its class"),
+                            "shift_times_noise": float((d ** 2).sum() / (len(d) * (1 / n + 1 / self._nc))),
                             "read": read, "from_the_recorded_events": add, "by_its_edge": edge, "forecast": float(f), "sd": sd,
                             "interval": [float(f - 1.96 * sd), float(f + 1.96 * sd)], "no_forecast": why,
                             "parts_of_the_spread": {"readout": float(np.sqrt(var)), "direct": float(sd_d), "row": float(np.sqrt(noise))}})
@@ -593,6 +823,7 @@ class Law:
             r = cand[i]
             moved = r["shift_times_noise"] >= 4.0
             out.append({"event": r["event"], "readout": r["readout"], "direct": r["direct"], "errors": r["direct"] / np.hypot(r["direct_sd"], self.sigma0), "shift_times_noise": r["shift_times_noise"],
+                        "change": r["change"], "forecast": r["forecast"], "z": r["z"], "flag": "a direction the law does not cover" if moved else "a missing edge",
                         "candidate": "a direction of the stage the law does not cover: its record would teach the readout" if moved else "a missing edge: the event does not move the stage"})
         return sorted(out, key=lambda r: -abs(r["errors"]))
 

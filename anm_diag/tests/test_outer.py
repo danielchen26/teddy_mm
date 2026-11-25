@@ -299,7 +299,7 @@ def test_the_round_of_20_november():
     items = outer.open_items(targets, world)
     c = outer.counts(items)
     assert len(targets) == 7 and len(items) == 21
-    assert c["by_lever"] == {"M": 0, "E": 8, "V": 3, "S": 5, "C": 1, "P": 4}
+    assert c["by_lever"] == {"M": 0, "E": 8, "V": 3, "S": 5, "C": 1, "P": 4, "G": 0}
     assert c["by_reading"]["unreadable"] == 0 and c["by_reading"]["invalid"] == 3     # no positive control in co-culture: no reading of where the loss is
     assert [outer.target_status(t) for t in targets].count("the model's part closed (relative)") == 3
     assert rules(outer.outer_check(targets, items, roles={"final": []})) == []

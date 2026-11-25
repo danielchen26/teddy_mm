@@ -12,6 +12,7 @@ writes all of them as the same record, so that three things can be checked:
   no leakage whether the readout's measurement could have entered an event (rules R2, S3, S4)
   admission  for how many cells an event could be applied at all
   join       whether the forward and the inverse half agree on the same source
+  edges      what an event does to a readout outside every stage of the system: declared, proposed, tested (rules G1 to G5)
 
 An event has: time, site, channel, sign, amplitude (the fields a verifier can
 depend on), plus role, stratum, provenance, the pool it is merged into, and an
@@ -485,6 +486,125 @@ def check_contrast(spec):
     for side, k in (("treated", len(treated)), ("control", n_ctl)):
         if k is not None and 1 < k < MIN_UNITS:
             add("C6", "warning", f"{k} {side} units: an interval over units is approximate below {MIN_UNITS}")
+    return out
+
+
+# ------------------------------------------------------------------ edges: what an event does to a readout outside every stage
+# An event changes a readout by two routes. Through the system: the event shifts a stage, and a readout of the stage
+# reads the shift. Past it: the knockout of the gene behind the measured protein removes the protein whatever the RNA of
+# the cell says; a batch of the measurement moves every protein of a donor. No head, no state and no training can supply
+# the second route: `account.chain` reads it as "not in the input", and it is the event graph that has to hold it, as an
+# edge between the event's site and the readout. An edge is a record of the same ledger as an event.
+EDGE_STATES = ("declared", "proposed", "admitted", "refused", "undecided")
+EDGE_BASES = ("declaration", "flag", "account")
+
+
+def edge(site, readout, cls, basis="declaration", status=None, stratum=None, scale=None, evidence=None, provenance=None, share=None):
+    """One edge. site: the event's site (a gene, a donor, a batch). readout: the readout it acts on. cls: its class; the
+    size of an edge is forecast from the recorded pairs of its class, so an edge with no class forecasts nothing.
+    basis: "declaration" (it follows from what the run declares: the site is a gene of the measured protein; the unit is
+    a batch of the measurement), "flag" (the law of a library flagged the pair) or "account" (the account of the pair
+    placed its change outside the input, and other events did not forecast it). An edge that rests on measured rows is
+    "proposed" until rows it did not see are forecast with it (rule G2). stratum: None for every stratum.
+    scale: the name of the quantity its size is forecast in (None: spreads of the readout among control cells).
+    share: the pair's own share of that scale where it was measured, {"value", "measured_in"}: what the edge carries
+    from one condition to another (`edge_shares`, `account.Law.new`)."""
+    status = status or ("declared" if basis == "declaration" else "proposed")
+    return {"edge_id": f"{site}->{readout}" + (f"@{stratum}" if stratum else ""), "kind": "edge", "site": str(site), "readout": str(readout), "class": cls, "basis": basis,
+            "status": status, "stratum": stratum, "scale": scale, "share": share, "evidence": evidence, "provenance": provenance}
+
+
+def edge_shares(edges, spread, states=("declared", "admitted")):
+    """{(site, readout): (share, spread)} of the edges that carry a measured share, for `account.Law.new(shares=)`.
+    spread: how far a pair's share is taken to move between conditions."""
+    return {(e["site"], e["readout"]): (float(e["share"]["value"]), float(spread)) for e in edges if e["status"] in states and e.get("share")}
+
+
+def own_edges(decl, sites, cls="own", partners=None, scale=None):
+    """The edges that follow from two declarations: the site of an event is a gene of a readout's own measurement
+    (`features` of the readout, the same field rule S3 reads), or one of its declared partners (partners: {readout id:
+    [genes]}, a subunit without which the measured protein is not made). Rule S3 keeps such an event out of the repair
+    of a model; here it becomes what it is, an edge of the graph."""
+    out = []
+    for r in decl.get("readouts") or []:
+        feats = _as_list(r.get("features")) + _as_list((partners or {}).get(r.get("id")))
+        for site in sites:
+            if _site_in_readout(site, feats):
+                why = "a declared partner of the readout" if _site_in_readout(site, _as_list((partners or {}).get(r.get("id")))) else "a gene of the readout's own measurement"
+                out.append(edge(site, r.get("id"), cls, "declaration", scale=scale, provenance=f"the site is {why} (declaration; rule S3)"))
+    return out
+
+
+def propose_edges(flags, known=(), cls="flagged", stratum=None):
+    """Edges proposed from the flags of `account.Law.flags`: a pair with no edge whose direct part stands out although the
+    event does not move the stage. A pair flagged as "a direction the law does not cover" is not an edge: the event moves
+    the stage, and what is missing is a record of its type. Pairs that already have an edge are left out."""
+    have = {(e["site"], e["readout"]) for e in known}
+    out = []
+    for f in flags:
+        if f.get("flag") == "a missing edge" and (f["event"], f["readout"]) not in have:
+            out.append(edge(f["event"], f["readout"], cls, "flag", stratum=stratum,
+                            evidence={k: f[k] for k in ("change", "forecast", "z", "shift_times_noise", "direct") if k in f}, provenance="flagged by the law of a library"))
+    return out
+
+
+def test_edges(edges, rows, z=1.96):
+    """Rule G2 for proposed edges: each is asked of rows that did not propose it (another condition, another library,
+    units never read). rows: the forecasts of those rows made WITHOUT the edge (`Law.forecast` or `Law.new` with the
+    measured change): event, readout, change, forecast, sd. An edge is admitted if the measured change again stands
+    outside what the system forecasts without it, on the same side; refused if it lies inside; undecided where the
+    pair is not among the rows. Returns the edges with their new status and the evidence."""
+    by = {(r["event"], r["readout"]): r for r in rows}
+    out = []
+    for e in edges:
+        if e["status"] != "proposed":
+            out.append(e)
+            continue
+        r = by.get((e["site"], e["readout"]))
+        if r is None:
+            out.append(dict(e, status="undecided", test={"why": "the pair is not among the rows of the test"}))
+            continue
+        zz = (r["change"] - r["forecast"]) / r["sd"]
+        was = ((e.get("evidence") or {}).get("z"))
+        same_side = was is None or (zz * was > 0)
+        status = "admitted" if abs(zz) > z and same_side else ("refused" if abs(zz) <= z else "undecided")
+        out.append(dict(e, status=status, test={"change": r["change"], "forecast_without_the_edge": r["forecast"], "sd": r["sd"], "z": float(zz), "same_side_as_proposed": bool(same_side)}))
+    return out
+
+
+def edge_table(edges, states=("declared", "admitted"), stratum=None):
+    """{(site, readout): class} of the edges a forecast may use: declared, or admitted by a test. A proposed edge enters
+    no forecast. stratum: also the edges that hold in that stratum only."""
+    return {(e["site"], e["readout"]): e["class"] for e in edges if e["status"] in states and e.get("stratum") in (None, stratum)}
+
+
+def check_edges(edges, sites=None, readouts=None):
+    """Rules for the edges of the event graph.
+
+    G1  an edge has a class (error): its size is forecast from the recorded pairs of the class
+    G2  an edge that rests on measured rows (basis flag or account) is not used before rows it did not see were forecast
+        with it: status admitted needs a test (error)
+    G3  a declared edge says what it follows from (warning if no provenance)
+    G4  the site and the readout are known to the run (warning)
+    G5  one pair, one edge in a stratum (error on a second)
+    """
+    out, seen = [], set()
+    add = lambda code, sev, msg, e: out.append({"code": code, "severity": sev, "edge": e.get("edge_id"), "message": msg})
+    for e in edges:
+        if not e.get("class"):
+            add("G1", "error", "an edge with no class forecasts nothing", e)
+        if e.get("basis") not in EDGE_BASES or e.get("status") not in EDGE_STATES:
+            add("G1", "error", f"unknown basis '{e.get('basis')}' or status '{e.get('status')}'", e)
+        if e.get("basis") in ("flag", "account") and e.get("status") == "admitted" and (e.get("test") or {}).get("z") is None:
+            add("G2", "error", "an edge proposed from measured rows is admitted with no test on rows it did not see", e)
+        if e.get("basis") == "declaration" and not e.get("provenance"):
+            add("G3", "warning", "a declared edge does not say what it follows from", e)
+        if (sites is not None and e["site"] not in set(map(str, sites))) or (readouts is not None and e["readout"] not in set(map(str, readouts))):
+            add("G4", "warning", "the site or the readout of the edge is not among the events and readouts of the run", e)
+        k = (e["site"], e["readout"], e.get("stratum"))
+        if k in seen:
+            add("G5", "error", "a second edge for the same pair in the same stratum", e)
+        seen.add(k)
     return out
 
 
