@@ -1,0 +1,84 @@
+{
+ "intervals": {
+  "inside": 1,
+  "of": 1
+ },
+ "outcomes": {
+  "most_likely_happened": 3,
+  "of": 5
+ },
+ "rows": [
+  {
+   "id": "TP-controls-u",
+   "what": "IRF1, arm prop: u of the output with no record of IRF1 (an overshoot is negative)",
+   "forecast": [
+    -1.8,
+    0.6
+   ],
+   "observed": 0.3234519397769321,
+   "inside": true
+  },
+  {
+   "id": "TP-controls-gain",
+   "what": "IRF1, arm prop: the gain of the output with no record over Z70",
+   "forecast": {
+    "a step": 0.4,
+    "unresolved": 0.3,
+    "no step": 0.3
+   },
+   "observed": "a step",
+   "probability_given": 0.4,
+   "most_likely_happened": true
+  },
+  {
+   "id": "T5-vs-TM",
+   "what": "IRF1, the output with no record: rows5 against mixed",
+   "forecast": {
+    "brings back a step": 0.5,
+    "costs a step": 0.03,
+    "no change of a step": 0.15,
+    "unresolved": 0.32
+   },
+   "observed": "no change of a step",
+   "probability_given": 0.15,
+   "most_likely_happened": false
+  },
+  {
+   "id": "T5-vs-TC",
+   "what": "IRF1, the repaired output: rows5 against cells5",
+   "forecast": {
+    "brings back a step": 0.07,
+    "costs a step": 0.07,
+    "no change of a step": 0.56,
+    "unresolved": 0.3
+   },
+   "observed": "unresolved",
+   "probability_given": 0.3,
+   "most_likely_happened": false
+  },
+  {
+   "id": "T4-vs-TP",
+   "what": "IRF1, the output with no record: rows4 against prop",
+   "forecast": {
+    "brings back a step": 0.15,
+    "costs a step": 0.35,
+    "no change of a step": 0.15,
+    "unresolved": 0.35
+   },
+   "observed": "costs a step",
+   "probability_given": 0.35,
+   "most_likely_happened": true
+  },
+  {
+   "id": "guard-cells5-holds",
+   "what": "the guard on the other outputs holds, arm cells5",
+   "forecast": {
+    "yes": 0.65,
+    "no": 0.35
+   },
+   "observed": "yes",
+   "probability_given": 0.65,
+   "most_likely_happened": true
+  }
+ ]
+}

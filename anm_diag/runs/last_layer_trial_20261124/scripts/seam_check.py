@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """A check added after the reading of part A. It was not declared, and nothing is judged by it.
 
-  python seam_check.py --work WORK [--results RESULTS]
+  python seam_check.py --work WORK [--states STATES] [--results RESULTS]
 
 Why. In the trial a cell takes its state from the fold that did not hold it, so the two halves of the cells have
 their states from two different trained layers. The round and the tool fit a reader on one half and read the other:
@@ -17,10 +17,13 @@ computed as the tool computes it for an output. Two readers of a stage:
   round   anm_diag.cycle.LinearRows, the arms of the round (controls, rows, cells), at unit length
 Resamples are paired between stages (the same seed, the same cells). Half the cells, so wider intervals.
 
-What it also shows. In the trial's own reading, the readout that reads a half is fitted on the control cells of the
-other half: the cells the layer was trained with, and so nearly the readout the layer was trained under. Here the
-readout is fitted on other control cells. The difference between the two is how much of a gain belongs to that one
-readout.
+Three readouts, then, for the output with no record of the event:
+  the readout of the training, exactly (--states): the vector the layer was trained under, kept as it was, applied to
+      the cells the layer did not see. Nothing is fitted again.
+  the round's (the declared reading, in trial.json): the same recipe on the same control cells, fitted again on the
+      states those cells have in the trial, which come from the other layer.
+  a fresh one (this check, inside a half): the same recipe on other control cells.
+How a gain falls from the first to the third is how much of it belongs to one vector.
 """
 import argparse
 import json
@@ -43,6 +46,7 @@ from sklearn.preprocessing import StandardScaler  # noqa: E402
 STEP = cycle.STEP
 POOL = ["IFNGR1", "IFNGR2", "JAK2", "STAT1"]
 READERS = ("tool", "controls", "rows", "cells")
+ARM_OF = {"T4": "rows4", "T5": "rows5", "TM": "mixed", "TC": "cells5", "TP": "prop"}
 step = lambda iv: "a step" if iv[0] > STEP else ("no step" if iv[1] < STEP else "unresolved")
 flat = lambda v: np.asarray(v, np.float64).ravel()
 
@@ -75,6 +79,7 @@ def one_half(d, stages, alphas, m, A, un, y, o, events):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--work", type=Path, required=True)
+    ap.add_argument("--states", type=Path, default=None, help="the folder of train.py's outputs: adds the readout of the training, kept as it was")
     ap.add_argument("--results", type=Path, default=RUN / "results")
     a = ap.parse_args()
     d = np.load(a.work / "thp1_tt.npz")
@@ -83,10 +88,30 @@ def main():
     first = cycle.halves(np.where(A, un, "control"), SEED)       # the halves of the rounds, which are the folds of the trial
     stages = [s for s in ("Z70", "T4", "T5", "TM", "TC", "TP") if s in d.files]
     res = {"what": "not declared, added after the reading of part A; nothing is judged by it. Read inside each half of the cells, where every state comes from one trained layer that did not see the cell, with readers fitted on cells of that half",
+           "the_readout_of_the_training_exactly": "the vector a layer was trained under, kept as it was and applied to the cells that layer did not see; nothing is fitted again. u as the tool computes it for an output",
            "step_margin": STEP, "ridge_weights_of_the_tool": alphas, "targets": {}}
+    exact = {}
+    if a.states:                                                 # the readout of the training, kept as it was, on the cells its layer did not see
+        x0 = unit(d["Z70"]).astype(np.float64)
+        for st in stages[1:]:
+            F = [np.load(a.states / f"{ARM_OF[st]}_{f}.npz") for f in (0, 1)]
+            assert (F[0]["fit"] == first).all() and (F[1]["fit"] == ~first).all()
+            r = lambda x: np.where(first, (x - F[1]["xc"]) @ F[1]["w"] + F[1]["b"], (x - F[0]["xc"]) @ F[0]["w"] + F[0]["b"])
+            exact[st] = (r(x0), r(unit(d[st]).astype(np.float64)))
     for target, events in (("IRF1 on its own", ["IRF1"]), ("the four pathway genes, a pool", POOL)):
         res["targets"][target] = {"halves": {}}
         print(f"==== {target}")
+        if exact:
+            m = ~A | np.isin(un, events)
+            cl = un[m] if len(events) > 1 else None
+            res["targets"][target]["the_readout_of_the_training_exactly"] = E = {}
+            for st, (p0, pt) in exact.items():
+                u0, ut = (flat(cycle.output_u(y[m], p[m], A[m], cl, SEED)[0]) for p in (p0, pt))
+                g = np.abs(u0) - np.abs(ut)
+                iv = cycle.interval(g[1:])
+                E[st] = {"arm_of_the_trial": ARM_OF[st], "as_released": {"u": float(u0[0]), "ci": cycle.interval(u0[1:])}, "trained": {"u": float(ut[0]), "ci": cycle.interval(ut[1:])},
+                         "gain": {"gain": float(g[0]), "ci": iv, "reading": step(iv)}}
+                print(f"  the readout of the training, exactly: {st:<3} {ARM_OF[st]:<6} released {u0[0]:.3f} | trained {ut[0]:.3f} [{E[st]['trained']['ci'][0]:.3f}, {E[st]['trained']['ci'][1]:.3f}] | gain {g[0]:+.3f} [{iv[0]:.3f}, {iv[1]:.3f}] {step(iv)}")
         for name, half in (("first", first), ("second", ~first)):
             R = one_half(d, stages, alphas, (~A | np.isin(un, events)) & half, A, un, y, o, events)
             res["targets"][target]["halves"][name] = R
