@@ -57,3 +57,42 @@ def test_parts_sum_to_one_and_gains_are_paired():
     assert abs(sum(p["share"] for p in ch["parts"].values()) - 1) < 1e-9
     g = AC.gain(R["Z"], R["V"])
     assert g["reading"] == "a step" and abs(g["gain"] - ch["parts"]["lost_before_the_state"]["share"]) < 1e-9
+
+
+def test_an_event_not_yet_measured_is_forecast_as_when_left_out():
+    """Law.new on the cells of an event equals the forecast of that event left out, when the rest is held the same."""
+    d = T.planted(5)
+    full = AC.Law(d["Z"], {"y": d["y"]}, d["unit"], edges=d["edges"]).fit()
+    rows = {r["event"]: r for r in full.forecast()}
+    for e in ("c1", "l", "n2", "q07"):
+        keep = d["unit"] != e
+        part = AC.Law(d["Z"][keep], {"y": d["y"][keep]}, d["unit"][keep], edges=d["edges"]).fit()
+        i = [k for k, h in enumerate(full.events) if h != e]
+        part.sigma0, part.cl = full.sigma0, full.cl                          # the same spreads, weights and widening
+        part.r["y"]["tau2"], part.r["y"]["w"] = full.r["y"]["tau2"], full.r["y"]["w"][i]
+        vals = {c: [v for h, _r, v in rows_ if h != e] for c, rows_ in full.class_values().items()}
+        f = part.new(d["Z"][~keep], d["unit"][~keep], edges=d["edges"], classes=vals)[0]
+        r = rows[e]
+        assert abs(f["read"] - r["read"]) < 1e-9 and abs(f["from_the_recorded_events"] - r["from_the_other_events"]) < 1e-6
+        if r["no_forecast"] is None:
+            assert abs(f["by_its_edge"] - r["by_its_edge"]) < 1e-9 and abs(f["forecast"] - r["forecast"]) < 1e-6
+            assert abs(f["sd"] - r["sd"]) < 0.05 * r["sd"] + 0.02                # the row's error is taken at the control spread
+        change, se = part.measure(d["y"][~keep], d["unit"][~keep], "y")[e]
+        assert abs(change - r["change"]) < 1e-9 and abs(se - r["se"]) < 0.5 * r["se"]
+
+
+def test_the_command_reads_a_spec_and_credits_a_repair_up_to_what_the_stage_carries(tmp_path):
+    """`anm_diag account` on a SPEC file; a repair that follows the mean of an event no stage holds gets no credit."""
+    d = T.planted(2)
+    np.savez(tmp_path / "cells.npz", Z=d["Z"], V=d["V"], unit=d["unit"], A=(d["unit"] != "control").astype(int), y=d["y"])
+    spec = {"name": "planted", "events": ["c1", "m"], "arrays": {"audit": "cells.npz"}, "account": {"unit_length": [], "others": ["c1", "c2", "r1", "r2"], "pairs": [["Z", "V"]]},
+            "keys": {"readouts": ["y"], "stages": {"V": "V", "Z": "Z"}, "unit": "unit", "control": {"key": "A", "equals": 0}}}
+    res = AC.run_spec(spec, tmp_path, draws=60)
+    assert res["state"] == "Z" and res["inputs"] == ["V"] and set(res["events"]) == {"c1", "m"}
+    m, c1 = res["events"]["m"], res["events"]["c1"]
+    z = m["stages"]["Z"]["shares"]
+    assert z["found_again"]["share"] > 0.4 and z["carried"]["share"] < 0.25
+    rep = m["a_repair_that_follows_the_mean"]
+    assert rep["credited"]["share"] < 0.25 and rep["beyond_what_the_stage_carries"]["reading"] == "a step"
+    assert c1["stages"]["Z"]["shares"]["read"]["share"] > 0.8 and c1["a_repair_that_follows_the_mean"]["beyond_what_the_stage_carries"]["reading"] != "a step"
+    assert "V over Z" in c1["gains"] and "_draws" not in c1["stages"]["Z"]
