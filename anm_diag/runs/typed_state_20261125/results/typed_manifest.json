@@ -1,0 +1,849 @@
+{
+ "cells": 7478,
+ "d_model": 512,
+ "genes_among_the_tokens": 13850,
+ "times_a_gene_is_twice_among_a_cells_tokens": 2,
+ "eligible_genes": 7503,
+ "min_share": 0.05,
+ "largest_differences": {
+  "mean_against_the_recorded_state": 0.0007146596908569336,
+  "entry_mean_against_the_recorded_one": 2.7939677238464355e-09,
+  "blocks_add_up_to_the_mean": 9.5367431640625e-07
+ },
+ "limits": {
+  "mean_against_the_recorded_state": 0.002,
+  "entry_mean_against_the_recorded_one": 0.002,
+  "blocks_add_up_to_the_mean": 0.0001
+ },
+ "the_entry_mean_is_recorded": true,
+ "hold": true,
+ "TK8": {
+  "genes_of_a_type": [
+   1715,
+   1750,
+   1783,
+   1784,
+   1832,
+   1593,
+   1765,
+   1628
+  ],
+  "positions_of_a_type_in_a_cell_mean": [
+   254.71623428724257,
+   267.8986359989302,
+   246.86680930730142,
+   269.87296068467504,
+   270.09039850227333,
+   227.6838726932335,
+   245.40157796202192,
+   230.15351698315058
+  ],
+  "sha256_of_the_assignment": "63754a64e35ad7e9",
+  "inertia": 13062.53864542544
+ },
+ "TA": {
+  "genes": [
+   {
+    "gene": "SERPING1",
+    "share_of_control_cells": 0.8281642917015927,
+    "share_of_pathway_knockout_cells": 0.21791044776119403
+   },
+   {
+    "gene": "GBP5",
+    "share_of_control_cells": 0.9740150880134115,
+    "share_of_pathway_knockout_cells": 0.3718905472636816
+   },
+   {
+    "gene": "GBP1",
+    "share_of_control_cells": 0.9744341994970662,
+    "share_of_pathway_knockout_cells": 0.3756218905472637
+   },
+   {
+    "gene": "HLA-DRA",
+    "share_of_control_cells": 0.8424140821458508,
+    "share_of_pathway_knockout_cells": 0.25099502487562186
+   },
+   {
+    "gene": "ETV7",
+    "share_of_control_cells": 0.8440905280804694,
+    "share_of_pathway_knockout_cells": 0.2728855721393035
+   },
+   {
+    "gene": "SOCS1",
+    "share_of_control_cells": 0.7820620284995808,
+    "share_of_pathway_knockout_cells": 0.21940298507462686
+   },
+   {
+    "gene": "GBP4",
+    "share_of_control_cells": 0.8688181056160938,
+    "share_of_pathway_knockout_cells": 0.31492537313432833
+   },
+   {
+    "gene": "IL18BP",
+    "share_of_control_cells": 0.8352891869237217,
+    "share_of_pathway_knockout_cells": 0.3283582089552239
+   },
+   {
+    "gene": "IRF1",
+    "share_of_control_cells": 0.9698239731768651,
+    "share_of_pathway_knockout_cells": 0.4701492537313433
+   },
+   {
+    "gene": "HLA-DQB1",
+    "share_of_control_cells": 0.6559094719195306,
+    "share_of_pathway_knockout_cells": 0.16417910447761194
+   },
+   {
+    "gene": "JAK2",
+    "share_of_control_cells": 0.7288348700754401,
+    "share_of_pathway_knockout_cells": 0.25348258706467663
+   },
+   {
+    "gene": "WARS",
+    "share_of_control_cells": 0.9920368818105616,
+    "share_of_pathway_knockout_cells": 0.5208955223880597
+   },
+   {
+    "gene": "HLA-DRB5",
+    "share_of_control_cells": 0.8415758591785415,
+    "share_of_pathway_knockout_cells": 0.3788557213930348
+   },
+   {
+    "gene": "CD74",
+    "share_of_control_cells": 0.9735959765297569,
+    "share_of_pathway_knockout_cells": 0.5151741293532338
+   },
+   {
+    "gene": "HLA-DRB1",
+    "share_of_control_cells": 0.9258172673931265,
+    "share_of_pathway_knockout_cells": 0.48407960199004973
+   },
+   {
+    "gene": "GBP2",
+    "share_of_control_cells": 0.575859178541492,
+    "share_of_pathway_knockout_cells": 0.16019900497512438
+   },
+   {
+    "gene": "GCH1",
+    "share_of_control_cells": 0.577116512992456,
+    "share_of_pathway_knockout_cells": 0.1691542288557214
+   },
+   {
+    "gene": "FCGR1A",
+    "share_of_control_cells": 0.7866722548197821,
+    "share_of_pathway_knockout_cells": 0.3808457711442786
+   },
+   {
+    "gene": "HLA-E",
+    "share_of_control_cells": 0.7284157585917854,
+    "share_of_pathway_knockout_cells": 0.32686567164179103
+   },
+   {
+    "gene": "HLA-DPA1",
+    "share_of_control_cells": 0.5523889354568315,
+    "share_of_pathway_knockout_cells": 0.15099502487562189
+   },
+   {
+    "gene": "IFI27",
+    "share_of_control_cells": 0.8248113998323554,
+    "share_of_pathway_knockout_cells": 0.42512437810945275
+   },
+   {
+    "gene": "APOL6",
+    "share_of_control_cells": 0.8642078792958927,
+    "share_of_pathway_knockout_cells": 0.47189054726368157
+   },
+   {
+    "gene": "IFITM1",
+    "share_of_control_cells": 0.7732606873428332,
+    "share_of_pathway_knockout_cells": 0.3845771144278607
+   },
+   {
+    "gene": "GSDMD",
+    "share_of_control_cells": 0.866303436714166,
+    "share_of_pathway_knockout_cells": 0.48034825870646763
+   },
+   {
+    "gene": "HLA-DMA",
+    "share_of_control_cells": 0.5188600167644594,
+    "share_of_pathway_knockout_cells": 0.13557213930348258
+   },
+   {
+    "gene": "SLC31A2",
+    "share_of_control_cells": 0.6508801341156748,
+    "share_of_pathway_knockout_cells": 0.27860696517412936
+   },
+   {
+    "gene": "FCGR1B",
+    "share_of_control_cells": 0.7627829002514669,
+    "share_of_pathway_knockout_cells": 0.39751243781094525
+   },
+   {
+    "gene": "TRIM69",
+    "share_of_control_cells": 0.7363788767812238,
+    "share_of_pathway_knockout_cells": 0.3756218905472637
+   },
+   {
+    "gene": "STX11",
+    "share_of_control_cells": 0.5913663034367141,
+    "share_of_pathway_knockout_cells": 0.23308457711442787
+   },
+   {
+    "gene": "APOL1",
+    "share_of_control_cells": 0.5616093880972338,
+    "share_of_pathway_knockout_cells": 0.20845771144278608
+   },
+   {
+    "gene": "SECTM1",
+    "share_of_control_cells": 0.46437552388935455,
+    "share_of_pathway_knockout_cells": 0.11716417910447761
+   },
+   {
+    "gene": "AIM2",
+    "share_of_control_cells": 0.48281642917015927,
+    "share_of_pathway_knockout_cells": 0.14601990049751243
+   },
+   {
+    "gene": "CXCL10",
+    "share_of_control_cells": 0.6890192791282481,
+    "share_of_pathway_knockout_cells": 0.3654228855721393
+   },
+   {
+    "gene": "FBXO6",
+    "share_of_control_cells": 0.7133277451802179,
+    "share_of_pathway_knockout_cells": 0.39129353233830844
+   },
+   {
+    "gene": "IL15RA",
+    "share_of_control_cells": 0.4673093042749371,
+    "share_of_pathway_knockout_cells": 0.15422885572139303
+   },
+   {
+    "gene": "CUL1",
+    "share_of_control_cells": 0.6282481139983236,
+    "share_of_pathway_knockout_cells": 0.3161691542288557
+   },
+   {
+    "gene": "SLAMF8",
+    "share_of_control_cells": 0.6802179379715004,
+    "share_of_pathway_knockout_cells": 0.3681592039800995
+   },
+   {
+    "gene": "APOL4",
+    "share_of_control_cells": 0.4010896898575021,
+    "share_of_pathway_knockout_cells": 0.09253731343283582
+   },
+   {
+    "gene": "GLUL",
+    "share_of_control_cells": 0.8390611902766136,
+    "share_of_pathway_knockout_cells": 0.5393034825870647
+   },
+   {
+    "gene": "TNFRSF14",
+    "share_of_control_cells": 0.5431684828164292,
+    "share_of_pathway_knockout_cells": 0.24427860696517412
+   },
+   {
+    "gene": "PSMB10",
+    "share_of_control_cells": 0.8755238893545683,
+    "share_of_pathway_knockout_cells": 0.5838308457711443
+   },
+   {
+    "gene": "CEBPE",
+    "share_of_control_cells": 0.4702430846605197,
+    "share_of_pathway_knockout_cells": 0.18258706467661692
+   },
+   {
+    "gene": "LAP3",
+    "share_of_control_cells": 0.9639564124057,
+    "share_of_pathway_knockout_cells": 0.6823383084577115
+   },
+   {
+    "gene": "KIAA0040",
+    "share_of_control_cells": 0.4673093042749371,
+    "share_of_pathway_knockout_cells": 0.1890547263681592
+   },
+   {
+    "gene": "CASP4",
+    "share_of_control_cells": 0.6374685666387259,
+    "share_of_pathway_knockout_cells": 0.36069651741293535
+   },
+   {
+    "gene": "HLA-DPB1",
+    "share_of_control_cells": 0.38600167644593464,
+    "share_of_pathway_knockout_cells": 0.11019900497512437
+   },
+   {
+    "gene": "RBM47",
+    "share_of_control_cells": 0.7309304274937133,
+    "share_of_pathway_knockout_cells": 0.4572139303482587
+   },
+   {
+    "gene": "UBE2L6",
+    "share_of_control_cells": 0.9664710813076278,
+    "share_of_pathway_knockout_cells": 0.6972636815920398
+   },
+   {
+    "gene": "TNFSF13B",
+    "share_of_control_cells": 0.7011735121542331,
+    "share_of_pathway_knockout_cells": 0.4330845771144279
+   },
+   {
+    "gene": "NCF1",
+    "share_of_control_cells": 0.8801341156747695,
+    "share_of_pathway_knockout_cells": 0.613681592039801
+   },
+   {
+    "gene": "MSRB1",
+    "share_of_control_cells": 0.8981559094719195,
+    "share_of_pathway_knockout_cells": 0.6368159203980099
+   },
+   {
+    "gene": "EPSTI1",
+    "share_of_control_cells": 0.8864207879295892,
+    "share_of_pathway_knockout_cells": 0.6268656716417911
+   },
+   {
+    "gene": "TGFBR1",
+    "share_of_control_cells": 0.2820620284995809,
+    "share_of_pathway_knockout_cells": 0.5402985074626866
+   },
+   {
+    "gene": "PARP14",
+    "share_of_control_cells": 0.8411567476948868,
+    "share_of_pathway_knockout_cells": 0.5838308457711443
+   },
+   {
+    "gene": "IFI44L",
+    "share_of_control_cells": 0.6261525565800503,
+    "share_of_pathway_knockout_cells": 0.36890547263681595
+   },
+   {
+    "gene": "RNF149",
+    "share_of_control_cells": 0.8302598491198658,
+    "share_of_pathway_knockout_cells": 0.5746268656716418
+   },
+   {
+    "gene": "PSMB9",
+    "share_of_control_cells": 0.9773679798826488,
+    "share_of_pathway_knockout_cells": 0.7218905472636816
+   },
+   {
+    "gene": "SCPEP1",
+    "share_of_control_cells": 0.5616093880972338,
+    "share_of_pathway_knockout_cells": 0.30845771144278605
+   },
+   {
+    "gene": "IGFLR1",
+    "share_of_control_cells": 0.5058675607711651,
+    "share_of_pathway_knockout_cells": 0.2557213930348259
+   },
+   {
+    "gene": "IFIT3",
+    "share_of_control_cells": 0.6668063704945516,
+    "share_of_pathway_knockout_cells": 0.4166666666666667
+   },
+   {
+    "gene": "ASCL2",
+    "share_of_control_cells": 0.4664710813076278,
+    "share_of_pathway_knockout_cells": 0.21741293532338307
+   },
+   {
+    "gene": "SAMD9L",
+    "share_of_control_cells": 0.7523051131601006,
+    "share_of_pathway_knockout_cells": 0.5039800995024876
+   },
+   {
+    "gene": "GSTK1",
+    "share_of_control_cells": 0.6781223805532272,
+    "share_of_pathway_knockout_cells": 0.4300995024875622
+   },
+   {
+    "gene": "XRN1",
+    "share_of_control_cells": 0.44970662196144173,
+    "share_of_pathway_knockout_cells": 0.2019900497512438
+   },
+   {
+    "gene": "CAPN2",
+    "share_of_control_cells": 0.4413243922883487,
+    "share_of_pathway_knockout_cells": 0.6880597014925374
+   },
+   {
+    "gene": "VPS9D1",
+    "share_of_control_cells": 0.365046102263202,
+    "share_of_pathway_knockout_cells": 0.12288557213930348
+   },
+   {
+    "gene": "PIM1",
+    "share_of_control_cells": 0.4471919530595138,
+    "share_of_pathway_knockout_cells": 0.20572139303482587
+   },
+   {
+    "gene": "NUB1",
+    "share_of_control_cells": 0.45766974015088013,
+    "share_of_pathway_knockout_cells": 0.21666666666666667
+   },
+   {
+    "gene": "BATF2",
+    "share_of_control_cells": 0.3906119027661358,
+    "share_of_pathway_knockout_cells": 0.15074626865671642
+   },
+   {
+    "gene": "TNFSF10",
+    "share_of_control_cells": 0.4304274937133277,
+    "share_of_pathway_knockout_cells": 0.19129353233830845
+   },
+   {
+    "gene": "PLEKHO1",
+    "share_of_control_cells": 0.6387259010896899,
+    "share_of_pathway_knockout_cells": 0.4009950248756219
+   },
+   {
+    "gene": "RARRES3",
+    "share_of_control_cells": 0.3134953897736798,
+    "share_of_pathway_knockout_cells": 0.0763681592039801
+   },
+   {
+    "gene": "RNF213",
+    "share_of_control_cells": 0.9610226320201174,
+    "share_of_pathway_knockout_cells": 0.7246268656716418
+   },
+   {
+    "gene": "NUCB1",
+    "share_of_control_cells": 0.6986588432523051,
+    "share_of_pathway_knockout_cells": 0.46417910447761196
+   },
+   {
+    "gene": "STAT1",
+    "share_of_control_cells": 0.9886839899413243,
+    "share_of_pathway_knockout_cells": 0.7584577114427861
+   },
+   {
+    "gene": "TMEM176B",
+    "share_of_control_cells": 0.5452640402347024,
+    "share_of_pathway_knockout_cells": 0.3154228855721393
+   },
+   {
+    "gene": "CASP8",
+    "share_of_control_cells": 0.501257334450964,
+    "share_of_pathway_knockout_cells": 0.27238805970149255
+   },
+   {
+    "gene": "SORL1",
+    "share_of_control_cells": 0.13788767812238056,
+    "share_of_pathway_knockout_cells": 0.3654228855721393
+   },
+   {
+    "gene": "ITGA6",
+    "share_of_control_cells": 0.39983235540653816,
+    "share_of_pathway_knockout_cells": 0.172636815920398
+   },
+   {
+    "gene": "HLA-C",
+    "share_of_control_cells": 0.8880972338642079,
+    "share_of_pathway_knockout_cells": 0.6611940298507463
+   },
+   {
+    "gene": "NCF2",
+    "share_of_control_cells": 0.6538139145012574,
+    "share_of_pathway_knockout_cells": 0.4293532338308458
+   },
+   {
+    "gene": "ICAM1",
+    "share_of_control_cells": 0.3977367979882649,
+    "share_of_pathway_knockout_cells": 0.17487562189054726
+   },
+   {
+    "gene": "EDEM2",
+    "share_of_control_cells": 0.6869237217099748,
+    "share_of_pathway_knockout_cells": 0.4664179104477612
+   },
+   {
+    "gene": "TGM2",
+    "share_of_control_cells": 0.3369656328583403,
+    "share_of_pathway_knockout_cells": 0.11716417910447761
+   },
+   {
+    "gene": "OPTN",
+    "share_of_control_cells": 0.39186923721709976,
+    "share_of_pathway_knockout_cells": 0.172636815920398
+   },
+   {
+    "gene": "RHOU",
+    "share_of_control_cells": 0.4027661357921207,
+    "share_of_pathway_knockout_cells": 0.18582089552238806
+   },
+   {
+    "gene": "VCAN",
+    "share_of_control_cells": 0.17183570829840739,
+    "share_of_pathway_knockout_cells": 0.38855721393034826
+   },
+   {
+    "gene": "GBP3",
+    "share_of_control_cells": 0.42078792958927075,
+    "share_of_pathway_knockout_cells": 0.2044776119402985
+   },
+   {
+    "gene": "CD274",
+    "share_of_control_cells": 0.2908633696563286,
+    "share_of_pathway_knockout_cells": 0.07512437810945273
+   },
+   {
+    "gene": "RALA",
+    "share_of_control_cells": 0.5213746856663872,
+    "share_of_pathway_knockout_cells": 0.30646766169154227
+   },
+   {
+    "gene": "SP110",
+    "share_of_control_cells": 0.7493713327745181,
+    "share_of_pathway_knockout_cells": 0.5345771144278607
+   },
+   {
+    "gene": "CD40",
+    "share_of_control_cells": 0.46186085498742663,
+    "share_of_pathway_knockout_cells": 0.24751243781094528
+   },
+   {
+    "gene": "IFI16",
+    "share_of_control_cells": 0.731349538977368,
+    "share_of_pathway_knockout_cells": 0.517910447761194
+   },
+   {
+    "gene": "PARP9",
+    "share_of_control_cells": 0.6881810561609388,
+    "share_of_pathway_knockout_cells": 0.4753731343283582
+   },
+   {
+    "gene": "GM2A",
+    "share_of_control_cells": 0.40067057837384745,
+    "share_of_pathway_knockout_cells": 0.18855721393034827
+   },
+   {
+    "gene": "IRF7",
+    "share_of_control_cells": 0.8914501257334451,
+    "share_of_pathway_knockout_cells": 0.6793532338308458
+   },
+   {
+    "gene": "ADORA3",
+    "share_of_control_cells": 0.21332774518021794,
+    "share_of_pathway_knockout_cells": 0.4243781094527363
+   },
+   {
+    "gene": "RSU1",
+    "share_of_control_cells": 0.4731768650461023,
+    "share_of_pathway_knockout_cells": 0.2626865671641791
+   },
+   {
+    "gene": "TAP1",
+    "share_of_control_cells": 0.9970662196144174,
+    "share_of_pathway_knockout_cells": 0.78681592039801
+   },
+   {
+    "gene": "IFI35",
+    "share_of_control_cells": 0.901089689857502,
+    "share_of_pathway_knockout_cells": 0.6920398009950248
+   },
+   {
+    "gene": "CD53",
+    "share_of_control_cells": 0.5850796311818944,
+    "share_of_pathway_knockout_cells": 0.37661691542288556
+   },
+   {
+    "gene": "GOLM1",
+    "share_of_control_cells": 0.6274098910310143,
+    "share_of_pathway_knockout_cells": 0.41940298507462687
+   },
+   {
+    "gene": "STAT2",
+    "share_of_control_cells": 0.5247275775356245,
+    "share_of_pathway_knockout_cells": 0.3169154228855721
+   },
+   {
+    "gene": "FSCN1",
+    "share_of_control_cells": 0.24224643755238895,
+    "share_of_pathway_knockout_cells": 0.4482587064676617
+   },
+   {
+    "gene": "PSMA4",
+    "share_of_control_cells": 0.7087175188600168,
+    "share_of_pathway_knockout_cells": 0.5042288557213931
+   },
+   {
+    "gene": "ISG20",
+    "share_of_control_cells": 0.3956412405699916,
+    "share_of_pathway_knockout_cells": 0.1917910447761194
+   },
+   {
+    "gene": "CARD16",
+    "share_of_control_cells": 0.38851634534786256,
+    "share_of_pathway_knockout_cells": 0.1853233830845771
+   },
+   {
+    "gene": "MTHFD2",
+    "share_of_control_cells": 0.7288348700754401,
+    "share_of_pathway_knockout_cells": 0.5266169154228856
+   },
+   {
+    "gene": "RNF181",
+    "share_of_control_cells": 0.5863369656328583,
+    "share_of_pathway_knockout_cells": 0.3843283582089552
+   },
+   {
+    "gene": "TANK",
+    "share_of_control_cells": 0.5603520536462699,
+    "share_of_pathway_knockout_cells": 0.35870646766169156
+   },
+   {
+    "gene": "CTSS",
+    "share_of_control_cells": 0.9538977367979883,
+    "share_of_pathway_knockout_cells": 0.7529850746268657
+   },
+   {
+    "gene": "PSME1",
+    "share_of_control_cells": 0.9396479463537301,
+    "share_of_pathway_knockout_cells": 0.7407960199004975
+   },
+   {
+    "gene": "TAGAP",
+    "share_of_control_cells": 0.3583403185247276,
+    "share_of_pathway_knockout_cells": 0.16044776119402984
+   },
+   {
+    "gene": "TIFA",
+    "share_of_control_cells": 0.3851634534786253,
+    "share_of_pathway_knockout_cells": 0.18781094527363185
+   },
+   {
+    "gene": "PROCR",
+    "share_of_control_cells": 0.5817267393126572,
+    "share_of_pathway_knockout_cells": 0.3853233830845771
+   },
+   {
+    "gene": "GLIPR2",
+    "share_of_control_cells": 0.5473595976529757,
+    "share_of_pathway_knockout_cells": 0.35149253731343283
+   },
+   {
+    "gene": "DTX3L",
+    "share_of_control_cells": 0.6261525565800503,
+    "share_of_pathway_knockout_cells": 0.4305970149253731
+   },
+   {
+    "gene": "AGT",
+    "share_of_control_cells": 0.43126571668063707,
+    "share_of_pathway_knockout_cells": 0.23606965174129355
+   },
+   {
+    "gene": "RMDN3",
+    "share_of_control_cells": 0.7078792958927075,
+    "share_of_pathway_knockout_cells": 0.5129353233830846
+   },
+   {
+    "gene": "CALCOCO2",
+    "share_of_control_cells": 0.4953897736797988,
+    "share_of_pathway_knockout_cells": 0.3012437810945274
+   },
+   {
+    "gene": "ANXA2R",
+    "share_of_control_cells": 0.35079631181894383,
+    "share_of_pathway_knockout_cells": 0.15796019900497513
+   },
+   {
+    "gene": "CXCL9",
+    "share_of_control_cells": 0.2808046940486169,
+    "share_of_pathway_knockout_cells": 0.0880597014925373
+   },
+   {
+    "gene": "HLA-A",
+    "share_of_control_cells": 0.9526404023470243,
+    "share_of_pathway_knockout_cells": 0.7604477611940299
+   },
+   {
+    "gene": "RHBDF2",
+    "share_of_control_cells": 0.3549874266554904,
+    "share_of_pathway_knockout_cells": 0.16293532338308458
+   },
+   {
+    "gene": "C5orf15",
+    "share_of_control_cells": 0.5863369656328583,
+    "share_of_pathway_knockout_cells": 0.39477611940298507
+   },
+   {
+    "gene": "APOL2",
+    "share_of_control_cells": 0.29295892707460186,
+    "share_of_pathway_knockout_cells": 0.10174129353233831
+   },
+   {
+    "gene": "SOD2",
+    "share_of_control_cells": 0.9610226320201174,
+    "share_of_pathway_knockout_cells": 0.7703980099502488
+   },
+   {
+    "gene": "SNX20",
+    "share_of_control_cells": 0.34534786253143335,
+    "share_of_pathway_knockout_cells": 0.15646766169154228
+   }
+  ],
+  "smallest_absolute_difference_chosen": 0.18888020083989107,
+  "positions_in_a_cell_mean": 61.33324418293662,
+  "holds_the_gene_of_the_protein": true,
+  "pathway_knockout_cells": 4020,
+  "control_cells": 2386
+ },
+ "TR": {
+  "genes": [
+   "CFLAR",
+   "AP2B1",
+   "GAS7",
+   "PIGQ",
+   "SEC62",
+   "SERPINB1",
+   "FBXO42",
+   "AIFM2",
+   "CELF2",
+   "HEBP2",
+   "MRPS24",
+   "POLD1",
+   "TNFRSF1A",
+   "VASH1",
+   "LLGL2",
+   "DYNC1I2",
+   "NOA1",
+   "MAPKAPK5",
+   "DNAJB11",
+   "ABCC6",
+   "ARCN1",
+   "SRPK1",
+   "MTMR3",
+   "RAE1",
+   "SLC17A9",
+   "LPIN2",
+   "MON1B",
+   "NARFL",
+   "IKBKB",
+   "TNNT1",
+   "TMEM245",
+   "HPS1",
+   "NAGLU",
+   "NFKB1",
+   "ELF2",
+   "GAPDH",
+   "GOLT1B",
+   "FBXL4",
+   "SNX3",
+   "APBB3",
+   "CCNG1",
+   "C5orf15",
+   "ATP6V0E1",
+   "SPCS1",
+   "NFE2L2",
+   "LAMTOR2",
+   "DPH5",
+   "CENPF",
+   "MFSD1",
+   "HEATR1",
+   "ZMYM2",
+   "KHDRBS1",
+   "MED13L",
+   "NCOA3",
+   "KLHDC3",
+   "CNOT1",
+   "RTN2",
+   "GPCPD1",
+   "STAT5A",
+   "DGCR6L",
+   "TST",
+   "SSBP4",
+   "LATS1",
+   "RLIM",
+   "TERF2",
+   "IMPA1",
+   "PRPF38B",
+   "TAF5L",
+   "ALPK3",
+   "ABI1",
+   "PAQR5",
+   "IFI44",
+   "THUMPD2",
+   "CALHM2",
+   "JDP2",
+   "EIF4A3",
+   "IFITM3",
+   "CTTNBP2NL",
+   "ABL2",
+   "CIAO1",
+   "VGLL4",
+   "SURF6",
+   "PGAP2",
+   "SERPINH1",
+   "DHX37",
+   "CACNA2D4",
+   "AKR1C2",
+   "TRIM36",
+   "UBALD1",
+   "ZCCHC10",
+   "MX1",
+   "F11R",
+   "CYB5R1",
+   "FLVCR1",
+   "CDC42EP3",
+   "S100A12",
+   "TGFBR2",
+   "SLBP",
+   "S100P",
+   "POP5",
+   "ZNF226",
+   "RNF187",
+   "RAB31",
+   "COMMD8",
+   "LSM3",
+   "CHST11",
+   "EXOSC1",
+   "NAT1",
+   "TVP23B",
+   "USP19",
+   "ATP2A2",
+   "C19orf70",
+   "UBE2C",
+   "CCDC85B",
+   "CD151",
+   "LCORL",
+   "CCDC43",
+   "LRRC57",
+   "AEN",
+   "UBE2E2",
+   "H1FX",
+   "KPNA4",
+   "NDOR1",
+   "ZNF775",
+   "SMC5",
+   "ZNF468",
+   "MT-ND4L",
+   "FAM133B"
+  ],
+  "positions_in_a_cell_mean": 32.00548274939823,
+  "genes_shared_with_TA": 1
+ },
+ "G": {
+  "gene": "CD274",
+  "vocabulary_entry": "ENSG00000120217",
+  "share_of_all_cells_with_the_gene_among_their_tokens": 0.16929660737514496
+ },
+ "device": "mps",
+ "torch": "2.15.0",
+ "numpy": "2.5.3",
+ "sklearn": "1.9.1",
+ "python": "3.13.7",
+ "seconds": 135.0,
+ "stages": {
+  "V": 512,
+  "Z70": 512,
+  "TK8": 4096,
+  "TA": 1024,
+  "TR": 1024,
+  "G": 513,
+  "ZG": 1025,
+  "EA": 1024,
+  "PERM": 512
+ }
+}

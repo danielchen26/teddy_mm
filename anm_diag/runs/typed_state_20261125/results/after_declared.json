@@ -1,0 +1,18 @@
+{
+ "note": "A check added after the reading of the typed states (results/typed.json was read on 25 November 2026 at 01:20). Not declared before that reading. Written before any stage of the check existed for a real cell.",
+ "why": [
+  "The genes: the 128 genes of TA hold IRF1 and JAK2, two genes that an event of the stratum knocks out. A reader fitted with the cells of IRF1 could read the knockout from the gene's own transcript.",
+  "The scale: the round's linear reader centres the columns and penalises all of them alike; the tool's reference reader brings every column to one scale first. The reference reader gained at TA (0.40 to 0.27) and the round's arm fitted on the event's own cells did not (0.42 to 0.40). A block that is a small part of the mean has small columns."
+ ],
+ "stages": "scripts/after_build.py: TAx, EAx (the rule of TA with the five knocked-out genes not eligible); Zs, TAs, TRs, TAxs, EAs (what the round read, every column divided by its spread among the control cells)",
+ "target": "IRF1 on its own; a step is 0.10",
+ "forecasts": [
+  {"id": "TAx-against-TA", "what": "TAx against TA at the reference reader", "probabilities": {"no change of a step": 0.5, "unresolved": 0.35, "costs a step": 0.15}},
+  {"id": "u-TAx-reference", "what": "what the reference reader of TAx leaves", "interval": [0.22, 0.38]},
+  {"id": "TAs-rows-over-Z", "what": "the gain of the output with IRF1's record at TAs over Z70 as it was read", "probabilities": {"unresolved": 0.4, "no step": 0.4, "a step": 0.2}},
+  {"id": "TAs-rows-over-Zs", "what": "the same gain over Zs, the control of the scale", "probabilities": {"no step": 0.45, "unresolved": 0.4, "a step": 0.15}},
+  {"id": "Zs-rows-over-Z", "what": "the gain of the output with IRF1's record at Zs over Z70 as it was read", "probabilities": {"no step": 0.65, "unresolved": 0.27, "a step": 0.08}},
+  {"id": "TAs-controls-over-Z", "what": "the gain of the output with no record of IRF1 at TAs over Z70 as it was read", "probabilities": {"no step": 0.5, "unresolved": 0.35, "a step": 0.15}},
+  {"id": "u-TAs-cells", "what": "what the round's arm fitted on the cells of IRF1 leaves at TAs", "interval": [0.22, 0.40]}
+ ]
+}

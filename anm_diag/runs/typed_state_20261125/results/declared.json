@@ -1,0 +1,373 @@
+{
+ "written": "25 November 2026, after the scripts were tried on made-up values and before any typed state of a real cell was computed",
+ "forecasts": [
+  {
+   "id": "TA-keeps",
+   "kind": "outcome",
+   "what": "TA, the state keeps it: the reference reader gains a step over Z70",
+   "at": [
+    "hypotheses",
+    "TA",
+    "the_state_keeps_it",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.5,
+    "refuted": 0.28,
+    "confirmed": 0.22
+   },
+   "why": "eight window means of the last layer read no more than the mean; a block of the genes the pathway moves is a different cut, and the block is a tenth of the positions or less, so less of it is drowned"
+  },
+  {
+   "id": "TA-closed",
+   "kind": "outcome",
+   "what": "TA, the encoder's loss is closed: the reference reader is no added loss from the input view",
+   "at": [
+    "hypotheses",
+    "TA",
+    "the_encoders_loss_is_closed",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.45,
+    "refuted": 0.35,
+    "confirmed": 0.2
+   }
+  },
+  {
+   "id": "TA-repair",
+   "kind": "outcome",
+   "what": "TA, the repair with the record: a step over Z70 and a grade",
+   "at": [
+    "hypotheses",
+    "TA",
+    "the_repair_with_the_record",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.6,
+    "refuted": 0.35,
+    "confirmed": 0.05
+   },
+   "why": "a grade needs gate 3, which no state of this event has passed"
+  },
+  {
+   "id": "TA-rows-gain",
+   "kind": "outcome",
+   "what": "TA, the output with IRF1's one record against the same at Z70",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "TA",
+    "gain_from_Z",
+    "rows",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.45,
+    "no step": 0.35,
+    "a step": 0.2
+   }
+  },
+  {
+   "id": "TA-no-record",
+   "kind": "outcome",
+   "what": "TA, without its own record: the output with no record of IRF1 gains a step over Z70",
+   "at": [
+    "hypotheses",
+    "TA",
+    "without_its_own_record",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.4,
+    "refuted": 0.35,
+    "confirmed": 0.25
+   },
+   "why": "among control cells the block of interferon-moved genes should go with PD-L1, and a readout fitted on control cells can then use it for IRF1; how much of IRF1's change lies in that block is not known"
+  },
+  {
+   "id": "ZG-keeps",
+   "kind": "outcome",
+   "what": "ZG, the state keeps it",
+   "at": [
+    "hypotheses",
+    "ZG",
+    "the_state_keeps_it",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.45,
+    "refuted": 0.4,
+    "confirmed": 0.15
+   },
+   "why": "the transcript of one gene in one cell is a noisy count; the position says its rank, and the flag whether it was seen at all"
+  },
+  {
+   "id": "ZG-closed",
+   "kind": "outcome",
+   "what": "ZG, the encoder's loss is closed",
+   "at": [
+    "hypotheses",
+    "ZG",
+    "the_encoders_loss_is_closed",
+    "reading"
+   ],
+   "probabilities": {
+    "refuted": 0.45,
+    "unresolved": 0.4,
+    "confirmed": 0.15
+   }
+  },
+  {
+   "id": "ZG-repair",
+   "kind": "outcome",
+   "what": "ZG, the repair with the record",
+   "at": [
+    "hypotheses",
+    "ZG",
+    "the_repair_with_the_record",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.51,
+    "refuted": 0.45,
+    "confirmed": 0.04
+   }
+  },
+  {
+   "id": "ZG-no-record",
+   "kind": "outcome",
+   "what": "ZG, without its own record",
+   "at": [
+    "hypotheses",
+    "ZG",
+    "without_its_own_record",
+    "reading"
+   ],
+   "probabilities": {
+    "refuted": 0.5,
+    "unresolved": 0.35,
+    "confirmed": 0.15
+   }
+  },
+  {
+   "id": "choice-matters",
+   "kind": "outcome",
+   "what": "the reference reader of TR against that of TA: 'costs a step' says the choice of genes matters",
+   "at": [
+    "hypotheses",
+    "the_choice_of_genes_matters",
+    "reading"
+   ],
+   "probabilities": {
+    "unresolved": 0.42,
+    "no change of a step": 0.35,
+    "costs a step": 0.2,
+    "brings back a step": 0.03
+   }
+  },
+  {
+   "id": "TK8-gain",
+   "kind": "outcome",
+   "what": "TK8, the reference reader against Z70",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "TK8",
+    "gain_from_Z",
+    "reference_reader",
+    "reading"
+   ],
+   "probabilities": {
+    "no step": 0.5,
+    "unresolved": 0.44,
+    "a step": 0.06
+   },
+   "why": "eight coarse types are much like the eight windows, which read no more than the mean"
+  },
+  {
+   "id": "EA-gain",
+   "kind": "outcome",
+   "what": "EA, the reference reader against Z70",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "EA",
+    "gain_from_Z",
+    "reference_reader",
+    "reading"
+   ],
+   "probabilities": {
+    "no step": 0.45,
+    "unresolved": 0.45,
+    "a step": 0.1
+   }
+  },
+  {
+   "id": "EA-from-input",
+   "kind": "outcome",
+   "what": "EA from the input view",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "EA",
+    "from_the_input_view",
+    "reading"
+   ],
+   "probabilities": {
+    "loss": 0.55,
+    "unresolved": 0.33,
+    "no added loss": 0.12
+   },
+   "why": "the mean of what enters the first layer leaves 0.52; a block of 128 genes of it says which of them are tokens and about where, which is part of what the order of the tokens carries (0.21)"
+  },
+  {
+   "id": "control-TA",
+   "kind": "outcome",
+   "what": "the control target is not harmed at TA",
+   "at": [
+    "hypotheses",
+    "the_control_target_is_not_harmed",
+    "TA"
+   ],
+   "probabilities": {
+    "yes": 0.8,
+    "no": 0.2
+   }
+  },
+  {
+   "id": "control-ZG",
+   "kind": "outcome",
+   "what": "the control target is not harmed at ZG",
+   "at": [
+    "hypotheses",
+    "the_control_target_is_not_harmed",
+    "ZG"
+   ],
+   "probabilities": {
+    "yes": 0.85,
+    "no": 0.15
+   }
+  },
+  {
+   "id": "u-TA-reference",
+   "kind": "interval",
+   "what": "u of the reference reader at TA",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "TA",
+    "reference",
+    "u"
+   ],
+   "interval": [
+    0.15,
+    0.45
+   ]
+  },
+  {
+   "id": "u-ZG-reference",
+   "kind": "interval",
+   "what": "u of the reference reader at ZG",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "ZG",
+    "reference",
+    "u"
+   ],
+   "interval": [
+    0.18,
+    0.46
+   ]
+  },
+  {
+   "id": "u-TA-rows",
+   "kind": "interval",
+   "what": "u of the output with IRF1's one record at TA",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "TA",
+    "arms",
+    "rows",
+    "u"
+   ],
+   "interval": [
+    0.35,
+    0.78
+   ]
+  },
+  {
+   "id": "u-TA-controls",
+   "kind": "interval",
+   "what": "u of the output with no record of IRF1 at TA",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "TA",
+    "arms",
+    "controls",
+    "u"
+   ],
+   "interval": [
+    0.55,
+    1.0
+   ]
+  },
+  {
+   "id": "u-TK8-reference",
+   "kind": "interval",
+   "what": "u of the reference reader at TK8",
+   "at": [
+    "targets",
+    "T",
+    "stages",
+    "TK8",
+    "reference",
+    "u"
+   ],
+   "interval": [
+    0.25,
+    0.55
+   ]
+  },
+  {
+   "id": "share-with-the-gene",
+   "kind": "interval",
+   "in": "manifest",
+   "what": "the share of the cells that have CD274 among their tokens",
+   "at": [
+    "G",
+    "share_of_all_cells_with_the_gene_among_their_tokens"
+   ],
+   "interval": [
+    0.15,
+    0.9
+   ]
+  },
+  {
+   "id": "TA-holds-the-gene",
+   "kind": "outcome",
+   "in": "manifest",
+   "what": "CD274 is among the 128 genes of TA",
+   "at": [
+    "TA",
+    "holds_the_gene_of_the_protein"
+   ],
+   "probabilities": {
+    "yes": 0.6,
+    "no": 0.4
+   }
+  }
+ ]
+}
