@@ -12,7 +12,8 @@ import math
 
 LEVERS = {"M": "the model (inner loop)", "E": "events: which units of the pool are read next, and in which role",
           "V": "views: the readers of a stage, the input, the readouts", "S": "schema: the fields of an event and what is pooled",
-          "C": "claim: the targets, the grade and the tolerance asked for", "P": "protocol: the gates and the rules"}
+          "C": "claim: the targets, the grade and the tolerance asked for", "P": "protocol: the gates and the rules",
+          "G": "graph: an edge between an event and a readout, with a class and a size (events.edge)"}
 
 # reading -> (lever, what the reading means, admissible actions in order of cost, what not to do).  OUTER_LOOP.md, Section 7.
 ROUTES = {
@@ -43,6 +44,32 @@ ROUTES = {
     "guard conflict": ("C", "every change that removes the loss breaks the guard on the system's own task",
                        ["a change that holds the guard: the inner loop again", "if none does, the owner decides between the target and the guard"], "widen the guard after the result"),
 }
+# Version 4 (LOOP_PROTOCOL.md): the open parts of an account (account.chain, account.plan), each sent to a lever. They take
+# the place of "unreadable", "upstream" and "self event" for a target read by the account: a part that is not in the input
+# is no dead end, it is asked of the other events and then of the graph.
+ROUTES.update({
+    "held, not read": ("M", "the state holds the change cell by cell and a readout with no record of the event does not read it",
+                       ["a readout taught by the records of the events of the same type, credited up to what the state carries", "a richer reader of the state"],
+                       "train what comes before the state"),
+    "held as the identity": ("E", "the state tells the event's cells apart completely, so what it holds of the change is the identity of the event",
+                             ["its own record answers it: the graph's memory, reported as such", "other events of its type, to say whether it is more than the identity"],
+                             "credit the model with it"),
+    "lost before the state": ("M", "the input holds the change cell by cell and the state the head reads does not",
+                              ["a state kept by type, judged by what it carries against the mean state and a matched control", "training of what comes before the state: the owner's decision"],
+                              "change the head"),
+    "outside the input, forecast by its type": ("E", "no stage holds the change cell by cell, and the rows of the other events forecast it through the state",
+                                                ["the records of events of the type teach the readout: ask for them, by type"], "add an edge"),
+    "outside the input, not forecast": ("G", "no stage holds the change cell by cell, and the rows of the other events do not forecast it",
+                                        ["an edge between the event and the readout: declared if it follows from the declarations (the site is a gene of the measured protein; the unit is a batch of the measurement)",
+                                         "else proposed, and tested on rows the proposal did not see", "a size for the edge: its class's share of a scale measured in each condition"],
+                                        "train, or change the head: no change of the model can supply it"),
+    "outside the input, undecided": ("E", "no stage holds the change cell by cell, and whether the other events forecast it is undecided",
+                                     ["more recorded events of the type"], "add an edge, or train"),
+})
+PARTS4 = {"held_not_read": "held, not read", "held_as_identity": "held as the identity", "lost_before_the_state": "lost before the state",
+          "not_in_the_input, forecast": "outside the input, forecast by its type", "not_in_the_input, not forecast": "outside the input, not forecast",
+          "not_in_the_input, undecided": "outside the input, undecided"}
+
 # the readings the inner loop keeps for itself (LOOP_PROTOCOL.md, version 2); they are statuses of a target, not open items of the outer step
 INNER = ("function", "coverage", "unit")
 
@@ -50,8 +77,11 @@ INNER = ("function", "coverage", "unit")
 WORDS = {"self event": "the event acts on the readout itself", "upstream": "a change of what comes before the stage the model reads"}
 STATUSES = ("closed (absolute)", "the model's part closed (relative)", "open in the model", "undecided in the model", "open before the model", "undecided before the model", "not graded",
             "not a target")
-STATES = ("open", "decided on development units", "closed", "limit", "at the margin", "not asked", "on the experiment list")
+STATES = ("open", "decided on development units", "closed", "limit", "at the margin", "not asked", "on the experiment list", "on the graph")
 TERMINAL = STATES[2:]
+NEEDS4 = {"held, not read": "no new data: the records already read", "held as the identity": "events of the type from the pool", "lost before the state": "no new data first; then the owner's decision",
+          "outside the input, forecast by its type": "no new data: the records already read", "outside the input, not forecast": "no new data to propose; rows not yet read to test",
+          "outside the input, undecided": "units of the pool"}
 NEEDS = {"invalid": "no new data", "rule": "no new data", "selection": "no new data", "mistyped": "no new data", "unreadable": "no new data first; then the owner's decision",
          "self event": "the owner's decision", "guard conflict": "the owner's decision", "small response": "units of the pool, or the owner's decision", "no final data": "units of the pool",
          "confounded": "units of the pool", "pooled, and differs": "units of the pool", "pooled, may be the same": "units of the pool", "no rows": "units of the pool",
@@ -303,6 +333,31 @@ def open_items(targets, world=None, d=DEFAULTS):
             it["after"] += mist
             it["forecast"] = "first the bridge reading with the type from the record, which changes the cells this estimate is read on; then: " + it["forecast"]
             it["next_step_needs"] = "no new data"
+    return items
+
+
+def open_parts(accounts, edges=()):
+    """Version 4: the open items of accounts. accounts: [{"readout", "group", "type", "event", "account": the result of
+    account.account}]. Every part of an account that is open (its interval above a step) is an item, sent to its lever with
+    the proposal and what the readings already credit it with (account.plan). An event with a declared or admitted edge to
+    the readout is "on the graph": its part outside the input is no open item. A part that is only unresolved is listed
+    with the state "at the margin". Same items as `open_items`, so the same ledger and the same checks apply."""
+    on_graph = {(e["site"], e["readout"]): e for e in edges if e.get("status") in ("declared", "admitted")}
+    items = []
+    for a in accounts:
+        acc, t = a["account"], {"readout": a.get("readout"), "group": a.get("group"), "type": a.get("type")}
+        for step in acc.get("plan", []):
+            reading = PARTS4[step["reading"]]
+            ed = on_graph.get((str(a.get("event")), str(a.get("readout")))) if step["part"] == "not_in_the_input" else None
+            it = _item(items, t, reading, f"{step['part'].replace('_', ' ')}: {step['share']:.0%} of the change", step["share"], step["ci"], None, event=a.get("event"),
+                       evidence=a.get("evidence"), note=step["proposal"])
+            it["next_step_needs"], it["credited_now"], it["judged_by"] = NEEDS4[reading], step["credited_now"], step["judged_by"]
+            it["state"] = "open" if step["resolved"] else "at the margin"
+            if ed is not None:
+                it["state"], it["edge"] = "on the graph", {"edge_id": ed["edge_id"], "class": ed["class"], "basis": ed["basis"], "status": ed["status"]}
+                it["note"] = f"on the graph: an edge of class '{ed['class']}' ({ed['basis']})"
+    for k, it in enumerate(items, 1):
+        it["id"] = f"P{k:02d}"
     return items
 
 
