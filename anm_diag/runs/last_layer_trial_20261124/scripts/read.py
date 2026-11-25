@@ -119,17 +119,26 @@ def main():
     # --- the guard: the head as trained, at the released state and at every trained state, on the control cells
     c0 = keep["T"][0]
     ctl = ~c0["treated"]
-    O0 = head(W, c0["raw"]["Z70"])[2].astype(np.float64)
+    H0 = head(W, c0["raw"]["Z70"])                                # HEAD_LAT, the log mean, the mean
+    O0, M0 = H0[1].astype(np.float64), H0[2].astype(np.float64)   # an output of the head is its log mean: that is what is recorded
     j = int(np.abs(O0 - c0["o"][:, None]).max(0).argmin())
-    own_ok = bool(a.made_up or np.abs(O0[:, j] - c0["o"]).max() < 1e-3 * max(1.0, float(np.abs(c0["o"]).max())))
-    sd = O0[ctl].std(0)
+    own = float(np.abs(O0[:, j] - c0["o"]).max())
+    own_ok = bool(a.made_up or own < 1e-3 * max(1.0, float(np.abs(c0["o"]).max())))
+    if not own_ok:
+        raise SystemExit(f"the head as trained does not repeat its recorded output at the released state (largest difference {own:.4f}): stopped, nothing written")
+    sd, sdm = O0[ctl].std(0), M0[ctl].std(0)
     rest = np.arange(O0.shape[1]) != j
-    OT, res["guard"] = {}, {"limit": GUARD, "the_heads_own_output_is_reproduced": own_ok, "other_outputs": int(rest.sum()), "by_arm": {}}
+    OT, res["guard"] = {}, {"limit": GUARD, "the_heads_own_output_is_reproduced": own_ok, "largest_difference_from_the_recorded_output": own, "column_of_the_target": j,
+                            "scale": "the log mean, which is what the head's output is recorded as; the same on the scale of the mean is given beside it and is not judged",
+                            "other_outputs": int(rest.sum()), "by_arm": {}}
     for st in TRAINED:
-        OT[st] = head(W, c0["raw"][st])[2].astype(np.float64)
+        HT = head(W, c0["raw"][st])
+        OT[st] = HT[1].astype(np.float64)
         per_cell = float((np.abs(OT[st][ctl] - O0[ctl])[:, rest] / sd[rest]).mean())
         of_mean = float((np.abs(OT[st][ctl].mean(0) - O0[ctl].mean(0))[rest] / sd[rest]).mean())
-        res["guard"]["by_arm"][ARM_OF[st]] = {"stage": st, "other_outputs_on_control_cells_mean_change_of_a_cell": per_cell, "mean_change_of_the_mean": of_mean, "holds": bool(per_cell <= GUARD)}
+        per_cell_m = float((np.abs(HT[2].astype(np.float64)[ctl] - M0[ctl])[:, rest] / sdm[rest]).mean())
+        res["guard"]["by_arm"][ARM_OF[st]] = {"stage": st, "other_outputs_on_control_cells_mean_change_of_a_cell": per_cell, "mean_change_of_the_mean": of_mean,
+                                               "the_same_on_the_scale_of_the_mean": per_cell_m, "holds": bool(per_cell <= GUARD)}
     for t, (g, spec, events, pooled, name) in TARGETS.items():
         c, by, draws, E, U, REF, (key, scope, m, cl), _d = keep[t]
         for st in TRAINED:

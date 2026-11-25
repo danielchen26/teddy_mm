@@ -389,16 +389,16 @@
      },
      "grade_kept": true,
      "the_head_as_trained_at_this_state": {
-      "u": 0.9791751625094047,
+      "u": 0.9495790476165633,
       "ci": [
-       0.9538166123332802,
-       0.9964557733263785
+       0.907990884131862,
+       0.9822790067264391
       ],
       "gain_from_Z": {
-       "gain": -0.029322338298284123,
+       "gain": 0.00027377659455729564,
        "ci": [
-        -0.049874002379696004,
-        -0.007985559886541453
+        -0.00031525537525200765,
+        0.0009080341409618024
        ],
        "reading": "no step",
        "no_harm": true
@@ -609,16 +609,16 @@
      },
      "grade_kept": true,
      "the_head_as_trained_at_this_state": {
-      "u": 0.9810234382162369,
+      "u": 0.9509378306395094,
       "ci": [
-       0.9566108401192682,
-       0.9978102419275108
+       0.9092256819834337,
+       0.9834443486655605
       ],
       "gain_from_Z": {
-       "gain": -0.031170614005116337,
+       "gain": -0.0010850064283888239,
        "ci": [
-        -0.051730048099463286,
-        -0.00992671601786386
+        -0.0020485187662472788,
+        -0.00026513226098069984
        ],
        "reading": "no step",
        "no_harm": true
@@ -1051,16 +1051,16 @@
      },
      "grade_kept": true,
      "the_head_as_trained_at_this_state": {
-      "u": 1.0019622576477318,
+      "u": 0.9692531655765924,
       "ci": [
-       0.996631664261329,
-       1.0061692166414136
+       0.949564737427689,
+       0.9806908438578912
       ],
       "gain_from_Z": {
-       "gain": -0.034315956855037744,
+       "gain": -0.0016068647838982653,
        "ci": [
-        -0.05016829705903815,
-        -0.023466079304131908
+        -0.0020247868386585903,
+        -0.001026159080639666
        ],
        "reading": "no step",
        "no_harm": true
@@ -1271,16 +1271,16 @@
      },
      "grade_kept": true,
      "the_head_as_trained_at_this_state": {
-      "u": 1.001700307296895,
+      "u": 0.9689894555255273,
       "ci": [
-       0.9962223699311215,
-       1.0057811904181362
+       0.9491900152895546,
+       0.9804889147277831
       ],
       "gain_from_Z": {
-       "gain": -0.034054006504200984,
+       "gain": -0.001343154732833196,
        "ci": [
-        -0.04962171915033569,
-        -0.023346621154048675
+        -0.0017127949273112674,
+        -0.0008540237625650316
        ],
        "reading": "no step",
        "no_harm": true
@@ -1337,19 +1337,24 @@
  },
  "guard": {
   "limit": 0.1,
-  "the_heads_own_output_is_reproduced": false,
+  "the_heads_own_output_is_reproduced": true,
+  "largest_difference_from_the_recorded_output": 7.458824409001252e-06,
+  "column_of_the_target": 1,
+  "scale": "the log mean, which is what the head's output is recorded as; the same on the scale of the mean is given beside it and is not judged",
   "other_outputs": 133,
   "by_arm": {
    "rows4": {
     "stage": "T4",
-    "other_outputs_on_control_cells_mean_change_of_a_cell": 0.01879216637805563,
-    "mean_change_of_the_mean": 0.0038332805741068897,
+    "other_outputs_on_control_cells_mean_change_of_a_cell": 0.018971589861309316,
+    "mean_change_of_the_mean": 0.0036731420382458742,
+    "the_same_on_the_scale_of_the_mean": 0.0188185245234761,
     "holds": true
    },
    "rows5": {
     "stage": "T5",
-    "other_outputs_on_control_cells_mean_change_of_a_cell": 0.023477356216802428,
-    "mean_change_of_the_mean": 0.009838624734910964,
+    "other_outputs_on_control_cells_mean_change_of_a_cell": 0.023714392095386033,
+    "mean_change_of_the_mean": 0.009883996760104303,
+    "the_same_on_the_scale_of_the_mean": 0.02351452411822012,
     "holds": true
    }
   }
