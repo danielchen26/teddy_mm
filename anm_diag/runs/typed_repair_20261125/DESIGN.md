@@ -183,3 +183,33 @@ committed before their states are read.
 
 [`results/declared.json`](results/declared.json): for part A, written before the melanoma strata were read by these
 rules.
+
+## 10. Added after part A was read, before any typed state of this run was read: parts B, D and E
+
+Part A is in [`results/round_a.json`](results/round_a.json). What it changes for the parts that follow: for MHC-I in
+co-culture the rows were already applied and the new rule changes nothing (0.36); there the state is the limit, and
+applying the rows costs the readout its slope among control cells. So that target is where a typed state has
+something to show.
+
+**The stages** are those of Section 3.1, made by [`scripts/states.py`](scripts/states.py) (committed before it was
+run): the genes of `T` and the programs of `P` are chosen on the fitted half; for an event read on its own or without
+a protein record, the genes of `T` are chosen by the other recorded events of its type. The reference of the grade
+is the tool's reference reader of `Z`. [`scripts/round_b.py`](scripts/round_b.py).
+
+| | confirmed | refuted |
+|---|---|---|
+| **HB1 the typed state where the state is the limit** | for T2 the new rows at `T` gain a step over the new rows at `Z` | no step |
+| **HB2 it is the type** | for T2 the rows at `T` remove a step that the rows at `R` leave | no step |
+| **HB3 one event, its record** | of the five MHC-I events read on their own at `T`, at least three gain a step over `Z` | fewer than two |
+| **HB4 the guard at `T`** | for T2 the correlation among control cells falls by less than 0.03 from `controls` to `rows` | it falls by more |
+| **HB5 no harm** | C2 and C3 are not harmed at `T` | one is |
+| **HD1 types from the input alone** | for T2 the new rows at `P` gain a step over the new rows at `Z` | no step |
+
+**Part E** ([`scripts/round_e.py`](scripts/round_e.py)). The five last layers of 24 November. For each, the stage is
+the state under the layer trained on the fitted half, for fitted and read cells alike; the cells that are read were
+never seen by that layer. **HE: a trained last layer adds a step under the new repair** is confirmed if the output
+with IRF1's record gains a step over the released state for the arm trained on the four pathway records or for the
+arm trained on those and IRF1's; refuted if neither gains a step. THP-1 only, and so exploratory like everything on
+those cells.
+
+The forecasts are in [`results/declared.json`](results/declared.json) under `parts_B_D_E`.

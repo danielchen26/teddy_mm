@@ -56,9 +56,10 @@ class Full(cycle.LinearRows):
         if key not in _KEPT:                                    # the readout of the control cells is the same for every event read against them
             lam, cv = cycle._cv_weight(F[C], t[C], pen)
             Mi = np.linalg.inv(F[C].T @ F[C] / len(C) + lam * np.diag(pen))
-            if len(_KEPT) >= 4:
+            if len(_KEPT) >= 10:
                 _KEPT.pop(next(iter(_KEPT)))
             _KEPT[key] = (lam, cv, Mi, Mi @ (F[C].T @ t[C] / len(C)))
+        _KEPT[key] = _KEPT.pop(key)                             # the one used last is dropped last
         lam, cv, Mi, thc = _KEPT[key]
         self.th = {"controls": thc}
         self.log = {"n_controls": int(len(C)), "ridge_weight": lam, "cv_error": cv, "rows": []}
