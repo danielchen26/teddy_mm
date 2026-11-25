@@ -313,8 +313,63 @@ was fitted on. The typed state, with its genes now chosen on the fitted half, re
 the limit and never a step; four programs found among control cells with no record remove nothing; and the last
 layers trained on 24 November add nothing once the repair applies a record. Three things follow. The item that
 "one record cannot close" was a property of the repair, not of the encoder, and the earlier localisation of a loss
-at the mean (0.40 against 0.18) is a statement about ridge readers. An event without a protein record can be
+at the mean (0.40 against 0.18) is a statement about ridge readers. (**Corrected by the run after it, Section 8:**
+this run's repair is a readout made to follow an event's mean, and such a readout reads near one whenever the
+event's shift of the state is found again. It does not show that the state holds the change; the loss at the mean
+is there, and the typed state does carry more.) An event without a protein record can be
 reached with no training, by a row derived from its RNA, as far as that rule holds; it has been tested on members
 of a type and on one event that is unlike its type. And four rules of the loop are now in question (the scale of a
 stage, the weight of a row, gate 3 for rows that are closed, the reader classes of the tool); they are the owner's
 decision, as is a batch of events that no run has read, on which all of this would be tested.
+
+## 8. The account of a change
+
+Added on 25 November ([`runs/account_20261125`](runs/account_20261125/)). The owner asked why nothing specific to the
+event graph had shown any weight, and for each link of the loop to be rebuilt on its foundation. `account.py` is the
+result. It stands beside the loop; the protocol and `cycle.py`, `outer.py`, `scope.py` are unchanged.
+
+**Why a new reading.** A reading of a stage is only as good as what its evidence can prove. For one event, one
+readout and one stage, on halves of the cells:
+
+| reading | evidence | proves |
+|---|---|---|
+| `read` | control cells | what a head reads with no record of the event |
+| `carried` | the cells of both arms, inside each arm (the readout given the stage against the arm given the stage) | among cells whose stage is alike, how much less the two arms differ: what the stage holds, cell by cell |
+| `others` | the rows of other events | what their records forecast for this one |
+| `found_again` | the event's own mean | that its shift of the stage is found again; nothing about what the stage holds |
+
+The repair of the round, read on other cells of the event it was fitted to, is `found_again`. On a planted event
+whose change no stage holds it "closes" more than half. Read by it, every stage looks alike.
+
+**Two levels.** Cell by cell, a change splits exactly into four parts, each with a place:
+not in the input (1 − carried at the input), lost before the state (carried at the input − at the state: the
+model), held and not read (carried − read at the state: the head), read. Across events, `Law` forecasts every event
+with itself left out from three parts: what a readout of control cells reads, what the rows of the other events add
+through the stage, and what the class of its edge says. A part that is not in the input needs an edge of the graph
+only if the other events do not forecast the change. A pair with no edge whose direct part stands out is a candidate
+for an edge the graph lacks.
+
+**What it found on development cells** (one reading declared, the rest explored):
+
+- The targets of forty runs were events for which a readout of control cells already reads most of the change. The
+  events with the largest changes that nothing reads act on the measured protein itself (CD274 on PD-L1; B2M, TAPBP,
+  HLA-A, -B, -C on MHC-I); no stage holds them, and rule S3 had kept them out as a risk of leakage. With the edge
+  "the site is a gene of the measured protein", six of seven such pairs are forecast inside their interval; without
+  any edge the law flags five of the seven and TAPBP by itself.
+- For IRF1 in THP-1 the mean state carries 52% [37, 66] of the change and the input view 89% [71, 112]: 37 points
+  [17, 61] are lost before the state, and 42 [22, 65] are held and not read by a readout of control cells. A state
+  typed by the TEG carries 21 points more than the mean [8, 39].
+- Declared, three melanoma targets by event: `found_again` exceeds `carried` by a step for five of five MHC-I events
+  (confirmed); the typed state carries 10 to 16 points more than the mean for each, none resolved as a step (refuted
+  as declared), and a step more than genes at random for three of five (confirmed); nothing is lost before the
+  state there (refuted); the other events forecast every event at 89% to 125% (confirmed); the controls hold.
+- The planted suite (`toy_account.py`): twenty systems as planted, 1,460 checks, 3 wrong; four harder variants (every cell
+  edited, half edited, noisy cells, few cells), 1,460 more, 8 wrong. The planted place is resolved as a step in 346
+  of 360 accounts.
+
+**What a system has to expose for it**: what Section 2 lists, and for `Law` the edges it knows, as a table of
+(event, readout, class).
+
+**What is not done.** The account is not the round's reading; whether it replaces it is the owner's decision. Its
+auxiliary fits are linear. One class of edge was tried, on one library. The last link, a forecast for a sealed batch
+written before it is opened, is prepared and not made.

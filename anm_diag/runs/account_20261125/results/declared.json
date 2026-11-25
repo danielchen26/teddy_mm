@@ -1,0 +1,16 @@
+{
+ "run": "account_20261125",
+ "written": "25 November 2026, before the readings of Section 7.1 (twenty planted systems and the variants) and 7.4 (three melanoma targets) of DESIGN.md",
+ "seen_before": "The planted suite was built on its seeds 0 and 1. THP-1 and the melanoma library under IFN-gamma were explored (DESIGN.md, Sections 2 and 3) and are not counted. The melanoma targets of 7.4 were read by run 40 with its repair; they have not been read with `carried`.",
+ "forecasts": {
+  "HP_planted_suite": {"probability_confirmed": 0.80, "value": "share of wrong checks on the twenty systems as planted", "interval": [0.0, 0.03], "not_counted": "the first full run of the suite finished and was seen before this file was committed"},
+  "HA1_the_mean_does_not_see": {"probability_confirmed": 0.75, "value": "MHC-I events (of five) where found_again exceeds carried at Z by more than a step", "interval": [3, 5]},
+  "HA2_the_typed_state_carries_more": {"probability_confirmed": 0.35, "probability_refuted": 0.30, "value": "median of carried(T) - carried(Z) over the five MHC-I events", "interval": [0.02, 0.20]},
+  "HA3_it_is_the_type": {"probability_confirmed": 0.40, "value": "median of carried(T) - carried(R) over the five MHC-I events", "interval": [0.03, 0.22]},
+  "HA4_where_MHC1_is_lost": {"probability_confirmed": 0.45, "value": "median share lost before the state over the five MHC-I events", "interval": [0.05, 0.30]},
+  "HA5_PDL1_has_nothing_open": {"probability_confirmed": 0.55, "value": "PD-L1 accounts (of ten) with no open part", "interval": [5, 10]},
+  "HA6_the_controls": {"probability_confirmed": 0.85},
+  "HA7_the_cells_can_be_read": {"probability_confirmed": 0.85, "value": "smallest overlap at Z over the fifteen", "interval": [0.15, 0.70]},
+  "HA8_transfer_inside_the_type": {"probability_confirmed": 0.50, "value": "pairs (of fifteen) with others at Z at least 0.75", "interval": [7, 14]}
+ }
+}

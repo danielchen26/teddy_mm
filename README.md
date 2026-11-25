@@ -266,7 +266,22 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   guard on control cells is tripped there, and one PD-L1 target loses its grade at gate 3. The typed state removes
   about 0.05 where the state is the limit and never a step; programs found with no record, and the last layers
   trained on 24 November, add nothing. Six hypotheses confirmed, seven refuted, one unresolved. Forecasts: 10 of
-  14 intervals, 12 of 16 outcomes.
+  14 intervals, 12 of 16 outcomes. Corrected in the next entry: this run's repair is a readout made to follow an
+  event's mean; what it reads does not show that the state holds the change.
+- **The account of a change (25 November; development cells; nothing trained;**
+  [`account_20261125/`](anm_diag/runs/account_20261125/)**):** why nothing specific to the TEG had shown weight, in
+  two layers. The measure of the run before reads near one whenever an event's shift of the state is found again (on
+  a planted event whose change no state holds it "closes" more than half), so every state looked alike. And the
+  targets of forty runs were events a readout of control cells already reads; the events nothing reads act on the
+  measured protein itself (CD274, B2M, TAPBP, HLA-A, -B, -C), no state holds them, and the graph has no edges. The
+  loop's readings are rebuilt on what their evidence can prove (`anm_diag/account.py`): `read`, `carried` (among
+  cells whose state is alike, how much less the arms differ), `others` (transfer), a chain of four parts cell by
+  cell, and a law of rows with edges across events; scored on a planted system. Explored: for IRF1 the mean state
+  carries 52% [37, 66], the input view 89%, the typed state 21 points more than the mean [8, 39]; with an edge known
+  beforehand six of seven pairs are forecast inside their interval, and without one the law finds five of them and
+  TAPBP on MHC-I by itself. Declared, three melanoma targets by event: five confirmed, two refuted, one unresolved
+  (the typed state carries 10 to 16 points more for every MHC-I event, none resolved as a step). The protocol is
+  not changed.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

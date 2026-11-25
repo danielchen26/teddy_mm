@@ -1,5 +1,15 @@
 # The repair, designed again: what came out
 
+> **Corrected on 25 November by the run after this one ([`../account_20261125/`](../account_20261125/)).** This run
+> read a repair by letting a readout follow the mean change of an event on one half of its cells and reading the other
+> half. That number is near one whenever the event's shift of the state can be found again; on a planted system it
+> calls an event closed whose change no state holds. So three statements below do not follow from it and are marked
+> where they stand: that IRF1 "closes" at the plain mean state, that the loss between the input and the mean state is
+> smaller than it was reported, and that the typed state adds 0.05 and never a step. Read by what a state carries among
+> cells whose state is alike, the mean state carries about half of IRF1's change, the input view nearly all of it, and
+> the typed state about a fifth more than the mean. What does stand: the old rule did not apply a record; the rule
+> that derives a row; the controls; and every reading as a statement about that repair.
+
 25 November 2026. The owner asked for the two open steps to be designed in depth, for the audit to be run again, and
 for the open item to be repaired as far as it can be. The design is in [`DESIGN.md`](DESIGN.md). It was written after
 an exploration on the THP-1 cells, which it reports and does not count, and **before the melanoma strata were read by
@@ -123,17 +133,25 @@ stayed at 0.36) and the guard to hold. Parts B, D and E: **6 of 6 intervals; 6 o
 - **For the item the loop could not close.** IRF1 was not a case of "one record cannot repair it". The repair
   weighed a record against a control fit that was sure of cells it had never seen. With the record applied, the
   released encoder's plain state is enough for the grade the loop calls relative. This is exploratory.
+  *(Corrected: a readout made to follow IRF1's mean reads it on other cells of IRF1; that does not show that the
+  state holds the change. See the note at the head.)*
 - **For the encoder.** The reading "the state loses a step that the input holds" (0.40 against 0.18) came from ridge
   readers. An output that is made to follow the mean change leaves 0.17 at that same state. The loss at the mean is
   smaller than it was reported, and how small depends on a class of readers the tool does not have.
+  *(Withdrawn: the loss is there. Among cells whose state is alike the mean state carries 52% [37, 66] of IRF1's
+  change and the input view 89% [71, 112].)*
 - **For an event without a record.** Two things now reach it. A record derived from its RNA by a rule that was tested
   on the records (fifteen of fifteen in melanoma, within a fifth to a quarter), and, for members of a type, the repair
   of the type. Neither needs a training. What they need is the event's RNA, and for the derived row a type whose
   shift the event shares in part.
 - **For the typed state.** Its place is smaller than the run before made it look: about 0.05 where the state is the
   limit, at IRF1 and at MHC-I alike, never a step, and only when the genes are those of the recorded events.
+  *(Corrected: under this run's repair every state reads alike, so it could not show. By what a state carries, the
+  typed state holds 21 points more of IRF1's change than the mean [8, 39] and 10 to 16 more of each MHC-I event's.)*
 - **For training.** A last layer trained by the rows adds nothing once the repair applies a record. Nothing found
   here asks for a training of the encoder.
+  *(Corrected in part: read by what a state carries, the trained layers change it by 1 to 4 points; one arm raises
+  what a readout of control cells reads by 28 points [12, 48].)*
 - **What is not repaired.** MHC-I in co-culture stays at 0.30 to 0.36; the input view itself leaves 0.23, so the
   limit there is before the model. And nothing here is confirmed.
 
