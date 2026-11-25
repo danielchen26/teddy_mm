@@ -139,9 +139,10 @@ What the reading showed that the design had not:
 
 - **A protein is not in a cell's RNA in full, and its mean change still follows a law.** For MHC-I in co-culture the
   input view and the state carry about half of each knockout's change cell by cell (37% to 46% is not in the input,
-  open for all five), and the other four events forecast the fifth at 91% to 110%. The chain is about single cells (what a head could read from a cell). What the
-  event graph must supply is read across events. The first part of the chain was named "direct" with the place "an
-  edge"; it is now **not in the input**, and it needs an edge only if the other events do not forecast the change.
+  open for all five), and the other four events forecast the fifth at 91% to 110%. The chain is about single cells
+  (what a head could read from a cell). What the event graph must supply is read across events. The first part of
+  the chain was named "direct" with the place "an edge"; it is now **not in the input**, and it needs an edge only if
+  the other events do not forecast the change.
 - **The state can carry more than a view of the input.** For PD-L1 under IFN-γ the state carries 85% to 102% and the
   view `V` 80% to 96%. The chain now takes the input to hold at least what the state holds.
 - **The head.** For MHC-I in co-culture a readout of control cells reads 36% to 40% where the state carries 51% to
