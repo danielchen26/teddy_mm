@@ -231,6 +231,18 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   donor's change (rejected for 10 of 10 flagged pairs), the repair with it leaves 0.77 against 0.75 without and
   0.45 with the donor's own row, and the own row still adds a step for 10 of 10. For these donors the items do not
   close by the schema. Forecasts: 3 of 3 intervals, 8 of 9 outcomes.
+- **A trial that trains the last layer by the rows of the TEG (24 November; development cells; one layer trained;
+  one event;** [`last_layer_trial_20261124/`](anm_diag/runs/last_layer_trial_20261124/)**):** the first training.
+  Only the last encoder layer of TEDDY-G 70M is trained, on the owner's laptop, with the rows as the loss under a
+  readout fixed beforehand; every cell is read with a state from a layer that never saw it. By the declared
+  reading, with IRF1's own row in the training a readout with no record of IRF1 leaves *u* 0.62 where it left 0.90,
+  a step, and 0.44 with its record (0.68); with no cell of IRF1 in the training the gain is 0.12 [0.09, 0.17],
+  unresolved. The reference reader stays at 0.40 against 0.18 at the input: what the encoder loses does not come
+  back. H1 unresolved, H2 refuted, H3 unresolved; the guard holds. A check that was not declared: the gain belongs
+  to the vector the layer was trained under (kept exactly it reads twice the gain, 0.90 to 0.37; fitted again on
+  other control cells, a third to a half), and with the event labels shuffled the result is the same. A derived row
+  for IRF1 can be trained in, and the rule that gives it ("the mean of its type") is wrong for IRF1 by a factor of
+  2.7. Forecasts: 8 of 8 intervals, 16 of 21 outcomes.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

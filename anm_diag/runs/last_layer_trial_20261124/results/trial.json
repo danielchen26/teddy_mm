@@ -1,0 +1,1438 @@
+{
+ "part": "A",
+ "margin": 0.1,
+ "step_margin": 0.1,
+ "note": "exploratory; development cells; every trained state is the state of a cell the trained layer did not hold",
+ "targets": {
+  "T": {
+   "events": [
+    "IRF1"
+   ],
+   "read_as": "on its own, with its own record",
+   "reference_scope": "own",
+   "input_view": {
+    "u": 0.1837016446685168,
+    "ci": [
+     0.03929966533994088,
+     0.2992835682831112
+    ],
+    "verdict": "unresolved",
+    "class": "ridge"
+   },
+   "stages": {
+    "Z70": {
+     "arm_of_the_trial": null,
+     "reference": {
+      "u": 0.39581140875816345,
+      "ci": [
+       0.2674033112823963,
+       0.5022481709718704
+      ],
+      "verdict": "reject"
+     },
+     "reader_of_the_stage": {
+      "units": {
+       "u": 0.637211276627464,
+       "ci": [
+        0.5281357399961298,
+        0.7539200432977077
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.39581140426642736,
+       "ci": [
+        0.26740331929849864,
+        0.5022481518473628
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      }
+     },
+     "from_the_input_view": {
+      "added": 0.2121097594499588,
+      "ci": [
+       0.11642154529690743,
+       0.3171980058774352
+      ],
+      "reading": "loss"
+     },
+     "as_trained": {
+      "u": 0.9498528258653278,
+      "ci": [
+       0.9081328690612319,
+       0.9826919619535913
+      ],
+      "verdict": "reject",
+      "slope": -0.26139537119769407,
+      "beyond_reference": {
+       "added": 0.5540414171071644,
+       "ci": [
+        0.44895873364449346,
+        0.6759319965117457
+       ],
+       "reading": "loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.9037443432765409,
+       "ci": [
+        0.778684372080623,
+        1.0651536250310105
+       ],
+       "verdict": "reject",
+       "slope": 1.520729755252497,
+       "valid": true,
+       "gain": 0.04610848258878697,
+       "gain_ci": [
+        -0.10827896057606784,
+        0.17091624274093128
+       ],
+       "beyond_reference": {
+        "added": 0.5079329345183774,
+        "ci": [
+         0.39350240264573544,
+         0.6633205335391106
+        ],
+        "reading": "loss"
+       }
+      },
+      "rows": {
+       "u": 0.6782876419355646,
+       "ci": [
+        0.5718204802195916,
+        0.7930594935453283
+       ],
+       "verdict": "reject",
+       "slope": 1.5156507590073423,
+       "valid": true,
+       "gain": 0.27156518392976325,
+       "gain_ci": [
+        0.15117672374493177,
+        0.38138352835922934
+       ],
+       "beyond_reference": {
+        "added": 0.2824762331774011,
+        "ci": [
+         0.19962759338223426,
+         0.38501281160170586
+        ],
+        "reading": "loss"
+       }
+      },
+      "cells": {
+       "u": 0.41915899136487733,
+       "ci": [
+        0.2996316653480677,
+        0.525572776957738
+       ],
+       "verdict": "reject",
+       "slope": 1.4803589667156203,
+       "valid": true,
+       "gain": 0.5306938345004505,
+       "gain_ci": [
+        0.42299015116835764,
+        0.6442522020007799
+       ],
+       "beyond_reference": {
+        "added": 0.02334758260671388,
+        "ci": [
+         -0.035228742846333906,
+         0.08509074992053005
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "A3": {
+      "added": 0.5540414171071644,
+      "ci": [
+       0.44895873364449346,
+       0.6759319965117457
+      ],
+      "reading": "loss",
+      "holds": true
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": 0.6402791319617384,
+       "ci": [
+        0.5248845042117161,
+        0.7672971077859975
+       ],
+       "verdict": "reject"
+      },
+      "against_the_reference": {
+       "added": 0.2444677232035749,
+       "ci": [
+        0.14895640770944588,
+        0.3711121249689373
+       ],
+       "reading": "loss"
+      },
+      "passes": false,
+      "control_the_output_as_trained": {
+       "added": 0.5540414171071644,
+       "ci": [
+        0.44895873364449346,
+        0.6759319965117457
+       ],
+       "reading": "loss",
+       "passes": false
+      }
+     },
+     "grade": "not tested (gate 3)"
+    },
+    "T4": {
+     "arm_of_the_trial": "rows4",
+     "reference": {
+      "u": 0.40469929575920105,
+      "ci": [
+       0.27958557233214376,
+       0.5124639600515366
+      ],
+      "verdict": "reject"
+     },
+     "reader_of_the_stage": {
+      "units": {
+       "u": 0.6372795326368847,
+       "ci": [
+        0.523199767627361,
+        0.7519855411655609
+       ],
+       "verdict": "reject",
+       "class": "hgb"
+      },
+      "own": {
+       "u": 0.4046993090419009,
+       "ci": [
+        0.2795855797838082,
+        0.5124639522733735
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      }
+     },
+     "from_the_input_view": {
+      "added": 0.2209976464509964,
+      "ci": [
+       0.1232931163161993,
+       0.32622040901333094
+      ],
+      "reading": "loss"
+     },
+     "as_trained": {
+      "u": 0.9498528258653278,
+      "ci": [
+       0.9081328690612319,
+       0.9826919619535913
+      ],
+      "verdict": "reject",
+      "slope": -0.26139537119769407,
+      "beyond_reference": {
+       "added": 0.5451535301061268,
+       "ci": [
+        0.4400262943265691,
+        0.6686851431680427
+       ],
+       "reading": "loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.7790307840908873,
+       "ci": [
+        0.6629339950373834,
+        0.9097325698735246
+       ],
+       "verdict": "reject",
+       "slope": 1.4358496574993507,
+       "valid": true,
+       "gain": 0.1708220417744405,
+       "gain_ci": [
+        0.035608958840265416,
+        0.28365050626048943
+       ],
+       "beyond_reference": {
+        "added": 0.3743314883316863,
+        "ci": [
+         0.2818488823653261,
+         0.49639071928120154
+        ],
+        "reading": "loss"
+       }
+      },
+      "rows": {
+       "u": 0.5795228649522628,
+       "ci": [
+        0.4707342886366208,
+        0.6865564170475498
+       ],
+       "verdict": "reject",
+       "slope": 1.4221365391298157,
+       "valid": true,
+       "gain": 0.370329960913065,
+       "gain_ci": [
+        0.26339358553401276,
+        0.4767648167089209
+       ],
+       "beyond_reference": {
+        "added": 0.17482356919306175,
+        "ci": [
+         0.10663479228195022,
+         0.2568308708930638
+        ],
+        "reading": "loss"
+       }
+      },
+      "cells": {
+       "u": 0.36754239213925444,
+       "ci": [
+        0.23943587409427147,
+        0.48106922820603026
+       ],
+       "verdict": "reject",
+       "slope": 1.3666110065826929,
+       "valid": true,
+       "gain": 0.5823104337260734,
+       "gain_ci": [
+        0.4721956563889558,
+        0.7037335979717663
+       ],
+       "beyond_reference": {
+        "added": -0.03715690361994661,
+        "ci": [
+         -0.09820590470770531,
+         0.019359903717638554
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "A3": {
+      "added": 0.5451535301061268,
+      "ci": [
+       0.4400262943265691,
+       0.6686851431680427
+      ],
+      "reading": "loss",
+      "holds": true
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": 0.6041127764473824,
+       "ci": [
+        0.48894249853356575,
+        0.7289370261181238
+       ],
+       "verdict": "reject"
+      },
+      "against_the_reference": {
+       "added": 0.19941348068818132,
+       "ci": [
+        0.10858318448377265,
+        0.31459834356282146
+       ],
+       "reading": "loss"
+      },
+      "passes": false,
+      "control_the_output_as_trained": {
+       "added": 0.5451535301061268,
+       "ci": [
+        0.4400262943265691,
+        0.6686851431680427
+       ],
+       "reading": "loss",
+       "passes": false
+      }
+     },
+     "grade": "not tested (gate 3)",
+     "gain_from_Z": {
+      "controls": {
+       "gain": 0.12471355918565352,
+       "ci": [
+        0.09222776425044685,
+        0.16922821799968407
+       ],
+       "reading": "unresolved",
+       "no_harm": true
+      },
+      "rows": {
+       "gain": 0.09876477698330177,
+       "ci": [
+        0.06838216957645209,
+        0.1389818496111323
+       ],
+       "reading": "unresolved",
+       "no_harm": true
+      },
+      "cells": {
+       "gain": 0.051616599225622894,
+       "ci": [
+        0.022168054718770692,
+        0.08796296312895599
+       ],
+       "reading": "no step",
+       "no_harm": true
+      },
+      "reference_reader": {
+       "gain": -0.008887887001037598,
+       "ci": [
+        -0.024373212456703187,
+        0.008245681971311567
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     },
+     "grade_kept": true,
+     "the_head_as_trained_at_this_state": {
+      "u": 0.9495790476165633,
+      "ci": [
+       0.907990884131862,
+       0.9822790067264391
+      ],
+      "gain_from_Z": {
+       "gain": 0.00027377659455729564,
+       "ci": [
+        -0.00031525537525200765,
+        0.0009080341409618024
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     }
+    },
+    "T5": {
+     "arm_of_the_trial": "rows5",
+     "reference": {
+      "u": 0.4042271375656128,
+      "ci": [
+       0.2808233194053173,
+       0.5145352378487587
+      ],
+      "verdict": "reject"
+     },
+     "reader_of_the_stage": {
+      "units": {
+       "u": 0.5803812032624638,
+       "ci": [
+        0.4652002047269116,
+        0.6927203031833621
+       ],
+       "verdict": "reject",
+       "class": "hgb"
+      },
+      "own": {
+       "u": 0.4042271522174874,
+       "ci": [
+        0.2808233047452371,
+        0.5145352321420782
+       ],
+       "verdict": "reject",
+       "class": "ridge"
+      }
+     },
+     "from_the_input_view": {
+      "added": 0.22052548825740814,
+      "ci": [
+       0.12102014049887658,
+       0.3252946574240923
+      ],
+      "reading": "loss"
+     },
+     "as_trained": {
+      "u": 0.9498528258653278,
+      "ci": [
+       0.9081328690612319,
+       0.9826919619535913
+      ],
+      "verdict": "reject",
+      "slope": -0.26139537119769407,
+      "beyond_reference": {
+       "added": 0.545625688299715,
+       "ci": [
+        0.4373810048695589,
+        0.6653765804356483
+       ],
+       "reading": "loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.6203030850036926,
+       "ci": [
+        0.5108527062662043,
+        0.7329723658756049
+       ],
+       "verdict": "reject",
+       "slope": 1.4498464245018583,
+       "valid": true,
+       "gain": 0.32954974086163524,
+       "gain_ci": [
+        0.21740589828794146,
+        0.43613194825469964
+       ],
+       "beyond_reference": {
+        "added": 0.21607594743807979,
+        "ci": [
+         0.14171293632460408,
+         0.30348143990261217
+        ],
+        "reading": "loss"
+       }
+      },
+      "rows": {
+       "u": 0.4392371598198992,
+       "ci": [
+        0.31473096187251764,
+        0.545623945512811
+       ],
+       "verdict": "reject",
+       "slope": 1.4250124760996845,
+       "valid": true,
+       "gain": 0.5106156660454286,
+       "gain_ci": [
+        0.4023368662394523,
+        0.6293427938362052
+       ],
+       "beyond_reference": {
+        "added": 0.0350100222542864,
+        "ci": [
+         -0.028730416060503028,
+         0.10437104380099257
+        ],
+        "reading": "unresolved"
+       }
+      },
+      "cells": {
+       "u": 0.24745022569753916,
+       "ci": [
+        0.08932823642849667,
+        0.3697989482068911
+       ],
+       "verdict": "unresolved",
+       "slope": 1.3476758033924896,
+       "valid": true,
+       "gain": 0.7024026001677887,
+       "gain_ci": [
+        0.5854456364198912,
+        0.8540891993559996
+       ],
+       "beyond_reference": {
+        "added": -0.15677691186807363,
+        "ci": [
+         -0.2379812168115737,
+         -0.09052667593818092
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "A3": {
+      "added": 0.545625688299715,
+      "ci": [
+       0.4373810048695589,
+       0.6653765804356483
+      ],
+      "reading": "loss",
+      "holds": true
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": 0.5527885325920254,
+       "ci": [
+        0.4391420099077388,
+        0.6716985557082358
+       ],
+       "verdict": "reject"
+      },
+      "against_the_reference": {
+       "added": 0.14856139502641263,
+       "ci": [
+        0.06197303368891254,
+        0.2541675312244569
+       ],
+       "reading": "unresolved"
+      },
+      "passes": false,
+      "control_the_output_as_trained": {
+       "added": 0.545625688299715,
+       "ci": [
+        0.4373810048695589,
+        0.6653765804356483
+       ],
+       "reading": "loss",
+       "passes": false
+      }
+     },
+     "grade": "not tested (gate 3)",
+     "gain_from_Z": {
+      "controls": {
+       "gain": 0.2834412582728483,
+       "ci": [
+        0.22322984482773373,
+        0.36855230008128914
+       ],
+       "reading": "a step",
+       "no_harm": true
+      },
+      "rows": {
+       "gain": 0.23905048211566537,
+       "ci": [
+        0.18636008930608436,
+        0.314360229496934
+       ],
+       "reading": "a step",
+       "no_harm": true
+      },
+      "cells": {
+       "gain": 0.17170876566733817,
+       "ci": [
+        0.12479789907144787,
+        0.23998952417779332
+       ],
+       "reading": "a step",
+       "no_harm": true
+      },
+      "reference_reader": {
+       "gain": -0.00841572880744934,
+       "ci": [
+        -0.02795674800872803,
+        0.011360748112201682
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     },
+     "grade_kept": true,
+     "the_head_as_trained_at_this_state": {
+      "u": 0.9509378306395094,
+      "ci": [
+       0.9092256819834337,
+       0.9834443486655605
+      ],
+      "gain_from_Z": {
+       "gain": -0.0010850064283888239,
+       "ci": [
+        -0.0020485187662472788,
+        -0.00026513226098069984
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     }
+    }
+   },
+   "between_arms": {
+    "T4_against_T5": {
+     "controls": {
+      "change": 0.15872769908719475,
+      "ci": [
+       0.12304679676703632,
+       0.20799780755034522
+      ],
+      "reading": "costs a step"
+     },
+     "rows": {
+      "change": 0.1402857051323636,
+      "ci": [
+       0.1071338293121979,
+       0.18591485189649762
+      ],
+      "reading": "costs a step"
+     },
+     "cells": {
+      "change": 0.12009216644171528,
+      "ci": [
+       0.08519010674500177,
+       0.16600132708181473
+      ],
+      "reading": "unresolved"
+     },
+     "reference_reader": {
+      "change": 0.00047215819358825684,
+      "ci": [
+       -0.015456629544496536,
+       0.017032954096794128
+      ],
+      "reading": "no change of a step"
+     }
+    }
+   }
+  },
+  "C": {
+   "events": [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK2",
+    "STAT1"
+   ],
+   "read_as": "a pool",
+   "reference_scope": "units",
+   "input_view": {
+    "u": 0.08302488021484089,
+    "ci": [
+     0.0034629569502649007,
+     0.14967158690206164
+    ],
+    "verdict": "unresolved",
+    "class": "ridge"
+   },
+   "stages": {
+    "Z70": {
+     "arm_of_the_trial": null,
+     "reference": {
+      "u": 0.08188069611787796,
+      "ci": [
+       -0.033982766512781384,
+       0.14996929690241811
+      ],
+      "verdict": "unresolved"
+     },
+     "reader_of_the_stage": {
+      "units": {
+       "u": 0.08188069245799245,
+       "ci": [
+        -0.03398276662118112,
+        0.14996929743983758
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.07761880418980238,
+       "ci": [
+        -0.00909487792702494,
+        0.13752652701238555
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "from_the_input_view": {
+      "added": -0.0011441856622695923,
+      "ci": [
+       -0.053567890217527746,
+       0.05614102678373455
+      ],
+      "reading": "no added loss"
+     },
+     "as_trained": {
+      "u": 0.9676462827455449,
+      "ci": [
+       0.9479738336546312,
+       0.9793745498443347
+      ],
+      "verdict": "reject",
+      "slope": -0.26139537119769407,
+      "beyond_reference": {
+       "added": 0.8857655866276669,
+       "ci": [
+        0.820148768126892,
+        0.9509169387817022
+       ],
+       "reading": "loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.45536986689538295,
+       "ci": [
+        0.3877017314823912,
+        0.49890838124262626
+       ],
+       "verdict": "reject",
+       "slope": 1.520729755252497,
+       "valid": true,
+       "gain": 0.5122764158501619,
+       "gain_ci": [
+        0.4741603431258831,
+        0.5677245091497373
+       ],
+       "beyond_reference": {
+        "added": 0.373489170777505,
+        "ci": [
+         0.32700245082055407,
+         0.4133462288371999
+        ],
+        "reading": "loss"
+       }
+      },
+      "rows": {
+       "u": 0.09180226554089699,
+       "ci": [
+        -0.03560591454510202,
+        0.16298552334661512
+       ],
+       "verdict": "unresolved",
+       "slope": 1.4449314626478842,
+       "valid": true,
+       "gain": 0.8758440172046479,
+       "gain_ci": [
+        0.8067900570268051,
+        0.9492077169787693
+       ],
+       "beyond_reference": {
+        "added": 0.009921569423019028,
+        "ci": [
+         -0.01831931944035507,
+         0.037923990476828436
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "cells": {
+       "u": 0.06523547213198089,
+       "ci": [
+        -0.025221631215849607,
+        0.12942279189238323
+       ],
+       "verdict": "unresolved",
+       "slope": 1.5109645651021584,
+       "valid": true,
+       "gain": 0.902410810613564,
+       "gain_ci": [
+        0.8413500451493634,
+        0.956422332957796
+       ],
+       "beyond_reference": {
+        "added": -0.016645223985897073,
+        "ci": [
+         -0.03623795616431338,
+         0.005820584835581122
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "A3": {
+      "added": 0.8857655866276669,
+      "ci": [
+       0.820148768126892,
+       0.9509169387817022
+      ],
+      "reading": "loss",
+      "holds": true
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": -0.017890951201797956,
+       "ci": [
+        -0.1609977580780924,
+        0.05657626191089465
+       ],
+       "verdict": "unresolved"
+      },
+      "against_the_reference": {
+       "added": -0.06398974491608,
+       "ci": [
+        -0.11514641585707584,
+        0.1318399628074536
+       ],
+       "reading": "unresolved"
+      },
+      "passes": false,
+      "control_the_output_as_trained": {
+       "added": 0.8857655866276669,
+       "ci": [
+        0.820148768126892,
+        0.9509169387817022
+       ],
+       "reading": "loss",
+       "passes": false
+      }
+     },
+     "grade": "not tested (gate 3)"
+    },
+    "T4": {
+     "arm_of_the_trial": "rows4",
+     "reference": {
+      "u": 0.08835582435131073,
+      "ci": [
+       -0.0314361160621047,
+       0.1606375254690647
+      ],
+      "verdict": "unresolved"
+     },
+     "reader_of_the_stage": {
+      "units": {
+       "u": 0.08835582535354791,
+       "ci": [
+        -0.03143611740234718,
+        0.1606375297092675
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.08457204947112729,
+       "ci": [
+        -0.005269749593620765,
+        0.1460600224684647
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "from_the_input_view": {
+      "added": 0.0053309425711631775,
+      "ci": [
+       -0.04813472422538325,
+       0.06240680786286247
+      ],
+      "reading": "no added loss"
+     },
+     "as_trained": {
+      "u": 0.9676462827455449,
+      "ci": [
+       0.9479738336546312,
+       0.9793745498443347
+      ],
+      "verdict": "reject",
+      "slope": -0.26139537119769407,
+      "beyond_reference": {
+       "added": 0.8792904583942341,
+       "ci": [
+        0.8090086602535955,
+        0.9504216066929686
+       ],
+       "reading": "loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.2792500497261159,
+       "ci": [
+        0.2156604348518562,
+        0.33016863169459193
+       ],
+       "verdict": "reject",
+       "slope": 1.4358496574993507,
+       "valid": true,
+       "gain": 0.688396233019429,
+       "gain_ci": [
+        0.64326566998592,
+        0.7420470372686165
+       ],
+       "beyond_reference": {
+        "added": 0.19089422537480516,
+        "ci": [
+         0.14911061809041332,
+         0.23537351408539142
+        ],
+        "reading": "loss"
+       }
+      },
+      "rows": {
+       "u": 0.012211739863634885,
+       "ci": [
+        -0.09941040672233317,
+        0.0858089156060148
+       ],
+       "verdict": "support",
+       "slope": 1.3504134032215311,
+       "valid": true,
+       "gain": 0.95543454288191,
+       "gain_ci": [
+        0.8523036135703619,
+        0.9695344947415618
+       ],
+       "beyond_reference": {
+        "added": -0.07614408448767584,
+        "ci": [
+         -0.10068883671450776,
+         0.06758782671137761
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "cells": {
+       "u": 0.02243760669575623,
+       "ci": [
+        -0.06816777166407657,
+        0.08905703644921656
+       ],
+       "verdict": "support",
+       "slope": 1.4204094117685195,
+       "valid": true,
+       "gain": 0.9452086760497886,
+       "gain_ci": [
+        0.8715927115957693,
+        0.9685274952831022
+       ],
+       "beyond_reference": {
+        "added": -0.0659182176555545,
+        "ci": [
+         -0.08649944880743234,
+         0.03844327786138997
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "A3": {
+      "added": 0.8792904583942341,
+      "ci": [
+       0.8090086602535955,
+       0.9504216066929686
+      ],
+      "reading": "loss",
+      "holds": true
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": -0.028101657859212148,
+       "ci": [
+        -0.15062034534817556,
+        0.042622705027143167
+       ],
+       "verdict": "unresolved"
+      },
+      "against_the_reference": {
+       "added": -0.06025416649209858,
+       "ci": [
+        -0.1339028153160322,
+        0.11822163071283227
+       ],
+       "reading": "unresolved"
+      },
+      "passes": false,
+      "control_the_output_as_trained": {
+       "added": 0.8792904583942341,
+       "ci": [
+        0.8090086602535955,
+        0.9504216066929686
+       ],
+       "reading": "loss",
+       "passes": false
+      }
+     },
+     "grade": "not tested (gate 3)",
+     "gain_from_Z": {
+      "controls": {
+       "gain": 0.17611981716926706,
+       "ci": [
+        0.15465372132360075,
+        0.19515360696960074
+       ],
+       "reading": "a step",
+       "no_harm": true
+      },
+      "rows": {
+       "gain": 0.0795905256772621,
+       "ci": [
+        -0.06424921339539039,
+        0.09508778732785322
+       ],
+       "reading": "no step",
+       "no_harm": true
+      },
+      "cells": {
+       "gain": 0.04279786543622466,
+       "ci": [
+        -0.04435337023510959,
+        0.05454811424403958
+       ],
+       "reading": "no step",
+       "no_harm": true
+      },
+      "reference_reader": {
+       "gain": -0.00647512823343277,
+       "ci": [
+        -0.01379044884815812,
+        0.003170037874951956
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     },
+     "grade_kept": true,
+     "the_head_as_trained_at_this_state": {
+      "u": 0.9692531655765924,
+      "ci": [
+       0.949564737427689,
+       0.9806908438578912
+      ],
+      "gain_from_Z": {
+       "gain": -0.0016068647838982653,
+       "ci": [
+        -0.0020247868386585903,
+        -0.001026159080639666
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     }
+    },
+    "T5": {
+     "arm_of_the_trial": "rows5",
+     "reference": {
+      "u": 0.0903276652097702,
+      "ci": [
+       -0.027536112768575545,
+       0.1620103035122156
+      ],
+      "verdict": "unresolved"
+     },
+     "reader_of_the_stage": {
+      "units": {
+       "u": 0.09032766172521367,
+       "ci": [
+        -0.02753611242024082,
+        0.16201030261543573
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      },
+      "own": {
+       "u": 0.08589474027760746,
+       "ci": [
+        -0.00178686498678,
+        0.14812666467094543
+       ],
+       "verdict": "unresolved",
+       "class": "ridge"
+      }
+     },
+     "from_the_input_view": {
+      "added": 0.00730278342962265,
+      "ci": [
+       -0.04689333606511355,
+       0.06441127071157096
+      ],
+      "reading": "no added loss"
+     },
+     "as_trained": {
+      "u": 0.9676462827455449,
+      "ci": [
+       0.9479738336546312,
+       0.9793745498443347
+      ],
+      "verdict": "reject",
+      "slope": -0.26139537119769407,
+      "beyond_reference": {
+       "added": 0.8773186175357747,
+       "ci": [
+        0.8072696990443361,
+        0.9502122933389799
+       ],
+       "reading": "loss"
+      }
+     },
+     "arms": {
+      "controls": {
+       "u": 0.28545815888119086,
+       "ci": [
+        0.22211316349130872,
+        0.3365547529893531
+       ],
+       "verdict": "reject",
+       "slope": 1.4498464245018583,
+       "valid": true,
+       "gain": 0.682188123864354,
+       "gain_ci": [
+        0.6368844970621543,
+        0.7348575717321948
+       ],
+       "beyond_reference": {
+        "added": 0.19513049367142066,
+        "ci": [
+         0.15355536310634177,
+         0.2414819568954994
+        ],
+        "reading": "loss"
+       }
+      },
+      "rows": {
+       "u": 0.015297728748607686,
+       "ci": [
+        -0.09711525483350524,
+        0.08972488292487928
+       ],
+       "verdict": "support",
+       "slope": 1.3609008588484452,
+       "valid": true,
+       "gain": 0.9523485539969372,
+       "gain_ci": [
+        0.8551486199093092,
+        0.9688733762155523
+       ],
+       "beyond_reference": {
+        "added": -0.07502993646116252,
+        "ci": [
+         -0.10061936955768246,
+         0.0636485173326023
+        ],
+        "reading": "no added loss"
+       }
+      },
+      "cells": {
+       "u": 0.025082211342777216,
+       "ci": [
+        -0.06527191410889216,
+        0.09301407499211857
+       ],
+       "verdict": "support",
+       "slope": 1.42781491815593,
+       "valid": true,
+       "gain": 0.9425640714027677,
+       "gain_ci": [
+        0.8696804592423344,
+        0.9676833534764678
+       ],
+       "beyond_reference": {
+        "added": -0.06524545386699299,
+        "ci": [
+         -0.08565786168248885,
+         0.03732481031893753
+        ],
+        "reading": "no added loss"
+       }
+      }
+     },
+     "A3": {
+      "added": 0.8773186175357747,
+      "ci": [
+       0.8072696990443361,
+       0.9502122933389799
+      ],
+      "reading": "loss",
+      "holds": true
+     },
+     "gate3": {
+      "on_the_cells_it_was_fitted_on": {
+       "u": -0.02604601183610411,
+       "ci": [
+        -0.14798563995890998,
+        0.04516579556720292
+       ],
+       "verdict": "unresolved"
+      },
+      "against_the_reference": {
+       "added": -0.06428165337366609,
+       "ci": [
+        -0.13314010459822392,
+        0.1201791619558999
+       ],
+       "reading": "unresolved"
+      },
+      "passes": false,
+      "control_the_output_as_trained": {
+       "added": 0.8773186175357747,
+       "ci": [
+        0.8072696990443361,
+        0.9502122933389799
+       ],
+       "reading": "loss",
+       "passes": false
+      }
+     },
+     "grade": "not tested (gate 3)",
+     "gain_from_Z": {
+      "controls": {
+       "gain": 0.1699117080141921,
+       "ci": [
+        0.14827178921159279,
+        0.18943772387259827
+       ],
+       "reading": "a step",
+       "no_harm": true
+      },
+      "rows": {
+       "gain": 0.0765045367922893,
+       "ci": [
+        -0.06021537467144814,
+        0.09243978289199765
+       ],
+       "reading": "no step",
+       "no_harm": true
+      },
+      "cells": {
+       "gain": 0.04015326078920367,
+       "ci": [
+        -0.041882307684010744,
+        0.05380664460409035
+       ],
+       "reading": "no step",
+       "no_harm": true
+      },
+      "reference_reader": {
+       "gain": -0.008446969091892242,
+       "ci": [
+        -0.015530741214752198,
+        0.004078522529744071
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     },
+     "grade_kept": true,
+     "the_head_as_trained_at_this_state": {
+      "u": 0.9689894555255273,
+      "ci": [
+       0.9491900152895546,
+       0.9804889147277831
+      ],
+      "gain_from_Z": {
+       "gain": -0.001343154732833196,
+       "ci": [
+        -0.0017127949273112674,
+        -0.0008540237625650316
+       ],
+       "reading": "no step",
+       "no_harm": true
+      }
+     }
+    }
+   },
+   "between_arms": {
+    "T4_against_T5": {
+     "controls": {
+      "change": -0.00620810915507497,
+      "ci": [
+       -0.014375658175007433,
+       0.0010899154129437865
+      ],
+      "reading": "no change of a step"
+     },
+     "rows": {
+      "change": -0.003085988884972801,
+      "ci": [
+       -0.011121104791633021,
+       0.011165615962675304
+      ],
+      "reading": "no change of a step"
+     },
+     "cells": {
+      "change": -0.002644604647020987,
+      "ci": [
+       -0.010692804554816212,
+       0.011322225244831324
+      ],
+      "reading": "no change of a step"
+     },
+     "reference_reader": {
+      "change": -0.0019718408584594727,
+      "ci": [
+       -0.007968439906835555,
+       0.0056480004917830225
+      ],
+      "reading": "no change of a step"
+     }
+    }
+   }
+  }
+ },
+ "checks_against_the_records": {
+  "largest_difference_of_an_arm_at_Z": 1.8903456089347515e-07,
+  "by_target": {
+   "T": 1.8903456089347515e-07,
+   "C": 1.3047979596780834e-07
+  },
+  "limit": 0.005,
+  "hold": true
+ },
+ "guard": {
+  "limit": 0.1,
+  "the_heads_own_output_is_reproduced": true,
+  "largest_difference_from_the_recorded_output": 7.458824409001252e-06,
+  "column_of_the_target": 1,
+  "scale": "the log mean, which is what the head's output is recorded as; the same on the scale of the mean is given beside it and is not judged",
+  "other_outputs": 133,
+  "by_arm": {
+   "rows4": {
+    "stage": "T4",
+    "other_outputs_on_control_cells_mean_change_of_a_cell": 0.018971589861309316,
+    "mean_change_of_the_mean": 0.0036731420382458742,
+    "the_same_on_the_scale_of_the_mean": 0.0188185245234761,
+    "holds": true
+   },
+   "rows5": {
+    "stage": "T5",
+    "other_outputs_on_control_cells_mean_change_of_a_cell": 0.023714392095386033,
+    "mean_change_of_the_mean": 0.009883996760104303,
+    "the_same_on_the_scale_of_the_mean": 0.02351452411822012,
+    "holds": true
+   }
+  }
+ },
+ "hypotheses": {
+  "H1_without_its_own_record": {
+   "reading": "unresolved",
+   "gain": {
+    "gain": 0.12471355918565352,
+    "ci": [
+     0.09222776425044685,
+     0.16922821799968407
+    ],
+    "reading": "unresolved",
+    "no_harm": true
+   },
+   "the_output_at_the_trained_state": {
+    "u": 0.7790307840908873,
+    "ci": [
+     0.6629339950373834,
+     0.9097325698735246
+    ],
+    "verdict": "reject"
+   },
+   "closed": false
+  },
+  "H2_the_encoders_loss_with_the_record": {
+   "reading": "refuted",
+   "from_the_input_view": {
+    "added": 0.22052548825740814,
+    "ci": [
+     0.12102014049887658,
+     0.3252946574240923
+    ],
+    "reading": "loss"
+   },
+   "the_released_state_from_the_input_view": {
+    "added": 0.2121097594499588,
+    "ci": [
+     0.11642154529690743,
+     0.3171980058774352
+    ],
+    "reading": "loss"
+   },
+   "gain_of_the_reference_reader": {
+    "gain": -0.00841572880744934,
+    "ci": [
+     -0.02795674800872803,
+     0.011360748112201682
+    ],
+    "reading": "no step",
+    "no_harm": true
+   }
+  },
+  "H3_the_repair_with_the_record": {
+   "reading": "unresolved",
+   "gain": {
+    "gain": 0.23905048211566537,
+    "ci": [
+     0.18636008930608436,
+     0.314360229496934
+    ],
+    "reading": "a step",
+    "no_harm": true
+   },
+   "grade": "not tested (gate 3)"
+  },
+  "the_control_target_is_not_harmed": {
+   "rows4": true,
+   "rows5": true
+  },
+  "the_control_target_keeps_its_grade": {
+   "rows4": true,
+   "rows5": true
+  },
+  "the_guard_on_other_outputs_holds": {
+   "rows4": true,
+   "rows5": true
+  }
+ }
+}

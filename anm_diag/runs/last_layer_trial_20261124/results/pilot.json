@@ -1,0 +1,966 @@
+{
+ "what": "the pilot (arm rows5, fold 0): the rows as read on the cells of the fitted half, every 25 steps; and the speed tests. No state of a trained layer was computed for the other half or kept.",
+ "by_learning_rate": {
+  "1e-4": {
+   "rows": {
+    "IFNGR1": -0.926,
+    "IFNGR2": -1.02,
+    "IRF1": -0.402,
+    "JAK2": -1.165,
+    "STAT1": -0.825
+   },
+   "curve": [
+    {
+     "step": 0,
+     "shift": {
+      "IFNGR1": -0.485,
+      "IFNGR2": -0.481,
+      "IRF1": -0.013,
+      "JAK2": -0.565,
+      "STAT1": -0.622
+     },
+     "hold": 0.0
+    },
+    {
+     "step": 25,
+     "shift": {
+      "IFNGR1": 0.197,
+      "IFNGR2": 0.157,
+      "IRF1": -0.017,
+      "JAK2": 0.224,
+      "STAT1": 0.34
+     },
+     "largest_error_of_a_row": 1.389,
+     "hold": 0.2883
+    },
+    {
+     "step": 50,
+     "shift": {
+      "IFNGR1": -1.035,
+      "IFNGR2": -1.116,
+      "IRF1": -0.142,
+      "JAK2": -1.242,
+      "STAT1": -1.38
+     },
+     "largest_error_of_a_row": 0.555,
+     "hold": 0.187
+    }
+   ],
+   "ended": "stopped by hand after step 50"
+  },
+  "3e-5": {
+   "rows": {
+    "IFNGR1": -0.926,
+    "IFNGR2": -1.02,
+    "IRF1": -0.402,
+    "JAK2": -1.165,
+    "STAT1": -0.825
+   },
+   "curve": [
+    {
+     "step": 0,
+     "shift": {
+      "IFNGR1": -0.485,
+      "IFNGR2": -0.481,
+      "IRF1": -0.013,
+      "JAK2": -0.565,
+      "STAT1": -0.622
+     },
+     "hold": 0.0
+    },
+    {
+     "step": 25,
+     "shift": {
+      "IFNGR1": -1.102,
+      "IFNGR2": -1.153,
+      "IRF1": -0.106,
+      "JAK2": -1.298,
+      "STAT1": -1.48
+     },
+     "largest_error_of_a_row": 0.655,
+     "hold": 0.0431
+    },
+    {
+     "step": 50,
+     "shift": {
+      "IFNGR1": -0.524,
+      "IFNGR2": -0.529,
+      "IRF1": -0.097,
+      "JAK2": -0.622,
+      "STAT1": -0.602
+     },
+     "largest_error_of_a_row": 0.543,
+     "hold": 0.0163
+    }
+   ],
+   "ended": "stopped by hand after step 50"
+  },
+  "1e-5": {
+   "rows": {
+    "IFNGR1": -0.926,
+    "IFNGR2": -1.02,
+    "IRF1": -0.402,
+    "JAK2": -1.165,
+    "STAT1": -0.825
+   },
+   "curve": [
+    {
+     "step": 0,
+     "shift": {
+      "IFNGR1": -0.485,
+      "IFNGR2": -0.481,
+      "IRF1": -0.013,
+      "JAK2": -0.565,
+      "STAT1": -0.622
+     },
+     "hold": 0.0
+    },
+    {
+     "step": 25,
+     "shift": {
+      "IFNGR1": -1.091,
+      "IFNGR2": -1.116,
+      "IRF1": -0.074,
+      "JAK2": -1.276,
+      "STAT1": -1.463
+     },
+     "largest_error_of_a_row": 0.638,
+     "hold": 0.0072
+    },
+    {
+     "step": 50,
+     "shift": {
+      "IFNGR1": -0.793,
+      "IFNGR2": -0.803,
+      "IRF1": -0.071,
+      "JAK2": -0.922,
+      "STAT1": -1.013
+     },
+     "largest_error_of_a_row": 0.331,
+     "hold": 0.0041
+    },
+    {
+     "step": 75,
+     "shift": {
+      "IFNGR1": -0.92,
+      "IFNGR2": -0.924,
+      "IRF1": -0.106,
+      "JAK2": -1.065,
+      "STAT1": -1.139
+     },
+     "largest_error_of_a_row": 0.314,
+     "hold": 0.0027
+    },
+    {
+     "step": 100,
+     "shift": {
+      "IFNGR1": -0.894,
+      "IFNGR2": -0.892,
+      "IRF1": -0.13,
+      "JAK2": -1.035,
+      "STAT1": -1.056
+     },
+     "largest_error_of_a_row": 0.273,
+     "hold": 0.0017
+    }
+   ],
+   "ended": "100 steps, as set"
+  }
+ },
+ "speed": {
+  "one_training": {
+   "steps": 10,
+   "seconds": 17.3,
+   "cells_per_second": 37.1,
+   "device": "mps"
+  },
+  "two_at_once_first": {
+   "steps": 12,
+   "seconds": 26.7,
+   "cells_per_second": 28.7,
+   "device": "mps"
+  },
+  "two_at_once_second": {
+   "steps": 12,
+   "seconds": 24.5,
+   "cells_per_second": 31.3,
+   "device": "mps"
+  }
+ },
+ "note": "by_learning_rate and speed are of the first pilot (the gradient of the rows with a running value of the shifts, Adam with momentum). after_the_first_commit holds what was run after the declaration was first committed and before it was amended: every entry is a training curve on the cells of the fitted half, read from the log of the run to three decimals. No state of a trained layer was computed for the other half, and none was kept, in any of them.",
+ "after_the_first_commit": {
+  "1_first_training_as_first_committed": {
+   "what": "arm rows4, both folds, as first committed (running shifts, Adam with momentum, 1e-5). The rows swung about their values. Stopped by hand after step 225 and before step 250; the script then started the arm rows5, which was stopped 9 seconds later, before its first step. No state was written.",
+   "fold_0": {
+    "rows": {
+     "IFNGR1": -0.926,
+     "IFNGR2": -1.02,
+     "JAK2": -1.165,
+     "STAT1": -0.825
+    },
+    "curve": [
+     {
+      "step": 0,
+      "shift": {
+       "IFNGR1": -0.485,
+       "IFNGR2": -0.481,
+       "JAK2": -0.565,
+       "STAT1": -0.622
+      },
+      "hold": 0.0
+     },
+     {
+      "step": 25,
+      "shift": {
+       "IFNGR1": -1.141,
+       "IFNGR2": -1.16,
+       "JAK2": -1.335,
+       "STAT1": -1.514
+      },
+      "hold": 0.0087,
+      "largest_error_of_a_row": 0.689
+     },
+     {
+      "step": 50,
+      "shift": {
+       "IFNGR1": -0.72,
+       "IFNGR2": -0.718,
+       "JAK2": -0.84,
+       "STAT1": -0.883
+      },
+      "hold": 0.0079,
+      "largest_error_of_a_row": 0.325
+     },
+     {
+      "step": 75,
+      "shift": {
+       "IFNGR1": -0.948,
+       "IFNGR2": -0.947,
+       "JAK2": -1.106,
+       "STAT1": -1.152
+      },
+      "hold": 0.0047,
+      "largest_error_of_a_row": 0.328
+     },
+     {
+      "step": 100,
+      "shift": {
+       "IFNGR1": -0.885,
+       "IFNGR2": -0.873,
+       "JAK2": -1.033,
+       "STAT1": -1.01
+      },
+      "hold": 0.0026,
+      "largest_error_of_a_row": 0.186
+     },
+     {
+      "step": 125,
+      "shift": {
+       "IFNGR1": -0.885,
+       "IFNGR2": -0.866,
+       "JAK2": -1.033,
+       "STAT1": -0.959
+      },
+      "hold": 0.0019,
+      "largest_error_of_a_row": 0.154
+     },
+     {
+      "step": 150,
+      "shift": {
+       "IFNGR1": -1.017,
+       "IFNGR2": -0.998,
+       "JAK2": -1.188,
+       "STAT1": -1.1
+      },
+      "hold": 0.003,
+      "largest_error_of_a_row": 0.275
+     },
+     {
+      "step": 175,
+      "shift": {
+       "IFNGR1": -0.793,
+       "IFNGR2": -0.762,
+       "JAK2": -0.925,
+       "STAT1": -0.758
+      },
+      "hold": 0.0018,
+      "largest_error_of_a_row": 0.257
+     },
+     {
+      "step": 200,
+      "shift": {
+       "IFNGR1": -1.156,
+       "IFNGR2": -1.134,
+       "JAK2": -1.347,
+       "STAT1": -1.207
+      },
+      "hold": 0.005,
+      "largest_error_of_a_row": 0.382
+     },
+     {
+      "step": 225,
+      "shift": {
+       "IFNGR1": -0.574,
+       "IFNGR2": -0.533,
+       "JAK2": -0.662,
+       "STAT1": -0.418
+      },
+      "hold": 0.0051,
+      "largest_error_of_a_row": 0.503
+     }
+    ]
+   },
+   "fold_1": {
+    "rows": {
+     "IFNGR1": -0.929,
+     "IFNGR2": -1.079,
+     "JAK2": -1.1,
+     "STAT1": -0.868
+    },
+    "curve": [
+     {
+      "step": 0,
+      "shift": {
+       "IFNGR1": -0.496,
+       "IFNGR2": -0.588,
+       "JAK2": -0.537,
+       "STAT1": -0.537
+      },
+      "hold": 0.0
+     },
+     {
+      "step": 25,
+      "shift": {
+       "IFNGR1": -1.181,
+       "IFNGR2": -1.371,
+       "JAK2": -1.295,
+       "STAT1": -1.512
+      },
+      "hold": 0.0098,
+      "largest_error_of_a_row": 0.644
+     },
+     {
+      "step": 50,
+      "shift": {
+       "IFNGR1": -0.698,
+       "IFNGR2": -0.814,
+       "JAK2": -0.756,
+       "STAT1": -0.776
+      },
+      "hold": 0.0091,
+      "largest_error_of_a_row": 0.344
+     },
+     {
+      "step": 75,
+      "shift": {
+       "IFNGR1": -0.947,
+       "IFNGR2": -1.092,
+       "JAK2": -1.028,
+       "STAT1": -1.096
+      },
+      "hold": 0.0047,
+      "largest_error_of_a_row": 0.228
+     },
+     {
+      "step": 100,
+      "shift": {
+       "IFNGR1": -0.969,
+       "IFNGR2": -1.112,
+       "JAK2": -1.046,
+       "STAT1": -1.084
+      },
+      "hold": 0.0025,
+      "largest_error_of_a_row": 0.216
+     },
+     {
+      "step": 125,
+      "shift": {
+       "IFNGR1": -0.846,
+       "IFNGR2": -0.968,
+       "JAK2": -0.908,
+       "STAT1": -0.872
+      },
+      "hold": 0.0012,
+      "largest_error_of_a_row": 0.192
+     },
+     {
+      "step": 150,
+      "shift": {
+       "IFNGR1": -1.118,
+       "IFNGR2": -1.278,
+       "JAK2": -1.211,
+       "STAT1": -1.241
+      },
+      "hold": 0.0037,
+      "largest_error_of_a_row": 0.373
+     },
+     {
+      "step": 175,
+      "shift": {
+       "IFNGR1": -0.747,
+       "IFNGR2": -0.849,
+       "JAK2": -0.795,
+       "STAT1": -0.673
+      },
+      "hold": 0.0025,
+      "largest_error_of_a_row": 0.305
+     },
+     {
+      "step": 200,
+      "shift": {
+       "IFNGR1": -1.07,
+       "IFNGR2": -1.212,
+       "JAK2": -1.148,
+       "STAT1": -1.1
+      },
+      "hold": 0.0038,
+      "largest_error_of_a_row": 0.232
+     },
+     {
+      "step": 225,
+      "shift": {
+       "IFNGR1": -0.921,
+       "IFNGR2": -1.04,
+       "JAK2": -0.983,
+       "STAT1": -0.875
+      },
+      "hold": 0.0022,
+      "largest_error_of_a_row": 0.117
+     }
+    ]
+   }
+  },
+  "2_pilot_every_knockout_cell_to_its_own_value": {
+   "what": "arm rows5, fold 0, 1e-5, Adam with momentum. In place of the rows term: every knockout cell is asked to read what it read as released plus what its row is missing; the control cells enter only through the hold. The rows did not move. Stopped by hand after step 75.",
+   "rows": {
+    "IFNGR1": -0.926,
+    "IFNGR2": -1.02,
+    "IRF1": -0.402,
+    "JAK2": -1.165,
+    "STAT1": -0.825
+   },
+   "curve": [
+    {
+     "step": 0,
+     "shift": {
+      "IFNGR1": -0.485,
+      "IFNGR2": -0.481,
+      "IRF1": -0.013,
+      "JAK2": -0.565,
+      "STAT1": -0.622
+     },
+     "hold": 0.0
+    },
+    {
+     "step": 25,
+     "shift": {
+      "IFNGR1": -0.497,
+      "IFNGR2": -0.491,
+      "IRF1": -0.011,
+      "JAK2": -0.581,
+      "STAT1": -0.613
+     },
+     "hold": 0.0017,
+     "largest_error_of_a_row": 0.584
+    },
+    {
+     "step": 50,
+     "shift": {
+      "IFNGR1": -0.495,
+      "IFNGR2": -0.489,
+      "IRF1": -0.006,
+      "JAK2": -0.577,
+      "STAT1": -0.592
+     },
+     "hold": 0.002,
+     "largest_error_of_a_row": 0.588
+    },
+    {
+     "step": 75,
+     "shift": {
+      "IFNGR1": -0.501,
+      "IFNGR2": -0.494,
+      "IRF1": -0.005,
+      "JAK2": -0.583,
+      "STAT1": -0.584
+     },
+     "hold": 0.0018,
+     "largest_error_of_a_row": 0.582
+    }
+   ]
+  },
+  "3_pilot_every_knockout_cell_relative_to_the_control_cells": {
+   "what": "arm rows5, fold 0, Adam without momentum, the exact gradient of a step. In place of the rows term: every knockout cell is asked to change, relative to the mean change of the step's control cells, by what its row is missing. Smooth at 1e-5, but the rows are held short of their values: this term also asks the cells of an event to move alike, which the declared loss does not. Stopped by hand (1e-5 and 3e-5 after step 150, 1e-4 after step 75).",
+   "rows": {
+    "IFNGR1": -0.926,
+    "IFNGR2": -1.02,
+    "IRF1": -0.402,
+    "JAK2": -1.165,
+    "STAT1": -0.825
+   },
+   "by_learning_rate": {
+    "1e-5": {
+     "curve": [
+      {
+       "step": 0,
+       "shift": {
+        "IFNGR1": -0.485,
+        "IFNGR2": -0.481,
+        "IRF1": -0.013,
+        "JAK2": -0.565,
+        "STAT1": -0.622
+       },
+       "hold": 0.0
+      },
+      {
+       "step": 25,
+       "shift": {
+        "IFNGR1": -0.73,
+        "IFNGR2": -0.729,
+        "IRF1": -0.068,
+        "JAK2": -0.849,
+        "STAT1": -0.929
+       },
+       "hold": 0.0006,
+       "largest_error_of_a_row": 0.334
+      },
+      {
+       "step": 50,
+       "shift": {
+        "IFNGR1": -0.761,
+        "IFNGR2": -0.764,
+        "IRF1": -0.095,
+        "JAK2": -0.883,
+        "STAT1": -0.951
+       },
+       "hold": 0.0005,
+       "largest_error_of_a_row": 0.308
+      },
+      {
+       "step": 75,
+       "shift": {
+        "IFNGR1": -0.784,
+        "IFNGR2": -0.788,
+        "IRF1": -0.117,
+        "JAK2": -0.91,
+        "STAT1": -0.96
+       },
+       "hold": 0.0008,
+       "largest_error_of_a_row": 0.285
+      },
+      {
+       "step": 100,
+       "shift": {
+        "IFNGR1": -0.799,
+        "IFNGR2": -0.798,
+        "IRF1": -0.138,
+        "JAK2": -0.921,
+        "STAT1": -0.949
+       },
+       "hold": 0.0006,
+       "largest_error_of_a_row": 0.265
+      },
+      {
+       "step": 125,
+       "shift": {
+        "IFNGR1": -0.802,
+        "IFNGR2": -0.805,
+        "IRF1": -0.149,
+        "JAK2": -0.924,
+        "STAT1": -0.94
+       },
+       "hold": 0.0006,
+       "largest_error_of_a_row": 0.253
+      },
+      {
+       "step": 150,
+       "shift": {
+        "IFNGR1": -0.784,
+        "IFNGR2": -0.787,
+        "IRF1": -0.16,
+        "JAK2": -0.902,
+        "STAT1": -0.912
+       },
+       "hold": 0.0008,
+       "largest_error_of_a_row": 0.263
+      }
+     ]
+    },
+    "3e-5": {
+     "curve": [
+      {
+       "step": 0,
+       "shift": {
+        "IFNGR1": -0.485,
+        "IFNGR2": -0.481,
+        "IRF1": -0.013,
+        "JAK2": -0.565,
+        "STAT1": -0.622
+       },
+       "hold": 0.0
+      },
+      {
+       "step": 25,
+       "shift": {
+        "IFNGR1": -0.767,
+        "IFNGR2": -0.765,
+        "IRF1": -0.118,
+        "JAK2": -0.882,
+        "STAT1": -0.915
+       },
+       "hold": 0.0008,
+       "largest_error_of_a_row": 0.284
+      },
+      {
+       "step": 50,
+       "shift": {
+        "IFNGR1": -0.851,
+        "IFNGR2": -0.858,
+        "IRF1": -0.138,
+        "JAK2": -0.984,
+        "STAT1": -1.005
+       },
+       "hold": 0.001,
+       "largest_error_of_a_row": 0.264
+      },
+      {
+       "step": 75,
+       "shift": {
+        "IFNGR1": -0.85,
+        "IFNGR2": -0.858,
+        "IRF1": -0.177,
+        "JAK2": -0.984,
+        "STAT1": -0.977
+       },
+       "hold": 0.0011,
+       "largest_error_of_a_row": 0.226
+      },
+      {
+       "step": 100,
+       "shift": {
+        "IFNGR1": -0.813,
+        "IFNGR2": -0.807,
+        "IRF1": -0.185,
+        "JAK2": -0.93,
+        "STAT1": -0.897
+       },
+       "hold": 0.0012,
+       "largest_error_of_a_row": 0.235
+      },
+      {
+       "step": 125,
+       "shift": {
+        "IFNGR1": -0.859,
+        "IFNGR2": -0.866,
+        "IRF1": -0.208,
+        "JAK2": -0.986,
+        "STAT1": -0.956
+       },
+       "hold": 0.0014,
+       "largest_error_of_a_row": 0.195
+      },
+      {
+       "step": 150,
+       "shift": {
+        "IFNGR1": -0.792,
+        "IFNGR2": -0.798,
+        "IRF1": -0.203,
+        "JAK2": -0.909,
+        "STAT1": -0.878
+       },
+       "hold": 0.0009,
+       "largest_error_of_a_row": 0.256
+      }
+     ]
+    },
+    "1e-4": {
+     "curve": [
+      {
+       "step": 0,
+       "shift": {
+        "IFNGR1": -0.485,
+        "IFNGR2": -0.481,
+        "IRF1": -0.013,
+        "JAK2": -0.565,
+        "STAT1": -0.622
+       },
+       "hold": 0.0
+      },
+      {
+       "step": 25,
+       "shift": {
+        "IFNGR1": -0.814,
+        "IFNGR2": -0.817,
+        "IRF1": -0.146,
+        "JAK2": -0.936,
+        "STAT1": -0.927
+       },
+       "hold": 0.0038,
+       "largest_error_of_a_row": 0.256
+      },
+      {
+       "step": 50,
+       "shift": {
+        "IFNGR1": -1.022,
+        "IFNGR2": -1.028,
+        "IRF1": -0.157,
+        "JAK2": -1.18,
+        "STAT1": -1.197
+       },
+       "hold": 0.0186,
+       "largest_error_of_a_row": 0.372
+      },
+      {
+       "step": 75,
+       "shift": {
+        "IFNGR1": -0.897,
+        "IFNGR2": -0.912,
+        "IRF1": -0.214,
+        "JAK2": -1.045,
+        "STAT1": -1.022
+       },
+       "hold": 0.0049,
+       "largest_error_of_a_row": 0.197
+      }
+     ]
+    }
+   }
+  },
+  "4_pilot_the_declared_loss_with_the_exact_gradient_of_a_step": {
+   "what": "arm rows5, fold 0, Adam without momentum, the declared rows term with the exact gradient of a step (DESIGN.md, Section 4 as amended). This is what the trial is trained with, at 1e-5. Speed with two trainings at once: 16.9 cells a second each, the readings of every 25 steps included.",
+   "rows": {
+    "IFNGR1": -0.926,
+    "IFNGR2": -1.02,
+    "IRF1": -0.402,
+    "JAK2": -1.165,
+    "STAT1": -0.825
+   },
+   "by_learning_rate": {
+    "1e-5": {
+     "curve": [
+      {
+       "step": 0,
+       "shift": {
+        "IFNGR1": -0.485,
+        "IFNGR2": -0.481,
+        "IRF1": -0.013,
+        "JAK2": -0.565,
+        "STAT1": -0.622
+       },
+       "hold": 0.0
+      },
+      {
+       "step": 25,
+       "shift": {
+        "IFNGR1": -0.805,
+        "IFNGR2": -0.808,
+        "IRF1": -0.066,
+        "JAK2": -0.939,
+        "STAT1": -1.033
+       },
+       "hold": 0.0012,
+       "largest_error_of_a_row": 0.337
+      },
+      {
+       "step": 50,
+       "shift": {
+        "IFNGR1": -0.837,
+        "IFNGR2": -0.834,
+        "IRF1": -0.096,
+        "JAK2": -0.972,
+        "STAT1": -1.036
+       },
+       "hold": 0.0009,
+       "largest_error_of_a_row": 0.306
+      },
+      {
+       "step": 75,
+       "shift": {
+        "IFNGR1": -0.878,
+        "IFNGR2": -0.873,
+        "IRF1": -0.129,
+        "JAK2": -1.017,
+        "STAT1": -1.053
+       },
+       "hold": 0.0011,
+       "largest_error_of_a_row": 0.273
+      },
+      {
+       "step": 100,
+       "shift": {
+        "IFNGR1": -0.887,
+        "IFNGR2": -0.89,
+        "IRF1": -0.16,
+        "JAK2": -1.027,
+        "STAT1": -1.044
+       },
+       "hold": 0.0009,
+       "largest_error_of_a_row": 0.242
+      },
+      {
+       "step": 125,
+       "shift": {
+        "IFNGR1": -0.909,
+        "IFNGR2": -0.91,
+        "IRF1": -0.18,
+        "JAK2": -1.048,
+        "STAT1": -1.035
+       },
+       "hold": 0.0011,
+       "largest_error_of_a_row": 0.223
+      },
+      {
+       "step": 150,
+       "shift": {
+        "IFNGR1": -0.918,
+        "IFNGR2": -0.919,
+        "IRF1": -0.208,
+        "JAK2": -1.054,
+        "STAT1": -1.023
+       },
+       "hold": 0.0013,
+       "largest_error_of_a_row": 0.198
+      },
+      {
+       "step": 175,
+       "shift": {
+        "IFNGR1": -0.881,
+        "IFNGR2": -0.883,
+        "IRF1": -0.219,
+        "JAK2": -1.011,
+        "STAT1": -0.946
+       },
+       "hold": 0.0012,
+       "largest_error_of_a_row": 0.183
+      },
+      {
+       "step": 200,
+       "shift": {
+        "IFNGR1": -0.864,
+        "IFNGR2": -0.866,
+        "IRF1": -0.229,
+        "JAK2": -0.991,
+        "STAT1": -0.909
+       },
+       "hold": 0.0012,
+       "largest_error_of_a_row": 0.174
+      }
+     ],
+     "ended": "200 steps, as set"
+    },
+    "3e-5": {
+     "curve": [
+      {
+       "step": 0,
+       "shift": {
+        "IFNGR1": -0.485,
+        "IFNGR2": -0.481,
+        "IRF1": -0.013,
+        "JAK2": -0.565,
+        "STAT1": -0.622
+       },
+       "hold": 0.0
+      },
+      {
+       "step": 25,
+       "shift": {
+        "IFNGR1": -0.823,
+        "IFNGR2": -0.818,
+        "IRF1": -0.133,
+        "JAK2": -0.953,
+        "STAT1": -0.958
+       },
+       "hold": 0.0014,
+       "largest_error_of_a_row": 0.27
+      },
+      {
+       "step": 50,
+       "shift": {
+        "IFNGR1": -0.869,
+        "IFNGR2": -0.864,
+        "IRF1": -0.182,
+        "JAK2": -1.003,
+        "STAT1": -0.96
+       },
+       "hold": 0.0012,
+       "largest_error_of_a_row": 0.22
+      },
+      {
+       "step": 75,
+       "shift": {
+        "IFNGR1": -0.917,
+        "IFNGR2": -0.912,
+        "IRF1": -0.24,
+        "JAK2": -1.052,
+        "STAT1": -0.952
+       },
+       "hold": 0.0016,
+       "largest_error_of_a_row": 0.162
+      },
+      {
+       "step": 100,
+       "shift": {
+        "IFNGR1": -0.895,
+        "IFNGR2": -0.892,
+        "IRF1": -0.267,
+        "JAK2": -1.031,
+        "STAT1": -0.888
+       },
+       "hold": 0.002,
+       "largest_error_of_a_row": 0.135
+      },
+      {
+       "step": 125,
+       "shift": {
+        "IFNGR1": -0.963,
+        "IFNGR2": -0.966,
+        "IRF1": -0.271,
+        "JAK2": -1.099,
+        "STAT1": -0.965
+       },
+       "hold": 0.0015,
+       "largest_error_of_a_row": 0.14
+      },
+      {
+       "step": 150,
+       "shift": {
+        "IFNGR1": -0.928,
+        "IFNGR2": -0.935,
+        "IRF1": -0.291,
+        "JAK2": -1.062,
+        "STAT1": -0.915
+       },
+       "hold": 0.0017,
+       "largest_error_of_a_row": 0.111
+      },
+      {
+       "step": 175,
+       "shift": {
+        "IFNGR1": -0.878,
+        "IFNGR2": -0.888,
+        "IRF1": -0.302,
+        "JAK2": -1.013,
+        "STAT1": -0.838
+       },
+       "hold": 0.0014,
+       "largest_error_of_a_row": 0.152
+      },
+      {
+       "step": 200,
+       "shift": {
+        "IFNGR1": -0.822,
+        "IFNGR2": -0.83,
+        "IRF1": -0.284,
+        "JAK2": -0.953,
+        "STAT1": -0.779
+       },
+       "hold": 0.0014,
+       "largest_error_of_a_row": 0.212
+      }
+     ],
+     "ended": "200 steps, as set"
+    }
+   }
+  }
+ }
+}
