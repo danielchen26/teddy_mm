@@ -189,6 +189,11 @@ an input that lacks the response. Both are in the run folder with a proposal.
   same as a second real system passing through it.
 - **What the paper has and the loop does not use.** The propagation law of the TEG, and the TEG as a constraint in
   training. Here the TEG is the test and the source of rows for a repair of the head.
+  A first trial of the TEG as a constraint in training was made on 24 November, on one layer
+  ([`runs/last_layer_trial_20261124`](runs/last_layer_trial_20261124/)); what it says is in Section 7. One of its
+  arms gave IRF1 a row derived by the simplest propagation rule, the mean of its type. Such a row can be trained
+  in, and for IRF1 its value is wrong by a factor of 2.7: a rule has to be tested on the record before it is given
+  to a training.
 - **The schema is not revised by the loop yet.** The rules of a split and of a merge are written
   ([`OUTER_LOOP.md`](OUTER_LOOP.md), Section 8.3), and the loop flags an event that differs from its type: IRF1 in
   THP-1, and ten items for eight donors read as one type. What follows a flag has not been done. Every new type so
@@ -261,3 +266,17 @@ and 0.35 where the small one leaves 0.40; against the small model that is −0.0
 every size. So a larger checkpoint is not the repair, and nothing is a reason to make the trial on one. Inside, one
 thing differs: in the larger models the layer before the last already reads what the last reads, and the last layer
 does not bring back a step as it does in the small one.
+
+A trial at the smallest scale was then made, on the owner's laptop
+([`runs/last_layer_trial_20261124`](runs/last_layer_trial_20261124/)): only the last layer of the 70M checkpoint is
+trained, the loss is the rows of the TEG under a readout fixed beforehand, and every cell is read with a state from
+a layer that did not see it. It is not step 5, which trains in pre-training; it asks what step 5 is to be judged
+by. What the encoder loses does not come back: the reference reader stays at 0.40 (H2 refuted). With IRF1's row in
+the training the readout with no record of it reads a step more (0.90 to 0.62); with no cell of IRF1 in the
+training, 0.12 more, unresolved (H1). The gain belongs to the vector the layer was trained under: that readout kept
+exactly reads twice the gain, a readout fitted on other control cells a third to a half, and shuffling the event
+labels changes nothing. Three things follow for a retraining. The last layer alone is not where the loss can be
+undone. A loss on one projection teaches one projection: if the response is wanted in the state, the readout has to
+be fitted again while the encoder trains, or be several; if it is wanted at the system's output, the readout has to
+be the system's head, which this trial did not use. And the reading has to use a readout fitted on cells the
+trained layers have not used.
