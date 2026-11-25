@@ -12,7 +12,7 @@ def test_planted_system_as_planted():
     assert len(wrong) <= 1, wrong                               # 73 checks, each with a 95% interval of 80 resamples
     assert rep["l"]["says"].startswith("lost before the state")
     assert rep["r1"]["says"].startswith("held not read")
-    assert rep["x"]["says"].startswith("direct")
+    assert rep["x"]["says"].startswith("not in the input")
     assert rep["c1"]["says"].startswith(("read", "unresolved"))  # no part is open
 
 

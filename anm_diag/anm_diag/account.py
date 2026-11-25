@@ -19,10 +19,16 @@ and one number that is NOT evidence that a stage holds a change:
 
 `chain` puts the readings of several stages in the order of the model and splits the change into four parts:
 
-  direct                 1 - carried(input)                  no stage holds it: only an edge of the event graph can
+  not in the input       1 - carried(input)                  no stage holds it cell by cell (see below)
   lost before the state  carried(input) - carried(state)     the model, between its input and the state its head reads
   held, not read         carried(state) - read(state)        the head: a readout with the records of events reads it
   read                   read(state)                         nothing to do
+
+These parts are about single cells: what a head could read from a cell. A readout that is measured in another way than
+the input (a protein beside RNA) is often not in a cell's input in full, and its mean change can still follow from the
+mean shift of a stage by a law that holds across events. That is the other level, `others` for a few events and `Law`
+for many: what the system can forecast of an event's mean change without its record. A part that is not in the input
+needs an edge of the event graph only if the other events do not forecast the change either.
 
 `Law` does the same for many events at once from their rows (the mean shift of a stage, the mean change of every
 readout): a readout with a prior from the control cells, the rows of the other events as evidence, and for what no row
@@ -192,37 +198,60 @@ def gain(a, b, key="carried"):
     return {"gain": float(d[0]), "ci": iv, "reading": step(iv)}
 
 
-PARTS = ("direct", "lost_before_the_state", "held_not_read", "read")
-LEVER = {"direct": "an edge of the event graph: no stage holds this part, so nothing built on a stage can reach it",
+PARTS = ("not_in_the_input", "lost_before_the_state", "held_not_read", "read")
+LEVER = {"not_in_the_input": "no stage holds this part cell by cell, so no head can read it from a cell. What the event graph must supply is read across events: "
+                             "the records of other events if they forecast the change through the stage, an edge if they do not",
          "lost_before_the_state": "the model, between its input and the state its head reads",
          "held_not_read": "the head: a readout with the cells of recorded events",
          "read": "nothing: a readout of control cells reads this part"}
+FORECAST, NOT_FORECAST = 0.75, 0.50                           # across events: the other events forecast a change if the interval of `others` lies above the first, and do not if it lies below the second
+
+
+def across_events(r):
+    """What the rows of the other events say of this event's change through a stage (None if there are none)."""
+    if "others" not in r["shares"]:
+        return None
+    o = r["shares"]["others"]
+    says = "the other events forecast it" if o["ci"][0] >= FORECAST else ("the other events do not forecast it" if o["ci"][1] < NOT_FORECAST else "unresolved")
+    return {"others": o["share"], "ci": o["ci"], "reading": says}
+
+
+def says(ch):
+    """One line for an account: the open parts, largest first, then the unresolved ones; and for a part that no stage
+    holds cell by cell, what the other events say."""
+    if ch["snr"] < MIN_SNR:
+        return "no change to account for (the change does not stand out from its error)"
+    ae = ch.get("across_events")
+    def name(p, is_open=False):
+        t = f"{p['part'].replace('_', ' ')} {p['share']:.0%}"
+        if is_open and p["part"] == "not_in_the_input" and ae:
+            t += f" [across events: {ae['reading']}, {ae['others']:.0%}]"
+        return t
+    if ch["open"]:
+        return "; ".join(name(p, True) for p in ch["open"]) + ("" if not ch["unresolved"] else " (unresolved: " + "; ".join(name(p) for p in ch["unresolved"]) + ")")
+    if ch["unresolved"]:
+        return "unresolved: " + "; ".join(name(p) for p in ch["unresolved"])
+    return "read: a readout of control cells reads the change, and no other part is as large as a step"
 
 
 def chain(by_stage, inputs, state):
-    """The four parts of a change from the readings of its stages. inputs: the names of the views of the model's input
-    (the one that carries most is the input); state: the stage the head reads. Every part has the interval of its own
-    resamples. `open`: the parts resolved as more than a step, largest first, each with the place it names.
-    `unresolved`: the parts whose interval holds a step. A change is `read` only if nothing is open or unresolved."""
-    inp = max(inputs, key=lambda s: by_stage[s]["shares"]["carried"]["share"])
+    """The four parts of a change, cell by cell, from the readings of its stages. inputs: the names of the views of the
+    model's input; state: the stage the head reads. The input is taken to hold what the view that carries most holds,
+    and at least what the state holds (if the state carries more than every view, nothing is lost before it and
+    `input` names the state). Every part has the interval of its own resamples. `open`: the parts resolved as more than a step, largest first, each with the place it names.
+    `unresolved`: the parts whose interval holds a step. `across_events`: what the rows of the other events forecast of
+    the change through the state; a part that is not in the input cell by cell needs an edge only if they do not."""
+    inp = max([*inputs, state], key=lambda s: by_stage[s]["shares"]["carried"]["share"])     # a view of the input is only a part of it: the input holds at least what the state holds
     ci_, cs, rd = by_stage[inp]["_draws"]["carried"], by_stage[state]["_draws"]["carried"], by_stage[state]["_draws"]["read"]
-    d = {"direct": 1 - ci_, "lost_before_the_state": ci_ - cs, "held_not_read": cs - rd, "read": rd}
+    d = {"not_in_the_input": 1 - ci_, "lost_before_the_state": ci_ - cs, "held_not_read": cs - rd, "read": rd}
     parts = {k: {"share": float(v[0]), "ci": interval(v[1:]), "reading": step(interval(v[1:]))} for k, v in d.items()}
     r = by_stage[state]
     out = {"event": r["event"], "change": r["change"], "snr": r["snr"], "input": inp, "state": state, "parts": parts,
-           "carried_by": {inp: by_stage[inp]["carried_by"], state: by_stage[state]["carried_by"]}, "open": [], "unresolved": []}
-    if r["snr"] < MIN_SNR:
-        out["says"] = "no change to account for (the change does not stand out from its error)"
-        return out
-    for key, want in (("open", "a step"), ("unresolved", "unresolved")):
-        out[key] = [{"part": k, "share": parts[k]["share"], "ci": parts[k]["ci"], "place": LEVER[k]} for k in sorted(PARTS[:3], key=lambda k: -parts[k]["share"]) if parts[k]["reading"] == want]
-    name = lambda p: f"{p['part'].replace('_', ' ')} {p['share']:.0%}"
-    if out["open"]:
-        out["says"] = "; ".join(name(p) for p in out["open"]) + ("" if not out["unresolved"] else " (unresolved: " + "; ".join(name(p) for p in out["unresolved"]) + ")")
-    elif out["unresolved"]:
-        out["says"] = "unresolved: " + "; ".join(name(p) for p in out["unresolved"])
-    else:
-        out["says"] = "read: a readout of control cells reads the change, and no other part is as large as a step"
+           "carried_by": {inp: by_stage[inp]["carried_by"], state: by_stage[state]["carried_by"]}, "across_events": across_events(r), "open": [], "unresolved": []}
+    if r["snr"] >= MIN_SNR:
+        for key, want in (("open", "a step"), ("unresolved", "unresolved")):
+            out[key] = [{"part": k, "share": parts[k]["share"], "ci": parts[k]["ci"], "place": LEVER[k]} for k in sorted(PARTS[:3], key=lambda k: -parts[k]["share"]) if parts[k]["reading"] == want]
+    out["says"] = says(out)
     return out
 
 

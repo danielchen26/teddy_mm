@@ -12,10 +12,10 @@ Five hidden factors of a cell. The readout is measured outside the model.
   c1 c2      factor 1                     read by a readout of control cells                        read
   r1 r2      factor 2                     held by the state, and no control cell can teach it       held, not read (the head); r1 is forecast from r2
   l          factor 4                     held by the input, lost before the state                  lost before the state (the model)
-  m          factor 3, and the readout    direct, though the event moves the state                  direct (an edge). A readout made to follow its
+  m          factor 3, and the readout    direct, though the event moves the state                  not in the input. A readout made to follow its
              directly                                                                               mean calls it closed: `found_again` is near one.
-  n1..n4     the readout directly         direct; the event graph has an edge for them              direct; forecast by the class of their edge
-  x          the readout directly         direct; the event graph has no edge                       direct; flagged as a missing edge
+  n1..n4     the readout directly         direct; the event graph has an edge for them              not in the input; forecast by the class of their edge
+  x          the readout directly         direct; the event graph has no edge                       not in the input; flagged as a missing edge
   null       factor 3                     none                                                      no change to account for
   q*         a little of factors 1, 3     none or small, through the state                          (they fill the library the law is fitted on)
 
@@ -103,7 +103,7 @@ def _truth(**kw):
             ov = float(((a - np.c_[x[m], np.ones(m.sum())] @ np.linalg.lstsq(np.c_[x[m], np.ones(m.sum())], a, rcond=None)[0]) ** 2).sum() / ((a - a.mean()) ** 2).sum())
             row[st] = {"read": float(read), "overlap": ov, "carried": (float(1 - b[-2] / change) if ov >= AC.MIN_OVERLAP else 1.0) if abs(change) > 0.05 else float("nan")}
         if abs(change) > 0.05:
-            row["parts"] = {"direct": 1 - row["V"]["carried"], "lost_before_the_state": row["V"]["carried"] - row["Z"]["carried"],
+            row["parts"] = {"not_in_the_input": 1 - row["V"]["carried"], "lost_before_the_state": row["V"]["carried"] - row["Z"]["carried"],
                             "held_not_read": row["Z"]["carried"] - row["Z"]["read"], "read": row["Z"]["read"]}
         out[e] = row
     return out

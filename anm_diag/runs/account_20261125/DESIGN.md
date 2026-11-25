@@ -300,3 +300,26 @@ protocol is the owner's decision; this run supplies the evidence.
 | the exploration chose the measure on THP-1 | THP-1 is not counted; the melanoma targets are the declared reading; they hold no event unlike its type |
 | seven pairs with an edge are few, and one class | reported as explored; the test is Section 9 |
 | hyper-parameters of the law are fitted with every event, the forecasts leave one out | stated; the planted suite scores the same procedure |
+
+## 12. Amended after the readings (25 November, after Section 7.4 was read)
+
+The sections above are as they were committed before the reading, except this one. Three things were changed after
+it; the hypotheses are scored as declared (`results/melanoma_as_first_read.json`, `scripts/score.py`).
+
+1. **The first part of the chain is not "direct", and its place is not "an edge".** For MHC-I in co-culture the
+   input view and the state carry about half of a pathway knockout's change cell by cell, and the other four events
+   forecast the fifth in full (91% to 110%). A protein that is measured beside the RNA is not in a cell's RNA in full,
+   and its mean change still follows from the mean shift of the stage by a law that holds across events. The chain
+   is about single cells; whether the event graph must supply something is read across events. The part is now
+   called **not in the input**; an account says beside it what the other events forecast; it needs an edge only if
+   they do not (Section 4.4 and `Law` answer that for many events).
+2. **The input holds at least what the state holds.** For PD-L1 under IFN-γ the state carries more than the input
+   view `V` (97% against 80% to 96%). `V` is one view of the input. The chain now takes for the input the view that
+   carries most, and the state itself if it carries more than every view; nothing is then lost before the state.
+3. **Section 2.1** was written from a first planted system of the exploration (one seed, another layout). The script
+   of this run, on the planted system of the module (five seeds): no record 1.01, run 40's rule 0.43, left among
+   cells alike 0.94. The rule "closes" more than half of a change the state does not hold; a row closed exactly
+   (`found again`) reads 98% of it.
+
+The numbers of Section 3 are those of the exploration as it was run; `scripts/explore_library.py` repeats it and
+differs in the second decimal where halves of cells are drawn (its values are in the README).

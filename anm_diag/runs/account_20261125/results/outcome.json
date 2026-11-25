@@ -1,0 +1,404 @@
+{
+ "readings_of_the_two_files_differ_by_at_most": 0.0,
+ "pairs_with_no_change_to_account_for": [],
+ "hypotheses": {
+  "HA1_the_mean_does_not_see": {
+   "reading": "confirmed",
+   "MHC1_events_where_found_again_exceeds_carried_by_a_step": 5,
+   "of": 5,
+   "by_event": {
+    "IFNGR1": {
+     "gain": 0.4057351828751017,
+     "ci": [
+      0.3151181318357105,
+      0.5104515306932066
+     ],
+     "reading": "a step"
+    },
+    "IFNGR2": {
+     "gain": 0.36326243109365974,
+     "ci": [
+      0.26467773891477775,
+      0.44961811592968975
+     ],
+     "reading": "a step"
+    },
+    "JAK1": {
+     "gain": 0.4034544709385678,
+     "ci": [
+      0.3072043885404693,
+      0.4955388362735985
+     ],
+     "reading": "a step"
+    },
+    "JAK2": {
+     "gain": 0.3617899089551577,
+     "ci": [
+      0.27250501912183966,
+      0.4455982373413304
+     ],
+     "reading": "a step"
+    },
+    "STAT1": {
+     "gain": 0.43630639487703204,
+     "ci": [
+      0.3588840450478625,
+      0.518275820828178
+     ],
+     "reading": "a step"
+    }
+   }
+  },
+  "HA2_the_typed_state_carries_more": {
+   "reading": "refuted",
+   "MHC1_events_with_a_step": 0,
+   "median_gain": 0.12550162486472338,
+   "by_event": {
+    "IFNGR1": {
+     "gain": 0.12550162486472338,
+     "ci": [
+      0.039405783331546755,
+      0.20038387593168971
+     ],
+     "reading": "unresolved"
+    },
+    "IFNGR2": {
+     "gain": 0.11874676703477571,
+     "ci": [
+      0.06246520239663725,
+      0.1853068917709809
+     ],
+     "reading": "unresolved"
+    },
+    "JAK1": {
+     "gain": 0.13063516966194877,
+     "ci": [
+      0.06098599338822115,
+      0.19696611726428148
+     ],
+     "reading": "unresolved"
+    },
+    "JAK2": {
+     "gain": 0.0962811451013551,
+     "ci": [
+      0.03446985574424566,
+      0.1679509379330313
+     ],
+     "reading": "unresolved"
+    },
+    "STAT1": {
+     "gain": 0.16118154238175375,
+     "ci": [
+      0.09229960539204082,
+      0.23719890375656105
+     ],
+     "reading": "unresolved"
+    }
+   }
+  },
+  "HA3_it_is_the_type": {
+   "reading": "confirmed",
+   "MHC1_events_with_a_step": 3,
+   "median_gain": 0.13913539221040971,
+   "by_event": {
+    "IFNGR1": {
+     "gain": 0.13913539221040971,
+     "ci": [
+      0.09979179536887195,
+      0.1756683657285438
+     ],
+     "reading": "unresolved"
+    },
+    "IFNGR2": {
+     "gain": 0.15663797713266459,
+     "ci": [
+      0.12760604599090214,
+      0.18806968625768017
+     ],
+     "reading": "a step"
+    },
+    "JAK1": {
+     "gain": 0.13604295616446038,
+     "ci": [
+      0.10003394937579431,
+      0.16811028577190587
+     ],
+     "reading": "a step"
+    },
+    "JAK2": {
+     "gain": 0.12874136625016153,
+     "ci": [
+      0.09928636821594139,
+      0.15671869939854333
+     ],
+     "reading": "unresolved"
+    },
+    "STAT1": {
+     "gain": 0.18779782273384737,
+     "ci": [
+      0.14827944469180135,
+      0.22062784475016012
+     ],
+     "reading": "a step"
+    }
+   }
+  },
+  "HA4_where_MHC1_is_lost": {
+   "reading": "refuted",
+   "MHC1_events_where_lost_before_the_state_is_open": 0,
+   "median_share": 0.014687837928375691,
+   "by_event": {
+    "IFNGR1": {
+     "share": -0.07587232610974137,
+     "ci": [
+      -0.14316721192048196,
+      -0.015539873602042736
+     ],
+     "reading": "no step"
+    },
+    "IFNGR2": {
+     "share": 0.035204430298568345,
+     "ci": [
+      -0.01982271612257821,
+      0.08509924844538974
+     ],
+     "reading": "no step"
+    },
+    "JAK1": {
+     "share": 0.014687837928375691,
+     "ci": [
+      -0.042185283998162404,
+      0.06267704726377568
+     ],
+     "reading": "no step"
+    },
+    "JAK2": {
+     "share": -0.04970703433652923,
+     "ci": [
+      -0.10357161118744977,
+      0.010328473938200832
+     ],
+     "reading": "no step"
+    },
+    "STAT1": {
+     "share": 0.03143749281322705,
+     "ci": [
+      -0.016919891697096907,
+      0.09419314874727744
+     ],
+     "reading": "no step"
+    }
+   }
+  },
+  "HA5_PDL1_has_nothing_open": {
+   "reading": "unresolved",
+   "accounts_with_no_open_part": 4,
+   "of": 10,
+   "what_is_open": {
+    "PDL1_coculture IFNGR1": [
+     "direct"
+    ],
+    "PDL1_coculture IFNGR2": [
+     "direct"
+    ],
+    "PDL1_coculture JAK1": [
+     "direct"
+    ],
+    "PDL1_coculture JAK2": [
+     "direct"
+    ],
+    "PDL1_coculture STAT1": [
+     "direct"
+    ],
+    "PDL1_ifn IFNGR1": [],
+    "PDL1_ifn IFNGR2": [],
+    "PDL1_ifn JAK1": [],
+    "PDL1_ifn JAK2": [
+     "direct"
+    ],
+    "PDL1_ifn STAT1": []
+   }
+  },
+  "HA6_the_controls": {
+   "reading": "confirmed",
+   "largest_carried_by_a_permuted_stage": 0.003677644430129634,
+   "made_up_events_with_no_change_to_account_for": 15,
+   "of": 15,
+   "permuted_stage": {
+    "MHC1_coculture IFNGR1": -0.0001849129358055812,
+    "MHC1_coculture IFNGR2": -0.0003766481762215168,
+    "MHC1_coculture JAK1": -0.0005904712146926894,
+    "MHC1_coculture JAK2": -3.7736373026397985e-05,
+    "MHC1_coculture STAT1": 0.00038157056299814585,
+    "PDL1_coculture IFNGR1": -0.0013794450325774754,
+    "PDL1_coculture IFNGR2": -0.0008199371002317601,
+    "PDL1_coculture JAK1": -0.0015541560022203083,
+    "PDL1_coculture JAK2": -0.001481431154425561,
+    "PDL1_coculture STAT1": -0.0008127048641819457,
+    "PDL1_ifn IFNGR1": -0.0002637210311278171,
+    "PDL1_ifn IFNGR2": 0.0013944921037181146,
+    "PDL1_ifn JAK1": -0.003677644430129634,
+    "PDL1_ifn JAK2": 0.00014093021213146262,
+    "PDL1_ifn STAT1": -0.0001435833461105318
+   }
+  },
+  "HA7_the_cells_can_be_read": {
+   "reading": "confirmed",
+   "pairs_with_overlap_at_least_0.10": 15,
+   "of": 15,
+   "smallest": 0.48728282322576016,
+   "overlap": {
+    "MHC1_coculture IFNGR1": 0.5376359421438276,
+    "MHC1_coculture IFNGR2": 0.5123768809187466,
+    "MHC1_coculture JAK1": 0.5159294444664911,
+    "MHC1_coculture JAK2": 0.4933883123610926,
+    "MHC1_coculture STAT1": 0.48728282322576016,
+    "PDL1_coculture IFNGR1": 0.5376359421438276,
+    "PDL1_coculture IFNGR2": 0.5123768809187466,
+    "PDL1_coculture JAK1": 0.5159294444664911,
+    "PDL1_coculture JAK2": 0.4933883123610926,
+    "PDL1_coculture STAT1": 0.48728282322576016,
+    "PDL1_ifn IFNGR1": 0.677068116969575,
+    "PDL1_ifn IFNGR2": 0.6644334810242097,
+    "PDL1_ifn JAK1": 0.6847997007540542,
+    "PDL1_ifn JAK2": 0.6752658851993382,
+    "PDL1_ifn STAT1": 0.6498992195337365
+   }
+  },
+  "HA8_transfer_inside_the_type": {
+   "reading": "confirmed",
+   "pairs_with_others_at_least_0.75": 15,
+   "of": 15,
+   "others_at_Z": {
+    "MHC1_coculture IFNGR1": 1.097639410527403,
+    "MHC1_coculture IFNGR2": 0.9667422871550706,
+    "MHC1_coculture JAK1": 0.9557880135661526,
+    "MHC1_coculture JAK2": 1.012366584512939,
+    "MHC1_coculture STAT1": 0.9050349813224533,
+    "PDL1_coculture IFNGR1": 1.0065745669639483,
+    "PDL1_coculture IFNGR2": 0.9614844250603136,
+    "PDL1_coculture JAK1": 1.249039440095185,
+    "PDL1_coculture JAK2": 0.9471864059462278,
+    "PDL1_coculture STAT1": 0.8854969049170671,
+    "PDL1_ifn IFNGR1": 1.0161027740389688,
+    "PDL1_ifn IFNGR2": 0.9956572116761293,
+    "PDL1_ifn JAK1": 1.142802425620798,
+    "PDL1_ifn JAK2": 0.8952202854773654,
+    "PDL1_ifn STAT1": 1.016072449757518
+   }
+  },
+  "HP_planted_suite": {
+   "reading": "confirmed",
+   "wrong": 2,
+   "checks": 1460,
+   "not_counted": "the first full run of the suite finished and was seen before this file was committed"
+  }
+ },
+ "counts": {
+  "confirmed": 5,
+  "refuted": 2,
+  "unresolved": 1
+ },
+ "forecasts": {
+  "by_hypothesis": {
+   "HA1_the_mean_does_not_see": {
+    "probability_confirmed": 0.75,
+    "reading": "confirmed",
+    "the_outcome_given_the_higher_probability": "confirmed",
+    "happened": true,
+    "interval": [
+     3,
+     5
+    ],
+    "value": 5,
+    "inside": true
+   },
+   "HA2_the_typed_state_carries_more": {
+    "probability_confirmed": 0.35,
+    "reading": "refuted",
+    "the_outcome_given_the_higher_probability": "not confirmed",
+    "happened": true,
+    "interval": [
+     0.02,
+     0.2
+    ],
+    "value": 0.12550162486472338,
+    "inside": true
+   },
+   "HA3_it_is_the_type": {
+    "probability_confirmed": 0.4,
+    "reading": "confirmed",
+    "the_outcome_given_the_higher_probability": "not confirmed",
+    "happened": false,
+    "interval": [
+     0.03,
+     0.22
+    ],
+    "value": 0.13913539221040971,
+    "inside": true
+   },
+   "HA4_where_MHC1_is_lost": {
+    "probability_confirmed": 0.45,
+    "reading": "refuted",
+    "the_outcome_given_the_higher_probability": "not confirmed",
+    "happened": true,
+    "interval": [
+     0.05,
+     0.3
+    ],
+    "value": 0.014687837928375691,
+    "inside": false
+   },
+   "HA5_PDL1_has_nothing_open": {
+    "probability_confirmed": 0.55,
+    "reading": "unresolved",
+    "the_outcome_given_the_higher_probability": "confirmed",
+    "happened": false,
+    "interval": [
+     5,
+     10
+    ],
+    "value": 4,
+    "inside": false
+   },
+   "HA6_the_controls": {
+    "probability_confirmed": 0.85,
+    "reading": "confirmed",
+    "the_outcome_given_the_higher_probability": "confirmed",
+    "happened": true
+   },
+   "HA7_the_cells_can_be_read": {
+    "probability_confirmed": 0.85,
+    "reading": "confirmed",
+    "the_outcome_given_the_higher_probability": "confirmed",
+    "happened": true,
+    "interval": [
+     0.15,
+     0.7
+    ],
+    "value": 0.48728282322576016,
+    "inside": true
+   },
+   "HA8_transfer_inside_the_type": {
+    "probability_confirmed": 0.5,
+    "reading": "confirmed",
+    "the_outcome_given_the_higher_probability": "confirmed",
+    "happened": true,
+    "interval": [
+     7,
+     14
+    ],
+    "value": 15,
+    "inside": false
+   }
+  },
+  "intervals_that_held_the_value": [
+   4,
+   7
+  ],
+  "outcomes_given_the_higher_probability_that_happened": [
+   6,
+   8
+  ]
+ }
+}

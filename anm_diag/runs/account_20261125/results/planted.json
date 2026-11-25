@@ -1,0 +1,1552 @@
+{
+ "as planted": {
+  "systems": 20,
+  "checks": 1460,
+  "wrong": 3,
+  "which": [
+   "seed 6: r1: the planted read is inside the interval (or within 0.15)",
+   "seed 18: l: the planted lost_before_the_state is inside the interval (or within 0.15)",
+   "seed 19: n3: the planted not_in_the_input is inside the interval (or within 0.15)"
+  ],
+  "the_planted_place_resolved_as_a_step": {
+   "of_all": [
+    173,
+    180
+   ],
+   "by_event": {
+    "r1": [
+     17,
+     20
+    ],
+    "r2": [
+     16,
+     20
+    ],
+    "l": [
+     20,
+     20
+    ],
+    "m": [
+     20,
+     20
+    ],
+    "n1": [
+     20,
+     20
+    ],
+    "n2": [
+     20,
+     20
+    ],
+    "n3": [
+     20,
+     20
+    ],
+    "n4": [
+     20,
+     20
+    ],
+    "x": [
+     20,
+     20
+    ]
+   }
+  },
+  "first_system": {
+   "c1": {
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+    "parts": {
+     "not_in_the_input": -0.09,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.03,
+     "read": 1.06
+    },
+    "found_again_at_Z": 1.0
+   },
+   "c2": {
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+    "parts": {
+     "not_in_the_input": -0.21,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.02,
+     "read": 1.19
+    },
+    "found_again_at_Z": 0.99
+   },
+   "r1": {
+    "says": "held not read 90% (unresolved: lost before the state 3%; not in the input 2%)",
+    "parts": {
+     "not_in_the_input": 0.02,
+     "lost_before_the_state": 0.03,
+     "held_not_read": 0.9,
+     "read": 0.06
+    },
+    "found_again_at_Z": 1.0
+   },
+   "r2": {
+    "says": "held not read 105% (unresolved: not in the input -14%)",
+    "parts": {
+     "not_in_the_input": -0.14,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 1.05,
+     "read": 0.09
+    },
+    "found_again_at_Z": 1.0
+   },
+   "l": {
+    "says": "lost before the state 111%",
+    "parts": {
+     "not_in_the_input": -0.06,
+     "lost_before_the_state": 1.11,
+     "held_not_read": -0.0,
+     "read": -0.05
+    },
+    "found_again_at_Z": -0.11
+   },
+   "m": {
+    "says": "not in the input 93% (unresolved: held not read 7%)",
+    "parts": {
+     "not_in_the_input": 0.93,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.07,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.98
+   },
+   "n1": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.2
+   },
+   "n2": {
+    "says": "not in the input 92%",
+    "parts": {
+     "not_in_the_input": 0.92,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.08
+    },
+    "found_again_at_Z": 0.19
+   },
+   "n3": {
+    "says": "not in the input 97%",
+    "parts": {
+     "not_in_the_input": 0.97,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.03
+    },
+    "found_again_at_Z": 0.24
+   },
+   "n4": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.01
+    },
+    "found_again_at_Z": -0.07
+   },
+   "x": {
+    "says": "not in the input 100%",
+    "parts": {
+     "not_in_the_input": 1.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.01
+   },
+   "null": {
+    "says": "no change to account for (the change does not stand out from its error)",
+    "parts": {
+     "not_in_the_input": -3.8,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.39,
+     "read": 4.4
+    },
+    "found_again_at_Z": 1.12
+   },
+   "law at V": {
+    "inside_95": 0.93,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 15.848931924611142,
+    "sigma0": 0.032,
+    "edge": {
+     "n1": [
+      -0.49,
+      -0.84
+     ],
+     "n2": [
+      -0.65,
+      -0.54
+     ],
+     "n3": [
+      -0.66,
+      -0.35
+     ],
+     "n4": [
+      -0.57,
+      -0.64
+     ]
+    }
+   },
+   "law at Z": {
+    "inside_95": 0.9,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "l": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 3.981071705534973,
+    "sigma0": 0.044,
+    "edge": {
+     "n1": [
+      -0.5,
+      -0.84
+     ],
+     "n2": [
+      -0.64,
+      -0.54
+     ],
+     "n3": [
+      -0.66,
+      -0.35
+     ],
+     "n4": [
+      -0.57,
+      -0.64
+     ]
+    }
+   },
+   "resolved": {
+    "r1": true,
+    "r2": true,
+    "l": true,
+    "m": true,
+    "n1": true,
+    "n2": true,
+    "n3": true,
+    "n4": true,
+    "x": true
+   }
+  },
+  "planted": {
+   "c1": {
+    "not_in_the_input": 0.014740319504259802,
+    "lost_before_the_state": 0.000449896488139645,
+    "held_not_read": -0.01269645040636469,
+    "read": 0.9975062344139652
+   },
+   "c2": {
+    "not_in_the_input": 0.0024830352132101385,
+    "lost_before_the_state": 0.0006399767352907038,
+    "held_not_read": -0.0006292463624661959,
+    "read": 0.9975062344139654
+   },
+   "r1": {
+    "not_in_the_input": 0.042312237326673885,
+    "lost_before_the_state": -0.018261191099151808,
+    "held_not_read": 0.9759489537724763,
+    "read": 1.7125753735743348e-15
+   },
+   "r2": {
+    "not_in_the_input": 0.0820471166305431,
+    "lost_before_the_state": 0.023751571620875045,
+    "held_not_read": 0.8942013117485802,
+    "read": 1.6945062350892343e-15
+   },
+   "l": {
+    "not_in_the_input": 0.0041498919937310585,
+    "lost_before_the_state": 0.9974639146788018,
+    "held_not_read": -0.0016138066725328581,
+    "read": -0.0
+   },
+   "m": {
+    "not_in_the_input": 0.9192544768553165,
+    "lost_before_the_state": 0.007936990160752888,
+    "held_not_read": 0.07280853298393067,
+    "read": -2.1749578672236506e-17
+   },
+   "n1": {
+    "not_in_the_input": 1.0003584621259416,
+    "lost_before_the_state": 0.005406481667528107,
+    "held_not_read": -0.005764943793469701,
+    "read": -0.0
+   },
+   "n2": {
+    "not_in_the_input": 1.0105397038650619,
+    "lost_before_the_state": -0.005051931513128549,
+    "held_not_read": -0.005487772351933318,
+    "read": -0.0
+   },
+   "n3": {
+    "not_in_the_input": 1.0304721555311522,
+    "lost_before_the_state": -0.018694621049713422,
+    "held_not_read": -0.011777534481438812,
+    "read": -0.0
+   },
+   "n4": {
+    "not_in_the_input": 0.9751190229461765,
+    "lost_before_the_state": 0.01889462663408281,
+    "held_not_read": 0.005986350419740716,
+    "read": -0.0
+   },
+   "x": {
+    "not_in_the_input": 1.0119768104553009,
+    "lost_before_the_state": -0.005216335393121163,
+    "held_not_read": -0.006760475062179694,
+    "read": -0.0
+   },
+   "null": null
+  }
+ },
+ "every cell edited": {
+  "systems": 5,
+  "checks": 365,
+  "wrong": 0,
+  "which": [],
+  "the_planted_place_resolved_as_a_step": {
+   "of_all": [
+    45,
+    45
+   ],
+   "by_event": {
+    "r1": [
+     5,
+     5
+    ],
+    "r2": [
+     5,
+     5
+    ],
+    "l": [
+     5,
+     5
+    ],
+    "m": [
+     5,
+     5
+    ],
+    "n1": [
+     5,
+     5
+    ],
+    "n2": [
+     5,
+     5
+    ],
+    "n3": [
+     5,
+     5
+    ],
+    "n4": [
+     5,
+     5
+    ],
+    "x": [
+     5,
+     5
+    ]
+   }
+  },
+  "first_system": {
+   "c1": {
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+    "parts": {
+     "not_in_the_input": -0.07,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.03,
+     "read": 1.03
+    },
+    "found_again_at_Z": 1.0
+   },
+   "c2": {
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step",
+    "parts": {
+     "not_in_the_input": -0.14,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.02,
+     "read": 1.12
+    },
+    "found_again_at_Z": 0.99
+   },
+   "r1": {
+    "says": "held not read 95%",
+    "parts": {
+     "not_in_the_input": 0.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.95,
+     "read": 0.05
+    },
+    "found_again_at_Z": 1.0
+   },
+   "r2": {
+    "says": "held not read 92%",
+    "parts": {
+     "not_in_the_input": 0.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.92,
+     "read": 0.08
+    },
+    "found_again_at_Z": 1.0
+   },
+   "l": {
+    "says": "lost before the state 110%",
+    "parts": {
+     "not_in_the_input": -0.06,
+     "lost_before_the_state": 1.1,
+     "held_not_read": -0.0,
+     "read": -0.04
+    },
+    "found_again_at_Z": -0.1
+   },
+   "m": {
+    "says": "not in the input 100%",
+    "parts": {
+     "not_in_the_input": 1.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.99
+   },
+   "n1": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.21
+   },
+   "n2": {
+    "says": "not in the input 94%",
+    "parts": {
+     "not_in_the_input": 0.94,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.06
+    },
+    "found_again_at_Z": 0.18
+   },
+   "n3": {
+    "says": "not in the input 98%",
+    "parts": {
+     "not_in_the_input": 0.98,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.03
+    },
+    "found_again_at_Z": 0.24
+   },
+   "n4": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.01
+    },
+    "found_again_at_Z": -0.08
+   },
+   "x": {
+    "says": "not in the input 100%",
+    "parts": {
+     "not_in_the_input": 1.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.01
+   },
+   "null": {
+    "says": "no change to account for (the change does not stand out from its error)",
+    "parts": {
+     "not_in_the_input": -3.63,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.19,
+     "read": 4.82
+    },
+    "found_again_at_Z": 1.06
+   },
+   "law at V": {
+    "inside_95": 0.95,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 15.848931924611142,
+    "sigma0": 0.033,
+    "edge": {
+     "n1": [
+      -0.67,
+      -1.08
+     ],
+     "n2": [
+      -0.85,
+      -0.73
+     ],
+     "n3": [
+      -0.88,
+      -0.48
+     ],
+     "n4": [
+      -0.75,
+      -0.87
+     ]
+    }
+   },
+   "law at Z": {
+    "inside_95": 0.93,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "l": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 3.1622776601683795,
+    "sigma0": 0.044,
+    "edge": {
+     "n1": [
+      -0.68,
+      -1.08
+     ],
+     "n2": [
+      -0.84,
+      -0.73
+     ],
+     "n3": [
+      -0.88,
+      -0.48
+     ],
+     "n4": [
+      -0.75,
+      -0.87
+     ]
+    }
+   },
+   "resolved": {
+    "r1": true,
+    "r2": true,
+    "l": true,
+    "m": true,
+    "n1": true,
+    "n2": true,
+    "n3": true,
+    "n4": true,
+    "x": true
+   }
+  },
+  "planted": {
+   "c1": {
+    "not_in_the_input": 0.012010614129092989,
+    "lost_before_the_state": 0.0019366356866441503,
+    "held_not_read": -0.011453484229702493,
+    "read": 0.9975062344139654
+   },
+   "c2": {
+    "not_in_the_input": 0.0028974501129870323,
+    "lost_before_the_state": 0.00265644093977635,
+    "held_not_read": -0.003060125466728514,
+    "read": 0.9975062344139651
+   },
+   "r1": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9999999999999983,
+    "read": 1.678651892266344e-15
+   },
+   "r2": {
+    "not_in_the_input": 0.0,
+    "lost_before_the_state": 0.0,
+    "held_not_read": 0.9999999999999983,
+    "read": 1.6766157770894849e-15
+   },
+   "l": {
+    "not_in_the_input": 0.005286344281831501,
+    "lost_before_the_state": 0.9959231485973702,
+    "held_not_read": -0.0012094928792016901,
+    "read": -0.0
+   },
+   "m": {
+    "not_in_the_input": 0.9876793814176842,
+    "lost_before_the_state": 0.0061900728752699585,
+    "held_not_read": 0.006130545707045885,
+    "read": -3.1001437210779475e-17
+   },
+   "n1": {
+    "not_in_the_input": 1.000298391703223,
+    "lost_before_the_state": 0.004052775246048856,
+    "held_not_read": -0.004351166949271956,
+    "read": -0.0
+   },
+   "n2": {
+    "not_in_the_input": 1.00786945699448,
+    "lost_before_the_state": -0.00379680876067634,
+    "held_not_read": -0.0040726482338036,
+    "read": -0.0
+   },
+   "n3": {
+    "not_in_the_input": 1.0225290063190735,
+    "lost_before_the_state": -0.013839079798501297,
+    "held_not_read": -0.008689926520572211,
+    "read": -0.0
+   },
+   "n4": {
+    "not_in_the_input": 0.9811197043678757,
+    "lost_before_the_state": 0.014329494999102188,
+    "held_not_read": 0.004550800633022156,
+    "read": -0.0
+   },
+   "x": {
+    "not_in_the_input": 1.0090038648878432,
+    "lost_before_the_state": -0.003924910542507876,
+    "held_not_read": -0.00507895434533534,
+    "read": -0.0
+   },
+   "null": null
+  }
+ },
+ "half of the cells edited": {
+  "systems": 5,
+  "checks": 365,
+  "wrong": 1,
+  "which": [
+   "seed 2: c2: the planted not_in_the_input is inside the interval (or within 0.15)"
+  ],
+  "the_planted_place_resolved_as_a_step": {
+   "of_all": [
+    44,
+    45
+   ],
+   "by_event": {
+    "r1": [
+     5,
+     5
+    ],
+    "r2": [
+     4,
+     5
+    ],
+    "l": [
+     5,
+     5
+    ],
+    "m": [
+     5,
+     5
+    ],
+    "n1": [
+     5,
+     5
+    ],
+    "n2": [
+     5,
+     5
+    ],
+    "n3": [
+     5,
+     5
+    ],
+    "n4": [
+     5,
+     5
+    ],
+    "x": [
+     5,
+     5
+    ]
+   }
+  },
+  "first_system": {
+   "c1": {
+    "says": "unresolved: held not read 4%",
+    "parts": {
+     "not_in_the_input": -0.16,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.04,
+     "read": 1.13
+    },
+    "found_again_at_Z": 1.01
+   },
+   "c2": {
+    "says": "unresolved: held not read 2%",
+    "parts": {
+     "not_in_the_input": -0.34,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.02,
+     "read": 1.32
+    },
+    "found_again_at_Z": 1.0
+   },
+   "r1": {
+    "says": "held not read 88% (unresolved: not in the input 3%; lost before the state 2%)",
+    "parts": {
+     "not_in_the_input": 0.03,
+     "lost_before_the_state": 0.02,
+     "held_not_read": 0.88,
+     "read": 0.07
+    },
+    "found_again_at_Z": 1.01
+   },
+   "r2": {
+    "says": "held not read 100% (unresolved: not in the input -12%)",
+    "parts": {
+     "not_in_the_input": -0.12,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 1.0,
+     "read": 0.13
+    },
+    "found_again_at_Z": 0.99
+   },
+   "l": {
+    "says": "lost before the state 120%",
+    "parts": {
+     "not_in_the_input": -0.11,
+     "lost_before_the_state": 1.2,
+     "held_not_read": -0.0,
+     "read": -0.09
+    },
+    "found_again_at_Z": -0.15
+   },
+   "m": {
+    "says": "not in the input 92% (unresolved: held not read 9%)",
+    "parts": {
+     "not_in_the_input": 0.92,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.09,
+     "read": -0.01
+    },
+    "found_again_at_Z": 0.94
+   },
+   "n1": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.01
+    },
+    "found_again_at_Z": 0.21
+   },
+   "n2": {
+    "says": "not in the input 88%",
+    "parts": {
+     "not_in_the_input": 0.88,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.11
+    },
+    "found_again_at_Z": 0.22
+   },
+   "n3": {
+    "says": "not in the input 95%",
+    "parts": {
+     "not_in_the_input": 0.95,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.05
+    },
+    "found_again_at_Z": 0.26
+   },
+   "n4": {
+    "says": "not in the input 98%",
+    "parts": {
+     "not_in_the_input": 0.98,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.01
+    },
+    "found_again_at_Z": -0.07
+   },
+   "x": {
+    "says": "not in the input 99% (unresolved: lost before the state 1%)",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.01,
+     "held_not_read": -0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.01
+   },
+   "null": {
+    "says": "no change to account for (the change does not stand out from its error)",
+    "parts": {
+     "not_in_the_input": -3.12,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.03,
+     "read": 4.09
+    },
+    "found_again_at_Z": 1.48
+   },
+   "law at V": {
+    "inside_95": 0.93,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 19.952623149688797,
+    "sigma0": 0.031,
+    "edge": {
+     "n1": [
+      -0.32,
+      -0.57
+     ],
+     "n2": [
+      -0.44,
+      -0.38
+     ],
+     "n3": [
+      -0.43,
+      -0.23
+     ],
+     "n4": [
+      -0.38,
+      -0.4
+     ]
+    }
+   },
+   "law at Z": {
+    "inside_95": 0.9,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "l": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 5.011872336272724,
+    "sigma0": 0.042,
+    "edge": {
+     "n1": [
+      -0.33,
+      -0.57
+     ],
+     "n2": [
+      -0.43,
+      -0.38
+     ],
+     "n3": [
+      -0.44,
+      -0.23
+     ],
+     "n4": [
+      -0.38,
+      -0.4
+     ]
+    }
+   },
+   "resolved": {
+    "r1": true,
+    "r2": true,
+    "l": true,
+    "m": true,
+    "n1": true,
+    "n2": true,
+    "n3": true,
+    "n4": true,
+    "x": true
+   }
+  },
+  "planted": {
+   "c1": {
+    "not_in_the_input": 0.0211128936871966,
+    "lost_before_the_state": -0.0018131936915997127,
+    "held_not_read": -0.01680593440956224,
+    "read": 0.9975062344139654
+   },
+   "c2": {
+    "not_in_the_input": 0.0027731552163831052,
+    "lost_before_the_state": -0.002719564652110873,
+    "held_not_read": 0.002440175021762636,
+    "read": 0.9975062344139651
+   },
+   "r1": {
+    "not_in_the_input": 0.02665477204420541,
+    "lost_before_the_state": -0.009773607355823,
+    "held_not_read": 0.9831188353116159,
+    "read": 1.678651892266344e-15
+   },
+   "r2": {
+    "not_in_the_input": 0.059694185883351736,
+    "lost_before_the_state": 0.019142384026264336,
+    "held_not_read": 0.9211634300903823,
+    "read": 1.6766157770894849e-15
+   },
+   "l": {
+    "not_in_the_input": 0.0025467647800191395,
+    "lost_before_the_state": 0.9998883214133579,
+    "held_not_read": -0.0024350861933770673,
+    "read": -0.0
+   },
+   "m": {
+    "not_in_the_input": 0.8925525391544814,
+    "lost_before_the_state": 0.012865261377825843,
+    "held_not_read": 0.09458219946769278,
+    "read": -3.1001437210779475e-17
+   },
+   "n1": {
+    "not_in_the_input": 1.000572194825995,
+    "lost_before_the_state": 0.008070013029293444,
+    "held_not_read": -0.008642207855288353,
+    "read": -0.0
+   },
+   "n2": {
+    "not_in_the_input": 1.0158865981397665,
+    "lost_before_the_state": -0.007670667335211823,
+    "held_not_read": -0.008215930804554628,
+    "read": -0.0
+   },
+   "n3": {
+    "not_in_the_input": 1.0467770561757161,
+    "lost_before_the_state": -0.028677121822700657,
+    "held_not_read": -0.01809993435301549,
+    "read": -0.0
+   },
+   "n4": {
+    "not_in_the_input": 0.9627502765665791,
+    "lost_before_the_state": 0.02830132481190939,
+    "held_not_read": 0.008948398621511533,
+    "read": -0.0
+   },
+   "x": {
+    "not_in_the_input": 1.0182036830686363,
+    "lost_before_the_state": -0.008005336865526624,
+    "held_not_read": -0.010198346203109665,
+    "read": -0.0
+   },
+   "null": null
+  }
+ },
+ "noisy cells": {
+  "systems": 5,
+  "checks": 365,
+  "wrong": 2,
+  "which": [
+   "seed 1: r2: the account points at not_in_the_input",
+   "seed 2: c2: the planted not_in_the_input is inside the interval (or within 0.15)"
+  ],
+  "the_planted_place_resolved_as_a_step": {
+   "of_all": [
+    44,
+    45
+   ],
+   "by_event": {
+    "r1": [
+     5,
+     5
+    ],
+    "r2": [
+     4,
+     5
+    ],
+    "l": [
+     5,
+     5
+    ],
+    "m": [
+     5,
+     5
+    ],
+    "n1": [
+     5,
+     5
+    ],
+    "n2": [
+     5,
+     5
+    ],
+    "n3": [
+     5,
+     5
+    ],
+    "n4": [
+     5,
+     5
+    ],
+    "x": [
+     5,
+     5
+    ]
+   }
+  },
+  "first_system": {
+   "c1": {
+    "says": "unresolved: held not read 10%",
+    "parts": {
+     "not_in_the_input": -0.02,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.1,
+     "read": 0.92
+    },
+    "found_again_at_Z": 1.0
+   },
+   "c2": {
+    "says": "unresolved: held not read 9%",
+    "parts": {
+     "not_in_the_input": -0.11,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.09,
+     "read": 1.03
+    },
+    "found_again_at_Z": 0.98
+   },
+   "r1": {
+    "says": "held not read 52%; not in the input 47% [across events: unresolved, 88%]",
+    "parts": {
+     "not_in_the_input": 0.47,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.52,
+     "read": 0.01
+    },
+    "found_again_at_Z": 1.0
+   },
+   "r2": {
+    "says": "not in the input 51% [across events: the other events forecast it, 111%]; held not read 44%",
+    "parts": {
+     "not_in_the_input": 0.51,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.44,
+     "read": 0.05
+    },
+    "found_again_at_Z": 0.99
+   },
+   "l": {
+    "says": "lost before the state 103% (unresolved: not in the input -0%)",
+    "parts": {
+     "not_in_the_input": -0.0,
+     "lost_before_the_state": 1.03,
+     "held_not_read": -0.0,
+     "read": -0.02
+    },
+    "found_again_at_Z": -0.12
+   },
+   "m": {
+    "says": "not in the input 94% (unresolved: held not read 6%)",
+    "parts": {
+     "not_in_the_input": 0.94,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.06,
+     "read": -0.0
+    },
+    "found_again_at_Z": 0.96
+   },
+   "n1": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.05
+   },
+   "n2": {
+    "says": "not in the input 92%",
+    "parts": {
+     "not_in_the_input": 0.92,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.07
+    },
+    "found_again_at_Z": 0.04
+   },
+   "n3": {
+    "says": "not in the input 97%",
+    "parts": {
+     "not_in_the_input": 0.97,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.01,
+     "read": 0.04
+    },
+    "found_again_at_Z": 0.19
+   },
+   "n4": {
+    "says": "not in the input 100%",
+    "parts": {
+     "not_in_the_input": 1.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": -0.15
+   },
+   "x": {
+    "says": "not in the input 99%",
+    "parts": {
+     "not_in_the_input": 0.99,
+     "lost_before_the_state": 0.01,
+     "held_not_read": 0.0,
+     "read": -0.0
+    },
+    "found_again_at_Z": 0.11
+   },
+   "null": {
+    "says": "no change to account for (the change does not stand out from its error)",
+    "parts": {
+     "not_in_the_input": -4.12,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.49,
+     "read": 4.62
+    },
+    "found_again_at_Z": 1.02
+   },
+   "law at V": {
+    "inside_95": 0.93,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 50.118723362727245,
+    "sigma0": 0.033,
+    "edge": {
+     "n1": [
+      -0.5,
+      -0.84
+     ],
+     "n2": [
+      -0.66,
+      -0.54
+     ],
+     "n3": [
+      -0.66,
+      -0.35
+     ],
+     "n4": [
+      -0.56,
+      -0.64
+     ]
+    }
+   },
+   "law at Z": {
+    "inside_95": 0.9,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "l": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 31.622776601683793,
+    "sigma0": 0.045,
+    "edge": {
+     "n1": [
+      -0.5,
+      -0.84
+     ],
+     "n2": [
+      -0.64,
+      -0.54
+     ],
+     "n3": [
+      -0.67,
+      -0.35
+     ],
+     "n4": [
+      -0.57,
+      -0.64
+     ]
+    }
+   },
+   "resolved": {
+    "r1": true,
+    "r2": true,
+    "l": true,
+    "m": true,
+    "n1": true,
+    "n2": true,
+    "n3": true,
+    "n4": true,
+    "x": true
+   }
+  },
+  "planted": {
+   "c1": {
+    "not_in_the_input": 0.0705756515319077,
+    "lost_before_the_state": -0.0010208447321329306,
+    "held_not_read": -0.010731277388010274,
+    "read": 0.9411764705882355
+   },
+   "c2": {
+    "not_in_the_input": 0.06191074128061891,
+    "lost_before_the_state": -0.0007860431417241465,
+    "held_not_read": -0.002301168727130265,
+    "read": 0.9411764705882355
+   },
+   "r1": {
+    "not_in_the_input": 0.48196860897022464,
+    "lost_before_the_state": -0.014994633597258833,
+    "held_not_read": 0.5330260246270344,
+    "read": -2.572079503235984e-16
+   },
+   "r2": {
+    "not_in_the_input": 0.597591046406499,
+    "lost_before_the_state": 0.006838618104081262,
+    "held_not_read": 0.3955703354894201,
+    "read": -3.1120246902678877e-16
+   },
+   "l": {
+    "not_in_the_input": 0.06128771933381749,
+    "lost_before_the_state": 0.9418870036497919,
+    "held_not_read": -0.003174722983609435,
+    "read": -0.0
+   },
+   "m": {
+    "not_in_the_input": 0.9247450640188716,
+    "lost_before_the_state": 0.008547195948685471,
+    "held_not_read": 0.06670774003244302,
+    "read": -6.957611434955105e-17
+   },
+   "n1": {
+    "not_in_the_input": 0.9997360902801555,
+    "lost_before_the_state": 0.005961407002789354,
+    "held_not_read": -0.0056974972829448856,
+    "read": -0.0
+   },
+   "n2": {
+    "not_in_the_input": 1.0095367616835014,
+    "lost_before_the_state": -0.004650893587333282,
+    "held_not_read": -0.004885868096168089,
+    "read": -0.0
+   },
+   "n3": {
+    "not_in_the_input": 1.0348750877919068,
+    "lost_before_the_state": -0.02225449183911432,
+    "held_not_read": -0.012620595952792524,
+    "read": -0.0
+   },
+   "n4": {
+    "not_in_the_input": 0.9770425694366669,
+    "lost_before_the_state": 0.017012017877744978,
+    "held_not_read": 0.005945412685588125,
+    "read": -0.0
+   },
+   "x": {
+    "not_in_the_input": 1.0115967692236822,
+    "lost_before_the_state": -0.00517906005093427,
+    "held_not_read": -0.006417709172747976,
+    "read": -0.0
+   },
+   "null": null
+  }
+ },
+ "few cells": {
+  "systems": 5,
+  "checks": 365,
+  "wrong": 5,
+  "which": [
+   "seed 2: r2: the planted not_in_the_input is inside the interval (or within 0.15)",
+   "seed 3: c2: the planted not_in_the_input is inside the interval (or within 0.15)",
+   "seed 3: c2: the planted read is inside the interval (or within 0.15)",
+   "seed 4: c1: the planted read is inside the interval (or within 0.15)",
+   "seed 4: n3: the account points at not_in_the_input"
+  ],
+  "the_planted_place_resolved_as_a_step": {
+   "of_all": [
+    40,
+    45
+   ],
+   "by_event": {
+    "r1": [
+     3,
+     5
+    ],
+    "r2": [
+     3,
+     5
+    ],
+    "l": [
+     5,
+     5
+    ],
+    "m": [
+     5,
+     5
+    ],
+    "n1": [
+     5,
+     5
+    ],
+    "n2": [
+     5,
+     5
+    ],
+    "n3": [
+     4,
+     5
+    ],
+    "n4": [
+     5,
+     5
+    ],
+    "x": [
+     5,
+     5
+    ]
+   }
+  },
+  "first_system": {
+   "c1": {
+    "says": "unresolved: lost before the state 2%; held not read 2%; not in the input -3%",
+    "parts": {
+     "not_in_the_input": -0.03,
+     "lost_before_the_state": 0.02,
+     "held_not_read": 0.02,
+     "read": 0.98
+    },
+    "found_again_at_Z": 1.0
+   },
+   "c2": {
+    "says": "unresolved: not in the input 4%; lost before the state 2%; held not read 2%",
+    "parts": {
+     "not_in_the_input": 0.04,
+     "lost_before_the_state": 0.02,
+     "held_not_read": 0.02,
+     "read": 0.91
+    },
+    "found_again_at_Z": 0.97
+   },
+   "r1": {
+    "says": "held not read 145% (unresolved: lost before the state 7%; not in the input 3%)",
+    "parts": {
+     "not_in_the_input": 0.03,
+     "lost_before_the_state": 0.07,
+     "held_not_read": 1.45,
+     "read": -0.54
+    },
+    "found_again_at_Z": 1.0
+   },
+   "r2": {
+    "says": "held not read 131% (unresolved: lost before the state 22%; not in the input 2%)",
+    "parts": {
+     "not_in_the_input": 0.02,
+     "lost_before_the_state": 0.22,
+     "held_not_read": 1.31,
+     "read": -0.55
+    },
+    "found_again_at_Z": 1.0
+   },
+   "l": {
+    "says": "lost before the state 99% (unresolved: not in the input -0%)",
+    "parts": {
+     "not_in_the_input": -0.0,
+     "lost_before_the_state": 0.99,
+     "held_not_read": 0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": 0.03
+   },
+   "m": {
+    "says": "not in the input 85% (unresolved: held not read 9%)",
+    "parts": {
+     "not_in_the_input": 0.85,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.09,
+     "read": 0.06
+    },
+    "found_again_at_Z": 0.96
+   },
+   "n1": {
+    "says": "not in the input 100%",
+    "parts": {
+     "not_in_the_input": 1.0,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.0,
+     "read": 0.0
+    },
+    "found_again_at_Z": -0.2
+   },
+   "n2": {
+    "says": "not in the input 93% (unresolved: lost before the state 5%)",
+    "parts": {
+     "not_in_the_input": 0.93,
+     "lost_before_the_state": 0.05,
+     "held_not_read": 0.0,
+     "read": 0.02
+    },
+    "found_again_at_Z": -0.4
+   },
+   "n3": {
+    "says": "not in the input 101% (unresolved: lost before the state 4%)",
+    "parts": {
+     "not_in_the_input": 1.01,
+     "lost_before_the_state": 0.04,
+     "held_not_read": 0.0,
+     "read": -0.05
+    },
+    "found_again_at_Z": -0.19
+   },
+   "n4": {
+    "says": "not in the input 98% (unresolved: lost before the state 5%)",
+    "parts": {
+     "not_in_the_input": 0.98,
+     "lost_before_the_state": 0.05,
+     "held_not_read": -0.0,
+     "read": -0.04
+    },
+    "found_again_at_Z": -0.16
+   },
+   "x": {
+    "says": "not in the input 108%",
+    "parts": {
+     "not_in_the_input": 1.08,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0,
+     "read": -0.08
+    },
+    "found_again_at_Z": -0.28
+   },
+   "null": {
+    "says": "no change to account for (the change does not stand out from its error)",
+    "parts": {
+     "not_in_the_input": 0.86,
+     "lost_before_the_state": 0.52,
+     "held_not_read": 0.35,
+     "read": -0.73
+    },
+    "found_again_at_Z": 0.92
+   },
+   "law at V": {
+    "inside_95": 0.93,
+    "flagged": {
+     "x": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 5.011872336272724,
+    "sigma0": 0.047,
+    "edge": {
+     "n1": [
+      -0.47,
+      -0.81
+     ],
+     "n2": [
+      -0.62,
+      -0.45
+     ],
+     "n3": [
+      -0.6,
+      -0.33
+     ],
+     "n4": [
+      -0.54,
+      -0.63
+     ]
+    }
+   },
+   "law at Z": {
+    "inside_95": 0.93,
+    "flagged": {
+     "l": "a missing edge: the event does not move the stage",
+     "x": "a missing edge: the event does not move the stage",
+     "m": "a direction of the stage the law does not cover: its record would teach the readout"
+    },
+    "tau2": 7.943282347242816,
+    "sigma0": 0.068,
+    "edge": {
+     "n1": [
+      -0.5,
+      -0.81
+     ],
+     "n2": [
+      -0.61,
+      -0.45
+     ],
+     "n3": [
+      -0.6,
+      -0.33
+     ],
+     "n4": [
+      -0.51,
+      -0.63
+     ]
+    }
+   },
+   "resolved": {
+    "r1": true,
+    "r2": true,
+    "l": true,
+    "m": true,
+    "n1": true,
+    "n2": true,
+    "n3": true,
+    "n4": true,
+    "x": true
+   }
+  },
+  "planted": {
+   "c1": {
+    "not_in_the_input": 0.014740319504259802,
+    "lost_before_the_state": 0.000449896488139645,
+    "held_not_read": -0.01269645040636469,
+    "read": 0.9975062344139652
+   },
+   "c2": {
+    "not_in_the_input": 0.0024830352132101385,
+    "lost_before_the_state": 0.0006399767352907038,
+    "held_not_read": -0.0006292463624661959,
+    "read": 0.9975062344139654
+   },
+   "r1": {
+    "not_in_the_input": 0.042312237326673885,
+    "lost_before_the_state": -0.018261191099151808,
+    "held_not_read": 0.9759489537724763,
+    "read": 1.7125753735743348e-15
+   },
+   "r2": {
+    "not_in_the_input": 0.0820471166305431,
+    "lost_before_the_state": 0.023751571620875045,
+    "held_not_read": 0.8942013117485802,
+    "read": 1.6945062350892343e-15
+   },
+   "l": {
+    "not_in_the_input": 0.0041498919937310585,
+    "lost_before_the_state": 0.9974639146788018,
+    "held_not_read": -0.0016138066725328581,
+    "read": -0.0
+   },
+   "m": {
+    "not_in_the_input": 0.9192544768553165,
+    "lost_before_the_state": 0.007936990160752888,
+    "held_not_read": 0.07280853298393067,
+    "read": -2.1749578672236506e-17
+   },
+   "n1": {
+    "not_in_the_input": 1.0003584621259416,
+    "lost_before_the_state": 0.005406481667528107,
+    "held_not_read": -0.005764943793469701,
+    "read": -0.0
+   },
+   "n2": {
+    "not_in_the_input": 1.0105397038650619,
+    "lost_before_the_state": -0.005051931513128549,
+    "held_not_read": -0.005487772351933318,
+    "read": -0.0
+   },
+   "n3": {
+    "not_in_the_input": 1.0304721555311522,
+    "lost_before_the_state": -0.018694621049713422,
+    "held_not_read": -0.011777534481438812,
+    "read": -0.0
+   },
+   "n4": {
+    "not_in_the_input": 0.9751190229461765,
+    "lost_before_the_state": 0.01889462663408281,
+    "held_not_read": 0.005986350419740716,
+    "read": -0.0
+   },
+   "x": {
+    "not_in_the_input": 1.0119768104553009,
+    "lost_before_the_state": -0.005216335393121163,
+    "held_not_read": -0.006760475062179694,
+    "read": -0.0
+   },
+   "null": null
+  }
+ }
+}
