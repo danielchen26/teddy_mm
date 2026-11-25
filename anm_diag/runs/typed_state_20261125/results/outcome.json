@@ -1,0 +1,262 @@
+{
+ "intervals": {
+  "inside": 6,
+  "of": 6
+ },
+ "outcomes": {
+  "most_likely_happened": 8,
+  "of": 16
+ },
+ "rows": [
+  {
+   "id": "TA-keeps",
+   "what": "TA, the state keeps it: the reference reader gains a step over Z70",
+   "forecast": {
+    "unresolved": 0.5,
+    "refuted": 0.28,
+    "confirmed": 0.22
+   },
+   "observed": "unresolved",
+   "probability_given": 0.5,
+   "most_likely_happened": true
+  },
+  {
+   "id": "TA-closed",
+   "what": "TA, the encoder's loss is closed: the reference reader is no added loss from the input view",
+   "forecast": {
+    "unresolved": 0.45,
+    "refuted": 0.35,
+    "confirmed": 0.2
+   },
+   "observed": "unresolved",
+   "probability_given": 0.45,
+   "most_likely_happened": true
+  },
+  {
+   "id": "TA-repair",
+   "what": "TA, the repair with the record: a step over Z70 and a grade",
+   "forecast": {
+    "unresolved": 0.6,
+    "refuted": 0.35,
+    "confirmed": 0.05
+   },
+   "observed": "refuted",
+   "probability_given": 0.35,
+   "most_likely_happened": false
+  },
+  {
+   "id": "TA-rows-gain",
+   "what": "TA, the output with IRF1's one record against the same at Z70",
+   "forecast": {
+    "unresolved": 0.45,
+    "no step": 0.35,
+    "a step": 0.2
+   },
+   "observed": "no step",
+   "probability_given": 0.35,
+   "most_likely_happened": false
+  },
+  {
+   "id": "TA-no-record",
+   "what": "TA, without its own record: the output with no record of IRF1 gains a step over Z70",
+   "forecast": {
+    "unresolved": 0.4,
+    "refuted": 0.35,
+    "confirmed": 0.25
+   },
+   "observed": "refuted",
+   "probability_given": 0.35,
+   "most_likely_happened": false
+  },
+  {
+   "id": "ZG-keeps",
+   "what": "ZG, the state keeps it",
+   "forecast": {
+    "unresolved": 0.45,
+    "refuted": 0.4,
+    "confirmed": 0.15
+   },
+   "observed": "refuted",
+   "probability_given": 0.4,
+   "most_likely_happened": false
+  },
+  {
+   "id": "ZG-closed",
+   "what": "ZG, the encoder's loss is closed",
+   "forecast": {
+    "refuted": 0.45,
+    "unresolved": 0.4,
+    "confirmed": 0.15
+   },
+   "observed": "refuted",
+   "probability_given": 0.45,
+   "most_likely_happened": true
+  },
+  {
+   "id": "ZG-repair",
+   "what": "ZG, the repair with the record",
+   "forecast": {
+    "unresolved": 0.51,
+    "refuted": 0.45,
+    "confirmed": 0.04
+   },
+   "observed": "refuted",
+   "probability_given": 0.45,
+   "most_likely_happened": false
+  },
+  {
+   "id": "ZG-no-record",
+   "what": "ZG, without its own record",
+   "forecast": {
+    "refuted": 0.5,
+    "unresolved": 0.35,
+    "confirmed": 0.15
+   },
+   "observed": "refuted",
+   "probability_given": 0.5,
+   "most_likely_happened": true
+  },
+  {
+   "id": "choice-matters",
+   "what": "the reference reader of TR against that of TA: 'costs a step' says the choice of genes matters",
+   "forecast": {
+    "unresolved": 0.42,
+    "no change of a step": 0.35,
+    "costs a step": 0.2,
+    "brings back a step": 0.03
+   },
+   "observed": "costs a step",
+   "probability_given": 0.2,
+   "most_likely_happened": false
+  },
+  {
+   "id": "TK8-gain",
+   "what": "TK8, the reference reader against Z70",
+   "forecast": {
+    "no step": 0.5,
+    "unresolved": 0.44,
+    "a step": 0.06
+   },
+   "observed": "no step",
+   "probability_given": 0.5,
+   "most_likely_happened": true
+  },
+  {
+   "id": "EA-gain",
+   "what": "EA, the reference reader against Z70",
+   "forecast": {
+    "no step": 0.45,
+    "unresolved": 0.45,
+    "a step": 0.1
+   },
+   "observed": "unresolved",
+   "probability_given": 0.45,
+   "most_likely_happened": false
+  },
+  {
+   "id": "EA-from-input",
+   "what": "EA from the input view",
+   "forecast": {
+    "loss": 0.55,
+    "unresolved": 0.33,
+    "no added loss": 0.12
+   },
+   "observed": "unresolved",
+   "probability_given": 0.33,
+   "most_likely_happened": false
+  },
+  {
+   "id": "control-TA",
+   "what": "the control target is not harmed at TA",
+   "forecast": {
+    "yes": 0.8,
+    "no": 0.2
+   },
+   "observed": "yes",
+   "probability_given": 0.8,
+   "most_likely_happened": true
+  },
+  {
+   "id": "control-ZG",
+   "what": "the control target is not harmed at ZG",
+   "forecast": {
+    "yes": 0.85,
+    "no": 0.15
+   },
+   "observed": "yes",
+   "probability_given": 0.85,
+   "most_likely_happened": true
+  },
+  {
+   "id": "u-TA-reference",
+   "what": "u of the reference reader at TA",
+   "forecast": [
+    0.15,
+    0.45
+   ],
+   "observed": 0.2723202109336853,
+   "inside": true
+  },
+  {
+   "id": "u-ZG-reference",
+   "what": "u of the reference reader at ZG",
+   "forecast": [
+    0.18,
+    0.46
+   ],
+   "observed": 0.4338686466217041,
+   "inside": true
+  },
+  {
+   "id": "u-TA-rows",
+   "what": "u of the output with IRF1's one record at TA",
+   "forecast": [
+    0.35,
+    0.78
+   ],
+   "observed": 0.6225506243329639,
+   "inside": true
+  },
+  {
+   "id": "u-TA-controls",
+   "what": "u of the output with no record of IRF1 at TA",
+   "forecast": [
+    0.55,
+    1.0
+   ],
+   "observed": 0.8706705047812198,
+   "inside": true
+  },
+  {
+   "id": "u-TK8-reference",
+   "what": "u of the reference reader at TK8",
+   "forecast": [
+    0.25,
+    0.55
+   ],
+   "observed": 0.38161543011665344,
+   "inside": true
+  },
+  {
+   "id": "share-with-the-gene",
+   "what": "the share of the cells that have CD274 among their tokens",
+   "forecast": [
+    0.15,
+    0.9
+   ],
+   "observed": 0.16929660737514496,
+   "inside": true
+  },
+  {
+   "id": "TA-holds-the-gene",
+   "what": "CD274 is among the 128 genes of TA",
+   "forecast": {
+    "yes": 0.6,
+    "no": 0.4
+   },
+   "observed": "yes",
+   "probability_given": 0.6,
+   "most_likely_happened": true
+  }
+ ]
+}
