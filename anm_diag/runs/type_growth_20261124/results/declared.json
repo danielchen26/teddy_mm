@@ -1,0 +1,190 @@
+{
+ "written": "24 November 2026, after the trials on made-up donors and before the script was run on the donors",
+ "forecasts": [
+  {
+   "id": "same-grouping",
+   "kind": "outcome",
+   "what": "the grouping found in the states is the batch",
+   "at": [
+    "candidates",
+    "the_same_grouping"
+   ],
+   "probabilities": {
+    "yes": 0.55,
+    "no": 0.45
+   }
+  },
+  {
+   "id": "H1-batch",
+   "kind": "outcome",
+   "what": "H1 for the batch: the type's record covers the member",
+   "at": [
+    "statements",
+    "batch",
+    "H1_the_types_record_covers_the_member"
+   ],
+   "probabilities": {
+    "refuted": 0.6,
+    "unresolved": 0.3,
+    "confirmed": 0.1
+   },
+   "why": "23 of the 26 admitted pairs are donors of one batch, and three donors hold 21 of them: donors that differ on their own"
+  },
+  {
+   "id": "P1-batch-median",
+   "kind": "interval",
+   "what": "part 1, the batch, the ten pairs: the median of |u_type|",
+   "at": [
+    "part1_the_record_alone",
+    "candidates",
+    "batch",
+    "sets",
+    "own_row_needed",
+    "median_abs_u"
+   ],
+   "interval": [
+    0.45,
+    1.05
+   ]
+  },
+  {
+   "id": "P1-batch-rank",
+   "kind": "outcome",
+   "what": "part 1: the batch is first or second of the 35 groupings",
+   "at": [
+    "statements",
+    "batch",
+    "not_a_random_grouping_by_the_record"
+   ],
+   "probabilities": {
+    "yes": 0.5,
+    "no": 0.5
+   }
+  },
+  {
+   "id": "H2-batch",
+   "kind": "outcome",
+   "what": "H2 for the batch: the repair with the type's record gains a step over `unseen`",
+   "at": [
+    "statements",
+    "batch",
+    "H2_the_repair_with_the_types_record_gains_a_step"
+   ],
+   "probabilities": {
+    "refuted": 0.65,
+    "unresolved": 0.25,
+    "confirmed": 0.1
+   }
+  },
+  {
+   "id": "P2-batch-median",
+   "kind": "interval",
+   "what": "part 2, the batch, the ten pairs: the median of |u| of `typed` (`unseen` 0.75, `rows` 0.45)",
+   "at": [
+    "part2_with_the_repair",
+    "candidates",
+    "batch",
+    "sets",
+    "own_row_needed",
+    "median_abs_u"
+   ],
+   "interval": [
+    0.5,
+    0.9
+   ]
+  },
+  {
+   "id": "P2-batch-gain",
+   "kind": "outcome",
+   "what": "part 2, the batch: the gain of the median over `unseen`",
+   "at": [
+    "part2_with_the_repair",
+    "candidates",
+    "batch",
+    "sets",
+    "own_row_needed",
+    "gain_of_the_median_over_unseen",
+    "reading"
+   ],
+   "probabilities": {
+    "no step": 0.6,
+    "unresolved": 0.25,
+    "a step": 0.15
+   }
+  },
+  {
+   "id": "P2-batch-rank",
+   "kind": "outcome",
+   "what": "part 2: the batch is first or second of the 35 groupings",
+   "at": [
+    "statements",
+    "batch",
+    "not_a_random_grouping_with_the_repair"
+   ],
+   "probabilities": {
+    "no": 0.65,
+    "yes": 0.35
+   }
+  },
+  {
+   "id": "H1-state",
+   "kind": "outcome",
+   "what": "H1 for the grouping found in the states",
+   "at": [
+    "statements",
+    "state",
+    "H1_the_types_record_covers_the_member"
+   ],
+   "probabilities": {
+    "refuted": 0.62,
+    "unresolved": 0.29,
+    "confirmed": 0.09
+   }
+  },
+  {
+   "id": "H2-state",
+   "kind": "outcome",
+   "what": "H2 for the grouping found in the states",
+   "at": [
+    "statements",
+    "state",
+    "H2_the_repair_with_the_types_record_gains_a_step"
+   ],
+   "probabilities": {
+    "refuted": 0.65,
+    "unresolved": 0.25,
+    "confirmed": 0.1
+   }
+  },
+  {
+   "id": "P1-best",
+   "kind": "interval",
+   "what": "part 1, the ten pairs: the median of |u_type| of the best of the 35 groupings",
+   "at": [
+    "part1_the_record_alone",
+    "candidates",
+    "batch",
+    "sets",
+    "own_row_needed",
+    "median_abs_u_of_the_best"
+   ],
+   "interval": [
+    0.4,
+    0.95
+   ]
+  },
+  {
+   "id": "checks",
+   "kind": "outcome",
+   "what": "the arms rows and unseen repeat the round of 23 November",
+   "at": [
+    "checks",
+    "hold"
+   ],
+   "probabilities": {
+    "yes": 0.93,
+    "no": 0.07
+   }
+  }
+ ]
+}

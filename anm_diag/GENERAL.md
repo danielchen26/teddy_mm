@@ -197,6 +197,13 @@ an input that lacks the response. Both are in the run folder with a proposal.
   test of a split on units not used for the proposal could not be run. This is why the readings so far look like
   "readable with a record, not without": a type that covers an event without a record of its own needs several
   members, and no such type has been proposed and tested.
+  A first test was made on 24 November, for the donors ([`runs/type_growth_20261124`](runs/type_growth_20261124/)):
+  a type as a grouping of the eight donors into two groups of four, the candidate from the record (the batch) and
+  the one found in the states with no protein (the same grouping), against all 35 groupings. The batch is the best
+  of them and does not cover a member: the type-mates' record leaves 0.82 of a donor's change, the repair with it
+  gains no step over the repair without (0.77 against 0.75; 0.45 with the donor's own row), and the own row still
+  adds a step for 10 of 10 flagged pairs. So for these donors the items do not close by the schema. Not tried: a
+  type of another shape, a dimension that is not a grouping, and a type for knockouts.
 
 ## 7. Plan
 
