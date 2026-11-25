@@ -282,6 +282,18 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   TAPBP on MHC-I by itself. Declared, three melanoma targets by event: five confirmed, two refuted, one unresolved
   (the typed state carries 10 to 16 points more for every MHC-I event, none resolved as a step). The protocol is
   not changed.
+- **Batch 2: forecasts committed first, then 33 units never read (25 November; nothing trained;**
+  [`batch2_forecast_20261125/`](anm_diag/runs/batch2_forecast_20261125/)**):** the owner accepted the account into
+  the method (`LOOP_PROTOCOL.md`, version 4; `python -m anm_diag account`). For 33 units that no run had read (none
+  final), 79 pairs of an event and a readout were forecast from the RNA of their cells alone, with intervals; the
+  forecasts were committed, then the protein was opened once. 77 of 79 fall inside their interval (the intervals are
+  wider than they need to be). The forecast beats "no change" and the control readout alone (error 0.23 against 0.31
+  and 0.29), and all of that gain is the edge: every knockout of the gene behind a measured protein lowered it in two
+  conditions the edge was not learned in, by 0.23 to 2.1 spreads where the forecast said about 1 for each. In all 14
+  accounts of batch 1 and batch 2, 78% to 102% of the change is not in the input. Of the 34 accounts read so far the
+  model loses a step between its input and its state in one (IRF1). Three hypotheses confirmed, two unresolved, one
+  half not tested (no pair where a typed state had something to bring back). A screen of 13 November had shown the
+  sign of the own-gene changes; the calibration and the accounts are what was new.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
