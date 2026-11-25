@@ -301,8 +301,9 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   study of units: 174 placements right, 42 undecided, none wrong); an edge is a record of the event graph, declared
   or proposed and then admitted or refused by rows it did not see; the law teaches within a type; and every open
   part of an account names its lever, with a lever for the graph (rules 4i to 4l). Retrospective, on batch 2: the
-  intervals are about right once the error of a row is counted once (mean squared *z* 1.02, was 0.30); four of five
-  edges the library under interferon proposed are admitted by another condition. The declared size model (the
+  intervals are about right once the error of a row is counted once (mean squared *z* 1.02, was 0.30); of five
+  edges the library under interferon proposed, three are admitted by another condition, one is refused and one has
+  no row elsewhere. The declared size model (the
   class's share of a scale) is refuted, 0.84 against 0.68; explored afterwards, the pair's own share under one
   condition times the scale of another forecasts the ten own-gene changes with an error of 0.23, and fails for
   HLA-E, which stands at the background of the panel. Three faults of the method were found and corrected on the
