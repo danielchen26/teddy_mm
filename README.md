@@ -253,7 +253,20 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   scale the typed state gains a step in every output (no record of IRF1 0.90 to 0.73, its record 0.68 to 0.49, its
   cells 0.42 to 0.24), and genes at random still give nothing. The same typing of what enters the first layer reads
   as much, so it is a way around the encoder and not a repair of it. Nothing closes. Forecasts: 6 of 6 intervals,
-  8 of 16 outcomes; the added check 2 of 2 and 2 of 5.
+  8 of 16 outcomes; the added check 2 of 2 and 2 of 5. Corrected in the next entry: the step "with no record" holds
+  for a readout of control cells alone.
+- **The repair designed again (25 November; development cells; nothing trained;**
+  [`typed_repair_20261125/`](anm_diag/runs/typed_repair_20261125/)**):** the round's repair did not apply its rows
+  (for IRF1 it closed 27% of the row on the cells it was fitted on). With the rows applied, IRF1 with its own record
+  leaves *u* 0.17 [−0.01, 0.29] at the plain mean state where it left 0.68, gate 3 passes and the grade is relative;
+  a row derived from IRF1's RNA alone (92% of the measured one) leaves 0.22. Those readings are exploratory: the rule
+  was found on those cells. Declared on the melanoma strata: every MHC-I event read on its own gains a step with its
+  record and with a derived row (5 of 5 each), the rule that derives a row is within 0.75 to 1.07 of the measured
+  change for 15 of 15 events, a permuted state does not close; the pooled MHC-I target does not move (0.36), the
+  guard on control cells is tripped there, and one PD-L1 target loses its grade at gate 3. The typed state removes
+  about 0.05 where the state is the limit and never a step; programs found with no record, and the last layers
+  trained on 24 November, add nothing. Six hypotheses confirmed, seven refuted, one unresolved. Forecasts: 10 of
+  14 intervals, 12 of 16 outcomes.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
