@@ -1,0 +1,2584 @@
+{
+ "cells_file_sha256": "73161d22b54ce7358829769a24fea31b9b84b7f957c5f0204198c88ff7197dd5",
+ "edges_known_beforehand": {
+  "PDL1": [
+   "CD274"
+  ],
+  "MHC1": [
+   "HLA-A",
+   "HLA-B",
+   "HLA-C",
+   "B2M"
+  ],
+  "HLAE": [
+   "HLA-E",
+   "B2M"
+  ]
+ },
+ "library": {
+  "events": 206,
+  "spread_of_a_direct_part_without_an_edge": 0.028611000065441938,
+  "class_own": [
+   {
+    "event": "CD274",
+    "readout": "PDL1",
+    "direct": -1.8145932080533913
+   },
+   {
+    "event": "B2M",
+    "readout": "MHC1",
+    "direct": -2.8213274766855863
+   },
+   {
+    "event": "HLA-A",
+    "readout": "MHC1",
+    "direct": -0.3832081908938506
+   },
+   {
+    "event": "HLA-B",
+    "readout": "MHC1",
+    "direct": -0.6891828152967298
+   },
+   {
+    "event": "HLA-C",
+    "readout": "MHC1",
+    "direct": -0.6347408334580316
+   },
+   {
+    "event": "B2M",
+    "readout": "HLAE",
+    "direct": -0.19942132586596728
+   },
+   {
+    "event": "HLA-E",
+    "readout": "HLAE",
+    "direct": -0.26156846801876493
+   }
+  ]
+ },
+ "strata": {
+  "mel_co": {
+   "study": "frangieh2021",
+   "condition": "Co-culture",
+   "control_cells": 5276,
+   "recorded_events": [
+    "CD44",
+    "CDH19",
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "STAT1",
+    "TAPBP"
+   ],
+   "pairs_without_an_edge_among_the_recorded": 24,
+   "spread_of_a_direct_part_without_an_edge": {
+    "value": 0.04053023235202253,
+    "from": "the stratum's own rows"
+   },
+   "widening_of_the_control_prior": {
+    "PDL1": 63.09573444801933,
+    "MHC1": 1995.262314968881,
+    "HLAE": 5.011872336272724
+   },
+   "recorded_pairs_each_left_out": [
+    {
+     "event": "CD44",
+     "readout": "PDL1",
+     "cells": 289,
+     "edge": null,
+     "change": 0.2529752911545699,
+     "se": 0.057634367720192536,
+     "read": 0.04274895802262074,
+     "from_the_other_events": -0.004873448788009993,
+     "by_its_edge": 0.0,
+     "forecast": 0.03787550923461075,
+     "sd": 0.11355328346797003,
+     "z": 1.894262986949491
+    },
+    {
+     "event": "CDH19",
+     "readout": "PDL1",
+     "cells": 267,
+     "edge": null,
+     "change": -0.00305151363605004,
+     "se": 0.06236646664200365,
+     "read": -0.04677187706862087,
+     "from_the_other_events": 0.00760681651539781,
+     "by_its_edge": 0.0,
+     "forecast": -0.03916506055322306,
+     "sd": 0.12008124275023399,
+     "z": 0.3007426146670409
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "PDL1",
+     "cells": 321,
+     "edge": null,
+     "change": -1.1613583414016442,
+     "se": 0.05998204992445938,
+     "read": -0.8776988446223197,
+     "from_the_other_events": -0.30591222039339816,
+     "by_its_edge": 0.0,
+     "forecast": -1.183611065015718,
+     "sd": 0.12772160895418833,
+     "z": 0.17422833768133475
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "PDL1",
+     "cells": 475,
+     "edge": null,
+     "change": -1.1075864293678515,
+     "se": 0.05050922480647132,
+     "read": -0.8394846085710819,
+     "from_the_other_events": -0.2506927913048513,
+     "by_its_edge": 0.0,
+     "forecast": -1.0901773998759332,
+     "sd": 0.10680639842301949,
+     "z": -0.1629961289675522
+    },
+    {
+     "event": "JAK1",
+     "readout": "PDL1",
+     "cells": 390,
+     "edge": null,
+     "change": -0.9088546646345472,
+     "se": 0.057186358392372925,
+     "read": -0.8253446283298236,
+     "from_the_other_events": -0.32145525267195174,
+     "by_its_edge": 0.0,
+     "forecast": -1.1467998810017752,
+     "sd": 0.13453418461815173,
+     "z": 1.7686598914810219
+    },
+    {
+     "event": "JAK2",
+     "readout": "PDL1",
+     "cells": 418,
+     "edge": null,
+     "change": -1.172578092801521,
+     "se": 0.050513034820204736,
+     "read": -0.8581860172775663,
+     "from_the_other_events": -0.24965173969016172,
+     "by_its_edge": 0.0,
+     "forecast": -1.107837756967728,
+     "sd": 0.111518013535925,
+     "z": -0.5805370251949227
+    },
+    {
+     "event": "STAT1",
+     "readout": "PDL1",
+     "cells": 396,
+     "edge": null,
+     "change": -1.270145747708634,
+     "se": 0.05510080644830022,
+     "read": -0.8757599764788829,
+     "from_the_other_events": -0.25172473338769047,
+     "by_its_edge": 0.0,
+     "forecast": -1.1274847098665735,
+     "sd": 0.11917866768648683,
+     "z": -1.1970350114782855
+    },
+    {
+     "event": "TAPBP",
+     "readout": "PDL1",
+     "cells": 170,
+     "edge": null,
+     "change": 0.10293533613404772,
+     "se": 0.08590081976135737,
+     "read": 0.04143793387059986,
+     "from_the_other_events": 0.006525011448552595,
+     "by_its_edge": 0.0,
+     "forecast": 0.047962945319152454,
+     "sd": 0.153542130712535,
+     "z": 0.35802805757473694
+    },
+    {
+     "event": "CD44",
+     "readout": "MHC1",
+     "cells": 289,
+     "edge": null,
+     "change": 0.40501764793990674,
+     "se": 0.06370751765784366,
+     "read": 0.03622757006090034,
+     "from_the_other_events": -0.06450993288450957,
+     "by_its_edge": 0.0,
+     "forecast": -0.028282362823609228,
+     "sd": 0.4899587690033462,
+     "z": 0.8843601506406691
+    },
+    {
+     "event": "CDH19",
+     "readout": "MHC1",
+     "cells": 267,
+     "edge": null,
+     "change": 0.0006964058382579887,
+     "se": 0.06607036834907255,
+     "read": -0.017117794469720272,
+     "from_the_other_events": -0.046584512548671284,
+     "by_its_edge": 0.0,
+     "forecast": -0.06370230701839155,
+     "sd": 0.5201475021638406,
+     "z": 0.12380855928125685
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "MHC1",
+     "cells": 321,
+     "edge": null,
+     "change": -1.7436305754993457,
+     "se": 0.07178557761052194,
+     "read": -0.8527790494693726,
+     "from_the_other_events": -1.0442522526761178,
+     "by_its_edge": 0.0,
+     "forecast": -1.8970313021454903,
+     "sd": 0.5517638722271352,
+     "z": 0.2780187945741339
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "MHC1",
+     "cells": 475,
+     "edge": null,
+     "change": -1.8848321269127322,
+     "se": 0.06057477826726005,
+     "read": -0.8533474307556328,
+     "from_the_other_events": -0.987021608134549,
+     "by_its_edge": 0.0,
+     "forecast": -1.8403690388901817,
+     "sd": 0.43504755046415094,
+     "z": -0.10220282351920604
+    },
+    {
+     "event": "JAK1",
+     "readout": "MHC1",
+     "cells": 390,
+     "edge": null,
+     "change": -2.0842505322332308,
+     "se": 0.06786032044875917,
+     "read": -0.954072369068134,
+     "from_the_other_events": -1.1038229276150018,
+     "by_its_edge": 0.0,
+     "forecast": -2.0578952966831356,
+     "sd": 0.6195475337598708,
+     "z": -0.04253948908512657
+    },
+    {
+     "event": "JAK2",
+     "readout": "MHC1",
+     "cells": 418,
+     "edge": null,
+     "change": -1.9288589523307471,
+     "se": 0.06202170513022715,
+     "read": -0.9279288726806768,
+     "from_the_other_events": -1.0089363379902971,
+     "by_its_edge": 0.0,
+     "forecast": -1.936865210670974,
+     "sd": 0.4637671564487557,
+     "z": 0.017263530262759355
+    },
+    {
+     "event": "STAT1",
+     "readout": "MHC1",
+     "cells": 396,
+     "edge": null,
+     "change": -2.1485952899828487,
+     "se": 0.06033909181455733,
+     "read": -0.9476202073419445,
+     "from_the_other_events": -1.0749957528785807,
+     "by_its_edge": 0.0,
+     "forecast": -2.0226159602205254,
+     "sd": 0.510048681483927,
+     "z": -0.2469947170450498
+    },
+    {
+     "event": "TAPBP",
+     "readout": "MHC1",
+     "cells": 170,
+     "edge": null,
+     "change": -1.7211283588153283,
+     "se": 0.084386482198246,
+     "read": 0.019551602762897684,
+     "from_the_other_events": 0.024247552796173633,
+     "by_its_edge": 0.0,
+     "forecast": 0.043799155559071316,
+     "sd": 0.6717339827181262,
+     "z": -2.6274203178358486
+    },
+    {
+     "event": "CD44",
+     "readout": "HLAE",
+     "cells": 289,
+     "edge": null,
+     "change": 0.03735228699828722,
+     "se": 0.06019364973450231,
+     "read": -0.009332730440062243,
+     "from_the_other_events": 0.0011628130497554068,
+     "by_its_edge": 0.0,
+     "forecast": -0.008169917390306836,
+     "sd": 0.07613387778684015,
+     "z": 0.5979231021969911
+    },
+    {
+     "event": "CDH19",
+     "readout": "HLAE",
+     "cells": 267,
+     "edge": null,
+     "change": -0.004802145119040426,
+     "se": 0.06376677145570013,
+     "read": 0.0047281884993576745,
+     "from_the_other_events": -0.001904212020798322,
+     "by_its_edge": 0.0,
+     "forecast": 0.0028239764785593525,
+     "sd": 0.07928561819660623,
+     "z": -0.09618543401766916
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "HLAE",
+     "cells": 321,
+     "edge": null,
+     "change": -0.06326850341303157,
+     "se": 0.048459095495676494,
+     "read": -0.0602462363084487,
+     "from_the_other_events": -0.10495597139862556,
+     "by_its_edge": 0.0,
+     "forecast": -0.16520220770707425,
+     "sd": 0.07313011842264466,
+     "z": 1.3938676224333724
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "HLAE",
+     "cells": 475,
+     "edge": null,
+     "change": -0.14242933736863206,
+     "se": 0.04214893283836146,
+     "read": -0.0742638526142592,
+     "from_the_other_events": -0.08901464496411844,
+     "by_its_edge": 0.0,
+     "forecast": -0.16327849757837765,
+     "sd": 0.0672143285997376,
+     "z": 0.31018922072260324
+    },
+    {
+     "event": "JAK1",
+     "readout": "HLAE",
+     "cells": 390,
+     "edge": null,
+     "change": -0.17490301599081998,
+     "se": 0.04439831424771247,
+     "read": -0.06493585122612379,
+     "from_the_other_events": -0.08628064194694074,
+     "by_its_edge": 0.0,
+     "forecast": -0.15121649317306451,
+     "sd": 0.07165492381450066,
+     "z": -0.33056378482900667
+    },
+    {
+     "event": "JAK2",
+     "readout": "HLAE",
+     "cells": 418,
+     "edge": null,
+     "change": -0.2080556367179061,
+     "se": 0.04018432950967594,
+     "read": -0.05306902905928354,
+     "from_the_other_events": -0.07138925361543144,
+     "by_its_edge": 0.0,
+     "forecast": -0.12445828267471498,
+     "sd": 0.06731959588036589,
+     "z": -1.2417982156600071
+    },
+    {
+     "event": "STAT1",
+     "readout": "HLAE",
+     "cells": 396,
+     "edge": null,
+     "change": -0.20796575226515143,
+     "se": 0.04296084444885956,
+     "read": -0.07571315652014916,
+     "from_the_other_events": -0.07922731833066153,
+     "by_its_edge": 0.0,
+     "forecast": -0.1549404748508107,
+     "sd": 0.06932285619206557,
+     "z": -0.7649032415431523
+    },
+    {
+     "event": "TAPBP",
+     "readout": "HLAE",
+     "cells": 170,
+     "edge": null,
+     "change": -0.14567387878002921,
+     "se": 0.07088738033195316,
+     "read": -0.023134788123676062,
+     "from_the_other_events": 0.00016493643497084154,
+     "by_its_edge": 0.0,
+     "forecast": -0.02296985168870522,
+     "sd": 0.08710689637817824,
+     "z": -1.4086603035263627
+    }
+   ],
+   "forecasts": [
+    {
+     "event": "CD274",
+     "readout": "PDL1",
+     "cells": 228,
+     "edge": "own",
+     "shift_times_noise": 0.8011979024441318,
+     "read": -0.13734104434825245,
+     "from_the_recorded_events": -0.007825631520818457,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -1.1318987891585381,
+     "sd": 1.0374764409432944,
+     "interval": [
+      -3.165352613407395,
+      0.9015550350903188
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.08652954972964912,
+      "direct": 1.03070982929088,
+      "row": 0.0806675296455389
+     },
+     "unit": "CD274@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "CD274",
+     "readout": "MHC1",
+     "cells": 228,
+     "edge": null,
+     "shift_times_noise": 0.8011979024441318,
+     "read": -0.07370042811346846,
+     "from_the_recorded_events": -0.047104088909980905,
+     "by_its_edge": 0.0,
+     "forecast": -0.12080451702344935,
+     "sd": 0.5303502208046842,
+     "interval": [
+      -1.1602909498006302,
+      0.9186819157537316
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.5229534393446428,
+      "direct": 0.04053023235202253,
+      "row": 0.07841146122013871
+     },
+     "unit": "CD274@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "CD274",
+     "readout": "HLAE",
+     "cells": 228,
+     "edge": null,
+     "shift_times_noise": 0.8011979024441318,
+     "read": 0.015243366437690871,
+     "from_the_recorded_events": -0.0029992262127567235,
+     "by_its_edge": 0.0,
+     "forecast": 0.012244140224934148,
+     "sd": 0.08253997876074538,
+     "interval": [
+      -0.1495342181461268,
+      0.17402249859599508
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017756065306356678,
+      "direct": 0.04053023235202253,
+      "row": 0.0696769007932454
+     },
+     "unit": "CD274@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "CTSA",
+     "readout": "PDL1",
+     "cells": 200,
+     "edge": null,
+     "shift_times_noise": 1.871868766035,
+     "read": -0.09884828633363335,
+     "from_the_recorded_events": -0.004211786860020028,
+     "by_its_edge": 0.0,
+     "forecast": -0.10306007319365337,
+     "sd": 0.1362659336258933,
+     "interval": [
+      -0.37014130310040416,
+      0.16402115671309744
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.0976994258658635,
+      "direct": 0.04053023235202253,
+      "row": 0.0859099942841813
+     },
+     "unit": "CTSA@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "CTSA",
+     "readout": "MHC1",
+     "cells": 200,
+     "edge": null,
+     "shift_times_noise": 1.871868766035,
+     "read": -0.08443105836556157,
+     "from_the_recorded_events": -0.11420141982146158,
+     "by_its_edge": 0.0,
+     "forecast": -0.19863247818702315,
+     "sd": 0.596461760346022,
+     "interval": [
+      -1.3676975284652264,
+      0.9704325720911801
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.5891947568098532,
+      "direct": 0.04053023235202253,
+      "row": 0.08350730727513923
+     },
+     "unit": "CTSA@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "CTSA",
+     "readout": "HLAE",
+     "cells": 200,
+     "edge": null,
+     "shift_times_noise": 1.871868766035,
+     "read": 0.04392403240127893,
+     "from_the_recorded_events": -0.002081193894326975,
+     "by_its_edge": 0.0,
+     "forecast": 0.04184283850695195,
+     "sd": 0.08721600253305471,
+     "interval": [
+      -0.1291005264578353,
+      0.21278620347173918
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021390054112339543,
+      "direct": 0.04053023235202253,
+      "row": 0.07420510055520481
+     },
+     "unit": "CTSA@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "CTSL",
+     "readout": "PDL1",
+     "cells": 214,
+     "edge": null,
+     "shift_times_noise": 1.3035058955114642,
+     "read": 0.02692720178876687,
+     "from_the_recorded_events": 0.034762430448255825,
+     "by_its_edge": 0.0,
+     "forecast": 0.061689632237022694,
+     "sd": 0.1360282824283289,
+     "interval": [
+      -0.20492580132250196,
+      0.32830506579654734
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.09972798145786171,
+      "direct": 0.04053023235202253,
+      "row": 0.08315842470990337
+     },
+     "unit": "CTSL@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "CTSL",
+     "readout": "MHC1",
+     "cells": 214,
+     "edge": null,
+     "shift_times_noise": 1.3035058955114642,
+     "read": -0.0024358898649634295,
+     "from_the_recorded_events": -0.008773093565180638,
+     "by_its_edge": 0.0,
+     "forecast": -0.011208983430144067,
+     "sd": 0.6052667788345791,
+     "interval": [
+      -1.1975318699459192,
+      1.175113903085631
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.5984741011089674,
+      "direct": 0.04053023235202253,
+      "row": 0.08083269219871313
+     },
+     "unit": "CTSL@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "CTSL",
+     "readout": "HLAE",
+     "cells": 214,
+     "edge": null,
+     "shift_times_noise": 1.3035058955114642,
+     "read": 0.015743125728032818,
+     "from_the_recorded_events": 0.0010040641665198104,
+     "by_its_edge": 0.0,
+     "forecast": 0.01674718989455263,
+     "sd": 0.08528375062075726,
+     "interval": [
+      -0.1504089613221316,
+      0.18390334111123685
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021709359083521073,
+      "direct": 0.04053023235202253,
+      "row": 0.07182842134988991
+     },
+     "unit": "CTSL@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "HLA-B",
+     "readout": "PDL1",
+     "cells": 144,
+     "edge": null,
+     "shift_times_noise": 1.6353992518608131,
+     "read": 0.06552361812177074,
+     "from_the_recorded_events": 0.01318005959221684,
+     "by_its_edge": 0.0,
+     "forecast": 0.07870367771398758,
+     "sd": 0.17609865898652938,
+     "interval": [
+      -0.26644969389961,
+      0.4238570493275851
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.1386439121572074,
+      "direct": 0.04053023235202253,
+      "row": 0.10072687617557487
+     },
+     "unit": "HLA-B@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-B",
+     "readout": "MHC1",
+     "cells": 144,
+     "edge": "own",
+     "shift_times_noise": 1.6353992518608131,
+     "read": 0.058682591883556075,
+     "from_the_recorded_events": -0.4332106893921846,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -1.3612602107980958,
+     "sd": 1.3288272177171059,
+     "interval": [
+      -3.9657615575236234,
+      1.2432411359274316
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.8329662020602389,
+      "direct": 1.03070982929088,
+      "row": 0.09790979815263981
+     },
+     "unit": "HLA-B@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-B",
+     "readout": "HLAE",
+     "cells": 144,
+     "edge": null,
+     "shift_times_noise": 1.6353992518608131,
+     "read": -0.047733981778542954,
+     "from_the_recorded_events": -0.002326434251896301,
+     "by_its_edge": 0.0,
+     "forecast": -0.05006041603043926,
+     "sd": 0.10040958961487807,
+     "interval": [
+      -0.24686321167560027,
+      0.14674237961472175
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.02949274368777794,
+      "direct": 0.04053023235202253,
+      "row": 0.087003241444709
+     },
+     "unit": "HLA-B@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-C",
+     "readout": "PDL1",
+     "cells": 158,
+     "edge": null,
+     "shift_times_noise": 2.7768911476434517,
+     "read": -0.10540556754998019,
+     "from_the_recorded_events": -0.004747132441619879,
+     "by_its_edge": 0.0,
+     "forecast": -0.11015269999160007,
+     "sd": 0.17478932506761727,
+     "interval": [
+      -0.45273977712412994,
+      0.23243437714092977
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.14013502051187,
+      "direct": 0.04053023235202253,
+      "row": 0.09628491288474025
+     },
+     "unit": "HLA-C@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-C",
+     "readout": "MHC1",
+     "cells": 158,
+     "edge": "own",
+     "shift_times_noise": 2.7768911476434517,
+     "read": -0.05499802111351927,
+     "from_the_recorded_events": -0.27295574480277196,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -1.3146858792057583,
+     "sd": 1.337113774953806,
+     "interval": [
+      -3.9354288781152182,
+      1.3060571197037016
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.8466114931081036,
+      "direct": 1.03070982929088,
+      "row": 0.09359206543104753
+     },
+     "unit": "HLA-C@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-C",
+     "readout": "HLAE",
+     "cells": 158,
+     "edge": null,
+     "shift_times_noise": 2.7768911476434517,
+     "read": 0.03484262334253998,
+     "from_the_recorded_events": -0.002965974829685234,
+     "by_its_edge": 0.0,
+     "forecast": 0.031876648512854745,
+     "sd": 0.09754690593148457,
+     "interval": [
+      -0.15931528711285503,
+      0.2230685841385645
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.030919833004567524,
+      "direct": 0.04053023235202253,
+      "row": 0.08316647791788843
+     },
+     "unit": "HLA-C@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-E",
+     "readout": "PDL1",
+     "cells": 192,
+     "edge": null,
+     "shift_times_noise": 1.0560622759961165,
+     "read": -0.008864151345033648,
+     "from_the_recorded_events": 0.010156150732531193,
+     "by_its_edge": 0.0,
+     "forecast": 0.0012919993874975447,
+     "sd": 0.14000177636350608,
+     "interval": [
+      -0.2731114822849744,
+      0.27569548105996944
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.1013951685084544,
+      "direct": 0.04053023235202253,
+      "row": 0.08761744948108437
+     },
+     "unit": "HLA-E@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-E",
+     "readout": "MHC1",
+     "cells": 192,
+     "edge": null,
+     "shift_times_noise": 1.0560622759961165,
+     "read": 0.06084712250676236,
+     "from_the_recorded_events": -0.11134625594087402,
+     "by_its_edge": 0.0,
+     "forecast": -0.050499133434111665,
+     "sd": 0.6215112819541149,
+     "interval": [
+      -1.2686612460641766,
+      1.1676629791959534
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.6143127496641263,
+      "direct": 0.04053023235202253,
+      "row": 0.08516700923385036
+     },
+     "unit": "HLA-E@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-E",
+     "readout": "HLAE",
+     "cells": 192,
+     "edge": "own",
+     "shift_times_noise": 1.0560622759961165,
+     "read": 0.010117477972220644,
+     "from_the_recorded_events": 0.0003514130248588587,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -0.9762632222923877,
+     "sd": 1.0337120324346099,
+     "interval": [
+      -3.0023388058642233,
+      1.0498123612794477
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021687859272718952,
+      "direct": 1.03070982929088,
+      "row": 0.07567992179847695
+     },
+     "unit": "HLA-E@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "PFN1",
+     "readout": "PDL1",
+     "cells": 102,
+     "edge": null,
+     "shift_times_noise": 0.8501151303912531,
+     "read": -0.0827189521888145,
+     "from_the_recorded_events": 0.0016552987593508495,
+     "by_its_edge": 0.0,
+     "forecast": -0.08106365342946366,
+     "sd": 0.2106050368779329,
+     "interval": [
+      -0.4938495257102121,
+      0.33172221885128483
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.16881690715811368,
+      "direct": 0.04053023235202253,
+      "row": 0.11921675084238526
+     },
+     "unit": "PFN1@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "PFN1",
+     "readout": "MHC1",
+     "cells": 102,
+     "edge": null,
+     "shift_times_noise": 0.8501151303912531,
+     "read": -0.0021647672996009636,
+     "from_the_recorded_events": -0.45920652967559794,
+     "by_its_edge": 0.0,
+     "forecast": -0.4613712969751989,
+     "sd": 1.0229773630838273,
+     "interval": [
+      -2.4664069286195,
+      1.5436643346691024
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 1.0155841759967439,
+      "direct": 0.04053023235202253,
+      "row": 0.11588255741243705
+     },
+     "unit": "PFN1@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "PFN1",
+     "readout": "HLAE",
+     "cells": 102,
+     "edge": null,
+     "shift_times_noise": 0.8501151303912531,
+     "read": 0.014382099184050354,
+     "from_the_recorded_events": -0.0065624736156537486,
+     "by_its_edge": 0.0,
+     "forecast": 0.007819625568396604,
+     "sd": 0.11634875337382891,
+     "interval": [
+      -0.22022393104430807,
+      0.23586318218110128
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.03592630553710548,
+      "direct": 0.04053023235202253,
+      "row": 0.10297394450825739
+     },
+     "unit": "PFN1@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "STAT3",
+     "readout": "PDL1",
+     "cells": 185,
+     "edge": null,
+     "shift_times_noise": 1.6524113516103107,
+     "read": 0.14625918447042932,
+     "from_the_recorded_events": 0.017456714716430562,
+     "by_its_edge": 0.0,
+     "forecast": 0.1637158991868599,
+     "sd": 0.1429228180505304,
+     "interval": [
+      -0.11641282419217966,
+      0.4438446225658994
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.1040535443393592,
+      "direct": 0.04053023235202253,
+      "row": 0.08920253413111699
+     },
+     "unit": "STAT3@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "STAT3",
+     "readout": "MHC1",
+     "cells": 185,
+     "edge": null,
+     "shift_times_noise": 1.6524113516103107,
+     "read": 0.009797987214743401,
+     "from_the_recorded_events": -0.15533749060896604,
+     "by_its_edge": 0.0,
+     "forecast": -0.14553950339422264,
+     "sd": 0.6339920607134476,
+     "interval": [
+      -1.3881639423925798,
+      1.0970849356041346
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.6267256155138978,
+      "direct": 0.04053023235202253,
+      "row": 0.08670776304288366
+     },
+     "unit": "STAT3@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "STAT3",
+     "readout": "HLAE",
+     "cells": 185,
+     "edge": null,
+     "shift_times_noise": 1.6524113516103107,
+     "read": -0.03962159328683373,
+     "from_the_recorded_events": 0.0009115709140818434,
+     "by_its_edge": 0.0,
+     "forecast": -0.03871002237275188,
+     "sd": 0.09031813724624516,
+     "interval": [
+      -0.2157335713753924,
+      0.1383135266298886
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.024043935758074612,
+      "direct": 0.04053023235202253,
+      "row": 0.0770490449933302
+     },
+     "unit": "STAT3@frangieh2021 | Co-culture",
+     "role": "targeted"
+    },
+    {
+     "event": "STX7",
+     "readout": "PDL1",
+     "cells": 213,
+     "edge": null,
+     "shift_times_noise": 1.013945930347196,
+     "read": 0.0325834264455957,
+     "from_the_recorded_events": 0.007094314747651443,
+     "by_its_edge": 0.0,
+     "forecast": 0.03967774119324714,
+     "sd": 0.13362962274463341,
+     "interval": [
+      -0.22223631938623434,
+      0.3015918017727286
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.09626864477934413,
+      "direct": 0.04053023235202253,
+      "row": 0.08334581196864407
+     },
+     "unit": "STX7@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "STX7",
+     "readout": "MHC1",
+     "cells": 213,
+     "edge": null,
+     "shift_times_noise": 1.013945930347196,
+     "read": 0.019960316646056898,
+     "from_the_recorded_events": -0.0389432297953232,
+     "by_its_edge": 0.0,
+     "forecast": -0.0189829131492663,
+     "sd": 0.5881754792530259,
+     "interval": [
+      -1.171806852485197,
+      1.1338410261866645
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.5811577157445883,
+      "direct": 0.04053023235202253,
+      "row": 0.08101483870594421
+     },
+     "unit": "STX7@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "STX7",
+     "readout": "HLAE",
+     "cells": 213,
+     "edge": null,
+     "shift_times_noise": 1.013945930347196,
+     "read": 0.01705211357777026,
+     "from_the_recorded_events": -0.00015759463297519743,
+     "by_its_edge": 0.0,
+     "forecast": 0.016894518944795062,
+     "sd": 0.08538068722004073,
+     "interval": [
+      -0.15045162800648476,
+      0.1842406658960749
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021553698331822888,
+      "direct": 0.04053023235202253,
+      "row": 0.07199027784276338
+     },
+     "unit": "STX7@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "TOP1MT",
+     "readout": "PDL1",
+     "cells": 192,
+     "edge": null,
+     "shift_times_noise": 2.152115746012778,
+     "read": 0.06564616661342947,
+     "from_the_recorded_events": 0.017399006142836945,
+     "by_its_edge": 0.0,
+     "forecast": 0.08304517275626641,
+     "sd": 0.14549351591538173,
+     "interval": [
+      -0.20212211843788178,
+      0.3682124639504146
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.10885240459144731,
+      "direct": 0.04053023235202253,
+      "row": 0.08761744948108437
+     },
+     "unit": "TOP1MT@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "TOP1MT",
+     "readout": "MHC1",
+     "cells": 192,
+     "edge": null,
+     "shift_times_noise": 2.152115746012778,
+     "read": -0.011399284931562441,
+     "from_the_recorded_events": -0.13290509978899365,
+     "by_its_edge": 0.0,
+     "forecast": -0.1443043847205561,
+     "sd": 0.6633176510630628,
+     "interval": [
+      -1.4444069808041593,
+      1.1557982113630472
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.6565776321315488,
+      "direct": 0.04053023235202253,
+      "row": 0.08516700923385036
+     },
+     "unit": "TOP1MT@frangieh2021 | Co-culture",
+     "role": "calibration"
+    },
+    {
+     "event": "TOP1MT",
+     "readout": "HLAE",
+     "cells": 192,
+     "edge": null,
+     "shift_times_noise": 2.152115746012778,
+     "read": 0.0219281810740997,
+     "from_the_recorded_events": 0.002737366770293786,
+     "by_its_edge": 0.0,
+     "forecast": 0.024665547844393485,
+     "sd": 0.08959043649384686,
+     "interval": [
+      -0.15093170768354636,
+      0.20026280337233332
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.025618274985359332,
+      "direct": 0.04053023235202253,
+      "row": 0.07567992179847695
+     },
+     "unit": "TOP1MT@frangieh2021 | Co-culture",
+     "role": "calibration"
+    }
+   ]
+  },
+  "mel_ctl": {
+   "study": "frangieh2021",
+   "condition": "Control",
+   "control_cells": 2645,
+   "recorded_events": [
+    "B2M",
+    "KLF4"
+   ],
+   "pairs_without_an_edge_among_the_recorded": 4,
+   "spread_of_a_direct_part_without_an_edge": {
+    "value": 0.028611000065441938,
+    "from": "the library under interferon"
+   },
+   "widening_of_the_control_prior": {
+    "PDL1": 1.0,
+    "MHC1": 50.118723362727245,
+    "HLAE": 251.18864315095823
+   },
+   "recorded_pairs_each_left_out": [
+    {
+     "event": "B2M",
+     "readout": "PDL1",
+     "cells": 150,
+     "edge": null,
+     "change": 0.039095695450870056,
+     "se": 0.08163667846650291,
+     "read": 0.022450180613344604,
+     "from_the_other_events": -0.00013267100871581367,
+     "by_its_edge": 0.0,
+     "forecast": 0.02231750960462879,
+     "sd": 0.10039220907596856,
+     "z": 0.16712637365659436
+    },
+    {
+     "event": "KLF4",
+     "readout": "PDL1",
+     "cells": 142,
+     "edge": null,
+     "change": -0.06896767575105331,
+     "se": 0.07923243097994222,
+     "read": -0.035743180612771076,
+     "from_the_other_events": 6.143350710877127e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.035681747105662305,
+     "sd": 0.09651968677276572,
+     "z": -0.344861548543515
+    },
+    {
+     "event": "B2M",
+     "readout": "MHC1",
+     "cells": 150,
+     "edge": "own",
+     "change": -2.2680082247505555,
+     "se": 0.13187023218117888,
+     "read": -0.2506496474056301,
+     "from_the_other_events": -0.012076955481097773,
+     "by_its_edge": NaN,
+     "forecast": -0.2627266028867279,
+     "sd": 0.2472991404557184,
+     "z": NaN
+    },
+    {
+     "event": "KLF4",
+     "readout": "MHC1",
+     "cells": 142,
+     "edge": null,
+     "change": -0.19640084692258097,
+     "se": 0.08646328138706427,
+     "read": -0.025116063152592683,
+     "from_the_other_events": -3.925751251854237e-09,
+     "by_its_edge": 0.0,
+     "forecast": -0.025116067078343934,
+     "sd": 0.16612978408994672,
+     "z": -1.0310299311019346
+    },
+    {
+     "event": "B2M",
+     "readout": "HLAE",
+     "cells": 150,
+     "edge": "own",
+     "change": 0.030062814329917212,
+     "se": 0.07768909533650137,
+     "read": 0.07966003851153829,
+     "from_the_other_events": 0.021667990378901006,
+     "by_its_edge": NaN,
+     "forecast": 0.10132802889043929,
+     "sd": 0.4180502500215851,
+     "z": NaN
+    },
+    {
+     "event": "KLF4",
+     "readout": "HLAE",
+     "cells": 142,
+     "edge": null,
+     "change": 0.2683642062453098,
+     "se": 0.09010676164550027,
+     "read": 0.02514895700206497,
+     "from_the_other_events": -2.850326641379297e-10,
+     "by_its_edge": 0.0,
+     "forecast": 0.025148956717032305,
+     "sd": 0.25398347295951906,
+     "z": 0.9576026608906248
+    }
+   ],
+   "forecasts": [
+    {
+     "event": "CD274",
+     "readout": "PDL1",
+     "cells": 148,
+     "edge": "own",
+     "shift_times_noise": 2.173806386565037,
+     "read": -0.07151312421448808,
+     "from_the_recorded_events": -0.0001370952314656051,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -1.058382332735421,
+     "sd": 1.0352267027466082,
+     "interval": [
+      -3.087426670118773,
+      0.9706620046479313
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.019620294215400246,
+      "direct": 1.03070982929088,
+      "row": 0.0945865631983766
+     },
+     "unit": "CD274@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "CD274",
+     "readout": "MHC1",
+     "cells": 148,
+     "edge": null,
+     "shift_times_noise": 2.173806386565037,
+     "read": -0.051019891814992654,
+     "from_the_recorded_events": -0.016225802818754707,
+     "by_its_edge": 0.0,
+     "forecast": -0.06724569463374735,
+     "sd": 0.1719035134532041,
+     "interval": [
+      -0.40417658100202736,
+      0.26968519173453265
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.14120769734329394,
+      "direct": 0.028611000065441938,
+      "row": 0.09376894381305519
+     },
+     "unit": "CD274@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "CD274",
+     "readout": "HLAE",
+     "cells": 148,
+     "edge": null,
+     "shift_times_noise": 2.173806386565037,
+     "read": 0.07979209879527373,
+     "from_the_recorded_events": 0.03551568023966129,
+     "by_its_edge": 0.0,
+     "forecast": 0.11530777903493503,
+     "sd": 0.2722660490022677,
+     "interval": [
+      -0.41833367700950963,
+      0.6489492350793797
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.2556206088525963,
+      "direct": 0.028611000065441938,
+      "row": 0.08926542692660187
+     },
+     "unit": "CD274@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "CD44",
+     "readout": "PDL1",
+     "cells": 180,
+     "edge": null,
+     "shift_times_noise": 0.706328051931774,
+     "read": -0.043040675116739986,
+     "from_the_recorded_events": -3.181006077883517e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.04307248517751882,
+     "sd": 0.09249210040003802,
+     "interval": [
+      -0.22435700196159336,
+      0.1382120316065557
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017199148864140076,
+      "direct": 0.028611000065441938,
+      "row": 0.08625768713578601
+     },
+     "unit": "CD44@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "CD44",
+     "readout": "MHC1",
+     "cells": 180,
+     "edge": null,
+     "shift_times_noise": 0.706328051931774,
+     "read": 0.03129326203297028,
+     "from_the_recorded_events": -0.006794576370955246,
+     "by_its_edge": 0.0,
+     "forecast": 0.024498685662015036,
+     "sd": 0.15359888236089053,
+     "interval": [
+      -0.2765551237653304,
+      0.32555249508936046
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.12434514183334824,
+      "direct": 0.028611000065441938,
+      "row": 0.08551206371158679
+     },
+     "unit": "CD44@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "CD44",
+     "readout": "HLAE",
+     "cells": 180,
+     "edge": null,
+     "shift_times_noise": 0.706328051931774,
+     "read": 0.026434908430345204,
+     "from_the_recorded_events": 0.019872995514824056,
+     "by_its_edge": 0.0,
+     "forecast": 0.04630790394516926,
+     "sd": 0.23291504210041986,
+     "interval": [
+      -0.41020557857165363,
+      0.5028213864619921
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.21634240480760325,
+      "direct": 0.028611000065441938,
+      "row": 0.08140510668231304
+     },
+     "unit": "CD44@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-A",
+     "readout": "PDL1",
+     "cells": 171,
+     "edge": null,
+     "shift_times_noise": 1.0798031227592988,
+     "read": -0.0025680495244608664,
+     "from_the_recorded_events": -3.961041577801565e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.002607659940238882,
+     "sd": 0.09441380300470284,
+     "interval": [
+      -0.18765871382945642,
+      0.18244339394897868
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.016980587437945078,
+      "direct": 0.028611000065441938,
+      "row": 0.08835743615185096
+     },
+     "unit": "HLA-A@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-A",
+     "readout": "MHC1",
+     "cells": 171,
+     "edge": "own",
+     "shift_times_noise": 1.0798031227592988,
+     "read": 0.02620342212143345,
+     "from_the_recorded_events": -0.006043238640613641,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -0.9665719298086474,
+     "sd": 1.0416871731175614,
+     "interval": [
+      -3.0082787891190677,
+      1.0751349295017727
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.12278747811658312,
+      "direct": 1.03070982929088,
+      "row": 0.0875936622056136
+     },
+     "unit": "HLA-A@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-A",
+     "readout": "HLAE",
+     "cells": 171,
+     "edge": null,
+     "shift_times_noise": 1.0798031227592988,
+     "read": -0.044667413494654654,
+     "from_the_recorded_events": 0.012181703421383049,
+     "by_its_edge": 0.0,
+     "forecast": -0.032485710073271605,
+     "sd": 0.23875729473271926,
+     "interval": [
+      -0.5004500077494013,
+      0.4354785876028581
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.2218853524446259,
+      "direct": 0.028611000065441938,
+      "row": 0.08338673056227833
+     },
+     "unit": "HLA-A@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-B",
+     "readout": "PDL1",
+     "cells": 112,
+     "edge": null,
+     "shift_times_noise": 0.8940015053104636,
+     "read": -0.03976583501284668,
+     "from_the_recorded_events": -8.745560083436048e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.03985329061368104,
+     "sd": 0.113763638928325,
+     "interval": [
+      -0.26283002291319807,
+      0.18312344168583597
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.02129886910859055,
+      "direct": 0.028611000065441938,
+      "row": 0.1080274705441385
+     },
+     "unit": "HLA-B@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-B",
+     "readout": "MHC1",
+     "cells": 112,
+     "edge": "own",
+     "shift_times_noise": 0.8940015053104636,
+     "read": -0.014255434381675086,
+     "from_the_recorded_events": -0.006388216033518823,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -1.0073757637046612,
+     "sd": 1.0476474066334516,
+     "interval": [
+      -3.0607646807062263,
+      1.0460131532969037
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.15405610378194565,
+      "direct": 1.03070982929088,
+      "row": 0.10709366608949433
+     },
+     "unit": "HLA-B@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-B",
+     "readout": "HLAE",
+     "cells": 112,
+     "edge": null,
+     "shift_times_noise": 0.8940015053104636,
+     "read": -0.030146444727295864,
+     "from_the_recorded_events": 0.011186710402132868,
+     "by_its_edge": 0.0,
+     "forecast": -0.018959734325162996,
+     "sd": 0.2952307766693355,
+     "interval": [
+      -0.5976120565970605,
+      0.5596925879467346
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.275588063095737,
+      "direct": 0.028611000065441938,
+      "row": 0.10195019199184666
+     },
+     "unit": "HLA-B@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-E",
+     "readout": "PDL1",
+     "cells": 123,
+     "edge": null,
+     "shift_times_noise": 1.2808484180963544,
+     "read": 0.08286799456594385,
+     "from_the_recorded_events": -0.00013778323078873943,
+     "by_its_edge": 0.0,
+     "forecast": 0.08273021133515511,
+     "sd": 0.10927714177263054,
+     "interval": [
+      -0.13145298653920073,
+      0.296913409209511
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021312565767052503,
+      "direct": 0.028611000065441938,
+      "row": 0.1032892972658636
+     },
+     "unit": "HLA-E@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-E",
+     "readout": "MHC1",
+     "cells": 123,
+     "edge": null,
+     "shift_times_noise": 1.2808484180963544,
+     "read": -0.06792144263738147,
+     "from_the_recorded_events": -0.016986205493893236,
+     "by_its_edge": 0.0,
+     "forecast": -0.0849076481312747,
+     "sd": 0.1866856971673588,
+     "interval": [
+      -0.45081161457929797,
+      0.28099631831674854
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.15345333877301967,
+      "direct": 0.028611000065441938,
+      "row": 0.10239645023891666
+     },
+     "unit": "HLA-E@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "HLA-E",
+     "readout": "HLAE",
+     "cells": 123,
+     "edge": "own",
+     "shift_times_noise": 1.2808484180963544,
+     "read": -0.04151848487868145,
+     "from_the_recorded_events": 0.03587909349938807,
+     "by_its_edge": -0.9867321132894672,
+     "forecast": -0.9923715046687606,
+     "sd": 1.0721768885706355,
+     "interval": [
+      -3.093838206267206,
+      1.109095196929685
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.2787444276925838,
+      "direct": 1.03070982929088,
+      "row": 0.09747857312511224
+     },
+     "unit": "HLA-E@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "PDL1",
+     "cells": 152,
+     "edge": null,
+     "shift_times_noise": 1.0895420033369336,
+     "read": -0.07622388831330516,
+     "from_the_recorded_events": -0.00020620251382376335,
+     "by_its_edge": 0.0,
+     "forecast": -0.07643009082712893,
+     "sd": 0.09935891089914307,
+     "interval": [
+      -0.2711735561894494,
+      0.1183133745351915
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.018164456878958075,
+      "direct": 0.028611000065441938,
+      "row": 0.09340051582626087
+     },
+     "unit": "IFNGR1@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "MHC1",
+     "cells": 152,
+     "edge": null,
+     "shift_times_noise": 1.0895420033369336,
+     "read": 0.07704700038585074,
+     "from_the_recorded_events": -0.011769736098720252,
+     "by_its_edge": 0.0,
+     "forecast": 0.06527726428713049,
+     "sd": 0.16299722669757344,
+     "interval": [
+      -0.2541973000401134,
+      0.3847518286143744
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.13105729808683925,
+      "direct": 0.028611000065441938,
+      "row": 0.0925931487991028
+     },
+     "unit": "IFNGR1@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "HLAE",
+     "cells": 152,
+     "edge": null,
+     "shift_times_noise": 1.0895420033369336,
+     "read": 0.014389532502709676,
+     "from_the_recorded_events": 0.02449762416954685,
+     "by_its_edge": 0.0,
+     "forecast": 0.03888715667225653,
+     "sd": 0.2574615406075511,
+     "interval": [
+      -0.4657374629185437,
+      0.5435117762630567
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.24020432996437613,
+      "direct": 0.028611000065441938,
+      "row": 0.08814610277053714
+     },
+     "unit": "IFNGR1@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "PDL1",
+     "cells": 168,
+     "edge": null,
+     "shift_times_noise": 0.496938756028861,
+     "read": 0.026179759924437898,
+     "from_the_recorded_events": 1.0385400756327949e-05,
+     "by_its_edge": 0.0,
+     "forecast": 0.026190145325194227,
+     "sd": 0.09486336549981134,
+     "interval": [
+      -0.15974205105443598,
+      0.21212234170482444
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.015571980458780227,
+      "direct": 0.028611000065441938,
+      "row": 0.08909535461401702
+     },
+     "unit": "IFNGR2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "MHC1",
+     "cells": 168,
+     "edge": null,
+     "shift_times_noise": 0.496938756028861,
+     "read": -0.04972989714946364,
+     "from_the_recorded_events": -0.0014665846189119021,
+     "by_its_edge": 0.0,
+     "forecast": -0.05119648176837554,
+     "sd": 0.14602952544947076,
+     "interval": [
+      -0.33741435164933825,
+      0.23502138811258716
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.11271509069437656,
+      "direct": 0.028611000065441938,
+      "row": 0.08832520199813514
+     },
+     "unit": "IFNGR2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "HLAE",
+     "cells": 168,
+     "edge": null,
+     "shift_times_noise": 0.496938756028861,
+     "read": 0.00731309532047324,
+     "from_the_recorded_events": -0.0028110996867061373,
+     "by_its_edge": 0.0,
+     "forecast": 0.004501995633767103,
+     "sd": 0.21336004139336068,
+     "interval": [
+      -0.4136836854972198,
+      0.42268767676475405
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.1939947013759444,
+      "direct": 0.028611000065441938,
+      "row": 0.08408313610165843
+     },
+     "unit": "IFNGR2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "JAK2",
+     "readout": "PDL1",
+     "cells": 172,
+     "edge": null,
+     "shift_times_noise": 1.0041108024511343,
+     "read": -0.045614110558673995,
+     "from_the_recorded_events": -0.00016126892412506575,
+     "by_its_edge": 0.0,
+     "forecast": -0.04577537948279906,
+     "sd": 0.09432101811703004,
+     "interval": [
+      -0.23064457499217794,
+      0.13909381602657983
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017704860665303006,
+      "direct": 0.028611000065441938,
+      "row": 0.08811585012193093
+     },
+     "unit": "JAK2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "JAK2",
+     "readout": "MHC1",
+     "cells": 172,
+     "edge": null,
+     "shift_times_noise": 1.0041108024511343,
+     "read": -0.06475987650570839,
+     "from_the_recorded_events": -0.014158311672663274,
+     "by_its_edge": 0.0,
+     "forecast": -0.07891818817837166,
+     "sd": 0.15714837376928334,
+     "interval": [
+      -0.386929000766167,
+      0.22909262440942368
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.1274608645890279,
+      "direct": 0.028611000065441938,
+      "row": 0.08735416447887964
+     },
+     "unit": "JAK2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "JAK2",
+     "readout": "HLAE",
+     "cells": 172,
+     "edge": null,
+     "shift_times_noise": 1.0041108024511343,
+     "read": 0.017620816386291736,
+     "from_the_recorded_events": 0.032296181464197826,
+     "by_its_edge": 0.0,
+     "forecast": 0.04991699785048956,
+     "sd": 0.24842646695511372,
+     "interval": [
+      -0.4369988773815333,
+      0.5368328730825125
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.2323397187051095,
+      "direct": 0.028611000065441938,
+      "row": 0.08315873538652505
+     },
+     "unit": "JAK2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "S100A6",
+     "readout": "PDL1",
+     "cells": 139,
+     "edge": null,
+     "shift_times_noise": 1.1035023164606461,
+     "read": 0.038800856453320355,
+     "from_the_recorded_events": -7.055281710151057e-05,
+     "by_its_edge": 0.0,
+     "forecast": 0.03873030363621884,
+     "sd": 0.10361845184069737,
+     "interval": [
+      -0.164361861971548,
+      0.2418224692439857
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.02056683173459545,
+      "direct": 0.028611000065441938,
+      "row": 0.09744331516075917
+     },
+     "unit": "S100A6@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "S100A6",
+     "readout": "MHC1",
+     "cells": 139,
+     "edge": null,
+     "shift_times_noise": 1.1035023164606461,
+     "read": -0.03290434812099959,
+     "from_the_recorded_events": -0.011163217279018475,
+     "by_its_edge": 0.0,
+     "forecast": -0.04406756540001806,
+     "sd": 0.17946582716501466,
+     "interval": [
+      -0.39582058664344677,
+      0.30768545584341067
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.14851814798970164,
+      "direct": 0.028611000065441938,
+      "row": 0.09660100161482427
+     },
+     "unit": "S100A6@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "S100A6",
+     "readout": "HLAE",
+     "cells": 139,
+     "edge": null,
+     "shift_times_noise": 1.1035023164606461,
+     "read": -0.05487916838222725,
+     "from_the_recorded_events": 0.023236821403218064,
+     "by_its_edge": 0.0,
+     "forecast": -0.03164234697900918,
+     "sd": 0.2830028682569936,
+     "interval": [
+      -0.5863279687627166,
+      0.5230432748046984
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.26611110962843004,
+      "direct": 0.028611000065441938,
+      "row": 0.0919614671983121
+     },
+     "unit": "S100A6@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SCARB2",
+     "readout": "PDL1",
+     "cells": 155,
+     "edge": null,
+     "shift_times_noise": 1.0391590261537318,
+     "read": -0.03797559919592478,
+     "from_the_recorded_events": -4.626434751030017e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.038021863543435085,
+     "sd": 0.09874208075982412,
+     "interval": [
+      -0.23155634183269036,
+      0.15551261474582018
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.019168257424838873,
+      "direct": 0.028611000065441938,
+      "row": 0.09254181268664462
+     },
+     "unit": "SCARB2@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SCARB2",
+     "readout": "MHC1",
+     "cells": 155,
+     "edge": null,
+     "shift_times_noise": 1.0391590261537318,
+     "read": -0.03673036629863985,
+     "from_the_recorded_events": -0.008748950207098417,
+     "by_its_edge": 0.0,
+     "forecast": -0.04547931650573826,
+     "sd": 0.16859202316990718,
+     "interval": [
+      -0.37591968191875635,
+      0.2849610489072798
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.13852115554191388,
+      "direct": 0.028611000065441938,
+      "row": 0.09174186840865352
+     },
+     "unit": "SCARB2@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SCARB2",
+     "readout": "HLAE",
+     "cells": 155,
+     "edge": null,
+     "shift_times_noise": 1.0391590261537318,
+     "read": 0.0555200647067733,
+     "from_the_recorded_events": 0.010488074786704826,
+     "by_its_edge": 0.0,
+     "forecast": 0.06600813949347813,
+     "sd": 0.26420843685324924,
+     "interval": [
+      -0.45184039673889037,
+      0.5838566757258467
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.24770947291759945,
+      "direct": 0.028611000065441938,
+      "row": 0.0873357075117487
+     },
+     "unit": "SCARB2@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SLC19A1",
+     "readout": "PDL1",
+     "cells": 104,
+     "edge": null,
+     "shift_times_noise": 0.6559890891579586,
+     "read": -0.05509581330940932,
+     "from_the_recorded_events": -7.807425825969835e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.055173887567669014,
+     "sd": 0.11747026334841643,
+     "interval": [
+      -0.2854156037305652,
+      0.17506782859522718
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.021201870690283547,
+      "direct": 0.028611000065441938,
+      "row": 0.11194263765712367
+     },
+     "unit": "SLC19A1@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SLC19A1",
+     "readout": "MHC1",
+     "cells": 104,
+     "edge": null,
+     "shift_times_noise": 0.6559890891579586,
+     "read": 0.0018332422670449687,
+     "from_the_recorded_events": -0.007407440145992897,
+     "by_its_edge": 0.0,
+     "forecast": -0.005574197878947928,
+     "sd": 0.1914113417329071,
+     "interval": [
+      -0.38074042767544586,
+      0.36959203191755
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.15331100424913952,
+      "direct": 0.028611000065441938,
+      "row": 0.11097498995434672
+     },
+     "unit": "SLC19A1@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SLC19A1",
+     "readout": "HLAE",
+     "cells": 104,
+     "edge": null,
+     "shift_times_noise": 0.6559890891579586,
+     "read": 0.020339040649588108,
+     "from_the_recorded_events": 0.011730293683386664,
+     "by_its_edge": 0.0,
+     "forecast": 0.03206933433297477,
+     "sd": 0.2947195263388404,
+     "interval": [
+      -0.5455809372911524,
+      0.609719605957102
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.2736423245805025,
+      "direct": 0.028611000065441938,
+      "row": 0.10564510437698775
+     },
+     "unit": "SLC19A1@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "SSR2",
+     "readout": "PDL1",
+     "cells": 100,
+     "edge": null,
+     "shift_times_noise": 1.8370338029073028,
+     "read": -0.09706920170497066,
+     "from_the_recorded_events": 1.898379510558148e-05,
+     "by_its_edge": 0.0,
+     "forecast": -0.09705021790986508,
+     "sd": 0.12010240151846584,
+     "interval": [
+      -0.3324509248860581,
+      0.13835048906632796
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.024342562506464587,
+      "direct": 0.028611000065441938,
+      "row": 0.114076453207386
+     },
+     "unit": "SSR2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "SSR2",
+     "readout": "MHC1",
+     "cells": 100,
+     "edge": null,
+     "shift_times_noise": 1.8370338029073028,
+     "read": 0.051806612000677696,
+     "from_the_recorded_events": -0.0058729103226022135,
+     "by_its_edge": 0.0,
+     "forecast": 0.045933701678075485,
+     "sd": 0.2112774493698828,
+     "interval": [
+      -0.3681700990868948,
+      0.46003750244304575
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.17615374434839284,
+      "direct": 0.028611000065441938,
+      "row": 0.11309036050671929
+     },
+     "unit": "SSR2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "SSR2",
+     "readout": "HLAE",
+     "cells": 100,
+     "edge": null,
+     "shift_times_noise": 1.8370338029073028,
+     "read": 0.059120022824902016,
+     "from_the_recorded_events": 0.009782816280768528,
+     "by_its_edge": 0.0,
+     "forecast": 0.06890283910567055,
+     "sd": 0.33888670833012163,
+     "interval": [
+      -0.5953151092213679,
+      0.7331207874327089
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.3200549604013839,
+      "direct": 0.028611000065441938,
+      "row": 0.1076588783173444
+     },
+     "unit": "SSR2@frangieh2021 | Control",
+     "role": "targeted"
+    },
+    {
+     "event": "TMEM173",
+     "readout": "PDL1",
+     "cells": 158,
+     "edge": null,
+     "shift_times_noise": 1.1033781926041535,
+     "read": 0.02359126614667545,
+     "from_the_recorded_events": 5.560622831100213e-05,
+     "by_its_edge": 0.0,
+     "forecast": 0.02364687237498645,
+     "sd": 0.09772068471003796,
+     "interval": [
+      -0.16788566965668797,
+      0.21517941440666086
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.017898649997599728,
+      "direct": 0.028611000065441938,
+      "row": 0.09170813063037188
+     },
+     "unit": "TMEM173@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "TMEM173",
+     "readout": "MHC1",
+     "cells": 158,
+     "edge": null,
+     "shift_times_noise": 1.1033781926041535,
+     "read": -0.005349643529040808,
+     "from_the_recorded_events": -0.005818446205253805,
+     "by_its_edge": 0.0,
+     "forecast": -0.011168089734294614,
+     "sd": 0.16083074211428938,
+     "interval": [
+      -0.3263963442783018,
+      0.30406016480971254
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.12954663111571757,
+      "direct": 0.028611000065441938,
+      "row": 0.09091539281582922
+     },
+     "unit": "TMEM173@frangieh2021 | Control",
+     "role": "calibration"
+    },
+    {
+     "event": "TMEM173",
+     "readout": "HLAE",
+     "cells": 158,
+     "edge": null,
+     "shift_times_noise": 1.1033781926041535,
+     "read": -0.015968458396639365,
+     "from_the_recorded_events": 0.00594321720668868,
+     "by_its_edge": 0.0,
+     "forecast": -0.010025241189950684,
+     "sd": 0.250457814229174,
+     "interval": [
+      -0.5009225570791318,
+      0.4808720746992304
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.233280541062912,
+      "direct": 0.028611000065441938,
+      "row": 0.08654892573051245
+     },
+     "unit": "TMEM173@frangieh2021 | Control",
+     "role": "calibration"
+    }
+   ]
+  },
+  "thp1": {
+   "study": "papalexi2021",
+   "condition": "all",
+   "control_cells": 2386,
+   "recorded_events": [
+    "BRD4",
+    "CMTM6",
+    "IFNGR1",
+    "IFNGR2",
+    "IRF1",
+    "JAK2",
+    "POU2F2",
+    "STAT1"
+   ],
+   "pairs_without_an_edge_among_the_recorded": 8,
+   "spread_of_a_direct_part_without_an_edge": {
+    "value": 0.1938769646358621,
+    "from": "the stratum's own rows"
+   },
+   "widening_of_the_control_prior": {
+    "PDL1": 25.11886431509581
+   },
+   "recorded_pairs_each_left_out": [
+    {
+     "event": "BRD4",
+     "readout": "PDL1",
+     "cells": 341,
+     "edge": null,
+     "change": 0.36326099586711946,
+     "se": 0.056781675499470816,
+     "read": 0.125943200809838,
+     "from_the_other_events": -0.012236704771592805,
+     "by_its_edge": 0.0,
+     "forecast": 0.1137064960382452,
+     "sd": 0.24667176805975902,
+     "z": 1.0116865087228664
+    },
+    {
+     "event": "CMTM6",
+     "readout": "PDL1",
+     "cells": 817,
+     "edge": null,
+     "change": -0.5386962125734551,
+     "se": 0.041499839983990754,
+     "read": 0.02108146724950217,
+     "from_the_other_events": -0.0004297215516181341,
+     "by_its_edge": 0.0,
+     "forecast": 0.020651745697884034,
+     "sd": 0.2059464370572145,
+     "z": -2.7159875463926832
+    },
+    {
+     "event": "IFNGR1",
+     "readout": "PDL1",
+     "cells": 1339,
+     "edge": null,
+     "change": -0.927386804553153,
+     "se": 0.03578254360081222,
+     "read": -0.5765746782625916,
+     "from_the_other_events": -0.3157934335343527,
+     "by_its_edge": 0.0,
+     "forecast": -0.8923681117969442,
+     "sd": 0.22685575048942536,
+     "z": -0.1543654621082272
+    },
+    {
+     "event": "IFNGR2",
+     "readout": "PDL1",
+     "cells": 1213,
+     "edge": null,
+     "change": -1.0495551460255008,
+     "se": 0.035401754278686456,
+     "read": -0.6273059178201447,
+     "from_the_other_events": -0.31221960120188297,
+     "by_its_edge": 0.0,
+     "forecast": -0.9395255190220276,
+     "sd": 0.22730585617935298,
+     "z": -0.484059798779032
+    },
+    {
+     "event": "IRF1",
+     "readout": "PDL1",
+     "cells": 1072,
+     "edge": null,
+     "change": -0.35603240839307576,
+     "se": 0.03873010667402742,
+     "read": -0.040144709044421675,
+     "from_the_other_events": -0.07271581327889415,
+     "by_its_edge": 0.0,
+     "forecast": -0.11286052232331582,
+     "sd": 0.23032479423724875,
+     "z": -1.0557781539545321
+    },
+    {
+     "event": "JAK2",
+     "readout": "PDL1",
+     "cells": 1024,
+     "edge": null,
+     "change": -1.1322011086423196,
+     "se": 0.03718193168901942,
+     "read": -0.6542030655858203,
+     "from_the_other_events": -0.3176190047320866,
+     "by_its_edge": 0.0,
+     "forecast": -0.9718220703179069,
+     "sd": 0.2330415393485338,
+     "z": -0.6881993603919341
+    },
+    {
+     "event": "POU2F2",
+     "readout": "PDL1",
+     "cells": 662,
+     "edge": null,
+     "change": 0.0995786376336557,
+     "se": 0.044296076612952304,
+     "read": 0.06483871854710173,
+     "from_the_other_events": -0.01153579771676589,
+     "by_its_edge": 0.0,
+     "forecast": 0.05330292083033584,
+     "sd": 0.21023945649937106,
+     "z": 0.22010957207482265
+    },
+    {
+     "event": "STAT1",
+     "readout": "PDL1",
+     "cells": 444,
+     "edge": null,
+     "change": -0.846534394746404,
+     "se": 0.05261787655583051,
+     "read": -0.6323474980245639,
+     "from_the_other_events": -0.521154386461762,
+     "by_its_edge": 0.0,
+     "forecast": -1.1535018844863258,
+     "sd": 0.3271246841444497,
+     "z": 0.9383806989153195
+    }
+   ],
+   "forecasts": [
+    {
+     "event": "ATF2",
+     "readout": "PDL1",
+     "cells": 1102,
+     "edge": null,
+     "shift_times_noise": 0.9948109192670798,
+     "read": -0.009468676233162283,
+     "from_the_recorded_events": -0.004670325375299633,
+     "by_its_edge": 0.0,
+     "forecast": -0.014139001608461916,
+     "sd": 0.20332794495509324,
+     "interval": [
+      -0.41266177372044466,
+      0.3843837705035208
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.04185908121111623,
+      "direct": 0.1938769646358621,
+      "row": 0.04474140256414954
+     },
+     "unit": "ATF2@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "CAV1",
+     "readout": "PDL1",
+     "cells": 882,
+     "edge": null,
+     "shift_times_noise": 0.8024607421166687,
+     "read": 0.013263545652200536,
+     "from_the_recorded_events": -0.0031600501744966153,
+     "by_its_edge": 0.0,
+     "forecast": 0.010103495477703922,
+     "sd": 0.20491270934858144,
+     "interval": [
+      -0.39152541484551573,
+      0.4117324058009235
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.04536064089037968,
+      "direct": 0.1938769646358621,
+      "row": 0.0484081944940617
+     },
+     "unit": "CAV1@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "ETV7",
+     "readout": "PDL1",
+     "cells": 841,
+     "edge": null,
+     "shift_times_noise": 2.2783627418637713,
+     "read": 0.0010844056062660073,
+     "from_the_recorded_events": -0.004537153399099789,
+     "by_its_edge": 0.0,
+     "forecast": -0.003452747792833782,
+     "sd": 0.20598212144030376,
+     "interval": [
+      -0.4071777058158291,
+      0.4002722102301616
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.04912834649902285,
+      "direct": 0.1938769646358621,
+      "row": 0.04926218130477657
+     },
+     "unit": "ETV7@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "IRF7",
+     "readout": "PDL1",
+     "cells": 614,
+     "edge": null,
+     "shift_times_noise": 1.8931793332011528,
+     "read": 0.08265510100646467,
+     "from_the_recorded_events": -0.00912383365558965,
+     "by_its_edge": 0.0,
+     "forecast": 0.07353126735087502,
+     "sd": 0.21018368133291232,
+     "interval": [
+      -0.33842874806163314,
+      0.48549128276338316
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.05915039602730578,
+      "direct": 0.1938769646358621,
+      "row": 0.05558896591998088
+     },
+     "unit": "IRF7@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "MARCH8",
+     "readout": "PDL1",
+     "cells": 1003,
+     "edge": null,
+     "shift_times_noise": 1.5619841948892956,
+     "read": -0.056624157741562986,
+     "from_the_recorded_events": -0.01117674830232989,
+     "by_its_edge": 0.0,
+     "forecast": -0.06780090604389288,
+     "sd": 0.2048206553311861,
+     "interval": [
+      -0.4692493904930176,
+      0.33364757840523185
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.04718337175361209,
+      "direct": 0.1938769646358621,
+      "row": 0.04622718749655501
+     },
+     "unit": "MARCH8@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "MYC",
+     "readout": "PDL1",
+     "cells": 109,
+     "edge": null,
+     "shift_times_noise": 6.929668968265987,
+     "read": 0.1832552746523611,
+     "from_the_recorded_events": -0.019322328297285012,
+     "by_its_edge": 0.0,
+     "forecast": 0.1639329463550761,
+     "sd": 0.2746384075992376,
+     "interval": [
+      -0.3743583325394296,
+      0.7022242252495818
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.15284409715526912,
+      "direct": 0.1938769646358621,
+      "row": 0.12031899050864872
+     },
+     "unit": "MYC@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "SMAD4",
+     "readout": "PDL1",
+     "cells": 659,
+     "edge": null,
+     "shift_times_noise": 44.25690161267572,
+     "read": -0.17055620021529685,
+     "from_the_recorded_events": 0.02287305794992228,
+     "by_its_edge": 0.0,
+     "forecast": -0.14768314226537457,
+     "sd": 0.26496081548486194,
+     "interval": [
+      -0.667006340615704,
+      0.37164005608495476
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.17231844638485624,
+      "direct": 0.1938769646358621,
+      "row": 0.05405838844709626
+     },
+     "unit": "SMAD4@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "STAT5A",
+     "readout": "PDL1",
+     "cells": 659,
+     "edge": null,
+     "shift_times_noise": 0.5143912033408882,
+     "read": 0.031044723223018027,
+     "from_the_recorded_events": -0.005226434745742598,
+     "by_its_edge": 0.0,
+     "forecast": 0.02581828847727543,
+     "sd": 0.20756279259993665,
+     "interval": [
+      -0.3810047850186004,
+      0.43264136197315123
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.050712188810697625,
+      "direct": 0.1938769646358621,
+      "row": 0.05405838844709626
+     },
+     "unit": "STAT5A@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "TNFRSF14",
+     "readout": "PDL1",
+     "cells": 964,
+     "edge": null,
+     "shift_times_noise": 1.291077613704884,
+     "read": -0.022923141108895706,
+     "from_the_recorded_events": -0.008008808487417647,
+     "by_its_edge": 0.0,
+     "forecast": -0.030931949596313353,
+     "sd": 0.20538218408865525,
+     "interval": [
+      -0.43348103041007763,
+      0.37161713121745094
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.04894634135780907,
+      "direct": 0.1938769646358621,
+      "row": 0.04688091074516129
+     },
+     "unit": "TNFRSF14@papalexi2021 | all",
+     "role": "calibration"
+    },
+    {
+     "event": "UBE2L6",
+     "readout": "PDL1",
+     "cells": 518,
+     "edge": null,
+     "shift_times_noise": 1.1192292472309433,
+     "read": 0.03586014761763095,
+     "from_the_recorded_events": 0.004960512058062942,
+     "by_its_edge": 0.0,
+     "forecast": 0.04082065967569389,
+     "sd": 0.21208483984930285,
+     "interval": [
+      -0.3748656264289397,
+      0.45650694578032747
+     ],
+     "no_forecast": null,
+     "parts_of_the_spread": {
+      "readout": 0.062016854808844536,
+      "direct": 0.1938769646358621,
+      "row": 0.059545038392025615
+     },
+     "unit": "UBE2L6@papalexi2021 | all",
+     "role": "calibration"
+    }
+   ]
+  }
+ },
+ "class_own_pooled": {
+  "values": [
+   -1.8145932080533913,
+   -2.8213274766855863,
+   -0.3832081908938506,
+   -0.6891828152967298,
+   -0.6347408334580316,
+   -0.19942132586596728,
+   -0.26156846801876493,
+   -2.005281499227098,
+   -0.07126520210578693
+  ],
+  "mean": -0.9867321132894672,
+  "spread_of_a_new_pair": 1.03070982929088
+ },
+ "pairs": 79
+}
