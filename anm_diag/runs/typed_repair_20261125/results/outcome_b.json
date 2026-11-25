@@ -1,0 +1,167 @@
+{
+ "intervals": {
+  "held": 6,
+  "of": 6
+ },
+ "outcomes": {
+  "the_most_probable_class_happened": 6,
+  "of": 7
+ },
+ "rows": [
+  {
+   "id": "HB1",
+   "kind": "outcome",
+   "what": "HB1: for T2 the new rows at T gain a step over the new rows at Z",
+   "probabilities": {
+    "refuted": 0.55,
+    "unresolved": 0.33,
+    "confirmed": 0.12
+   },
+   "outcome": "refuted",
+   "probability_given": 0.55,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "HB2",
+   "kind": "outcome",
+   "what": "HB2: for T2 the rows at T remove a step that the rows at R leave",
+   "probabilities": {
+    "refuted": 0.55,
+    "unresolved": 0.35,
+    "confirmed": 0.1
+   },
+   "outcome": "unresolved",
+   "probability_given": 0.35,
+   "the_most_probable_class_happened": false
+  },
+  {
+   "id": "HB3",
+   "kind": "outcome",
+   "what": "HB3: MHC-I events on their own at T",
+   "probabilities": {
+    "refuted": 0.7,
+    "unresolved": 0.2,
+    "confirmed": 0.1
+   },
+   "outcome": "refuted",
+   "probability_given": 0.7,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "HB4",
+   "kind": "outcome",
+   "what": "HB4: the guard at T for T2",
+   "probabilities": {
+    "confirmed": 0.5,
+    "refuted": 0.5
+   },
+   "outcome": "confirmed",
+   "probability_given": 0.5,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "HB5",
+   "kind": "outcome",
+   "what": "HB5: C2 and C3 not harmed at T",
+   "probabilities": {
+    "confirmed": 0.85,
+    "refuted": 0.15
+   },
+   "outcome": "confirmed",
+   "probability_given": 0.85,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "HD1",
+   "kind": "outcome",
+   "what": "HD1: for T2 the new rows at P gain a step over the new rows at Z",
+   "probabilities": {
+    "refuted": 0.65,
+    "unresolved": 0.28,
+    "confirmed": 0.07
+   },
+   "outcome": "refuted",
+   "probability_given": 0.65,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "HE",
+   "kind": "outcome",
+   "what": "HE: a trained last layer adds a step under the new repair",
+   "probabilities": {
+    "refuted": 0.6,
+    "unresolved": 0.28,
+    "confirmed": 0.12
+   },
+   "outcome": "refuted",
+   "probability_given": 0.6,
+   "the_most_probable_class_happened": true
+  },
+  {
+   "id": "u-T2-T",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at T",
+   "interval": [
+    0.26,
+    0.4
+   ],
+   "value": 0.2994425468843569,
+   "inside": true
+  },
+  {
+   "id": "u-T2-P",
+   "kind": "interval",
+   "what": "u of the new rows, T2 at P",
+   "interval": [
+    0.26,
+    0.42
+   ],
+   "value": 0.4085177927586764,
+   "inside": true
+  },
+  {
+   "id": "u-IRF1-T",
+   "kind": "interval",
+   "what": "u of the new rows with IRF1's record at T (THP-1, genes chosen on the fitted half)",
+   "interval": [
+    0.0,
+    0.2
+   ],
+   "value": 0.11463554223324546,
+   "inside": true
+  },
+  {
+   "id": "u-IRF1-T-derived",
+   "kind": "interval",
+   "what": "u of `derived` for IRF1 at T",
+   "interval": [
+    0.05,
+    0.3
+   ],
+   "value": 0.1746122014222724,
+   "inside": true
+  },
+  {
+   "id": "u-IRF1-rows5",
+   "kind": "interval",
+   "what": "u of the new rows with IRF1's record at the state of the layer trained with IRF1's record",
+   "interval": [
+    0.0,
+    0.22
+   ],
+   "value": 0.18963178952866522,
+   "inside": true
+  },
+  {
+   "id": "u-IRF1-rows5-none",
+   "kind": "interval",
+   "what": "u of the readout of control cells (no record) at that state",
+   "interval": [
+    0.65,
+    0.9
+   ],
+   "value": 0.7354395194869903,
+   "inside": true
+  }
+ ]
+}

@@ -7,6 +7,14 @@ trained in this run.** The encoder is TEDDY-G 70M as released.
 Everything here is exploratory. The cells are development cells of the THP-1 screen that earlier runs have read. No
 final unit was read.
 
+> **A correction, made later on 25 November** ([`typed_repair_20261125`](../typed_repair_20261125/)). This file said
+> that reading a step more of IRF1 with no record of it (0.90 to 0.73) was new. That holds only for a readout
+> fitted on control cells alone. The tool's reader that is fitted with the cells of the four pathway genes and never
+> sees a cell of IRF1 leaves 0.64 at the mean state and 0.64 at the typed state (`reader_of_the_stage.units` in
+> [`results/typed.json`](results/typed.json)). The typing did not improve the best reading without IRF1's record.
+> The two passages that said otherwise are marked below. The run that follows also found that the round's repair
+> did not apply its rows, which changes what "with its record" means here.
+
 ## The question
 
 TEDDY gives a head one vector for a cell: the mean of the last layer's output over the cell's gene positions. For
@@ -109,9 +117,10 @@ divided by its spread among the control cells; `Zs` is the control, the same sca
 Beside the run of 23 November, in which the head read the mean beside the 512 components of the input view
 ([`input_beside_z_20261123`](../input_beside_z_20261123/); not paired with this one): with IRF1's record that stage
 gave 0.39, about what the typed states give here (0.49 and 0.41). **With no record of IRF1 it gave 1.00 against 0.90;
-the state typed by the events' genes gives 0.73.** That is what the typing by the TEG adds: the block is chosen by
-the records of the pathway's events, and a readout that has seen only control cells then reads part of the response
-to an event it has no record of.
+the state typed by the events' genes gives 0.73.** The block is chosen by the records of the pathway's events, and a
+readout that has seen only control cells then reads part of the response to an event it has no record of.
+*(Corrected, see the head of this file: a reader fitted with the cells of the pathway's events reads 0.64 at the mean
+state already, and 0.64 at the typed state.)*
 
 ## The forecasts
 
@@ -153,7 +162,8 @@ The check added after the reading: 2 of 2 intervals; 2 of 5 outcomes. I expected
   much. The block carries what the input holds about the interferon response; the layers neither add to it nor are
   needed for it. This agrees with the localisation of 24 November: the response is in which genes are tokens, and
   the mean over positions erases it.
-- **What is new is the reading without a record.** Giving the head the whole input view did not carry to an event
+- **What is new is the reading without a record.** *(Corrected, see the head of this file: this holds for a readout
+  of control cells alone, not for the best reading without IRF1's record.)* Giving the head the whole input view did not carry to an event
   without a record (1.00), and training the last layer without a cell of IRF1 gained 0.12, unresolved
   ([`last_layer_trial_20261124`](../last_layer_trial_20261124/)). A block chosen by the records of the events of one
   type reads a step more of an event that has no record of its own (0.90 to 0.73), with nothing trained. Most of that
