@@ -6,8 +6,8 @@
 
 Since run 41 every turn of the loop also changed a rule; the afternoon of 25 November changed three. So far it could
 not be told whether the loop corrects itself or its author corrects the loop. Closing the loop needs one full turn in
-which the rules do not move. This run finishes what was still open, fixes the rules, and tags them
-(`anm-protocol-v5`). Batch 3 ([`runs/batch3_frozen_20261126`](../batch3_frozen_20261126/)) is read under them.
+which the rules do not move. This run finishes what was still open and fixes the rules: version 5 is the
+code and the protocol at commit `d777070` of the main branch (the merge of this run). Batch 3 ([`runs/batch3_frozen_20261126`](../batch3_frozen_20261126/)) is read under them.
 
 ## What was finished (rules 5a to 5f of [`LOOP_PROTOCOL.md`](../../LOOP_PROTOCOL.md))
 

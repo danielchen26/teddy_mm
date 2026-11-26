@@ -1,0 +1,44 @@
+{
+ "sources": [
+  "runs/outer_step_20261122/results/census.json",
+  "runs/batch2_forecast_20261125/results/roles.json"
+ ],
+ "seed": 20261126,
+ "units": {
+  "CD47@frangieh2021 | Co-culture": "own gene of a readout never read (CD47)",
+  "CD58@frangieh2021 | Co-culture": "own gene of a readout never read (CD58)",
+  "CD59@frangieh2021 | Co-culture": "own gene of a readout never read (CD59)",
+  "ITGA3@frangieh2021 | Co-culture": "no declared edge; the screen of 13 November lists it on CD49f: whether the law flags it under interferon, and whether that holds here, is asked by rule",
+  "NONO@frangieh2021 | Co-culture": "an edge to PD-L1 proposed by the law of the library under interferon (run 43) that had no row elsewhere",
+  "CD47@frangieh2021 | Control": "own gene of a readout never read (CD47)",
+  "NONO@frangieh2021 | Control": "an edge to PD-L1 proposed by the law of the library under interferon (run 43) that had no row elsewhere"
+ },
+ "teachers": {
+  "frangieh2021 | Co-culture": {
+   "teachers": [
+    "IFNGR2",
+    "JAK2",
+    "STAT1"
+   ],
+   "forecast": [
+    "IFNGR1",
+    "JAK1"
+   ]
+  },
+  "papalexi2021 | all": {
+   "teachers": [
+    "JAK2",
+    "STAT1"
+   ],
+   "forecast": [
+    "IFNGR1",
+    "IFNGR2"
+   ]
+  }
+ },
+ "counts": {
+  "units": 7,
+  "final_units_in_the_batch": 0,
+  "unread_and_not_final_left_after_the_batch": 218
+ }
+}

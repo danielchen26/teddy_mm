@@ -311,10 +311,10 @@ it, none of batch 2.
 What does not change: *u*, the margin and the step (0.10); the roles of units (final, development, unread); a
 declaration committed before a reading; a reading made once; nothing final is read except as a final audit.
 
-**Version 5 (26 November 2026): the rules are frozen** (tag `anm-protocol-v5`;
+**Version 5 (26 November 2026): the rules are frozen** (commit `d777070` on the main branch;
 [`runs/freeze_v5_20261126`](runs/freeze_v5_20261126/)). Until now every turn of the loop also changed a rule, so
 that it could not be told whether the loop corrects itself or its author corrects the loop. From this version on a
-batch is read with the rules as they stand at the tag. A rule changes only between batches and by a new version, and
+batch is read with the rules as they stand at that commit. A rule changes only between batches and by a new version, and
 a batch that forces a change counts as development, not as a test.
 
 | rule | what was open in version 4 | version 5 |
