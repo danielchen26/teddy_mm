@@ -311,6 +311,23 @@ it, none of batch 2.
 What does not change: *u*, the margin and the step (0.10); the roles of units (final, development, unread); a
 declaration committed before a reading; a reading made once; nothing final is read except as a final audit.
 
+**Version 5 (26 November 2026): the rules are frozen** (tag `anm-protocol-v5`;
+[`runs/freeze_v5_20261126`](runs/freeze_v5_20261126/)). Until now every turn of the loop also changed a rule, so
+that it could not be told whether the loop corrects itself or its author corrects the loop. From this version on a
+batch is read with the rules as they stand at the tag. A rule changes only between batches and by a new version, and
+a batch that forces a change counts as development, not as a test.
+
+| rule | what was open in version 4 | version 5 |
+|---|---|---|
+| 5a | The spread of a direct part with no edge was fitted over all pairs: a few pairs with a large part of their own, or a stratum whose recorded events were chosen for their effect, widened it (THP-1: mean squared *z* 0.01), and it fell slowly where it should be near zero. | **By calibration** (`account._calibrated_spread`): the spread at which the recorded pairs with no edge and no type, each left out, are as wide as they should be (the median of their squared *z* is that of a standard normal). A stratum with fewer than eight such pairs takes the library's (`Law.fit(fallback=)`). |
+| 5b | A row that stands far out still taught the readout once the spread was small. | **A pair with a direct part of its own is an edge the graph does not hold yet**, and by how likely that is its row teaches less: left out, it stands where a part of the order of one spread of the readout would put it (`OWN_PART`). It is flagged; it does not bend the forecasts of the others. |
+| 5c | The scale failed where a readout stands at the background of its panel (HLA-E), and that was found after the reading. | **Said beforehand, from control cells** (`events.by_scale`): where the scale is below one spread of the readout (`MIN_SCALE`) the edge is of the class "…, at the background", has no scale, and its size is asked of the recorded pairs of that class, in spreads. |
+| 5d | The class's share of a scale was refuted (run 43); the pair's own share was explored. | **The size of an edge**: the pair's own share where the library holds one on a scale that measures, with the spread by which the shares of pairs measured in two conditions moved (`events.carried_spread`; the class's spread while fewer than three pairs were measured twice); else its class's share. Explored when frozen: batch 3 is its first test. |
+| 5e | The law asked for control cells: a donor could be placed by the account and not forecast. | **`Law(control=None)`**: every unit is an event, read against the mean of the units; the readout "with no record" is one of the variation inside a unit; the rows of the units teach each other. |
+| 5f | What a batch has to show was written batch by batch. | **Three systems are forecast before a batch is opened**: the model alone (a readout of control cells), the system as it stood before the last change, and the frozen one. The frozen one has to be calibrated and to have the smallest error. Then the batch's rows become records, and its flags proposals, by rule and by nothing else. |
+
+Not in version 5: the five older proposals for rules of judgment that wait for the owner's decision.
+
 ## Commands
 
 ```

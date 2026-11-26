@@ -514,6 +514,36 @@ def edge(site, readout, cls, basis="declaration", status=None, stratum=None, sca
             "status": status, "stratum": stratum, "scale": scale, "share": share, "evidence": evidence, "provenance": provenance}
 
 
+MIN_SCALE = 1.0                                               # below one spread of the readout there is nothing for a scale to measure: the readout stands at its background
+AT_THE_BACKGROUND = ", at the background"
+
+
+def by_scale(table, scale_of):
+    """The edges of one stratum sorted by whether their scale measures anything there, decided from control cells before
+    any event is read. table: {(site, readout): class}; scale_of: {readout: s} of the stratum (a readout with no scale
+    is left out). Returns (table, scales): an edge keeps its class and gets its scale where the scale is at least
+    MIN_SCALE; where the readout stands at its background the edge is of the class "<class>, at the background", has no
+    scale, and its size is asked of the recorded pairs of that class, in spreads of the readout."""
+    out, scales = {}, {}
+    for (site, readout), cls in table.items():
+        s = scale_of.get(readout)
+        if s is None:
+            out[(site, readout)] = cls
+        elif s >= MIN_SCALE:
+            out[(site, readout)], scales[(site, readout)] = cls, float(s)
+        else:
+            out[(site, readout)] = cls + AT_THE_BACKGROUND
+    return out, scales
+
+
+def carried_spread(pairs, minimum=3):
+    """How far a pair's share of its scale moves between two conditions: the root mean square difference over the
+    recorded pairs measured in both. pairs: [(share in one condition, share in another)]. None with fewer than
+    `minimum` such pairs: nothing says yet how well a share carries."""
+    d = [a - b for a, b in pairs]
+    return None if len(d) < minimum else float((sum(x * x for x in d) / len(d)) ** 0.5)
+
+
 def edge_shares(edges, spread, states=("declared", "admitted")):
     """{(site, readout): (share, spread)} of the edges that carry a measured share, for `account.Law.new(shares=)`.
     spread: how far a pair's share is taken to move between conditions."""

@@ -529,6 +529,24 @@ def main(argv=None):
 
 
 # --- many events at once: the law of their rows, and the edges ---------------------------------------------------------
+MEDIAN_Z2 = 0.4549364                                          # the median of the square of a standard normal
+OWN_PART, OWN_SHARE = 1.0, 0.05                                # a direct part of a pair's own: of the order of one spread of the readout; the share of pairs that have one, to begin with
+
+
+def _calibrated_spread(r2, base):
+    """The spread s at which the median of r2 / (base + s^2) is that of the square of a standard normal: how wide a direct
+    part has to be for rows left out to stand as far as they do. 0 where they are already as wide as they should be.
+    The median does not move with a few rows that stand far out."""
+    f = lambda s2: np.median(r2 / (base + s2 + 1e-300)) - MEDIAN_Z2
+    if len(r2) == 0 or f(0.0) <= 0:
+        return 0.0
+    lo, hi = 0.0, float(r2.max() / MEDIAN_Z2)
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if f(mid) > 0 else (lo, mid)
+    return float(np.sqrt(0.5 * (lo + hi)))
+
+
 class Law:
     """Every event of a library and every readout, from rows. In spreads of a readout among control cells:
 
@@ -547,13 +565,30 @@ class Law:
     rule excludes. None: every event is of one type (one readout error, one widening for all).
     scale: {(event, readout): s}. The direct part of an edge is its class's share times s, so that one class holds in
     conditions where the readout has more or less to lose (for the knockout of a protein's own gene: how far the
-    readout stands above its background among control cells). None: s = 1, one size per class."""
+    readout stands above its background among control cells). None: s = 1, one size per class.
+    control=None: no cell is a control cell. Every unit is an event, read against the mean of the units: the readout
+    "with no record" is one of the variation inside a unit, the spread of a readout is its spread inside a unit, and
+    the rows of the units teach each other (one type, unless `types` says otherwise).
+    The spread of a direct part with no edge is the one at which the recorded pairs with no edge and no type, each left
+    out, are as wide as they should be (the median of their squared z is that of a standard normal): a few pairs with
+    a large direct part of their own do not widen it. Such a pair is an edge the graph does not hold yet: left out, it
+    stands where a direct part of the order of the readout's own spread would put it and not where a pair with none
+    would be, and by that much its row teaches the readout less (`OWN_PART`)."""
 
     def __init__(self, x, Y, unit, control="control", edges=None, nu=4.0, min_cells=30, min_class=3, seed=0, types=None, scale=None):
-        C = np.where(unit == control)[0]
-        self._centre, self._scale = x[C].mean(0), one_scale(x, C)
-        X = (x - self._centre) / self._scale
         self.events = [str(e) for e in sorted(set(unit.tolist())) if e != control and (unit == e).sum() >= min_cells]
+        self.units_only = control is None
+        if self.units_only:                                         # no control cells: the reference is the inside of every unit, and the mean of the units
+            keep = np.isin(unit, self.events)
+            x, unit, Y = x[keep], unit[keep], {k: v[keep] for k, v in Y.items()}
+            inv = np.unique(unit, return_inverse=True)[1]
+            C = np.arange(len(unit))
+            mean_of_units = lambda v: np.mean([v[unit == e].mean(0) for e in self.events], axis=0)
+            self._centre, self._scale = mean_of_units(x), one_scale(x, C, inv)
+        else:
+            C, inv = np.where(unit == control)[0], None
+            self._centre, self._scale = x[C].mean(0), one_scale(x, C)
+        X = (x - self._centre) / self._scale
         self.readouts, self.nu, self.min_class = list(Y), nu, min_class
         self.n = np.array([(unit == e).sum() for e in self.events])
         self.D = np.array([X[unit == e].mean(0) for e in self.events])
@@ -561,13 +596,14 @@ class Law:
         self.times_noise = (self.D ** 2).sum(1) / (p * (1 / self.n + 1 / nc))
         self.typed = types is not None
         self.type = ["(all)" if types is None else str(types.get(e, f"({e})")) for e in self.events]
+        self.declared = np.array([types is None or e in types for e in self.events])       # the events whose rows teach others: those of a declared type (all, in a law with one type)
         same = np.array([[a == b for b in self.type] for a in self.type])
         by = {}
         for i, (e, t) in enumerate(zip(self.events, self.type)):
             by.setdefault(t if (types is None or e in types) else None, []).append(i)
         # the events whose rows choose a widening together: {type: its events}; an event in no group keeps the control prior as it is
         self.groups = {t: np.array(idx) for t, idx in by.items() if t is not None}
-        Xc = X[C]
+        Xc = _within(X, inv) if self.units_only else X[C]
         G = Xc.T @ Xc / nc
         w, V = np.linalg.eigh(G)
         self._nc, self._w, self._V = nc, w, V
@@ -578,7 +614,9 @@ class Law:
             wk, Vk = np.linalg.eigh((G * nc - Xc[m].T @ Xc[m]) / (nc - m.sum()))
             parts.append((m, wk, Vk, Xc[m] @ Vk, Xc[~m]))
         for name, y in Y.items():
-            sd, yc = y[C].std(), y[C] - y[C].mean()
+            centre = float(mean_of_units(y)) if self.units_only else float(y[C].mean())
+            yc = _within(y, inv) if self.units_only else y[C] - centre
+            sd = yc.std()
             err = np.zeros(len(LAMBDAS))
             for m, wk, Vk, Fv, Xr in parts:
                 c = Vk.T @ (Xr.T @ yc[~m] / (nc - m.sum()))
@@ -588,18 +626,21 @@ class Law:
             th = V @ ((V.T @ (Xc.T @ yc / nc)) / (w + lam))
             DV = self.D @ V
             K0 = same * ((cv / nc) * (DV / (w + lam)) @ DV.T / sd ** 2)                    # the rows of another type do not bear on this type's readout
-            dy = np.array([y[unit == e].mean() - y[C].mean() for e in self.events])
-            se2 = np.array([y[unit == e].var(ddof=1) / (unit == e).sum() + y[C].var(ddof=1) / nc for e in self.events])
-            left = y - y[C].mean() - X @ th                                                # what the control readout leaves in a cell
+            dy = np.array([y[unit == e].mean() - centre for e in self.events])
+            left = yc - Xc @ th if self.units_only else y - centre - X @ th                 # what the readout leaves in a cell
+            own = lambda v: np.array([v[unit == e].var(ddof=1) / (unit == e).sum() for e in self.events])
+            # the error of the reference: of the mean of the control cells, or of the mean of the units
+            ref_y, ref_left = (own(y).sum() / len(self.events) ** 2, own(left).sum() / len(self.events) ** 2) if self.units_only else (y[C].var(ddof=1) / nc, cv / nc)
+            se2 = own(y) + ref_y
             # the error of a row beside its readout: the change and the shift are means over the same cells, so the error of the
             # shift is in both and cancels; what is left is the mean of what the readout leaves in the cells of the two arms
-            noise = (np.array([left[unit == e].var(ddof=1) / (unit == e).sum() for e in self.events]) + cv / nc) / sd ** 2
+            noise = (own(left) + ref_left) / sd ** 2
             cls = np.array([(edges or {}).get((e, name)) for e in self.events], dtype=object)
             sc = np.array([float((scale or {}).get((e, name), 1.0)) for e in self.events])
             self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise, "scale": sc,
-                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "tau": np.ones(len(dy)), "w": np.ones(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": float(y[C].mean())}
+                            "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "tau": np.ones(len(dy)), "w": np.ones(len(dy)), "own": np.zeros(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": centre}
         self.classes = sorted({c for q in self.r.values() for c in q["cls"] if c is not None})
-        self.sigma0, self.cl, self.fixed = None, {}, False
+        self.sigma0, self.cl, self.fixed, self.own_share = None, {}, False, OWN_SHARE
 
     def _prior(self, q):
         """The readout's prior among the recorded rows: the control prior, widened by the factor the rows of each type chose."""
@@ -611,23 +652,34 @@ class Law:
         return q["tau2"] if not self.typed else q["tau2"].get(t, 1.0)
 
     def _var_direct(self, q):
-        s2 = np.array([self.sigma0 ** 2 if c is None else (self.cl[c]["sigma"] * s) ** 2 for c, s in zip(q["cls"], q["scale"])])
-        return s2 / q["w"]
+        """The spread of the direct part of every recorded pair, as its row is weighed: a pair with an edge by its class; a
+        pair with none by the spread with no edge, widened by how likely it is to hold a direct part of its own."""
+        s2 = np.array([self.sigma0 ** 2 if c is None else (self.cl[c]["sigma"] * s) ** 2 for c, s in zip(q["cls"], q["scale"])]) / q["w"]
+        n, g = q["noise"], q["own"]
+        mixed = 1 / ((1 - g) / (self.sigma0 ** 2 + n) + g / (OWN_PART ** 2 + n)) - n
+        return np.where([c is None for c in q["cls"]], mixed, s2)
 
     def _mean_direct(self, q, without=None):
         return np.array([0.0 if c is None else self.cl[c]["mu"] * s for c, s in zip(q["cls"], q["scale"])])
 
-    def fit(self, iters=40, sigma0=None):
+    def fit(self, iters=40, sigma0=None, fallback=None):
         """The spread of a direct part with no edge, the classes and the widening of the control prior, from the rows.
-        `sigma0`: hold the spread at this value (a library with too few rows to tell it takes it from a larger one);
-        the widening is still chosen by the rows."""
+        `sigma0`: hold the spread at this value. `fallback`: the value to hold it at where this law has fewer than
+        MIN_ROWS recorded pairs with no edge and no type (a stratum with too few such rows takes it from a larger
+        library). The widening is still chosen by the rows."""
         res = np.concatenate([q["change"] - q["read"] for q in self.r.values()])
         cls = np.concatenate([q["cls"] for q in self.r.values()])
         sc = np.concatenate([q["scale"] for q in self.r.values()])
         none = np.array([c is None for c in cls])
         res = np.where(none, res, res / sc)                          # a pair with an edge: its direct part as a share of its scale
+        plain = none & np.tile(~self.declared if self.typed else np.ones(len(self.events), bool), len(self.r))     # no edge, and taught by no row of a type
+        if sigma0 is None and fallback is not None and plain.sum() < MIN_ROWS:
+            sigma0 = fallback
+        if plain.sum() < MIN_ROWS:
+            plain = none
         self.fixed = sigma0 is not None
-        self.sigma0 = float(sigma0) if self.fixed else float(1.4826 * np.median(np.abs(res[none] - np.median(res[none])))) + 1e-6
+        self.spread_from = "given" if self.fixed else f"{int(plain.sum())} recorded pairs with no edge" + (" and no type" if self.typed and plain.sum() < none.sum() else "")
+        self.sigma0 = float(sigma0) if self.fixed else float(1.4826 * np.median(np.abs(res[plain] - np.median(res[plain])))) + 1e-6
         edge_res = res[~none]
         pooled = (float(edge_res.mean()), float(edge_res.std(ddof=1))) if len(edge_res) >= self.min_class else (0.0, float("nan"))
         for c in self.classes:
@@ -636,7 +688,7 @@ class Law:
                           "sigma": float(v.std(ddof=1)) if len(v) >= self.min_class else pooled[1], "own": bool(len(v) >= self.min_class)}
         taus = 10.0 ** np.arange(0, 4.01, 0.1)
         for _ in range(iters):
-            Ed2, Ed, W = [], [], []
+            Ed2, Ed, W, R2, BASE = [], [], [], [], []
             for q in self.r.values():
                 Vd, rho = self._var_direct(q), q["change"] - q["read"] - self._mean_direct(q)
                 Vd = np.where(np.isfinite(Vd), Vd, 1e6)
@@ -657,13 +709,19 @@ class Law:
                 v = Vd - Vd * np.diag(Si) * Vd
                 q["direct_dev"], q["direct_var"] = m, v
                 Ed.append(m + self._mean_direct(q)); Ed2.append(m * m + v); W.append(q["w"])
-            Ed, Ed2, W = np.concatenate(Ed), np.concatenate(Ed2), np.concatenate(W)
+                R2.append(((Si @ rho) / np.diag(Si)) ** 2); BASE.append(np.maximum(1 / np.diag(Si) - Vd, 0.0))     # each pair left out: how far it stands, and its spread before its own direct part
+            Ed, Ed2, W, R2, BASE = np.concatenate(Ed), np.concatenate(Ed2), np.concatenate(W), np.concatenate(R2), np.concatenate(BASE)
             Ed, Ed2 = np.where(none, Ed, Ed / sc), np.where(none, Ed2, Ed2 / sc ** 2)
             s2 = np.array([self.sigma0 ** 2 if c is None else self.cl[c]["sigma"] ** 2 for c in cls])
-            s2 = np.where(np.isfinite(s2), s2, 1e6)
+            s2 = np.maximum(np.where(np.isfinite(s2), s2, 1e6), 1e-18)
             Wn = (self.nu + 1) / (self.nu + Ed2 / s2)
             if not self.fixed:
-                self.sigma0 = float(np.sqrt((Wn[none] * Ed2[none]).mean())) + 1e-9
+                self.sigma0 = _calibrated_spread(R2[plain], BASE[plain]) + 1e-9
+            # how likely a pair with no edge holds a direct part of its own: where it stands, left out, under the two spreads
+            dens = lambda var: np.exp(-0.5 * R2 / var) / np.sqrt(var)
+            a, b = self.own_share * dens(BASE + OWN_PART ** 2), (1 - self.own_share) * dens(BASE + self.sigma0 ** 2)
+            own = np.where(none, a / (a + b + 1e-300), 0.0)
+            self.own_share = float(np.clip(own[plain].mean(), 0.005, 0.5))
             for c in self.classes:
                 m = cls == c
                 if self.cl[c]["own"]:
@@ -671,7 +729,8 @@ class Law:
                     self.cl[c]["sigma"] = float(np.sqrt(max((Wn[m] * Ed2[m]).mean(), 1e-12)))
             k = 0
             for q in self.r.values():
-                q["w"] = Wn[k:k + len(q["w"])]
+                q["w"] = np.where(none[k:k + len(q["w"])], 1.0, Wn[k:k + len(q["w"])])
+                q["own"] = own[k:k + len(q["w"])]
                 k += len(q["w"])
         return self
 
@@ -766,7 +825,7 @@ class Law:
                 else:
                     edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(vals.get(c, []))} recorded pairs: its size cannot be forecast"
                 read = float(d @ q["th"] / q["sd"])
-                noise = (1 / n + 1 / self._nc) * q["cv"] / q["sd"] ** 2
+                noise = (1 / n + (1 / (n * len(self.events)) if self.units_only else 1 / self._nc)) * q["cv"] / q["sd"] ** 2
                 f = read + add + (edge if edge == edge else 0.0)
                 sd = float(np.sqrt(var + (sd_d ** 2 if sd_d == sd_d else 0.0) + noise))
                 out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "type": tn if self.typed else None, "taught_by": int(of_type.sum()), "widening": float(t2), "scale": sn,
@@ -783,7 +842,8 @@ class Law:
         out = {}
         for e in sorted(set(unit.tolist())):
             v = y[unit == e]
-            out[str(e)] = (float((v.mean() - q["centre"]) / q["sd"]), float(np.sqrt(v.var(ddof=1) / len(v) + q["sd"] ** 2 / self._nc) / q["sd"]))
+            ref = v.var(ddof=1) / (len(v) * len(self.events)) if self.units_only else q["sd"] ** 2 / self._nc
+            out[str(e)] = (float((v.mean() - q["centre"]) / q["sd"]), float(np.sqrt(v.var(ddof=1) / len(v) + ref) / q["sd"]))
         return out
 
     def calibration(self, rows=None):
@@ -828,6 +888,6 @@ class Law:
         return sorted(out, key=lambda r: -abs(r["errors"]))
 
     def summary(self):
-        return {"events": len(self.events), "readouts": self.readouts, "spread_of_a_direct_part_without_an_edge": self.sigma0,
+        return {"events": len(self.events), "readouts": self.readouts, "spread_of_a_direct_part_without_an_edge": self.sigma0, "spread_from": self.spread_from,
                 "widening_of_the_control_prior": {k: q["tau2"] for k, q in self.r.items()}, "classes": self.cl,
                 "events_whose_shift_stands_out": {"beyond_2x_noise": int((self.times_noise > 2).sum()), "beyond_4x_noise": int((self.times_noise > 4).sum())}}

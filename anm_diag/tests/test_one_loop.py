@@ -157,10 +157,10 @@ def test_a_pair_measured_in_one_condition_is_forecast_in_another_at_its_own_shar
         names = [f"q{k:02d}" for k in range(12)] + [f"k{k}" for k in range(6)]
         unit = np.array(["control"] * n_c + [e for e in names for _ in range(n_e)])
         x = rng.normal(size=(len(unit), p))
+        for e in names:
+            x[unit == e] += 0.15 * rng.normal(size=p)                                # every event moves the stage, and the readout with it
         y = x @ th + 0.5 * rng.normal(size=len(unit))
         sd = y[:n_c].std()
-        for e in names:
-            x[unit == e] += 0.15 * rng.normal(size=p)
         for k, sh in enumerate(SHARES):
             y[unit == f"k{k}"] += sh * scale_of * sd
         return x, y, unit
@@ -206,3 +206,32 @@ def test_a_forecast_that_overshoots_is_no_forecast():
     assert r(-0.10, 0.40) == "the other events do not forecast it"
     assert r(3.2, 27.0) == "the other events do not forecast it"
     assert r(1.10, 1.42) == "unresolved" and r(0.40, 0.90) == "unresolved"
+
+
+def test_a_unit_with_no_control_cells_is_forecast_from_the_other_units():
+    """The law with no control cells: a unit left out is forecast from its state and the rows of the other units. A unit
+    whose difference is a factor that varies inside units is forecast; an ordinary unit stays inside its interval; a
+    unit whose difference is not in the state stands far outside, and does not bend the forecasts of the others."""
+    d = toy.planted_units(0, n_ordinary=40, n_cell=300)
+    un = d["unit"]
+    out = {}
+    for u in ["h1", "h2", "post", "modb"] + [f"u{k:02d}" for k in range(6)]:
+        keep = un != u
+        law = AC.Law(d["z"][keep], {"y": d["y"][keep]}, un[keep], control=None).fit()
+        assert law.units_only and "control" not in law.events and len(law.events) == len(set(un[keep].tolist()))
+        r = law.new(d["z"][~keep], un[~keep])[0]
+        ch, _se = law.measure(d["y"][~keep], un[~keep], "y")[u]
+        out[u] = (ch, r["forecast"], (ch - r["forecast"]) / r["sd"])
+    assert all(abs(out[u][0]) > 1.5 and abs(out[u][0] - out[u][1]) < 0.25 for u in ("h1", "h2"))          # read from the state
+    assert all(abs(out[u][2]) > 10 and abs(out[u][1]) < 0.3 for u in ("post", "modb"))                     # not in the state: no forecast of it, and it shows
+    assert sum(abs(out[f"u{k:02d}"][2]) < 1.96 for k in range(6)) >= 5 and max(abs(out[f"u{k:02d}"][1]) for k in range(6)) < 0.2
+
+
+def test_a_scale_that_measures_nothing_is_said_beforehand():
+    """An edge sized by a scale keeps its class where the readout stands above its background by a spread or more; where
+    it does not, the edge is of another class and has no scale. How well a share carries is asked of pairs measured twice."""
+    table = {("A", "p"): "own", ("B", "q"): "own", ("C", "r"): "own"}
+    out, scales = EV.by_scale(table, {"p": 3.1, "q": 0.46})
+    assert out == {("A", "p"): "own", ("B", "q"): "own, at the background", ("C", "r"): "own"} and scales == {("A", "p"): 3.1}
+    assert EV.carried_spread([(-0.56, -0.63), (-0.14, -0.13)]) is None
+    assert abs(EV.carried_spread([(-0.5, -0.6), (-0.1, -0.2), (0.3, 0.2)]) - 0.1) < 1e-12

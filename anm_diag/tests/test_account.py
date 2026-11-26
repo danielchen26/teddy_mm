@@ -44,7 +44,13 @@ def test_the_law_forecasts_by_an_edge_and_flags_a_missing_one():
     assert flagged.get("x", "").startswith("a missing edge")
     assert not any(e.startswith("q") for e in flagged)
     cal = law.calibration(rows)
-    assert cal["inside_95"] >= 0.85 and cal["by_class"]["own"]["error_forecast"] < cal["by_class"]["own"]["error_without_edges"]
+    assert cal["by_class"]["own"]["error_forecast"] < cal["by_class"]["own"]["error_without_edges"]
+    # the spread with no edge is the one at which the pairs with nothing of their own are as wide as they should be:
+    # the planted events that have a direct part stand outside, and do not widen it
+    z = np.concatenate([[r["z"] for r in AC.Law(q["Z"], {"y": q["y"]}, q["unit"], edges=q["edges"]).fit().forecast() if r["event"].startswith("q")] for q in (T.planted(k) for k in range(4))])
+    assert np.mean(np.abs(z) < 1.96) >= 0.90 and 0.6 < np.mean(z ** 2) < 1.6
+    assert all(abs(by[e]["z"]) > 4 for e in ("l", "x"))
+    assert AC._calibrated_spread(np.array([0.1, 0.2, 0.3]), np.ones(3)) == 0.0 and abs(AC._calibrated_spread(np.full(9, AC.MEDIAN_Z2), np.zeros(9)) - 1.0) < 1e-6
 
 
 def test_parts_sum_to_one_and_gains_are_paired():
@@ -69,7 +75,7 @@ def test_an_event_not_yet_measured_is_forecast_as_when_left_out():
         part = AC.Law(d["Z"][keep], {"y": d["y"][keep]}, d["unit"][keep], edges=d["edges"]).fit()
         i = [k for k, h in enumerate(full.events) if h != e]
         part.sigma0, part.cl = full.sigma0, full.cl                          # the same spreads, weights and widening
-        part.r["y"]["tau2"], part.r["y"]["w"] = full.r["y"]["tau2"], full.r["y"]["w"][i]
+        part.r["y"]["tau2"], part.r["y"]["w"], part.r["y"]["own"] = full.r["y"]["tau2"], full.r["y"]["w"][i], full.r["y"]["own"][i]
         vals = {c: [v for h, _r, v in rows_ if h != e] for c, rows_ in full.class_values().items()}
         f = part.new(d["Z"][~keep], d["unit"][~keep], edges=d["edges"], classes=vals)[0]
         r = rows[e]
