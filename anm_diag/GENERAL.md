@@ -418,6 +418,21 @@ So what a system has to expose for an edge is: the declarations an edge can foll
 readout's own measurement), a scale per condition for each class of edge, and one measured row of a pair for its
 share.
 
+**One turn with the rules frozen** ([`runs/freeze_v5_20261126`](runs/freeze_v5_20261126/),
+[`runs/batch3_frozen_20261126`](runs/batch3_frozen_20261126/), 26 November). While every turn also changes a rule it
+cannot be told whether the loop corrects itself or its author corrects the loop. So the rules were fixed at one
+commit, three systems (the model alone, the system before the last change, the frozen one) forecast a batch before
+its values were opened, and a gate was written first. The correction held with no rule changed (error 0.247, 0.174,
+0.138 over 698 pairs) and the size of an edge held; the intervals did not, so the gate was not passed. What that
+says for any system:
+
+- The definition of a readout is part of the graph. A readout that is a ratio over a set of columns gives an event
+  with an edge to one column an edge to every other, by arithmetic and with no constant.
+- A spread has to be estimated on pairs like the ones it is applied to. A batch therefore needs teachers of no type
+  in every stratum and on every readout it forecasts; a spread from another condition was less than half of what it is.
+- A criterion on the mean of squared *z* mixes how wide the intervals are with how many edges are missing. The share
+  inside and the median do not.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,
