@@ -224,6 +224,10 @@ resampled by unit. An edge between an event and a readout is a record of the eve
 from the declarations, or proposed from measured rows and admitted or refused by rows it did not see), and every open
 part of an account names its lever, its proposal and what judges it (`account.plan`, `outer.open_parts`; rules 4i to
 4l of the protocol, [`runs/one_loop_20261125`](runs/one_loop_20261125/)).
+Since 26 November the rules are frozen as version 5 at one commit ([`runs/freeze_v5_20261126`](runs/freeze_v5_20261126/)),
+and a batch is read under them with three systems forecast first
+([`runs/batch3_frozen_20261126`](runs/batch3_frozen_20261126/): the correction holds with no rule changed, the
+intervals do not, and the final audit waits for another batch).
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR

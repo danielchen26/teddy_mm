@@ -311,10 +311,10 @@ it, none of batch 2.
 What does not change: *u*, the margin and the step (0.10); the roles of units (final, development, unread); a
 declaration committed before a reading; a reading made once; nothing final is read except as a final audit.
 
-**Version 5 (26 November 2026): the rules are frozen** (tag `anm-protocol-v5`;
+**Version 5 (26 November 2026): the rules are frozen** (commit `d777070` on the main branch;
 [`runs/freeze_v5_20261126`](runs/freeze_v5_20261126/)). Until now every turn of the loop also changed a rule, so
 that it could not be told whether the loop corrects itself or its author corrects the loop. From this version on a
-batch is read with the rules as they stand at the tag. A rule changes only between batches and by a new version, and
+batch is read with the rules as they stand at that commit. A rule changes only between batches and by a new version, and
 a batch that forces a change counts as development, not as a test.
 
 | rule | what was open in version 4 | version 5 |
@@ -327,6 +327,20 @@ a batch that forces a change counts as development, not as a test.
 | 5f | What a batch has to show was written batch by batch. | **Three systems are forecast before a batch is opened**: the model alone (a readout of control cells), the system as it stood before the last change, and the frozen one. The frozen one has to be calibrated and to have the smallest error. Then the batch's rows become records, and its flags proposals, by rule and by nothing else. |
 
 Not in version 5: the five older proposals for rules of judgment that wait for the owner's decision.
+
+**Batch 3 under version 5** ([`runs/batch3_frozen_20261126`](runs/batch3_frozen_20261126/), 26 November). Three
+systems forecast 698 pairs before the values were opened. With no rule changed the error falls from 0.247 (the model
+alone) to 0.174 (the system as it forecast batch 2) to 0.138 (version 5); an edge has the size of its pair (error
+0.65 on eight own-gene pairs, against 1.19 and 1.98); eight of ten tests of edges proposed beforehand admit the edge.
+The intervals of version 5 do not hold: 82% of the pairs are inside, the mean of squared *z* is 3.08. So the gate is
+not passed, the batch counts as development, and the final audit waits for another batch. What the batch showed was
+found on the batch, so these are proposals for a version 6 and no rules yet:
+
+| | what the batch showed | proposed |
+|---|---|---|
+| 6a | A readout that is a ratio over a set of columns couples them: an event with an edge to one column moves every other readout by arithmetic. No system forecast that. With it, 619 of the 698 pairs are inside, where 575 were. | **Derived edges.** The declaration of a readout names the columns it is a ratio over; an edge to one of them gives every other readout of the set its share by arithmetic, with no constant. |
+| 6b | For the readouts never read no stratum had a recorded pair with no edge and no type, and rule 5a fell back on a library in another condition: a spread of 0.018 where the batch's own rows give 0.03 to 0.05. | **A batch has teachers of no type** in every stratum and on every readout it forecasts, and the spread comes from them. |
+| 6c | A few edges missing from the graph move the mean of squared *z* more than all other pairs together. | **The gate asks for the share inside and the median of squared *z*.** A pair far outside is counted as the proposal of an edge. |
 
 ## Commands
 

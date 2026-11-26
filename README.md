@@ -308,6 +308,20 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   condition times the scale of another forecasts the ten own-gene changes with an error of 0.23, and fails for
   HLA-E, which stands at the background of the panel. Three faults of the method were found and corrected on the
   way; one moves three readings of run 41 from "forecast" to "unresolved".
+- **The rules frozen as version 5 (26 November; cells read before; nothing trained, nothing opened;**
+  [`freeze_v5_20261126/`](anm_diag/runs/freeze_v5_20261126/)**):** until then every turn of the loop also changed a
+  rule. Six rules were settled and fixed at one commit; a rule now changes only between batches, by a new version,
+  and a batch that forces a change counts as development. Retrospective: batch 2 again, 73 of 79 pairs inside, error
+  0.099 against 0.292 for the model alone.
+- **Batch 3 under the frozen rules (26 November; forecasts committed first; nothing trained;**
+  [`batch3_frozen_20261126/`](anm_diag/runs/batch3_frozen_20261126/)**):** three systems forecast 698 pairs before the
+  values were opened: 17 antibodies nobody had read cell by cell on cells read before, and seven units never read.
+  With no rule changed the error falls from 0.247 (the model alone) to 0.174 (the system of batch 2) to 0.138
+  (version 5). An edge has the size of its pair (eight own-gene pairs: 0.65 against 1.19 and 1.98), and eight of ten
+  tests of edges proposed beforehand admit the edge. The intervals of version 5 do not hold (82% inside, 90% asked),
+  so the gate written beforehand is not passed and the final audit was not run. Explored afterwards: a readout that
+  is a centred log-ratio couples the columns of the panel, which accounts for 44 of the 123 pairs outside with
+  nothing fitted; and the spread of a pair with no edge had been borrowed from another condition.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
