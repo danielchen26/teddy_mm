@@ -230,7 +230,9 @@ and a batch is read under them with three systems forecast first
 intervals do not, and the final audit waits for another batch). What that batch showed to be missing is the candidate
 for version 6, checked on a planted twin with the real measurement before it meets a unit never read
 ([`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/)): the arithmetic of a readout that is a ratio
-(`events.derived`), and an interval as wide as the recorded pairs say (`Law.conformal`).
+(`events.derived`), and an interval as wide as the recorded pairs say (`Law.conformal`). Version 6 was frozen on 27 November and a fourth
+batch was read under it ([`runs/batch4_frozen_20261127`](runs/batch4_frozen_20261127/)): 581 of 600 pairs inside
+their interval, the first batch that passes its gate with no rule changed. The final audit waits for the owner's word.
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR

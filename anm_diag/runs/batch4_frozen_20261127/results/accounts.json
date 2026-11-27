@@ -1,0 +1,1111 @@
+{
+ "pack_sha256": "08b57a6ef505e4f961f39acea82a41e9dce89e198a9f205421334c6aa5b764d7",
+ "min_snr": 4.0,
+ "pairs_with_a_change": 2,
+ "strata": {
+  "mel_co": {
+   "stages": {
+    "V": 512,
+    "Z": 512,
+    "T": 1024,
+    "R": 1024
+   },
+   "genes_of_the_input_view": 12471,
+   "cells": {
+    "control": 5276,
+    "all": 13935
+   }
+  },
+  "mel_ctl": {
+   "stages": {
+    "V": 512,
+    "Z": 512
+   },
+   "genes_of_the_input_view": 12801,
+   "cells": {
+    "control": 2645,
+    "all": 7100
+   }
+  }
+ },
+ "accounts": {
+  "mel_co|TXNDC17|CD49f": {
+   "stages": {
+    "V": {
+     "event": "TXNDC17",
+     "change": -0.24653656977924676,
+     "snr": 4.216342058838631,
+     "cells": {
+      "event": 158,
+      "control": 5276
+     },
+     "read_against": "control cells",
+     "shift_of_the_stage": {
+      "cosine_between_the_halves": 0.4050146309776075,
+      "times_its_noise": 1.580301822097416
+     },
+     "overlap": 0.9598237663473572,
+     "carried_by": "cells",
+     "shares": {
+      "read": {
+       "share": 0.1539498632329571,
+       "ci": [
+        -0.369895725469232,
+        0.46296870281366603
+       ]
+      },
+      "carried": {
+       "share": 0.19821443081757883,
+       "ci": [
+        -0.17851993025238558,
+        0.4272714254317631
+       ]
+      },
+      "found_again": {
+       "share": 0.5287117337972131,
+       "ci": [
+        0.13481589056140583,
+        0.9349589335134769
+       ]
+      }
+     }
+    },
+    "Z": {
+     "event": "TXNDC17",
+     "change": -0.24653656977924676,
+     "snr": 4.216342058838631,
+     "cells": {
+      "event": 158,
+      "control": 5276
+     },
+     "read_against": "control cells",
+     "shift_of_the_stage": {
+      "cosine_between_the_halves": 0.40834726018178635,
+      "times_its_noise": 1.5500429701028877
+     },
+     "overlap": 0.9906179637114267,
+     "carried_by": "cells",
+     "shares": {
+      "read": {
+       "share": -0.19438509806612644,
+       "ci": [
+        -0.9329678647604615,
+        0.11348101534114984
+       ]
+      },
+      "carried": {
+       "share": -0.20357625500057175,
+       "ci": [
+        -0.9348752632890168,
+        0.06217506385702234
+       ]
+      },
+      "found_again": {
+       "share": 0.1455691007970148,
+       "ci": [
+        -0.41244961737624186,
+        0.44061955194832075
+       ]
+      }
+     }
+    },
+    "T": {
+     "event": "TXNDC17",
+     "change": -0.24653656977924676,
+     "snr": 4.216342058838631,
+     "cells": {
+      "event": 158,
+      "control": 5276
+     },
+     "read_against": "control cells",
+     "shift_of_the_stage": {
+      "cosine_between_the_halves": 0.5034750525444933,
+      "times_its_noise": 1.6843033336621316
+     },
+     "overlap": 0.9889266953891287,
+     "carried_by": "cells",
+     "shares": {
+      "read": {
+       "share": -0.12657923923275188,
+       "ci": [
+        -0.8271496851384488,
+        0.15857603126623915
+       ]
+      },
+      "carried": {
+       "share": -0.13260691192323626,
+       "ci": [
+        -0.8191440437320775,
+        0.11139831438571433
+       ]
+      },
+      "found_again": {
+       "share": 0.1779001397852721,
+       "ci": [
+        -0.2711006030028724,
+        0.48208362678004885
+       ]
+      }
+     }
+    },
+    "R": {
+     "event": "TXNDC17",
+     "change": -0.24653656977924676,
+     "snr": 4.216342058838631,
+     "cells": {
+      "event": 158,
+      "control": 5276
+     },
+     "read_against": "control cells",
+     "shift_of_the_stage": {
+      "cosine_between_the_halves": 0.37327009979061576,
+      "times_its_noise": 1.5131238170700958
+     },
+     "overlap": 0.9964868578029292,
+     "carried_by": "cells",
+     "shares": {
+      "read": {
+       "share": -0.062058769725908756,
+       "ci": [
+        -0.6594857260994553,
+        0.17958722876833882
+       ]
+      },
+      "carried": {
+       "share": -0.012797094063827119,
+       "ci": [
+        -0.5277637748355137,
+        0.18961101553371412
+       ]
+      },
+      "found_again": {
+       "share": 0.23158247919961752,
+       "ci": [
+        -0.11228029704638015,
+        0.5429804674845631
+       ]
+      }
+     }
+    }
+   },
+   "chain": {
+    "event": "TXNDC17",
+    "change": -0.24653656977924676,
+    "snr": 4.216342058838631,
+    "input": "V",
+    "state": "Z",
+    "parts": {
+     "not_in_the_input": {
+      "share": 0.8017855691824212,
+      "ci": [
+       0.5727285745682366,
+       1.1785199302523852
+      ],
+      "reading": "a step"
+     },
+     "lost_before_the_state": {
+      "share": 0.4017906858181506,
+      "ci": [
+       0.17063024599982315,
+       0.9127448010681027
+      ],
+      "reading": "a step"
+     },
+     "held_not_read": {
+      "share": -0.009191156934445305,
+      "ci": [
+       -0.20182171939822138,
+       0.18620937866050338
+      ],
+      "reading": "unresolved"
+     },
+     "read": {
+      "share": -0.19438509806612644,
+      "ci": [
+       -0.9329678647604615,
+       0.11348101534114984
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "across_events": null,
+    "open": [
+     {
+      "part": "not_in_the_input",
+      "share": 0.8017855691824212,
+      "ci": [
+       0.5727285745682366,
+       1.1785199302523852
+      ],
+      "place": "no stage holds this part cell by cell, so no head can read it from a cell. What the event graph must supply is read across events: the records of other events if they forecast the change through the stage, an edge if they do not"
+     },
+     {
+      "part": "lost_before_the_state",
+      "share": 0.4017906858181506,
+      "ci": [
+       0.17063024599982315,
+       0.9127448010681027
+      ],
+      "place": "the model, between its input and the state its head reads"
+     }
+    ],
+    "unresolved": [
+     {
+      "part": "held_not_read",
+      "share": -0.009191156934445305,
+      "ci": [
+       -0.20182171939822138,
+       0.18620937866050338
+      ],
+      "place": "the head: a readout with the cells of recorded events"
+     }
+    ],
+    "says": "not in the input 80%; lost before the state 40% (unresolved: held not read -1%)"
+   },
+   "gains": {
+    "T over Z": {
+     "carried": {
+      "gain": 0.07096934307733549,
+      "ci": [
+       -0.2885661392416935,
+       0.5658590629411123
+      ],
+      "reading": "unresolved"
+     },
+     "read": {
+      "gain": 0.06780585883337456,
+      "ci": [
+       -0.33062708011781344,
+       0.6173529856949425
+      ],
+      "reading": "unresolved"
+     },
+     "found_again": {
+      "gain": 0.032331038988257316,
+      "ci": [
+       -0.3649630054336837,
+       0.4610422571345239
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "T over R": {
+     "carried": {
+      "gain": -0.11980981785940914,
+      "ci": [
+       -0.3516278687268283,
+       -0.024149374356929938
+      ],
+      "reading": "no step"
+     },
+     "read": {
+      "gain": -0.06452046950684312,
+      "ci": [
+       -0.37351886622483454,
+       0.19362802376481375
+      ],
+      "reading": "unresolved"
+     },
+     "found_again": {
+      "gain": -0.053682339414345415,
+      "ci": [
+       -0.40107806213420255,
+       0.20435363887546465
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "V over Z": {
+     "carried": {
+      "gain": 0.4017906858181506,
+      "ci": [
+       0.17063024599982315,
+       0.9127448010681027
+      ],
+      "reading": "a step"
+     },
+     "read": {
+      "gain": 0.34833496129908353,
+      "ci": [
+       -0.06463512165038661,
+       0.9091631817110982
+      ],
+      "reading": "unresolved"
+     },
+     "found_again": {
+      "gain": 0.38314263300019835,
+      "ci": [
+       0.024819447984415495,
+       0.9571616325224878
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "V over T": {
+     "carried": {
+      "gain": 0.3308213427408151,
+      "ci": [
+       0.036710497509343284,
+       0.8764468801580488
+      ],
+      "reading": "unresolved"
+     },
+     "read": {
+      "gain": 0.28052910246570895,
+      "ci": [
+       -0.18843559047264583,
+       0.8633176173648698
+      ],
+      "reading": "unresolved"
+     },
+     "found_again": {
+      "gain": 0.35081159401194106,
+      "ci": [
+       -0.11861167416668944,
+       1.0026190737343268
+      ],
+      "reading": "unresolved"
+     }
+    }
+   },
+   "a_repair_that_follows_the_mean": {
+    "credited": {
+     "share": -0.20357625500057175,
+     "ci": [
+      -0.9348752632890168,
+      0.06217506385702234
+     ]
+    },
+    "beyond_what_the_stage_carries": {
+     "share": 0.34914535579758654,
+     "ci": [
+      0.12752278530332914,
+      0.9144346638018166
+     ],
+     "reading": "a step"
+    }
+   },
+   "plan": [
+    {
+     "part": "not_in_the_input",
+     "resolved": true,
+     "share": 0.8017855691824212,
+     "ci": [
+      0.5727285745682366,
+      1.1785199302523852
+     ],
+     "reading": "not_in_the_input, undecided",
+     "lever": "E: records",
+     "proposal": "more recorded events of the type, so that it can be said whether they forecast the change",
+     "judged_by": "the interval of `others` at the state",
+     "credited_now": null
+    },
+    {
+     "part": "lost_before_the_state",
+     "resolved": true,
+     "share": 0.4017906858181506,
+     "ci": [
+      0.17063024599982315,
+      0.9127448010681027
+     ],
+     "reading": "lost_before_the_state",
+     "lever": "M: the model before the state",
+     "proposal": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+     "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)",
+     "credited_now": {
+      "candidate_states": {
+       "T over Z": {
+        "gain": 0.07096934307733549,
+        "ci": [
+         -0.2885661392416935,
+         0.5658590629411123
+        ],
+        "reading": "unresolved"
+       },
+       "V over Z": {
+        "gain": 0.4017906858181506,
+        "ci": [
+         0.17063024599982315,
+         0.9127448010681027
+        ],
+        "reading": "a step"
+       }
+      }
+     }
+    },
+    {
+     "part": "held_not_read",
+     "resolved": false,
+     "share": -0.009191156934445305,
+     "ci": [
+      -0.20182171939822138,
+      0.18620937866050338
+     ],
+     "reading": "held_not_read",
+     "lever": "M: the head",
+     "proposal": "a readout taught by the records of the events of the same type",
+     "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)",
+     "credited_now": null
+    }
+   ],
+   "must_fail": {
+    "permuted_stage": {
+     "read": {
+      "share": 0.0032834495331363392,
+      "ci": [
+       -0.024957070084395835,
+       0.03332184984448655
+      ]
+     },
+     "carried": {
+      "share": -0.002737049675866521,
+      "ci": [
+       -0.014632843524692135,
+       0.01136571085899803
+      ]
+     },
+     "found_again": {
+      "share": -0.08288058143487284,
+      "ci": [
+       -0.5967858091862127,
+       0.27639336567605005
+      ]
+     }
+    },
+    "made_up_event": {
+     "change": 0.009218222482320959,
+     "snr": 0.14825315407410966,
+     "no_change_to_account_for": true
+    }
+   },
+   "stratum": "mel_co",
+   "event": "TXNDC17",
+   "readout": "CD49f",
+   "chosen": "by an item on record",
+   "edge": null,
+   "type": null,
+   "change_in_spreads": -0.3259054824752242,
+   "snr": 4.216354737368248
+  },
+  "mel_ctl|TXNDC17|CD49f": {
+   "stages": {
+    "V": {
+     "event": "TXNDC17",
+     "change": -0.3327783011556199,
+     "snr": 4.498820056496539,
+     "cells": {
+      "event": 151,
+      "control": 2645
+     },
+     "read_against": "control cells",
+     "shift_of_the_stage": {
+      "cosine_between_the_halves": 0.2533880176132107,
+      "times_its_noise": 1.381520271853919
+     },
+     "overlap": 0.9632163834447933,
+     "carried_by": "cells",
+     "shares": {
+      "read": {
+       "share": 0.3542209945226068,
+       "ci": [
+        -0.0671314746995554,
+        0.7674621653278969
+       ]
+      },
+      "carried": {
+       "share": 0.4077109033087758,
+       "ci": [
+        0.15467116518195806,
+        0.6449294294756059
+       ]
+      },
+      "found_again": {
+       "share": 0.5233221592938879,
+       "ci": [
+        0.13870673186961296,
+        0.9203469571591401
+       ]
+      }
+     }
+    },
+    "Z": {
+     "event": "TXNDC17",
+     "change": -0.3327783011556199,
+     "snr": 4.498820056496539,
+     "cells": {
+      "event": 151,
+      "control": 2645
+     },
+     "read_against": "control cells",
+     "shift_of_the_stage": {
+      "cosine_between_the_halves": 0.4796314212729092,
+      "times_its_noise": 0.9245763130550808
+     },
+     "overlap": 0.999699922021545,
+     "carried_by": "cells",
+     "shares": {
+      "read": {
+       "share": 0.17870648438651957,
+       "ci": [
+        -0.20187660402378443,
+        0.4948731938239635
+       ]
+      },
+      "carried": {
+       "share": 0.20473368921810242,
+       "ci": [
+        -0.15537275708117318,
+        0.425619140763884
+       ]
+      },
+      "found_again": {
+       "share": 0.41747414887501655,
+       "ci": [
+        0.020246206507732675,
+        0.8169492466409689
+       ]
+      }
+     }
+    }
+   },
+   "chain": {
+    "event": "TXNDC17",
+    "change": -0.3327783011556199,
+    "snr": 4.498820056496539,
+    "input": "V",
+    "state": "Z",
+    "parts": {
+     "not_in_the_input": {
+      "share": 0.5922890966912242,
+      "ci": [
+       0.355070570524394,
+       0.8453288348180419
+      ],
+      "reading": "a step"
+     },
+     "lost_before_the_state": {
+      "share": 0.20297721409067337,
+      "ci": [
+       -0.010768774412549503,
+       0.4664595052615592
+      ],
+      "reading": "unresolved"
+     },
+     "held_not_read": {
+      "share": 0.026027204831582856,
+      "ci": [
+       -0.182593632944632,
+       0.21500854819477871
+      ],
+      "reading": "unresolved"
+     },
+     "read": {
+      "share": 0.17870648438651957,
+      "ci": [
+       -0.20187660402378443,
+       0.4948731938239635
+      ],
+      "reading": "unresolved"
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "across_events": null,
+    "open": [
+     {
+      "part": "not_in_the_input",
+      "share": 0.5922890966912242,
+      "ci": [
+       0.355070570524394,
+       0.8453288348180419
+      ],
+      "place": "no stage holds this part cell by cell, so no head can read it from a cell. What the event graph must supply is read across events: the records of other events if they forecast the change through the stage, an edge if they do not"
+     }
+    ],
+    "unresolved": [
+     {
+      "part": "lost_before_the_state",
+      "share": 0.20297721409067337,
+      "ci": [
+       -0.010768774412549503,
+       0.4664595052615592
+      ],
+      "place": "the model, between its input and the state its head reads"
+     },
+     {
+      "part": "held_not_read",
+      "share": 0.026027204831582856,
+      "ci": [
+       -0.182593632944632,
+       0.21500854819477871
+      ],
+      "place": "the head: a readout with the cells of recorded events"
+     }
+    ],
+    "says": "not in the input 59% (unresolved: lost before the state 20%; held not read 3%)"
+   },
+   "gains": {
+    "V over Z": {
+     "carried": {
+      "gain": 0.20297721409067337,
+      "ci": [
+       -0.010768774412549503,
+       0.4664595052615592
+      ],
+      "reading": "unresolved"
+     },
+     "read": {
+      "gain": 0.17551451013608724,
+      "ci": [
+       -0.2458244164569753,
+       0.7101176120007163
+      ],
+      "reading": "unresolved"
+     },
+     "found_again": {
+      "gain": 0.10584801041887137,
+      "ci": [
+       -0.3416859589371819,
+       0.5776704431055858
+      ],
+      "reading": "unresolved"
+     }
+    }
+   },
+   "a_repair_that_follows_the_mean": {
+    "credited": {
+     "share": 0.20473368921810242,
+     "ci": [
+      -0.15537275708117318,
+      0.4143284434150606
+     ]
+    },
+    "beyond_what_the_stage_carries": {
+     "share": 0.21274045965691413,
+     "ci": [
+      0.005043246289059209,
+      0.508656463171628
+     ],
+     "reading": "unresolved"
+    }
+   },
+   "plan": [
+    {
+     "part": "not_in_the_input",
+     "resolved": true,
+     "share": 0.5922890966912242,
+     "ci": [
+      0.355070570524394,
+      0.8453288348180419
+     ],
+     "reading": "not_in_the_input, undecided",
+     "lever": "E: records",
+     "proposal": "more recorded events of the type, so that it can be said whether they forecast the change",
+     "judged_by": "the interval of `others` at the state",
+     "credited_now": null
+    },
+    {
+     "part": "lost_before_the_state",
+     "resolved": false,
+     "share": 0.20297721409067337,
+     "ci": [
+      -0.010768774412549503,
+      0.4664595052615592
+     ],
+     "reading": "lost_before_the_state",
+     "lever": "M: the model before the state",
+     "proposal": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+     "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)",
+     "credited_now": {
+      "candidate_states": {
+       "V over Z": {
+        "gain": 0.20297721409067337,
+        "ci": [
+         -0.010768774412549503,
+         0.4664595052615592
+        ],
+        "reading": "unresolved"
+       }
+      }
+     }
+    },
+    {
+     "part": "held_not_read",
+     "resolved": false,
+     "share": 0.026027204831582856,
+     "ci": [
+      -0.182593632944632,
+      0.21500854819477871
+     ],
+     "reading": "held_not_read",
+     "lever": "M: the head",
+     "proposal": "a readout taught by the records of the events of the same type",
+     "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)",
+     "credited_now": null
+    }
+   ],
+   "must_fail": {
+    "permuted_stage": {
+     "read": {
+      "share": -0.0003416441314337575,
+      "ci": [
+       -0.013617768700689484,
+       0.01154726303769278
+      ]
+     },
+     "carried": {
+      "share": 0.003381624153488083,
+      "ci": [
+       -0.009489782480214027,
+       0.023406948392505907
+      ]
+     },
+     "found_again": {
+      "share": -0.38493786615197007,
+      "ci": [
+       -0.9504785001480783,
+       0.0595855344636983
+      ]
+     }
+    },
+    "made_up_event": {
+     "change": -0.020667639170394603,
+     "snr": 0.28030699170666146,
+     "no_change_to_account_for": true
+    }
+   },
+   "stratum": "mel_ctl",
+   "event": "TXNDC17",
+   "readout": "CD49f",
+   "chosen": "by an item on record",
+   "edge": null,
+   "type": null,
+   "change_in_spreads": -0.377668245408401,
+   "snr": 4.498865698469871
+  }
+ },
+ "open_parts": [
+  {
+   "id": "P01",
+   "key": null,
+   "readout": "CD49f",
+   "group": "mel_co",
+   "type": null,
+   "event": "TXNDC17",
+   "reading": "outside the input, undecided",
+   "lever": "E",
+   "question": "not in the input: 80% of the change",
+   "value": 0.8017855691824212,
+   "ci": [
+    0.5727285745682366,
+    1.1785199302523852
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more recorded events of the type"
+   ],
+   "not": "add an edge, or train",
+   "evidence": null,
+   "note": "on the graph: an edge of class 'flagged' (flag)",
+   "state": "on the graph",
+   "observations": [
+    {
+     "readout": "CD49f",
+     "group": "mel_co",
+     "event": "TXNDC17",
+     "value": 0.8017855691824212,
+     "ci": [
+      0.5727285745682366,
+      1.1785199302523852
+     ],
+     "evidence": null,
+     "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+    }
+   ],
+   "credited_now": null,
+   "judged_by": "the interval of `others` at the state",
+   "edge": {
+    "edge_id": "TXNDC17->CD49f@mel_ctl",
+    "class": "flagged",
+    "basis": "flag",
+    "status": "admitted"
+   }
+  },
+  {
+   "id": "P02",
+   "key": null,
+   "readout": "CD49f",
+   "group": "mel_co",
+   "type": null,
+   "event": "TXNDC17",
+   "reading": "lost before the state",
+   "lever": "M",
+   "question": "lost before the state: 40% of the change",
+   "value": 0.4017906858181506,
+   "ci": [
+    0.17063024599982315,
+    0.9127448010681027
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a state kept by type, judged by what it carries against the mean state and a matched control",
+    "training of what comes before the state: the owner's decision"
+   ],
+   "not": "change the head",
+   "evidence": null,
+   "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+   "state": "open",
+   "observations": [
+    {
+     "readout": "CD49f",
+     "group": "mel_co",
+     "event": "TXNDC17",
+     "value": 0.4017906858181506,
+     "ci": [
+      0.17063024599982315,
+      0.9127448010681027
+     ],
+     "evidence": null,
+     "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+    }
+   ],
+   "credited_now": {
+    "candidate_states": {
+     "T over Z": {
+      "gain": 0.07096934307733549,
+      "ci": [
+       -0.2885661392416935,
+       0.5658590629411123
+      ],
+      "reading": "unresolved"
+     },
+     "V over Z": {
+      "gain": 0.4017906858181506,
+      "ci": [
+       0.17063024599982315,
+       0.9127448010681027
+      ],
+      "reading": "a step"
+     }
+    }
+   },
+   "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+  },
+  {
+   "id": "P03",
+   "key": null,
+   "readout": "CD49f",
+   "group": "mel_co",
+   "type": null,
+   "event": "TXNDC17",
+   "reading": "held, not read",
+   "lever": "M",
+   "question": "held not read: -1% of the change",
+   "value": -0.009191156934445305,
+   "ci": [
+    -0.20182171939822138,
+    0.18620937866050338
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data: the records already read",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a readout taught by the records of the events of the same type, credited up to what the state carries",
+    "a richer reader of the state"
+   ],
+   "not": "train what comes before the state",
+   "evidence": null,
+   "note": "a readout taught by the records of the events of the same type",
+   "state": "at the margin",
+   "observations": [
+    {
+     "readout": "CD49f",
+     "group": "mel_co",
+     "event": "TXNDC17",
+     "value": -0.009191156934445305,
+     "ci": [
+      -0.20182171939822138,
+      0.18620937866050338
+     ],
+     "evidence": null,
+     "note": "a readout taught by the records of the events of the same type"
+    }
+   ],
+   "credited_now": null,
+   "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+  },
+  {
+   "id": "P04",
+   "key": null,
+   "readout": "CD49f",
+   "group": "mel_ctl",
+   "type": null,
+   "event": "TXNDC17",
+   "reading": "outside the input, undecided",
+   "lever": "E",
+   "question": "not in the input: 59% of the change",
+   "value": 0.5922890966912242,
+   "ci": [
+    0.355070570524394,
+    0.8453288348180419
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "units of the pool",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "more recorded events of the type"
+   ],
+   "not": "add an edge, or train",
+   "evidence": null,
+   "note": "on the graph: an edge of class 'flagged' (flag)",
+   "state": "on the graph",
+   "observations": [
+    {
+     "readout": "CD49f",
+     "group": "mel_ctl",
+     "event": "TXNDC17",
+     "value": 0.5922890966912242,
+     "ci": [
+      0.355070570524394,
+      0.8453288348180419
+     ],
+     "evidence": null,
+     "note": "more recorded events of the type, so that it can be said whether they forecast the change"
+    }
+   ],
+   "credited_now": null,
+   "judged_by": "the interval of `others` at the state",
+   "edge": {
+    "edge_id": "TXNDC17->CD49f@mel_ctl",
+    "class": "flagged",
+    "basis": "flag",
+    "status": "admitted"
+   }
+  },
+  {
+   "id": "P05",
+   "key": null,
+   "readout": "CD49f",
+   "group": "mel_ctl",
+   "type": null,
+   "event": "TXNDC17",
+   "reading": "lost before the state",
+   "lever": "M",
+   "question": "lost before the state: 20% of the change",
+   "value": 0.20297721409067337,
+   "ci": [
+    -0.010768774412549503,
+    0.4664595052615592
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data first; then the owner's decision",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a state kept by type, judged by what it carries against the mean state and a matched control",
+    "training of what comes before the state: the owner's decision"
+   ],
+   "not": "change the head",
+   "evidence": null,
+   "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)",
+   "state": "at the margin",
+   "observations": [
+    {
+     "readout": "CD49f",
+     "group": "mel_ctl",
+     "event": "TXNDC17",
+     "value": 0.20297721409067337,
+     "ci": [
+      -0.010768774412549503,
+      0.4664595052615592
+     ],
+     "evidence": null,
+     "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+    }
+   ],
+   "credited_now": {
+    "candidate_states": {
+     "V over Z": {
+      "gain": 0.20297721409067337,
+      "ci": [
+       -0.010768774412549503,
+       0.4664595052615592
+      ],
+      "reading": "unresolved"
+     }
+    }
+   },
+   "judged_by": "what the candidate state carries against the mean state and against a matched control (`gain`)"
+  },
+  {
+   "id": "P06",
+   "key": null,
+   "readout": "CD49f",
+   "group": "mel_ctl",
+   "type": null,
+   "event": "TXNDC17",
+   "reading": "held, not read",
+   "lever": "M",
+   "question": "held not read: 3% of the change",
+   "value": 0.026027204831582856,
+   "ci": [
+    -0.182593632944632,
+    0.21500854819477871
+   ],
+   "resampling_units": null,
+   "units_needed": null,
+   "more_units_in_pool": null,
+   "next_step_needs": "no new data: the records already read",
+   "after": [],
+   "standing": null,
+   "actions": [
+    "a readout taught by the records of the events of the same type, credited up to what the state carries",
+    "a richer reader of the state"
+   ],
+   "not": "train what comes before the state",
+   "evidence": null,
+   "note": "a readout taught by the records of the events of the same type",
+   "state": "at the margin",
+   "observations": [
+    {
+     "readout": "CD49f",
+     "group": "mel_ctl",
+     "event": "TXNDC17",
+     "value": 0.026027204831582856,
+     "ci": [
+      -0.182593632944632,
+      0.21500854819477871
+     ],
+     "evidence": null,
+     "note": "a readout taught by the records of the events of the same type"
+    }
+   ],
+   "credited_now": null,
+   "judged_by": "what it reads on cells it was not fitted on, credited up to what the state carries (`credit`)"
+  }
+ ]
+}

@@ -445,6 +445,16 @@ could show. Two things end that, and neither is particular to this system:
   the distribution, as long as a new pair is exchangeable with the recorded ones; so the units a batch adds are
   drawn by lot, and the rule that draws them is written down.
 
+**The first turn that passes** ([`runs/batch4_frozen_20261127`](runs/batch4_frozen_20261127/), 27 November). With
+both in place a batch of 30 units never read passed its gate with no rule changed: 96.8% of 600 pairs inside, the
+median of squared *z* 0.48. Two things it shows for any system:
+
+- Say beforehand what a batch can test. This one could test the width of an interval on plain units and nothing
+  else, and its design said so. The old version would have passed it too, once every stratum had records of its own:
+  the rule that mattered was where the spread comes from.
+- An interval learned from units chosen for what they might show is a little wide for units drawn by lot (98% inside
+  where 95% is the aim). The median tells the two apart, so a gate asks for both.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,

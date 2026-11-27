@@ -335,8 +335,9 @@ alone) to 0.174 (the system as it forecast batch 2) to 0.138 (version 5); an edg
 The intervals of version 5 do not hold: 82% of the pairs are inside, the mean of squared *z* is 3.08. So the gate is
 not passed, the batch counts as development, and the final audit waits for another batch.
 
-**The candidate for version 6** ([`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/), 27 November). Made
-from batch 3, so it is no rule until it is frozen, at the commit made before a fourth batch is forecast.
+**Version 6 (27 November 2026): frozen at commit `b4f6196` on the main branch**, the candidate of
+[`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/) as it passed the planted twin. It was made from batch 3;
+batch 4 is read under it ([`runs/batch4_frozen_20261127`](runs/batch4_frozen_20261127/)).
 
 | | what batch 3 showed | the candidate |
 |---|---|---|
@@ -351,6 +352,16 @@ from batch 3, so it is no rule until it is frozen, at the commit made before a f
 ones are, and plants events whose effect is known. Version 5 fails on it as it failed on batch 3 (85% of the pairs
 inside); the candidate has 94%. **The units of a batch are chosen by a written rule**: by an item on record, and
 the rest by lot.
+
+**Batch 4 under version 6** ([`runs/batch4_frozen_20261127`](runs/batch4_frozen_20261127/), 27 November). Thirty
+units never read, chosen by the written rule, 600 pairs, forecasts committed first, no rule changed. 581 pairs
+(96.8%) are inside the interval of version 6 and the median of squared *z* is 0.48, where at least 90% and 0.23 to
+0.91 were asked: **the gate is passed, the first time for a batch read with no rule changed.** By rule the batch
+leaves 600 rows as records, the edge TXNDC17 → CD49f admitted in both conditions (proposed under interferon; the
+same share of its scale in all three), DAG1 → PD-L1 refused, and two pairs flagged by the laws fitted again, proposed
+and refused on the library's rows. What it does not test: rule 6a on data never read (no unread unit that is not
+final removes a large protein) and the correction (the graph holds almost nothing about these units, so the three
+systems give the same values). Both are asked in the final audit, which is run only on the owner's word.
 
 ## Commands
 

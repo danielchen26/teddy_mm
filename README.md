@@ -329,6 +329,14 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   shows version 5 failing as it failed on batch 3 (85% of the pairs inside) and the candidate holding (94%).
   Batch 3 again, as development: 629 of 698 pairs inside where 575 were, and 385 of 402 when every stratum has
   recorded units of no type. A fourth batch of 30 units, chosen by a written rule, is designed and not opened.
+- **Batch 4 under version 6: the gate is passed (27 November; forecasts committed first; nothing trained;**
+  [`batch4_frozen_20261127/`](anm_diag/runs/batch4_frozen_20261127/)**):** 30 units never read, chosen by the written
+  rule, 600 pairs, no rule changed. 581 pairs (96.8%) lie inside the 95% interval and the median of squared *z* is
+  0.48 (0.455 for an interval of exactly the right width); at least 90% and 0.23 to 0.91 were asked. It is the first
+  batch read with no rule changed that passes. An edge proposed under interferon (TXNDC17 on CD49f) is admitted in
+  both other conditions with the same share of its scale; a second one is refused. What the batch does not test: the
+  arithmetic of the readout on data never read, and the correction (these units are plain, so the three systems
+  give the same values). Both are asked in the final audit of 133 units, which has not been run.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
