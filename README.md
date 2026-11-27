@@ -350,6 +350,16 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   that a readout taught by control cells has to read the recorded events, and lets the loop judge it.
   [`final_audit_design_20261127/`](anm_diag/runs/final_audit_design_20261127/) is the final audit of the 133 units:
   what would be opened, under which rules, and what is asked. The reserve donors are not part of it.
+- **The final audit: read once, passed (27 November; on the owner's word; design, forecasts and scoring committed
+  first; nothing trained;** [`final_audit_20261127/`](anm_diag/runs/final_audit_20261127/)**):** the 133 units kept
+  untouched since 22 November, 2,564 pairs, read against control cells no run had read, with no rule changed. The
+  intervals hold: 95.3% of the pairs inside, median of squared *z* 0.41. The loop corrects: on the 160 pairs where
+  the graph has something to say the error falls from 0.336 for the model alone to 0.140, beyond chance over
+  resampled units. An edge has the size of its pair (B2M on MHC-I: −4.30 forecast, −3.48 measured; the model alone
+  −0.40), and 5 of 8 edges proposed under interferon are admitted here. One condition is not met: the arithmetic
+  of the readout, 84 of 94 pairs inside where 85 were asked, wrong for B2M in the co-culture. Version 5 would have
+  passed as well, and on the other 2,404 pairs the three systems give the same values. It holds for one study, one
+  model and knockouts; the model itself has not been corrected.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

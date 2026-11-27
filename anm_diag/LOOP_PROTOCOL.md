@@ -376,9 +376,15 @@ events, no wrong type is admitted, and a true one is refused in 5 of 32 tests. T
 proposes exactly the five events declared by hand, and the co-culture's rows admit them (retrospective). Its test on
 data never read needs units that move the state.
 
-**Waiting for the owner's word** (27 November): the final audit of the 133 units
-([`runs/final_audit_design_20261127`](runs/final_audit_design_20261127/); the gate of batch 4 allows it, and it can
-be read once), and the first training experiment
+**The final audit under version 6** ([`runs/final_audit_20261127`](runs/final_audit_20261127/), 27 November, on
+the owner's word). 133 final units, 2,564 pairs, read once against control cells no run had read, no rule changed.
+The intervals hold (95.3% inside, median of squared *z* 0.41), and on the 160 pairs where the systems can differ the
+error falls from 0.336 for the model alone to 0.140: **the audit is passed.** An edge has the size of its pair (5 of
+5 inside), and 5 of 8 edges flagged under interferon are admitted. Rule 6a does not meet its own condition (84 of
+94 pairs inside, 85 asked): it fails for B2M in the co-culture and holds for the four other units. Version 5 would
+have passed as well. What the audit shows holds for one study, one model and knockouts.
+
+**Next, on the owner's word** (27 November): the first training experiment
 ([`runs/learned_state_design_20261127`](runs/learned_state_design_20261127/); the pooling trained by one constraint
 of the TEG, judged by the loop).
 

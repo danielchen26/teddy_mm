@@ -236,6 +236,9 @@ their interval, the first batch that passes its gate with no rule changed. The f
 A type can now be proposed and tested by rule as an edge is (`events.propose_types`, `account.test_types`;
 [`runs/types_by_rule_20261127`](runs/types_by_rule_20261127/)): told of no type, the system proposes exactly the
 five events that had been declared by hand. It is a candidate for the version after 6.
+**The final audit was read once on 27 November and passed** ([`runs/final_audit_20261127`](runs/final_audit_20261127/)):
+on 133 units kept untouched until then, 95.3% of 2,564 pairs lie inside their interval, and where the graph has
+something to say the error falls from 0.336 for the model alone to 0.140. One study, one model, knockouts.
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR
