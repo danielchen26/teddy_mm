@@ -376,6 +376,12 @@ events, no wrong type is admitted, and a true one is refused in 5 of 32 tests. T
 proposes exactly the five events declared by hand, and the co-culture's rows admit them (retrospective). Its test on
 data never read needs units that move the state.
 
+**Waiting for the owner's word** (27 November): the final audit of the 133 units
+([`runs/final_audit_design_20261127`](runs/final_audit_design_20261127/); the gate of batch 4 allows it, and it can
+be read once), and the first training experiment
+([`runs/learned_state_design_20261127`](runs/learned_state_design_20261127/); the pooling trained by one constraint
+of the TEG, judged by the loop).
+
 ## Commands
 
 ```
