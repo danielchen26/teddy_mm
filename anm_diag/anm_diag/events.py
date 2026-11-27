@@ -536,6 +536,35 @@ def by_scale(table, scale_of):
     return out, scales
 
 
+def derived(direct, spread, over):
+    """The edges that follow from the arithmetic of a readout, with their size. No constant is fitted.
+
+    A readout that is one column minus the mean of a set of K columns (a centred log-ratio) moves when another column
+    of its set moves. If an event changes the columns A of the set and no other column, the mean falls by their
+    changes over K, and every readout of the set outside A moves by
+
+        - (sum over A of the direct parts, in the readouts' own units) / (K - |A|)
+
+    direct: {(event, readout): (the direct part in spreads of the readout, its spread)} for the pairs of an event and
+    a readout with an edge (recorded, or forecast by the edge). spread: {readout: one spread in its own units}.
+    over: {readout: (the name of its set, K)}; a readout that is no ratio is not named.
+    Returns {(event, readout): (value, its spread)} in spreads of the readout, for every readout of a set that the
+    event has no edge to."""
+    by = {}
+    for (e, r), (v, sd) in direct.items():
+        if r in over:
+            by.setdefault((e, over[r][0]), []).append((r, v * spread[r], sd * spread[r]))
+    out = {}
+    for (e, name), parts in by.items():
+        k = next(K for s, K in over.values() if s == name)
+        A = {r for r, _v, _sd in parts}
+        total, var = sum(v for _r, v, _sd in parts), sum(sd ** 2 for _r, _v, sd in parts)
+        for r, (s, _K) in over.items():
+            if s == name and r not in A:
+                out[(e, r)] = (-total / ((k - len(A)) * spread[r]), var ** 0.5 / ((k - len(A)) * spread[r]))
+    return out
+
+
 def carried_spread(pairs, minimum=3):
     """How far a pair's share of its scale moves between two conditions: the root mean square difference over the
     recorded pairs measured in both. pairs: [(share in one condition, share in another)]. None with fewer than

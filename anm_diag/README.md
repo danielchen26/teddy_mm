@@ -227,7 +227,10 @@ part of an account names its lever, its proposal and what judges it (`account.pl
 Since 26 November the rules are frozen as version 5 at one commit ([`runs/freeze_v5_20261126`](runs/freeze_v5_20261126/)),
 and a batch is read under them with three systems forecast first
 ([`runs/batch3_frozen_20261126`](runs/batch3_frozen_20261126/): the correction holds with no rule changed, the
-intervals do not, and the final audit waits for another batch).
+intervals do not, and the final audit waits for another batch). What that batch showed to be missing is the candidate
+for version 6, checked on a planted twin with the real measurement before it meets a unit never read
+([`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/)): the arithmetic of a readout that is a ratio
+(`events.derived`), and an interval as wide as the recorded pairs say (`Law.conformal`).
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR

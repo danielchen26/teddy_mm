@@ -322,6 +322,13 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   so the gate written beforehand is not passed and the final audit was not run. Explored afterwards: a readout that
   is a centred log-ratio couples the columns of the panel, which accounts for 44 of the 123 pairs outside with
   nothing fitted; and the spread of a pair with no edge had been borrowed from another condition.
+- **The candidate for version 6, checked before it meets data never read (27 November; nothing opened, nothing
+  trained;** [`v6_candidate_20261126/`](anm_diag/runs/v6_candidate_20261126/)**):** the arithmetic of the readout
+  goes on the graph as derived edges, and the width of an interval is measured on the recorded pairs instead of
+  assumed. A planted twin built from real control cells, so that its readouts are measured as the real ones are,
+  shows version 5 failing as it failed on batch 3 (85% of the pairs inside) and the candidate holding (94%).
+  Batch 3 again, as development: 629 of 698 pairs inside where 575 were, and 385 of 402 when every stratum has
+  recorded units of no type. A fourth batch of 30 units, chosen by a written rule, is designed and not opened.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
