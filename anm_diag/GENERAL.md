@@ -466,6 +466,20 @@ propose it. Two things carry over to any system:
 - Ask the rule to find what was declared by hand, told nothing. If it does, the declaration can go; if it does not,
   either the rule or the declaration is wrong, and both are worth knowing.
 
+**The final audit** ([`runs/final_audit_20261127`](runs/final_audit_20261127/), 27 November). The units set aside
+at the start were read once, and the system passed what was written first. What the way it was done says for any
+system:
+
+- Keep a reference the method never saw. The final units were read against control cells no run had read; the
+  forecast was made against the same reference and carried its error. That it works was shown beforehand on cells
+  read before, with a third of the control cells taken out.
+- Ask of the final data what the batches could not. The batch before it could test the width of an interval on
+  plain units only; the audit held the units with edges. Its primary questions were two; everything else was
+  reported with a verdict and could not change the outcome.
+- A pass is narrow. The graph had something to say for 8 of 133 units; on all others the three systems gave the
+  same values, and the older version passed too. The rule added last did not meet its own condition. All of that
+  is part of the result.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,
