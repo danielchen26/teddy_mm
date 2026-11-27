@@ -455,6 +455,17 @@ median of squared *z* 0.48. Two things it shows for any system:
 - An interval learned from units chosen for what they might show is a little wide for units drawn by lot (98% inside
   where 95% is the aim). The median tells the two apart, so a gate asks for both.
 
+**What the author declares, the system should be able to find**
+([`runs/types_by_rule_20261127`](runs/types_by_rule_20261127/)). A loop is closed only as far as its graph grows
+by rule. Edges did; types were declared. The same three steps serve: a flag by a law that was told nothing, a
+proposal by a written grouping (here: events that move the state the same way), and a test on rows that did not
+propose it. Two things carry over to any system:
+
+- Judge a proposal on what it says. A type is scored on the pairs it teaches. Pairs it leaves as they were, and a
+  few pairs that stand far out for reasons of their own, would otherwise decide a sum of squares.
+- Ask the rule to find what was declared by hand, told nothing. If it does, the declaration can go; if it does not,
+  either the rule or the declaration is wrong, and both are worth knowing.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,

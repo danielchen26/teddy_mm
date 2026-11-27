@@ -233,6 +233,9 @@ for version 6, checked on a planted twin with the real measurement before it mee
 (`events.derived`), and an interval as wide as the recorded pairs say (`Law.conformal`). Version 6 was frozen on 27 November and a fourth
 batch was read under it ([`runs/batch4_frozen_20261127`](runs/batch4_frozen_20261127/)): 581 of 600 pairs inside
 their interval, the first batch that passes its gate with no rule changed. The final audit waits for the owner's word.
+A type can now be proposed and tested by rule as an edge is (`events.propose_types`, `account.test_types`;
+[`runs/types_by_rule_20261127`](runs/types_by_rule_20261127/)): told of no type, the system proposes exactly the
+five events that had been declared by hand. It is a candidate for the version after 6.
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR

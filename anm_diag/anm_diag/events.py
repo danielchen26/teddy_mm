@@ -607,6 +607,54 @@ def propose_edges(flags, known=(), cls="flagged", stratum=None):
     return out
 
 
+MIN_COSINE, MIN_TYPE = 0.5, 2                                   # two events are linked from this cosine of their shifts on; a type has at least this many events
+
+
+def propose_types(flags, shifts, moving=(), known=(), min_cos=MIN_COSINE, minimum=MIN_TYPE, stratum=None):
+    """Types proposed from the flags of `account.Law.flags`, as edges are (`propose_edges`). A pair flagged as "a direction
+    the law does not cover" says that its event moves the stage and that a readout of control cells misreads what it
+    does there: a record of an event of the same type would teach the readout. Such an event seeds a type. What a
+    readout misreads along a direction it misreads for every event that moves along it, so the type holds every event
+    that moves the stage the same way: two events are linked when their shifts point the same way (cosine at least
+    `min_cos`), among the flagged events and the events of `moving` (`Law.moving`); every connected group with a
+    flagged event and at least `minimum` events is proposed. A flagged event linked to no other stays a flag: one
+    record can neither teach nor be tested. shifts: {event: its shift of the stage} (`Law.shifts`). known: the events
+    that have a type already. A proposed type enters no forecast until rows it did not see admit it
+    (`account.test_types`, rule G2)."""
+    import numpy as np
+    of = {}
+    for f in flags:
+        if f.get("flag") == "a direction the law does not cover" and f["event"] not in set(known):
+            of.setdefault(f["event"], []).append(f["readout"])
+    ev = sorted(set(of) | (set(moving) - set(known)))
+    unit = {e: np.asarray(shifts[e], float) / (np.linalg.norm(shifts[e]) + 1e-300) for e in ev}
+    cos = {(a, b): float(unit[a] @ unit[b]) for i, a in enumerate(ev) for b in ev[i + 1:]}
+    group = {e: e for e in ev}
+
+    def root(e):
+        while group[e] != e:
+            e = group[e]
+        return e
+    for (a, b), c in cos.items():
+        if c >= min_cos:
+            group[root(b)] = root(a)
+    members = {}
+    for e in ev:
+        members.setdefault(root(e), []).append(e)
+    out = []
+    for m in sorted(members.values()):
+        if len(m) < minimum or not any(e in of for e in m):
+            continue
+        inside = [cos[(a, b)] for i, a in enumerate(m) for b in m[i + 1:]]
+        outside = [c for (a, b), c in cos.items() if (a in m) != (b in m)]
+        out.append({"type_id": "+".join(m) + (f"@{stratum}" if stratum else ""), "kind": "type", "members": m, "basis": "flag", "status": "proposed", "stratum": stratum,
+                    "evidence": {"seeded_by": {e: sorted(of[e]) for e in m if e in of}, "joined_by_the_direction_of_their_shift": [e for e in m if e not in of],
+                                 "cosine_of_the_shifts": {"smallest": min(inside), "median": statistics.median(inside)},
+                                 "largest_cosine_with_an_event_outside": max(outside) if outside else None},
+                    "provenance": "flagged by the law of a library; grouped by the direction of the shift"})
+    return out
+
+
 def test_edges(edges, rows, z=1.96):
     """Rule G2 for proposed edges: each is asked of rows that did not propose it (another condition, another library,
     units never read). rows: the forecasts of those rows made WITHOUT the edge (`Law.forecast` or `Law.new` with the

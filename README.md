@@ -337,6 +337,19 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   both other conditions with the same share of its scale; a second one is refused. What the batch does not test: the
   arithmetic of the readout on data never read, and the correction (these units are plain, so the three systems
   give the same values). Both are asked in the final audit of 133 units, which has not been run.
+- **Types by rule (27 November; exploratory; nothing opened, nothing trained;**
+  [`types_by_rule_20261127/`](anm_diag/runs/types_by_rule_20261127/)**):** the one type of the system (the interferon
+  pathway) had been declared by hand. Now a type is flagged, proposed and tested as an edge is. On a planted twin
+  every planted type is proposed with exactly its events and no wrong type is admitted in 24 worlds; a true one is
+  refused in 5 of 32 tests. Told of no type, the real library proposes exactly the five declared events and no
+  other, and the rows of another condition admit them (retrospective: it shows the rule can replace the hand).
+- **Two designs that wait for the owner's word (27 November; nothing run):**
+  [`learned_state_design_20261127/`](anm_diag/runs/learned_state_design_20261127/) is the first training experiment
+  the loop asks for. The one loss the loop has never corrected is before the state, and it was located at the mean
+  over the gene positions; the design trains the pooling alone (2,048 numbers, the encoder frozen) by one constraint,
+  that a readout taught by control cells has to read the recorded events, and lets the loop judge it.
+  [`final_audit_design_20261127/`](anm_diag/runs/final_audit_design_20261127/) is the final audit of the 133 units:
+  what would be opened, under which rules, and what is asked. The reserve donors are not part of it.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

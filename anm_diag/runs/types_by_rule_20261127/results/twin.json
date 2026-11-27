@@ -1,0 +1,4563 @@
+{
+ "planted": {
+  "units": {
+   "A": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+   ],
+   "B": [
+    "B1",
+    "B2",
+    "B3",
+    "B4"
+   ],
+   "C": [
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "M": [
+    "M1",
+    "M2",
+    "M3"
+   ],
+   "O": [
+    "O01",
+    "O02",
+    "O03",
+    "O04",
+    "O05",
+    "O06"
+   ],
+   "N": [
+    "N01",
+    "N02",
+    "N03",
+    "N04",
+    "N05",
+    "N06",
+    "N07",
+    "N08",
+    "N09",
+    "N10",
+    "N11",
+    "N12",
+    "N13",
+    "N14",
+    "N15",
+    "N16",
+    "N17",
+    "N18",
+    "N19",
+    "N20"
+   ]
+  },
+  "effect_of_a_type": {
+   "A": {
+    "MHC1": -0.8,
+    "PDL1": -0.7,
+    "CD119": 0.3
+   },
+   "B": {
+    "CD47": -0.6,
+    "CD58": 0.5,
+    "CD44": -0.4
+   }
+  },
+  "cells_per_unit": 200,
+  "spread_with_no_edge": {
+   "library": 0.02,
+   "stratum": 0.05
+  },
+  "the_state_moves_by": 0.11352431743307717,
+  "min_cosine": 0.5,
+  "a_pair_is_taught_from": 2.0
+ },
+ "worlds": [
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 25,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9062494673515594,
+      "median": 0.9548377172336794
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 25,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3510776502889674,
+      "error_with_the_type": 0.10535327371204828,
+      "share_of_the_squared_error_removed": 0.9099487585293914,
+      "z": 11.712362837669138,
+      "closer": 23,
+      "by_chance": 9.715557098388672e-06
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.20109637658837318,
+      "error_with_the_type": 0.09391226027764635,
+      "share_of_the_squared_error_removed": 0.7819098276662212
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9384398423793053,
+      "median": 0.9608599413872148
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 39,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.38676027864785295,
+      "error_with_the_type": 0.3321277262659329,
+      "share_of_the_squared_error_removed": 0.2625602632322833,
+      "z": 4.483757697316581,
+      "closer": 26,
+      "by_chance": 0.026625957048963755
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.35834212978257585,
+      "error_with_the_type": 0.329926576127424,
+      "share_of_the_squared_error_removed": 0.15230648830145432
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9876822793161655,
+      "median": 0.9884072199257394
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3598762837512566,
+      "error_with_the_type": 0.55791688485113,
+      "share_of_the_squared_error_removed": -1.4034359672431131,
+      "z": -13.205392311627186,
+      "closer": 5,
+      "by_chance": 0.9754791259765625
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.33409229823628334,
+      "error_with_the_type": 0.414350224682792,
+      "share_of_the_squared_error_removed": -0.5381625357557144
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M1"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.2859734077969163,
+      "error_with_the_type": 0.07631676605345783,
+      "share_of_the_squared_error_removed": 0.9287821897635162,
+      "z": 2.151055955290709,
+      "closer": 1,
+      "by_chance": 0.5
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3243797717939962,
+      "error_with_the_type": 0.31683820016727327,
+      "share_of_the_squared_error_removed": 0.04595788334932261
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "refused",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2"
+   ],
+   "flagged_as_a_missing_edge": 21,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8923155901695117,
+      "median": 0.9417908406846984
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 38,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.38115678529175534,
+      "error_with_the_type": 0.16457070267873386,
+      "share_of_the_squared_error_removed": 0.8135777539508702,
+      "z": 12.917641419592623,
+      "closer": 29,
+      "by_chance": 0.0008290262630907819
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.28735230359898706,
+      "error_with_the_type": 0.17077649442174583,
+      "share_of_the_squared_error_removed": 0.6467950163792234
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.926345619759662,
+      "median": 0.9630490219969261
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 41,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.41250295609079873,
+      "error_with_the_type": 0.2844899848908015,
+      "share_of_the_squared_error_removed": 0.5243583969662886,
+      "z": 10.693886775220484,
+      "closer": 34,
+      "by_chance": 1.266040180780692e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.32075421070837634,
+      "error_with_the_type": 0.23176510253172042,
+      "share_of_the_squared_error_removed": 0.4779028111425862
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9682145566859337,
+      "median": 0.983225063413615
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 14,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4061668728914841,
+      "error_with_the_type": 0.4995758150137253,
+      "share_of_the_squared_error_removed": -0.5128428342302149,
+      "z": -5.640430239533531,
+      "closer": 4,
+      "by_chance": 0.9713134765625
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.27821036433312596,
+      "error_with_the_type": 0.31473294264950064,
+      "share_of_the_squared_error_removed": -0.2797872954823649
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.1776610039778713,
+      "error_with_the_type": 0.1765560970813106,
+      "share_of_the_squared_error_removed": 0.012399694484847843
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 19,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8886363138819106,
+      "median": 0.9481994903018007
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3564915178896774,
+      "error_with_the_type": 0.12485894697739566,
+      "share_of_the_squared_error_removed": 0.8773292745017617,
+      "z": 12.403342755907664,
+      "closer": 29,
+      "by_chance": 1.9279075786471367e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2538284050002169,
+      "error_with_the_type": 0.14749138822485086,
+      "share_of_the_squared_error_removed": 0.6623607824865265
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9625228461857005,
+      "median": 0.9737297876138324
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 46,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4568569494373822,
+      "error_with_the_type": 0.29097477447030684,
+      "share_of_the_squared_error_removed": 0.594351187053974,
+      "z": 13.926818830476675,
+      "closer": 33,
+      "by_chance": 0.0022669307910945236
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.392001947027592,
+      "error_with_the_type": 0.27671522049980024,
+      "share_of_the_squared_error_removed": 0.5017014224755456
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9839412025341159,
+      "median": 0.9875987593258877
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 16,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.12868185154812445,
+      "error_with_the_type": 0.3426410799515079,
+      "share_of_the_squared_error_removed": -6.089967724099561,
+      "z": -7.949891631490407,
+      "closer": 3,
+      "by_chance": 0.9979095458984375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.28153677022124035,
+      "error_with_the_type": 0.3193114546226712,
+      "share_of_the_squared_error_removed": -0.28634880749993796
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.18110388382574732,
+      "error_with_the_type": 0.17426094617737153,
+      "share_of_the_squared_error_removed": 0.07414152229812919
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1"
+   ],
+   "flagged_as_a_missing_edge": 16,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9415137472614867,
+      "median": 0.9477438220201395
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 27,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.47133140841477394,
+      "error_with_the_type": 0.30845149630568663,
+      "share_of_the_squared_error_removed": 0.5717266993232839,
+      "z": 12.772729743782122,
+      "closer": 22,
+      "by_chance": 0.0007568597793579102
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2623432779422287,
+      "error_with_the_type": 0.17398315975920697,
+      "share_of_the_squared_error_removed": 0.5601804331754313
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9457287155186791,
+      "median": 0.9535328032706245
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 25,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.31150433894754415,
+      "error_with_the_type": 0.13890337499256503,
+      "share_of_the_squared_error_removed": 0.8011629113901996,
+      "z": 9.18968293764624,
+      "closer": 22,
+      "by_chance": 7.826089859008789e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.21602325314115386,
+      "error_with_the_type": 0.13087246189137733,
+      "share_of_the_squared_error_removed": 0.6329750903030992
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9783978168279428,
+      "median": 0.9834014104000295
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4368702481458835,
+      "error_with_the_type": 0.5426219772158739,
+      "share_of_the_squared_error_removed": -0.5427296290968502,
+      "z": -6.004464092732626,
+      "closer": 4,
+      "by_chance": 0.9936370849609375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3457369532836026,
+      "error_with_the_type": 0.37102376115104646,
+      "share_of_the_squared_error_removed": -0.15162702056717728
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.19407641720935065,
+      "error_with_the_type": 0.3576606900304097,
+      "share_of_the_squared_error_removed": -2.3962283878655866,
+      "z": -3.799826406154024,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2509694627682417,
+      "error_with_the_type": 0.2577068829426485,
+      "share_of_the_squared_error_removed": -0.05441184012564702
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2"
+   ],
+   "flagged_as_a_missing_edge": 17,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9475122148724444,
+      "median": 0.9663813437117863
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 44,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.38315630715340726,
+      "error_with_the_type": 0.09973930334390346,
+      "share_of_the_squared_error_removed": 0.9322388601189383,
+      "z": 17.18471225685785,
+      "closer": 40,
+      "by_chance": 8.525717021257151e-09
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.28835750850780917,
+      "error_with_the_type": 0.14329433583978982,
+      "share_of_the_squared_error_removed": 0.7530576829015301
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9411716361439487,
+      "median": 0.9660948781191325
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 51,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3552242076290438,
+      "error_with_the_type": 0.21108166082860297,
+      "share_of_the_squared_error_removed": 0.6469014802851479,
+      "z": 12.206453106594614,
+      "closer": 43,
+      "by_chance": 3.433558868337627e-07
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.32680750362205585,
+      "error_with_the_type": 0.2397323810586133,
+      "share_of_the_squared_error_removed": 0.46189211152766635
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9772668800510459,
+      "median": 0.9806734548709563
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 20,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.23875090707842034,
+      "error_with_the_type": 0.44783063589521,
+      "share_of_the_squared_error_removed": -2.518337844614937,
+      "z": -9.625109629113844,
+      "closer": 3,
+      "by_chance": 0.9997987747192383
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.35570304444226586,
+      "error_with_the_type": 0.4178789523133223,
+      "share_of_the_squared_error_removed": -0.38014853822104433
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M1"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.04318875902050071,
+      "error_with_the_type": 0.20734342677180434,
+      "share_of_the_squared_error_removed": -22.048310349991603,
+      "z": -1.7774027703086221,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.292580554626078,
+      "error_with_the_type": 0.2874153613297724,
+      "share_of_the_squared_error_removed": 0.03499617636473865
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2"
+   ],
+   "flagged_as_a_missing_edge": 17,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8983113986814553,
+      "median": 0.9502614392300619
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 32,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3416293567580127,
+      "error_with_the_type": 0.1528848475713531,
+      "share_of_the_squared_error_removed": 0.7997287895665142,
+      "z": 10.291600093631601,
+      "closer": 24,
+      "by_chance": 0.0035001833457499743
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.26772658604506416,
+      "error_with_the_type": 0.19951580642032507,
+      "share_of_the_squared_error_removed": 0.44464381156045096
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8443282844407409,
+      "median": 0.9080566800067389
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.339517808519845,
+      "error_with_the_type": 0.07040550837024444,
+      "share_of_the_squared_error_removed": 0.9569980490560269,
+      "z": 9.441784911197217,
+      "closer": 17,
+      "by_chance": 7.62939453125e-06
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.20233700448487368,
+      "error_with_the_type": 0.11827405785844207,
+      "share_of_the_squared_error_removed": 0.6583130735842008
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9765473603055072,
+      "median": 0.9824202357815937
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 16,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.24508936695364456,
+      "error_with_the_type": 0.44337385602634005,
+      "share_of_the_squared_error_removed": -2.272587157190582,
+      "z": -10.19255329496804,
+      "closer": 3,
+      "by_chance": 0.9979095458984375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3060061443176877,
+      "error_with_the_type": 0.3549302511320356,
+      "share_of_the_squared_error_removed": -0.3453204352947475
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.15685785779838693,
+      "error_with_the_type": 0.15512371990515092,
+      "share_of_the_squared_error_removed": 0.021988723544517308
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1",
+    "M2"
+   ],
+   "flagged_as_a_missing_edge": 9,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9373319481176908,
+      "median": 0.9700672663734684
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 48,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4449949511873126,
+      "error_with_the_type": 0.3172004408184166,
+      "share_of_the_squared_error_removed": 0.49189040371618364,
+      "z": 10.455752734004035,
+      "closer": 38,
+      "by_chance": 3.0848203888211856e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.35837900787054044,
+      "error_with_the_type": 0.2773383542084791,
+      "share_of_the_squared_error_removed": 0.4011269877824042
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9258591417993238,
+      "median": 0.9524461823799206
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 47,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4291051467479615,
+      "error_with_the_type": 0.3385915650456673,
+      "share_of_the_squared_error_removed": 0.37737748338852367,
+      "z": 7.9698746838625665,
+      "closer": 36,
+      "by_chance": 0.0001730005701574555
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.38905369861078204,
+      "error_with_the_type": 0.3270362058826337,
+      "share_of_the_squared_error_removed": 0.293401722183349
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9758292484960251,
+      "median": 0.9814895747218524
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 19,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.36072111503614934,
+      "error_with_the_type": 0.5894508536724963,
+      "share_of_the_squared_error_removed": -1.670250914547154,
+      "z": -18.217593637069776,
+      "closer": 4,
+      "by_chance": 0.9977874755859375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3220328544767116,
+      "error_with_the_type": 0.4153609418004823,
+      "share_of_the_squared_error_removed": -0.6636077995932746
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 2,
+     "events_with_a_pair_it_teaches": [
+      "M1",
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.0931196981549601,
+      "error_with_the_type": 0.15156359996314656,
+      "share_of_the_squared_error_removed": -1.6491509492715504,
+      "z": -0.6570734718694972,
+      "closer": 1,
+      "by_chance": 0.75
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.32971425459456194,
+      "error_with_the_type": 0.3217281363272768,
+      "share_of_the_squared_error_removed": 0.04785599013869112
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 20,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9548905068775316,
+      "median": 0.9780926929944234
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 56,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.39746269481393215,
+      "error_with_the_type": 0.25259269417118957,
+      "share_of_the_squared_error_removed": 0.5961232760717997,
+      "z": 13.913501502403664,
+      "closer": 43,
+      "by_chance": 3.666609198474391e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.33448100567464245,
+      "error_with_the_type": 0.22897655800807779,
+      "share_of_the_squared_error_removed": 0.5313602476629844
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9533819844643562,
+      "median": 0.9582244743709931
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 32,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3481286955008422,
+      "error_with_the_type": 0.24615533363479175,
+      "share_of_the_squared_error_removed": 0.5000358603021207,
+      "z": 6.982877730130429,
+      "closer": 24,
+      "by_chance": 0.0035001833457499743
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.294497235452786,
+      "error_with_the_type": 0.24020061713283813,
+      "share_of_the_squared_error_removed": 0.33474860608684054
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9626804899036925,
+      "median": 0.9684430817050427
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 21,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.2854387442513645,
+      "error_with_the_type": 0.46937980372087673,
+      "share_of_the_squared_error_removed": -1.704101280916776,
+      "z": -12.648488130590195,
+      "closer": 6,
+      "by_chance": 0.9866981506347656
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.33401228235273855,
+      "error_with_the_type": 0.3938524431043026,
+      "share_of_the_squared_error_removed": -0.3904078576947678
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M1"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.027780079867585225,
+      "error_with_the_type": 0.17349451837457863,
+      "share_of_the_squared_error_removed": -38.0035857558025,
+      "z": -1.0069033188040795,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.25811487182122406,
+      "error_with_the_type": 0.2597398543043103,
+      "share_of_the_squared_error_removed": -0.012630791663568015
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "flagged_as_a_missing_edge": 28,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9323561215992391,
+      "median": 0.9657613132037708
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 44,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3548347497672856,
+      "error_with_the_type": 0.1850930604371559,
+      "share_of_the_squared_error_removed": 0.7279003498650823,
+      "z": 11.31982142052876,
+      "closer": 33,
+      "by_chance": 0.0006300169081328022
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.31615293926050614,
+      "error_with_the_type": 0.23239310300888028,
+      "share_of_the_squared_error_removed": 0.45967878215848856
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9084765512884212,
+      "median": 0.9529149423225471
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.321734260790066,
+      "error_with_the_type": 0.1541940634378077,
+      "share_of_the_squared_error_removed": 0.7703107413665945,
+      "z": 9.638775841248581,
+      "closer": 27,
+      "by_chance": 0.0004106976557523012
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2565679902947446,
+      "error_with_the_type": 0.1537520814264529,
+      "share_of_the_squared_error_removed": 0.6408820917092611
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9753899658122104,
+      "median": 0.9806890218989454
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3547446299502582,
+      "error_with_the_type": 0.44745024557942625,
+      "share_of_the_squared_error_removed": -0.590954801695236,
+      "z": -5.126415855968366,
+      "closer": 5,
+      "by_chance": 0.9754791259765625
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.29958637720767284,
+      "error_with_the_type": 0.3276563920177856,
+      "share_of_the_squared_error_removed": -0.19617071853649207
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.1638153896178555,
+      "error_with_the_type": 0.16230479854192992,
+      "share_of_the_squared_error_removed": 0.01835757033155197
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "flagged_as_a_missing_edge": 22,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.943938636811448,
+      "median": 0.9613590840620718
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.44270100061404666,
+      "error_with_the_type": 0.3037991778734198,
+      "share_of_the_squared_error_removed": 0.5290745284322432,
+      "z": 10.686917863526455,
+      "closer": 27,
+      "by_chance": 0.0004106976557523012
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.29834842744414153,
+      "error_with_the_type": 0.225787215819558,
+      "share_of_the_squared_error_removed": 0.42726834082067827
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8773013711445987,
+      "median": 0.9473016012088951
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3648180871559185,
+      "error_with_the_type": 0.28243536115643614,
+      "share_of_the_squared_error_removed": 0.4006432290883964,
+      "z": 6.527621024562138,
+      "closer": 24,
+      "by_chance": 0.012153255054727197
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2865250963051017,
+      "error_with_the_type": 0.23397568315450706,
+      "share_of_the_squared_error_removed": 0.33316848979405
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9716120057585864,
+      "median": 0.9731117624711407
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 12,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.440281800524471,
+      "error_with_the_type": 0.6139945223700998,
+      "share_of_the_squared_error_removed": -0.9447667723281259,
+      "z": -10.621421711200355,
+      "closer": 2,
+      "by_chance": 0.996826171875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.28812273543363365,
+      "error_with_the_type": 0.35387479194034627,
+      "share_of_the_squared_error_removed": -0.5084961129715391
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.0324196609980022,
+      "error_with_the_type": 0.21933420779173418,
+      "share_of_the_squared_error_removed": -44.77156925372909,
+      "z": -1.1552328891282106,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.211543831296524,
+      "error_with_the_type": 0.21186419427587105,
+      "share_of_the_squared_error_removed": -0.0030311028876449236
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 25,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8662426777317296,
+      "median": 0.9436780551038728
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.2925187308939132,
+      "error_with_the_type": 0.1433847603094637,
+      "share_of_the_squared_error_removed": 0.759730509060032,
+      "z": 9.04553945935211,
+      "closer": 29,
+      "by_chance": 1.9279075786471367e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2226028974687128,
+      "error_with_the_type": 0.15765125719218415,
+      "share_of_the_squared_error_removed": 0.49842803852507317
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9153466735316949,
+      "median": 0.9379844416531496
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 32,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3363299946649226,
+      "error_with_the_type": 0.09561758008839853,
+      "share_of_the_squared_error_removed": 0.919175263811777,
+      "z": 12.68054811550717,
+      "closer": 29,
+      "by_chance": 1.2780074030160904e-06
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.23522035996047433,
+      "error_with_the_type": 0.08434405129098003,
+      "share_of_the_squared_error_removed": 0.8714242415812099
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9758871640573354,
+      "median": 0.9772476382174466
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.40576418939006365,
+      "error_with_the_type": 0.5240455308580179,
+      "share_of_the_squared_error_removed": -0.6679791266945632,
+      "z": -6.460353316406727,
+      "closer": 3,
+      "by_chance": 0.9988250732421875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3558299583646046,
+      "error_with_the_type": 0.38581594886338505,
+      "share_of_the_squared_error_removed": -0.17564265119903516
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 3,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3963206031044269,
+      "error_with_the_type": 0.5753451906524866,
+      "share_of_the_squared_error_removed": -1.1074810296006687,
+      "z": -7.44388553850019,
+      "closer": 1,
+      "by_chance": 0.875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.35746237429367594,
+      "error_with_the_type": 0.3707871143634268,
+      "share_of_the_squared_error_removed": -0.07594134119102354
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2"
+   ],
+   "flagged_as_a_missing_edge": 27,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9078171222218125,
+      "median": 0.9486061239338921
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3821009067636516,
+      "error_with_the_type": 0.08721195197292589,
+      "share_of_the_squared_error_removed": 0.9479050198028077,
+      "z": 14.910509237433455,
+      "closer": 32,
+      "by_chance": 3.4691765904426575e-08
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2412202608600922,
+      "error_with_the_type": 0.08765139306988276,
+      "share_of_the_squared_error_removed": 0.8679646928247842
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9101953224779917,
+      "median": 0.9374664679913853
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 28,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.40120875018251356,
+      "error_with_the_type": 0.17503785853351364,
+      "share_of_the_squared_error_removed": 0.8096630129454341,
+      "z": 12.539739855830359,
+      "closer": 26,
+      "by_chance": 1.516193151473999e-06
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2543576440862396,
+      "error_with_the_type": 0.11966854327860554,
+      "share_of_the_squared_error_removed": 0.7786546406158996
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9845953546744755,
+      "median": 0.9884198758233065
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 16,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.17547415621143111,
+      "error_with_the_type": 0.3122444201854523,
+      "share_of_the_squared_error_removed": -2.16638009735619,
+      "z": -5.535184121506564,
+      "closer": 3,
+      "by_chance": 0.9979095458984375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2655140199904149,
+      "error_with_the_type": 0.29877155197262395,
+      "share_of_the_squared_error_removed": -0.2662036752669314
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.09592066583183902,
+      "error_with_the_type": 0.35727310640409554,
+      "share_of_the_squared_error_removed": -12.87318835413744,
+      "z": -2.9527850580626174,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.27180210563317797,
+      "error_with_the_type": 0.2757000783683242,
+      "share_of_the_squared_error_removed": -0.028888102692854287
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "flagged_as_a_missing_edge": 23,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.938570733452945,
+      "median": 0.9683467949768512
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 42,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3245914927461712,
+      "error_with_the_type": 0.18714926836078827,
+      "share_of_the_squared_error_removed": 0.6675686288314602,
+      "z": 9.485925954069092,
+      "closer": 30,
+      "by_chance": 0.003957948667448363
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2821125755039936,
+      "error_with_the_type": 0.20969761971922293,
+      "share_of_the_squared_error_removed": 0.44748749726935405
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9497964585225378,
+      "median": 0.9665884340438664
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 45,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.35854766475482447,
+      "error_with_the_type": 0.20254175389176354,
+      "share_of_the_squared_error_removed": 0.6808937309529228,
+      "z": 11.525029277244137,
+      "closer": 36,
+      "by_chance": 3.28733162291428e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.34946313717473937,
+      "error_with_the_type": 0.26742718852297964,
+      "share_of_the_squared_error_removed": 0.4143901478559351
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9790796024346746,
+      "median": 0.9818218129854581
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.149024465756414,
+      "error_with_the_type": 0.34098355156401805,
+      "share_of_the_squared_error_removed": -4.235422229226714,
+      "z": -7.121775184366592,
+      "closer": 3,
+      "by_chance": 0.9988250732421875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2939100310493653,
+      "error_with_the_type": 0.338980886496006,
+      "share_of_the_squared_error_removed": -0.3302142775709996
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2778063255108345,
+      "error_with_the_type": 0.2798622634576457,
+      "share_of_the_squared_error_removed": -0.014856001184878885
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 17,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8426576877331571,
+      "median": 0.9258255716796516
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.38156653679182867,
+      "error_with_the_type": 0.14467879027303632,
+      "share_of_the_squared_error_removed": 0.8562297006585353,
+      "z": 12.950323292955368,
+      "closer": 30,
+      "by_chance": 3.08244489133358e-06
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.27556471574559804,
+      "error_with_the_type": 0.172754258463362,
+      "share_of_the_squared_error_removed": 0.6069839314554646
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9310840302404152,
+      "median": 0.9540648102880847
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 43,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.42988672761420366,
+      "error_with_the_type": 0.31387098450362627,
+      "share_of_the_squared_error_removed": 0.4669176966619179,
+      "z": 9.521522282348029,
+      "closer": 32,
+      "by_chance": 0.0009569805006321985
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3774715183992575,
+      "error_with_the_type": 0.31617903907712447,
+      "share_of_the_squared_error_removed": 0.29838676269286407
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9818244191552468,
+      "median": 0.9825902162989375
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 16,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.38433326102186116,
+      "error_with_the_type": 0.557898544986516,
+      "share_of_the_squared_error_removed": -1.1071454552990625,
+      "z": -8.099110650951353,
+      "closer": 4,
+      "by_chance": 0.9893646240234375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3382928680343115,
+      "error_with_the_type": 0.40336139390349296,
+      "share_of_the_squared_error_removed": -0.4216836677424073
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2187383052561689,
+      "error_with_the_type": 0.21589017717368855,
+      "share_of_the_squared_error_removed": 0.025871881506796302
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 26,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9238607475203846,
+      "median": 0.9607824044912752
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.36499618599991057,
+      "error_with_the_type": 0.2946370812995614,
+      "share_of_the_squared_error_removed": 0.34837437465650944,
+      "z": 5.379236937046773,
+      "closer": 26,
+      "by_chance": 0.0014675278216600418
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2875775378133416,
+      "error_with_the_type": 0.24967911920926775,
+      "share_of_the_squared_error_removed": 0.24620279096245787
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9355295888544933,
+      "median": 0.9559143674243878
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 31,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.44572134435411387,
+      "error_with_the_type": 0.24892426671126835,
+      "share_of_the_squared_error_removed": 0.6881055768361105,
+      "z": 12.646011906149644,
+      "closer": 23,
+      "by_chance": 0.005336920265108347
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3037246975109129,
+      "error_with_the_type": 0.18132531206024594,
+      "share_of_the_squared_error_removed": 0.6435844441328858
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9853676799169997,
+      "median": 0.985454938972733
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 13,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3920092704778654,
+      "error_with_the_type": 0.7077610757356676,
+      "share_of_the_squared_error_removed": -2.259722825142764,
+      "z": -19.671888634709035,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3139829793666651,
+      "error_with_the_type": 0.4163863370318881,
+      "share_of_the_squared_error_removed": -0.7586553141067482
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 2,
+     "events_with_a_pair_it_teaches": [
+      "M1",
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.18325652933581887,
+      "error_with_the_type": 0.37624754059805193,
+      "share_of_the_squared_error_removed": -3.215299383633017,
+      "z": -4.820496791224821,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2551455465739065,
+      "error_with_the_type": 0.26420600097528585,
+      "share_of_the_squared_error_removed": -0.07228287606148194
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 20,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8726950172514043,
+      "median": 0.9546913615644879
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 31,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3814416980930357,
+      "error_with_the_type": 0.12592940399490593,
+      "share_of_the_squared_error_removed": 0.8910071618644144,
+      "z": 12.276415362479016,
+      "closer": 26,
+      "by_chance": 9.609758853912354e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2536225927009468,
+      "error_with_the_type": 0.13732653702315212,
+      "share_of_the_squared_error_removed": 0.7068208635375332
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.8953324630998001,
+      "median": 0.9500343696110651
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 32,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3940190054466154,
+      "error_with_the_type": 0.3866233334784585,
+      "share_of_the_squared_error_removed": 0.03718736453454577,
+      "z": 0.6315385622686004,
+      "closer": 22,
+      "by_chance": 0.025051229866221547
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3135556323468208,
+      "error_with_the_type": 0.30074271912039297,
+      "share_of_the_squared_error_removed": 0.0800567622968056
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.976817119099484,
+      "median": 0.9815746417160685
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 18,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.43415050752383433,
+      "error_with_the_type": 0.664852325790894,
+      "share_of_the_squared_error_removed": -1.345145315029125,
+      "z": -20.06422627967491,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3514720707077266,
+      "error_with_the_type": 0.44333811318479716,
+      "share_of_the_squared_error_removed": -0.5910671059251912
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.24842685243413937,
+      "error_with_the_type": 0.13525790775844015,
+      "share_of_the_squared_error_removed": 0.7035658345467977,
+      "z": 0.7484174474918508,
+      "closer": 1,
+      "by_chance": 0.5
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.205194729690379,
+      "error_with_the_type": 0.19498189725916407,
+      "share_of_the_squared_error_removed": 0.09706563980523608
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "refused",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "flagged_as_a_missing_edge": 14,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9242515571601164,
+      "median": 0.9495042901944362
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 36,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.29089613960933614,
+      "error_with_the_type": 0.27724354216741925,
+      "share_of_the_squared_error_removed": 0.09166308986602399,
+      "z": 1.05201157565957,
+      "closer": 18,
+      "by_chance": 0.5660302997857798
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3027555203257561,
+      "error_with_the_type": 0.2951716465115464,
+      "share_of_the_squared_error_removed": 0.049471518735739774
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8482696873225488,
+      "median": 0.9165820608385838
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 45,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.36193917361120803,
+      "error_with_the_type": 0.07582720733017205,
+      "share_of_the_squared_error_removed": 0.9561086496917482,
+      "z": 17.02411562900454,
+      "closer": 45,
+      "by_chance": 2.842170943040401e-14
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.29492076404650824,
+      "error_with_the_type": 0.12994642151032607,
+      "share_of_the_squared_error_removed": 0.8058586935057866
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9591670444561688,
+      "median": 0.96838760448117
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 15,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.33290016498252556,
+      "error_with_the_type": 0.5252448349179524,
+      "share_of_the_squared_error_removed": -1.4894050143677209,
+      "z": -9.788981333960786,
+      "closer": 2,
+      "by_chance": 0.99951171875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3525524938448193,
+      "error_with_the_type": 0.4021539476000969,
+      "share_of_the_squared_error_removed": -0.30117913375350686
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M1"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.09845867955588251,
+      "error_with_the_type": 0.342986978784131,
+      "share_of_the_squared_error_removed": -11.135208744608402,
+      "z": -3.1734182579670844,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.29117479355859543,
+      "error_with_the_type": 0.2934702372476949,
+      "share_of_the_squared_error_removed": -0.015828922530175715
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "refused",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 24,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9448594246942126,
+      "median": 0.9652801606589073
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 36,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.44477193124303066,
+      "error_with_the_type": 0.12987596302972518,
+      "share_of_the_squared_error_removed": 0.9147326397765518,
+      "z": 16.633220140713586,
+      "closer": 29,
+      "by_chance": 0.00015627557877451181
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.31697984243452454,
+      "error_with_the_type": 0.17540608441184416,
+      "share_of_the_squared_error_removed": 0.6937853126582403
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9401826274045074,
+      "median": 0.9557006878622518
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 42,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.34397386518122797,
+      "error_with_the_type": 0.09465572995000325,
+      "share_of_the_squared_error_removed": 0.9242743648191386,
+      "z": 14.459682042459745,
+      "closer": 38,
+      "by_chance": 2.826573108904995e-08
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.26878454142885294,
+      "error_with_the_type": 0.0999851395460441,
+      "share_of_the_squared_error_removed": 0.8616235008502815
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9849084201636316,
+      "median": 0.98755712310672
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 24,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.2522160200133209,
+      "error_with_the_type": 0.4787198018034493,
+      "share_of_the_squared_error_removed": -2.6026116381998485,
+      "z": -14.011188487654566,
+      "closer": 1,
+      "by_chance": 0.9999999403953552
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.36104457308712357,
+      "error_with_the_type": 0.4451095789576153,
+      "share_of_the_squared_error_removed": -0.5198902824743471
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.00765492088413447,
+      "error_with_the_type": 0.19967767184621293,
+      "share_of_the_squared_error_removed": -679.4208226816933,
+      "z": -1.5212842054292208,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.28067547071965826,
+      "error_with_the_type": 0.283560912768181,
+      "share_of_the_squared_error_removed": -0.020666385402542477
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "flagged_as_a_missing_edge": 25,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9521356053462057,
+      "median": 0.9702854971150628
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 52,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3694761699326312,
+      "error_with_the_type": 0.2349398025975614,
+      "share_of_the_squared_error_removed": 0.5956659340504683,
+      "z": 12.434381804962932,
+      "closer": 43,
+      "by_chance": 1.0188849306480563e-06
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.30704497094737876,
+      "error_with_the_type": 0.22788324952674535,
+      "share_of_the_squared_error_removed": 0.44916588419824705
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9542157763648301,
+      "median": 0.9680206475808137
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 32,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.38638797890155346,
+      "error_with_the_type": 0.24871113416593835,
+      "share_of_the_squared_error_removed": 0.5856729926673474,
+      "z": 8.555887734249144,
+      "closer": 27,
+      "by_chance": 5.653710104525089e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.33149968638342664,
+      "error_with_the_type": 0.27665773929094606,
+      "share_of_the_squared_error_removed": 0.3035027535550463
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9844110616779791,
+      "median": 0.9853649770571434
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 19,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.48987774002997964,
+      "error_with_the_type": 0.5645551746843138,
+      "share_of_the_squared_error_removed": -0.32812017419736206,
+      "z": -5.056021308815784,
+      "closer": 6,
+      "by_chance": 0.9682159423828125
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3917646412827905,
+      "error_with_the_type": 0.4243845352356708,
+      "share_of_the_squared_error_removed": -0.1734609095184466
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.19814647826808346,
+      "error_with_the_type": 0.19945777077153765,
+      "share_of_the_squared_error_removed": -0.013279382470459183
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "flagged_as_a_missing_edge": 15,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9245514629114517,
+      "median": 0.9573788414162154
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 33,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.39666982377904975,
+      "error_with_the_type": 0.13245838443633154,
+      "share_of_the_squared_error_removed": 0.8884933981358752,
+      "z": 14.177306138609088,
+      "closer": 30,
+      "by_chance": 7.005874067544937e-07
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.28577295123606195,
+      "error_with_the_type": 0.1942710173388677,
+      "share_of_the_squared_error_removed": 0.5378597561946373
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9609576292077342,
+      "median": 0.9761542153459309
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 42,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.412326368440857,
+      "error_with_the_type": 0.3162221468340822,
+      "share_of_the_squared_error_removed": 0.4118307065639382,
+      "z": 9.344499082815735,
+      "closer": 34,
+      "by_chance": 3.438555745560734e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3140048635981797,
+      "error_with_the_type": 0.2439098833620535,
+      "share_of_the_squared_error_removed": 0.3966267568603839
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9794134844834629,
+      "median": 0.9813289889441843
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 23,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.24143393885635542,
+      "error_with_the_type": 0.34021149206790235,
+      "share_of_the_squared_error_removed": -0.9856436893275556,
+      "z": -4.965203635069362,
+      "closer": 5,
+      "by_chance": 0.9987002611160278
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3292796203222617,
+      "error_with_the_type": 0.351655899453837,
+      "share_of_the_squared_error_removed": -0.14052841738207714
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.015875880967888674,
+      "error_with_the_type": 0.14014620610175813,
+      "share_of_the_squared_error_removed": -76.92683232959858,
+      "z": -0.7970279236031305,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.22884171692899916,
+      "error_with_the_type": 0.22747144873301617,
+      "share_of_the_squared_error_removed": 0.011939831068687559
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M2",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 24,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.8905304028699502,
+      "median": 0.9465623121546907
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.43829503565238825,
+      "error_with_the_type": 0.2795085592724157,
+      "share_of_the_squared_error_removed": 0.5933159686121626,
+      "z": 10.558402207218156,
+      "closer": 22,
+      "by_chance": 0.06072474247775972
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.31210279705603866,
+      "error_with_the_type": 0.22637453144251388,
+      "share_of_the_squared_error_removed": 0.4739102901964672
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.966792581717556,
+      "median": 0.9722081023038256
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 28,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.40635541767964467,
+      "error_with_the_type": 0.15889271436144253,
+      "share_of_the_squared_error_removed": 0.8471040929568596,
+      "z": 11.678596802575223,
+      "closer": 25,
+      "by_chance": 1.372024416923523e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.30334473416432034,
+      "error_with_the_type": 0.19304015531127702,
+      "share_of_the_squared_error_removed": 0.5950304252794983
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9821504838100897,
+      "median": 0.9889956540299658
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 17,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.47095022647528484,
+      "error_with_the_type": 0.6507355840794422,
+      "share_of_the_squared_error_removed": -0.9092337000336362,
+      "z": -14.367298615847965,
+      "closer": 3,
+      "by_chance": 0.9988250732421875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.30599643441906155,
+      "error_with_the_type": 0.3911646415785943,
+      "share_of_the_squared_error_removed": -0.6341294234313452
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 1,
+     "events_with_a_pair_it_teaches": [
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.009472861277159805,
+      "error_with_the_type": 0.20468505391589362,
+      "share_of_the_squared_error_removed": -465.8849862997097,
+      "z": -1.2527584090226278,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.20534150527489378,
+      "error_with_the_type": 0.20524956330053207,
+      "share_of_the_squared_error_removed": 0.0008953025902730655
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "refused",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 25,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9253591080485475,
+      "median": 0.9528653828254021
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 35,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4945154839790713,
+      "error_with_the_type": 0.6409873763922046,
+      "share_of_the_squared_error_removed": -0.6801155995227183,
+      "z": -19.394430275967736,
+      "closer": 14,
+      "by_chance": 0.912267375504598
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.35081854534636037,
+      "error_with_the_type": 0.4259730176421425,
+      "share_of_the_squared_error_removed": -0.4743449078326216
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9459320911933353,
+      "median": 0.9641817593282151
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 34,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4627821699860688,
+      "error_with_the_type": 0.27142358206118156,
+      "share_of_the_squared_error_removed": 0.6560130878028894,
+      "z": 13.378971267635583,
+      "closer": 24,
+      "by_chance": 0.012153255054727197
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.333233169254321,
+      "error_with_the_type": 0.2219577369131633,
+      "share_of_the_squared_error_removed": 0.5563462782808366
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9720715867284747,
+      "median": 0.982038588713591
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 16,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.4160301078973958,
+      "error_with_the_type": 0.5907042761863109,
+      "share_of_the_squared_error_removed": -1.0160008304763661,
+      "z": -15.009469486825424,
+      "closer": 2,
+      "by_chance": 0.9997406005859375
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2815662292639998,
+      "error_with_the_type": 0.35763285067535366,
+      "share_of_the_squared_error_removed": -0.6132945968610326
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.20682013162893303,
+      "error_with_the_type": 0.20008330269533778,
+      "share_of_the_squared_error_removed": 0.06408571802350575
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "refused",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1",
+    "M2",
+    "M3"
+   ],
+   "flagged_as_a_missing_edge": 19,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.92792155787474,
+      "median": 0.9611069046893035
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 46,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3499665825651954,
+      "error_with_the_type": 0.206344465123942,
+      "share_of_the_squared_error_removed": 0.6523577957832545,
+      "z": 9.991562050657379,
+      "closer": 35,
+      "by_chance": 0.00026779253605013764
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.33596972529122865,
+      "error_with_the_type": 0.2570752145976816,
+      "share_of_the_squared_error_removed": 0.4145091322648304
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.9662273025908076,
+      "median": 0.9731410372713546
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 51,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.44216920441925384,
+      "error_with_the_type": 0.32167171280018986,
+      "share_of_the_squared_error_removed": 0.4707647550277399,
+      "z": 11.160157427406109,
+      "closer": 39,
+      "by_chance": 9.90197256687253e-05
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.4076000274990287,
+      "error_with_the_type": 0.31386188302062745,
+      "share_of_the_squared_error_removed": 0.40706273925171765
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9752825817567434,
+      "median": 0.9848559045931511
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 18,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.21469845417151223,
+      "error_with_the_type": 0.43240724631519445,
+      "share_of_the_squared_error_removed": -3.056281544263305,
+      "z": -10.37790702138603,
+      "closer": 3,
+      "by_chance": 0.9993438720703125
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.30303984317030935,
+      "error_with_the_type": 0.35245108704931927,
+      "share_of_the_squared_error_removed": -0.3526898884640761
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 3,
+     "events_with_a_pair_it_teaches": [
+      "M1",
+      "M3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.09253847544243962,
+      "error_with_the_type": 0.18815083999640828,
+      "share_of_the_squared_error_removed": -3.133973064098432,
+      "z": -1.3498902634855037,
+      "closer": 1,
+      "by_chance": 0.875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.2956246580179435,
+      "error_with_the_type": 0.29234527938463695,
+      "share_of_the_squared_error_removed": 0.022063041034912745
+     },
+     "why": null
+    }
+   ],
+   "as_planted": {
+    "A": "admitted",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  },
+  {
+   "flagged_as_a_direction_the_law_does_not_cover": [
+    "A1",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "M1"
+   ],
+   "flagged_as_a_missing_edge": 26,
+   "types": [
+    {
+     "members": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9045131342133321,
+      "median": 0.9506506089635548
+     },
+     "events_that_move_the_stage": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "pairs": 100,
+     "pairs_it_teaches": 27,
+     "events_with_a_pair_it_teaches": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.3847843282200926,
+      "error_with_the_type": 0.2768389858810269,
+      "share_of_the_squared_error_removed": 0.48236963070342825,
+      "z": 7.8630953068772875,
+      "closer": 19,
+      "by_chance": 0.026119492948055267
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.23779794976068652,
+      "error_with_the_type": 0.18310737910582817,
+      "share_of_the_squared_error_removed": 0.40708084494190255
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "basis": "flag",
+     "status": "admitted",
+     "cosine": {
+      "smallest": 0.8919251438211735,
+      "median": 0.9196060645469359
+     },
+     "events_that_move_the_stage": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "pairs": 80,
+     "pairs_it_teaches": 30,
+     "events_with_a_pair_it_teaches": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.45642387883484686,
+      "error_with_the_type": 0.34606102194344074,
+      "share_of_the_squared_error_removed": 0.42513130809593236,
+      "z": 7.572443974411675,
+      "closer": 23,
+      "by_chance": 0.002611439675092697
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.32508156160826446,
+      "error_with_the_type": 0.25066142741574615,
+      "share_of_the_squared_error_removed": 0.4054473183283865
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "basis": "flag",
+     "status": "refused",
+     "cosine": {
+      "smallest": 0.9740289400547659,
+      "median": 0.983312018664954
+     },
+     "events_that_move_the_stage": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 11,
+     "events_with_a_pair_it_teaches": [
+      "C1",
+      "C2",
+      "C3"
+     ],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": 0.33886041166949393,
+      "error_with_the_type": 0.5748147050929167,
+      "share_of_the_squared_error_removed": -1.8774916463333484,
+      "z": -13.52889454244933,
+      "closer": 4,
+      "by_chance": 0.88671875
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.3236551335846527,
+      "error_with_the_type": 0.3738203481643524,
+      "share_of_the_squared_error_removed": -0.3340154994696982
+     },
+     "why": null
+    },
+    {
+     "members": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "basis": "made up",
+     "status": "refused",
+     "cosine": null,
+     "events_that_move_the_stage": [
+      "M1",
+      "M2",
+      "M3"
+     ],
+     "pairs": 60,
+     "pairs_it_teaches": 0,
+     "events_with_a_pair_it_teaches": [],
+     "on_the_pairs_it_teaches": {
+      "error_without_the_type": null,
+      "error_with_the_type": null,
+      "share_of_the_squared_error_removed": 0.0,
+      "z": 0.0,
+      "closer": 0,
+      "by_chance": 1.0
+     },
+     "on_all_its_pairs": {
+      "error_without_the_type": 0.18148048943859335,
+      "error_with_the_type": 0.17413123043544632,
+      "share_of_the_squared_error_removed": 0.07935233942603657
+     },
+     "why": "its records teach no pair here"
+    }
+   ],
+   "as_planted": {
+    "A": "refused",
+    "B": "admitted",
+    "C": "refused"
+   },
+   "made_up": "refused",
+   "other_types_proposed": []
+  }
+ ],
+ "summary": {
+  "worlds_the_rule_was_settled_on": {
+   "worlds": 8,
+   "type_A_proposed_as_planted": 8,
+   "type_A_admitted": 8,
+   "type_B_proposed_as_planted": 8,
+   "type_B_admitted": 7,
+   "group_C_proposed": 8,
+   "group_C_refused": 8,
+   "made_up_type_refused": 8,
+   "worlds_with_another_type_proposed": 0,
+   "worlds_with_a_wrong_type_admitted": 0
+  },
+  "worlds_run_once_after": {
+   "worlds": 16,
+   "type_A_proposed_as_planted": 16,
+   "type_A_admitted": 12,
+   "type_B_proposed_as_planted": 16,
+   "type_B_admitted": 15,
+   "group_C_proposed": 16,
+   "group_C_refused": 16,
+   "made_up_type_refused": 16,
+   "worlds_with_another_type_proposed": 0,
+   "worlds_with_a_wrong_type_admitted": 0
+  }
+ }
+}

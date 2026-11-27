@@ -363,6 +363,25 @@ and refused on the library's rows. What it does not test: rule 6a on data never 
 final removes a large protein) and the correction (the graph holds almost nothing about these units, so the three
 systems give the same values). Both are asked in the final audit, which is run only on the owner's word.
 
+**A candidate for the version after: a type is proposed and tested as an edge is**
+([`runs/types_by_rule_20261127`](runs/types_by_rule_20261127/), 27 November; exploratory; version 6 is unchanged).
+The one type of the system was declared by the author. Rule 7a, not frozen:
+
+| | until now | the candidate |
+|---|---|---|
+| 7a | A type is declared. | **Flag, propose, test.** An event flagged as moving the stage where the control readout misreads it seeds a type; every event that moves the stage the same way joins (cosine of the shifts at least 0.5; `events.propose_types`). Rows that did not propose it admit the type if, on the pairs it teaches, the forecast with it is closer more often than chance and the squared error falls; else they refuse it (`account.test_types`). A proposed type enters no forecast. |
+
+On a planted twin (16 worlds run once after the rule was settled) every planted type is proposed with exactly its
+events, no wrong type is admitted, and a true one is refused in 5 of 32 tests. Told of no type, the real library
+proposes exactly the five events declared by hand, and the co-culture's rows admit them (retrospective). Its test on
+data never read needs units that move the state.
+
+**Waiting for the owner's word** (27 November): the final audit of the 133 units
+([`runs/final_audit_design_20261127`](runs/final_audit_design_20261127/); the gate of batch 4 allows it, and it can
+be read once), and the first training experiment
+([`runs/learned_state_design_20261127`](runs/learned_state_design_20261127/); the pooling trained by one constraint
+of the TEG, judged by the loop).
+
 ## Commands
 
 ```
