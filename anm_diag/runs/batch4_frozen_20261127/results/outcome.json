@@ -1,0 +1,1107 @@
+{
+ "pairs": 600,
+ "rehearsal_on_made_up_values": false,
+ "errors": {
+  "pairs": 600,
+  "no_change": 0.09664714922296608,
+  "S0": 0.08615377619289596,
+  "S2": 0.08586428219597955,
+  "S3": 0.08588198445774518
+ },
+ "intervals": {
+  "S2": {
+   "pairs": 600,
+   "inside": 584,
+   "share_inside": 0.9733333333333334,
+   "mean_z2": 0.7866477338589942,
+   "median_z2": 0.35801985353432386,
+   "median_half_width": 0.1883166217387945
+  },
+  "S3": {
+   "pairs": 600,
+   "inside": 581,
+   "share_inside": 0.9683333333333334,
+   "mean_z2": 1.0344685024822275,
+   "median_z2": 0.4763350374840448,
+   "median_half_width": 0.17769700128515298
+  }
+ },
+ "by_how_the_unit_was_chosen": {
+  "by lot": {
+   "errors": {
+    "pairs": 480,
+    "no_change": 0.0918499648486444,
+    "S0": 0.08040396115099092,
+    "S2": 0.08040396115099092,
+    "S3": 0.08040396115099092
+   },
+   "S2": {
+    "pairs": 480,
+    "inside": 474,
+    "share_inside": 0.9875,
+    "mean_z2": 0.6662681641928041,
+    "median_z2": 0.322105308810928,
+    "median_half_width": 0.19067235486566603
+   },
+   "S3": {
+    "pairs": 480,
+    "inside": 472,
+    "share_inside": 0.9833333333333333,
+    "mean_z2": 0.8632961697035099,
+    "median_z2": 0.44122909815515876,
+    "median_half_width": 0.18166865538192903
+   }
+  },
+  "by an item on record": {
+   "errors": {
+    "pairs": 120,
+    "no_change": 0.11383186326263187,
+    "S0": 0.10608099682034387,
+    "S2": 0.10490084322861193,
+    "S3": 0.10497327467942348
+   },
+   "S2": {
+    "pairs": 120,
+    "inside": 110,
+    "share_inside": 0.9166666666666666,
+    "mean_z2": 1.268166012523755,
+    "median_z2": 0.47254868061578226,
+    "median_half_width": 0.18180590531338564
+   },
+   "S3": {
+    "pairs": 120,
+    "inside": 109,
+    "share_inside": 0.9083333333333333,
+    "mean_z2": 1.7191578335970987,
+    "median_z2": 0.6487853729207613,
+    "median_half_width": 0.16907323133626773
+   }
+  }
+ },
+ "by_stratum": {
+  "mel_co": {
+   "errors": {
+    "pairs": 300,
+    "no_change": 0.08931819804811829,
+    "S0": 0.07640793064528847,
+    "S2": 0.0757524615794969,
+    "S3": 0.07579311017811893
+   },
+   "S2": {
+    "pairs": 300,
+    "inside": 293,
+    "share_inside": 0.9766666666666667,
+    "mean_z2": 0.7034789736185306,
+    "median_z2": 0.3031301212853636,
+    "median_half_width": 0.17471489599762163
+   },
+   "S3": {
+    "pairs": 300,
+    "inside": 292,
+    "share_inside": 0.9733333333333334,
+    "mean_z2": 0.9968989525919161,
+    "median_z2": 0.424448550385559,
+    "median_half_width": 0.15947909679750236
+   }
+  },
+  "mel_ctl": {
+   "errors": {
+    "pairs": 300,
+    "no_change": 0.10345821573606258,
+    "S0": 0.09490402751778242,
+    "S2": 0.094904765310855,
+    "S3": 0.09490434636163032
+   },
+   "S2": {
+    "pairs": 300,
+    "inside": 291,
+    "share_inside": 0.97,
+    "mean_z2": 0.8698164940994578,
+    "median_z2": 0.4293328360898945,
+    "median_half_width": 0.20028947409103962
+   },
+   "S3": {
+    "pairs": 300,
+    "inside": 289,
+    "share_inside": 0.9633333333333334,
+    "mean_z2": 1.0720380523725392,
+    "median_z2": 0.5242463491956912,
+    "median_half_width": 0.19377227814856846
+   }
+  }
+ },
+ "pairs_with_an_edge": {
+  "errors": {
+   "pairs": 3,
+   "no_change": 0.11438632981576441,
+   "S0": 0.11179112437102928,
+   "S2": 0.050374759901953114,
+   "S3": 0.050374816345496364
+  },
+  "S2": {
+   "pairs": 3,
+   "inside": 3,
+   "share_inside": 1.0,
+   "mean_z2": 0.10397325053912226,
+   "median_z2": 0.04875574885375751,
+   "median_half_width": 0.3284172471625332
+  },
+  "S3": {
+   "pairs": 3,
+   "inside": 3,
+   "share_inside": 1.0,
+   "mean_z2": 0.09134001705773147,
+   "median_z2": 0.04875574885375751,
+   "median_half_width": 0.35497960266597495
+  },
+  "rows": [
+   {
+    "stratum": "mel_co",
+    "event": "CXCR4",
+    "readout": "CD184",
+    "chosen": "by an item on record",
+    "edge": "own, at the background",
+    "cells": 206,
+    "change": 0.053125039345154335,
+    "se": 0.0722160738130714,
+    "snr": 0.7356400942353432,
+    "S0": -0.03537568353293725,
+    "S2": -0.032610099405561706,
+    "S3": -0.03261021159061429,
+    "interval_S3": [
+     -0.3875898142565892,
+     0.32236939107536067
+    ],
+    "inside_S2": true,
+    "inside_S3": true,
+    "z_S3": 0.47338238752897605
+   },
+   {
+    "stratum": "mel_co",
+    "event": "KDR",
+    "readout": "CD309",
+    "chosen": "by an item on record",
+    "edge": "own, at the background",
+    "cells": 225,
+    "change": -0.1908639270016235,
+    "se": 0.056527523881061324,
+    "snr": 3.3764777562735153,
+    "S0": -0.018702427786759922,
+    "S2": -0.20502431903828117,
+    "S3": -0.20502431903828117,
+    "interval_S3": [
+     -0.3307194436541941,
+     -0.07932919442236824
+    ],
+    "inside_S2": true,
+    "inside_S3": true,
+    "z_S3": 0.2208070398645784
+   },
+   {
+    "stratum": "mel_ctl",
+    "event": "CXCR4",
+    "readout": "CD184",
+    "chosen": "by an item on record",
+    "edge": "own",
+    "cells": 119,
+    "change": -0.0011785203677660036,
+    "se": 0.08883927581387156,
+    "snr": 0.01326575838185735,
+    "S0": 0.003271951805226053,
+    "S2": 0.006683959285746829,
+    "S3": 0.006683820878733706,
+    "interval_S3": [
+     -0.44318063535939317,
+     0.4565482771168606
+    ],
+    "inside_S2": true,
+    "inside_S3": true,
+    "z_S3": -0.03425518204306044
+   }
+  ]
+ },
+ "pairs_with_a_change": {
+  "errors": {
+   "pairs": 2,
+   "no_change": 0.3527376412415245,
+   "S0": 0.34701575453146966,
+   "S2": 0.34701575453146966,
+   "S3": 0.34701575453146966
+  },
+  "S2": {
+   "pairs": 2,
+   "inside": 0,
+   "share_inside": 0.0,
+   "mean_z2": 15.979877201933139,
+   "median_z2": 15.979877201933139,
+   "median_half_width": 0.1702131406478814
+  },
+  "S3": {
+   "pairs": 2,
+   "inside": 0,
+   "share_inside": 0.0,
+   "mean_z2": 22.58770736035389,
+   "median_z2": 22.58770736035389,
+   "median_half_width": 0.15551258601118365
+  },
+  "rows": [
+   {
+    "stratum": "mel_ctl",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "chosen": "by an item on record",
+    "edge": null,
+    "cells": 151,
+    "change": -0.377668245408401,
+    "se": 0.08394743713662121,
+    "snr": 4.498865698469871,
+    "S0": -0.08712146907558622,
+    "S2": -0.08712146907558622,
+    "S3": -0.08712146907558622,
+    "interval_S3": [
+     -0.24483291014448333,
+     0.0705899719933109
+    ],
+    "inside_S2": false,
+    "inside_S3": false,
+    "z_S3": -3.8644349746460285
+   },
+   {
+    "stratum": "mel_co",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "chosen": "by an item on record",
+    "edge": null,
+    "cells": 158,
+    "change": -0.3259054824752242,
+    "se": 0.07729555570522202,
+    "snr": 4.216354737368248,
+    "S0": 0.06959728432761335,
+    "S2": 0.06959728432761335,
+    "S3": 0.06959728432761335,
+    "interval_S3": [
+     -0.08371644662585682,
+     0.22291101528108354
+    ],
+    "inside_S2": false,
+    "inside_S3": false,
+    "z_S3": -5.499232405294427
+   }
+  ]
+ },
+ "outside_S3": [
+  {
+   "stratum": "mel_co",
+   "event": "TXNDC17",
+   "readout": "CD49f",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 158,
+   "change": -0.3259054824752242,
+   "se": 0.07729555570522202,
+   "snr": 4.216354737368248,
+   "S0": 0.06959728432761335,
+   "S2": 0.06959728432761335,
+   "S3": 0.06959728432761335,
+   "interval_S3": [
+    -0.08371644662585682,
+    0.22291101528108354
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -5.499232405294427
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "TXNDC17",
+   "readout": "CD49f",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 151,
+   "change": -0.377668245408401,
+   "se": 0.08394743713662121,
+   "snr": 4.498865698469871,
+   "S0": -0.08712146907558622,
+   "S2": -0.08712146907558622,
+   "S3": -0.08712146907558622,
+   "interval_S3": [
+    -0.24483291014448333,
+    0.0705899719933109
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -3.8644349746460285
+  },
+  {
+   "stratum": "mel_co",
+   "event": "TXNDC17",
+   "readout": "MHC1",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 158,
+   "change": 0.20245468131831046,
+   "se": 0.07716533671955314,
+   "snr": 2.6236479995429076,
+   "S0": -0.06437309774526567,
+   "S2": -0.06437309774526567,
+   "S3": -0.06437309774526567,
+   "interval_S3": [
+    -0.23114094345790334,
+    0.102394747967372
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 3.4107691265916054
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "TXNDC17",
+   "readout": "CD29",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 151,
+   "change": -0.31987489920407375,
+   "se": 0.08045487561565785,
+   "snr": 3.9758298891934496,
+   "S0": -0.05006767487389008,
+   "S2": -0.05006767487389008,
+   "S3": -0.05006767487389008,
+   "interval_S3": [
+    -0.2180294042548731,
+    0.11789405450709295
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -3.369584713927046
+  },
+  {
+   "stratum": "mel_co",
+   "event": "TXNDC17",
+   "readout": "CD29",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 158,
+   "change": -0.2026607812928315,
+   "se": 0.08133139864686552,
+   "snr": 2.4917901900687647,
+   "S0": 0.013135816609199002,
+   "S2": 0.013135816609199002,
+   "S3": 0.013135816609199002,
+   "interval_S3": [
+    -0.13798502888329722,
+    0.1642566621016952
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -3.0440642826461812
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "TXNDC17",
+   "readout": "CD61",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 151,
+   "change": 0.3132347809834436,
+   "se": 0.08366294353936653,
+   "snr": 3.744008610407725,
+   "S0": 0.03611670012532894,
+   "S2": 0.03611670012532894,
+   "S3": 0.03611670012532894,
+   "interval_S3": [
+    -0.15793636067707167,
+    0.23016976092772956
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.9955564511607014
+  },
+  {
+   "stratum": "mel_co",
+   "event": "TXNDC17",
+   "readout": "CD47",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 158,
+   "change": 0.16705106578140097,
+   "se": 0.07744317673947149,
+   "snr": 2.1570792007071407,
+   "S0": -0.05566263209751991,
+   "S2": -0.05566263209751991,
+   "S3": -0.05566263209751991,
+   "interval_S3": [
+    -0.22398424112271603,
+    0.1126589769276762
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.8205945039239486
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "FBXO32",
+   "readout": "CD47",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 141,
+   "change": 0.29156698254573765,
+   "se": 0.07868256958548428,
+   "snr": 3.705610837085921,
+   "S0": 0.04632810349958318,
+   "S2": 0.04632810349958318,
+   "S3": 0.04632810349958318,
+   "interval_S3": [
+    -0.13882466599114984,
+    0.23148087299031622
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.778383893259486
+  },
+  {
+   "stratum": "mel_co",
+   "event": "TTLL1",
+   "readout": "CD61",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 240,
+   "change": -0.19436662413741615,
+   "se": 0.06108122659869925,
+   "snr": 3.1821008673318825,
+   "S0": 0.011700103056821336,
+   "S2": 0.011700103056821336,
+   "S3": 0.011700103056821336,
+   "interval_S3": [
+    -0.14767724373032956,
+    0.17107744984397225
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -2.756226356353111
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "IDI2-AS1",
+   "readout": "CD172a",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 150,
+   "change": -0.21083011350783845,
+   "se": 0.09867134984372904,
+   "snr": 2.1366902737394504,
+   "S0": 0.01725738612059375,
+   "S2": 0.01725738612059375,
+   "S3": 0.01725738612059375,
+   "interval_S3": [
+    -0.17624698972285727,
+    0.21076176196404475
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -2.4725429064795765
+  },
+  {
+   "stratum": "mel_co",
+   "event": "TTLL1",
+   "readout": "CD279",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 240,
+   "change": -0.19363392534071644,
+   "se": 0.057656467123423566,
+   "snr": 3.358407738132997,
+   "S0": -0.013465009508421659,
+   "S2": -0.013465009508421659,
+   "S3": -0.013465009508421659,
+   "interval_S3": [
+    -0.1704160328584817,
+    0.14348601384163837
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": -2.4470864592969734
+  },
+  {
+   "stratum": "mel_co",
+   "event": "TXNDC17",
+   "readout": "CD58",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 158,
+   "change": 0.2226294523749807,
+   "se": 0.07696385066173182,
+   "snr": 2.8926496070664656,
+   "S0": 0.014380896575150005,
+   "S2": 0.014380896575150005,
+   "S3": 0.014380896575150005,
+   "interval_S3": [
+    -0.17271299186555175,
+    0.20147478501585178
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.37277193842526
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "IDI2-AS1",
+   "readout": "PDL1",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 150,
+   "change": 0.15553435510146735,
+   "se": 0.08835908511890166,
+   "snr": 1.7602531181957162,
+   "S0": -0.04260172111491546,
+   "S2": -0.04260172111491546,
+   "S3": -0.04260172111491546,
+   "interval_S3": [
+    -0.21787921453842352,
+    0.13267577230859257
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.3712128898162352
+  },
+  {
+   "stratum": "mel_co",
+   "event": "DAG1",
+   "readout": "CD9",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 188,
+   "change": 0.21526665731206576,
+   "se": 0.06862930199838764,
+   "snr": 3.1366581189638674,
+   "S0": 0.04742669482563579,
+   "S2": 0.04742669482563579,
+   "S3": 0.04742669482563579,
+   "interval_S3": [
+    -0.1090890802430781,
+    0.20394246989434966
+   ],
+   "inside_S2": true,
+   "inside_S3": false,
+   "z_S3": 2.285971744468561
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "TXNDC17",
+   "readout": "CD59",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 151,
+   "change": 0.15794389247871288,
+   "se": 0.07682759359138001,
+   "snr": 2.05582246033584,
+   "S0": -0.04468691965903817,
+   "S2": -0.04468691965903817,
+   "S3": -0.04468691965903817,
+   "interval_S3": [
+    -0.23175989673446726,
+    0.1423860574163909
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.2721006725747985
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "VAT1",
+   "readout": "PDL1",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 125,
+   "change": 0.19661250621483362,
+   "se": 0.091846992742612,
+   "snr": 2.1406526261106,
+   "S0": -0.006230724369704336,
+   "S2": -0.006230724369704336,
+   "S3": -0.006230724369704336,
+   "interval_S3": [
+    -0.1951370242900379,
+    0.18267557555062922
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.2524088232496924
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "TXNDC17",
+   "readout": "MHC1",
+   "chosen": "by an item on record",
+   "edge": null,
+   "cells": 151,
+   "change": 0.19439897368044154,
+   "se": 0.08556376684392505,
+   "snr": 2.271977740707002,
+   "S0": 0.0003371575526774431,
+   "S2": 0.0003371575526774431,
+   "S3": 0.0003371575526774431,
+   "interval_S3": [
+    -0.1814314799321369,
+    0.18210579503749177
+   ],
+   "inside_S2": false,
+   "inside_S3": false,
+   "z_S3": 2.2395165819977634
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "GAS5",
+   "readout": "CD49f",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 135,
+   "change": -0.11071871342603792,
+   "se": 0.08582845481221005,
+   "snr": 1.2900000782757535,
+   "S0": 0.05853159520017168,
+   "S2": 0.05853159520017168,
+   "S3": 0.05853159520017168,
+   "interval_S3": [
+    -0.10200613602315464,
+    0.219069326423498
+   ],
+   "inside_S2": true,
+   "inside_S3": false,
+   "z_S3": -2.2114926027993165
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "IDI2-AS1",
+   "readout": "CD309",
+   "chosen": "by lot",
+   "edge": null,
+   "cells": 150,
+   "change": -0.15778156566374674,
+   "se": 0.07293296642520616,
+   "snr": 2.1633778714534264,
+   "S0": 0.035722283351832335,
+   "S2": 0.035722283351832335,
+   "S3": 0.035722283351832335,
+   "interval_S3": [
+    -0.15602073973515604,
+    0.2274653064388207
+   ],
+   "inside_S2": true,
+   "inside_S3": false,
+   "z_S3": -2.1169138317151583
+  }
+ ],
+ "outside_S3_by_unit": {
+  "mel_co|DAG1": 1,
+  "mel_co|TTLL1": 2,
+  "mel_co|TXNDC17": 5,
+  "mel_ctl|FBXO32": 1,
+  "mel_ctl|GAS5": 1,
+  "mel_ctl|IDI2-AS1": 3,
+  "mel_ctl|TXNDC17": 5,
+  "mel_ctl|VAT1": 1
+ },
+ "outside_S3_by_readout": {
+  "mel_co|CD9": 1,
+  "mel_co|CD61": 1,
+  "mel_co|CD279": 1,
+  "mel_co|MHC1": 1,
+  "mel_co|CD29": 1,
+  "mel_co|CD47": 1,
+  "mel_co|CD49f": 1,
+  "mel_co|CD58": 1,
+  "mel_ctl|CD47": 1,
+  "mel_ctl|CD49f": 2,
+  "mel_ctl|PDL1": 2,
+  "mel_ctl|CD172a": 1,
+  "mel_ctl|CD309": 1,
+  "mel_ctl|MHC1": 1,
+  "mel_ctl|CD29": 1,
+  "mel_ctl|CD59": 1,
+  "mel_ctl|CD61": 1
+ },
+ "hypotheses": {
+  "H1_the_intervals_of_version_6_hold": {
+   "pairs": 600,
+   "inside": 581,
+   "share_inside": 0.9683333333333334,
+   "mean_z2": 1.0344685024822275,
+   "median_z2": 0.4763350374840448,
+   "median_half_width": 0.17769700128515298,
+   "asked": {
+    "share_inside_at_least": 0.9,
+    "median_z2_between": [
+     0.23,
+     0.91
+    ],
+    "refuted_below": 0.85,
+    "or_median_z2_outside": [
+     0.15,
+     1.4
+    ]
+   },
+   "outcome": "holds",
+   "S2_for_comparison": {
+    "pairs": 600,
+    "inside": 584,
+    "share_inside": 0.9733333333333334,
+    "mean_z2": 0.7866477338589942,
+    "median_z2": 0.35801985353432386,
+    "median_half_width": 0.1883166217387945,
+    "as_if_scored": "holds"
+   },
+   "by_lot": {
+    "pairs": 480,
+    "inside": 472,
+    "share_inside": 0.9833333333333333,
+    "mean_z2": 0.8632961697035099,
+    "median_z2": 0.44122909815515876,
+    "median_half_width": 0.18166865538192903,
+    "as_if_scored": "holds"
+   },
+   "by_stratum": {
+    "mel_co": {
+     "pairs": 300,
+     "inside": 292,
+     "share_inside": 0.9733333333333334,
+     "mean_z2": 0.9968989525919161,
+     "median_z2": 0.424448550385559,
+     "median_half_width": 0.15947909679750236,
+     "as_if_scored": "holds"
+    },
+    "mel_ctl": {
+     "pairs": 300,
+     "inside": 289,
+     "share_inside": 0.9633333333333334,
+     "mean_z2": 1.0720380523725392,
+     "median_z2": 0.5242463491956912,
+     "median_half_width": 0.19377227814856846,
+     "as_if_scored": "holds"
+    }
+   }
+  }
+ },
+ "expected_before_the_states": {
+  "H1_holds": 0.7,
+  "H1_unresolved": 0.2,
+  "H1_refuted": 0.1,
+  "the_errors_of_the_three_systems_agree_to_two_digits": 0.9,
+  "at_least_one_of_the_three_edge_tests_admits": 0.5
+ },
+ "expectations": {
+  "the_errors_of_the_three_systems_agree_to_two_digits": true,
+  "at_least_one_of_the_three_edge_tests_admits": true
+ },
+ "edges": {
+  "tests": 3,
+  "admitted": [
+   "TXNDC17->CD49f@mel_co",
+   "TXNDC17->CD49f@mel_ctl"
+  ],
+  "refused": [
+   "DAG1->PDL1@mel_co"
+  ],
+  "undecided": [],
+  "with_no_row_in_the_batch": [],
+  "rows": [
+   {
+    "edge": "TXNDC17->CD49f@mel_co",
+    "status": "admitted",
+    "proposed_with_z": -4.474445625699862,
+    "change": -0.3259054824752242,
+    "forecast_without_the_edge": 0.06959728432761335,
+    "sd": 0.0719196312601854,
+    "z": -5.499232405294427,
+    "same_side_as_proposed": true,
+    "scale_of_the_readout_here": 3.2988607512525108,
+    "direct_part": -0.3955027668028376,
+    "inside_the_interval_of_S3": false
+   },
+   {
+    "edge": "DAG1->PDL1@mel_co",
+    "status": "refused",
+    "proposed_with_z": -3.8889876735141953,
+    "change": -0.14450716585460965,
+    "forecast_without_the_edge": -0.04677717905119703,
+    "sd": 0.06884978904050094,
+    "z": -1.4194667574932276,
+    "same_side_as_proposed": true,
+    "scale_of_the_readout_here": 3.126682937319764,
+    "direct_part": -0.09772998680341263,
+    "inside_the_interval_of_S3": true
+   },
+   {
+    "edge": "TXNDC17->CD49f@mel_ctl",
+    "status": "admitted",
+    "proposed_with_z": -4.474445625699862,
+    "change": -0.377668245408401,
+    "forecast_without_the_edge": -0.08712146907558622,
+    "sd": 0.07518480146232194,
+    "z": -3.8644349746460285,
+    "same_side_as_proposed": true,
+    "scale_of_the_readout_here": 2.6230499482020266,
+    "direct_part": -0.2905467763328148,
+    "inside_the_interval_of_S3": false
+   }
+  ]
+ },
+ "accounts": {
+  "pairs_with_a_change": 2,
+  "accounts": 2,
+  "what_they_say": {
+   "not in the input 80%; lost before the state 40% (unresolved: held not read -1%)": 1,
+   "not in the input 59% (unresolved: lost before the state 20%; held not read 3%)": 1
+  },
+  "rows": [
+   {
+    "pair": "mel_co|TXNDC17|CD49f",
+    "chosen": "by an item on record",
+    "change": -0.3259054824752242,
+    "snr": 4.216354737368248,
+    "carried": {
+     "V": 0.19821443081757883,
+     "Z": -0.20357625500057175,
+     "T": -0.13260691192323626,
+     "R": -0.012797094063827119
+    },
+    "says": "not in the input 80%; lost before the state 40% (unresolved: held not read -1%)"
+   },
+   {
+    "pair": "mel_ctl|TXNDC17|CD49f",
+    "chosen": "by an item on record",
+    "change": -0.377668245408401,
+    "snr": 4.498865698469871,
+    "carried": {
+     "V": 0.4077109033087758,
+     "Z": 0.20473368921810242
+    },
+    "says": "not in the input 59% (unresolved: lost before the state 20%; held not read 3%)"
+   }
+  ],
+  "open_parts": [
+   {
+    "id": "P01",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "group": "mel_co",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 80% of the change",
+    "state": "on the graph",
+    "note": "on the graph: an edge of class 'flagged' (flag)"
+   },
+   {
+    "id": "P02",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "group": "mel_co",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 40% of the change",
+    "state": "open",
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+   },
+   {
+    "id": "P03",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "group": "mel_co",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: -1% of the change",
+    "state": "at the margin",
+    "note": "a readout taught by the records of the events of the same type"
+   },
+   {
+    "id": "P04",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "group": "mel_ctl",
+    "reading": "outside the input, undecided",
+    "lever": "E",
+    "question": "not in the input: 59% of the change",
+    "state": "on the graph",
+    "note": "on the graph: an edge of class 'flagged' (flag)"
+   },
+   {
+    "id": "P05",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "group": "mel_ctl",
+    "reading": "lost before the state",
+    "lever": "M",
+    "question": "lost before the state: 20% of the change",
+    "state": "at the margin",
+    "note": "a state kept by type; if that does not bring it back, training of what comes before the state (the owner's decision)"
+   },
+   {
+    "id": "P06",
+    "event": "TXNDC17",
+    "readout": "CD49f",
+    "group": "mel_ctl",
+    "reading": "held, not read",
+    "lever": "M",
+    "question": "held not read: 3% of the change",
+    "state": "at the margin",
+    "note": "a readout taught by the records of the events of the same type"
+   }
+  ]
+ },
+ "by_rule_the_batch_leaves": {
+  "records": {
+   "mel_co": {
+    "units": 15,
+    "pairs": 300
+   },
+   "mel_ctl": {
+    "units": 15,
+    "pairs": 300
+   }
+  },
+  "edges_admitted": [
+   {
+    "edge": "TXNDC17->CD49f@mel_co",
+    "class": "flagged",
+    "direct_part_here": -0.3955027668028376,
+    "scale_here": 3.2988607512525108,
+    "share_here": -0.11989071277187835,
+    "direct_part_under_interferon": -0.253419439197871,
+    "scale_under_interferon": 2.6178777176002495,
+    "share_under_interferon": -0.09680339058394791
+   },
+   {
+    "edge": "TXNDC17->CD49f@mel_ctl",
+    "class": "flagged",
+    "direct_part_here": -0.2905467763328148,
+    "scale_here": 2.6230499482020266,
+    "share_here": -0.11076677229572791,
+    "direct_part_under_interferon": -0.253419439197871,
+    "scale_under_interferon": 2.6178777176002495,
+    "share_under_interferon": -0.09680339058394791
+   }
+  ],
+  "edges_refused": [
+   "DAG1->PDL1@mel_co"
+  ],
+  "edges_still_proposed": [],
+  "own_gene_pairs_now_measured_twice": [
+   {
+    "stratum": "mel_ctl",
+    "event": "CXCR4",
+    "readout": "CD184",
+    "scale": 1.2337384521217476,
+    "share_under_interferon": 0.0027654719423229612,
+    "share_here": -0.003607306042328715
+   }
+  ],
+  "spread_of_a_carried_share": {
+   "before": {
+    "S2": {
+     "pairs": 15,
+     "spread_of_a_carried_share": 0.15505055167783927
+    },
+    "S3": {
+     "pairs": 15,
+     "spread_of_a_carried_share": 0.15596257296826527
+    }
+   },
+   "pairs_added": 3,
+   "of_the_pairs_added_alone": 0.016006381788522546
+  },
+  "the_laws_fitted_again": {
+   "mel_co": {
+    "recorded_events": 38,
+    "spread_with_no_edge": 0.03478404733410643,
+    "spread_from": "643 recorded pairs with no edge and no type",
+    "width": {
+     "quantile": 2.0221493792906893,
+     "pairs": 643,
+     "events": 33
+    },
+    "flags": 2,
+    "flags_of_units_of_the_batch": 0,
+    "flags_that_ask_for_a_record_of_a_type": []
+   },
+   "mel_ctl": {
+    "recorded_events": 32,
+    "spread_with_no_edge": 0.04615644432250509,
+    "spread_from": "564 recorded pairs with no edge and no type",
+    "width": {
+     "quantile": 1.9258280037849198,
+     "pairs": 564,
+     "events": 29
+    },
+    "flags": 0,
+    "flags_of_units_of_the_batch": 0,
+    "flags_that_ask_for_a_record_of_a_type": []
+   }
+  },
+  "edges_proposed_by_the_flags": [
+   {
+    "edge": "TAPBP->CD9@mel_co",
+    "z_here": 3.9827857329602256,
+    "on_the_library's_row": "refused",
+    "z_there": -0.07861572687178456
+   },
+   {
+    "edge": "PFN1->CD9@mel_co",
+    "z_here": -3.829043176710483,
+    "on_the_library's_row": "refused",
+    "z_there": -0.4858035072574322
+   }
+  ],
+  "open_parts": {
+   "count": 6,
+   "by_state_and_lever": {
+    "on the graph | E": 2,
+    "open | M": 1,
+    "at the margin | M": 3
+   }
+  }
+ },
+ "gate_by_the_numbers": {
+  "H1": "holds",
+  "the_turn_by_rule": {
+   "reading.json": true,
+   "by_rule.json": true,
+   "accounts.json": true
+  },
+  "passed": true
+ },
+ "explored_against_the_background": {
+  "all_pairs": {
+   "pairs": 600,
+   "error": {
+    "no_change": 0.10540067566013925,
+    "S0": 0.09649683454591002,
+    "S2": 0.09642079253301758,
+    "S3": 0.09631115982549607
+   },
+   "S3_inside_with_the_error_of_this_measure": 584,
+   "S3_inside_as_scored": 581
+  },
+  "by_stratum": {
+   "mel_co": {
+    "pairs": 300,
+    "error": {
+     "no_change": 0.09670496401211204,
+     "S0": 0.08634031890497357,
+     "S2": 0.08616764798176421,
+     "S3": 0.08592503431417126
+    },
+    "S3_inside_with_the_error_of_this_measure": 292,
+    "S3_inside_as_scored": 292
+   },
+   "mel_ctl": {
+    "pairs": 300,
+    "error": {
+     "no_change": 0.11343171864449493,
+     "S0": 0.10568172730490795,
+     "S2": 0.1056838441138531,
+     "S3": 0.10568144346086965
+    },
+    "S3_inside_with_the_error_of_this_measure": 292,
+    "S3_inside_as_scored": 289
+   }
+  }
+ }
+}

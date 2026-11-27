@@ -1,0 +1,170 @@
+{
+ "pack_sha256": "08b57a6ef505e4f961f39acea82a41e9dce89e198a9f205421334c6aa5b764d7",
+ "strata": {
+  "mel_co": {
+   "recorded_events": 38,
+   "spread_with_no_edge": 0.03478404733410643,
+   "spread_from": "643 recorded pairs with no edge and no type",
+   "width": {
+    "no type": {
+     "quantile": 2.0221493792906893,
+     "pairs": 643,
+     "events": 33
+    },
+    "of a type": {
+     "quantile": null,
+     "pairs": 99,
+     "events": 5
+    },
+    "any": {
+     "quantile": 1.970814709303471,
+     "pairs": 742,
+     "events": 38
+    }
+   },
+   "flags": [
+    {
+     "event": "TAPBP",
+     "readout": "CD9",
+     "flag": "a missing edge",
+     "change": 0.4103748437840729,
+     "forecast": 0.10275637428336129,
+     "z": 3.9827857329602256,
+     "a_unit_of_the_batch": false
+    },
+    {
+     "event": "PFN1",
+     "readout": "CD9",
+     "flag": "a missing edge",
+     "change": -0.384980948601468,
+     "forecast": -0.00887022754351179,
+     "z": -3.829043176710483,
+     "a_unit_of_the_batch": false
+    }
+   ]
+  },
+  "mel_ctl": {
+   "recorded_events": 32,
+   "spread_with_no_edge": 0.04615644432250509,
+   "spread_from": "564 recorded pairs with no edge and no type",
+   "width": {
+    "no type": {
+     "quantile": 1.9258280037849198,
+     "pairs": 564,
+     "events": 29
+    },
+    "of a type": {
+     "quantile": null,
+     "pairs": 59,
+     "events": 3
+    },
+    "any": {
+     "quantile": 1.9004627316645186,
+     "pairs": 623,
+     "events": 32
+    }
+   },
+   "flags": []
+  }
+ },
+ "edges": {
+  "proposed": [
+   {
+    "edge_id": "TAPBP->CD9@mel_co",
+    "kind": "edge",
+    "site": "TAPBP",
+    "readout": "CD9",
+    "class": "flagged",
+    "basis": "flag",
+    "status": "proposed",
+    "stratum": "mel_co",
+    "scale": null,
+    "share": null,
+    "evidence": {
+     "change": 0.4103748437840729,
+     "forecast": 0.10275637428336129,
+     "z": 3.9827857329602256,
+     "shift_times_noise": 1.3307777754375247,
+     "direct": 0.30761846950071164
+    },
+    "provenance": "flagged by the law of a library"
+   },
+   {
+    "edge_id": "PFN1->CD9@mel_co",
+    "kind": "edge",
+    "site": "PFN1",
+    "readout": "CD9",
+    "class": "flagged",
+    "basis": "flag",
+    "status": "proposed",
+    "stratum": "mel_co",
+    "scale": null,
+    "share": null,
+    "evidence": {
+     "change": -0.384980948601468,
+     "forecast": -0.00887022754351179,
+     "z": -3.829043176710483,
+     "shift_times_noise": 0.8501151331344254,
+     "direct": -0.3761107210579562
+    },
+    "provenance": "flagged by the law of a library"
+   }
+  ],
+  "tested_on_the_library": [
+   {
+    "edge_id": "TAPBP->CD9@mel_co",
+    "kind": "edge",
+    "site": "TAPBP",
+    "readout": "CD9",
+    "class": "flagged",
+    "basis": "flag",
+    "status": "refused",
+    "stratum": "mel_co",
+    "scale": null,
+    "share": null,
+    "evidence": {
+     "change": 0.4103748437840729,
+     "forecast": 0.10275637428336129,
+     "z": 3.9827857329602256,
+     "shift_times_noise": 1.3307777754375247,
+     "direct": 0.30761846950071164
+    },
+    "provenance": "flagged by the law of a library",
+    "test": {
+     "change": -0.04854417444039627,
+     "forecast_without_the_edge": -0.04334708346970554,
+     "sd": 0.06610752297904382,
+     "z": -0.07861572687178456,
+     "same_side_as_proposed": false
+    }
+   },
+   {
+    "edge_id": "PFN1->CD9@mel_co",
+    "kind": "edge",
+    "site": "PFN1",
+    "readout": "CD9",
+    "class": "flagged",
+    "basis": "flag",
+    "status": "refused",
+    "stratum": "mel_co",
+    "scale": null,
+    "share": null,
+    "evidence": {
+     "change": -0.384980948601468,
+     "forecast": -0.00887022754351179,
+     "z": -3.829043176710483,
+     "shift_times_noise": 0.8501151331344254,
+     "direct": -0.3761107210579562
+    },
+    "provenance": "flagged by the law of a library",
+    "test": {
+     "change": -0.1976631143151433,
+     "forecast_without_the_edge": -0.1480190336127593,
+     "sd": 0.10218963008860513,
+     "z": -0.4858035072574322,
+     "same_side_as_proposed": true
+    }
+   }
+  ]
+ }
+}
