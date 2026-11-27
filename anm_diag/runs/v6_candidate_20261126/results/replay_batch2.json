@@ -1,0 +1,243 @@
+{
+ "note": "retrospective: every value here was read before; nothing is a forecast",
+ "strata": {
+  "mel_co": {
+   "version 5": {
+    "pairs": 30,
+    "with_a_forecast": 30,
+    "inside": 28,
+    "mean_z2": 0.8872493368228617,
+    "median_z2": 0.1515263964312049,
+    "error": {
+     "no_change": 0.4504614137276324,
+     "control_readout": 0.4245594875802216,
+     "forecast": 0.10800457935751921
+    }
+   },
+   "candidate": {
+    "pairs": 30,
+    "with_a_forecast": 30,
+    "inside": 29,
+    "mean_z2": 0.6137235504820868,
+    "median_z2": 0.09872978737381055,
+    "error": {
+     "no_change": 0.4504614137276324,
+     "control_readout": 0.4245594875802216,
+     "forecast": 0.09781390244389992
+    }
+   },
+   "spread_with_no_edge": {
+    "version 5": 0.06140849237002103,
+    "candidate": 0.06140849237002103
+   },
+   "width_from": [
+    "the library's 596 recorded pairs with no edge (no type), each left out"
+   ]
+  },
+  "mel_ctl": {
+   "version 5": {
+    "pairs": 39,
+    "with_a_forecast": 39,
+    "inside": 35,
+    "mean_z2": 1.5771563032011169,
+    "median_z2": 0.24762016130387074,
+    "error": {
+     "no_change": 0.20376493129204404,
+     "control_readout": 0.18554717451545263,
+     "forecast": 0.10455432622020924
+    }
+   },
+   "candidate": {
+    "pairs": 39,
+    "with_a_forecast": 39,
+    "inside": 37,
+    "mean_z2": 1.5540069323068961,
+    "median_z2": 0.25203260066369315,
+    "error": {
+     "no_change": 0.20376493129204404,
+     "control_readout": 0.18554717451545263,
+     "forecast": 0.10377874862733294
+    }
+   },
+   "spread_with_no_edge": {
+    "version 5": 0.017095133235433293,
+    "candidate": 0.013291600280211435
+   },
+   "width_from": [
+    "the library's 596 recorded pairs with no edge (no type), each left out",
+    "the library's 611 recorded pairs with no edge (any), each left out"
+   ]
+  },
+  "thp1": {
+   "version 5": {
+    "pairs": 10,
+    "with_a_forecast": 10,
+    "inside": 10,
+    "mean_z2": 0.34779463953694273,
+    "median_z2": 0.28040846595369945,
+    "error": {
+     "no_change": 0.08076525945319873,
+     "control_readout": 0.023980589012996722,
+     "forecast": 0.023980589012996722
+    }
+   },
+   "candidate": {
+    "pairs": 10,
+    "with_a_forecast": 10,
+    "inside": 10,
+    "mean_z2": 0.3779359483604948,
+    "median_z2": 0.31110296709409135,
+    "error": {
+     "no_change": 0.08076525945319873,
+     "control_readout": 0.023980589012996722,
+     "forecast": 0.023980589012996722
+    }
+   },
+   "spread_with_no_edge": {
+    "version 5": 0.017095133235433293,
+    "candidate": 0.013291600280211435
+   },
+   "width_from": [
+    "the library's 596 recorded pairs with no edge (no type), each left out"
+   ]
+  }
+ },
+ "all": {
+  "version 5": {
+   "pairs": 79,
+   "with_a_forecast": 79,
+   "inside": 73,
+   "mean_z2": 1.159550915505049,
+   "median_z2": 0.17113567105035943,
+   "error": {
+    "no_change": 0.31365506674770244,
+    "control_readout": 0.2924353406014361,
+    "forecast": 0.09949448426179074
+   }
+  },
+  "candidate": {
+   "pairs": 79,
+   "with_a_forecast": 79,
+   "inside": 76,
+   "mean_z2": 1.0480675488359055,
+   "median_z2": 0.16013771018645373,
+   "error": {
+    "no_change": 0.31365506674770244,
+    "control_readout": 0.2924353406014361,
+    "forecast": 0.09498891273294637
+   }
+  },
+  "as_committed_for_the_batch": {
+   "pairs": 79,
+   "inside": 77,
+   "mean_z2": 0.3,
+   "error": 0.231
+  }
+ },
+ "pairs_with_an_edge": [
+  {
+   "stratum": "mel_co",
+   "event": "CD274",
+   "readout": "PDL1",
+   "edge": "own",
+   "change": -2.1162245254831356,
+   "forecast": -1.8981815326956546,
+   "interval": [
+    -3.4299068777721375,
+    -0.36645618761917165
+   ],
+   "inside": true
+  },
+  {
+   "stratum": "mel_co",
+   "event": "HLA-B",
+   "readout": "MHC1",
+   "edge": "own",
+   "change": -0.8319325468989448,
+   "forecast": -0.8937883969591823,
+   "interval": [
+    -4.205314654890031,
+    2.4177378609716658
+   ],
+   "inside": true
+  },
+  {
+   "stratum": "mel_co",
+   "event": "HLA-C",
+   "readout": "MHC1",
+   "edge": "own",
+   "change": -0.628493123737337,
+   "forecast": -0.937229712583698,
+   "interval": [
+    -4.248520703348125,
+    2.3740612781807284
+   ],
+   "inside": true
+  },
+  {
+   "stratum": "mel_co",
+   "event": "HLA-E",
+   "readout": "HLAE",
+   "edge": "own, at the background",
+   "change": -0.46530451210546075,
+   "forecast": -0.273077596233353,
+   "interval": [
+    -0.4342923951067572,
+    -0.11186279735994875
+   ],
+   "inside": false
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "CD274",
+   "readout": "PDL1",
+   "edge": "own",
+   "change": -0.7261694232630305,
+   "forecast": -0.7835370811153005,
+   "interval": [
+    -1.4188111770239127,
+    -0.14826298520668846
+   ],
+   "inside": true
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "HLA-A",
+   "readout": "MHC1",
+   "edge": "own",
+   "change": -0.3299047203079209,
+   "forecast": -0.3083340648467088,
+   "interval": [
+    -2.408236949361688,
+    1.7915688196682704
+   ],
+   "inside": true
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "HLA-B",
+   "readout": "MHC1",
+   "edge": "own",
+   "change": -0.591530512218142,
+   "forecast": -0.6174340145173081,
+   "interval": [
+    -2.7196624571553967,
+    1.4847944281207806
+   ],
+   "inside": true
+  },
+  {
+   "stratum": "mel_ctl",
+   "event": "HLA-E",
+   "readout": "HLAE",
+   "edge": "own, at the background",
+   "change": -0.22655257906556062,
+   "forecast": -0.3247135590842551,
+   "interval": [
+    -0.515504853418616,
+    -0.13392226474989416
+   ],
+   "inside": true
+  }
+ ]
+}

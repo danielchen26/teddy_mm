@@ -533,6 +533,22 @@ MEDIAN_Z2 = 0.4549364                                          # the median of t
 OWN_PART, OWN_SHARE = 1.0, 0.05                                # a direct part of a pair's own: of the order of one spread of the readout; the share of pairs that have one, to begin with
 
 
+MIN_CONFORMAL, MIN_CONFORMAL_EVENTS = 40, 8                    # the recorded pairs, and the events they come from, that a kind needs before its own pairs set the width of its interval
+
+
+def _mixture_half(bulk, wide, share, alpha=ALPHA):
+    """The half-width c of the central (1 - alpha) interval of a mixture of two normals with mean zero: variance `bulk`
+    with weight 1 - share and variance `wide` with weight share. (1 - share) P(|N(0, bulk)| > c) + share P(|N(0, wide)| > c)
+    = alpha."""
+    from math import erfc, sqrt
+    out = lambda c: (1 - share) * erfc(c / sqrt(2 * bulk)) + share * erfc(c / sqrt(2 * wide)) - alpha
+    lo, hi = 0.0, 10.0 * sqrt(wide)
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if out(mid) > 0 else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
 def _calibrated_spread(r2, base):
     """The spread s at which the median of r2 / (base + s^2) is that of the square of a standard normal: how wide a direct
     part has to be for rows left out to stand as far as they do. 0 where they are already as wide as they should be.
@@ -573,9 +589,12 @@ class Law:
     out, are as wide as they should be (the median of their squared z is that of a standard normal): a few pairs with
     a large direct part of their own do not widen it. Such a pair is an edge the graph does not hold yet: left out, it
     stands where a direct part of the order of the readout's own spread would put it and not where a pair with none
-    would be, and by that much its row teaches the readout less (`OWN_PART`)."""
+    would be, and by that much its row teaches the readout less (`OWN_PART`).
+    known: {(event, readout): value}. A part of the direct part that is known by declaration and not asked of the rows
+    (what the arithmetic of a readout gives: `events.derived`). It is taken out of a recorded row before the row
+    teaches anything, and put back into its forecast. None: nothing is known."""
 
-    def __init__(self, x, Y, unit, control="control", edges=None, nu=4.0, min_cells=30, min_class=3, seed=0, types=None, scale=None):
+    def __init__(self, x, Y, unit, control="control", edges=None, nu=4.0, min_cells=30, min_class=3, seed=0, types=None, scale=None, known=None):
         self.events = [str(e) for e in sorted(set(unit.tolist())) if e != control and (unit == e).sum() >= min_cells]
         self.units_only = control is None
         if self.units_only:                                         # no control cells: the reference is the inside of every unit, and the mean of the units
@@ -637,10 +656,15 @@ class Law:
             noise = (own(left) + ref_left) / sd ** 2
             cls = np.array([(edges or {}).get((e, name)) for e in self.events], dtype=object)
             sc = np.array([float((scale or {}).get((e, name), 1.0)) for e in self.events])
-            self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise, "scale": sc,
+            kn = np.array([float((known or {}).get((e, name), 0.0)) for e in self.events])
+            self.r[name] = {"sd": float(sd), "cv": cv, "lam": float(lam), "K0": K0, "change": dy / sd, "se": np.sqrt(se2) / sd, "noise": noise, "scale": sc, "known": kn,
                             "read": self.D @ th / sd, "cls": cls, "tau2": 1.0, "tau": np.ones(len(dy)), "w": np.ones(len(dy)), "own": np.zeros(len(dy)), "th": th, "thGth": float(th @ G @ th), "centre": centre}
         self.classes = sorted({c for q in self.r.values() for c in q["cls"] if c is not None})
         self.sigma0, self.cl, self.fixed, self.own_share = None, {}, False, OWN_SHARE
+
+    def _res(self, q):
+        """What a recorded row shows beyond the control readout and beyond what is known by declaration."""
+        return q["change"] - q["read"] - q["known"]
 
     def _prior(self, q):
         """The readout's prior among the recorded rows: the control prior, widened by the factor the rows of each type chose."""
@@ -667,7 +691,7 @@ class Law:
         `sigma0`: hold the spread at this value. `fallback`: the value to hold it at where this law has fewer than
         MIN_ROWS recorded pairs with no edge and no type (a stratum with too few such rows takes it from a larger
         library). The widening is still chosen by the rows."""
-        res = np.concatenate([q["change"] - q["read"] for q in self.r.values()])
+        res = np.concatenate([self._res(q) for q in self.r.values()])
         cls = np.concatenate([q["cls"] for q in self.r.values()])
         sc = np.concatenate([q["scale"] for q in self.r.values()])
         none = np.array([c is None for c in cls])
@@ -690,7 +714,7 @@ class Law:
         for _ in range(iters):
             Ed2, Ed, W, R2, BASE = [], [], [], [], []
             for q in self.r.values():
-                Vd, rho = self._var_direct(q), q["change"] - q["read"] - self._mean_direct(q)
+                Vd, rho = self._var_direct(q), self._res(q) - self._mean_direct(q)
                 Vd = np.where(np.isfinite(Vd), Vd, 1e6)
                 chosen = {}
                 for g, b in self.groups.items():
@@ -747,7 +771,7 @@ class Law:
         for name, q in self.r.items():
             Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
             V = Vd + q["noise"]
-            rho = q["change"] - q["read"] - self._mean_direct(q)
+            rho = self._res(q) - self._mean_direct(q)
             Si = np.linalg.inv(self._prior(q) + np.diag(V))
             m_loo = rho - (Si @ rho) / np.diag(Si)                  # what the rows of the other events add through the stage
             v_loo = np.maximum(1 / np.diag(Si) - V, 0.0)
@@ -761,14 +785,48 @@ class Law:
                         edge, sd_d, why = float(np.mean(oth) * q["scale"][i]), float(np.std(oth, ddof=1) * np.sqrt(1 + 1 / len(oth)) * q["scale"][i]), None
                     else:
                         edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(oth)} other recorded pairs: its size cannot be forecast"
-                f = q["read"][i] + m_loo[i] + (edge if edge == edge else 0.0)
+                f = q["read"][i] + q["known"][i] + m_loo[i] + (edge if edge == edge else 0.0)
                 sd = float(np.sqrt(v_loo[i] + (sd_d ** 2 if sd_d == sd_d else 0.0) + q["noise"][i]))
                 z = float((q["change"][i] - f) / sd) if why is None else float("nan")
                 rows.append({"event": e, "readout": name, "cells": int(self.n[i]), "edge": c, "type": self.type[i] if self.typed else None, "change": float(q["change"][i]), "se": float(q["se"][i]),
                              "shift_times_noise": float(self.times_noise[i]), "read": float(q["read"][i]), "from_the_other_events": float(m_loo[i]),
                              "by_its_edge": edge, "forecast": float(f), "sd": sd, "interval": [float(f - t95 * sd), float(f + t95 * sd)], "z": z, "no_forecast": why,
-                             "direct": float(q["change"][i] - q["read"][i] - m_loo[i]), "direct_sd": float(np.sqrt(v_loo[i] + q["noise"][i]))})
+                             "known_by_declaration": float(q["known"][i]),
+                             "direct": float(q["change"][i] - q["read"][i] - q["known"][i] - m_loo[i]), "direct_sd": float(np.sqrt(v_loo[i] + q["noise"][i]))})
         return rows
+
+    def _new_noise(self, q, n):
+        """The error of a row not yet measured, of an event with n cells: what the readout leaves among control cells."""
+        return (1 / n + (1 / (n * len(self.events)) if self.units_only else 1 / self._nc)) * q["cv"] / q["sd"] ** 2
+
+    def conformal(self, alpha=ALPHA, minimum=MIN_CONFORMAL, events=MIN_CONFORMAL_EVENTS):
+        """How wide the interval of a pair with no edge has to be, from the recorded pairs with no edge themselves. Each is
+        left out and forecast as a new event is (its row's error taken at what the readout leaves among control cells);
+        how far it then stands, in spreads of that forecast, is its score. A new pair that is exchangeable with the
+        recorded pairs of its kind exceeds the returned quantile with probability `alpha` at most, whatever the shape
+        of their distribution. Nothing about that shape is assumed. The pairs of one event are not independent of each
+        other (they share its cells and its place in the stage), so a kind also needs pairs from `events` events.
+        {"no type" | "of a type" | "any": {"quantile", "pairs", "events"}}; the quantile is None where a kind has too few."""
+        score, kind, who = [], [], []
+        for q in self.r.values():
+            Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
+            V = Vd + q["noise"]
+            rho = self._res(q) - self._mean_direct(q)
+            Si = np.linalg.inv(self._prior(q) + np.diag(V))
+            left_out = (Si @ rho) / np.diag(Si)
+            v_loo = np.maximum(1 / np.diag(Si) - V, 0.0)
+            as_new = np.array([self._new_noise(q, n) for n in self.n])
+            none = np.array([c is None for c in q["cls"]])
+            score += list((np.abs(left_out) / np.sqrt(v_loo + self.sigma0 ** 2 + as_new))[none])
+            kind += list(np.where(self.declared, "of a type", "no type")[none])
+            who += list(np.arange(len(self.events))[none])
+        score, kind, who, out = np.array(score), np.array(kind), np.array(who), {}
+        for k in ("no type", "of a type", "any"):
+            m = np.ones(len(score), bool) if k == "any" else kind == k
+            v, n_events = np.sort(score[m]), int(len(set(who[m].tolist())))
+            rank = int(np.ceil((len(v) + 1) * (1 - alpha)))
+            out[k] = {"quantile": float(v[rank - 1]) if len(v) >= minimum and n_events >= events and rank <= len(v) else None, "pairs": int(len(v)), "events": n_events}
+        return out
 
     def class_values(self):
         """The direct parts of the recorded pairs of every class, as fitted, each as a share of its scale:
@@ -780,7 +838,7 @@ class Law:
                     out.setdefault(c, []).append((self.events[i], name, float(q["direct_dev"][i] / q["scale"][i] + self.cl[c]["mu"])))
         return out
 
-    def new(self, x, unit, edges=None, classes=None, types=None, scale=None, shares=None):
+    def new(self, x, unit, edges=None, classes=None, types=None, scale=None, shares=None, known=None, width=None):
         """Events with no measured change, from the stage of their cells alone: for every pair the part a readout of
         control cells reads, what the rows of the recorded events add through the stage, the part by its edge, and the
         forecast with its spread. `x`, `unit`: the stage and the event of the new cells. `classes`: {class: [values]}, the
@@ -790,7 +848,13 @@ class Law:
         scale: {(event, readout): s} of the new pairs. shares: {(event, readout): (share, its spread)}, the pair's own
         share of its scale where the pair was measured elsewhere (the same knockout in another condition): the edge is
         then forecast at that share of this condition's scale, and its class is not asked. The error of a row not yet
-        measured is taken at what the readout leaves among control cells."""
+        measured is taken at what the readout leaves among control cells.
+        known: {(event, readout): (value, its spread)}, a part of the direct part known by declaration (`events.derived`).
+        width: how the 95% interval of a pair with no edge is formed. None: 1.96 spreads of the forecast, as up to
+        version 5. Else the result of `conformal()` (this law's, or a library's where this law has too few pairs): the
+        quantile of the pair's kind, else of any kind; where neither exists, the central 95% of the mixture the law
+        itself assumes (most pairs with the spread with no edge, a share `own_share` with a direct part of their own),
+        and the row says that its width is assumed. A pair with an edge keeps 1.96 spreads."""
         edges = edges or {}
         vals = {c: [v for _e, _r, v in rows] for c, rows in self.class_values().items()}
         vals.update(classes or {})
@@ -808,7 +872,7 @@ class Law:
                 knn = (q["cv"] / self._nc) * float((dV / (self._w + q["lam"])) @ dV) / q["sd"] ** 2
                 Vd = np.where(np.isfinite(self._var_direct(q)), self._var_direct(q), 1e6)
                 Si = np.linalg.inv(self._prior(q) + np.diag(Vd + q["noise"]))
-                rho = q["change"] - q["read"] - self._mean_direct(q)
+                rho = self._res(q) - self._mean_direct(q)
                 t2 = self._widening(q, tn)
                 add = float(t2 * k @ Si @ rho)
                 var = max(float(t2 * knn - t2 ** 2 * k @ Si @ k), 0.0)
@@ -825,15 +889,24 @@ class Law:
                 else:
                     edge, sd_d, why = float("nan"), float("nan"), f"an edge of class '{c}' with {len(vals.get(c, []))} recorded pairs: its size cannot be forecast"
                 read = float(d @ q["th"] / q["sd"])
-                noise = (1 / n + (1 / (n * len(self.events)) if self.units_only else 1 / self._nc)) * q["cv"] / q["sd"] ** 2
-                f = read + add + (edge if edge == edge else 0.0)
-                sd = float(np.sqrt(var + (sd_d ** 2 if sd_d == sd_d else 0.0) + noise))
+                noise = self._new_noise(q, n)
+                kv, ks = (known or {}).get((str(e), name), (0.0, 0.0))
+                f = read + add + kv + (edge if edge == edge else 0.0)
+                sd = float(np.sqrt(var + (sd_d ** 2 if sd_d == sd_d else 0.0) + noise + ks ** 2))
+                half, how = 1.96 * sd, "1.96 spreads of the forecast"
+                if width is not None and c is None:
+                    k = "of a type" if (self.typed and types is not None and str(e) in types) or not self.typed else "no type"
+                    use = next((j for j in (k, "any") if width.get(j, {}).get("quantile") is not None), None)
+                    if use is not None:
+                        half, how = width[use]["quantile"] * sd, width[use].get("from") or f"the {width[use]['pairs']} recorded pairs with no edge ({use}), each left out"
+                    else:
+                        half, how = _mixture_half(sd ** 2, sd ** 2 - sd_d ** 2 + OWN_PART ** 2, self.own_share), "assumed: the mixture of the law, for want of recorded pairs"
                 out.append({"event": str(e), "readout": name, "cells": n, "edge": c, "type": tn if self.typed else None, "taught_by": int(of_type.sum()), "widening": float(t2), "scale": sn,
                             "size_of_the_edge_from": None if c is None else ("the pair's own share, measured elsewhere" if own is not None else "its class"),
                             "shift_times_noise": float((d ** 2).sum() / (len(d) * (1 / n + 1 / self._nc))),
-                            "read": read, "from_the_recorded_events": add, "by_its_edge": edge, "forecast": float(f), "sd": sd,
-                            "interval": [float(f - 1.96 * sd), float(f + 1.96 * sd)], "no_forecast": why,
-                            "parts_of_the_spread": {"readout": float(np.sqrt(var)), "direct": float(sd_d), "row": float(np.sqrt(noise))}})
+                            "read": read, "from_the_recorded_events": add, "by_its_edge": edge, "known_by_declaration": float(kv), "forecast": float(f), "sd": sd,
+                            "interval": [float(f - half), float(f + half)], "width_from": how, "no_forecast": why,
+                            "parts_of_the_spread": {"readout": float(np.sqrt(var)), "direct": float(sd_d), "row": float(np.sqrt(noise)), "known": float(ks)}})
         return out
 
     def measure(self, y, unit, readout):

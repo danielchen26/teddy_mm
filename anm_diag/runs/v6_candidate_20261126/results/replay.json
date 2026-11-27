@@ -1,0 +1,1799 @@
+{
+ "note": "development: the candidate was made from this batch; nothing here is a test",
+ "library": {
+  "spread_with_no_edge": {
+   "version 5": 0.018129181064224845,
+   "candidate": 0.015272798564265515
+  },
+  "width": {
+   "no type": {
+    "quantile": 2.055247934869072,
+    "pairs": 4007,
+    "events": 201
+   },
+   "of a type": {
+    "quantile": null,
+    "pairs": 99,
+    "events": 5
+   },
+   "any": {
+    "quantile": 2.047394065373666,
+    "pairs": 4106,
+    "events": 206
+   }
+  },
+  "pairs_with_a_known_part": 246,
+  "flags": {
+   "version 5": [
+    "TAPBP->MHC1",
+    "ITGA3->CD49f",
+    "SSR2->CD9",
+    "SSR2->MHC1",
+    "STAT3->MHC1",
+    "CD44->MHC1",
+    "CD44->CD47",
+    "TXNDC17->CD49f",
+    "SSR2->CD59",
+    "NONO->PDL1",
+    "SSR2->CD44",
+    "CD44->CD29",
+    "DAG1->PDL1"
+   ],
+   "candidate": [
+    "TAPBP->MHC1",
+    "ITGA3->CD49f",
+    "SSR2->CD9",
+    "SSR2->MHC1",
+    "STAT3->MHC1",
+    "CD44->MHC1",
+    "CD44->CD47",
+    "TXNDC17->CD49f",
+    "SSR2->CD59",
+    "NONO->PDL1",
+    "SSR2->CD44",
+    "DAG1->PDL1"
+   ]
+  }
+ },
+ "layouts": {
+  "as it was": {
+   "teachers_of_no_type": {},
+   "pairs": 698,
+   "by_set": {
+    "all pairs": {
+     "candidate": {
+      "pairs": 698,
+      "inside": 629,
+      "share_inside": 0.9011461318051576,
+      "mean_z2": 2.3676240680408287,
+      "median_z2": 0.6592719810152475,
+      "error": 0.1270582565840509,
+      "error_of_the_model_alone": 0.24699895029097582,
+      "no_change": 0.26764857840479206
+     },
+     "version 5": {
+      "pairs": 698,
+      "inside": 575,
+      "share_inside": 0.8237822349570201,
+      "mean_z2": 3.0784489148178316,
+      "median_z2": 0.8104667433805615,
+      "error": 0.1375115097567834,
+      "error_of_the_model_alone": 0.24699895029097582,
+      "no_change": 0.26764857840479206
+     }
+    },
+    "pairs on which the systems can differ": {
+     "candidate": {
+      "pairs": 97,
+      "inside": 92,
+      "share_inside": 0.9484536082474226,
+      "mean_z2": 1.6476209472767152,
+      "median_z2": 0.7759744094789933,
+      "error": 0.20438814126930085,
+      "error_of_the_model_alone": 0.5888645336100126,
+      "no_change": 0.6339388950449231
+     },
+     "version 5": {
+      "pairs": 97,
+      "inside": 82,
+      "share_inside": 0.845360824742268,
+      "mean_z2": 2.241688506172765,
+      "median_z2": 0.868811537658858,
+      "error": 0.20933649278020813,
+      "error_of_the_model_alone": 0.5888645336100126,
+      "no_change": 0.6339388950449231
+     }
+    },
+    "own-gene pairs (H3)": {
+     "candidate": {
+      "pairs": 8,
+      "inside": 7,
+      "share_inside": 0.875,
+      "mean_z2": 6.371529821216216,
+      "median_z2": 1.158954297743617,
+      "error": 0.6528762720662408,
+      "error_of_the_model_alone": 1.9823980521290325,
+      "no_change": 2.0015155054339773
+     },
+     "version 5": {
+      "pairs": 8,
+      "inside": 6,
+      "share_inside": 0.75,
+      "mean_z2": 8.047752436390944,
+      "median_z2": 1.5924621063029027,
+      "error": 0.6529322167524934,
+      "error_of_the_model_alone": 1.9823980521290325,
+      "no_change": 2.0015155054339773
+     }
+    },
+    "of the declared type, no edge (H4)": {
+     "candidate": {
+      "pairs": 39,
+      "inside": 35,
+      "share_inside": 0.8974358974358975,
+      "mean_z2": 1.5705636071507203,
+      "median_z2": 0.9480744315374824,
+      "error": 0.09444690387493505,
+      "error_of_the_model_alone": 0.21774474502775545,
+      "no_change": 0.4105582115447455
+     },
+     "version 5": {
+      "pairs": 39,
+      "inside": 30,
+      "share_inside": 0.7692307692307693,
+      "mean_z2": 2.483638680772515,
+      "median_z2": 0.9549777033938693,
+      "error": 0.11238697873463244,
+      "error_of_the_model_alone": 0.21774474502775545,
+      "no_change": 0.4105582115447455
+     }
+    },
+    "no type, no edge, never read (H5)": {
+     "candidate": {
+      "pairs": 580,
+      "inside": 519,
+      "share_inside": 0.8948275862068965,
+      "mean_z2": 2.4914358953964855,
+      "median_z2": 0.6306479089953504,
+      "error": 0.11024116258999515,
+      "error_of_the_model_alone": 0.12234092542685762,
+      "no_change": 0.13590140452581803
+     },
+     "version 5": {
+      "pairs": 580,
+      "inside": 479,
+      "share_inside": 0.8258620689655173,
+      "mean_z2": 3.198285251520953,
+      "median_z2": 0.7658218881073511,
+      "error": 0.12234092542685762,
+      "error_of_the_model_alone": 0.12234092542685762,
+      "no_change": 0.13590140452581803
+     }
+    },
+    "with a change of at least four errors": {
+     "candidate": {
+      "pairs": 48,
+      "inside": 28,
+      "share_inside": 0.5833333333333334,
+      "mean_z2": 16.693756442122112,
+      "median_z2": 2.5880505882769294,
+      "error": 0.36350318385284996,
+      "error_of_the_model_alone": 0.8693707502082769,
+      "no_change": 0.9377249472009851
+     },
+     "version 5": {
+      "pairs": 48,
+      "inside": 21,
+      "share_inside": 0.4375,
+      "mean_z2": 20.985966763627115,
+      "median_z2": 5.32957058185831,
+      "error": 0.3804203293420977,
+      "error_of_the_model_alone": 0.8693707502082769,
+      "no_change": 0.9377249472009851
+     }
+    }
+   },
+   "by_stratum": {
+    "mel_co": {
+     "candidate": {
+      "pairs": 355,
+      "inside": 316,
+      "share_inside": 0.8901408450704226,
+      "mean_z2": 3.168253693979007,
+      "median_z2": 0.7499352290578345,
+      "error": 0.14596973530527935,
+      "error_of_the_model_alone": 0.2870481814447282,
+      "no_change": 0.31706964748545324
+     },
+     "version 5": {
+      "pairs": 355,
+      "inside": 274,
+      "share_inside": 0.7718309859154929,
+      "mean_z2": 4.277571787460058,
+      "median_z2": 0.9549777033938693,
+      "error": 0.15818524496142825,
+      "error_of_the_model_alone": 0.2870481814447282,
+      "no_change": 0.31706964748545324
+     }
+    },
+    "mel_ctl": {
+     "candidate": {
+      "pairs": 295,
+      "inside": 270,
+      "share_inside": 0.9152542372881356,
+      "mean_z2": 1.4909679624282512,
+      "median_z2": 0.5891723936725807,
+      "error": 0.10773120854941443,
+      "error_of_the_model_alone": 0.20946559202115997,
+      "no_change": 0.21314113497290466
+     },
+     "version 5": {
+      "pairs": 295,
+      "inside": 258,
+      "share_inside": 0.8745762711864407,
+      "mean_z2": 1.8379097246810472,
+      "median_z2": 0.6534404370711867,
+      "error": 0.11695578104464298,
+      "error_of_the_model_alone": 0.20946559202115997,
+      "no_change": 0.21314113497290466
+     }
+    },
+    "thp1": {
+     "candidate": {
+      "pairs": 48,
+      "inside": 43,
+      "share_inside": 0.8958333333333334,
+      "mean_z2": 1.8340831086170202,
+      "median_z2": 0.5860080227318136,
+      "error": 0.0764520255490928,
+      "error_of_the_model_alone": 0.09010817461585105,
+      "no_change": 0.13775672644506332
+     },
+     "version 5": {
+      "pairs": 48,
+      "inside": 43,
+      "share_inside": 0.8958333333333334,
+      "mean_z2": 1.8340831086170202,
+      "median_z2": 0.5860080227318136,
+      "error": 0.0764520255490928,
+      "error_of_the_model_alone": 0.09010817461585105,
+      "no_change": 0.13775672644506332
+     }
+    }
+   },
+   "strata": {
+    "mel_co": {
+     "spread_with_no_edge": {
+      "used": 1e-09,
+      "new": 0.015272798564265515
+     },
+     "spread_from": {
+      "used": "33 recorded pairs with no edge and no type",
+      "new": "given"
+     },
+     "pairs_with_a_known_part": 152
+    },
+    "mel_ctl": {
+     "spread_with_no_edge": {
+      "used": 1e-09,
+      "new": 0.015272798564265515
+     },
+     "spread_from": {
+      "used": "28 recorded pairs with no edge and no type",
+      "new": "given"
+     },
+     "pairs_with_a_known_part": 133
+    },
+    "thp1": {
+     "spread_with_no_edge": {
+      "new": 0.020066295662945023
+     },
+     "spread_from": {
+      "new": "given"
+     }
+    }
+   },
+   "width_from": {
+    "the library's 4007 recorded pairs with no edge (no type), each left out": 559,
+    "the library's 4106 recorded pairs with no edge (any), each left out": 83,
+    "assumed: the mixture of the law, for want of recorded pairs": 48
+   },
+   "outside": [
+    {
+     "pair": "mel_co|ITGA3|CD49f",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": 1.1532118080444074,
+     "forecast": 0.05572658807509317,
+     "interval": [
+      -0.057373922243564864,
+      0.1688270983937512
+     ],
+     "z": 19.943360339720396,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD44|CD47",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.680595440814128,
+     "forecast": 0.08962811947213459,
+     "interval": [
+      -0.04395660492120146,
+      0.22321284386547063
+     ],
+     "z": 9.092239941948254,
+     "known_by_declaration": 0.06021439806835605,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|IFNGR1|CD119",
+     "edge": "own",
+     "type": "interferon pathway",
+     "change": -1.4308871872364894,
+     "forecast": -0.18277272610440687,
+     "interval": [
+      -0.55459860251909,
+      0.18905315031027625
+     ],
+     "z": -6.579166483535999,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TAPBP|CD9",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.4103748437840729,
+     "forecast": 0.04202997216031515,
+     "interval": [
+      -0.09743714397165998,
+      0.18149708829229028
+     ],
+     "z": 5.428089844547791,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD9",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": 0.4981197523564586,
+     "forecast": -0.012820023135202972,
+     "interval": [
+      -0.21231857885060038,
+      0.18667853258019443
+     ],
+     "z": 5.263736946145003,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|CD44|CD47",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.4763075567319115,
+     "forecast": 0.07206134314466141,
+     "interval": [
+      -0.09309203477202681,
+      0.2372147210613496
+     ],
+     "z": 5.030633984809858,
+     "known_by_declaration": 0.056468639411354216,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD44|CD29",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.3152733945989413,
+     "forecast": 0.04809277030264305,
+     "interval": [
+      -0.07265912471430383,
+      0.16884466531958994
+     ],
+     "z": 4.547526365900345,
+     "known_by_declaration": 0.05801180796215733,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD58|PDL1",
+     "edge": null,
+     "type": "(CD58)",
+     "change": 0.2738414017276419,
+     "forecast": 0.0591284287024696,
+     "interval": [
+      -0.03891063604262194,
+      0.15716749344756115
+     ],
+     "z": 4.501148552844368,
+     "known_by_declaration": 0.047801862304741614,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|IRF1|PDL2",
+     "edge": null,
+     "type": "(IRF1)",
+     "change": -0.30776550843484063,
+     "forecast": -0.0999230635108657,
+     "interval": [
+      -0.1952224454223651,
+      -0.004623681599366283
+     ],
+     "z": -4.359724769215522,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TAPBP|CD47",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.3422368501790306,
+     "forecast": 0.049035923960689946,
+     "interval": [
+      -0.09057443570016069,
+      0.1886462836215406
+     ],
+     "z": 4.316302884512404,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|PFN1|CD9",
+     "edge": null,
+     "type": "(PFN1)",
+     "change": -0.384980948601468,
+     "forecast": -0.008870227543511798,
+     "interval": [
+      -0.1881114870743259,
+      0.1703710319873023
+     ],
+     "z": -4.312627487442936,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|BRD4|CD86",
+     "edge": null,
+     "type": "(BRD4)",
+     "change": -0.24428430590247702,
+     "forecast": -0.023548808612304222,
+     "interval": [
+      -0.14336324903773182,
+      0.09626563181312338
+     ],
+     "z": -3.6811426562670637,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD119",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": 0.4222514332188831,
+     "forecast": 0.07677704462565355,
+     "interval": [
+      -0.124413997878009,
+      0.2779680871293161
+     ],
+     "z": 3.5291607164541863,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|IRF1|CD86",
+     "edge": null,
+     "type": "(IRF1)",
+     "change": 0.1124779542722504,
+     "forecast": -0.04099828271709984,
+     "interval": [
+      -0.132849539331776,
+      0.05085297389757632
+     ],
+     "z": 3.340400280310987,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD44|CD172a",
+     "edge": null,
+     "type": "(CD44)",
+     "change": -0.182429316123011,
+     "forecast": 0.050472652154702265,
+     "interval": [
+      -0.09494467896337011,
+      0.19588998327277463
+     ],
+     "z": -3.291707292723263,
+     "known_by_declaration": 0.05618691398991246,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD47",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": 0.301221330164666,
+     "forecast": -0.01248815749648013,
+     "interval": [
+      -0.20854854688173408,
+      0.1835722318887738
+     ],
+     "z": 3.2885315523753524,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD44",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.2332266241956656,
+     "forecast": -0.02839569063722306,
+     "interval": [
+      -0.16152539063656,
+      0.10473400936211388
+     ],
+     "z": -3.1621670686209753,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD44|CD9",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.20301409095354164,
+     "forecast": 0.01765270420306375,
+     "interval": [
+      -0.10467059546487334,
+      0.13997600387100084
+     ],
+     "z": 3.114399369192652,
+     "known_by_declaration": 0.04297054314080143,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|MYC|CD86",
+     "edge": null,
+     "type": "(MYC)",
+     "change": -0.2550935197558177,
+     "forecast": 0.025899993169073404,
+     "interval": [
+      -0.15657938052384898,
+      0.2083793668619958
+     ],
+     "z": -3.0733295825227858,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD172a",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.19908976794149907,
+     "forecast": 0.020881078658946416,
+     "interval": [
+      -0.12635254375304347,
+      0.16811470107093632
+     ],
+     "z": -3.070593664685594,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|CD44|CD58",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.3266216506640819,
+     "forecast": 0.08541436090000326,
+     "interval": [
+      -0.08323825687012149,
+      0.254066978670128
+     ],
+     "z": 2.9394194452332085,
+     "known_by_declaration": 0.05242046728162265,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|STX7|CD172a",
+     "edge": null,
+     "type": "(STX7)",
+     "change": -0.19200812204452586,
+     "forecast": 0.012348693558270965,
+     "interval": [
+      -0.13351054104161336,
+      0.15820792815815526
+     ],
+     "z": -2.8795154752882617,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|NONO|CD184",
+     "edge": null,
+     "type": "(NONO)",
+     "change": -0.25211360115485765,
+     "forecast": 0.0034810781699539154,
+     "interval": [
+      -0.18265481398664082,
+      0.18961697032654865
+     ],
+     "z": -2.822187761637621,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|KLF4|CD279",
+     "edge": null,
+     "type": "(KLF4)",
+     "change": 0.25081588585094694,
+     "forecast": 0.00713764347173058,
+     "interval": [
+      -0.17055093143058062,
+      0.18482621837404176
+     ],
+     "z": 2.8185222640102086,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD58|CD61",
+     "edge": null,
+     "type": "(CD58)",
+     "change": -0.08543707655867315,
+     "forecast": 0.09004080588269041,
+     "interval": [
+      -0.03795276158649159,
+      0.21803437335187242
+     ],
+     "z": -2.8177240671852264,
+     "known_by_declaration": 0.07823323637736736,
+     "inside_version_5": true
+    },
+    {
+     "pair": "mel_co|TAPBP|CD140a",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.12588678374443366,
+     "forecast": -0.06213394101062113,
+     "interval": [
+      -0.1997253246724699,
+      0.07545744265122763
+     ],
+     "z": 2.8085276561730033,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|B2M|CD47",
+     "edge": null,
+     "type": "(B2M)",
+     "change": 0.13907273219974794,
+     "forecast": -0.08896879587956603,
+     "interval": [
+      -0.2575543305860831,
+      0.07961673882695104
+     ],
+     "z": 2.780083596527452,
+     "known_by_declaration": 0.09957325717425973,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TOP1MT|CD47",
+     "edge": null,
+     "type": "(TOP1MT)",
+     "change": 0.1456484250837704,
+     "forecast": -0.03265395879798919,
+     "interval": [
+      -0.1651995784182404,
+      0.09989166082226203
+     ],
+     "z": 2.7647507877297617,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|IFNGR1|CD140b",
+     "edge": null,
+     "type": "interferon pathway",
+     "change": 0.34965254670039964,
+     "forecast": 0.1910951084598034,
+     "interval": [
+      0.07197932260202229,
+      0.31021089431758453
+     ],
+     "z": 2.725327761865597,
+     "known_by_declaration": 0.05421355658893986,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|IRF1|CD366",
+     "edge": null,
+     "type": "(IRF1)",
+     "change": 0.18701275584782717,
+     "forecast": 0.060432562566497046,
+     "interval": [
+      -0.03303647208068047,
+      0.15390159721367455
+     ],
+     "z": 2.7072448539574387,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|IFNGR1|CD140a",
+     "edge": null,
+     "type": "interferon pathway",
+     "change": 0.44356335592065854,
+     "forecast": 0.292200418899938,
+     "interval": [
+      0.17709119868479756,
+      0.4073096391150784
+     ],
+     "z": 2.6922220339478065,
+     "known_by_declaration": 0.06174021002160393,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|HLA-E|CD119",
+     "edge": null,
+     "type": "(HLA-E)",
+     "change": -0.1717102634322224,
+     "forecast": 0.011727173315803523,
+     "interval": [
+      -0.12863228698486828,
+      0.15208663361647534
+     ],
+     "z": -2.6860278049405677,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|KLF4|CD47",
+     "edge": null,
+     "type": "(KLF4)",
+     "change": -0.2135398382097083,
+     "forecast": 0.001829438613967717,
+     "interval": [
+      -0.16358901279469235,
+      0.1672478900226278
+     ],
+     "z": -2.6758638933971572,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD47|CD117",
+     "edge": null,
+     "type": "(CD47)",
+     "change": 0.41128065764118105,
+     "forecast": 0.22009415165395968,
+     "interval": [
+      0.07214407111241239,
+      0.36804423219550697
+     ],
+     "z": 2.655866560983224,
+     "known_by_declaration": 0.1433043158183396,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|NONO|CD47",
+     "edge": null,
+     "type": "(NONO)",
+     "change": 0.24419193566345299,
+     "forecast": 0.025817772437241128,
+     "interval": [
+      -0.14544003132264818,
+      0.19707557619713043
+     ],
+     "z": 2.6206866965822386,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|NONO|CD140a",
+     "edge": null,
+     "type": "(NONO)",
+     "change": -0.250894259180092,
+     "forecast": -0.02168289113974194,
+     "interval": [
+      -0.20290042019447563,
+      0.15953463791499173
+     ],
+     "z": -2.599561936809991,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TAPBP|CD59",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.23107587919474015,
+     "forecast": 0.03517762696332061,
+     "interval": [
+      -0.11979596953678362,
+      0.19015122346342483
+     ],
+     "z": 2.5979875761792415,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|CD44|CD29",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.17491904887956444,
+     "forecast": -0.01083015248582963,
+     "interval": [
+      -0.15827914814495217,
+      0.1366188431732929
+     ],
+     "z": 2.5891031729532594,
+     "known_by_declaration": 0.04971883778670136,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|CD274|CD117",
+     "edge": null,
+     "type": "(CD274)",
+     "change": 0.26433646815909845,
+     "forecast": 0.04971778295783702,
+     "interval": [
+      -0.12459678332321197,
+      0.224032349238886
+     ],
+     "z": 2.53045180878933,
+     "known_by_declaration": 0.03900542104273089,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|HLA-B|CD9",
+     "edge": null,
+     "type": "(HLA-B)",
+     "change": 0.3475284776871893,
+     "forecast": 0.16446462166515738,
+     "interval": [
+      0.012281976104675851,
+      0.3166472672256389
+     ],
+     "z": 2.4723030057255877,
+     "known_by_declaration": 0.031070532529871103,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD202b",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.11096209752931492,
+     "forecast": 0.04697660209478521,
+     "interval": [
+      -0.0847682519140705,
+      0.17872145610364093
+     ],
+     "z": -2.4638775357139875,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|HLA-C|CD49f",
+     "edge": null,
+     "type": "(HLA-C)",
+     "change": -0.244498571040164,
+     "forecast": -0.0909924017842427,
+     "interval": [
+      -0.2208303776215123,
+      0.03884557405302691
+     ],
+     "z": -2.429899536852862,
+     "known_by_declaration": 0.01718854865936478,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|B2M|CD117",
+     "edge": null,
+     "type": "(B2M)",
+     "change": 0.2986490086606629,
+     "forecast": 0.09231693202779154,
+     "interval": [
+      -0.0825833890892611,
+      0.2672172531448442
+     ],
+     "z": 2.424601462641969,
+     "known_by_declaration": 0.07859101252405667,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD59",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": -0.27166221394019746,
+     "forecast": -0.03760733879738172,
+     "interval": [
+      -0.23875695639635874,
+      0.16354227880159528
+     ],
+     "z": -2.3914576847088025,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD140b",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.10328681859339298,
+     "forecast": 0.0480561202585427,
+     "interval": [
+      -0.08439191548401012,
+      0.1805041560010955
+     ],
+     "z": -2.348447531053297,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TAPBP|CD184",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.10590121064702446,
+     "forecast": -0.060203632464078165,
+     "interval": [
+      -0.20697805323443805,
+      0.0865707883062817
+     ],
+     "z": 2.3259273242847343,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|PFN1|CD117",
+     "edge": null,
+     "type": "(PFN1)",
+     "change": 0.2506387073396117,
+     "forecast": 0.03543343772718907,
+     "interval": [
+      -0.15489986882388931,
+      0.22576674427826746
+     ],
+     "z": 2.323819167325696,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD274|CD58",
+     "edge": null,
+     "type": "(CD274)",
+     "change": 0.27311759815681746,
+     "forecast": 0.11723695186562672,
+     "interval": [
+      -0.02120718875568464,
+      0.25568109248693804
+     ],
+     "z": 2.3140984872183856,
+     "known_by_declaration": 0.12143581197174667,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|JAK1|CD119",
+     "edge": null,
+     "type": "interferon pathway",
+     "change": 0.1597862321205832,
+     "forecast": 0.468804129292295,
+     "interval": [
+      0.19444047636063772,
+      0.7431677822239522
+     ],
+     "z": -2.305995717738933,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|IFNGR1|CD202b",
+     "edge": null,
+     "type": "interferon pathway",
+     "change": 0.3586820567269342,
+     "forecast": 0.22570894111186038,
+     "interval": [
+      0.10590656162342438,
+      0.3455113206002964
+     ],
+     "z": 2.2724788015652684,
+     "known_by_declaration": 0.05807427674068077,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|KLF4|CD9",
+     "edge": null,
+     "type": "(KLF4)",
+     "change": -0.22128968042558878,
+     "forecast": -0.035583168796623064,
+     "interval": [
+      -0.20387181506945246,
+      0.1327054774762063
+     ],
+     "z": -2.2679659797037246,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|HLAE",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.13373222351880637,
+     "forecast": 0.02209109275795003,
+     "interval": [
+      -0.11988996575539983,
+      0.16407215127129987
+     ],
+     "z": -2.2556216465461945,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|B2M|CD309",
+     "edge": null,
+     "type": "(B2M)",
+     "change": 0.014004982185947656,
+     "forecast": 0.20935164428086156,
+     "interval": [
+      0.02980940941345306,
+      0.38889387914827006
+     ],
+     "z": -2.2361636756423056,
+     "known_by_declaration": 0.09919202145647679,
+     "inside_version_5": true
+    },
+    {
+     "pair": "mel_ctl|SCARB2|CD117",
+     "edge": null,
+     "type": "(SCARB2)",
+     "change": 0.1912074440015725,
+     "forecast": 0.0065718628100277,
+     "interval": [
+      -0.1636890393006453,
+      0.17683276492070069
+     ],
+     "z": 2.228767099451928,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD274|CD61",
+     "edge": null,
+     "type": "(CD274)",
+     "change": 0.021239779311322336,
+     "forecast": 0.1720051981231101,
+     "interval": [
+      0.032448398793250094,
+      0.3115619974529701
+     ],
+     "z": -2.2203168684759227,
+     "known_by_declaration": 0.1408117401661146,
+     "inside_version_5": true
+    },
+    {
+     "pair": "mel_ctl|KLF4|CD49f",
+     "edge": null,
+     "type": "(KLF4)",
+     "change": -0.19182671924218345,
+     "forecast": -0.045189138626066605,
+     "interval": [
+      -0.180974461533296,
+      0.09059618428116278
+     ],
+     "z": -2.2195078104382184,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|HLA-E|CD202b",
+     "edge": null,
+     "type": "(HLA-E)",
+     "change": 0.1762884205639175,
+     "forecast": -0.021388605584282742,
+     "interval": [
+      -0.20828328483456063,
+      0.16550607366599515
+     ],
+     "z": 2.173819508355768,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD44|CD119",
+     "edge": null,
+     "type": "(CD44)",
+     "change": 0.2205167400691519,
+     "forecast": 0.08171229069023393,
+     "interval": [
+      -0.0495937827182716,
+      0.21301836409873948
+     ],
+     "z": 2.1726151009720205,
+     "known_by_declaration": 0.04768713982819828,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|HLA-A|CD9",
+     "edge": null,
+     "type": "(HLA-A)",
+     "change": -0.12690345227886268,
+     "forecast": 0.036465870139678586,
+     "interval": [
+      -0.11843039203159986,
+      0.19136213231095703
+     ],
+     "z": -2.16767311111995,
+     "known_by_declaration": 0.013746790091585217,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|NONO|CD202b",
+     "edge": null,
+     "type": "(NONO)",
+     "change": -0.052991879160896996,
+     "forecast": 0.09867114153880918,
+     "interval": [
+      -0.04514172144459755,
+      0.2424840045222159
+     ],
+     "z": -2.167435538259476,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|NONO|CD44",
+     "edge": null,
+     "type": "(NONO)",
+     "change": 0.2130296116486058,
+     "forecast": 0.029359040587207175,
+     "interval": [
+      -0.1450872715666275,
+      0.20380535274104186
+     ],
+     "z": 2.1639240016566017,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|B2M|CD61",
+     "edge": null,
+     "type": "(B2M)",
+     "change": 0.22733378154908404,
+     "forecast": 0.03988294569795544,
+     "interval": [
+      -0.13954288899693512,
+      0.21930878039284601
+     ],
+     "z": 2.1471709685934335,
+     "known_by_declaration": 0.08613666212020601,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|HLA-B|CD47",
+     "edge": null,
+     "type": "(HLA-B)",
+     "change": 0.312579314758898,
+     "forecast": 0.15466625467795891,
+     "interval": [
+      0.0028369354578745287,
+      0.30649557389804327
+     ],
+     "z": 2.1376009079626654,
+     "known_by_declaration": 0.04353897524215866,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|B2M|CD279",
+     "edge": null,
+     "type": "(B2M)",
+     "change": -0.0484084962550683,
+     "forecast": 0.13388411939109823,
+     "interval": [
+      -0.04360390042020776,
+      0.31137213920240425
+     ],
+     "z": -2.1108834401723353,
+     "known_by_declaration": 0.0857950635240254,
+     "inside_version_5": true
+    },
+    {
+     "pair": "mel_co|ITGA3|CD140a",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.07039674746022162,
+     "forecast": 0.057015565971516545,
+     "interval": [
+      -0.06843383414084625,
+      0.18246496608387935
+     ],
+     "z": -2.087406506710466,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|NONO|PDL1",
+     "edge": null,
+     "type": "(NONO)",
+     "change": -0.06102274513081653,
+     "forecast": -0.18585579353697418,
+     "interval": [
+      -0.3096452444108441,
+      -0.06206634266310422
+     ],
+     "z": 2.0725745459649896,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|STX7|CD47",
+     "edge": null,
+     "type": "(STX7)",
+     "change": 0.12831258668133821,
+     "forecast": 0.0016142471845162001,
+     "interval": [
+      -0.12436647534440987,
+      0.12759496971344225
+     ],
+     "z": 2.066955129126166,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD61",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.1266040362313878,
+     "forecast": 0.01925573597056033,
+     "interval": [
+      -0.12619677640697022,
+      0.16470824834809086
+     ],
+     "z": -2.0610025272058263,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SCARB2|CD49f",
+     "edge": null,
+     "type": "(SCARB2)",
+     "change": -0.21874277294035244,
+     "forecast": -0.08713168456098991,
+     "interval": [
+      -0.21859795124039216,
+      0.04433458211841235
+     ],
+     "z": -2.0575119719280495,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    }
+   ],
+   "the_gate_as_written_for_batch_3": {
+    "H1_share_inside_at_least_0.90": true,
+    "H1_mean_z2_in_0.5_to_2": false,
+    "median_z2": 0.6592719810152475,
+    "error_smaller_than_version_5": true
+   }
+  },
+  "with teachers of no type": {
+   "teachers_of_no_type": {
+    "mel_co": [
+     "CD44",
+     "CDH19",
+     "CTSL",
+     "HLA-B",
+     "HLA-E",
+     "STAT3",
+     "STX7",
+     "TOP1MT"
+    ],
+    "mel_ctl": [
+     "B2M",
+     "CD274",
+     "CD44",
+     "HLA-A",
+     "HLA-B",
+     "KLF4",
+     "SCARB2",
+     "SLC19A1"
+    ],
+    "thp1": [
+     "BRD4",
+     "CMTM6",
+     "ETV7",
+     "MARCH8",
+     "MYC",
+     "SMAD4",
+     "TNFRSF14",
+     "UBE2L6"
+    ]
+   },
+   "pairs": 402,
+   "by_set": {
+    "all pairs": {
+     "candidate": {
+      "pairs": 402,
+      "inside": 385,
+      "share_inside": 0.9577114427860697,
+      "mean_z2": 2.137152194751538,
+      "median_z2": 0.5586210509113254,
+      "error": 0.13377432750378876,
+      "error_of_the_model_alone": 0.2771606265445696,
+      "no_change": 0.30613944009003025
+     },
+     "version 5": {
+      "pairs": 402,
+      "inside": 315,
+      "share_inside": 0.7835820895522388,
+      "mean_z2": 3.574250847310809,
+      "median_z2": 0.9340145250875507,
+      "error": 0.14626553137757134,
+      "error_of_the_model_alone": 0.2771606265445696,
+      "no_change": 0.30613944009003025
+     }
+    },
+    "pairs on which the systems can differ": {
+     "candidate": {
+      "pairs": 95,
+      "inside": 94,
+      "share_inside": 0.9894736842105263,
+      "mean_z2": 1.3864414822908788,
+      "median_z2": 0.5900058738075054,
+      "error": 0.1735818184207038,
+      "error_of_the_model_alone": 0.5165263082786452,
+      "no_change": 0.5682605566570801
+     },
+     "version 5": {
+      "pairs": 95,
+      "inside": 80,
+      "share_inside": 0.8421052631578947,
+      "mean_z2": 2.262462779932997,
+      "median_z2": 0.868811537658858,
+      "error": 0.17962926350610753,
+      "error_of_the_model_alone": 0.5165263082786452,
+      "no_change": 0.5682605566570801
+     }
+    },
+    "own-gene pairs (H3)": {
+     "candidate": {
+      "pairs": 6,
+      "inside": 5,
+      "share_inside": 0.8333333333333334,
+      "mean_z2": 8.100557657677241,
+      "median_z2": 1.158954297743617,
+      "error": 0.608502525458747,
+      "error_of_the_model_alone": 1.96423446910894,
+      "no_change": 1.9892923186724785
+     },
+     "version 5": {
+      "pairs": 6,
+      "inside": 4,
+      "share_inside": 0.6666666666666666,
+      "mean_z2": 10.31203308100066,
+      "median_z2": 1.5924621063029027,
+      "error": 0.6089863555257575,
+      "error_of_the_model_alone": 1.96423446910894,
+      "no_change": 1.9892923186724785
+     }
+    },
+    "of the declared type, no edge (H4)": {
+     "candidate": {
+      "pairs": 39,
+      "inside": 39,
+      "share_inside": 1.0,
+      "mean_z2": 1.137678183060588,
+      "median_z2": 0.6139472699748766,
+      "error": 0.0942582103347602,
+      "error_of_the_model_alone": 0.21774474502775545,
+      "no_change": 0.4105582115447455
+     },
+     "version 5": {
+      "pairs": 39,
+      "inside": 30,
+      "share_inside": 0.7692307692307693,
+      "mean_z2": 2.483638680772515,
+      "median_z2": 0.9549777033938693,
+      "error": 0.11238697873463244,
+      "error_of_the_model_alone": 0.21774474502775545,
+      "no_change": 0.4105582115447455
+     }
+    },
+    "no type, no edge, never read (H5)": {
+     "candidate": {
+      "pairs": 286,
+      "inside": 273,
+      "share_inside": 0.9545454545454546,
+      "mean_z2": 2.376481444740522,
+      "median_z2": 0.4974939303044221,
+      "error": 0.12066495349936485,
+      "error_of_the_model_alone": 0.13571708436476462,
+      "no_change": 0.1529564825899561
+     },
+     "version 5": {
+      "pairs": 286,
+      "inside": 221,
+      "share_inside": 0.7727272727272727,
+      "mean_z2": 4.0056180593125,
+      "median_z2": 0.9326924590399515,
+      "error": 0.13571708436476462,
+      "error_of_the_model_alone": 0.13571708436476462,
+      "no_change": 0.1529564825899561
+     }
+    },
+    "with a change of at least four errors": {
+     "candidate": {
+      "pairs": 40,
+      "inside": 31,
+      "share_inside": 0.775,
+      "mean_z2": 11.964477844257777,
+      "median_z2": 1.7525570523457579,
+      "error": 0.3328807581861227,
+      "error_of_the_model_alone": 0.8225860013257867,
+      "no_change": 0.9059018680324603
+     },
+     "version 5": {
+      "pairs": 40,
+      "inside": 19,
+      "share_inside": 0.475,
+      "mean_z2": 18.465175457406353,
+      "median_z2": 3.859519802241074,
+      "error": 0.3477902982940521,
+      "error_of_the_model_alone": 0.8225860013257867,
+      "no_change": 0.9059018680324603
+     }
+    }
+   },
+   "by_stratum": {
+    "mel_co": {
+     "candidate": {
+      "pairs": 219,
+      "inside": 209,
+      "share_inside": 0.954337899543379,
+      "mean_z2": 2.8808906099932083,
+      "median_z2": 0.596496582350047,
+      "error": 0.15611069907280756,
+      "error_of_the_model_alone": 0.31799620220854485,
+      "no_change": 0.3588386975469955
+     },
+     "version 5": {
+      "pairs": 219,
+      "inside": 152,
+      "share_inside": 0.6940639269406392,
+      "mean_z2": 5.178646193478041,
+      "median_z2": 1.437885135413108,
+      "error": 0.1727391281257038,
+      "error_of_the_model_alone": 0.31799620220854485,
+      "no_change": 0.3588386975469955
+     }
+    },
+    "mel_ctl": {
+     "candidate": {
+      "pairs": 159,
+      "inside": 155,
+      "share_inside": 0.9748427672955975,
+      "mean_z2": 1.1904765096097052,
+      "median_z2": 0.49674968409161957,
+      "error": 0.10500032062864667,
+      "error_of_the_model_alone": 0.2314900676021351,
+      "no_change": 0.23500321867777418
+     },
+     "version 5": {
+      "pairs": 159,
+      "inside": 142,
+      "share_inside": 0.8930817610062893,
+      "mean_z2": 1.5945873975070908,
+      "median_z2": 0.6779790530607408,
+      "error": 0.11102531583626729,
+      "error_of_the_model_alone": 0.2314900676021351,
+      "no_change": 0.23500321867777418
+     }
+    },
+    "thp1": {
+     "candidate": {
+      "pairs": 24,
+      "inside": 21,
+      "share_inside": 0.875,
+      "mean_z2": 1.6222655697359436,
+      "median_z2": 0.42437842126956254,
+      "error": 0.06579107883183129,
+      "error_of_the_model_alone": 0.09459950328417964,
+      "no_change": 0.17021906398359019
+     },
+     "version 5": {
+      "pairs": 24,
+      "inside": 21,
+      "share_inside": 0.875,
+      "mean_z2": 2.049413668484458,
+      "median_z2": 0.5992796895550094,
+      "error": 0.06633192427127671,
+      "error_of_the_model_alone": 0.09459950328417964,
+      "no_change": 0.17021906398359019
+     }
+    }
+   },
+   "strata": {
+    "mel_co": {
+     "spread_with_no_edge": {
+      "used": 1e-09,
+      "new": 0.04055206207767504
+     },
+     "spread_from": {
+      "used": "33 recorded pairs with no edge and no type",
+      "new": "135 recorded pairs with no edge and no type"
+     },
+     "pairs_with_a_known_part": 133
+    },
+    "mel_ctl": {
+     "spread_with_no_edge": {
+      "used": 1e-09,
+      "new": 0.040335572920913276
+     },
+     "spread_from": {
+      "used": "28 recorded pairs with no edge and no type",
+      "new": "135 recorded pairs with no edge"
+     },
+     "pairs_with_a_known_part": 114
+    },
+    "thp1": {
+     "spread_with_no_edge": {
+      "new": 0.03021244472030773
+     },
+     "spread_from": {
+      "new": "24 recorded pairs with no edge and no type"
+     }
+    }
+   },
+   "width_from": {
+    "the library's 4007 recorded pairs with no edge (no type), each left out": 21,
+    "the stratum's own 135 recorded pairs with no edge (no type), each left out": 268,
+    "the stratum's own 186 recorded pairs with no edge (any), each left out": 33,
+    "the stratum's own 135 recorded pairs with no edge (any), each left out": 50,
+    "assumed: the mixture of the law, for want of recorded pairs": 24
+   },
+   "outside": [
+    {
+     "pair": "mel_co|ITGA3|CD49f",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": 1.1532118080444074,
+     "forecast": 0.05572658807509317,
+     "interval": [
+      -0.11358343899493778,
+      0.22503661514512413
+     ],
+     "z": 16.471398837061454,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|IFNGR1|CD119",
+     "edge": "own",
+     "type": "interferon pathway",
+     "change": -1.4308871872364894,
+     "forecast": -0.18395565063873187,
+     "interval": [
+      -0.5582070576593174,
+      0.19029575638185364
+     ],
+     "z": -6.530331659106293,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD9",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": 0.4981197523564586,
+     "forecast": -0.012820023135202972,
+     "interval": [
+      -0.2665009529157222,
+      0.24086090664531623
+     ],
+     "z": 4.9129113005229454,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TAPBP|CD9",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.4103748437840729,
+     "forecast": 0.04202997216031515,
+     "interval": [
+      -0.15506271054387796,
+      0.23912265486450826
+     ],
+     "z": 4.748961064979596,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|CD58|PDL1",
+     "edge": null,
+     "type": "(CD58)",
+     "change": 0.2738414017276419,
+     "forecast": 0.0591284287024696,
+     "interval": [
+      -0.03891063604262194,
+      0.15716749344756115
+     ],
+     "z": 4.501148552844368,
+     "known_by_declaration": 0.047801862304741614,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|PFN1|CD9",
+     "edge": null,
+     "type": "(PFN1)",
+     "change": -0.384980948601468,
+     "forecast": -0.008870227543511798,
+     "interval": [
+      -0.25016443744819705,
+      0.23242398236117345
+     ],
+     "z": -3.9608034780909254,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|IRF1|PDL2",
+     "edge": null,
+     "type": "(IRF1)",
+     "change": -0.30776550843484063,
+     "forecast": -0.0999230635108657,
+     "interval": [
+      -0.20736973799599345,
+      0.00752361097426206
+     ],
+     "z": -3.9399173204835582,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|TAPBP|CD47",
+     "edge": null,
+     "type": "(TAPBP)",
+     "change": 0.3422368501790306,
+     "forecast": 0.049035923960689946,
+     "interval": [
+      -0.14821172214008263,
+      0.24628357006146254
+     ],
+     "z": 3.777182691779297,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD119",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": 0.4222514332188831,
+     "forecast": 0.07677704462565355,
+     "interval": [
+      -0.17877973650365714,
+      0.33233382575496423
+     ],
+     "z": 3.2975051221210196,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|SSR2|CD47",
+     "edge": null,
+     "type": "(SSR2)",
+     "change": 0.301221330164666,
+     "forecast": -0.01248815749648013,
+     "interval": [
+      -0.2623647887147171,
+      0.2373884737217568
+     ],
+     "z": 3.062379736804425,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|IRF1|CD86",
+     "edge": null,
+     "type": "(IRF1)",
+     "change": 0.1124779542722504,
+     "forecast": -0.04099828271709984,
+     "interval": [
+      -0.14528777281553326,
+      0.06329120738133356
+     ],
+     "z": 2.997765070175738,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD44",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.2332266241956656,
+     "forecast": -0.02839569063722306,
+     "interval": [
+      -0.21867111637093284,
+      0.16187973509648673
+     ],
+     "z": -2.735440825103005,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|CD172a",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.19908976794149907,
+     "forecast": 0.020881078658946416,
+     "interval": [
+      -0.18466515708856507,
+      0.2264273144064579
+     ],
+     "z": -2.7193811368152287,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_ctl|NONO|CD184",
+     "edge": null,
+     "type": "(NONO)",
+     "change": -0.25211360115485765,
+     "forecast": 0.0034810781699539154,
+     "interval": [
+      -0.2354653325186212,
+      0.24242748885852902
+     ],
+     "z": -2.6092057624481217,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "thp1|IRF1|CD366",
+     "edge": null,
+     "type": "(IRF1)",
+     "change": 0.18701275584782717,
+     "forecast": 0.060432562566497046,
+     "interval": [
+      -0.04533550087546075,
+      0.16620062600845484
+     ],
+     "z": 2.437722335819167,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|ITGA3|HLAE",
+     "edge": null,
+     "type": "(ITGA3)",
+     "change": -0.13373222351880637,
+     "forecast": 0.02209109275795003,
+     "interval": [
+      -0.11988996575539983,
+      0.16407215127129987
+     ],
+     "z": -2.2556216465461945,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    },
+    {
+     "pair": "mel_co|NONO|PDL1",
+     "edge": null,
+     "type": "(NONO)",
+     "change": -0.06102274513081653,
+     "forecast": -0.18585579353697418,
+     "interval": [
+      -0.3096452444108441,
+      -0.06206634266310422
+     ],
+     "z": 2.0725745459649896,
+     "known_by_declaration": 0.0,
+     "inside_version_5": false
+    }
+   ],
+   "the_gate_as_written_for_batch_3": {
+    "H1_share_inside_at_least_0.90": true,
+    "H1_mean_z2_in_0.5_to_2": false,
+    "median_z2": 0.5586210509113254,
+    "error_smaller_than_version_5": true
+   }
+  }
+ }
+}

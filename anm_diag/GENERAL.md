@@ -433,6 +433,18 @@ says for any system:
 - A criterion on the mean of squared *z* mixes how wide the intervals are with how many edges are missing. The share
   inside and the median do not.
 
+**Before a method meets data never read** ([`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/)). Three
+batches in a row forced a rule to change, because data never read was the only place where a fault of the method
+could show. Two things end that, and neither is particular to this system:
+
+- A planted twin that measures as the real system is measured: real control cells, so that the noise, the
+  background and the arithmetic of the readouts are the real ones, with made-up events whose effect is known. A
+  change of the method is run on it first. It is a twin only if the old method fails on it as it failed on the data.
+- An interval whose width is measured, not assumed: every recorded pair of the same kind is left out and forecast
+  as a new one, and the interval is as wide as the score that 5% of them exceed. That holds whatever the shape of
+  the distribution, as long as a new pair is exchangeable with the recorded ones; so the units a batch adds are
+  drawn by lot, and the rule that draws them is written down.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,
