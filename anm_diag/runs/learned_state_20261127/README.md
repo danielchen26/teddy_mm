@@ -60,8 +60,8 @@ the three hypotheses.
 
 The model is still the one part the loop has not corrected. Two ways on, both the owner's decision:
 
-1. **The same experiment where the rows differ**: the melanoma strata, with 20 readouts, 38 recorded units whose
-   rows go both ways, and three of the pairs that lose a part before the state. It needs a cache of the last layer's
+1. **The same experiment where the rows differ**: the melanoma strata, with 20 readouts, about a hundred recorded
+   units in each whose rows go both ways, and four of the pairs that lose a part before the state. It needs a cache of the last layer's
    input for those cells (tens of GB on the owner's machine) and can end in a test on unread units (188 are left).
 2. **Pooling and last layer together** under this loss, on the THP-1 cells again. Cheap, and limited in what it
    can show for the reason above.
