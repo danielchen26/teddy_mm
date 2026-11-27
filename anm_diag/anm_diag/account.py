@@ -536,6 +536,64 @@ OWN_PART, OWN_SHARE = 1.0, 0.05                                # a direct part o
 MIN_CONFORMAL, MIN_CONFORMAL_EVENTS = 40, 8                    # the recorded pairs, and the events they come from, that a kind needs before its own pairs set the width of its interval
 
 
+MOVED = 4.0                                                     # an event moves the stage when its shift is this many times what noise gives (as in `Law.flags`)
+TAUGHT = 2.0                                                    # a type teaches a pair when it moves the forecast by this many errors of the measured change
+
+
+def test_types(proposals, x, Y, unit, edges=None, scale=None, known=None, types=None, fallback=None, z=1.96, control="control"):
+    """Rule G2 for proposed types (`events.propose_types`): each is asked of rows that did not propose it (another
+    condition, another library, units never read). Every pair with no edge of its events is forecast twice here, the
+    event left out both times: with no type (a readout of control cells alone) and with the type (the rows of its other
+    events teach the readout). A type is judged on what it says: the pairs it teaches, where the two forecasts differ
+    by at least `TAUGHT` errors of the measured change. A pair it leaves as it was (also one that stands far out for a
+    reason of its own, an edge the graph does not hold) says nothing for or against it.
+    Admitted: on the pairs it teaches, of at least two events, the forecast with the type is the closer one more often
+    than chance gives (a sign test, one-sided at 2.5%), and the squared error falls by more than the error of the
+    measured changes explains (more than `z` of its standard errors). Refused: it does not, or it teaches no pair (two
+    events that move the stage in different directions teach each other nothing). Both are asked because each alone
+    can be met by chance: a few pairs can carry a sum of squares, and where events do much any fall is many errors.
+    Undecided: fewer than two of its events move the stage in these rows, so nothing can teach and nothing is asked.
+    types: the types that hold already, {event: type}; they stand in both forecasts."""
+    from math import comb
+    types = dict(types or {})
+    kw = dict(control=control, edges=edges, scale=scale, known=known)
+    base = Law(x, Y, unit, types=types, **kw).fit(fallback=fallback)
+    rows0 = {(r["event"], r["readout"]): r for r in base.forecast()}
+    rms = lambda v: float(np.sqrt(np.mean(np.square(v)))) if len(v) else None
+    out = []
+    for t in proposals:
+        if t["status"] != "proposed":
+            out.append(t)
+            continue
+        here = [e for e in t["members"] if e in base.events]
+        moving = [e for e in here if e in set(base.moving())]
+        if len(moving) < 2:
+            out.append(dict(t, status="undecided", test={"why": "fewer than two of its events move the stage in these rows", "events_with_rows": here, "events_that_move_the_stage": moving}))
+            continue
+        law = Law(x, Y, unit, types={**types, **{e: t["type_id"] for e in here}}, **kw).fit(fallback=fallback)
+        rows1 = {(r["event"], r["readout"]): r for r in law.forecast()}
+        P = [(e, a["change"] - a["forecast"], rows1[(e, r)]["forecast"] - a["forecast"], a["se"]) for (e, r), a in rows0.items() if e in moving and a["edge"] is None]
+        ev = np.array([p[0] for p in P])
+        y, d, se = (np.array([p[k] for p in P], float) for k in (1, 2, 3))     # what the pair shows beyond the control readout; what the type adds to its forecast; the error of its change
+        tau = np.abs(d) >= TAUGHT * se
+        gain, var = (y ** 2 - (y - d) ** 2), 4 * d ** 2 * se ** 2               # the fall of the squared error of a pair, and its variance from the measured change
+        zz = float(gain[tau].sum() / np.sqrt(var[tau].sum())) if tau.any() else 0.0
+        removed = float(gain[tau].sum() / (y[tau] ** 2).sum()) if tau.any() else 0.0
+        teaching = sorted(set(ev[tau].tolist()))
+        n, k = int(tau.sum()), int((np.abs(y - d) < np.abs(y))[tau].sum())
+        chance = float(sum(comb(n, i) for i in range(k, n + 1)) / 2 ** n) if n else 1.0       # how often at least k of n pairs come out closer if each is as likely closer as not
+        ok = len(teaching) >= 2 and zz > z and chance < 0.025
+        test = {"events_with_rows": here, "events_that_move_the_stage": moving, "pairs": len(P), "pairs_it_teaches": int(tau.sum()), "events_with_a_pair_it_teaches": teaching,
+                "on_the_pairs_it_teaches": {"error_without_the_type": rms(y[tau]), "error_with_the_type": rms((y - d)[tau]), "share_of_the_squared_error_removed": removed, "z": zz,
+                                            "closer": k, "by_chance": chance},
+                "on_all_its_pairs": {"error_without_the_type": rms(y), "error_with_the_type": rms(y - d), "share_of_the_squared_error_removed": float(gain.sum() / (y ** 2).sum())},
+                "by_event": {e: {"pairs": int((ev == e).sum()), "taught": int((tau & (ev == e)).sum()), "error_without": rms(y[ev == e]), "error_with": rms((y - d)[ev == e])} for e in moving}}
+        if not tau.any():
+            test["why"] = "its records teach no pair here"
+        out.append(dict(t, status="admitted" if ok else "refused", test=test))
+    return out
+
+
 def _mixture_half(bulk, wide, share, alpha=ALPHA):
     """The half-width c of the central (1 - alpha) interval of a mixture of two normals with mean zero: variance `bulk`
     with weight 1 - share and variance `wide` with weight share. (1 - share) P(|N(0, bulk)| > c) + share P(|N(0, wide)| > c)
@@ -794,6 +852,14 @@ class Law:
                              "known_by_declaration": float(q["known"][i]),
                              "direct": float(q["change"][i] - q["read"][i] - q["known"][i] - m_loo[i]), "direct_sd": float(np.sqrt(v_loo[i] + q["noise"][i]))})
         return rows
+
+    def shifts(self):
+        """{event: how the mean of its cells moved in the stage}, in the units the law reads the stage in."""
+        return {e: self.D[i].copy() for i, e in enumerate(self.events)}
+
+    def moving(self):
+        """The events that move the stage: a shift of at least `MOVED` times what noise gives."""
+        return [e for e, t in zip(self.events, self.times_noise) if t >= MOVED]
 
     def _new_noise(self, q, n):
         """The error of a row not yet measured, of an event with n cells: what the readout leaves among control cells."""

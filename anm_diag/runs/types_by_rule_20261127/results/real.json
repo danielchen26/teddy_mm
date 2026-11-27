@@ -1,0 +1,568 @@
+{
+ "declared_by_hand": [
+  "IFNGR1",
+  "IFNGR2",
+  "JAK1",
+  "JAK2",
+  "STAT1"
+ ],
+ "min_cosine": 0.5,
+ "a_pair_is_taught_from": 2.0,
+ "from": {
+  "library": {
+   "events": 206,
+   "flags": 14,
+   "events_flagged_as_a_direction_the_law_does_not_cover": [
+    "IFNGR2",
+    "JAK1"
+   ],
+   "events_that_move_the_stage": [
+    "ACSL3",
+    "CCND1",
+    "CDK6",
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "NPC1",
+    "PTMA",
+    "STAT1"
+   ],
+   "cosines_of_their_shifts": {
+    "ACSL3|CCND1": 0.5305356730681602,
+    "ACSL3|CDK6": 0.5088248660888025,
+    "ACSL3|IFNGR1": -0.14773119897534612,
+    "ACSL3|IFNGR2": -0.16664536127287385,
+    "ACSL3|JAK1": -0.2678530319228888,
+    "ACSL3|JAK2": -0.04888752518842656,
+    "ACSL3|NPC1": -0.10973057238327975,
+    "ACSL3|PTMA": 0.348113507259884,
+    "ACSL3|STAT1": -0.15341230531748226,
+    "CCND1|CDK6": 0.723929376669407,
+    "CCND1|IFNGR1": -0.24225861264885648,
+    "CCND1|IFNGR2": -0.1975245748380429,
+    "CCND1|JAK1": -0.28676593653374216,
+    "CCND1|JAK2": -0.15980035436627613,
+    "CCND1|NPC1": -0.20535694028382528,
+    "CCND1|PTMA": 0.5899436259901412,
+    "CCND1|STAT1": -0.2077239077464798,
+    "CDK6|IFNGR1": -0.22001051894103496,
+    "CDK6|IFNGR2": -0.12893179593668821,
+    "CDK6|JAK1": -0.18579562473046332,
+    "CDK6|JAK2": -0.09569241923054164,
+    "CDK6|NPC1": 0.1435201310677541,
+    "CDK6|PTMA": 0.4593260827537598,
+    "CDK6|STAT1": -0.11607777479267183,
+    "IFNGR1|IFNGR2": 0.9571524689691635,
+    "IFNGR1|JAK1": 0.951206480386685,
+    "IFNGR1|JAK2": 0.9640573968838922,
+    "IFNGR1|NPC1": 0.17030693725509666,
+    "IFNGR1|PTMA": -0.3220089672166561,
+    "IFNGR1|STAT1": 0.9648084533975381,
+    "IFNGR2|JAK1": 0.9495964552632417,
+    "IFNGR2|JAK2": 0.9703623541454476,
+    "IFNGR2|NPC1": 0.13774702512481365,
+    "IFNGR2|PTMA": -0.21077215719079215,
+    "IFNGR2|STAT1": 0.9732210025161807,
+    "JAK1|JAK2": 0.9430076194523322,
+    "JAK1|NPC1": 0.24959556497674584,
+    "JAK1|PTMA": -0.3739153689505219,
+    "JAK1|STAT1": 0.9603655605626051,
+    "JAK2|NPC1": 0.14212525591397693,
+    "JAK2|PTMA": -0.23051810913767545,
+    "JAK2|STAT1": 0.9716534269258998,
+    "NPC1|PTMA": -0.5623192493684557,
+    "NPC1|STAT1": 0.180815503053176,
+    "PTMA|STAT1": -0.2600549002924496
+   },
+   "proposed": [
+    {
+     "type": "IFNGR1+IFNGR2+JAK1+JAK2+STAT1",
+     "members": [
+      "IFNGR1",
+      "IFNGR2",
+      "JAK1",
+      "JAK2",
+      "STAT1"
+     ],
+     "status": "proposed",
+     "cosine": {
+      "smallest": 0.9430076194523321,
+      "median": 0.9622114787232487
+     },
+     "seeded_by": {
+      "IFNGR2": [
+       "CD119"
+      ],
+      "JAK1": [
+       "CD309"
+      ]
+     },
+     "joined_by_direction": [
+      "IFNGR1",
+      "JAK2",
+      "STAT1"
+     ],
+     "events_that_move_the_stage": null,
+     "pairs": null,
+     "pairs_it_teaches": null,
+     "events_with_a_pair_it_teaches": null,
+     "on_the_pairs_it_teaches": null,
+     "on_all_its_pairs": null,
+     "by_event": null,
+     "why": null
+    }
+   ],
+   "the_same_events_as_declared_by_hand": true,
+   "asked_of": {
+    "mel_co": [
+     {
+      "type": "IFNGR1+IFNGR2+JAK1+JAK2+STAT1",
+      "members": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "status": "admitted",
+      "cosine": {
+       "smallest": 0.9430076194523321,
+       "median": 0.9622114787232487
+      },
+      "seeded_by": {
+       "IFNGR2": [
+        "CD119"
+       ],
+       "JAK1": [
+        "CD309"
+       ]
+      },
+      "joined_by_direction": [
+       "IFNGR1",
+       "JAK2",
+       "STAT1"
+      ],
+      "events_that_move_the_stage": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "pairs": 99,
+      "pairs_it_teaches": 48,
+      "events_with_a_pair_it_teaches": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "on_the_pairs_it_teaches": {
+       "error_without_the_type": 0.4500981209213183,
+       "error_with_the_type": 0.09209628971742488,
+       "share_of_the_squared_error_removed": 0.9581331902830306,
+       "z": 25.563387628363003,
+       "closer": 44,
+       "by_chance": 7.569163074094831e-10
+      },
+      "on_all_its_pairs": {
+       "error_without_the_type": 0.3181214065911806,
+       "error_with_the_type": 0.0769316674084429,
+       "share_of_the_squared_error_removed": 0.9415176921334285
+      },
+      "by_event": {
+       "IFNGR1": {
+        "pairs": 19,
+        "taught": 9,
+        "error_without": 0.2897765542813505,
+        "error_with": 0.062031228669722764
+       },
+       "IFNGR2": {
+        "pairs": 20,
+        "taught": 10,
+        "error_without": 0.3082338265059567,
+        "error_with": 0.04806931880941826
+       },
+       "JAK1": {
+        "pairs": 20,
+        "taught": 10,
+        "error_without": 0.3221087236633696,
+        "error_with": 0.11453678696153828
+       },
+       "JAK2": {
+        "pairs": 20,
+        "taught": 10,
+        "error_without": 0.3144888835689794,
+        "error_with": 0.04982857899112367
+       },
+       "STAT1": {
+        "pairs": 20,
+        "taught": 9,
+        "error_without": 0.3514381550138693,
+        "error_with": 0.08791348731789458
+       }
+      },
+      "why": null
+     },
+     {
+      "type": "declared by hand",
+      "members": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "status": "admitted",
+      "cosine": null,
+      "seeded_by": null,
+      "joined_by_direction": null,
+      "events_that_move_the_stage": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "pairs": 99,
+      "pairs_it_teaches": 48,
+      "events_with_a_pair_it_teaches": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "on_the_pairs_it_teaches": {
+       "error_without_the_type": 0.4500981209213183,
+       "error_with_the_type": 0.09209628971742488,
+       "share_of_the_squared_error_removed": 0.9581331902830306,
+       "z": 25.563387628363003,
+       "closer": 44,
+       "by_chance": 7.569163074094831e-10
+      },
+      "on_all_its_pairs": {
+       "error_without_the_type": 0.3181214065911806,
+       "error_with_the_type": 0.0769316674084429,
+       "share_of_the_squared_error_removed": 0.9415176921334285
+      },
+      "by_event": {
+       "IFNGR1": {
+        "pairs": 19,
+        "taught": 9,
+        "error_without": 0.2897765542813505,
+        "error_with": 0.062031228669722764
+       },
+       "IFNGR2": {
+        "pairs": 20,
+        "taught": 10,
+        "error_without": 0.3082338265059567,
+        "error_with": 0.04806931880941826
+       },
+       "JAK1": {
+        "pairs": 20,
+        "taught": 10,
+        "error_without": 0.3221087236633696,
+        "error_with": 0.11453678696153828
+       },
+       "JAK2": {
+        "pairs": 20,
+        "taught": 10,
+        "error_without": 0.3144888835689794,
+        "error_with": 0.04982857899112367
+       },
+       "STAT1": {
+        "pairs": 20,
+        "taught": 9,
+        "error_without": 0.3514381550138693,
+        "error_with": 0.08791348731789458
+       }
+      },
+      "why": null
+     }
+    ],
+    "mel_ctl": [
+     {
+      "type": "IFNGR1+IFNGR2+JAK1+JAK2+STAT1",
+      "members": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "status": "undecided",
+      "cosine": {
+       "smallest": 0.9430076194523321,
+       "median": 0.9622114787232487
+      },
+      "seeded_by": {
+       "IFNGR2": [
+        "CD119"
+       ],
+       "JAK1": [
+        "CD309"
+       ]
+      },
+      "joined_by_direction": [
+       "IFNGR1",
+       "JAK2",
+       "STAT1"
+      ],
+      "events_that_move_the_stage": [],
+      "pairs": null,
+      "pairs_it_teaches": null,
+      "events_with_a_pair_it_teaches": null,
+      "on_the_pairs_it_teaches": null,
+      "on_all_its_pairs": null,
+      "by_event": null,
+      "why": "fewer than two of its events move the stage in these rows"
+     },
+     {
+      "type": "declared by hand",
+      "members": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "status": "undecided",
+      "cosine": null,
+      "seeded_by": null,
+      "joined_by_direction": null,
+      "events_that_move_the_stage": [],
+      "pairs": null,
+      "pairs_it_teaches": null,
+      "events_with_a_pair_it_teaches": null,
+      "on_the_pairs_it_teaches": null,
+      "on_all_its_pairs": null,
+      "by_event": null,
+      "why": "fewer than two of its events move the stage in these rows"
+     }
+    ]
+   }
+  },
+  "mel_co": {
+   "events": 38,
+   "flags": 33,
+   "events_flagged_as_a_direction_the_law_does_not_cover": [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "STAT1"
+   ],
+   "events_that_move_the_stage": [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "STAT1"
+   ],
+   "proposed": [
+    {
+     "type": "IFNGR1+IFNGR2+JAK1+JAK2+STAT1",
+     "members": [
+      "IFNGR1",
+      "IFNGR2",
+      "JAK1",
+      "JAK2",
+      "STAT1"
+     ],
+     "status": "proposed",
+     "cosine": {
+      "smallest": 0.945090331001203,
+      "median": 0.9732855989656946
+     },
+     "seeded_by": {
+      "IFNGR1": [
+       "CD44",
+       "CD59",
+       "CD9",
+       "MHC1",
+       "PDL1"
+      ],
+      "IFNGR2": [
+       "CD119",
+       "CD44",
+       "CD59",
+       "CD9",
+       "MHC1",
+       "PDL1"
+      ],
+      "JAK1": [
+       "CD119",
+       "CD58",
+       "CD59",
+       "CD9",
+       "MHC1"
+      ],
+      "JAK2": [
+       "CD119",
+       "CD44",
+       "CD58",
+       "CD59",
+       "CD9",
+       "MHC1",
+       "PDL1"
+      ],
+      "STAT1": [
+       "CD119",
+       "CD44",
+       "CD59",
+       "CD9",
+       "MHC1",
+       "PDL1"
+      ]
+     },
+     "joined_by_direction": [],
+     "events_that_move_the_stage": null,
+     "pairs": null,
+     "pairs_it_teaches": null,
+     "events_with_a_pair_it_teaches": null,
+     "on_the_pairs_it_teaches": null,
+     "on_all_its_pairs": null,
+     "by_event": null,
+     "why": null
+    }
+   ],
+   "the_same_events_as_declared_by_hand": true,
+   "asked_of": {
+    "library": [
+     {
+      "type": "IFNGR1+IFNGR2+JAK1+JAK2+STAT1",
+      "members": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "status": "refused",
+      "cosine": {
+       "smallest": 0.945090331001203,
+       "median": 0.9732855989656946
+      },
+      "seeded_by": {
+       "IFNGR1": [
+        "CD44",
+        "CD59",
+        "CD9",
+        "MHC1",
+        "PDL1"
+       ],
+       "IFNGR2": [
+        "CD119",
+        "CD44",
+        "CD59",
+        "CD9",
+        "MHC1",
+        "PDL1"
+       ],
+       "JAK1": [
+        "CD119",
+        "CD58",
+        "CD59",
+        "CD9",
+        "MHC1"
+       ],
+       "JAK2": [
+        "CD119",
+        "CD44",
+        "CD58",
+        "CD59",
+        "CD9",
+        "MHC1",
+        "PDL1"
+       ],
+       "STAT1": [
+        "CD119",
+        "CD44",
+        "CD59",
+        "CD9",
+        "MHC1",
+        "PDL1"
+       ]
+      },
+      "joined_by_direction": [],
+      "events_that_move_the_stage": [
+       "IFNGR1",
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "pairs": 99,
+      "pairs_it_teaches": 7,
+      "events_with_a_pair_it_teaches": [
+       "IFNGR2",
+       "JAK1",
+       "JAK2",
+       "STAT1"
+      ],
+      "on_the_pairs_it_teaches": {
+       "error_without_the_type": 0.19386478669555027,
+       "error_with_the_type": 0.10494473548395444,
+       "share_of_the_squared_error_removed": 0.706962330911278,
+       "z": 2.659883013703369,
+       "closer": 5,
+       "by_chance": 0.2265625
+      },
+      "on_all_its_pairs": {
+       "error_without_the_type": 0.11136810960383216,
+       "error_with_the_type": 0.07618640449588544,
+       "share_of_the_squared_error_removed": 0.5320135695828228
+      },
+      "by_event": {
+       "IFNGR1": {
+        "pairs": 19,
+        "taught": 0,
+        "error_without": 0.09187821211502026,
+        "error_with": 0.056270418324783716
+       },
+       "IFNGR2": {
+        "pairs": 20,
+        "taught": 2,
+        "error_without": 0.11647068265689585,
+        "error_with": 0.06552279913922626
+       },
+       "JAK1": {
+        "pairs": 20,
+        "taught": 1,
+        "error_without": 0.1223943230746685,
+        "error_with": 0.10038438990289458
+       },
+       "JAK2": {
+        "pairs": 20,
+        "taught": 2,
+        "error_without": 0.09786776596034728,
+        "error_with": 0.0717355249088511
+       },
+       "STAT1": {
+        "pairs": 20,
+        "taught": 2,
+        "error_without": 0.12349380943958402,
+        "error_with": 0.07878662501887508
+       }
+      },
+      "why": null
+     }
+    ]
+   }
+  },
+  "mel_ctl": {
+   "events": 32,
+   "flags": 1,
+   "events_flagged_as_a_direction_the_law_does_not_cover": [],
+   "events_that_move_the_stage": [],
+   "proposed": [],
+   "the_same_events_as_declared_by_hand": false,
+   "asked_of": {
+    "library": []
+   }
+  }
+ }
+}
