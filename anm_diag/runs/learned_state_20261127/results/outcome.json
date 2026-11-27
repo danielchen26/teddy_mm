@@ -1,0 +1,178 @@
+{
+ "rehearsal_on_made_up_states": false,
+ "carried": {
+  "V": {
+   "share": 0.8942021755978853,
+   "ci": [
+    0.7054431996294623,
+    1.1158335945751063
+   ]
+  },
+  "Z": {
+   "share": 0.5202430769928361,
+   "ci": [
+    0.37159608029962427,
+    0.6624287270567445
+   ]
+  },
+  "T": {
+   "share": 0.7306939437932647,
+   "ci": [
+    0.5880922737881505,
+    0.8957401214083242
+   ]
+  },
+  "P0": {
+   "share": 0.49788926367109065,
+   "ci": [
+    0.3559753975494461,
+    0.6454702842745038
+   ]
+  },
+  "P4": {
+   "share": 0.5852564336086077,
+   "ci": [
+    0.4506369326733364,
+    0.754382526282776
+   ]
+  },
+  "P5": {
+   "share": 0.6571125981059431,
+   "ci": [
+    0.5001342352340389,
+    0.8437163396752537
+   ]
+  },
+  "PM": {
+   "share": 0.6412714292924337,
+   "ci": [
+    0.4939814486821251,
+    0.8293614962747681
+   ]
+  }
+ },
+ "gains_in_carried": {
+  "P5 over Z": {
+   "gain": 0.13686952111310702,
+   "ci": [
+    -0.011716871818341386,
+    0.3104956825203234
+   ],
+   "reading": "unresolved"
+  },
+  "P5 over PM": {
+   "gain": 0.015841168813509388,
+   "ci": [
+    -0.020143275106227383,
+    0.05062072660576077
+   ],
+   "reading": "no step"
+  },
+  "P4 over Z": {
+   "gain": 0.06501335661577157,
+   "ci": [
+    -0.07778071213333533,
+    0.21842780148019444
+   ],
+   "reading": "unresolved"
+  },
+  "PM over Z": {
+   "gain": 0.12102835229959763,
+   "ci": [
+    -0.020071890743169486,
+    0.28702523509073763
+   ],
+   "reading": "unresolved"
+  },
+  "P0 over Z": {
+   "gain": -0.022353813321745464,
+   "ci": [
+    -0.1644338953081264,
+    0.11335776506532202
+   ],
+   "reading": "unresolved"
+  },
+  "P5 over P0": {
+   "gain": 0.15922333443485248,
+   "ci": [
+    0.082552082242668,
+    0.2517056643845476
+   ],
+   "reading": "unresolved"
+  },
+  "T over Z": {
+   "gain": 0.21045086680042857,
+   "ci": [
+    0.07742404333587691,
+    0.38858710529615165
+   ],
+   "reading": "unresolved"
+  },
+  "P5 over T": {
+   "gain": -0.07358134568732155,
+   "ci": [
+    -0.23073830886522942,
+    0.08312007396573304
+   ],
+   "reading": "no step"
+  },
+  "V over Z": {
+   "gain": 0.37395909860504917,
+   "ci": [
+    0.16915668211188278,
+    0.6055610994325119
+   ],
+   "reading": "a step"
+  },
+  "V over P5": {
+   "gain": 0.23708957749194215,
+   "ci": [
+    0.030965040683766078,
+    0.4625078944074445
+   ],
+   "reading": "unresolved"
+  }
+ },
+ "hypotheses": {
+  "H1_the_trained_state_holds_more": {
+   "gain": 0.13686952111310702,
+   "ci": [
+    -0.011716871818341386,
+    0.3104956825203234
+   ],
+   "reading": "unresolved",
+   "outcome": "unresolved"
+  },
+  "H2_the_gain_belongs_to_the_rows": {
+   "gain": 0.015841168813509388,
+   "ci": [
+    -0.020143275106227383,
+    0.05062072660576077
+   ],
+   "reading": "no step",
+   "outcome": "refuted"
+  },
+  "H3_an_event_with_no_record_gains": {
+   "gain": 0.06501335661577157,
+   "ci": [
+    -0.07778071213333533,
+    0.21842780148019444
+   ],
+   "reading": "unresolved",
+   "outcome": "unresolved"
+  }
+ },
+ "guards": {
+  "the_pathway_events_are_read_no_worse_by_a_step": true,
+  "the_control_readout_is_no_worse_by_5_percent": true,
+  "the_arm_none_moved_nothing": true,
+  "all_hold": true
+ },
+ "what_the_account_says": "held not read 42%; lost before the state 37% (unresolved: not in the input 11%)",
+ "expected_before_any_trained_state": {
+  "H1": 0.35,
+  "H2": 0.25,
+  "H3": 0.2,
+  "the_guards_all_hold": 0.7
+ }
+}

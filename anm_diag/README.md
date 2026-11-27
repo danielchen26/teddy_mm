@@ -239,6 +239,9 @@ five events that had been declared by hand. It is a candidate for the version af
 **The final audit was read once on 27 November and passed** ([`runs/final_audit_20261127`](runs/final_audit_20261127/)):
 on 133 units kept untouched until then, 95.3% of 2,564 pairs lie inside their interval, and where the graph has
 something to say the error falls from 0.336 for the model alone to 0.140. One study, one model, knockouts.
+The first training the loop asked for was run the same day ([`runs/learned_state_20261127`](runs/learned_state_20261127/)):
+a pooling trained by one constraint of the TEG moves the state the right way and does not close the loss before
+the state (unresolved; the gain is not specific to the rows).
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR
