@@ -335,8 +335,9 @@ alone) to 0.174 (the system as it forecast batch 2) to 0.138 (version 5); an edg
 The intervals of version 5 do not hold: 82% of the pairs are inside, the mean of squared *z* is 3.08. So the gate is
 not passed, the batch counts as development, and the final audit waits for another batch.
 
-**The candidate for version 6** ([`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/), 27 November). Made
-from batch 3, so it is no rule until it is frozen, at the commit made before a fourth batch is forecast.
+**Version 6 (27 November 2026): frozen at commit `b4f6196` on the main branch**, the candidate of
+[`runs/v6_candidate_20261126`](runs/v6_candidate_20261126/) as it passed the planted twin. It was made from batch 3;
+batch 4 is read under it ([`runs/batch4_frozen_20261127`](runs/batch4_frozen_20261127/)).
 
 | | what batch 3 showed | the candidate |
 |---|---|---|
