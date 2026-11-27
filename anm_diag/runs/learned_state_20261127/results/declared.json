@@ -1,0 +1,53 @@
+{
+ "what": "the forecasts and the rule of the reading, committed before any trained state exists",
+ "design": "runs/learned_state_design_20261127/DESIGN.md",
+ "training_script": {
+  "file": "runs/learned_state_design_20261127/scripts/pool.py",
+  "sha256": "f0098a2bc20260bf8a14a984d558f2bdd269993275e93d532654d6627913a647"
+ },
+ "learning_rate": {
+  "declared": 0.01,
+  "pilot": "pool5, fold 0, 100 steps, the training curve only (results/pilot.json): the largest error of a row falls 0.82, 0.60, 0.36, 0.26, 0.27 and nothing diverges",
+  "used": 0.01,
+  "changed": false
+ },
+ "steps": 600,
+ "blocks": 4,
+ "arms": [
+  "none",
+  "pool4",
+  "pool5",
+  "mixed"
+ ],
+ "folds": [
+  0,
+  1
+ ],
+ "the_judge": "scripts/read.py: account.account for IRF1 on PD-L1 at V, Z, T, P0, P4, P5, PM, every cell at the state trained on the other half; a step is 0.10",
+ "hypotheses": {
+  "H1": "carried at P5 over Z: gain at least 0.10 and its interval above zero; refuted if the interval lies below 0.10",
+  "H2": "carried at P5 over PM: the same rule",
+  "H3": "carried at P4 over Z: the same rule"
+ },
+ "guards": [
+  "for each of IFNGR1, IFNGR2, JAK2, STAT1: the interval of carried at P5 over Z does not lie below -0.10",
+  "the cross-validated error of a control readout at P5 is at most 1.05 times that at Z, on control cells the pooling never saw",
+  "the arm none moved nothing"
+ ],
+ "reported_beside": "carried at P5 over P0 (the same four blocks with nothing trained), and at P5 over T (the state typed by declared gene sets)",
+ "known_before": {
+  "carried_at_the_released_stages": {
+   "V": 0.894,
+   "Z": 0.52,
+   "T": 0.731
+  },
+  "from": "the rehearsal of read.py on made-up states (the mean with noise): the stages V, Z and T are the released ones"
+ },
+ "expected": {
+  "H1_holds": 0.35,
+  "H2_holds": 0.25,
+  "H3_holds": 0.2,
+  "the_guards_all_hold": 0.7
+ },
+ "what_the_pilot_changes_in_what_the_author_expects": "The control readout came to read the rows of the pathway events within 100 steps, and IRF1's shift went from -0.00 to -0.22 of a row of -0.40, on the cells of the fit. That is the loss falling, which was to be expected, and says little about cells the pooling never saw or about a reader fitted independently. The expectations above are left as written in the design."
+}

@@ -360,6 +360,15 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   of the readout, 84 of 94 pairs inside where 85 were asked, wrong for B2M in the co-culture. Version 5 would have
   passed as well, and on the other 2,404 pairs the three systems give the same values. It holds for one study, one
   model and knockouts; the model itself has not been corrected.
+- **The first training experiment (27 November; on the owner's word; exploratory; judge and forecasts committed
+  first;** [`learned_state_20261127/`](anm_diag/runs/learned_state_20261127/)**):** the one loss the loop has never
+  corrected is before the state, at the mean over the gene positions. Only the pooling was trained (2,048 numbers,
+  the encoder frozen), by one constraint: a readout taught by control cells alone has to read the recorded events.
+  On cells the pooling never saw, the trained state carries 0.66 of IRF1's change of PD-L1 where the mean carries
+  0.52 (+0.14 [−0.01, 0.31]: unresolved by the rule), against 0.73 for a state typed by hand and 0.89 for the
+  input. With the event labels shuffled the gain is the same (refuted): in a stratum where every event lowers the
+  readout, the rows teach little beyond "a knocked-out cell reads lower". Nothing measured got worse. The model
+  is still not corrected.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.

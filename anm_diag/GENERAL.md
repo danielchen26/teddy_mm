@@ -480,6 +480,18 @@ system:
   same values, and the older version passed too. The rule added last did not meet its own condition. All of that
   is part of the result.
 
+**Training by a constraint, judged by the loop** ([`runs/learned_state_20261127`](runs/learned_state_20261127/)).
+The first time a part of the model was trained under this design. Three things carry over:
+
+- The loss was the loop's own first reading: a readout taught by control cells alone has to read the recorded
+  events, the readout fitted again at every step. A loss with a fixed readout can be met by moving cells along it.
+- The judge was not the loss: the share of a change the state carries on cells the training never saw, by the same
+  code that reads every other state. The training met its rows to within a tenth of a spread and the judge still
+  said unresolved.
+- A control arm with shuffled labels tells something only where the rows differ. Where every event moves the
+  readout the same way, shuffled rows ask for nearly what the true rows ask. The control has to be checked for
+  that before it is run.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,

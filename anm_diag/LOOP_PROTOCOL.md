@@ -384,9 +384,13 @@ error falls from 0.336 for the model alone to 0.140: **the audit is passed.** An
 94 pairs inside, 85 asked): it fails for B2M in the co-culture and holds for the four other units. Version 5 would
 have passed as well. What the audit shows holds for one study, one model and knockouts.
 
-**Next, on the owner's word** (27 November): the first training experiment
-([`runs/learned_state_design_20261127`](runs/learned_state_design_20261127/); the pooling trained by one constraint
-of the TEG, judged by the loop).
+**The first training experiment** ([`runs/learned_state_20261127`](runs/learned_state_20261127/), 27 November, on
+the owner's word; exploratory; designed in [`runs/learned_state_design_20261127`](runs/learned_state_design_20261127/)).
+The pooling alone was trained (2,048 numbers, the encoder frozen) by one constraint: a readout taught by control
+cells has to read the recorded events. The loop judged it on cells the pooling never saw. For IRF1 on PD-L1 the
+trained state carries 0.66 of the change where the mean carries 0.52 (+0.14 [−0.01, 0.31]: unresolved), the state
+typed by hand 0.73 and the input 0.89; with the event labels shuffled the gain is the same (refuted). The model is
+still the part the loop has not corrected.
 
 ## Commands
 
