@@ -492,6 +492,18 @@ The first time a part of the model was trained under this design. Three things c
   readout the same way, shuffled rows ask for nearly what the true rows ask. The control has to be checked for
   that before it is run.
 
+**Whether two events compose, from the data alone** ([`runs/known_answer_20261127`](runs/known_answer_20261127/)).
+A composition rule asked of every unit, with an answer known beforehand. Three things carry over:
+
+- *Two halves of the cells, and the noise from the mirror side.* If the effects add, the departures measured in two
+  halves err independently and their product is as often negative as positive; a real departure only makes it
+  positive. The largest value on the negative side over all units is the end of the interval, whatever the shape of
+  the noise, and no cell both finds a departure and confirms it.
+- *A refusal names a readout.* A sum over all readouts was a second way to be refused; on made-up worlds with nothing
+  planted it refused units that add and named nothing. It is reported and decides nothing.
+- *Relative readouts are centred first.* RNA levels are shares: a unit that removes an abundant transcript moves every
+  other gene by one factor, which is no departure.
+
 **What is not done.** The auxiliary fits of the account are linear. One class of edge was tried, in one study; the
 edge across cell types was not tested (the THP-1 screen has no such unit that is not final). The typed state had
 nothing to bring back in the units opened, so its evidence is still that of run 41. The pair's own share is explored,

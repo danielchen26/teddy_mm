@@ -242,6 +242,10 @@ something to say the error falls from 0.336 for the model alone to 0.140. One st
 The first training the loop asked for was run the same day ([`runs/learned_state_20261127`](runs/learned_state_20261127/)):
 a pooling trained by one constraint of the TEG moves the state the right way and does not close the loss before
 the state (unresolved; the gain is not specific to the rows).
+A check with a known answer followed ([`runs/known_answer_20261127`](runs/known_answer_20261127/)): asked from the
+data alone whether each knockout composes with IFN-γ by addition, the rule refuses exactly IFNGR1, IFNGR2, JAK1,
+JAK2 and STAT1 among 95 knockouts, each with a witness, and groups them into one class by its witnesses. TEDDY's state
+carries 0.93 of the part that does not add on PD-L1; the head's output as trained 0.09.
 
 ```
 python -m anm_diag scope SPEC.yaml --out DIR

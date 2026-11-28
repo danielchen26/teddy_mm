@@ -392,6 +392,15 @@ trained state carries 0.66 of the change where the mean carries 0.52 (+0.14 [−
 typed by hand 0.73 and the input 0.89; with the event labels shuffled the gain is the same (refuted). The model is
 still the part the loop has not corrected.
 
+**A check with a known answer** ([`runs/known_answer_20261127`](runs/known_answer_20261127/), 27 November, on the
+owner's word; nothing trained; the design and the pass line committed before any value was read). Does a knockout
+compose with IFN-γ by addition? For each of 95 knockouts, the departure from addition on 3,303 genes and 20 proteins,
+in two halves of the cells; the end of the interval from the mirror side (products of the halves that disagree in
+sign), over the knockouts. Refused: exactly the five of the pathway, each with witnesses; the other 90 carry over;
+one class, the five, proposed from the witnesses by `events.propose_types`. Passed (P1 to P3). Of the part that does
+not add, TEDDY's state carries 0.93 on PD-L1 and its head's output as trained 0.09. Every cell had been read before;
+it checks the method and is not confirmatory.
+
 ## Commands
 
 ```

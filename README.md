@@ -369,6 +369,14 @@ repairs that were made delivered about two thirds. Disease is untested: every do
   input. With the event labels shuffled the gain is the same (refuted): in a stratum where every event lowers the
   readout, the rows teach little beyond "a knocked-out cell reads lower". Nothing measured got worse. The model
   is still not corrected.
+- **A check with a known answer: does a knockout compose with IFN-γ by addition? (27 November; on the owner's word;
+  nothing trained; design and pass line committed first;** [`known_answer_20261127/`](anm_diag/runs/known_answer_20261127/)**):**
+  95 knockouts read before with no signal and under IFN-γ, 3,303 genes and 20 proteins, cells in two halves, the
+  knockout as the unit. Refused (does not add): exactly IFNGR1, IFNGR2, JAK1, JAK2 and STAT1, each with witnesses
+  (19 genes IFN-γ raises in all five, and PD-L1); the other 90 carry over; recall 5 of 5, precision 5 of 5. The
+  witnesses group the five into one class with nothing declared by hand. Passed. For TEDDY, of the part that does not
+  add on PD-L1: 0.94 at the input, 0.93 at the state, 0.87 read from the state by a readout of control cells, 0.09 at
+  the head's output as trained. A check of the method on an answer known beforehand, not a finding on data never read.
 - **Corrected along the way:** the first sealed run fed the head un-normalized embeddings; after the fix the designs
   were resealed and run once. Loss locations did not change; magnitudes did. A post hoc two-sided reread
   (exploratory) drops the MHC-I head claim and moves HLA-E's step one stage later.
