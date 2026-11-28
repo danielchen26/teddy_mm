@@ -44,14 +44,30 @@ The fit uses only the teach control cells and the events recorded before; none o
 - **The judge itself measures what it is meant to** ([`results/rehearsal.json`](results/rehearsal.json)): handed the
   readout itself as an output it gives 1.000, handed noise −0.001, handed half of each 0.441.
 
-## What to do instead, and what it costs
+## What to do instead — counted first this time
 
-The judge needs units that move the three readouts. The one set that moves them and that no part of this fit
-touched is the **IFN-γ library**: the fit used control cells and recorded events of the co-culture and the control
-condition only, and never a cell under IFN-γ, where PD-L1 moves by 12 to 18 errors for the events of the pathway
-(run 51). Judging there costs nothing sealed, and the answer is retrospective: it can show whether a correction at
-the head works, not confirm it on data never read. A sealed confirmation afterwards would use the 95 units still
-closed, with the units chosen by a written rule on what the frozen system forecasts rather than by lot.
+Two counts were made after the reading, on data already read, before anything was proposed.
+
+**The head has an output for twelve of the twenty melanoma readouts, not three.** Besides CD274 (PD-L1) and
+HLA-A-B-C (MHC-I), its 134 outputs carry HLA-E, CD119, CD172a, CD29, CD44, CD47, CD49f, CD58, CD9 and CD279 under
+exactly those names. The run corrected and judged three of them because the loop had only ever read three; nothing
+forced that.
+
+**Where the judgeable pairs are** (a change of at least four errors, on those twelve readouts):
+
+| set | units | pairs | on which readouts |
+|---|---|---|---|
+| the IFN-γ library | 206 | **29** | PD-L1 7, MHC-I 10, CD47 3, CD9 3, CD119 3, CD44 1, CD49f 1, CD58 1 |
+| the 93 drawn units of this run | 93 | 2 | PD-L1 1, CD29 1 |
+
+So the lot, not the three readouts, was the deeper fault: even on twelve readouts those 93 units hold two
+judgeable pairs. **And the 95 units still closed would hold about two as well.** Spending them on this question
+would answer nothing; they should be kept for a question they can answer.
+
+The set that can answer it is the **IFN-γ library**, which no part of this fit touched: the fit used control cells
+and recorded events of the co-culture and the control condition only, and never a cell under IFN-γ. Twenty-nine
+pairs over eight readouts and about twenty-five events. The library was read before, so a judgement there is
+retrospective: it can show whether a correction at the head works; it cannot confirm it on data never read.
 
 That is a proposal; it waits for the owner.
 
