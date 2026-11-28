@@ -1,0 +1,5303 @@
+{
+ "rehearsal_on_made_up_values": false,
+ "knockouts": [
+  "IFNGR1",
+  "IFNGR2",
+  "JAK1",
+  "JAK2",
+  "STAT1"
+ ],
+ "min_errors": 4.0,
+ "head_outputs": {
+  "PDL1": "CD274",
+  "MHC1": "HLA-A-B-C",
+  "HLAE": "HLA-E"
+ },
+ "conditions": {
+  "IFNγ": {
+   "cells": {
+    "control": 4000,
+    "all": 25881
+   },
+   "genes_of_the_input_view": 12267
+  },
+  "Control": {
+   "cells": {
+    "control": 3978,
+    "all": 17549
+   },
+   "genes_of_the_input_view": 12824
+  }
+ },
+ "pairs": [
+  {
+   "knockout": "IFNGR1",
+   "readout": "protein:PDL1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.9002705469489072,
+    "errors": 15.645856221352133,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8833328776979732,
+      "ci": [
+       0.792136906543734,
+       0.9786595205082684
+      ]
+     },
+     "Z": {
+      "share": 0.9241242376497116,
+      "ci": [
+       0.8200322697427688,
+       1.0404822656306187
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8787743863139172,
+      "ci": [
+       0.7700494764955411,
+       1.0107168206734036
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9977893623513887,
+      "ci": [
+       0.8980350995671962,
+       1.1171558391750334
+      ]
+     },
+     "head_output": {
+      "share": 0.09113026383841578,
+      "ci": [
+       0.07212863026471276,
+       0.116558975104573
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.07587576235028837,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.04534985133579439,
+     "read": 0.8787743863139172
+    },
+    "says": "unresolved: not in the input 8%; held not read 5%"
+   },
+   "Control": {
+    "change": -0.06885598703154439,
+    "errors": 0.9949401191025806,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.9002705469489072,
+    "held": {
+     "input": -0.7952385729431065,
+     "Z": -0.8319618328776478,
+     "Z_read_by_a_readout_of_control_cells": -0.7911346974115205,
+     "Z_read_by_a_readout_taught_by_its_class": -0.898280374983886,
+     "head_output": -0.0820418924694088
+    },
+    "share": {
+     "input": 0.8833328776979733,
+     "Z": 0.9241242376497116,
+     "Z_read_by_a_readout_of_control_cells": 0.8787743863139172,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9977893623513887,
+     "head_output": 0.09113026383841578
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "protein:MHC1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.15988417763053464,
+    "errors": 3.9637586932034816,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.13853670129560025,
+    "errors": 3.0180510234264637,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "protein:HLAE",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.0489919887973177,
+    "errors": 1.1252637629212845,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.0204483376273894,
+    "errors": 0.5241380361708249,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "IDO1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.266441490770389,
+    "errors": 24.488793123419455,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.0500572611370862,
+      "ci": [
+       1.00061576122625,
+       1.1054834044756323
+      ]
+     },
+     "Z": {
+      "share": 0.97822501405436,
+      "ci": [
+       0.8926562962838634,
+       1.0733411633755288
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0030571318484693,
+      "ci": [
+       0.9173279803607444,
+       1.1148539521073038
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9901251179279793,
+      "ci": [
+       0.9177680288968821,
+       1.0859999579936168
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.050057261137086195,
+     "lost_before_the_state": 0.07183224708272617,
+     "held_not_read": -0.02483211779410932,
+     "read": 1.0030571318484693
+    },
+    "says": "unresolved: lost before the state 7%"
+   },
+   "Control": {
+    "change": -0.0006391613190656362,
+    "errors": 1.9213699277118956,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.266441490770389,
+    "held": {
+     "input": -1.329836083188723,
+     "Z": -1.2388647451078885,
+     "Z_read_by_a_readout_of_control_cells": -1.270313169386046,
+     "Z_read_by_a_readout_taught_by_its_class": -1.2539355303979172,
+     "head_output": null
+    },
+    "share": {
+     "input": 1.0500572611370862,
+     "Z": 0.9782250140543601,
+     "Z_read_by_a_readout_of_control_cells": 1.0030571318484693,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9901251179279792,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "LAP3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.177073891891388,
+    "errors": 21.783726927694328,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8253768506939346,
+      "ci": [
+       0.7577227933207417,
+       0.893415994166835
+      ]
+     },
+     "Z": {
+      "share": 0.8095262044474957,
+      "ci": [
+       0.7410794808315879,
+       0.8898206316923384
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6874798471474494,
+      "ci": [
+       0.6198673199519917,
+       0.7712202579255222
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.947681392378016,
+      "ci": [
+       0.8788237380080394,
+       1.0383880479744845
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.17462314930606537,
+     "lost_before_the_state": 0.01585064624643895,
+     "held_not_read": 0.12204635730004632,
+     "read": 0.6874798471474494
+    },
+    "says": "not in the input 17% [across events: the other events forecast it, 95%] (unresolved: held not read 12%)"
+   },
+   "Control": {
+    "change": 0.017526340554480324,
+    "errors": 0.4657816639972262,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.177073891891388,
+    "held": {
+     "input": -0.9715295419233666,
+     "Z": -0.9528721600570771,
+     "Z_read_by_a_readout_of_control_cells": -0.8092145792787447,
+     "Z_read_by_a_readout_taught_by_its_class": -1.1154910247994407,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8253768506939346,
+     "Z": 0.8095262044474957,
+     "Z_read_by_a_readout_of_control_cells": 0.6874798471474494,
+     "Z_read_by_a_readout_taught_by_its_class": 0.947681392378016,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "B2M",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.6812751845649005,
+    "errors": 16.298129389165183,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.7602561305181434,
+      "ci": [
+       0.6623917493855828,
+       0.8886014067714872
+      ]
+     },
+     "Z": {
+      "share": 0.8219070863148678,
+      "ci": [
+       0.7400411488945057,
+       0.9176427636619771
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.779667492167143,
+      "ci": [
+       0.7034138770358294,
+       0.8718875645858107
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9827302397287145,
+      "ci": [
+       0.8896346606085134,
+       1.0867821494697592
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.17809291368513225,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.04223959414772471,
+     "read": 0.779667492167143
+    },
+    "says": "unresolved: not in the input 18%; held not read 4%"
+   },
+   "Control": {
+    "change": 0.039001035354457425,
+    "errors": 1.156048691934359,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.6812751845649005,
+    "held": {
+     "input": -0.5179436356353453,
+     "Z": -0.5599449019243612,
+     "Z_read_by_a_readout_of_control_cells": -0.5311681146254236,
+     "Z_read_by_a_readout_taught_by_its_class": -0.6695097254486889,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.7602561305181434,
+     "Z": 0.8219070863148678,
+     "Z_read_by_a_readout_of_control_cells": 0.7796674921671432,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9827302397287144,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "IRF1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.3430976581401473,
+    "errors": 20.963902487133705,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9062081074283177,
+      "ci": [
+       0.8431268073639662,
+       0.9834453839955531
+      ]
+     },
+     "Z": {
+      "share": 0.7351663809065185,
+      "ci": [
+       0.6702266824580303,
+       0.8089043667849986
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5955813253459705,
+      "ci": [
+       0.5352794161124079,
+       0.670720999266477
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0249942342062313,
+      "ci": [
+       0.9575197253565871,
+       1.1223784284546232
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.0937918925716823,
+     "lost_before_the_state": 0.17104172652179916,
+     "held_not_read": 0.139585055560548,
+     "read": 0.5955813253459705
+    },
+    "says": "lost before the state 17% (unresolved: held not read 14%; not in the input 9%)"
+   },
+   "Control": {
+    "change": 0.03996708427478024,
+    "errors": 1.0655602858140367,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.3430976581401473,
+    "held": {
+     "input": -1.2171259868745885,
+     "Z": -0.9874002445389125,
+     "Z_read_by_a_readout_of_control_cells": -0.7999238833041782,
+     "Z_read_by_a_readout_taught_by_its_class": -1.3766673555695428,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9062081074283177,
+     "Z": 0.7351663809065185,
+     "Z_read_by_a_readout_of_control_cells": 0.5955813253459705,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0249942342062313,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "ETV7",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.4056962445692509,
+    "errors": 14.367266838460518,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8838025134597755,
+      "ci": [
+       0.7214870526482584,
+       1.0812574492167024
+      ]
+     },
+     "Z": {
+      "share": 1.3256134832041506,
+      "ci": [
+       1.1777725538862387,
+       1.5568229845095727
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0738449729686248,
+      "ci": [
+       0.9269113181578418,
+       1.290721106168313
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.1005891217129677,
+      "ci": [
+       0.9754472793737075,
+       1.2626785423339404
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.3256134832041506,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.2517685102355258,
+     "read": 1.0738449729686248
+    },
+    "says": "unresolved: held not read 25%"
+   },
+   "Control": {
+    "change": -0.0028663008373580913,
+    "errors": 1.3029791593373325,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.4056962445692509,
+    "held": {
+     "input": -0.35855536065149574,
+     "Z": -0.5377964118862877,
+     "Z_read_by_a_readout_of_control_cells": -0.43565487278293985,
+     "Z_read_by_a_readout_taught_by_its_class": -0.4465048734927212,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8838025134597755,
+     "Z": 1.3256134832041506,
+     "Z_read_by_a_readout_of_control_cells": 1.0738449729686248,
+     "Z_read_by_a_readout_taught_by_its_class": 1.1005891217129677,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "GBP1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.850947636245743,
+    "errors": 24.652993680997273,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8853996687074198,
+      "ci": [
+       0.834073985407456,
+       0.9306921519171334
+      ]
+     },
+     "Z": {
+      "share": 0.6966913505600189,
+      "ci": [
+       0.6542216130479839,
+       0.7422821757642004
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6285923860885116,
+      "ci": [
+       0.5864189242378449,
+       0.677202185683927
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.003356416537838,
+      "ci": [
+       0.9507057823500504,
+       1.0582015257800628
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.11460033129258018,
+     "lost_before_the_state": 0.18870831814740097,
+     "held_not_read": 0.0680989644715072,
+     "read": 0.6285923860885116
+    },
+    "says": "lost before the state 19% (unresolved: not in the input 11%; held not read 7%)"
+   },
+   "Control": {
+    "change": 0.0013897939520893243,
+    "errors": 0.04135295917555678,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.850947636245743,
+    "held": {
+     "input": -1.6388284239267628,
+     "Z": -1.2895392085119213,
+     "Z_read_by_a_readout_of_control_cells": -1.1634915911926023,
+     "Z_read_by_a_readout_taught_by_its_class": -1.8571601875027104,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8853996687074198,
+     "Z": 0.6966913505600189,
+     "Z_read_by_a_readout_of_control_cells": 0.6285923860885116,
+     "Z_read_by_a_readout_taught_by_its_class": 1.003356416537838,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "PSMB8",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.1543477365713568,
+    "errors": 18.726651389505676,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8873186624400109,
+      "ci": [
+       0.8164314757381648,
+       0.9675271053636902
+      ]
+     },
+     "Z": {
+      "share": 0.719386777860617,
+      "ci": [
+       0.6510021721495088,
+       0.7862450022219589
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5574976475143933,
+      "ci": [
+       0.5026900149101108,
+       0.6208552776432119
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9984735086567508,
+      "ci": [
+       0.9189640757076087,
+       1.0888395442461691
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.1126813375599891,
+     "lost_before_the_state": 0.1679318845793939,
+     "held_not_read": 0.16188913034622365,
+     "read": 0.5574976475143933
+    },
+    "says": "lost before the state 17% (unresolved: held not read 16%; not in the input 11%)"
+   },
+   "Control": {
+    "change": -0.0029793523589610738,
+    "errors": 0.07209726111725498,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.1543477365713568,
+    "held": {
+     "input": -1.0242742896051504,
+     "Z": -0.8304224987427646,
+     "Z_read_by_a_readout_of_control_cells": -0.643546147552096,
+     "Z_read_by_a_readout_taught_by_its_class": -1.1525856347443812,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8873186624400109,
+     "Z": 0.719386777860617,
+     "Z_read_by_a_readout_of_control_cells": 0.5574976475143933,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9984735086567508,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "HAPLN3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.3519784144928043,
+    "errors": 17.669401789384093,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.5698622185519076,
+      "ci": [
+       0.42615651904536306,
+       0.7437151017737944
+      ]
+     },
+     "Z": {
+      "share": 0.8733485520893266,
+      "ci": [
+       0.7320483579684453,
+       1.0486502495439602
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7733731952888344,
+      "ci": [
+       0.6055981497131868,
+       0.9967866926601052
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9791524379637051,
+      "ci": [
+       0.862766684748595,
+       1.1361513386122428
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.1266514479106734,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.09997535680049219,
+     "read": 0.7733731952888344
+    },
+    "says": "unresolved: not in the input 13%; held not read 10%"
+   },
+   "Control": {
+    "change": -0.0028606110219477022,
+    "errors": 4.554568857659726,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": -0.021662791513733515,
+      "ci": [
+       -0.11598446087531133,
+       0.06795800253651801
+      ]
+     },
+     "Z": {
+      "share": -0.006154211334410853,
+      "ci": [
+       -0.05357155234394655,
+       0.037244392147220466
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.06801499131477294,
+      "ci": [
+       -0.2334466337731298,
+       0.39127892181162877
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.11445787419789769,
+      "ci": [
+       -0.28800733894480246,
+       0.6077228272114231
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 1.0061542113344109,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0741692026491838,
+     "read": 0.06801499131477294
+    },
+    "says": "not in the input 101% [across events: unresolved, 11%] (unresolved: held not read -7%)"
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.34911780347085664,
+    "held": {
+     "input": -0.2006411689854227,
+     "Z": -0.3074174434687621,
+     "Z_read_by_a_readout_of_control_cells": -0.27201610665518516,
+     "Z_read_by_a_readout_taught_by_its_class": -0.34431310320474967,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.5747090723838484,
+     "Z": 0.880555045925707,
+     "Z_read_by_a_readout_of_control_cells": 0.7791527786634127,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9862375959680668,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "RNF213",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.9225039855544938,
+    "errors": 19.104582332235555,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.0194271320028534,
+      "ci": [
+       0.9309941244788613,
+       1.1317083636628558
+      ]
+     },
+     "Z": {
+      "share": 0.8182324337842508,
+      "ci": [
+       0.7237960275125979,
+       0.9324289069412941
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6754142095447836,
+      "ci": [
+       0.5914726822375721,
+       0.7849801687393675
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9521474320973278,
+      "ci": [
+       0.8586488972393456,
+       1.057474422780985
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.019427132002853398,
+     "lost_before_the_state": 0.20119469821860259,
+     "held_not_read": 0.14281822423946722,
+     "read": 0.6754142095447836
+    },
+    "says": "lost before the state 20% (unresolved: held not read 14%)"
+   },
+   "Control": {
+    "change": 0.022134522864251716,
+    "errors": 0.643151133724249,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.9225039855544938,
+    "held": {
+     "input": -0.9404255922550193,
+     "Z": -0.7548226812759248,
+     "Z_read_by_a_readout_of_control_cells": -0.6230723002052009,
+     "Z_read_by_a_readout_taught_by_its_class": -0.8783598009452616,
+     "head_output": null
+    },
+    "share": {
+     "input": 1.0194271320028534,
+     "Z": 0.8182324337842508,
+     "Z_read_by_a_readout_of_control_cells": 0.6754142095447836,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9521474320973278,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR1",
+   "readout": "GBP2",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.9998135773285707,
+    "errors": 22.277200336597218,
+    "cells": {
+     "event": 198,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.010403633331499,
+      "ci": [
+       0.9344485066032417,
+       1.0849224126988724
+      ]
+     },
+     "Z": {
+      "share": 0.8235720472474378,
+      "ci": [
+       0.7529512908178847,
+       0.9110188829065109
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6502873149224242,
+      "ci": [
+       0.5803900287965977,
+       0.7301743236206268
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9825992024489227,
+      "ci": [
+       0.9206172417945966,
+       1.0629174123755876
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.010403633331498963,
+     "lost_before_the_state": 0.18683158608406114,
+     "held_not_read": 0.17328473232501362,
+     "read": 0.6502873149224242
+    },
+    "says": "lost before the state 19% (unresolved: held not read 17%)"
+   },
+   "Control": {
+    "change": 0.012973553803690592,
+    "errors": 0.9758389452717872,
+    "cells": {
+     "event": 152,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.9998135773285707,
+    "held": {
+     "input": -1.0102152711869514,
+     "Z": -0.8234185147462755,
+     "Z_read_by_a_readout_of_control_cells": -0.6501660866239798,
+     "Z_read_by_a_readout_taught_by_its_class": -0.9824160236806578,
+     "head_output": null
+    },
+    "share": {
+     "input": 1.010403633331499,
+     "Z": 0.8235720472474378,
+     "Z_read_by_a_readout_of_control_cells": 0.6502873149224242,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9825992024489227,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "protein:PDL1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.8233129981730034,
+    "errors": 15.635304136448754,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9805993311782581,
+      "ci": [
+       0.8719485319904882,
+       1.1027674203660212
+      ]
+     },
+     "Z": {
+      "share": 0.9592835203644395,
+      "ci": [
+       0.8541957500817501,
+       1.0895985426724653
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8682822629939485,
+      "ci": [
+       0.7458948939491536,
+       0.9870826234489753
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9966118319595665,
+      "ci": [
+       0.8924506227994994,
+       1.1303285651366153
+      ]
+     },
+     "head_output": {
+      "share": 0.0955712189402403,
+      "ci": [
+       0.07591066128248747,
+       0.11579604301343395
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.01940066882174185,
+     "lost_before_the_state": 0.021315810813818614,
+     "held_not_read": 0.09100125737049103,
+     "read": 0.8682822629939485
+    },
+    "says": "unresolved: held not read 9%; not in the input 2%"
+   },
+   "Control": {
+    "change": 0.0322089644239516,
+    "errors": 0.4970180041141654,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.8233129981730034,
+    "held": {
+     "input": -0.8073401753588136,
+     "Z": -0.7897905912492,
+     "Z_read_by_a_readout_of_control_cells": -0.714868073205988,
+     "Z_read_by_a_readout_taught_by_its_class": -0.8205234753853201,
+     "head_output": -0.07868502680473777
+    },
+    "share": {
+     "input": 0.9805993311782581,
+     "Z": 0.9592835203644394,
+     "Z_read_by_a_readout_of_control_cells": 0.8682822629939485,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9966118319595665,
+     "head_output": 0.0955712189402403
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "protein:MHC1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.12807904434649853,
+    "errors": 3.7954706742081212,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": -0.027358449613436697,
+    "errors": 0.61766750011544,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "protein:HLAE",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.11152067017486444,
+    "errors": 3.147424386471916,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.00017299765300493597,
+    "errors": 0.004779792551338702,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "IDO1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.2253295780544167,
+    "errors": 27.097934012386713,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.045219347735601,
+      "ci": [
+       0.9908796970932252,
+       1.0927070128924274
+      ]
+     },
+     "Z": {
+      "share": 0.9939632234732484,
+      "ci": [
+       0.9143114376823581,
+       1.0700541081323367
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0041874960611334,
+      "ci": [
+       0.897610982087316,
+       1.1063539973017593
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9878715291086019,
+      "ci": [
+       0.9143638927513332,
+       1.06816934400372
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.0452193477356011,
+     "lost_before_the_state": 0.05125612426235271,
+     "held_not_read": -0.010224272587885053,
+     "read": 1.0041874960611334
+    },
+    "says": "unresolved: lost before the state 5%"
+   },
+   "Control": {
+    "change": 0.002021992012502369,
+    "errors": 0.7539499979709724,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.2253295780544167,
+    "held": {
+     "input": -1.2807381823351767,
+     "Z": -1.2179325372200833,
+     "Z_read_by_a_readout_of_control_cells": -1.2304606408361098,
+     "Z_read_by_a_readout_taught_by_its_class": -1.2104682039346146,
+     "head_output": null
+    },
+    "share": {
+     "input": 1.045219347735601,
+     "Z": 0.9939632234732484,
+     "Z_read_by_a_readout_of_control_cells": 1.0041874960611334,
+     "Z_read_by_a_readout_taught_by_its_class": 0.987871529108602,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "ETV7",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.40867474570807427,
+    "errors": 16.739205857025436,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8928498917884259,
+      "ci": [
+       0.7490813423394806,
+       1.0873336834971452
+      ]
+     },
+     "Z": {
+      "share": 1.161150902858813,
+      "ci": [
+       1.0020158724302226,
+       1.3928957090019467
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0219890501977071,
+      "ci": [
+       0.8700242973195952,
+       1.204163587586185
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0343009722829246,
+      "ci": [
+       0.915561122606429,
+       1.1639047807348406
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.16115090285881295,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.1391618526611058,
+     "read": 1.0219890501977071
+    },
+    "says": "unresolved: held not read 14%"
+   },
+   "Control": {
+    "change": 0.006782311052925402,
+    "errors": 0.9936067559143213,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.40867474570807427,
+    "held": {
+     "input": -0.3648852024821166,
+     "Z": -0.4745330499545262,
+     "Z_read_by_a_readout_of_control_cells": -0.4176611152059843,
+     "Z_read_by_a_readout_taught_by_its_class": -0.4226926868333382,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8928498917884259,
+     "Z": 1.161150902858813,
+     "Z_read_by_a_readout_of_control_cells": 1.0219890501977071,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0343009722829246,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "CXCL11",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.43789571144681194,
+    "errors": 18.469319768892206,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8387839226804731,
+      "ci": [
+       0.6882000141730429,
+       0.981005415554378
+      ]
+     },
+     "Z": {
+      "share": 1.412248399980575,
+      "ci": [
+       1.2284632119644086,
+       1.632709442713815
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.6704228293039551,
+      "ci": [
+       1.3901583263401667,
+       1.9268493343375104
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9687167874249413,
+      "ci": [
+       0.7913387807249427,
+       1.1352500445470093
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.41224839998057505,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.2581744293233801,
+     "read": 1.6704228293039551
+    },
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step"
+   },
+   "Control": {
+    "change": 0.0007711124658666897,
+    "errors": 0.42435424090271817,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.43789571144681194,
+    "held": {
+     "input": -0.36729988257231344,
+     "Z": -0.6184175178491157,
+     "Z_read_by_a_readout_of_control_cells": -0.7314709932550519,
+     "Z_read_by_a_readout_taught_by_its_class": -0.4241969268199147,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8387839226804731,
+     "Z": 1.4122483999805748,
+     "Z_read_by_a_readout_of_control_cells": 1.6704228293039551,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9687167874249412,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "PSMB8",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.1310174717672346,
+    "errors": 20.577947988050727,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8873616779468554,
+      "ci": [
+       0.8331933291916896,
+       0.9687386288166171
+      ]
+     },
+     "Z": {
+      "share": 0.741479365905469,
+      "ci": [
+       0.6793196125080126,
+       0.8185528837183955
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5587321304310593,
+      "ci": [
+       0.5063101360788219,
+       0.6177412870986417
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.980815831226174,
+      "ci": [
+       0.9083121906555072,
+       1.068638993315656
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.11263832205314461,
+     "lost_before_the_state": 0.14588231204138635,
+     "held_not_read": 0.18274723547440974,
+     "read": 0.5587321304310593
+    },
+    "says": "held not read 18%; lost before the state 15% (unresolved: not in the input 11%)"
+   },
+   "Control": {
+    "change": -0.06160880721237327,
+    "errors": 1.5735966071359206,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.1310174717672346,
+    "held": {
+     "input": -1.0036215615345834,
+     "Z": -0.8386261177939758,
+     "Z_read_by_a_readout_of_control_cells": -0.6319358015552574,
+     "Z_read_by_a_readout_taught_by_its_class": -1.109319841702706,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8873616779468554,
+     "Z": 0.741479365905469,
+     "Z_read_by_a_readout_of_control_cells": 0.5587321304310593,
+     "Z_read_by_a_readout_taught_by_its_class": 0.980815831226174,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "LAP3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.0756281886615067,
+    "errors": 22.120263879394155,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9983167888884954,
+      "ci": [
+       0.9269057534598001,
+       1.071842136571322
+      ]
+     },
+     "Z": {
+      "share": 0.8761762307505727,
+      "ci": [
+       0.8148689682214953,
+       0.9400707656845213
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7274291889133588,
+      "ci": [
+       0.655060554446215,
+       0.7867669926733878
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0155250209354045,
+      "ci": [
+       0.9476730123182714,
+       1.0921008896143574
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.0016832111115046011,
+     "lost_before_the_state": 0.12214055813792268,
+     "held_not_read": 0.14874704183721388,
+     "read": 0.7274291889133588
+    },
+    "says": "unresolved: held not read 15%; lost before the state 12%"
+   },
+   "Control": {
+    "change": -0.017613707409900092,
+    "errors": 0.5302190547416291,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.0756281886615067,
+    "held": {
+     "input": -1.073817679342504,
+     "Z": -0.9424398520305048,
+     "Z_read_by_a_readout_of_control_cells": -0.7824433408503851,
+     "Z_read_by_a_readout_taught_by_its_class": -1.0923273388091879,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9983167888884954,
+     "Z": 0.8761762307505727,
+     "Z_read_by_a_readout_of_control_cells": 0.7274291889133588,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0155250209354045,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "GBP4",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.9826322347895174,
+    "errors": 27.269737029431354,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8517924570991715,
+      "ci": [
+       0.7880869799853067,
+       0.9136606719388567
+      ]
+     },
+     "Z": {
+      "share": 0.9639049795012756,
+      "ci": [
+       0.884688275142032,
+       1.0438360221210863
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.9482512719348408,
+      "ci": [
+       0.8541157202078234,
+       1.0270323052497552
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9578784532869947,
+      "ci": [
+       0.8856481579703047,
+       1.0307109859919732
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.03609502049872437,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.015653707566434805,
+     "read": 0.9482512719348408
+    },
+    "says": "unresolved: not in the input 4%; held not read 2%"
+   },
+   "Control": {
+    "change": -0.005414814967112547,
+    "errors": 0.8080831303821405,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.9826322347895174,
+    "held": {
+     "input": -0.836998725696213,
+     "Z": -0.9471641041320825,
+     "Z_read_by_a_readout_of_control_cells": -0.9317822664833351,
+     "Z_read_by_a_readout_taught_by_its_class": -0.941242245210126,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8517924570991715,
+     "Z": 0.9639049795012756,
+     "Z_read_by_a_readout_of_control_cells": 0.9482512719348408,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9578784532869947,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "HAPLN3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.31514548846677215,
+    "errors": 15.671359853173424,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.7356097432980192,
+      "ci": [
+       0.5751946009362862,
+       0.9104829065100829
+      ]
+     },
+     "Z": {
+      "share": 0.9853289450286559,
+      "ci": [
+       0.7940123702350047,
+       1.1617621270990788
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8137825549455658,
+      "ci": [
+       0.6231670851674005,
+       1.012748724776319
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0303364061259586,
+      "ci": [
+       0.8946286646695417,
+       1.1754768314244235
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.014671054971344133,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.17154639008309003,
+     "read": 0.8137825549455658
+    },
+    "says": "unresolved: held not read 17%; not in the input 1%"
+   },
+   "Control": {
+    "change": -0.0028606110219477022,
+    "errors": 4.554568857659726,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.02043253893282715,
+      "ci": [
+       -0.07021793584714492,
+       0.10269844485933355
+      ]
+     },
+     "Z": {
+      "share": -0.013166705551800106,
+      "ci": [
+       -0.07008801801835648,
+       0.03069702101229925
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": -0.0005755157076347977,
+      "ci": [
+       -0.32731842170796127,
+       0.2724534840925942
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": -0.12043770087043117,
+      "ci": [
+       -0.6649505179041992,
+       0.2538937739899315
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.9795674610671729,
+     "lost_before_the_state": 0.033599244484627255,
+     "held_not_read": -0.012591189844165308,
+     "read": -0.0005755157076347977
+    },
+    "says": "not in the input 98% [across events: the other events do not forecast it, -12%] (unresolved: lost before the state 3%; held not read -1%)"
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.31228487744482447,
+    "held": {
+     "input": -0.23176564232649352,
+     "Z": -0.3105596365045292,
+     "Z_read_by_a_readout_of_control_cells": -0.25646154711063474,
+     "Z_read_by_a_readout_taught_by_its_class": -0.3250503954082317,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.7421609532387384,
+     "Z": 0.994475425917478,
+     "Z_read_by_a_readout_of_control_cells": 0.8212422875198214,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0408777974388552,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "GBP1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.7951482594710366,
+    "errors": 25.19082561154309,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8972343954607412,
+      "ci": [
+       0.8604021906398226,
+       0.9359834510915344
+      ]
+     },
+     "Z": {
+      "share": 0.7301512533583837,
+      "ci": [
+       0.6940398399033048,
+       0.7663065848772758
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6240579726689599,
+      "ci": [
+       0.5801230751467003,
+       0.6709291645290033
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9773151114062689,
+      "ci": [
+       0.9295340283180124,
+       1.0269774462344898
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.10276560453925876,
+     "lost_before_the_state": 0.16708314210235753,
+     "held_not_read": 0.10609328068942381,
+     "read": 0.6240579726689599
+    },
+    "says": "lost before the state 17% (unresolved: held not read 11%; not in the input 10%)"
+   },
+   "Control": {
+    "change": 0.04217744517949479,
+    "errors": 1.2753828097393365,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.7951482594710366,
+    "held": {
+     "input": -1.6106687633488974,
+     "Z": -1.3107297516168983,
+     "Z_read_by_a_readout_of_control_cells": -1.1202765834457071,
+     "Z_read_by_a_readout_taught_by_its_class": -1.7544255211957058,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8972343954607412,
+     "Z": 0.7301512533583837,
+     "Z_read_by_a_readout_of_control_cells": 0.6240579726689599,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9773151114062689,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "STAT1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.3618056039800581,
+    "errors": 22.150464693522498,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8456106561481078,
+      "ci": [
+       0.7954302759793306,
+       0.9040995127410958
+      ]
+     },
+     "Z": {
+      "share": 0.6666373139578666,
+      "ci": [
+       0.6190522026476749,
+       0.7240474062296041
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5093855141004452,
+      "ci": [
+       0.46473855029075206,
+       0.5647202853111303
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0258994781679753,
+      "ci": [
+       0.9619120327703476,
+       1.0903867887219738
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.15438934385189218,
+     "lost_before_the_state": 0.1789733421902412,
+     "held_not_read": 0.15725179985742144,
+     "read": 0.5093855141004452
+    },
+    "says": "lost before the state 18%; held not read 16% (unresolved: not in the input 15%)"
+   },
+   "Control": {
+    "change": -0.021587777934712338,
+    "errors": 0.6523059958705487,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.3618056039800581,
+    "held": {
+     "input": -1.1515573303277473,
+     "Z": -0.9078304299700362,
+     "Z_read_by_a_readout_of_control_cells": -0.6936840476882492,
+     "Z_read_by_a_readout_taught_by_its_class": -1.397075658489366,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8456106561481079,
+     "Z": 0.6666373139578666,
+     "Z_read_by_a_readout_of_control_cells": 0.5093855141004452,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0258994781679753,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "IFNGR2",
+   "readout": "B2M",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.6537745249077975,
+    "errors": 18.692134130478077,
+    "cells": {
+     "event": 278,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.789619835441171,
+      "ci": [
+       0.7187033372477427,
+       0.8728848358613771
+      ]
+     },
+     "Z": {
+      "share": 0.8447586776724756,
+      "ci": [
+       0.7733523763392879,
+       0.9202551664742349
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7676612532407605,
+      "ci": [
+       0.6910511204484191,
+       0.8427016493282722
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9558608252635646,
+      "ci": [
+       0.8842029786882606,
+       1.0364240014744373
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.1552413223275244,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.07709742443171508,
+     "read": 0.7676612532407605
+    },
+    "says": "unresolved: not in the input 16%; held not read 8%"
+   },
+   "Control": {
+    "change": -0.04205547343429705,
+    "errors": 1.0780767607739936,
+    "cells": {
+     "event": 168,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.6537745249077975,
+    "held": {
+     "input": -0.5162333327733248,
+     "Z": -0.552281703157062,
+     "Z_read_by_a_readout_of_control_cells": -0.5018773711276027,
+     "Z_read_by_a_readout_taught_by_its_class": -0.6249174569146623,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.789619835441171,
+     "Z": 0.8447586776724757,
+     "Z_read_by_a_readout_of_control_cells": 0.7676612532407605,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9558608252635646,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "protein:PDL1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.6930832485290224,
+    "errors": 12.220360041123339,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.0473849490375338,
+      "ci": [
+       0.9228039430702242,
+       1.2009281367686646
+      ]
+     },
+     "Z": {
+      "share": 0.9936466197755017,
+      "ci": [
+       0.8606134149623925,
+       1.1439735353616005
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.944018984929388,
+      "ci": [
+       0.8236358165572901,
+       1.1020929708151912
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.1041046208868466,
+      "ci": [
+       0.9684335721063636,
+       1.2646276922729704
+      ]
+     },
+     "head_output": {
+      "share": 0.09300112922625954,
+      "ci": [
+       0.06850991773829528,
+       0.1185927045223339
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.04738494903753376,
+     "lost_before_the_state": 0.053738329262032036,
+     "held_not_read": 0.049627634846113766,
+     "read": 0.944018984929388
+    },
+    "says": "unresolved: lost before the state 5%; held not read 5%"
+   },
+   "Control": {
+    "change": 0.22260190906013988,
+    "errors": 3.0113800125121095,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.6930832485290224,
+    "held": {
+     "input": -0.7259249629393384,
+     "Z": -0.6886798271238871,
+     "Z_read_by_a_readout_of_control_cells": -0.6542837447479304,
+     "Z_read_by_a_readout_taught_by_its_class": -0.7652364173601603,
+     "head_output": -0.06445752476100337
+    },
+    "share": {
+     "input": 1.0473849490375338,
+     "Z": 0.9936466197755017,
+     "Z_read_by_a_readout_of_control_cells": 0.944018984929388,
+     "Z_read_by_a_readout_taught_by_its_class": 1.1041046208868466,
+     "head_output": 0.09300112922625955
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "protein:MHC1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.05972327476094952,
+    "errors": 1.7111107490694255,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.004584917481245343,
+    "errors": 0.10429620921014304,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "protein:HLAE",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.0643834583983226,
+    "errors": 1.6735282552253445,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.010889228367628068,
+    "errors": 0.35412697321520703,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "IDO1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.124141056855743,
+    "errors": 20.335830290900113,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9689695395852103,
+      "ci": [
+       0.9148684525574716,
+       1.0329298925752652
+      ]
+     },
+     "Z": {
+      "share": 1.013944399227415,
+      "ci": [
+       0.9267339219916405,
+       1.104360636068294
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0194316260509035,
+      "ci": [
+       0.9166626937739527,
+       1.138302118692353
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0014557244560491,
+      "ci": [
+       0.9192943114121783,
+       1.082766220350302
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.013944399227415083,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.005487226823488456,
+     "read": 1.0194316260509035
+    },
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step"
+   },
+   "Control": {
+    "change": 0.0024081783984122983,
+    "errors": 0.785589003015389,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.124141056855743,
+    "held": {
+     "input": -1.089258442290341,
+     "Z": -1.1398165285404678,
+     "Z_read_by_a_readout_of_control_cells": -1.1459849455010314,
+     "Z_read_by_a_readout_taught_by_its_class": -1.1257774964842568,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9689695395852103,
+     "Z": 1.013944399227415,
+     "Z_read_by_a_readout_of_control_cells": 1.0194316260509035,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0014557244560491,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "ETV7",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.39455374512061325,
+    "errors": 15.146674226071744,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8144724226701909,
+      "ci": [
+       0.687701166119596,
+       0.9672683509348994
+      ]
+     },
+     "Z": {
+      "share": 1.1117069294544408,
+      "ci": [
+       0.9594919162698138,
+       1.306433597578166
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.9907101036391894,
+      "ci": [
+       0.8502981062864925,
+       1.156819933129718
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.998576284508238,
+      "ci": [
+       0.8862102412355208,
+       1.1380544685884415
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.11170692945444083,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.1209968258152514,
+     "read": 0.9907101036391894
+    },
+    "says": "unresolved: held not read 12%"
+   },
+   "Control": {
+    "change": -0.0020139782437873176,
+    "errors": 0.6757814403638845,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.39455374512061325,
+    "held": {
+     "input": -0.3213531446619829,
+     "Z": -0.43862813249278704,
+     "Z_read_by_a_readout_of_control_cells": -0.3908883817196731,
+     "Z_read_by_a_readout_taught_by_its_class": -0.3939920128413523,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8144724226701909,
+     "Z": 1.1117069294544408,
+     "Z_read_by_a_readout_of_control_cells": 0.9907101036391894,
+     "Z_read_by_a_readout_taught_by_its_class": 0.998576284508238,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "PSMB8",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.1073671854878115,
+    "errors": 18.12305541555644,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8523669528070222,
+      "ci": [
+       0.7943080684177841,
+       0.9207525155048892
+      ]
+     },
+     "Z": {
+      "share": 0.7008692956828071,
+      "ci": [
+       0.6458267865942158,
+       0.7662799805941386
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5288000234579656,
+      "ci": [
+       0.47180666306026026,
+       0.5907447671313208
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9523319156755621,
+      "ci": [
+       0.8784786171789838,
+       1.0370644043660588
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.14763304719297776,
+     "lost_before_the_state": 0.15149765712421515,
+     "held_not_read": 0.17206927222484147,
+     "read": 0.5288000234579656
+    },
+    "says": "held not read 17%; lost before the state 15% (unresolved: not in the input 15%)"
+   },
+   "Control": {
+    "change": -0.05739862130607232,
+    "errors": 1.3689603094746723,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.1073671854878115,
+    "held": {
+     "input": -0.9438831935327345,
+     "Z": -0.7761196593550949,
+     "Z_read_by_a_readout_of_control_cells": -0.5855757936625361,
+     "Z_read_by_a_readout_taught_by_its_class": -1.054581113111863,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8523669528070222,
+     "Z": 0.7008692956828071,
+     "Z_read_by_a_readout_of_control_cells": 0.5288000234579656,
+     "Z_read_by_a_readout_taught_by_its_class": 0.952331915675562,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "LAP3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.0318539744446995,
+    "errors": 20.066128564404945,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8592599417653415,
+      "ci": [
+       0.7978674911939375,
+       0.9263630807417713
+      ]
+     },
+     "Z": {
+      "share": 0.8632928910044195,
+      "ci": [
+       0.7911560817833309,
+       0.9316592801280611
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7246453357259035,
+      "ci": [
+       0.6606380657072476,
+       0.8047860632030713
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.025714188394631,
+      "ci": [
+       0.9536989476890628,
+       1.108363200483373
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.13670710899558047,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.13864755527851602,
+     "read": 0.7246453357259035
+    },
+    "says": "unresolved: held not read 14%; not in the input 14%"
+   },
+   "Control": {
+    "change": -0.03634354261849776,
+    "errors": 1.01379219129198,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.0318539744446995,
+    "held": {
+     "input": -0.8866307859916887,
+     "Z": -0.8907922006927651,
+     "Z_read_by_a_readout_of_control_cells": -0.7477281697315872,
+     "Z_read_by_a_readout_taught_by_its_class": -1.0583872619393193,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8592599417653415,
+     "Z": 0.8632928910044195,
+     "Z_read_by_a_readout_of_control_cells": 0.7246453357259035,
+     "Z_read_by_a_readout_taught_by_its_class": 1.025714188394631,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "STAT1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.4139124373430936,
+    "errors": 20.921794164873823,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8441011356039496,
+      "ci": [
+       0.7932213727935084,
+       0.8889117626349691
+      ]
+     },
+     "Z": {
+      "share": 0.6525212588004653,
+      "ci": [
+       0.6047160082330097,
+       0.7050279211305618
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5047585613807496,
+      "ci": [
+       0.4653641224894585,
+       0.5522503740208067
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9990380629445239,
+      "ci": [
+       0.9378849732371607,
+       1.060782788517687
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.15589886439605039,
+     "lost_before_the_state": 0.19157987680348432,
+     "held_not_read": 0.1477626974197157,
+     "read": 0.5047585613807496
+    },
+    "says": "lost before the state 19%; not in the input 16% [across events: the other events forecast it, 100%] (unresolved: held not read 15%)"
+   },
+   "Control": {
+    "change": -0.01913739236412576,
+    "errors": 0.5057808760276005,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.4139124373430936,
+    "held": {
+     "input": -1.1934850940058535,
+     "Z": -0.9226079234487494,
+     "Z_read_by_a_readout_of_control_cells": -0.7136844077916492,
+     "Z_read_by_a_readout_taught_by_its_class": -1.4125523425764148,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8441011356039495,
+     "Z": 0.6525212588004653,
+     "Z_read_by_a_readout_of_control_cells": 0.5047585613807496,
+     "Z_read_by_a_readout_taught_by_its_class": 0.999038062944524,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "B2M",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.6634711306669265,
+    "errors": 19.525528593693988,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.775168852784127,
+      "ci": [
+       0.6991429852110809,
+       0.8499332616415051
+      ]
+     },
+     "Z": {
+      "share": 0.8224503532713043,
+      "ci": [
+       0.7605126653637667,
+       0.887747534115815
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7444654469654778,
+      "ci": [
+       0.6771093638479696,
+       0.813792489749249
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9148930763182677,
+      "ci": [
+       0.8407899872420516,
+       0.986294898697008
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.17754964672869566,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.07798490630582655,
+     "read": 0.7444654469654778
+    },
+    "says": "not in the input 18% [across events: the other events forecast it, 91%] (unresolved: held not read 8%)"
+   },
+   "Control": {
+    "change": -0.011988666753699917,
+    "errors": 0.3389726412283132,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.6634711306669265,
+    "held": {
+     "input": -0.514302155214469,
+     "Z": -0.5456720658023254,
+     "Z_read_by_a_readout_of_control_cells": -0.49393133184064436,
+     "Z_read_by_a_readout_taught_by_its_class": -0.6070051437842238,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.7751688527841268,
+     "Z": 0.8224503532713043,
+     "Z_read_by_a_readout_of_control_cells": 0.7444654469654778,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9148930763182677,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "RARRES3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.7282551791632073,
+    "errors": 19.47040238207143,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8952780679298843,
+      "ci": [
+       0.8099539587078892,
+       0.9870622963585377
+      ]
+     },
+     "Z": {
+      "share": 0.8718538550468775,
+      "ci": [
+       0.7731450640241232,
+       0.9782794978281484
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7605235805195603,
+      "ci": [
+       0.6584684403345712,
+       0.8646988980278235
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.019754122253634,
+      "ci": [
+       0.9260203976122452,
+       1.1156702319541625
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.10472193207011571,
+     "lost_before_the_state": 0.02342421288300678,
+     "held_not_read": 0.11133027452731725,
+     "read": 0.7605235805195603
+    },
+    "says": "unresolved: held not read 11%; not in the input 10%; lost before the state 2%"
+   },
+   "Control": {
+    "change": 0.019740980663024432,
+    "errors": 0.8975679652283197,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.7282551791632073,
+    "held": {
+     "input": -0.6519908897611679,
+     "Z": -0.6349320854112968,
+     "Z_read_by_a_readout_of_control_cells": -0.5538552363891163,
+     "Z_read_by_a_readout_taught_by_its_class": -0.7426412210042393,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8952780679298843,
+     "Z": 0.8718538550468776,
+     "Z_read_by_a_readout_of_control_cells": 0.7605235805195603,
+     "Z_read_by_a_readout_taught_by_its_class": 1.019754122253634,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "RNF213",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.8668443043346312,
+    "errors": 18.76162904128645,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8427351058076953,
+      "ci": [
+       0.7600176795553429,
+       0.9131384841199738
+      ]
+     },
+     "Z": {
+      "share": 0.8258136427218055,
+      "ci": [
+       0.7341409978318029,
+       0.9223149292990928
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6840235210173653,
+      "ci": [
+       0.6007009871337097,
+       0.77771356717689
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9570329120827369,
+      "ci": [
+       0.8536062796988235,
+       1.0483680278299152
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.15726489419230472,
+     "lost_before_the_state": 0.01692146308588982,
+     "held_not_read": 0.14179012170444016,
+     "read": 0.6840235210173653
+    },
+    "says": "unresolved: not in the input 16%; held not read 14%"
+   },
+   "Control": {
+    "change": -0.0022635739218301865,
+    "errors": 0.0743701317820866,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.8668443043346312,
+    "held": {
+     "input": -0.7305201265322434,
+     "Z": -0.7158518526352311,
+     "Z_read_by_a_readout_of_control_cells": -0.592941893224823,
+     "Z_read_by_a_readout_taught_by_its_class": -0.8295985288997063,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8427351058076953,
+     "Z": 0.8258136427218054,
+     "Z_read_by_a_readout_of_control_cells": 0.6840235210173653,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9570329120827369,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "GBP4",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.886063080768335,
+    "errors": 20.42545250966465,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9094043405946582,
+      "ci": [
+       0.8296481383402868,
+       0.9943201560301819
+      ]
+     },
+     "Z": {
+      "share": 1.112854215739271,
+      "ci": [
+       1.0238471480152123,
+       1.214865076795835
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0479811918033684,
+      "ci": [
+       0.9476692041203477,
+       1.1399827134550857
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0727990472778393,
+      "ci": [
+       0.9891421974402734,
+       1.163834851924085
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.1128542157392709,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.06487302393590255,
+     "read": 1.0479811918033684
+    },
+    "says": "unresolved: held not read 6%"
+   },
+   "Control": {
+    "change": 0.017999703521814334,
+    "errors": 1.5172307699316645,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.886063080768335,
+    "held": {
+     "input": -0.8057896116913991,
+     "Z": -0.9860590348439676,
+     "Z_read_by_a_readout_of_control_cells": -0.9285774433965639,
+     "Z_read_by_a_readout_taught_by_its_class": -0.9505676288763368,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9094043405946582,
+     "Z": 1.112854215739271,
+     "Z_read_by_a_readout_of_control_cells": 1.0479811918033684,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0727990472778393,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK1",
+   "readout": "HAPLN3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.3036186189383796,
+    "errors": 13.926491713078295,
+    "cells": {
+     "event": 248,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.5936283920413965,
+      "ci": [
+       0.44539210444433636,
+       0.7628146425272039
+      ]
+     },
+     "Z": {
+      "share": 0.8643184459361615,
+      "ci": [
+       0.7015833663320968,
+       1.0780388647943662
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7624947156999825,
+      "ci": [
+       0.6014754097262173,
+       0.945745266240984
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.986488510591691,
+      "ci": [
+       0.8296234271865522,
+       1.1570070183483279
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.13568155406383853,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.10182373023617897,
+     "read": 0.7624947156999825
+    },
+    "says": "unresolved: not in the input 14%; held not read 10%"
+   },
+   "Control": {
+    "change": -0.0028606110219477022,
+    "errors": 4.554568857659726,
+    "cells": {
+     "event": 158,
+     "control": 3978
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": -0.004075686491112229,
+      "ci": [
+       -0.1335345221185937,
+       0.13832390877551146
+      ]
+     },
+     "Z": {
+      "share": 0.10432413454211253,
+      "ci": [
+       -0.00846467794001674,
+       0.2214121991776956
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.07671388650984069,
+      "ci": [
+       -0.22546950738033977,
+       0.4156000920964187
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.25270433114308777,
+      "ci": [
+       -0.2195946495580303,
+       0.8952272557195922
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.8956758654578875,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.027610248032271842,
+     "read": 0.07671388650984069
+    },
+    "says": "not in the input 90% [across events: unresolved, 25%] (unresolved: held not read 3%)"
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.3007580079164319,
+    "held": {
+     "input": -0.18024829150791827,
+     "Z": -0.2621247421089775,
+     "Z_read_by_a_readout_of_control_cells": -0.2312881439393546,
+     "Z_read_by_a_readout_taught_by_its_class": -0.2987933903894664,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.5993133574617961,
+     "Z": 0.8715470085897464,
+     "Z_read_by_a_readout_of_control_cells": 0.769017408851903,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9934677798254622,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "protein:PDL1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.90786265517643,
+    "errors": 16.88993984330163,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8700788192504767,
+      "ci": [
+       0.7731050903093579,
+       0.9733544035918713
+      ]
+     },
+     "Z": {
+      "share": 0.877378963534278,
+      "ci": [
+       0.7765682811857683,
+       0.9938087625288807
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8004425780429512,
+      "ci": [
+       0.6975175206256121,
+       0.905352376915759
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.8902698215918996,
+      "ci": [
+       0.7981030184372296,
+       0.9867398856099563
+      ]
+     },
+     "head_output": {
+      "share": 0.09419457409952559,
+      "ci": [
+       0.07425272488463527,
+       0.11448672931565212
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.12262103646572198,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.07693638549132686,
+     "read": 0.8004425780429512
+    },
+    "says": "unresolved: not in the input 12%; held not read 8%"
+   },
+   "Control": {
+    "change": -0.036054333169259184,
+    "errors": 0.6267432893298372,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.90786265517643,
+    "held": {
+     "input": -0.7899120670575108,
+     "Z": -0.7965395954301737,
+     "Z_read_by_a_readout_of_control_cells": -0.7266919242183404,
+     "Z_read_by_a_readout_taught_by_its_class": -0.8082427240538685,
+     "head_output": -0.08551573614520827
+    },
+    "share": {
+     "input": 0.8700788192504767,
+     "Z": 0.877378963534278,
+     "Z_read_by_a_readout_of_control_cells": 0.8004425780429512,
+     "Z_read_by_a_readout_taught_by_its_class": 0.8902698215918996,
+     "head_output": 0.09419457409952559
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "protein:MHC1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.15523144539012024,
+    "errors": 4.549364326359061,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.2308621244298785,
+      "ci": [
+       0.8319022683957858,
+       2.0197188781293973
+      ]
+     },
+     "Z": {
+      "share": 1.46253149768475,
+      "ci": [
+       1.028452124924367,
+       2.516645213852536
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.436372354456614,
+      "ci": [
+       0.9256465936005334,
+       2.321075136887602
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.1118068368977374,
+      "ci": [
+       0.708927393888812,
+       1.7936592848989308
+      ]
+     },
+     "head_output": {
+      "share": 0.05509291450013805,
+      "ci": [
+       -0.011291655345974958,
+       0.11810011620797238
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.4625314976847501,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.02615914322813606,
+     "read": 1.436372354456614
+    },
+    "says": "unresolved: held not read 3%"
+   },
+   "Control": {
+    "change": 0.04399183147726271,
+    "errors": 1.057748636037455,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.15523144539012024,
+    "held": {
+     "input": -0.19106850665120406,
+     "Z": -0.22703087831418106,
+     "Z_read_by_a_readout_of_control_cells": -0.2229701567007103,
+     "Z_read_by_a_readout_taught_by_its_class": -0.17258738228625345,
+     "head_output": -0.008552152748610743
+    },
+    "share": {
+     "input": 1.2308621244298785,
+     "Z": 1.46253149768475,
+     "Z_read_by_a_readout_of_control_cells": 1.436372354456614,
+     "Z_read_by_a_readout_taught_by_its_class": 1.1118068368977374,
+     "head_output": 0.05509291450013805
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "protein:HLAE",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.035631398821890814,
+    "errors": 0.9126133035081528,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.005422490881377362,
+    "errors": 0.14773007073237562,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "IDO1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.2911735265231297,
+    "errors": 27.832680471348258,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.0179993658767288,
+      "ci": [
+       0.9655371252452906,
+       1.0743593395503064
+      ]
+     },
+     "Z": {
+      "share": 0.978369432901489,
+      "ci": [
+       0.8995386241531232,
+       1.0672206066973107
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0051927630329154,
+      "ci": [
+       0.896909599357133,
+       1.103581303444977
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9860393622404098,
+      "ci": [
+       0.9021593969012276,
+       1.065975560697414
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.01799936587672879,
+     "lost_before_the_state": 0.03962993297523976,
+     "held_not_read": -0.02682333013142635,
+     "read": 1.0051927630329154
+    },
+    "says": "unresolved: lost before the state 4%"
+   },
+   "Control": {
+    "change": -0.0006391613190656362,
+    "errors": 1.9213699277118956,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.2911735265231297,
+    "held": {
+     "input": -1.3144138312373657,
+     "Z": -1.26324471092185,
+     "Z_read_by_a_readout_of_control_cells": -1.297878284680738,
+     "Z_read_by_a_readout_taught_by_its_class": -1.2731479206345675,
+     "head_output": null
+    },
+    "share": {
+     "input": 1.0179993658767288,
+     "Z": 0.978369432901489,
+     "Z_read_by_a_readout_of_control_cells": 1.0051927630329154,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9860393622404097,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "ETV7",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.4469688850633942,
+    "errors": 19.520422709639202,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9154176846950385,
+      "ci": [
+       0.7835181606407264,
+       1.0856085307642467
+      ]
+     },
+     "Z": {
+      "share": 1.1500363891221117,
+      "ci": [
+       1.0150678496126664,
+       1.2951030673136104
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.9667213712772408,
+      "ci": [
+       0.839089287592873,
+       1.1174351274907965
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9606688768935513,
+      "ci": [
+       0.864157138406486,
+       1.0620195244979205
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.1500363891221117,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.18331501784487092,
+     "read": 0.9667213712772408
+    },
+    "says": "unresolved: held not read 18%"
+   },
+   "Control": {
+    "change": 0.00023228627792120943,
+    "errors": 0.05897060040958592,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.4469688850633942,
+    "held": {
+     "input": -0.4091632218954551,
+     "Z": -0.514030482628242,
+     "Z_read_by_a_readout_of_control_cells": -0.4320943734867439,
+     "Z_read_by_a_readout_taught_by_its_class": -0.42938909682021376,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9154176846950385,
+     "Z": 1.1500363891221117,
+     "Z_read_by_a_readout_of_control_cells": 0.9667213712772408,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9606688768935513,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "LAP3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.0487569750560746,
+    "errors": 20.64655312801715,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8679650740832174,
+      "ci": [
+       0.8012899809329048,
+       0.9545016687512806
+      ]
+     },
+     "Z": {
+      "share": 0.8816646880157022,
+      "ci": [
+       0.814831101683917,
+       0.9643232575676133
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7504880004941691,
+      "ci": [
+       0.677118641589364,
+       0.8297911566572806
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0604439561271457,
+      "ci": [
+       0.9844436665847395,
+       1.1518047867994083
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.11833531198429781,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.1311766875215331,
+     "read": 0.7504880004941691
+    },
+    "says": "unresolved: held not read 13%; not in the input 12%"
+   },
+   "Control": {
+    "change": 0.0114979829910421,
+    "errors": 0.3205070149879032,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.0487569750560746,
+    "held": {
+     "input": -0.9102844255498368,
+     "Z": -0.9246519912171055,
+     "Z_read_by_a_readout_of_control_cells": -0.7870795252141466,
+     "Z_read_by_a_readout_taught_by_its_class": -1.112147995644402,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8679650740832174,
+     "Z": 0.8816646880157022,
+     "Z_read_by_a_readout_of_control_cells": 0.7504880004941691,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0604439561271457,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "PSMB8",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.111214579887806,
+    "errors": 19.199252701180576,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8916066152710684,
+      "ci": [
+       0.8160331166393384,
+       0.9722679927990795
+      ]
+     },
+     "Z": {
+      "share": 0.6980637578120181,
+      "ci": [
+       0.6384318699095971,
+       0.7677251138394368
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.568913070986788,
+      "ci": [
+       0.5102421588742458,
+       0.6339539806216175
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.017029564325038,
+      "ci": [
+       0.9433098487596148,
+       1.0933521220719102
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.10839338472893156,
+     "lost_before_the_state": 0.1935428574590503,
+     "held_not_read": 0.12915068682523012,
+     "read": 0.568913070986788
+    },
+    "says": "lost before the state 19% (unresolved: held not read 13%; not in the input 11%)"
+   },
+   "Control": {
+    "change": -0.029114171538685896,
+    "errors": 0.7482874591223193,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.111214579887806,
+    "held": {
+     "input": -0.990766270413629,
+     "Z": -0.7756986253719849,
+     "Z_read_by_a_readout_of_control_cells": -0.6321844991692651,
+     "Z_read_by_a_readout_taught_by_its_class": -1.1301380800549254,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8916066152710684,
+     "Z": 0.6980637578120181,
+     "Z_read_by_a_readout_of_control_cells": 0.568913070986788,
+     "Z_read_by_a_readout_taught_by_its_class": 1.017029564325038,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "HAPLN3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.3449908489244047,
+    "errors": 19.35143051422616,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.5559665896125636,
+      "ci": [
+       0.41941594057762066,
+       0.716036627612097
+      ]
+     },
+     "Z": {
+      "share": 0.8466587320566556,
+      "ci": [
+       0.6889229091310436,
+       0.9878052560688207
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7274235226875747,
+      "ci": [
+       0.5774647022660008,
+       0.8837546361699413
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.90366139101001,
+      "ci": [
+       0.7814871435473622,
+       1.0413908420762248
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.15334126794334435,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.11923520936908094,
+     "read": 0.7274235226875747
+    },
+    "says": "unresolved: not in the input 15%; held not read 12%"
+   },
+   "Control": {
+    "change": 0.00047371269462579855,
+    "errors": 0.13961625806519504,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.3449908489244047,
+    "held": {
+     "input": -0.19180338572404443,
+     "Z": -0.2920895147214857,
+     "Z_read_by_a_readout_of_control_cells": -0.25095445861956733,
+     "Z_read_by_a_readout_taught_by_its_class": -0.31175491042475173,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.5559665896125636,
+     "Z": 0.8466587320566556,
+     "Z_read_by_a_readout_of_control_cells": 0.7274235226875747,
+     "Z_read_by_a_readout_taught_by_its_class": 0.90366139101001,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "B2M",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.6022016000367132,
+    "errors": 16.332498630822002,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8770781247704271,
+      "ci": [
+       0.7811163198835306,
+       0.9759093346068324
+      ]
+     },
+     "Z": {
+      "share": 0.8879876700140062,
+      "ci": [
+       0.8072695287693293,
+       0.9646599760806304
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8128279581308537,
+      "ci": [
+       0.7322083527801112,
+       0.8968042793373233
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0353261273395047,
+      "ci": [
+       0.9518052293303145,
+       1.1189146409426411
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.11201232998599375,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.07515971188315251,
+     "read": 0.8128279581308537
+    },
+    "says": "unresolved: not in the input 11%; held not read 8%"
+   },
+   "Control": {
+    "change": -0.035046070953258734,
+    "errors": 0.9132928743984162,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.6022016000367132,
+    "held": {
+     "input": -0.5281778500939512,
+     "Z": -0.5347475956953075,
+     "Z_read_by_a_readout_of_control_cells": -0.4894862969409746,
+     "Z_read_by_a_readout_taught_by_its_class": -0.6234750504436636,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8770781247704272,
+     "Z": 0.8879876700140064,
+     "Z_read_by_a_readout_of_control_cells": 0.8128279581308537,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0353261273395047,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "CXCL11",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.4465022749404819,
+    "errors": 16.765876151087742,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.7610092021860073,
+      "ci": [
+       0.6262627826467532,
+       0.8978291848318397
+      ]
+     },
+     "Z": {
+      "share": 1.484656017943018,
+      "ci": [
+       1.2572670829407215,
+       1.7161905253462875
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.7000728782456183,
+      "ci": [
+       1.4207695483701053,
+       2.0214503887866386
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.006739210208274,
+      "ci": [
+       0.8347175976607867,
+       1.2252260109985273
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.48465601794301794,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.21541686030260032,
+     "read": 1.7000728782456183
+    },
+    "says": "read: a readout of control cells reads the change, and no other part is as large as a step"
+   },
+   "Control": {
+    "change": -0.0009579101141902569,
+    "errors": 1.7135872257383016,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.4465022749404819,
+    "held": {
+     "input": -0.3397923400266934,
+     "Z": -0.6629022895156345,
+     "Z_read_by_a_readout_of_control_cells": -0.7590864077012814,
+     "Z_read_by_a_readout_taught_by_its_class": -0.44951134762977835,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.7610092021860073,
+     "Z": 1.484656017943018,
+     "Z_read_by_a_readout_of_control_cells": 1.7000728782456183,
+     "Z_read_by_a_readout_taught_by_its_class": 1.006739210208274,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "GBP1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.8388460206601722,
+    "errors": 26.100856389314984,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9178167015232942,
+      "ci": [
+       0.8758271110368764,
+       0.9627563773737221
+      ]
+     },
+     "Z": {
+      "share": 0.6962081290818283,
+      "ci": [
+       0.6521259700649846,
+       0.7419172669335183
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6205261842773134,
+      "ci": [
+       0.5742051308240692,
+       0.6649017356008624
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.979412308918517,
+      "ci": [
+       0.926632054014815,
+       1.0329048042239823
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.0821832984767058,
+     "lost_before_the_state": 0.22160857244146592,
+     "held_not_read": 0.07568194480451484,
+     "read": 0.6205261842773134
+    },
+    "says": "lost before the state 22% (unresolved: not in the input 8%; held not read 8%)"
+   },
+   "Control": {
+    "change": -0.014422597673454413,
+    "errors": 0.48267690946233494,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.8388460206601722,
+    "held": {
+     "input": -1.6877235892915545,
+     "Z": -1.2802195477133835,
+     "Z_read_by_a_readout_of_control_cells": -1.1410521046737785,
+     "Z_read_by_a_readout_taught_by_its_class": -1.8009884268404064,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9178167015232942,
+     "Z": 0.6962081290818283,
+     "Z_read_by_a_readout_of_control_cells": 0.6205261842773134,
+     "Z_read_by_a_readout_taught_by_its_class": 0.979412308918517,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "IRF1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.3026704827590336,
+    "errors": 22.643809479550633,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.876486813848055,
+      "ci": [
+       0.810806591159812,
+       0.9346162486397254
+      ]
+     },
+     "Z": {
+      "share": 0.7134514175991793,
+      "ci": [
+       0.6528887982487755,
+       0.7733422911945308
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5973854672736356,
+      "ci": [
+       0.541956654800345,
+       0.6524790064303356
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0245704158910376,
+      "ci": [
+       0.9540655585392616,
+       1.0986015213232148
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.12351318615194495,
+     "lost_before_the_state": 0.16303539624887575,
+     "held_not_read": 0.11606595032554368,
+     "read": 0.5973854672736356
+    },
+    "says": "lost before the state 16% (unresolved: not in the input 12%; held not read 12%)"
+   },
+   "Control": {
+    "change": 9.038778798092784e-05,
+    "errors": 0.002621314139298245,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.3026704827590336,
+    "held": {
+     "input": -1.141773500927373,
+     "Z": -0.9293921025890398,
+     "Z_read_by_a_readout_of_control_cells": -0.7781964150465778,
+     "Z_read_by_a_readout_taught_by_its_class": -1.334677638289402,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.876486813848055,
+     "Z": 0.7134514175991793,
+     "Z_read_by_a_readout_of_control_cells": 0.5973854672736356,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0245704158910376,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "JAK2",
+   "readout": "CD74",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.3479342642526301,
+    "errors": 15.221920446938393,
+    "cells": {
+     "event": 244,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.7129773562225266,
+      "ci": [
+       0.5278503554290719,
+       0.9087944312320111
+      ]
+     },
+     "Z": {
+      "share": 0.8382798367077858,
+      "ci": [
+       0.6583518986161435,
+       1.0290541392183425
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8337339380802176,
+      "ci": [
+       0.6259524201963462,
+       1.0385106060460978
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9660739770792227,
+      "ci": [
+       0.7932635512694232,
+       1.1545058666432333
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.16172016329221417,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.004545898627568268,
+     "read": 0.8337339380802176
+    },
+    "says": "unresolved: not in the input 16%; held not read 0%"
+   },
+   "Control": {
+    "change": 0.005334359639050391,
+    "errors": 0.8823110726258755,
+    "cells": {
+     "event": 172,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.3479342642526301,
+    "held": {
+     "input": -0.24806925186607012,
+     "Z": -0.29166627822273833,
+     "Z_read_by_a_readout_of_control_cells": -0.29008460432838834,
+     "Z_read_by_a_readout_taught_by_its_class": -0.33613023842867157,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.7129773562225266,
+     "Z": 0.8382798367077858,
+     "Z_read_by_a_readout_of_control_cells": 0.8337339380802176,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9660739770792227,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "protein:PDL1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.956314258750895,
+    "errors": 17.656776483180817,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9643433656138974,
+      "ci": [
+       0.864352367894508,
+       1.0774752905880223
+      ]
+     },
+     "Z": {
+      "share": 0.903728480590412,
+      "ci": [
+       0.8180741742224057,
+       0.999853934279234
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8623902214311423,
+      "ci": [
+       0.7652448243151283,
+       0.9796749864663585
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9836665897597037,
+      "ci": [
+       0.8954736961883722,
+       1.088058675938634
+      ]
+     },
+     "head_output": {
+      "share": 0.0979821472868316,
+      "ci": [
+       0.07532427762049494,
+       0.1185611088244776
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.03565663438610256,
+     "lost_before_the_state": 0.06061488502348544,
+     "held_not_read": 0.0413382591592697,
+     "read": 0.8623902214311423
+    },
+    "says": "unresolved: lost before the state 6%; held not read 4%; not in the input 4%"
+   },
+   "Control": {
+    "change": -0.022082710141749673,
+    "errors": 0.3124316118603269,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.956314258750895,
+    "held": {
+     "input": -0.9222153108683977,
+     "Z": -0.8642484320278925,
+     "Z_read_by_a_readout_of_control_cells": -0.8247160653619431,
+     "Z_read_by_a_readout_taught_by_its_class": -0.9406943856440718,
+     "head_output": -0.09370172455342739
+    },
+    "share": {
+     "input": 0.9643433656138974,
+     "Z": 0.903728480590412,
+     "Z_read_by_a_readout_of_control_cells": 0.8623902214311423,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9836665897597037,
+     "head_output": 0.0979821472868316
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "protein:MHC1",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.2046323011414939,
+    "errors": 5.567587812101871,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9733711797187301,
+      "ci": [
+       0.6295531828661267,
+       1.5600106272835141
+      ]
+     },
+     "Z": {
+      "share": 1.0285606913415475,
+      "ci": [
+       0.7381537843065161,
+       1.5716844514786237
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.1168697875681768,
+      "ci": [
+       0.7631295148870286,
+       1.7616666881162586
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.756208810990979,
+      "ci": [
+       0.5012036884255923,
+       1.1204870341939082
+      ]
+     },
+     "head_output": {
+      "share": 0.09270210895316852,
+      "ci": [
+       0.033358183620060565,
+       0.1754100911494101
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.028560691341547484,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.0883090962266293,
+     "read": 1.1168697875681768
+    },
+    "says": "unresolved: not in the input -3%; held not read -9%"
+   },
+   "Control": {
+    "change": -0.03912755149144376,
+    "errors": 0.8070111652723014,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.2046323011414939,
+    "held": {
+     "input": -0.19918318437065435,
+     "Z": -0.21047674113290668,
+     "Z_read_by_a_readout_of_control_cells": -0.22854763470548745,
+     "Z_read_by_a_readout_taught_by_its_class": -0.15474474913655706,
+     "head_output": -0.01896984587575636
+    },
+    "share": {
+     "input": 0.9733711797187301,
+     "Z": 1.0285606913415475,
+     "Z_read_by_a_readout_of_control_cells": 1.1168697875681768,
+     "Z_read_by_a_readout_taught_by_its_class": 0.756208810990979,
+     "head_output": 0.09270210895316852
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "protein:HLAE",
+   "kind": "protein",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.13286745669573474,
+    "errors": 3.6327268538497144,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": false
+   },
+   "Control": {
+    "change": 0.0008931411499952802,
+    "errors": 0.021727980252220443,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": null
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "IDO1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.253031131190903,
+    "errors": 24.351248218630253,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 1.0023270071073989,
+      "ci": [
+       0.9523224234837363,
+       1.0613401597401777
+      ]
+     },
+     "Z": {
+      "share": 1.0842165647642006,
+      "ci": [
+       0.9903305534605038,
+       1.1852065769292632
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 1.0875855546309183,
+      "ci": [
+       0.9796503314045908,
+       1.2275109685720729
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0862624059517183,
+      "ci": [
+       1.012548281467831,
+       1.1773216927135624
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.08421656476420059,
+     "lost_before_the_state": 0.0,
+     "held_not_read": -0.003368989866717742,
+     "read": 1.0875855546309183
+    },
+    "says": "unresolved: held not read -0%"
+   },
+   "Control": {
+    "change": -0.0006391613190656362,
+    "errors": 1.9213699277118956,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.253031131190903,
+    "held": {
+     "input": -1.2559469435389763,
+     "Z": -1.3585571086024013,
+     "Z_read_by_a_readout_of_control_cells": -1.3627785577860652,
+     "Z_read_by_a_readout_taught_by_its_class": -1.3611206112998335,
+     "head_output": null
+    },
+    "share": {
+     "input": 1.0023270071073989,
+     "Z": 1.0842165647642006,
+     "Z_read_by_a_readout_of_control_cells": 1.0875855546309183,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0862624059517183,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "ETV7",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.4648635512480172,
+    "errors": 22.428265047270184,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8416613218238311,
+      "ci": [
+       0.7152327475523481,
+       1.0008597494474463
+      ]
+     },
+     "Z": {
+      "share": 1.0777059370340485,
+      "ci": [
+       0.9493889348929764,
+       1.2136340332438684
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.9657767776863991,
+      "ci": [
+       0.8366457123237919,
+       1.1059490046037803
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9778683851045818,
+      "ci": [
+       0.8985717526849422,
+       1.0759996803769085
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": -0.07770593703404849,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.11192915934764935,
+     "read": 0.9657767776863991
+    },
+    "says": "unresolved: held not read 11%"
+   },
+   "Control": {
+    "change": -0.0048116444182488395,
+    "errors": 4.685025598068415,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": -0.02165776265632191,
+      "ci": [
+       -0.09444617400429721,
+       0.042774485400282954
+      ]
+     },
+     "Z": {
+      "share": -0.09688324801098536,
+      "ci": [
+       -0.29149655249349243,
+       0.05327664584089761
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": -0.19637879383364285,
+      "ci": [
+       -0.8942008772288076,
+       0.198767996355954
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": -0.04253594198892788,
+      "ci": [
+       -0.5483669311797422,
+       0.3864331601789728
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 1.021657762656322,
+     "lost_before_the_state": 0.07522548535466345,
+     "held_not_read": 0.09949554582265749,
+     "read": -0.19637879383364285
+    },
+    "says": "not in the input 102% [across events: the other events do not forecast it, -4%] (unresolved: held not read 10%; lost before the state 8%)"
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.4600519068297684,
+    "held": {
+     "input": -0.39136188046392345,
+     "Z": -0.5014523768302337,
+     "Z_read_by_a_readout_of_control_cells": -0.4498993275153784,
+     "Z_read_by_a_readout_taught_by_its_class": -0.45478003798072564,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8506907039268895,
+     "Z": 1.0899908670866234,
+     "Z_read_by_a_readout_of_control_cells": 0.9779316656149701,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9885407086227045,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "PSMB8",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.2565452587821035,
+    "errors": 22.73019772627725,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8433335730127771,
+      "ci": [
+       0.7607595593061239,
+       0.9219677691362226
+      ]
+     },
+     "Z": {
+      "share": 0.6684902743934418,
+      "ci": [
+       0.6059234176257791,
+       0.7358084918580811
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5506207662374013,
+      "ci": [
+       0.5047300210218237,
+       0.6051467343599237
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9716890908992233,
+      "ci": [
+       0.9050596724262918,
+       1.0493146066506787
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.15666642698722288,
+     "lost_before_the_state": 0.17484329861933534,
+     "held_not_read": 0.11786950815604047,
+     "read": 0.5506207662374013
+    },
+    "says": "lost before the state 17% (unresolved: not in the input 16%; held not read 12%)"
+   },
+   "Control": {
+    "change": -0.06528121146695398,
+    "errors": 1.4838862154999672,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.2565452587821035,
+    "held": {
+     "input": -1.059686802740976,
+     "Z": -0.8399882848310267,
+     "Z_read_by_a_readout_of_control_cells": -0.6918799132025756,
+     "Z_read_by_a_readout_taught_by_its_class": -1.2209713201797114,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8433335730127771,
+     "Z": 0.6684902743934418,
+     "Z_read_by_a_readout_of_control_cells": 0.5506207662374013,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9716890908992233,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "LAP3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.2788413040214293,
+    "errors": 24.43340310571367,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8915544590978517,
+      "ci": [
+       0.8198518829705893,
+       0.967624754913696
+      ]
+     },
+     "Z": {
+      "share": 0.808266303303789,
+      "ci": [
+       0.7471458031295279,
+       0.8854431480892574
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6845954831361498,
+      "ci": [
+       0.6262091985616881,
+       0.76164989778543
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9373003438801196,
+      "ci": [
+       0.8769692604797605,
+       1.0107471738312925
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.10844554090214831,
+     "lost_before_the_state": 0.08328815579406268,
+     "held_not_read": 0.1236708201676392,
+     "read": 0.6845954831361498
+    },
+    "says": "unresolved: held not read 12%; not in the input 11%; lost before the state 8%"
+   },
+   "Control": {
+    "change": 0.0021208641164729425,
+    "errors": 0.05457245791462688,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.2788413040214293,
+    "held": {
+     "input": -1.1401566670788166,
+     "Z": -1.0336443333135976,
+     "Z_read_by_a_readout_of_control_cells": -0.8754889803810142,
+     "Z_read_by_a_readout_taught_by_its_class": -1.1986583940273863,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8915544590978516,
+     "Z": 0.808266303303789,
+     "Z_read_by_a_readout_of_control_cells": 0.6845954831361498,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9373003438801196,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "IRF1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.5514530432302152,
+    "errors": 26.92547070304504,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.860850773968117,
+      "ci": [
+       0.8020221098615717,
+       0.9243919460928622
+      ]
+     },
+     "Z": {
+      "share": 0.6653719987666245,
+      "ci": [
+       0.6176708979395266,
+       0.7132453325917019
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.540811093574763,
+      "ci": [
+       0.49346635175298575,
+       0.5904744507734279
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9137027244113819,
+      "ci": [
+       0.8639348426598571,
+       0.9656552251676904
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.13914922603188296,
+     "lost_before_the_state": 0.1954787752014926,
+     "held_not_read": 0.12456090519186147,
+     "read": 0.540811093574763
+    },
+    "says": "lost before the state 20% (unresolved: not in the input 14%; held not read 12%)"
+   },
+   "Control": {
+    "change": -0.0542797725463694,
+    "errors": 1.5057431118411337,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.5514530432302152,
+    "held": {
+     "input": -1.3355695530399212,
+     "Z": -1.0322934123666505,
+     "Z_read_by_a_readout_of_control_cells": -0.8390430169392267,
+     "Z_read_by_a_readout_taught_by_its_class": -1.417566872395777,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.860850773968117,
+     "Z": 0.6653719987666245,
+     "Z_read_by_a_readout_of_control_cells": 0.540811093574763,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9137027244113819,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "B2M",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.7009653439956223,
+    "errors": 19.428285022993485,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.9024886269214152,
+      "ci": [
+       0.811974853663268,
+       1.0237034338416848
+      ]
+     },
+     "Z": {
+      "share": 0.8241303658194328,
+      "ci": [
+       0.7586640521334094,
+       0.9102122709964687
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.7739253725843284,
+      "ci": [
+       0.6938752967605877,
+       0.8627816136146323
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9751849974148942,
+      "ci": [
+       0.9005886033306865,
+       1.0607657446576377
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.09751137307858482,
+     "lost_before_the_state": 0.07835826110198241,
+     "held_not_read": 0.05020499323510441,
+     "read": 0.7739253725843284
+    },
+    "says": "unresolved: not in the input 10%; lost before the state 8%; held not read 5%"
+   },
+   "Control": {
+    "change": -0.011030714173579703,
+    "errors": 0.36429890426303985,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.7009653439956223,
+    "held": {
+     "input": -0.6326132508221066,
+     "Z": -0.5776868253738567,
+     "Z_read_by_a_readout_of_control_cells": -0.5424948650205139,
+     "Z_read_by_a_readout_taught_by_its_class": -0.6835708871723013,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.9024886269214152,
+     "Z": 0.8241303658194328,
+     "Z_read_by_a_readout_of_control_cells": 0.7739253725843285,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9751849974148942,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "HAPLN3",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.337868805772208,
+    "errors": 16.543792770163233,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.5270540891403646,
+      "ci": [
+       0.3648522901675413,
+       0.7072419318892188
+      ]
+     },
+     "Z": {
+      "share": 0.978467121527629,
+      "ci": [
+       0.8160090188059355,
+       1.1825904568119303
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.8329298031789318,
+      "ci": [
+       0.6763624027022741,
+       1.0247229641287452
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 1.0726435342807632,
+      "ci": [
+       0.9343184274050395,
+       1.2468706935816034
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.021532878472370953,
+     "lost_before_the_state": 0.0,
+     "held_not_read": 0.1455373183486972,
+     "read": 0.8329298031789318
+    },
+    "says": "unresolved: held not read 15%; not in the input 2%"
+   },
+   "Control": {
+    "change": 0.000645868481608804,
+    "errors": 0.18130734119793337,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.337868805772208,
+    "held": {
+     "input": -0.17807513567521385,
+     "Z": -0.33059351783790997,
+     "Z_read_by_a_readout_of_control_cells": -0.281420997892146,
+     "Z_read_by_a_readout_taught_by_its_class": -0.36241278994672194,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.5270540891403646,
+     "Z": 0.978467121527629,
+     "Z_read_by_a_readout_of_control_cells": 0.8329298031789318,
+     "Z_read_by_a_readout_taught_by_its_class": 1.0726435342807632,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "GBP1",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -2.0516914078758126,
+    "errors": 29.117006910702464,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8416403408417179,
+      "ci": [
+       0.7990077788303738,
+       0.8879427256605339
+      ]
+     },
+     "Z": {
+      "share": 0.6869657089995874,
+      "ci": [
+       0.6418949437799926,
+       0.729292348647831
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6217248463965417,
+      "ci": [
+       0.5770850409549599,
+       0.668015004369201
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9718616736429613,
+      "ci": [
+       0.9230058050043318,
+       1.023355614789454
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.1583596591582821,
+     "lost_before_the_state": 0.15467463184213048,
+     "held_not_read": 0.06524086260304574,
+     "read": 0.6217248463965417
+    },
+    "says": "not in the input 16% [across events: the other events forecast it, 97%]; lost before the state 15% (unresolved: held not read 7%)"
+   },
+   "Control": {
+    "change": 0.012332184792233747,
+    "errors": 0.30966593726743347,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -2.0516914078758126,
+    "held": {
+     "input": -1.726786255826623,
+     "Z": -1.4094416426597693,
+     "Z_read_by_a_readout_of_control_cells": -1.275587525414694,
+     "Z_read_by_a_readout_taught_by_its_class": -1.9939602454570708,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8416403408417179,
+     "Z": 0.6869657089995874,
+     "Z_read_by_a_readout_of_control_cells": 0.6217248463965417,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9718616736429613,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "IFI16",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -0.7373627276565231,
+    "errors": 14.270498260465194,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8890229495052913,
+      "ci": [
+       0.772943348121929,
+       1.02393660851138
+      ]
+     },
+     "Z": {
+      "share": 0.8080550933241872,
+      "ci": [
+       0.7014210483811293,
+       0.9191047623192311
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.6603754802011902,
+      "ci": [
+       0.5593630946017455,
+       0.8083999411220717
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9921100498962138,
+      "ci": [
+       0.8814225600154573,
+       1.158167068824645
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.11097705049470874,
+     "lost_before_the_state": 0.08096785618110403,
+     "held_not_read": 0.14767961312299704,
+     "read": 0.6603754802011902
+    },
+    "says": "unresolved: held not read 15%; not in the input 11%; lost before the state 8%"
+   },
+   "Control": {
+    "change": 0.06038402659125197,
+    "errors": 1.1928449617101837,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -0.7373627276565231,
+    "held": {
+     "input": -0.655532386996469,
+     "Z": -0.595829707710269,
+     "Z_read_by_a_readout_of_control_cells": -0.4869362653586359,
+     "Z_read_by_a_readout_taught_by_its_class": -0.7315449725269214,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8890229495052913,
+     "Z": 0.8080550933241872,
+     "Z_read_by_a_readout_of_control_cells": 0.6603754802011902,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9921100498962138,
+     "head_output": null
+    }
+   }
+  },
+  {
+   "knockout": "STAT1",
+   "readout": "WARS",
+   "kind": "gene",
+   "class": 1,
+   "IFNγ": {
+    "change": -1.6317583095907149,
+    "errors": 26.16668779512432,
+    "cells": {
+     "event": 203,
+     "control": 4000
+    },
+    "account": true,
+    "shares": {
+     "input": {
+      "share": 0.8315230203002,
+      "ci": [
+       0.7752812626855956,
+       0.8887855209437343
+      ]
+     },
+     "Z": {
+      "share": 0.6214876652377903,
+      "ci": [
+       0.5759117641591792,
+       0.6698314585722466
+      ]
+     },
+     "Z_read_by_a_readout_of_control_cells": {
+      "share": 0.5109274819130015,
+      "ci": [
+       0.47058975338891373,
+       0.5570830434814107
+      ]
+     },
+     "Z_read_by_a_readout_taught_by_its_class": {
+      "share": 0.9152702211740686,
+      "ci": [
+       0.8632981691708138,
+       0.967824436893091
+      ]
+     }
+    },
+    "carried_by": {
+     "V": "cells",
+     "Z": "cells"
+    },
+    "parts": {
+     "not_in_the_input": 0.16847697969980002,
+     "lost_before_the_state": 0.21003535506240967,
+     "held_not_read": 0.11056018332478879,
+     "read": 0.5109274819130015
+    },
+    "says": "lost before the state 21%; not in the input 17% [across events: the other events forecast it, 92%] (unresolved: held not read 11%)"
+   },
+   "Control": {
+    "change": -0.014165518995115589,
+    "errors": 0.46654773681767386,
+    "cells": {
+     "event": 125,
+     "control": 3978
+    },
+    "account": false
+   },
+   "non_additive": {
+    "part_that_does_not_add": -1.6317583095907149,
+    "held": {
+     "input": -1.35684459799082,
+     "Z": -1.0141176620598968,
+     "Z_read_by_a_readout_of_control_cells": -0.8337101642097999,
+     "Z_read_by_a_readout_taught_by_its_class": -1.493499788921718,
+     "head_output": null
+    },
+    "share": {
+     "input": 0.8315230203001999,
+     "Z": 0.6214876652377903,
+     "Z_read_by_a_readout_of_control_cells": 0.5109274819130015,
+     "Z_read_by_a_readout_taught_by_its_class": 0.9152702211740688,
+     "head_output": null
+    }
+   }
+  }
+ ],
+ "pooled": {
+  "class 1 | HLA-E": {},
+  "class 1 | MHC-I": {
+   "input": {
+    "share": 1.0844429170293615,
+    "ci": [
+     0.0,
+     1.2308621244298785
+    ],
+    "pairs": 2,
+    "knockouts": 2
+   },
+   "Z": {
+    "share": 1.215759085664531,
+    "ci": [
+     0.0,
+     1.4625314976847503
+    ],
+    "pairs": 2,
+    "knockouts": 2
+   },
+   "Z_read_by_a_readout_of_control_cells": {
+    "share": 1.254690965005367,
+    "ci": [
+     0.0,
+     1.436372354456614
+    ],
+    "pairs": 2,
+    "knockouts": 2
+   },
+   "Z_read_by_a_readout_taught_by_its_class": {
+    "share": 0.9096001877867802,
+    "ci": [
+     0.0,
+     1.1118068368977374
+    ],
+    "pairs": 2,
+    "knockouts": 2
+   },
+   "head_output": {
+    "share": 0.07647894207078536,
+    "ci": [
+     0.0,
+     0.09270210895316854
+    ],
+    "pairs": 2,
+    "knockouts": 2
+   }
+  },
+  "class 1 | PD-L1": {
+   "input": {
+    "share": 0.9438866179613498,
+    "ci": [
+     0.8950124431885232,
+     1.0036695675444298
+    ],
+    "pairs": 5,
+    "knockouts": 5
+   },
+   "Z": {
+    "share": 0.9276723351704387,
+    "ci": [
+     0.8960129174639262,
+     0.9640313755084976
+    ],
+    "pairs": 5,
+    "knockouts": 5
+   },
+   "Z_read_by_a_readout_of_control_cells": {
+    "share": 0.8670474230056596,
+    "ci": [
+     0.8287736565906543,
+     0.9076307357121496
+    ],
+    "pairs": 5,
+    "knockouts": 5
+   },
+   "Z_read_by_a_readout_taught_by_its_class": {
+    "share": 0.988818482191673,
+    "ci": [
+     0.9309043884921827,
+     1.0505428309669618
+    ],
+    "pairs": 5,
+    "knockouts": 5
+   },
+   "head_output": {
+    "share": 0.0944678040961608,
+    "ci": [
+     0.09230472847290194,
+     0.09651412599399577
+    ],
+    "pairs": 5,
+    "knockouts": 5
+   }
+  },
+  "class 1 | genes": {
+   "input": {
+    "share": 0.8828594021013599,
+    "ci": [
+     0.8660841682003876,
+     0.8998045139455084
+    ],
+    "pairs": 50,
+    "knockouts": 5
+   },
+   "Z": {
+    "share": 0.8291899978373533,
+    "ci": [
+     0.7968723856694987,
+     0.8598333580721743
+    ],
+    "pairs": 50,
+    "knockouts": 5
+   },
+   "Z_read_by_a_readout_of_control_cells": {
+    "share": 0.7356317987163417,
+    "ci": [
+     0.7017756193382733,
+     0.7730816767290161
+    ],
+    "pairs": 50,
+    "knockouts": 5
+   },
+   "Z_read_by_a_readout_taught_by_its_class": {
+    "share": 0.9891760189878543,
+    "ci": [
+     0.978238910003315,
+     0.9981468270354608
+    ],
+    "pairs": 50,
+    "knockouts": 5
+   }
+  },
+  "class 1 | the three proteins the head has an output for": {
+   "input": {
+    "share": 0.9547860588076883,
+    "ci": [
+     0.9178399263729023,
+     1.004414538341198
+    ],
+    "pairs": 7,
+    "knockouts": 5
+   },
+   "Z": {
+    "share": 0.9500120276384716,
+    "ci": [
+     0.9307318805724065,
+     0.97183142627779
+    ],
+    "pairs": 7,
+    "knockouts": 5
+   },
+   "Z_read_by_a_readout_of_control_cells": {
+    "share": 0.897107248737458,
+    "ci": [
+     0.8783676719711798,
+     0.9183765032352965
+    ],
+    "pairs": 7,
+    "knockouts": 5
+   },
+   "Z_read_by_a_readout_taught_by_its_class": {
+    "share": 0.9826754980668835,
+    "ci": [
+     0.9401410122540319,
+     1.0359891966489465
+    ],
+    "pairs": 7,
+    "knockouts": 5
+   },
+   "head_output": {
+    "share": 0.093072857453153,
+    "ci": [
+     0.09015727271327038,
+     0.09592639703010788
+    ],
+    "pairs": 7,
+    "knockouts": 5
+   }
+  }
+ }
+}

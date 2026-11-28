@@ -1,0 +1,103 @@
+{
+ "rehearsal_on_made_up_values": false,
+ "the_check": "knockout x IFN-γ",
+ "passed": true,
+ "lines": {
+  "P1": {
+   "says": "all five are refused",
+   "refused": 5,
+   "of": 5,
+   "holds": true
+  },
+  "P2": {
+   "says": "at least 90% of the other knockouts carry over",
+   "carry_over": 90,
+   "of": 90,
+   "share": 1.0,
+   "holds": true
+  },
+  "P3": {
+   "says": "one class holds all five and at most two others",
+   "class": [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "STAT1"
+   ],
+   "of_the_five_in_it": 5,
+   "others_in_it": 0,
+   "holds": true
+  }
+ },
+ "against_the_five": {
+  "refusals": {
+   "recall": 1.0,
+   "precision": 1.0,
+   "refused": 5
+  },
+  "class": {
+   "recall": 1.0,
+   "precision": 1.0,
+   "members": 5
+  }
+ },
+ "refused": [
+  "IFNGR1",
+  "IFNGR2",
+  "JAK1",
+  "JAK2",
+  "STAT1"
+ ],
+ "classes": [
+  [
+   "IFNGR1",
+   "IFNGR2",
+   "JAK1",
+   "JAK2",
+   "STAT1"
+  ]
+ ],
+ "whole_profile_stands_out": [
+  "CD274",
+  "IFNGR1",
+  "IFNGR2",
+  "JAK1",
+  "JAK2",
+  "SEC11C",
+  "STAT1"
+ ],
+ "secondary_co_culture": {
+  "knockouts": 56,
+  "refused": [
+   "IFNGR1",
+   "IFNGR2",
+   "JAK1",
+   "JAK2",
+   "STAT1",
+   "STAT3"
+  ],
+  "against_the_five": {
+   "refusals": {
+    "recall": 1.0,
+    "precision": 0.8333333333333334,
+    "refused": 6
+   },
+   "class": {
+    "recall": 1.0,
+    "precision": 0.8333333333333334,
+    "members": 6
+   }
+  },
+  "classes": [
+   [
+    "IFNGR1",
+    "IFNGR2",
+    "JAK1",
+    "JAK2",
+    "STAT1",
+    "STAT3"
+   ]
+  ]
+ }
+}
