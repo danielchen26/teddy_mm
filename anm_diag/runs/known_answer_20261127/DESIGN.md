@@ -54,26 +54,27 @@ knockout departs are never the cells that say whether it does.
 
     I = (g − control, under IFN-γ) − (g − control, no signal given)
 
-It is zero if the effects add. It is divided by its error from cell counts (the variance among the control cells of
+It is zero if the effects add. For the genes it is centred by its median over the genes of the group: RNA levels
+are relative, and a knockout that removes an abundant transcript moves every other gene by one common factor, which is
+no departure. It is divided by its error from cell counts (the variance among the control cells of
 each condition over the number of the knockout's cells), centred by its median over the knockouts and scaled by its
 median absolute deviation over the knockouts: *z*. **The unit is the knockout**: what noise does to a readout is
 learned from the 95 knockouts, not from cells.
 
-**Two numbers per knockout**, over all readouts together:
-
-- the sum *T* of *z*(A) × *z*(B): the whole profile;
-- for each readout, the smaller of |*z*(A)| and |*z*(B)|, with the sign of their product: one readout.
+**Per readout**: the smaller of |*z*(A)| and |*z*(B)|, with the sign of their product. Beside it, over all
+readouts together, the sum *T* of *z*(A) × *z*(B): the whole profile.
 
 **The interval comes from the mirror side.** If the effects add, the two halves err independently: a product is as
 often negative as positive. A real departure can only make it positive. So the negative side shows what noise alone
 does, whatever its shape:
 
-- τ = the largest −*T* of any knockout;
 - *w* = the largest value of any readout of any knockout whose halves disagree in sign, and not less than 4 (the four
-  errors of every other rule here).
+  errors of every other rule here);
+- τ = the largest −*T* of any knockout.
 
-A knockout **carries over** if *T* ≤ τ and no readout that agrees in sign exceeds *w*. Otherwise it is **refused**
-(does not add). Its **witnesses** are the readouts that agree in sign and exceed *w*; with them, the share of the
+A knockout **carries over** if no readout that agrees in sign exceeds *w*. Otherwise it is **refused** (does not
+add), and its **witnesses** are the readouts that agree in sign and exceed *w*: a refusal always leaves a witness.
+Whether *T* exceeds τ is reported beside the verdict and decides nothing (below). With the witnesses, the share of the
 IFN-γ response that the knockout removes (the departure of one half projected on the IFN-γ effect of the other half,
 over the readouts IFN-γ changes two-fold; described).
 
@@ -81,8 +82,20 @@ over the readouts IFN-γ changes two-fold; described).
 are computed again each time. Reported: the range of τ and of *w*, and for every knockout the share of resamples in
 which it is refused. The verdict is the one of the full set.
 
-By the argument of the mirror about one knockout that adds is expected to be refused through *T* and one through a
-readout, among 90.
+By the argument of the mirror about one knockout that adds is expected to be refused, among 90.
+
+**Changed after the rehearsal on made-up values, before any value was read** (the first version of this document is
+commit `f1578f4`). Two things, both found on made-up worlds:
+
+1. *The centring over the genes* was not there. In a made-up world with planted knockouts, the planted ones shifted
+   every gene the signal does not touch by a common factor (counts per 10,000 are shares), and the sum *T* then
+   refused 22 knockouts that add.
+2. *T was a second way to be refused.* On made-up worlds with nothing planted it refused 0 to 6 of 40 knockouts in a
+   test (8 in six tests; no readout refused any): its end is a single most negative value and varies widely, and a
+   refusal through it names no readout. The owner asked that a refusal leave a witness. So the verdict is by readouts,
+   and *T* is reported.
+
+The pass line is unchanged.
 
 ## 5. Types, from the witnesses
 
@@ -111,9 +124,10 @@ TAPBP may be refused for that); P3 0.7; passed 0.55. In the co-culture: the five
 From what is cached, and no new run of the encoder: the states of all these cells, the head as trained, the RNA
 counts.
 
-For every refused knockout (if more than twelve are refused: the members of the classes, then the largest *T*, up to
-twelve), and for PD-L1, MHC-I and HLA-E, every other protein that is a witness, and its ten strongest RNA witnesses:
-the account (`account.account`, unchanged) in each condition, with the same halves, at
+For every refused knockout (if more than twelve are refused: the members of the classes, then the strongest
+readouts, up to twelve), and for PD-L1, MHC-I and HLA-E, every other protein that is a witness, and its ten strongest
+RNA witnesses: the account (`account.account`, unchanged) in each condition, with the same halves, at the places
+below. Read at Z beside them, `others`: what a readout taught by the other members of the knockout's class reads.
 
 | place | what is read | number |
 |---|---|---|
@@ -136,7 +150,8 @@ it, the state a part, the input most.
 2. On the owner's machine, the RNA counts of the IFN-γ cells of the 95 knockouts and of the 4,000 control cells are
    exported (`scripts/counts.py`; no value is printed). The other counts, the states and the antibody columns are
    already cached.
-3. The scripts, rehearsed on made-up values with planted knockouts that do not add: committed and pushed.
+3. The scripts, rehearsed on made-up values with planted knockouts that do not add
+   ([`results/rehearsal.json`](results/rehearsal.json)): committed and pushed.
 4. The reading, once: `summarize.py`, `analyze.py`, `teddy.py`.
 5. The write-up, as it comes.
 
