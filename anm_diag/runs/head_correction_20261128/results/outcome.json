@@ -1,0 +1,134 @@
+{
+ "the_run_did_not_answer_its_question": "of 279 pairs (93 drawn units x 3 readouts) only 1 had a change of at least four errors, so C1 cannot be read. See README.",
+ "rehearsal_on_made_up_values": false,
+ "passed": false,
+ "lines": {
+  "C1": {
+   "says": "a correction at the head closes the loss, on units never read",
+   "best_arm": "H2",
+   "best": 0.17983293135298759,
+   "H0": -0.0011065069673650342,
+   "holds": false,
+   "refuted": true
+  },
+  "C2": {
+   "says": "the loop's rows teach something a plain refit does not",
+   "difference": 0.04282889005294873,
+   "ci": [
+    0.04282889005294873,
+    0.04282889005294873
+   ],
+   "pairs": 1,
+   "units": 1,
+   "holds": true,
+   "refuted": false
+  },
+  "G1": {
+   "says": "the state did not move",
+   "largest_difference": 0.0,
+   "holds": true
+  },
+  "G2": {
+   "says": "nothing got worse where nothing was wrong",
+   "largest_move_of_an_output_on_a_quiet_pair_in_spreads": 0.45916875649260624,
+   "quiet_pairs": 278,
+   "error_on_the_judge_control_cells": {
+    "H0": 0.5823803052913528,
+    "H1": 0.567222727175383,
+    "H2": 0.5703760210878758,
+    "H3": 0.5716353587704565
+   },
+   "holds": true
+  }
+ },
+ "pooled": {
+  "H0": {
+   "share": -0.0011065069673650342,
+   "ci": [
+    -0.0011065069673650342,
+    -0.0011065069673650342
+   ],
+   "pairs": 1,
+   "units": 1
+  },
+  "H1": {
+   "share": 0.13700404130003885,
+   "ci": [
+    0.13700404130003885,
+    0.13700404130003885
+   ],
+   "pairs": 1,
+   "units": 1
+  },
+  "H2": {
+   "share": 0.17983293135298759,
+   "ci": [
+    0.17983293135298759,
+    0.17983293135298759
+   ],
+   "pairs": 1,
+   "units": 1
+  },
+  "H3": {
+   "share": 0.09535160890442143,
+   "ci": [
+    0.09535160890442143,
+    0.09535160890442143
+   ],
+   "pairs": 1,
+   "units": 1
+  }
+ },
+ "differences": {
+  "H2-H1": {
+   "difference": 0.04282889005294873,
+   "ci": [
+    0.04282889005294873,
+    0.04282889005294873
+   ],
+   "pairs": 1,
+   "units": 1
+  },
+  "H1-H0": {
+   "difference": 0.13811054826740388,
+   "ci": [
+    0.13811054826740388,
+    0.13811054826740388
+   ],
+   "pairs": 1,
+   "units": 1
+  },
+  "H2-H0": {
+   "difference": 0.1809394383203526,
+   "ci": [
+    0.1809394383203526,
+    0.1809394383203526
+   ],
+   "pairs": 1,
+   "units": 1
+  },
+  "H3-H1": {
+   "difference": -0.04165243239561742,
+   "ci": [
+    -0.04165243239561742,
+    -0.04165243239561742
+   ],
+   "pairs": 1,
+   "units": 1
+  }
+ },
+ "pairs": 1,
+ "quiet_pairs": 278,
+ "units": {
+  "Co-culture": {
+   "drawn_units": 47,
+   "cells_of_the_drawn_units": 9914,
+   "judge_control_cells": 2916
+  },
+  "Control": {
+   "drawn_units": 46,
+   "cells_of_the_drawn_units": 6798,
+   "judge_control_cells": 1998
+  }
+ }
+}
