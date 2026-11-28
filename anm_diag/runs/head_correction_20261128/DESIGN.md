@@ -59,13 +59,29 @@ measures in.
 | **H3** | the same as H2 with the labels of the events shuffled (described; no pass line) |
 
 The recorded events are the units of batches 1 to 4 and of the final audit in these two conditions, with their
-measured shifts; the drawn units are not among them. H1 and H2 are fitted by the same procedure with the same
-regularization, chosen on made-up values before the reading; the only difference is the rows.
+measured shifts; the drawn units are not among them. H1, H2 and H3 are fitted by the same procedure; the only
+difference is the rows.
+
+**Changed after the rehearsal and before any value of a drawn unit was read** (the first version of this document is
+commit `adfad6d`). Three things, all found on made-up values or on the teach control cells, and all about how the
+fit is carried out; the arms, the judge and the pass line are unchanged.
+
+1. *The search is made in the activation as the teach control cells see it* (centred and scaled by them), and the
+   row written back into the head's own numbers afterwards. On made-up values the search in the raw scale did not
+   move: it reached a squared error of 2.65 where 0.75 was within reach.
+2. *The weight of the ridge is not fixed but chosen*, from the grid 1e-4 … 1, by splitting the teach control cells
+   in two and measuring on the half the fit was not given. A fixed weight of 1 pinned the row to the shipped one.
+3. *The weight of the loop's rows is chosen the same way*, from the grid 0.03 … 3, by splitting the recorded events
+   in two and measuring how well the fit gives the shifts of the events it was not given. On made-up worlds a fixed
+   weight of 1 made H2 worse than H1, which would have decided C2 by the weight rather than by the data.
+
+Neither half of a drawn unit, nor a judge control cell, takes part in any of these choices.
 
 **The shuffled arm is informative here, and was not in run 50.** In THP-1 every recorded event lowered PD-L1, so
 shuffled rows asked for nearly what the true rows asked. In these two conditions the recorded events move the three
 readouts up and down and by different amounts, so a shuffled set asks for something else. This is checked before the
-arm is run (`results/rehearsal.json`: the correlation of the true and shuffled right-hand sides) and reported.
+arm is run (`results/rehearsal.json`: the correlation of the true and shuffled right-hand sides) and reported. It
+came out at −0.03 for PD-L1, −0.11 for MHC-I and −0.04 for HLA-E: the shuffled rows ask for something else.
 
 ## 5. What is asked
 
@@ -100,6 +116,10 @@ model, donors, or time.
 1. This document and `results/units.json`: committed and pushed.
 2. On the owner's machine: the cells of the drawn units (names only), their states, and their antibody columns.
 3. `scripts/fit.py` and `scripts/read.py`, rehearsed on made-up values (`results/rehearsal.json`), committed and
-   pushed.
+   pushed. What the rehearsal settles and what it does not: handed the readout itself as an output the judge gives
+   1.000, handed noise it gives −0.001, handed half of each it gives 0.441 — it measures what it is meant to. The
+   two made-up worlds run the whole path end to end and find faults of the code; they do **not** reproduce the
+   regime of the real data (in them the row the head was shipped with already carries the made-up readout), so they
+   say nothing about how C1 or C2 will come out.
 4. The reading, once.
 5. The write-up, as it comes.
